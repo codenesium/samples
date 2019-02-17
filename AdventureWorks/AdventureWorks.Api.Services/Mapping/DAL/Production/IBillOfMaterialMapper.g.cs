@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALBillOfMaterialMapper
 	{
-		BillOfMaterial MapModelToBO(
+		BillOfMaterial MapModelToEntity(
 			int billOfMaterialsID,
 			ApiBillOfMaterialServerRequestModel model);
 
-		ApiBillOfMaterialServerResponseModel MapBOToModel(
+		ApiBillOfMaterialServerResponseModel MapEntityToModel(
 			BillOfMaterial item);
 
-		List<ApiBillOfMaterialServerResponseModel> MapBOToModel(
+		List<ApiBillOfMaterialServerResponseModel> MapEntityToModel(
 			List<BillOfMaterial> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>05363040e0204247d195edf02244c750</Hash>
+    <Hash>03c9beff42fbdbc978819e95ca81dd58</Hash>
 </Codenesium>*/

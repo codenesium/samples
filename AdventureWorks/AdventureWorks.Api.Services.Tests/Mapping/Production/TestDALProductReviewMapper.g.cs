@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALProductReviewMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALProductReviewMapper();
 			ApiProductReviewServerRequestModel model = new ApiProductReviewServerRequestModel();
 			model.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ProductReview response = mapper.MapModelToBO(1, model);
+			ProductReview response = mapper.MapModelToEntity(1, model);
 
 			response.Comment.Should().Be("A");
 			response.EmailAddress.Should().Be("A");
@@ -30,12 +30,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALProductReviewMapper();
 			ProductReview item = new ProductReview();
 			item.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiProductReviewServerResponseModel response = mapper.MapBOToModel(item);
+			ApiProductReviewServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Comment.Should().Be("A");
 			response.EmailAddress.Should().Be("A");
@@ -48,12 +48,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALProductReviewMapper();
 			ProductReview item = new ProductReview();
 			item.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiProductReviewServerResponseModel> response = mapper.MapBOToModel(new List<ProductReview>() { { item} });
+			List<ApiProductReviewServerResponseModel> response = mapper.MapEntityToModel(new List<ProductReview>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8b18c93f68cfa07168c4d47b8990e89</Hash>
+    <Hash>853acfd349cc8b2e4d51d1926eecd7ff</Hash>
 </Codenesium>*/

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import EmployeeMapper from './employeeMapper';
 import EmployeeViewModel from './employeeViewModel';
 
@@ -488,9 +490,6 @@ const EmployeeCreate = withFormik<Props, EmployeeViewModel>({
     if (values.birthDate == undefined) {
       errors.birthDate = 'Required';
     }
-    if (values.currentFlag == false) {
-      errors.currentFlag = 'Required';
-    }
     if (values.gender == '') {
       errors.gender = 'Required';
     }
@@ -515,9 +514,6 @@ const EmployeeCreate = withFormik<Props, EmployeeViewModel>({
     if (values.rowguid == undefined) {
       errors.rowguid = 'Required';
     }
-    if (values.salariedFlag == false) {
-      errors.salariedFlag = 'Required';
-    }
     if (values.sickLeaveHour == 0) {
       errors.sickLeaveHour = 'Required';
     }
@@ -534,7 +530,7 @@ const EmployeeCreate = withFormik<Props, EmployeeViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'employees',
+        Constants.ApiEndpoint + ApiRoutes.Employees,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -583,20 +579,18 @@ export default class EmployeeCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <EmployeeCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>de18ac76e0c2d4188f19d0faa4f6749c</Hash>
+    <Hash>b37d1afc1253c52ac98c9fcc3dfa756c</Hash>
 </Codenesium>*/

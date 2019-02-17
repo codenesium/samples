@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALSalesPersonMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALSalesPersonMapper();
 			ApiSalesPersonServerRequestModel model = new ApiSalesPersonServerRequestModel();
 			model.SetProperties(1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
-			SalesPerson response = mapper.MapModelToBO(1, model);
+			SalesPerson response = mapper.MapModelToEntity(1, model);
 
 			response.Bonus.Should().Be(1m);
 			response.CommissionPct.Should().Be(1m);
@@ -31,12 +31,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALSalesPersonMapper();
 			SalesPerson item = new SalesPerson();
 			item.SetProperties(1, 1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
-			ApiSalesPersonServerResponseModel response = mapper.MapBOToModel(item);
+			ApiSalesPersonServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Bonus.Should().Be(1m);
 			response.BusinessEntityID.Should().Be(1);
@@ -50,12 +50,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALSalesPersonMapper();
 			SalesPerson item = new SalesPerson();
 			item.SetProperties(1, 1m, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
-			List<ApiSalesPersonServerResponseModel> response = mapper.MapBOToModel(new List<SalesPerson>() { { item} });
+			List<ApiSalesPersonServerResponseModel> response = mapper.MapEntityToModel(new List<SalesPerson>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>556c7be6106427799bfe215f209357e6</Hash>
+    <Hash>86eb346af336906b57affd600fd22057</Hash>
 </Codenesium>*/

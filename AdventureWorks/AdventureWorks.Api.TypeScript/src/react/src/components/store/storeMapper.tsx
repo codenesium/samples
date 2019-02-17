@@ -1,6 +1,6 @@
 import * as Api from '../../api/models';
 import StoreViewModel from './storeViewModel';
-
+import SalesPersonViewModel from '../salesPerson/salesPersonViewModel';
 export default class StoreMapper {
   mapApiResponseToViewModel(dto: Api.StoreClientResponseModel): StoreViewModel {
     let response = new StoreViewModel();
@@ -12,6 +12,22 @@ export default class StoreMapper {
       dto.rowguid,
       dto.salesPersonID
     );
+
+    if (dto.salesPersonIDNavigation != null) {
+      response.salesPersonIDNavigation = new SalesPersonViewModel();
+      response.salesPersonIDNavigation.setProperties(
+        dto.salesPersonIDNavigation.bonus,
+        dto.salesPersonIDNavigation.businessEntityID,
+        dto.salesPersonIDNavigation.commissionPct,
+        dto.salesPersonIDNavigation.modifiedDate,
+        dto.salesPersonIDNavigation.rowguid,
+        dto.salesPersonIDNavigation.salesLastYear,
+        dto.salesPersonIDNavigation.salesQuota,
+        dto.salesPersonIDNavigation.salesYTD,
+        dto.salesPersonIDNavigation.territoryID
+      );
+    }
+
     return response;
   }
 
@@ -31,5 +47,5 @@ export default class StoreMapper {
 
 
 /*<Codenesium>
-    <Hash>ef3dec104976bd9107f66091594329ed</Hash>
+    <Hash>80f218595f1a675b1460daabecf824f9</Hash>
 </Codenesium>*/

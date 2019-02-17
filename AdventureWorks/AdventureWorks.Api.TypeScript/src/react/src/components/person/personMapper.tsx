@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import PersonViewModel from './personViewModel';
-
 export default class PersonMapper {
   mapApiResponseToViewModel(
     dto: Api.PersonClientResponseModel
@@ -21,6 +20,7 @@ export default class PersonMapper {
       dto.suffix,
       dto.title
     );
+
     return response;
   }
 
@@ -49,5 +49,5 @@ export default class PersonMapper {
 
 
 /*<Codenesium>
-    <Hash>53b135dcd204f8cba65698f6a43a2ea9</Hash>
+    <Hash>901944b6ca10a06f40fdf57783f1833d</Hash>
 </Codenesium>*/

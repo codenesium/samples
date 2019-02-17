@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import PasswordMapper from './passwordMapper';
 import PasswordViewModel from './passwordViewModel';
 
@@ -217,7 +219,7 @@ const PasswordCreate = withFormik<Props, PasswordViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'passwords',
+        Constants.ApiEndpoint + ApiRoutes.Passwords,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -266,20 +268,18 @@ export default class PasswordCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <PasswordCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>cccfb177bd9367c3a28daf5b2c8bb936</Hash>
+    <Hash>f88ed0d67a3435e4729f574485c1d0a6</Hash>
 </Codenesium>*/

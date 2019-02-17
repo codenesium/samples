@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import LocationViewModel from './locationViewModel';
-
 export default class LocationMapper {
   mapApiResponseToViewModel(
     dto: Api.LocationClientResponseModel
@@ -13,6 +12,7 @@ export default class LocationMapper {
       dto.modifiedDate,
       dto.name
     );
+
     return response;
   }
 
@@ -33,5 +33,5 @@ export default class LocationMapper {
 
 
 /*<Codenesium>
-    <Hash>cbf5d7678237b6022820fe69a9a2693e</Hash>
+    <Hash>05c2eed3bb95cb50fab39a24a8384902</Hash>
 </Codenesium>*/

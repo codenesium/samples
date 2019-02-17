@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALContactTypeMapper
 	{
-		public virtual ContactType MapModelToBO(
+		public virtual ContactType MapModelToEntity(
 			int contactTypeID,
 			ApiContactTypeServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiContactTypeServerResponseModel MapBOToModel(
+		public virtual ApiContactTypeServerResponseModel MapEntityToModel(
 			ContactType item)
 		{
 			var model = new ApiContactTypeServerResponseModel();
 
-			model.SetProperties(item.ContactTypeID, item.ModifiedDate, item.Name);
+			model.SetProperties(item.ContactTypeID,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiContactTypeServerResponseModel> MapBOToModel(
+		public virtual List<ApiContactTypeServerResponseModel> MapEntityToModel(
 			List<ContactType> items)
 		{
 			List<ApiContactTypeServerResponseModel> response = new List<ApiContactTypeServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5f4a5ec12a9e91a832a7fbc31da1d3c</Hash>
+    <Hash>4681d525b3fd762d41d3cab56496bf7d</Hash>
 </Codenesium>*/

@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALPhoneNumberTypeMapper
 	{
-		PhoneNumberType MapModelToBO(
+		PhoneNumberType MapModelToEntity(
 			int phoneNumberTypeID,
 			ApiPhoneNumberTypeServerRequestModel model);
 
-		ApiPhoneNumberTypeServerResponseModel MapBOToModel(
+		ApiPhoneNumberTypeServerResponseModel MapEntityToModel(
 			PhoneNumberType item);
 
-		List<ApiPhoneNumberTypeServerResponseModel> MapBOToModel(
+		List<ApiPhoneNumberTypeServerResponseModel> MapEntityToModel(
 			List<PhoneNumberType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0407da760b67391466e3cf4bc8e3e46</Hash>
+    <Hash>fbd7561f959dbc3c16b9bd5b256a7828</Hash>
 </Codenesium>*/

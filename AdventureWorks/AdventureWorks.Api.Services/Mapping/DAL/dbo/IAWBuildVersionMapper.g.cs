@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALAWBuildVersionMapper
 	{
-		AWBuildVersion MapModelToBO(
+		AWBuildVersion MapModelToEntity(
 			int systemInformationID,
 			ApiAWBuildVersionServerRequestModel model);
 
-		ApiAWBuildVersionServerResponseModel MapBOToModel(
+		ApiAWBuildVersionServerResponseModel MapEntityToModel(
 			AWBuildVersion item);
 
-		List<ApiAWBuildVersionServerResponseModel> MapBOToModel(
+		List<ApiAWBuildVersionServerResponseModel> MapEntityToModel(
 			List<AWBuildVersion> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>277d4586ed256b158d94b9591bcdb70e</Hash>
+    <Hash>c147f0d1dcdaf3014dcd7839a804323a</Hash>
 </Codenesium>*/

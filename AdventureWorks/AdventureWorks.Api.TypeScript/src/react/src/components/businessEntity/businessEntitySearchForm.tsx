@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import BusinessEntityMapper from './businessEntityMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import BusinessEntityViewModel from './businessEntityViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class BusinessEntitySearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.BusinessEntityClientResponseModel>(),
-    filteredRecords: new Array<Api.BusinessEntityClientResponseModel>(),
+    records: new Array<BusinessEntityViewModel>(),
+    filteredRecords: new Array<BusinessEntityViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class BusinessEntitySearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.BusinessEntityClientResponseModel) {
-    this.props.history.push('/businessentities/edit/' + row.businessEntityID);
+    this.props.history.push(
+      ClientRoutes.BusinessEntities + '/edit/' + row.businessEntityID
+    );
   }
 
   handleDetailClick(e: any, row: Api.BusinessEntityClientResponseModel) {
-    this.props.history.push('/businessentities/' + row.businessEntityID);
+    this.props.history.push(
+      ClientRoutes.BusinessEntities + '/' + row.businessEntityID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/businessentities/create');
+    this.props.history.push(ClientRoutes.BusinessEntities + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.BusinessEntityClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'businessentities/' + row.businessEntityID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.BusinessEntities +
+          '/' +
+          row.businessEntityID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class BusinessEntitySearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'businessentities' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.BusinessEntities + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -144,7 +157,9 @@ export default class BusinessEntitySearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -265,17 +280,13 @@ export default class BusinessEntitySearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>581d9ec250e4534e372e2313b80cba30</Hash>
+    <Hash>9c027bb035d84e59ea4a8e6e2bd5d2e9</Hash>
 </Codenesium>*/

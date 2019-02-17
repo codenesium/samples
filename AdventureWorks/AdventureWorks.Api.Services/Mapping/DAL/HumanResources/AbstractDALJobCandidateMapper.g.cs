@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALJobCandidateMapper
 	{
-		public virtual JobCandidate MapModelToBO(
+		public virtual JobCandidate MapModelToEntity(
 			int jobCandidateID,
 			ApiJobCandidateServerRequestModel model
 			)
@@ -21,24 +21,27 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiJobCandidateServerResponseModel MapBOToModel(
+		public virtual ApiJobCandidateServerResponseModel MapEntityToModel(
 			JobCandidate item)
 		{
 			var model = new ApiJobCandidateServerResponseModel();
 
-			model.SetProperties(item.JobCandidateID, item.BusinessEntityID, item.ModifiedDate, item.Resume);
+			model.SetProperties(item.JobCandidateID,
+			                    item.BusinessEntityID,
+			                    item.ModifiedDate,
+			                    item.Resume);
 
 			return model;
 		}
 
-		public virtual List<ApiJobCandidateServerResponseModel> MapBOToModel(
+		public virtual List<ApiJobCandidateServerResponseModel> MapEntityToModel(
 			List<JobCandidate> items)
 		{
 			List<ApiJobCandidateServerResponseModel> response = new List<ApiJobCandidateServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -47,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7bf197369a77d0637a01df17d4269de</Hash>
+    <Hash>a08ad92ae2648031faad75a46ec29d82</Hash>
 </Codenesium>*/

@@ -54,6 +54,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<ProductDescriptionRepository>> loggerMoc = ProductDescriptionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductDescriptionRepositoryMoc.GetContext();
+			var repository = new ProductDescriptionRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
 		public async void Get()
 		{
 			Mock<ILogger<ProductDescriptionRepository>> loggerMoc = ProductDescriptionRepositoryMoc.GetLoggerMoc();
@@ -117,6 +129,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			context.Set<ProductDescription>().Add(entity);
 			await context.SaveChangesAsync();
 
+			context.Entry(entity).State = EntityState.Detached;
+
 			await repository.Update(entity);
 
 			var records = await context.Set<ProductDescription>().Where(x => true).ToListAsync();
@@ -160,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>015bb46bac3f6c2fdb402f264bd2cb8c</Hash>
+    <Hash>f5635bc59d1c977a41bd7f7702252147</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -147,5 +147,5 @@ export default class RateDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e63015cf736f1b8b014857a49f98b906</Hash>
+    <Hash>7249c1aafa9be9bc9c2d49483a57eef9</Hash>
 </Codenesium>*/

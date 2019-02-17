@@ -35,15 +35,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual DateTime ModifiedDate { get; private set; }
 
 		[ForeignKey("CreditCardID")]
-		public virtual CreditCard CreditCardNavigation { get; private set; }
+		public virtual CreditCard CreditCardIDNavigation { get; private set; }
 
-		public void SetCreditCardNavigation(CreditCard item)
+		public void SetCreditCardIDNavigation(CreditCard item)
 		{
-			this.CreditCardNavigation = item;
+			this.CreditCardIDNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>40d7984f6631e0982ed9f1f419f3ab84</Hash>
+    <Hash>02854a573c79dcba1dba7f8596a8a766</Hash>
 </Codenesium>*/

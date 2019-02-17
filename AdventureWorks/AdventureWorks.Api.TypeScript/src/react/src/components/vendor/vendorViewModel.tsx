@@ -38,9 +38,13 @@ export default class VendorViewModel {
     this.preferredVendorStatu = preferredVendorStatu;
     this.purchasingWebServiceURL = purchasingWebServiceURL;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>064e0b20403608eb882cc2431db79e73</Hash>
+    <Hash>bfe493103486564e53ba51b08b053621</Hash>
 </Codenesium>*/

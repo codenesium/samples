@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import ContactTypeMapper from './contactTypeMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import ContactTypeViewModel from './contactTypeViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class ContactTypeSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.ContactTypeClientResponseModel>(),
-    filteredRecords: new Array<Api.ContactTypeClientResponseModel>(),
+    records: new Array<ContactTypeViewModel>(),
+    filteredRecords: new Array<ContactTypeViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class ContactTypeSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.ContactTypeClientResponseModel) {
-    this.props.history.push('/contacttypes/edit/' + row.contactTypeID);
+    this.props.history.push(
+      ClientRoutes.ContactTypes + '/edit/' + row.contactTypeID
+    );
   }
 
   handleDetailClick(e: any, row: Api.ContactTypeClientResponseModel) {
-    this.props.history.push('/contacttypes/' + row.contactTypeID);
+    this.props.history.push(
+      ClientRoutes.ContactTypes + '/' + row.contactTypeID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/contacttypes/create');
+    this.props.history.push(ClientRoutes.ContactTypes + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.ContactTypeClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'contacttypes/' + row.contactTypeID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.ContactTypes +
+          '/' +
+          row.contactTypeID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class ContactTypeSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'contacttypes' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.ContactTypes + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +155,9 @@ export default class ContactTypeSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -263,17 +278,13 @@ export default class ContactTypeSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>baaaaa2b7379e38d56cf3131495bb627</Hash>
+    <Hash>a840e64cdcfd81bbb5950996308fa59a</Hash>
 </Codenesium>*/

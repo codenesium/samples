@@ -63,10 +63,54 @@ namespace AdventureWorksNS.Api.Client
 			this.TotalDue = totalDue;
 
 			this.CreditCardIDEntity = nameof(ApiResponse.CreditCards);
+
 			this.CurrencyRateIDEntity = nameof(ApiResponse.CurrencyRates);
+
 			this.CustomerIDEntity = nameof(ApiResponse.Customers);
+
 			this.SalesPersonIDEntity = nameof(ApiResponse.SalesPersons);
+
 			this.TerritoryIDEntity = nameof(ApiResponse.SalesTerritories);
+		}
+
+		[JsonProperty]
+		public ApiCreditCardClientResponseModel CreditCardIDNavigation { get; private set; }
+
+		public void SetCreditCardIDNavigation(ApiCreditCardClientResponseModel value)
+		{
+			this.CreditCardIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiCurrencyRateClientResponseModel CurrencyRateIDNavigation { get; private set; }
+
+		public void SetCurrencyRateIDNavigation(ApiCurrencyRateClientResponseModel value)
+		{
+			this.CurrencyRateIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiCustomerClientResponseModel CustomerIDNavigation { get; private set; }
+
+		public void SetCustomerIDNavigation(ApiCustomerClientResponseModel value)
+		{
+			this.CustomerIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiSalesPersonClientResponseModel SalesPersonIDNavigation { get; private set; }
+
+		public void SetSalesPersonIDNavigation(ApiSalesPersonClientResponseModel value)
+		{
+			this.SalesPersonIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiSalesTerritoryClientResponseModel TerritoryIDNavigation { get; private set; }
+
+		public void SetTerritoryIDNavigation(ApiSalesTerritoryClientResponseModel value)
+		{
+			this.TerritoryIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -165,5 +209,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ae273a48dc3bf992a6d7a73647ad0f0e</Hash>
+    <Hash>121e50b0235cacfe66cd3db7bc1866f4</Hash>
 </Codenesium>*/

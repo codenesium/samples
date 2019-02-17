@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALProductSubcategoryMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALProductSubcategoryMapper();
 			ApiProductSubcategoryServerRequestModel model = new ApiProductSubcategoryServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ProductSubcategory response = mapper.MapModelToBO(1, model);
+			ProductSubcategory response = mapper.MapModelToEntity(1, model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -27,12 +27,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALProductSubcategoryMapper();
 			ProductSubcategory item = new ProductSubcategory();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiProductSubcategoryServerResponseModel response = mapper.MapBOToModel(item);
+			ApiProductSubcategoryServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -42,12 +42,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALProductSubcategoryMapper();
 			ProductSubcategory item = new ProductSubcategory();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiProductSubcategoryServerResponseModel> response = mapper.MapBOToModel(new List<ProductSubcategory>() { { item} });
+			List<ApiProductSubcategoryServerResponseModel> response = mapper.MapEntityToModel(new List<ProductSubcategory>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -55,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29b2df7cc63a5c9a6e8da9873f650643</Hash>
+    <Hash>fbf126015c2f2473f6dcd834aa7fdced</Hash>
 </Codenesium>*/

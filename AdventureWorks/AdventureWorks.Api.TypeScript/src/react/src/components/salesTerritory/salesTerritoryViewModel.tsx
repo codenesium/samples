@@ -42,9 +42,13 @@ export default class SalesTerritoryViewModel {
     this.salesYTD = salesYTD;
     this.territoryID = territoryID;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>d3a4a0e9c8f0a6304a2378e9593257f6</Hash>
+    <Hash>899312ebb9ad0052d7cc233841a8e96f</Hash>
 </Codenesium>*/

@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALProductModelMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALProductModelMapper();
 			ApiProductModelServerRequestModel model = new ApiProductModelServerRequestModel();
 			model.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ProductModel response = mapper.MapModelToBO(1, model);
+			ProductModel response = mapper.MapModelToEntity(1, model);
 
 			response.CatalogDescription.Should().Be("A");
 			response.Instruction.Should().Be("A");
@@ -28,12 +28,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALProductModelMapper();
 			ProductModel item = new ProductModel();
 			item.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiProductModelServerResponseModel response = mapper.MapBOToModel(item);
+			ApiProductModelServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.CatalogDescription.Should().Be("A");
 			response.Instruction.Should().Be("A");
@@ -44,12 +44,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALProductModelMapper();
 			ProductModel item = new ProductModel();
 			item.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiProductModelServerResponseModel> response = mapper.MapBOToModel(new List<ProductModel>() { { item} });
+			List<ApiProductModelServerResponseModel> response = mapper.MapEntityToModel(new List<ProductModel>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a65f8e078e99017426b3adfb6d7d870d</Hash>
+    <Hash>f36f83d5d37450f6a05e5b4f61d58b39</Hash>
 </Codenesium>*/

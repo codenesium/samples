@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALErrorLogMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALErrorLogMapper();
 			ApiErrorLogServerRequestModel model = new ApiErrorLogServerRequestModel();
 			model.SetProperties(1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ErrorLog response = mapper.MapModelToBO(1, model);
+			ErrorLog response = mapper.MapModelToEntity(1, model);
 
 			response.ErrorLine.Should().Be(1);
 			response.ErrorMessage.Should().Be("A");
@@ -31,12 +31,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALErrorLogMapper();
 			ErrorLog item = new ErrorLog();
 			item.SetProperties(1, 1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiErrorLogServerResponseModel response = mapper.MapBOToModel(item);
+			ApiErrorLogServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ErrorLine.Should().Be(1);
 			response.ErrorLogID.Should().Be(1);
@@ -50,12 +50,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALErrorLogMapper();
 			ErrorLog item = new ErrorLog();
 			item.SetProperties(1, 1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiErrorLogServerResponseModel> response = mapper.MapBOToModel(new List<ErrorLog>() { { item} });
+			List<ApiErrorLogServerResponseModel> response = mapper.MapEntityToModel(new List<ErrorLog>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6966a1e870f505f2544d05a0be113859</Hash>
+    <Hash>6361a84630f91c29baf8fcb85ba5c9cb</Hash>
 </Codenesium>*/

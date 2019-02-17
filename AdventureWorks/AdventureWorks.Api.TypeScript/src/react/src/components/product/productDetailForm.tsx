@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ProductMapper from './productMapper';
 import ProductViewModel from './productViewModel';
 
 interface Props {
+  history: any;
   model?: ProductViewModel;
 }
 
 const ProductDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.Products + '/edit/' + model.model!.productID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="color" className={'col-sm-2 col-form-label'}>
           Color
         </label>
         <div className="col-sm-12">{String(model.model!.color)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="daysToManufacture"
@@ -32,14 +44,12 @@ const ProductDetailDisplay = (model: Props) => {
           {String(model.model!.daysToManufacture)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="discontinuedDate" className={'col-sm-2 col-form-label'}>
           DiscontinuedDate
         </label>
         <div className="col-sm-12">{String(model.model!.discontinuedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="finishedGoodsFlag"
@@ -51,63 +61,54 @@ const ProductDetailDisplay = (model: Props) => {
           {String(model.model!.finishedGoodsFlag)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="listPrice" className={'col-sm-2 col-form-label'}>
           ListPrice
         </label>
         <div className="col-sm-12">{String(model.model!.listPrice)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="makeFlag" className={'col-sm-2 col-form-label'}>
           MakeFlag
         </label>
         <div className="col-sm-12">{String(model.model!.makeFlag)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
         <div className="col-sm-12">{String(model.model!.name)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="productID" className={'col-sm-2 col-form-label'}>
           ProductID
         </label>
         <div className="col-sm-12">{String(model.model!.productID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="productLine" className={'col-sm-2 col-form-label'}>
           ProductLine
         </label>
         <div className="col-sm-12">{String(model.model!.productLine)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="productModelID" className={'col-sm-2 col-form-label'}>
           ProductModelID
         </label>
         <div className="col-sm-12">{String(model.model!.productModelID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="productNumber" className={'col-sm-2 col-form-label'}>
           ProductNumber
         </label>
         <div className="col-sm-12">{String(model.model!.productNumber)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="productSubcategoryID"
@@ -119,49 +120,42 @@ const ProductDetailDisplay = (model: Props) => {
           {String(model.model!.productSubcategoryID)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="reorderPoint" className={'col-sm-2 col-form-label'}>
           ReorderPoint
         </label>
         <div className="col-sm-12">{String(model.model!.reorderPoint)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
           Rowguid
         </label>
         <div className="col-sm-12">{String(model.model!.rowguid)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="safetyStockLevel" className={'col-sm-2 col-form-label'}>
           SafetyStockLevel
         </label>
         <div className="col-sm-12">{String(model.model!.safetyStockLevel)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="sellEndDate" className={'col-sm-2 col-form-label'}>
           SellEndDate
         </label>
         <div className="col-sm-12">{String(model.model!.sellEndDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="sellStartDate" className={'col-sm-2 col-form-label'}>
           SellStartDate
         </label>
         <div className="col-sm-12">{String(model.model!.sellStartDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="size" className={'col-sm-2 col-form-label'}>
           Size
         </label>
         <div className="col-sm-12">{String(model.model!.size)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="sizeUnitMeasureCode"
@@ -173,28 +167,24 @@ const ProductDetailDisplay = (model: Props) => {
           {String(model.model!.sizeUnitMeasureCode)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="standardCost" className={'col-sm-2 col-form-label'}>
           StandardCost
         </label>
         <div className="col-sm-12">{String(model.model!.standardCost)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="style" className={'col-sm-2 col-form-label'}>
           Style
         </label>
         <div className="col-sm-12">{String(model.model!.style)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="weight" className={'col-sm-2 col-form-label'}>
           Weight
         </label>
         <div className="col-sm-12">{String(model.model!.weight)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="weightUnitMeasureCode"
@@ -220,6 +210,7 @@ interface IMatch {
 
 interface ProductDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface ProductDetailComponentState {
@@ -246,11 +237,17 @@ export default class ProductDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(Constants.ApiUrl + 'products/' + this.props.match.params.productID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Products +
+          '/' +
+          this.props.match.params.productID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Api.ProductClientResponseModel;
@@ -281,20 +278,23 @@ export default class ProductDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <ProductDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <ProductDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>21bcb49182c62e81012fe05b800d4627</Hash>
+    <Hash>8a3bcaf86dc0847582d0580e786eadfb</Hash>
 </Codenesium>*/

@@ -54,6 +54,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<CurrencyRepository>> loggerMoc = CurrencyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CurrencyRepositoryMoc.GetContext();
+			var repository = new CurrencyRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
 		public async void Get()
 		{
 			Mock<ILogger<CurrencyRepository>> loggerMoc = CurrencyRepositoryMoc.GetLoggerMoc();
@@ -117,6 +129,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			context.Set<Currency>().Add(entity);
 			await context.SaveChangesAsync();
 
+			context.Entry(entity).State = EntityState.Detached;
+
 			await repository.Update(entity);
 
 			var records = await context.Set<Currency>().Where(x => true).ToListAsync();
@@ -160,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>240f935dfe11ef116dbd173b663eafc2</Hash>
+    <Hash>5bcae65ee3597e692cafe963bf91b323</Hash>
 </Codenesium>*/

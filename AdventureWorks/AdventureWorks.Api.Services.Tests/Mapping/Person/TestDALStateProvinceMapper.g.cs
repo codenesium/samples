@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALStateProvinceMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALStateProvinceMapper();
 			ApiStateProvinceServerRequestModel model = new ApiStateProvinceServerRequestModel();
 			model.SetProperties("A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
-			StateProvince response = mapper.MapModelToBO(1, model);
+			StateProvince response = mapper.MapModelToEntity(1, model);
 
 			response.CountryRegionCode.Should().Be("A");
 			response.IsOnlyStateProvinceFlag.Should().Be(true);
@@ -30,12 +30,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALStateProvinceMapper();
 			StateProvince item = new StateProvince();
 			item.SetProperties(1, "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
-			ApiStateProvinceServerResponseModel response = mapper.MapBOToModel(item);
+			ApiStateProvinceServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.CountryRegionCode.Should().Be("A");
 			response.IsOnlyStateProvinceFlag.Should().Be(true);
@@ -48,12 +48,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALStateProvinceMapper();
 			StateProvince item = new StateProvince();
 			item.SetProperties(1, "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
-			List<ApiStateProvinceServerResponseModel> response = mapper.MapBOToModel(new List<StateProvince>() { { item} });
+			List<ApiStateProvinceServerResponseModel> response = mapper.MapEntityToModel(new List<StateProvince>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62c3836084b8c88380e9c8310532dbb4</Hash>
+    <Hash>be0f280714476050dec1d2acd91defc4</Hash>
 </Codenesium>*/

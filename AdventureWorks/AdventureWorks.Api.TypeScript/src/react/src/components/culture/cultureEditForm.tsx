@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import CultureViewModel from './cultureViewModel';
 import CultureMapper from './cultureMapper';
 
@@ -141,7 +143,7 @@ const CultureEditDisplay = (props: FormikProps<CultureViewModel>) => {
   );
 };
 
-const CultureUpdate = withFormik<Props, CultureViewModel>({
+const CultureEdit = withFormik<Props, CultureViewModel>({
   mapPropsToValues: props => {
     let response = new CultureViewModel();
     response.setProperties(
@@ -175,7 +177,7 @@ const CultureUpdate = withFormik<Props, CultureViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'cultures/' + values.cultureID,
+        Constants.ApiEndpoint + ApiRoutes.Cultures + '/' + values.cultureID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -241,11 +243,17 @@ export default class CultureEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(Constants.ApiUrl + 'cultures/' + this.props.match.params.cultureID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Cultures +
+          '/' +
+          this.props.match.params.cultureID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Api.CultureClientResponseModel;
@@ -276,20 +284,18 @@ export default class CultureEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <CultureUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <CultureEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>d70606bc7af57a396dba2a31ec42ef3e</Hash>
+    <Hash>195b26c9cba3fe117b7017b2432eb3bd</Hash>
 </Codenesium>*/

@@ -18,9 +18,13 @@ export default class BusinessEntityViewModel {
     this.modifiedDate = modifiedDate;
     this.rowguid = rowguid;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>2d42729b723992297c0c2ce04c5977f9</Hash>
+    <Hash>945402dc0a22e8a8228ccd7fa497c3da</Hash>
 </Codenesium>*/

@@ -51,23 +51,23 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int TerritoryID { get; private set; }
 
 		[ForeignKey("BusinessEntityID")]
-		public virtual SalesPerson SalesPersonNavigation { get; private set; }
+		public virtual SalesPerson BusinessEntityIDNavigation { get; private set; }
 
-		public void SetSalesPersonNavigation(SalesPerson item)
+		public void SetBusinessEntityIDNavigation(SalesPerson item)
 		{
-			this.SalesPersonNavigation = item;
+			this.BusinessEntityIDNavigation = item;
 		}
 
 		[ForeignKey("TerritoryID")]
-		public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
+		public virtual SalesTerritory TerritoryIDNavigation { get; private set; }
 
-		public void SetSalesTerritoryNavigation(SalesTerritory item)
+		public void SetTerritoryIDNavigation(SalesTerritory item)
 		{
-			this.SalesTerritoryNavigation = item;
+			this.TerritoryIDNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a8c949ea74f8c244a32c7b14fb80567</Hash>
+    <Hash>e938bc77fc0047405bbd8310ebb80ce5</Hash>
 </Codenesium>*/

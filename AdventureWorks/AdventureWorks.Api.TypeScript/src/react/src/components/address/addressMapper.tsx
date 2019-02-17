@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import AddressViewModel from './addressViewModel';
-
 export default class AddressMapper {
   mapApiResponseToViewModel(
     dto: Api.AddressClientResponseModel
@@ -16,6 +15,7 @@ export default class AddressMapper {
       dto.rowguid,
       dto.stateProvinceID
     );
+
     return response;
   }
 
@@ -39,5 +39,5 @@ export default class AddressMapper {
 
 
 /*<Codenesium>
-    <Hash>717663bac0309f1f0ec53821076a1086</Hash>
+    <Hash>5d11fc667c9ea77d28a9de28d1318a12</Hash>
 </Codenesium>*/

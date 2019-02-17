@@ -1,54 +1,64 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ShoppingCartItemMapper from './shoppingCartItemMapper';
 import ShoppingCartItemViewModel from './shoppingCartItemViewModel';
 
 interface Props {
+  history: any;
   model?: ShoppingCartItemViewModel;
 }
 
 const ShoppingCartItemDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.ShoppingCartItems +
+              '/edit/' +
+              model.model!.shoppingCartItemID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="dateCreated" className={'col-sm-2 col-form-label'}>
           DateCreated
         </label>
         <div className="col-sm-12">{String(model.model!.dateCreated)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="productID" className={'col-sm-2 col-form-label'}>
           ProductID
         </label>
         <div className="col-sm-12">{String(model.model!.productID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="quantity" className={'col-sm-2 col-form-label'}>
           Quantity
         </label>
         <div className="col-sm-12">{String(model.model!.quantity)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="shoppingCartID" className={'col-sm-2 col-form-label'}>
           ShoppingCartID
         </label>
         <div className="col-sm-12">{String(model.model!.shoppingCartID)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="shoppingCartItemID"
@@ -74,6 +84,7 @@ interface IMatch {
 
 interface ShoppingCartItemDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface ShoppingCartItemDetailComponentState {
@@ -101,8 +112,9 @@ export default class ShoppingCartItemDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'shoppingcartitems/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.ShoppingCartItems +
+          '/' +
           this.props.match.params.shoppingCartItemID,
         {
           headers: {
@@ -140,20 +152,23 @@ export default class ShoppingCartItemDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <ShoppingCartItemDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <ShoppingCartItemDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>68f2474d1248b78f4ca725cccdaa0649</Hash>
+    <Hash>a0431c45450c2db65725aeba38a02259</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace StudioResourceManagerNS.Api.Services
 			{
 				var eventStatusIdModel = new ApiEventStatusServerResponseModel();
 				eventStatusIdModel.SetProperties(
-					item.Id,
+					item.EventStatusIdNavigation.Id,
 					item.EventStatusIdNavigation.Name);
 
 				model.SetEventStatusIdNavigation(eventStatusIdModel);
@@ -69,5 +69,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9988e4075dee120d61cfaf0762e8255</Hash>
+    <Hash>a52f5ffbc6e70401fda9866c9dd2ffb9</Hash>
 </Codenesium>*/

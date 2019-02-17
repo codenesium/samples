@@ -1,66 +1,77 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import CurrencyRateMapper from './currencyRateMapper';
 import CurrencyRateViewModel from './currencyRateViewModel';
 
 interface Props {
+  history: any;
   model?: CurrencyRateViewModel;
 }
 
 const CurrencyRateDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.CurrencyRates + '/edit/' + model.model!.currencyRateID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="averageRate" className={'col-sm-2 col-form-label'}>
           AverageRate
         </label>
         <div className="col-sm-12">{String(model.model!.averageRate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="currencyRateDate" className={'col-sm-2 col-form-label'}>
           CurrencyRateDate
         </label>
         <div className="col-sm-12">{String(model.model!.currencyRateDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="currencyRateID" className={'col-sm-2 col-form-label'}>
           CurrencyRateID
         </label>
         <div className="col-sm-12">{String(model.model!.currencyRateID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="endOfDayRate" className={'col-sm-2 col-form-label'}>
           EndOfDayRate
         </label>
         <div className="col-sm-12">{String(model.model!.endOfDayRate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="fromCurrencyCode" className={'col-sm-2 col-form-label'}>
           FromCurrencyCode
         </label>
-        <div className="col-sm-12">{String(model.model!.fromCurrencyCode)}</div>
+        <div className="col-sm-12">
+          {model.model!.fromCurrencyCodeNavigation!.toDisplay()}
+        </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="toCurrencyCode" className={'col-sm-2 col-form-label'}>
           ToCurrencyCode
         </label>
-        <div className="col-sm-12">{String(model.model!.toCurrencyCode)}</div>
+        <div className="col-sm-12">
+          {model.model!.toCurrencyCodeNavigation!.toDisplay()}
+        </div>
       </div>
     </form>
   );
@@ -76,6 +87,7 @@ interface IMatch {
 
 interface CurrencyRateDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface CurrencyRateDetailComponentState {
@@ -103,8 +115,9 @@ export default class CurrencyRateDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'currencyrates/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.CurrencyRates +
+          '/' +
           this.props.match.params.currencyRateID,
         {
           headers: {
@@ -142,20 +155,23 @@ export default class CurrencyRateDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <CurrencyRateDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <CurrencyRateDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>b554278d73143bb54794b12270373a1f</Hash>
+    <Hash>3dc32657d77d60a467678d231cac51dc</Hash>
 </Codenesium>*/

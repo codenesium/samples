@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALUnitMeasureMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALUnitMeasureMapper();
 			ApiUnitMeasureServerRequestModel model = new ApiUnitMeasureServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			UnitMeasure response = mapper.MapModelToBO("A", model);
+			UnitMeasure response = mapper.MapModelToEntity("A", model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALUnitMeasureMapper();
 			UnitMeasure item = new UnitMeasure();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiUnitMeasureServerResponseModel response = mapper.MapBOToModel(item);
+			ApiUnitMeasureServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALUnitMeasureMapper();
 			UnitMeasure item = new UnitMeasure();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiUnitMeasureServerResponseModel> response = mapper.MapBOToModel(new List<UnitMeasure>() { { item} });
+			List<ApiUnitMeasureServerResponseModel> response = mapper.MapEntityToModel(new List<UnitMeasure>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db04ffcf6f7a76dbc5c13810f253b990</Hash>
+    <Hash>71a777c273b7d86ac19f54bb92064dcc</Hash>
 </Codenesium>*/

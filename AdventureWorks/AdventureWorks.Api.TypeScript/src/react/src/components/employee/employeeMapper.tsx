@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import EmployeeViewModel from './employeeViewModel';
-
 export default class EmployeeMapper {
   mapApiResponseToViewModel(
     dto: Api.EmployeeClientResponseModel
@@ -23,6 +22,7 @@ export default class EmployeeMapper {
       dto.sickLeaveHour,
       dto.vacationHour
     );
+
     return response;
   }
 
@@ -53,5 +53,5 @@ export default class EmployeeMapper {
 
 
 /*<Codenesium>
-    <Hash>f5cf9f496fbfa8356b2087e22fdc0196</Hash>
+    <Hash>c5d6a6eaa50baa00fc3862d011b117f1</Hash>
 </Codenesium>*/

@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALCreditCardMapper
 	{
-		CreditCard MapModelToBO(
+		CreditCard MapModelToEntity(
 			int creditCardID,
 			ApiCreditCardServerRequestModel model);
 
-		ApiCreditCardServerResponseModel MapBOToModel(
+		ApiCreditCardServerResponseModel MapEntityToModel(
 			CreditCard item);
 
-		List<ApiCreditCardServerResponseModel> MapBOToModel(
+		List<ApiCreditCardServerResponseModel> MapEntityToModel(
 			List<CreditCard> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>43866eeefdb98b2079226d48e55a56be</Hash>
+    <Hash>4f79d1ea4d62d09505f9a4f57e54d125</Hash>
 </Codenesium>*/

@@ -106,7 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.JobCandidateID;
 			}
 
-			return await this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<JobCandidate>();
+			return await this.Context.Set<JobCandidate>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<JobCandidate>();
 		}
 
 		private async Task<JobCandidate> GetById(int jobCandidateID)
@@ -119,5 +121,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bcb2033cff331c71a43f1c0eaa18fe6d</Hash>
+    <Hash>f9993883a1fec861eb4c7388777af673</Hash>
 </Codenesium>*/

@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiPasswordServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PasswordRepository.All(limit, offset, query);
+			List<Password> records = await this.PasswordRepository.All(limit, offset, query);
 
-			return this.DalPasswordMapper.MapBOToModel(records);
+			return this.DalPasswordMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPasswordServerResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.PasswordRepository.Get(businessEntityID);
+			Password record = await this.PasswordRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalPasswordMapper.MapBOToModel(record);
+				return this.DalPasswordMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalPasswordMapper.MapModelToBO(default(int), model);
-				var record = await this.PasswordRepository.Create(bo);
+				Password record = this.DalPasswordMapper.MapModelToEntity(default(int), model);
+				record = await this.PasswordRepository.Create(record);
 
-				response.SetRecord(this.DalPasswordMapper.MapBOToModel(record));
+				response.SetRecord(this.DalPasswordMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PasswordCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalPasswordMapper.MapModelToBO(businessEntityID, model);
-				await this.PasswordRepository.Update(bo);
+				Password record = this.DalPasswordMapper.MapModelToEntity(businessEntityID, model);
+				await this.PasswordRepository.Update(record);
 
-				var record = await this.PasswordRepository.Get(businessEntityID);
+				record = await this.PasswordRepository.Get(businessEntityID);
 
-				var apiModel = this.DalPasswordMapper.MapBOToModel(record);
+				ApiPasswordServerResponseModel apiModel = this.DalPasswordMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PasswordUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPasswordServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea48f7ba7deee501ee1036920e592ae5</Hash>
+    <Hash>37d0c102dced34582f204d0f38c73abd</Hash>
 </Codenesium>*/

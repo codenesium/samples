@@ -58,9 +58,13 @@ export default class DocumentViewModel {
     this.status = status;
     this.title = title;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>8b56974621e8dfc295de58c127337338</Hash>
+    <Hash>0061da5028d875788c2ac27bc59d3efd</Hash>
 </Codenesium>*/

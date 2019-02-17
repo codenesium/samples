@@ -96,13 +96,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Vendor_AccountNumber.
 		public async virtual Task<Vendor> ByAccountNumber(string accountNumber)
 		{
-			return await this.Context.Set<Vendor>().FirstOrDefaultAsync(x => x.AccountNumber == accountNumber);
+			return await this.Context.Set<Vendor>()
+
+			       .FirstOrDefaultAsync(x => x.AccountNumber == accountNumber);
 		}
 
 		// Foreign key reference to this table PurchaseOrderHeader via vendorID.
 		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.VendorID == vendorID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+			return await this.Context.Set<PurchaseOrderHeader>()
+			       .Where(x => x.VendorID == vendorID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
 		}
 
 		protected async Task<List<Vendor>> Where(
@@ -116,7 +119,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Vendor>();
+			return await this.Context.Set<Vendor>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Vendor>();
 		}
 
 		private async Task<Vendor> GetById(int businessEntityID)
@@ -129,5 +134,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dcb6eed97b483239c8bb9dbcac01ef7c</Hash>
+    <Hash>6aa763d1499595edcb48d6032d53844d</Hash>
 </Codenesium>*/

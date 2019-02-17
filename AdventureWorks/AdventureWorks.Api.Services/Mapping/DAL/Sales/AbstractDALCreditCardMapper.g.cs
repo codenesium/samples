@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALCreditCardMapper
 	{
-		public virtual CreditCard MapModelToBO(
+		public virtual CreditCard MapModelToEntity(
 			int creditCardID,
 			ApiCreditCardServerRequestModel model
 			)
@@ -23,24 +23,29 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiCreditCardServerResponseModel MapBOToModel(
+		public virtual ApiCreditCardServerResponseModel MapEntityToModel(
 			CreditCard item)
 		{
 			var model = new ApiCreditCardServerResponseModel();
 
-			model.SetProperties(item.CreditCardID, item.CardNumber, item.CardType, item.ExpMonth, item.ExpYear, item.ModifiedDate);
+			model.SetProperties(item.CreditCardID,
+			                    item.CardNumber,
+			                    item.CardType,
+			                    item.ExpMonth,
+			                    item.ExpYear,
+			                    item.ModifiedDate);
 
 			return model;
 		}
 
-		public virtual List<ApiCreditCardServerResponseModel> MapBOToModel(
+		public virtual List<ApiCreditCardServerResponseModel> MapEntityToModel(
 			List<CreditCard> items)
 		{
 			List<ApiCreditCardServerResponseModel> response = new List<ApiCreditCardServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -49,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7a1a57f40e1f394052b4e88da9e2cd42</Hash>
+    <Hash>b4cbb11710f42de519c115d2447efb6f</Hash>
 </Codenesium>*/

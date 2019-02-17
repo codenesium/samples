@@ -26,9 +26,13 @@ export default class LocationViewModel {
     this.modifiedDate = modifiedDate;
     this.name = name;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>51cc94803bdb84955bb05ba3d39019e8</Hash>
+    <Hash>77338a350f01ebd2ade4968e179e6a46</Hash>
 </Codenesium>*/

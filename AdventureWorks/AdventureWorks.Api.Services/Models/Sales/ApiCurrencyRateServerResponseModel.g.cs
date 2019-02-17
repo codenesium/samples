@@ -45,6 +45,14 @@ namespace AdventureWorksNS.Api.Services
 		public string FromCurrencyCodeEntity { get; private set; } = RouteConstants.Currencies;
 
 		[JsonProperty]
+		public ApiCurrencyServerResponseModel FromCurrencyCodeNavigation { get; private set; }
+
+		public void SetFromCurrencyCodeNavigation(ApiCurrencyServerResponseModel value)
+		{
+			this.FromCurrencyCodeNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime ModifiedDate { get; private set; }
 
 		[JsonProperty]
@@ -52,9 +60,17 @@ namespace AdventureWorksNS.Api.Services
 
 		[JsonProperty]
 		public string ToCurrencyCodeEntity { get; private set; } = RouteConstants.Currencies;
+
+		[JsonProperty]
+		public ApiCurrencyServerResponseModel ToCurrencyCodeNavigation { get; private set; }
+
+		public void SetToCurrencyCodeNavigation(ApiCurrencyServerResponseModel value)
+		{
+			this.ToCurrencyCodeNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>09cbebbc7c2d74a40f9f31c1b45a67ca</Hash>
+    <Hash>205548ebfcf12f5221be3063d6473307</Hash>
 </Codenesium>*/

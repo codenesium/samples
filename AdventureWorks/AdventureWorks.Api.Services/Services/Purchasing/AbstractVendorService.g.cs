@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiVendorServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.VendorRepository.All(limit, offset, query);
+			List<Vendor> records = await this.VendorRepository.All(limit, offset, query);
 
-			return this.DalVendorMapper.MapBOToModel(records);
+			return this.DalVendorMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiVendorServerResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.VendorRepository.Get(businessEntityID);
+			Vendor record = await this.VendorRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalVendorMapper.MapBOToModel(record);
+				return this.DalVendorMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalVendorMapper.MapModelToBO(default(int), model);
-				var record = await this.VendorRepository.Create(bo);
+				Vendor record = this.DalVendorMapper.MapModelToEntity(default(int), model);
+				record = await this.VendorRepository.Create(record);
 
-				response.SetRecord(this.DalVendorMapper.MapBOToModel(record));
+				response.SetRecord(this.DalVendorMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new VendorCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalVendorMapper.MapModelToBO(businessEntityID, model);
-				await this.VendorRepository.Update(bo);
+				Vendor record = this.DalVendorMapper.MapModelToEntity(businessEntityID, model);
+				await this.VendorRepository.Update(record);
 
-				var record = await this.VendorRepository.Get(businessEntityID);
+				record = await this.VendorRepository.Get(businessEntityID);
 
-				var apiModel = this.DalVendorMapper.MapBOToModel(record);
+				ApiVendorServerResponseModel apiModel = this.DalVendorMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new VendorUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiVendorServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalVendorMapper.MapBOToModel(record);
+				return this.DalVendorMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -135,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<PurchaseOrderHeader> records = await this.VendorRepository.PurchaseOrderHeadersByVendorID(vendorID, limit, offset);
 
-			return this.DalPurchaseOrderHeaderMapper.MapBOToModel(records);
+			return this.DalPurchaseOrderHeaderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>90c9fe94117eac3efdf21ebef49852bd</Hash>
+    <Hash>dc33551beee722a03d7ab141ffc44452</Hash>
 </Codenesium>*/

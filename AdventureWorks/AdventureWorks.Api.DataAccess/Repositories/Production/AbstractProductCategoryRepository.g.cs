@@ -92,19 +92,24 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ProductCategory_Name.
 		public async virtual Task<ProductCategory> ByName(string name)
 		{
-			return await this.Context.Set<ProductCategory>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ProductCategory>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_ProductCategory_rowguid.
 		public async virtual Task<ProductCategory> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<ProductCategory>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<ProductCategory>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table ProductSubcategory via productCategoryID.
 		public async virtual Task<List<ProductSubcategory>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<ProductSubcategory>().Where(x => x.ProductCategoryID == productCategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
+			return await this.Context.Set<ProductSubcategory>()
+			       .Where(x => x.ProductCategoryID == productCategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
 		}
 
 		protected async Task<List<ProductCategory>> Where(
@@ -118,7 +123,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ProductCategoryID;
 			}
 
-			return await this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductCategory>();
+			return await this.Context.Set<ProductCategory>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductCategory>();
 		}
 
 		private async Task<ProductCategory> GetById(int productCategoryID)
@@ -131,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>954b029ec59673c34855daec5f84dfe7</Hash>
+    <Hash>d8e7a0ecc3fffbef76cbb4299cd89dec</Hash>
 </Codenesium>*/

@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PersonRepository.All(limit, offset, query);
+			List<Person> records = await this.PersonRepository.All(limit, offset, query);
 
-			return this.DalPersonMapper.MapBOToModel(records);
+			return this.DalPersonMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPersonServerResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.PersonRepository.Get(businessEntityID);
+			Person record = await this.PersonRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalPersonMapper.MapBOToModel(record);
+				return this.DalPersonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalPersonMapper.MapModelToBO(default(int), model);
-				var record = await this.PersonRepository.Create(bo);
+				Person record = this.DalPersonMapper.MapModelToEntity(default(int), model);
+				record = await this.PersonRepository.Create(record);
 
-				response.SetRecord(this.DalPersonMapper.MapBOToModel(record));
+				response.SetRecord(this.DalPersonMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PersonCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalPersonMapper.MapModelToBO(businessEntityID, model);
-				await this.PersonRepository.Update(bo);
+				Person record = this.DalPersonMapper.MapModelToEntity(businessEntityID, model);
+				await this.PersonRepository.Update(record);
 
-				var record = await this.PersonRepository.Get(businessEntityID);
+				record = await this.PersonRepository.Get(businessEntityID);
 
-				var apiModel = this.DalPersonMapper.MapBOToModel(record);
+				ApiPersonServerResponseModel apiModel = this.DalPersonMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PersonUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalPersonMapper.MapBOToModel(record);
+				return this.DalPersonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -135,32 +135,32 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Person> records = await this.PersonRepository.ByLastNameFirstNameMiddleName(lastName, firstName, middleName, limit, offset);
 
-			return this.DalPersonMapper.MapBOToModel(records);
+			return this.DalPersonMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiPersonServerResponseModel>> ByAdditionalContactInfo(string additionalContactInfo, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Person> records = await this.PersonRepository.ByAdditionalContactInfo(additionalContactInfo, limit, offset);
 
-			return this.DalPersonMapper.MapBOToModel(records);
+			return this.DalPersonMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiPersonServerResponseModel>> ByDemographic(string demographic, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Person> records = await this.PersonRepository.ByDemographic(demographic, limit, offset);
 
-			return this.DalPersonMapper.MapBOToModel(records);
+			return this.DalPersonMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiPasswordServerResponseModel>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Password> records = await this.PersonRepository.PasswordsByBusinessEntityID(businessEntityID, limit, offset);
 
-			return this.DalPasswordMapper.MapBOToModel(records);
+			return this.DalPasswordMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ba7046e28b5125d2f9edc27b67de0660</Hash>
+    <Hash>62b3c0050525cec42d0c6553f32e281e</Hash>
 </Codenesium>*/

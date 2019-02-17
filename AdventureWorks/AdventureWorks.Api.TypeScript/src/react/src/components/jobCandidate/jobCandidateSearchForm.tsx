@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import JobCandidateMapper from './jobCandidateMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import JobCandidateViewModel from './jobCandidateViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class JobCandidateSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.JobCandidateClientResponseModel>(),
-    filteredRecords: new Array<Api.JobCandidateClientResponseModel>(),
+    records: new Array<JobCandidateViewModel>(),
+    filteredRecords: new Array<JobCandidateViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class JobCandidateSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.JobCandidateClientResponseModel) {
-    this.props.history.push('/jobcandidates/edit/' + row.jobCandidateID);
+    this.props.history.push(
+      ClientRoutes.JobCandidates + '/edit/' + row.jobCandidateID
+    );
   }
 
   handleDetailClick(e: any, row: Api.JobCandidateClientResponseModel) {
-    this.props.history.push('/jobcandidates/' + row.jobCandidateID);
+    this.props.history.push(
+      ClientRoutes.JobCandidates + '/' + row.jobCandidateID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/jobcandidates/create');
+    this.props.history.push(ClientRoutes.JobCandidates + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.JobCandidateClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'jobcandidates/' + row.jobCandidateID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.JobCandidates +
+          '/' +
+          row.jobCandidateID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class JobCandidateSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'jobcandidates' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.JobCandidates + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -144,7 +157,9 @@ export default class JobCandidateSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -274,17 +289,13 @@ export default class JobCandidateSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>3da134f9032c2389a379f9b1460616c3</Hash>
+    <Hash>ba980134f0063ada0d057aaaa81fc928</Hash>
 </Codenesium>*/

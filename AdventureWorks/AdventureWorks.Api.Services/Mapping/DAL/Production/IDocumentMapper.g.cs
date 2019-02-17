@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALDocumentMapper
 	{
-		Document MapModelToBO(
+		Document MapModelToEntity(
 			Guid rowguid,
 			ApiDocumentServerRequestModel model);
 
-		ApiDocumentServerResponseModel MapBOToModel(
+		ApiDocumentServerResponseModel MapEntityToModel(
 			Document item);
 
-		List<ApiDocumentServerResponseModel> MapBOToModel(
+		List<ApiDocumentServerResponseModel> MapEntityToModel(
 			List<Document> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5eded61f25b0d7f640d41630d376185f</Hash>
+    <Hash>3d0b52c050eff6d6bc345973aff46e18</Hash>
 </Codenesium>*/

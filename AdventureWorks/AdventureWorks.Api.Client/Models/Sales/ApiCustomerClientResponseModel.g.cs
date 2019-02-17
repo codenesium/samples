@@ -25,7 +25,24 @@ namespace AdventureWorksNS.Api.Client
 			this.TerritoryID = territoryID;
 
 			this.StoreIDEntity = nameof(ApiResponse.Stores);
+
 			this.TerritoryIDEntity = nameof(ApiResponse.SalesTerritories);
+		}
+
+		[JsonProperty]
+		public ApiStoreClientResponseModel StoreIDNavigation { get; private set; }
+
+		public void SetStoreIDNavigation(ApiStoreClientResponseModel value)
+		{
+			this.StoreIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiSalesTerritoryClientResponseModel TerritoryIDNavigation { get; private set; }
+
+		public void SetTerritoryIDNavigation(ApiSalesTerritoryClientResponseModel value)
+		{
+			this.TerritoryIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -58,5 +75,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ddd760f3699992d301ef0cd1971b2ea0</Hash>
+    <Hash>470dd44628a7f0cceed158654f6ff4a5</Hash>
 </Codenesium>*/

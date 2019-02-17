@@ -1,0 +1,1504 @@
+{
+  "$id": "1",
+  "Name": "FileService",
+  "ProjectType": ".NET Core REST API 1.0.0",
+  "LocalDestinationDirectory": "C:\\Users\\Administrator\\Documents\\Mercurial\\Samples\\FileService",
+  "Database": {
+    "$id": "2",
+    "Name": "FileService",
+    "Schemas": [
+      {
+        "$id": "3",
+        "Name": "dbo",
+        "Tables": [
+          {
+            "$id": "4",
+            "Name": "Bucket",
+            "Columns": [
+              {
+                "$id": "5",
+                "Name": "externalId",
+                "DataType": "uniqueidentifier",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "6",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "7",
+                "Name": "name",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "8",
+                "Name": "PK_Bucket",
+                "TableName": "Bucket",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "9",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "10",
+                "Name": "IX_Bucket_externalId",
+                "TableName": "Bucket",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "11",
+                    "Name": "externalId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "12",
+                "Name": "IX_Bucket_name",
+                "TableName": "Bucket",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "13",
+                    "Name": "name",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "14",
+            "Name": "File",
+            "Columns": [
+              {
+                "$id": "15",
+                "Name": "bucketId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "16",
+                "Name": "dateCreated",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "17",
+                "Name": "description",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "18",
+                "Name": "expiration",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "19",
+                "Name": "extension",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 32,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "20",
+                "Name": "externalId",
+                "DataType": "uniqueidentifier",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "21",
+                "Name": "fileSizeInBytes",
+                "DataType": "decimal",
+                "NumericPrecision": 18,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "22",
+                "Name": "fileTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "23",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "24",
+                "Name": "location",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "25",
+                "Name": "privateKey",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 64,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "26",
+                "Name": "publicKey",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 64,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "27",
+                "Name": "PK_File",
+                "TableName": "File",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "28",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "29",
+            "Name": "FileType",
+            "Columns": [
+              {
+                "$id": "30",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "31",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "32",
+                "Name": "PK_FileType",
+                "TableName": "FileType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "33",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "34",
+            "Name": "VersionInfo",
+            "Columns": [
+              {
+                "$id": "35",
+                "Name": "AppliedOn",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "36",
+                "Name": "Description",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 1024,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "37",
+                "Name": "Version",
+                "DataType": "bigint",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "38",
+                "Name": "UC_Version",
+                "TableName": "VersionInfo",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "39",
+                    "Name": "Version",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "40",
+            "Columns": [
+              {
+                "$id": "41",
+                "ForeignKeyTableName": "File",
+                "ForeignKeyColumnName": "bucketId",
+                "PrimaryKeyTableName": "Bucket",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_File_Bucket"
+          },
+          {
+            "$id": "42",
+            "Columns": [
+              {
+                "$id": "43",
+                "ForeignKeyTableName": "File",
+                "ForeignKeyColumnName": "fileTypeId",
+                "PrimaryKeyTableName": "FileType",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_File_fileTypeId_FileType_id"
+          }
+        ]
+      }
+    ],
+    "Version": "1.0",
+    "DatabaseType": "MSSQL"
+  },
+  "Project": {
+    "$id": "44",
+    "Schemas": [
+      {
+        "$id": "45",
+        "AppSchemaName": "dbo",
+        "AppSchemaId": "b8bfdac7-be5f-4efd-8461-9513591fd85b",
+        "Tables": [
+          {
+            "$id": "46",
+            "AppTableName": "Bucket",
+            "AppTableNamePlural": "Buckets",
+            "AppDoNotProcess": false,
+            "AppTableId": "12fabea9-7a77-4acf-96de-a6d2d0425062",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "47",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "ExternalId",
+                "AppNamePlural": "ExternalIds",
+                "AppFieldType": "uniqueidentifier",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "63c83b72-6717-47da-9c7c-4c483f62ed17",
+                "AppCLRType": "Guid",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "46"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "externalId",
+                "DataType": "uniqueidentifier",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "48",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "7d53ec55-1b14-4b25-b35e-ad53860e7da2",
+                "AppCLRType": "int",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "46"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "49",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 255,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "0f759db6-392a-420b-b3ef-ccdf177c895d",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "46"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "50",
+                "Columns": [
+                  {
+                    "$id": "51",
+                    "Column": {
+                      "$ref": "48"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Bucket",
+                "Table": {
+                  "$ref": "46"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Bucket",
+                "TableName": "Bucket",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "52",
+                "Columns": [
+                  {
+                    "$id": "53",
+                    "Column": {
+                      "$ref": "47"
+                    },
+                    "Name": "ExternalId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByExternalId",
+                "ControllerRoute": "byExternalId",
+                "AppName": "IX_Bucket_externalId",
+                "Table": {
+                  "$ref": "46"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_Bucket_externalId",
+                "TableName": "Bucket",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "54",
+                "Columns": [
+                  {
+                    "$id": "55",
+                    "Column": {
+                      "$ref": "49"
+                    },
+                    "Name": "Name",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByName",
+                "ControllerRoute": "byName",
+                "AppName": "IX_Bucket_name",
+                "Table": {
+                  "$ref": "46"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_Bucket_name",
+                "TableName": "Bucket",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "45"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "",
+            "GenerationEnabled": true,
+            "Name": "Bucket",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "56",
+            "AppTableName": "File",
+            "AppTableNamePlural": "Files",
+            "AppDoNotProcess": false,
+            "AppTableId": "ecd3d436-bd80-42be-873b-a1e385e15d33",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "57",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "BucketId",
+                "AppNamePlural": "BucketIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "7a6d4ec0-5bab-4956-900b-d2f2483f1c9d",
+                "AppCLRType": "int?",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "bucketId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "58",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "DateCreated",
+                "AppNamePlural": "DateCreateds",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "a9761f24-3158-49ca-bd98-8cf45ff4b110",
+                "AppCLRType": "DateTime",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "dateCreated",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "59",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Description",
+                "AppNamePlural": "Descriptions",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 255,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "bbf4a052-7749-4c47-ad7a-c7065e9165c3",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "description",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "60",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Expiration",
+                "AppNamePlural": "Expirations",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8640b734-19b0-42e3-80bd-60990cce2e94",
+                "AppCLRType": "DateTime",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "expiration",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "61",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Extension",
+                "AppNamePlural": "Extensions",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 32,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "21b9be8c-d617-40db-aa80-bb0d1477a02c",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "extension",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 32,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "62",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "ExternalId",
+                "AppNamePlural": "ExternalIds",
+                "AppFieldType": "uniqueidentifier",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "887334f7-8f7b-46f3-bd82-b87c36e220cb",
+                "AppCLRType": "Guid",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "externalId",
+                "DataType": "uniqueidentifier",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "63",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "FileSizeInByte",
+                "AppNamePlural": "FileSizeInBytes",
+                "AppFieldType": "decimal",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "ead2f526-28de-4470-bbab-e0ba3ef32882",
+                "AppCLRType": "double",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "fileSizeInBytes",
+                "DataType": "decimal",
+                "NumericPrecision": 18,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "64",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "FileTypeId",
+                "AppNamePlural": "FileTypeIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8fca869b-f9ac-4ca9-964b-ea1dd551351f",
+                "AppCLRType": "int",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "fileTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "65",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "411000cd-c2e0-4d9e-80e8-cb4065eca6a9",
+                "AppCLRType": "int",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "66",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Location",
+                "AppNamePlural": "Locations",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 255,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "dee988b3-9733-47f0-91b8-abb51d5b1c2e",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "location",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "67",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PrivateKey",
+                "AppNamePlural": "PrivateKeys",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 64,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "b1064444-682c-4423-ab7f-6e0be1fd3042",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "privateKey",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 64,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "68",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PublicKey",
+                "AppNamePlural": "PublicKeys",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 64,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "59e52867-226a-4200-b8ba-362580e67c35",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "publicKey",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 64,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "69",
+                "Columns": [
+                  {
+                    "$id": "70",
+                    "Column": {
+                      "$ref": "65"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_File",
+                "Table": {
+                  "$ref": "56"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_File",
+                "TableName": "File",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "45"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "",
+            "GenerationEnabled": true,
+            "Name": "File",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "71",
+            "AppTableName": "FileType",
+            "AppTableNamePlural": "FileTypes",
+            "AppDoNotProcess": false,
+            "AppTableId": "9a83aebb-2e86-4056-8b89-f2f5358cfcb7",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "72",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "d6f04965-66f3-45ee-8aab-4321340ec934",
+                "AppCLRType": "int",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "73",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 255,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "590eb402-07f1-4800-970b-76de2e793b1b",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 255,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "74",
+                "Columns": [
+                  {
+                    "$id": "75",
+                    "Column": {
+                      "$ref": "72"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_FileType",
+                "Table": {
+                  "$ref": "71"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_FileType",
+                "TableName": "FileType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "45"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "",
+            "GenerationEnabled": true,
+            "Name": "FileType",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "76",
+            "AppTableName": "VersionInfo",
+            "AppTableNamePlural": "VersionInfoes",
+            "AppDoNotProcess": false,
+            "AppTableId": "318fee46-02fa-4b9b-b40b-12955417489a",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "77",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "AppliedOn",
+                "AppNamePlural": "AppliedOns",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "85668d26-2389-4b8f-a828-cbbc7bc7b353",
+                "AppCLRType": "DateTime?",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "76"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "AppliedOn",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "78",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Description",
+                "AppNamePlural": "Descriptions",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 1024,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "c3d28aec-d850-466b-bcb3-094b9e8bc617",
+                "AppCLRType": "string",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "76"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "Description",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 1024,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "79",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Version",
+                "AppNamePlural": "Versions",
+                "AppFieldType": "bigint",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "3c5dba18-91a6-4195-9bbf-61628289880b",
+                "AppCLRType": "long",
+                "AppTypescriptType": null,
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "76"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 14,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "",
+                "GenerationEnabled": true,
+                "Name": "Version",
+                "DataType": "bigint",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "80",
+                "Columns": [
+                  {
+                    "$id": "81",
+                    "Column": {
+                      "$ref": "79"
+                    },
+                    "Name": "Version",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByVersion",
+                "ControllerRoute": "byVersion",
+                "AppName": "UC_Version",
+                "Table": {
+                  "$ref": "76"
+                },
+                "GenerationEnabled": true,
+                "Name": "UC_Version",
+                "TableName": "VersionInfo",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "45"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "",
+            "GenerationEnabled": true,
+            "Name": "VersionInfo",
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "82",
+            "Columns": [
+              {
+                "$id": "83",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "57"
+                },
+                "PrimaryColumn": {
+                  "$ref": "48"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_File_BucketId_Bucket_Id"
+          },
+          {
+            "$id": "84",
+            "Columns": [
+              {
+                "$id": "85",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "64"
+                },
+                "PrimaryColumn": {
+                  "$ref": "72"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_File_FileTypeId_FileType_Id"
+          }
+        ],
+        "ReferenceForeignKeys": [],
+        "ApplicationApiContainer": {
+          "$ref": "44"
+        },
+        "Name": "dbo"
+      }
+    ],
+    "ApplicationVersion": "1.0",
+    "ApiSettings": {
+      "$id": "86",
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "Name": "",
+    "Version": "",
+    "DatabaseType": ""
+  },
+  "Settings": {
+    "$id": "87",
+    "SettingsVersion": "1.0",
+    "ApiSettings": {
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "TableParameterSettings": [
+      {
+        "$id": "88",
+        "Table": "VersionInfo",
+        "Schema": "dbo",
+        "AppDoNotProcess": true,
+        "AppTableName": "VersionInfo",
+        "AppTableNamePlural": "VersionInfoes",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": null,
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": ""
+      }
+    ],
+    "ColumnParameterSettings": [],
+    "VirtualForeignKeys": [],
+    "ForeignKeyParameterSettings": [],
+    "VirtualConstraints": [],
+    "ConstraintParameterSettings": []
+  }
+}

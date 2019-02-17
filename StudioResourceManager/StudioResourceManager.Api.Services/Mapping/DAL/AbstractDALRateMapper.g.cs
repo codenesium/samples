@@ -34,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Services
 			{
 				var teacherIdModel = new ApiTeacherServerResponseModel();
 				teacherIdModel.SetProperties(
-					item.Id,
+					item.TeacherIdNavigation.Id,
 					item.TeacherIdNavigation.Birthday,
 					item.TeacherIdNavigation.Email,
 					item.TeacherIdNavigation.FirstName,
@@ -49,7 +49,7 @@ namespace StudioResourceManagerNS.Api.Services
 			{
 				var teacherSkillIdModel = new ApiTeacherSkillServerResponseModel();
 				teacherSkillIdModel.SetProperties(
-					item.Id,
+					item.TeacherSkillIdNavigation.Id,
 					item.TeacherSkillIdNavigation.Name);
 
 				model.SetTeacherSkillIdNavigation(teacherSkillIdModel);
@@ -74,5 +74,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6c4a5dae6c93949578e24470b9e9f7e4</Hash>
+    <Hash>4b79fc0be6e093af36273f4015f83705</Hash>
 </Codenesium>*/

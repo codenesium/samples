@@ -25,7 +25,24 @@ namespace AdventureWorksNS.Api.Client
 			this.ToCurrencyCode = toCurrencyCode;
 
 			this.FromCurrencyCodeEntity = nameof(ApiResponse.Currencies);
+
 			this.ToCurrencyCodeEntity = nameof(ApiResponse.Currencies);
+		}
+
+		[JsonProperty]
+		public ApiCurrencyClientResponseModel FromCurrencyCodeNavigation { get; private set; }
+
+		public void SetFromCurrencyCodeNavigation(ApiCurrencyClientResponseModel value)
+		{
+			this.FromCurrencyCodeNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiCurrencyClientResponseModel ToCurrencyCodeNavigation { get; private set; }
+
+		public void SetToCurrencyCodeNavigation(ApiCurrencyClientResponseModel value)
+		{
+			this.ToCurrencyCodeNavigation = value;
 		}
 
 		[JsonProperty]
@@ -58,5 +75,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>289e5a38ba5e98b77d664ca33cd9d5ee</Hash>
+    <Hash>d87ec892c4f79a69ebb5f6f7a1c2f401</Hash>
 </Codenesium>*/

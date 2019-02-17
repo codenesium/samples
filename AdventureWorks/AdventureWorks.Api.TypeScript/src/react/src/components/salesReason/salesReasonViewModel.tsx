@@ -22,9 +22,13 @@ export default class SalesReasonViewModel {
     this.reasonType = reasonType;
     this.salesReasonID = salesReasonID;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>197d2178d7bd9b2f00277ad43c98c62e</Hash>
+    <Hash>a1a03d7be759af319cf95f582f4f6851</Hash>
 </Codenesium>*/

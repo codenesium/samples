@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import VendorMapper from './vendorMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import VendorViewModel from './vendorViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class VendorSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.VendorClientResponseModel>(),
-    filteredRecords: new Array<Api.VendorClientResponseModel>(),
+    records: new Array<VendorViewModel>(),
+    filteredRecords: new Array<VendorViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,29 @@ export default class VendorSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.VendorClientResponseModel) {
-    this.props.history.push('/vendors/edit/' + row.businessEntityID);
+    this.props.history.push(
+      ClientRoutes.Vendors + '/edit/' + row.businessEntityID
+    );
   }
 
   handleDetailClick(e: any, row: Api.VendorClientResponseModel) {
-    this.props.history.push('/vendors/' + row.businessEntityID);
+    this.props.history.push(ClientRoutes.Vendors + '/' + row.businessEntityID);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/vendors/create');
+    this.props.history.push(ClientRoutes.Vendors + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.VendorClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'vendors/' + row.businessEntityID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint + ApiRoutes.Vendors + '/' + row.businessEntityID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +100,8 @@ export default class VendorSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'vendors' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.Vendors + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +150,9 @@ export default class VendorSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -308,17 +318,13 @@ export default class VendorSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>383d28c5d874b7c8b3a151344009c93c</Hash>
+    <Hash>121046a1fde4525bce910f480b56871e</Hash>
 </Codenesium>*/

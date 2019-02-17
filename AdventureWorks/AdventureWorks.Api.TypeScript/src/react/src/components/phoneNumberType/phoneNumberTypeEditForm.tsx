@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import PhoneNumberTypeViewModel from './phoneNumberTypeViewModel';
 import PhoneNumberTypeMapper from './phoneNumberTypeMapper';
 
@@ -147,7 +149,7 @@ const PhoneNumberTypeEditDisplay = (
   );
 };
 
-const PhoneNumberTypeUpdate = withFormik<Props, PhoneNumberTypeViewModel>({
+const PhoneNumberTypeEdit = withFormik<Props, PhoneNumberTypeViewModel>({
   mapPropsToValues: props => {
     let response = new PhoneNumberTypeViewModel();
     response.setProperties(
@@ -181,7 +183,10 @@ const PhoneNumberTypeUpdate = withFormik<Props, PhoneNumberTypeViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'phonenumbertypes/' + values.phoneNumberTypeID,
+        Constants.ApiEndpoint +
+          ApiRoutes.PhoneNumberTypes +
+          '/' +
+          values.phoneNumberTypeID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -248,8 +253,9 @@ export default class PhoneNumberTypeEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'phonenumbertypes/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.PhoneNumberTypes +
+          '/' +
           this.props.match.params.phoneNumberTypeID,
         {
           headers: {
@@ -287,20 +293,18 @@ export default class PhoneNumberTypeEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <PhoneNumberTypeUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <PhoneNumberTypeEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>08ec334e000015d7f9c85381cb8be6ce</Hash>
+    <Hash>5ba4dc5dadbd9e6a3fc40856ea88abd2</Hash>
 </Codenesium>*/

@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALSalesTaxRateMapper
 	{
-		SalesTaxRate MapModelToBO(
+		SalesTaxRate MapModelToEntity(
 			int salesTaxRateID,
 			ApiSalesTaxRateServerRequestModel model);
 
-		ApiSalesTaxRateServerResponseModel MapBOToModel(
+		ApiSalesTaxRateServerResponseModel MapEntityToModel(
 			SalesTaxRate item);
 
-		List<ApiSalesTaxRateServerResponseModel> MapBOToModel(
+		List<ApiSalesTaxRateServerResponseModel> MapEntityToModel(
 			List<SalesTaxRate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0990ff15f37590a96d85e11dd832e35d</Hash>
+    <Hash>f6d09dfe22b20ec2ba1a013e8d8a7757</Hash>
 </Codenesium>*/

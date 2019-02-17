@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiPurchaseOrderHeaderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PurchaseOrderHeaderRepository.All(limit, offset, query);
+			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.All(limit, offset, query);
 
-			return this.DalPurchaseOrderHeaderMapper.MapBOToModel(records);
+			return this.DalPurchaseOrderHeaderMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPurchaseOrderHeaderServerResponseModel> Get(int purchaseOrderID)
 		{
-			var record = await this.PurchaseOrderHeaderRepository.Get(purchaseOrderID);
+			PurchaseOrderHeader record = await this.PurchaseOrderHeaderRepository.Get(purchaseOrderID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalPurchaseOrderHeaderMapper.MapBOToModel(record);
+				return this.DalPurchaseOrderHeaderMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalPurchaseOrderHeaderMapper.MapModelToBO(default(int), model);
-				var record = await this.PurchaseOrderHeaderRepository.Create(bo);
+				PurchaseOrderHeader record = this.DalPurchaseOrderHeaderMapper.MapModelToEntity(default(int), model);
+				record = await this.PurchaseOrderHeaderRepository.Create(record);
 
-				response.SetRecord(this.DalPurchaseOrderHeaderMapper.MapBOToModel(record));
+				response.SetRecord(this.DalPurchaseOrderHeaderMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PurchaseOrderHeaderCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalPurchaseOrderHeaderMapper.MapModelToBO(purchaseOrderID, model);
-				await this.PurchaseOrderHeaderRepository.Update(bo);
+				PurchaseOrderHeader record = this.DalPurchaseOrderHeaderMapper.MapModelToEntity(purchaseOrderID, model);
+				await this.PurchaseOrderHeaderRepository.Update(record);
 
-				var record = await this.PurchaseOrderHeaderRepository.Get(purchaseOrderID);
+				record = await this.PurchaseOrderHeaderRepository.Get(purchaseOrderID);
 
-				var apiModel = this.DalPurchaseOrderHeaderMapper.MapBOToModel(record);
+				ApiPurchaseOrderHeaderServerResponseModel apiModel = this.DalPurchaseOrderHeaderMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PurchaseOrderHeaderUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPurchaseOrderHeaderServerResponseModel>.UpdateResponse(apiModel);
@@ -117,18 +117,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByEmployeeID(employeeID, limit, offset);
 
-			return this.DalPurchaseOrderHeaderMapper.MapBOToModel(records);
+			return this.DalPurchaseOrderHeaderMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiPurchaseOrderHeaderServerResponseModel>> ByVendorID(int vendorID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByVendorID(vendorID, limit, offset);
 
-			return this.DalPurchaseOrderHeaderMapper.MapBOToModel(records);
+			return this.DalPurchaseOrderHeaderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>816d037fa249b7d7b1f52af1c2b2cd75</Hash>
+    <Hash>d357ccf71382a9f3c57296be34b74c71</Hash>
 </Codenesium>*/

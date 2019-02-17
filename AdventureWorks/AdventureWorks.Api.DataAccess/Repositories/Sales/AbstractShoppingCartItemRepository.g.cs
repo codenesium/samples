@@ -108,7 +108,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ShoppingCartItemID;
 			}
 
-			return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
+			return await this.Context.Set<ShoppingCartItem>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
 		}
 
 		private async Task<ShoppingCartItem> GetById(int shoppingCartItemID)
@@ -121,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4c81689d4f1ec5845e587e8424bb1b7f</Hash>
+    <Hash>d766276214a67829e12270bd49981167</Hash>
 </Codenesium>*/

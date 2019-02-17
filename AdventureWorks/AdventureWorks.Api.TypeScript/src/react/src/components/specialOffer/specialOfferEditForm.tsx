@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import SpecialOfferViewModel from './specialOfferViewModel';
 import SpecialOfferMapper from './specialOfferMapper';
 
@@ -331,7 +333,7 @@ const SpecialOfferEditDisplay = (props: FormikProps<SpecialOfferViewModel>) => {
   );
 };
 
-const SpecialOfferUpdate = withFormik<Props, SpecialOfferViewModel>({
+const SpecialOfferEdit = withFormik<Props, SpecialOfferViewModel>({
   mapPropsToValues: props => {
     let response = new SpecialOfferViewModel();
     response.setProperties(
@@ -390,7 +392,10 @@ const SpecialOfferUpdate = withFormik<Props, SpecialOfferViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'specialoffers/' + values.specialOfferID,
+        Constants.ApiEndpoint +
+          ApiRoutes.SpecialOffers +
+          '/' +
+          values.specialOfferID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -457,8 +462,9 @@ export default class SpecialOfferEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'specialoffers/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.SpecialOffers +
+          '/' +
           this.props.match.params.specialOfferID,
         {
           headers: {
@@ -496,20 +502,18 @@ export default class SpecialOfferEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <SpecialOfferUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <SpecialOfferEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ea0fca29aee015f846df193eb71fd328</Hash>
+    <Hash>c0305cf918f4d21032ea816b00473eab</Hash>
 </Codenesium>*/

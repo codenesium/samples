@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALTransactionHistoryArchiveMapper
 	{
-		public virtual TransactionHistoryArchive MapModelToBO(
+		public virtual TransactionHistoryArchive MapModelToEntity(
 			int transactionID,
 			ApiTransactionHistoryArchiveServerRequestModel model
 			)
@@ -26,24 +26,32 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiTransactionHistoryArchiveServerResponseModel MapBOToModel(
+		public virtual ApiTransactionHistoryArchiveServerResponseModel MapEntityToModel(
 			TransactionHistoryArchive item)
 		{
 			var model = new ApiTransactionHistoryArchiveServerResponseModel();
 
-			model.SetProperties(item.TransactionID, item.ActualCost, item.ModifiedDate, item.ProductID, item.Quantity, item.ReferenceOrderID, item.ReferenceOrderLineID, item.TransactionDate, item.TransactionType);
+			model.SetProperties(item.TransactionID,
+			                    item.ActualCost,
+			                    item.ModifiedDate,
+			                    item.ProductID,
+			                    item.Quantity,
+			                    item.ReferenceOrderID,
+			                    item.ReferenceOrderLineID,
+			                    item.TransactionDate,
+			                    item.TransactionType);
 
 			return model;
 		}
 
-		public virtual List<ApiTransactionHistoryArchiveServerResponseModel> MapBOToModel(
+		public virtual List<ApiTransactionHistoryArchiveServerResponseModel> MapEntityToModel(
 			List<TransactionHistoryArchive> items)
 		{
 			List<ApiTransactionHistoryArchiveServerResponseModel> response = new List<ApiTransactionHistoryArchiveServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -52,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85b1e064c71d98443f746c88138c35d2</Hash>
+    <Hash>2b0566515e7396967d533ab18c710111</Hash>
 </Codenesium>*/

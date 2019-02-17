@@ -38,9 +38,13 @@ export default class StateProvinceViewModel {
     this.stateProvinceID = stateProvinceID;
     this.territoryID = territoryID;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>41d9e20059dab71e1499b6c13f58572c</Hash>
+    <Hash>89637a5ff5a77b5d10b4cc16ffdd3ca9</Hash>
 </Codenesium>*/

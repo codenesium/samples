@@ -2497,9 +2497,11 @@ currencyRateID:number;
 endOfDayRate:number;
 fromCurrencyCode:string;
 fromCurrencyCodeEntity : string;
+fromCurrencyCodeNavigation? : CurrencyClientResponseModel;
 modifiedDate:any;
 toCurrencyCode:string;
 toCurrencyCodeEntity : string;
+toCurrencyCodeNavigation? : CurrencyClientResponseModel;
 
 	
 				constructor() {
@@ -2509,9 +2511,11 @@ this.currencyRateID = 0;
 this.endOfDayRate = 0;
 this.fromCurrencyCode = '';
 this.fromCurrencyCodeEntity = '';
+this.fromCurrencyCodeNavigation = undefined;
 this.modifiedDate = undefined;
 this.toCurrencyCode = '';
 this.toCurrencyCodeEntity = '';
+this.toCurrencyCodeNavigation = undefined;
 
 				}
 
@@ -2535,9 +2539,11 @@ currencyRateID:number;
 endOfDayRate:number;
 fromCurrencyCode:string;
 fromCurrencyCodeEntity : string;
+fromCurrencyCodeNavigation? : CurrencyClientResponseModel;
 modifiedDate:any;
 toCurrencyCode:string;
 toCurrencyCodeEntity : string;
+toCurrencyCodeNavigation? : CurrencyClientResponseModel;
 
 	
 				constructor() {
@@ -2547,9 +2553,11 @@ this.currencyRateID = 0;
 this.endOfDayRate = 0;
 this.fromCurrencyCode = '';
 this.fromCurrencyCodeEntity = '';
+this.fromCurrencyCodeNavigation = undefined;
 this.modifiedDate = undefined;
 this.toCurrencyCode = '';
 this.toCurrencyCodeEntity = '';
+this.toCurrencyCodeNavigation = undefined;
 
 				}
 
@@ -2573,8 +2581,10 @@ personID:any;
 rowguid:any;
 storeID:any;
 storeIDEntity : string;
+storeIDNavigation? : StoreClientResponseModel;
 territoryID:any;
 territoryIDEntity : string;
+territoryIDNavigation? : SalesTerritoryClientResponseModel;
 
 	
 				constructor() {
@@ -2585,8 +2595,10 @@ this.personID = undefined;
 this.rowguid = undefined;
 this.storeID = undefined;
 this.storeIDEntity = '';
+this.storeIDNavigation = undefined;
 this.territoryID = undefined;
 this.territoryIDEntity = '';
+this.territoryIDNavigation = undefined;
 
 				}
 
@@ -2611,8 +2623,10 @@ personID:any;
 rowguid:any;
 storeID:any;
 storeIDEntity : string;
+storeIDNavigation? : StoreClientResponseModel;
 territoryID:any;
 territoryIDEntity : string;
+territoryIDNavigation? : SalesTerritoryClientResponseModel;
 
 	
 				constructor() {
@@ -2623,8 +2637,10 @@ this.personID = undefined;
 this.rowguid = undefined;
 this.storeID = undefined;
 this.storeIDEntity = '';
+this.storeIDNavigation = undefined;
 this.territoryID = undefined;
 this.territoryIDEntity = '';
+this.territoryIDNavigation = undefined;
 
 				}
 
@@ -2647,10 +2663,13 @@ comment:string;
 creditCardApprovalCode:string;
 creditCardID:any;
 creditCardIDEntity : string;
+creditCardIDNavigation? : CreditCardClientResponseModel;
 currencyRateID:any;
 currencyRateIDEntity : string;
+currencyRateIDNavigation? : CurrencyRateClientResponseModel;
 customerID:number;
 customerIDEntity : string;
+customerIDNavigation? : CustomerClientResponseModel;
 dueDate:any;
 freight:number;
 modifiedDate:any;
@@ -2663,6 +2682,7 @@ salesOrderID:number;
 salesOrderNumber:string;
 salesPersonID:any;
 salesPersonIDEntity : string;
+salesPersonIDNavigation? : SalesPersonClientResponseModel;
 shipDate:any;
 shipMethodID:number;
 shipToAddressID:number;
@@ -2671,6 +2691,7 @@ subTotal:number;
 taxAmt:number;
 territoryID:any;
 territoryIDEntity : string;
+territoryIDNavigation? : SalesTerritoryClientResponseModel;
 totalDue:number;
 
 	
@@ -2681,10 +2702,13 @@ this.comment = '';
 this.creditCardApprovalCode = '';
 this.creditCardID = undefined;
 this.creditCardIDEntity = '';
+this.creditCardIDNavigation = undefined;
 this.currencyRateID = undefined;
 this.currencyRateIDEntity = '';
+this.currencyRateIDNavigation = undefined;
 this.customerID = 0;
 this.customerIDEntity = '';
+this.customerIDNavigation = undefined;
 this.dueDate = undefined;
 this.freight = 0;
 this.modifiedDate = undefined;
@@ -2697,6 +2721,7 @@ this.salesOrderID = 0;
 this.salesOrderNumber = '';
 this.salesPersonID = undefined;
 this.salesPersonIDEntity = '';
+this.salesPersonIDNavigation = undefined;
 this.shipDate = undefined;
 this.shipMethodID = 0;
 this.shipToAddressID = 0;
@@ -2705,6 +2730,7 @@ this.subTotal = 0;
 this.taxAmt = 0;
 this.territoryID = undefined;
 this.territoryIDEntity = '';
+this.territoryIDNavigation = undefined;
 this.totalDue = 0;
 
 				}
@@ -2748,10 +2774,13 @@ comment:string;
 creditCardApprovalCode:string;
 creditCardID:any;
 creditCardIDEntity : string;
+creditCardIDNavigation? : CreditCardClientResponseModel;
 currencyRateID:any;
 currencyRateIDEntity : string;
+currencyRateIDNavigation? : CurrencyRateClientResponseModel;
 customerID:number;
 customerIDEntity : string;
+customerIDNavigation? : CustomerClientResponseModel;
 dueDate:any;
 freight:number;
 modifiedDate:any;
@@ -2764,6 +2793,7 @@ salesOrderID:number;
 salesOrderNumber:string;
 salesPersonID:any;
 salesPersonIDEntity : string;
+salesPersonIDNavigation? : SalesPersonClientResponseModel;
 shipDate:any;
 shipMethodID:number;
 shipToAddressID:number;
@@ -2772,6 +2802,7 @@ subTotal:number;
 taxAmt:number;
 territoryID:any;
 territoryIDEntity : string;
+territoryIDNavigation? : SalesTerritoryClientResponseModel;
 totalDue:number;
 
 	
@@ -2782,10 +2813,13 @@ this.comment = '';
 this.creditCardApprovalCode = '';
 this.creditCardID = undefined;
 this.creditCardIDEntity = '';
+this.creditCardIDNavigation = undefined;
 this.currencyRateID = undefined;
 this.currencyRateIDEntity = '';
+this.currencyRateIDNavigation = undefined;
 this.customerID = 0;
 this.customerIDEntity = '';
+this.customerIDNavigation = undefined;
 this.dueDate = undefined;
 this.freight = 0;
 this.modifiedDate = undefined;
@@ -2798,6 +2832,7 @@ this.salesOrderID = 0;
 this.salesOrderNumber = '';
 this.salesPersonID = undefined;
 this.salesPersonIDEntity = '';
+this.salesPersonIDNavigation = undefined;
 this.shipDate = undefined;
 this.shipMethodID = 0;
 this.shipToAddressID = 0;
@@ -2806,6 +2841,7 @@ this.subTotal = 0;
 this.taxAmt = 0;
 this.territoryID = undefined;
 this.territoryIDEntity = '';
+this.territoryIDNavigation = undefined;
 this.totalDue = 0;
 
 				}
@@ -2852,6 +2888,7 @@ salesQuota:any;
 salesYTD:number;
 territoryID:any;
 territoryIDEntity : string;
+territoryIDNavigation? : SalesTerritoryClientResponseModel;
 
 	
 				constructor() {
@@ -2865,6 +2902,7 @@ this.salesQuota = undefined;
 this.salesYTD = 0;
 this.territoryID = undefined;
 this.territoryIDEntity = '';
+this.territoryIDNavigation = undefined;
 
 				}
 
@@ -2894,6 +2932,7 @@ salesQuota:any;
 salesYTD:number;
 territoryID:any;
 territoryIDEntity : string;
+territoryIDNavigation? : SalesTerritoryClientResponseModel;
 
 	
 				constructor() {
@@ -2907,6 +2946,7 @@ this.salesQuota = undefined;
 this.salesYTD = 0;
 this.territoryID = undefined;
 this.territoryIDEntity = '';
+this.territoryIDNavigation = undefined;
 
 				}
 
@@ -3273,6 +3313,7 @@ name:string;
 rowguid:any;
 salesPersonID:any;
 salesPersonIDEntity : string;
+salesPersonIDNavigation? : SalesPersonClientResponseModel;
 
 	
 				constructor() {
@@ -3283,6 +3324,7 @@ this.name = '';
 this.rowguid = undefined;
 this.salesPersonID = undefined;
 this.salesPersonIDEntity = '';
+this.salesPersonIDNavigation = undefined;
 
 				}
 
@@ -3306,6 +3348,7 @@ name:string;
 rowguid:any;
 salesPersonID:any;
 salesPersonIDEntity : string;
+salesPersonIDNavigation? : SalesPersonClientResponseModel;
 
 	
 				constructor() {
@@ -3316,6 +3359,7 @@ this.name = '';
 this.rowguid = undefined;
 this.salesPersonID = undefined;
 this.salesPersonIDEntity = '';
+this.salesPersonIDNavigation = undefined;
 
 				}
 
@@ -3332,5 +3376,5 @@ this.salesPersonID = salesPersonID;
 			}
 
 /*<Codenesium>
-    <Hash>1b8c738b9bb5cf3d8f7420f20ab393d8</Hash>
+    <Hash>8d645f8e0bf23ba5b62d4f98a8f86db6</Hash>
 </Codenesium>*/

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import WorkOrderMapper from './workOrderMapper';
 import WorkOrderViewModel from './workOrderViewModel';
 
@@ -368,7 +370,7 @@ const WorkOrderCreate = withFormik<Props, WorkOrderViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'workorders',
+        Constants.ApiEndpoint + ApiRoutes.WorkOrders,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -417,20 +419,18 @@ export default class WorkOrderCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <WorkOrderCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>e7973ab16056ebd56f48a5c91acbf509</Hash>
+    <Hash>d81a4768b32ee25a3f5ee14ce560e30b</Hash>
 </Codenesium>*/

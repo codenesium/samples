@@ -1,103 +1,104 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import DocumentMapper from './documentMapper';
 import DocumentViewModel from './documentViewModel';
 
 interface Props {
+  history: any;
   model?: DocumentViewModel;
 }
 
 const DocumentDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.Documents + '/edit/' + model.model!.rowguid
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="changeNumber" className={'col-sm-2 col-form-label'}>
           ChangeNumber
         </label>
         <div className="col-sm-12">{String(model.model!.changeNumber)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="document1" className={'col-sm-2 col-form-label'}>
           Document
         </label>
         <div className="col-sm-12">{String(model.model!.document1)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="documentLevel" className={'col-sm-2 col-form-label'}>
           DocumentLevel
         </label>
         <div className="col-sm-12">{String(model.model!.documentLevel)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="documentSummary" className={'col-sm-2 col-form-label'}>
           DocumentSummary
         </label>
         <div className="col-sm-12">{String(model.model!.documentSummary)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="fileExtension" className={'col-sm-2 col-form-label'}>
           FileExtension
         </label>
         <div className="col-sm-12">{String(model.model!.fileExtension)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="fileName" className={'col-sm-2 col-form-label'}>
           FileName
         </label>
         <div className="col-sm-12">{String(model.model!.fileName)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="folderFlag" className={'col-sm-2 col-form-label'}>
           FolderFlag
         </label>
         <div className="col-sm-12">{String(model.model!.folderFlag)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="owner" className={'col-sm-2 col-form-label'}>
           Owner
         </label>
         <div className="col-sm-12">{String(model.model!.owner)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="revision" className={'col-sm-2 col-form-label'}>
           Revision
         </label>
         <div className="col-sm-12">{String(model.model!.revision)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
           Rowguid
         </label>
         <div className="col-sm-12">{String(model.model!.rowguid)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="status" className={'col-sm-2 col-form-label'}>
           Status
         </label>
         <div className="col-sm-12">{String(model.model!.status)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="title" className={'col-sm-2 col-form-label'}>
           Title
@@ -118,6 +119,7 @@ interface IMatch {
 
 interface DocumentDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface DocumentDetailComponentState {
@@ -144,11 +146,17 @@ export default class DocumentDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(Constants.ApiUrl + 'documents/' + this.props.match.params.rowguid, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Documents +
+          '/' +
+          this.props.match.params.rowguid,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Api.DocumentClientResponseModel;
@@ -179,20 +187,23 @@ export default class DocumentDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <DocumentDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <DocumentDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>08651dbd895bbdd5ea93a364c406f2f4</Hash>
+    <Hash>179f0d91cd29ba50a83725960130337a</Hash>
 </Codenesium>*/

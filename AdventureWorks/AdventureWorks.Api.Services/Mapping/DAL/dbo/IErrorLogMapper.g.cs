@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALErrorLogMapper
 	{
-		ErrorLog MapModelToBO(
+		ErrorLog MapModelToEntity(
 			int errorLogID,
 			ApiErrorLogServerRequestModel model);
 
-		ApiErrorLogServerResponseModel MapBOToModel(
+		ApiErrorLogServerResponseModel MapEntityToModel(
 			ErrorLog item);
 
-		List<ApiErrorLogServerResponseModel> MapBOToModel(
+		List<ApiErrorLogServerResponseModel> MapEntityToModel(
 			List<ErrorLog> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>46b9081d0d8db17864892c0c63490986</Hash>
+    <Hash>ec7bfd73689c29faddda2f5f23fda931</Hash>
 </Codenesium>*/

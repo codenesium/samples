@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALPersonMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALPersonMapper();
 			ApiPersonServerRequestModel model = new ApiPersonServerRequestModel();
 			model.SetProperties("A", "A", 1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
-			Person response = mapper.MapModelToBO(1, model);
+			Person response = mapper.MapModelToEntity(1, model);
 
 			response.AdditionalContactInfo.Should().Be("A");
 			response.Demographic.Should().Be("A");
@@ -35,12 +35,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALPersonMapper();
 			Person item = new Person();
 			item.SetProperties(1, "A", "A", 1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
-			ApiPersonServerResponseModel response = mapper.MapBOToModel(item);
+			ApiPersonServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.AdditionalContactInfo.Should().Be("A");
 			response.BusinessEntityID.Should().Be(1);
@@ -58,12 +58,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALPersonMapper();
 			Person item = new Person();
 			item.SetProperties(1, "A", "A", 1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
-			List<ApiPersonServerResponseModel> response = mapper.MapBOToModel(new List<Person>() { { item} });
+			List<ApiPersonServerResponseModel> response = mapper.MapEntityToModel(new List<Person>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f235f760b2e6b0bda8d0b7cf88ad52fa</Hash>
+    <Hash>2a6f8f1ba861fef97b4acd4505809923</Hash>
 </Codenesium>*/

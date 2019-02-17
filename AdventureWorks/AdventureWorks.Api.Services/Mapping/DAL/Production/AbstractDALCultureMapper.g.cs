@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALCultureMapper
 	{
-		public virtual Culture MapModelToBO(
+		public virtual Culture MapModelToEntity(
 			string cultureID,
 			ApiCultureServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiCultureServerResponseModel MapBOToModel(
+		public virtual ApiCultureServerResponseModel MapEntityToModel(
 			Culture item)
 		{
 			var model = new ApiCultureServerResponseModel();
 
-			model.SetProperties(item.CultureID, item.ModifiedDate, item.Name);
+			model.SetProperties(item.CultureID,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCultureServerResponseModel> MapBOToModel(
+		public virtual List<ApiCultureServerResponseModel> MapEntityToModel(
 			List<Culture> items)
 		{
 			List<ApiCultureServerResponseModel> response = new List<ApiCultureServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc1e2db5d8792a142c55e6c63cce7c93</Hash>
+    <Hash>67152a608e59c0ac2d737d80a13a2537</Hash>
 </Codenesium>*/

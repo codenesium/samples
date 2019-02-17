@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import CustomerViewModel from './customerViewModel';
 import CustomerMapper from './customerMapper';
 
@@ -251,7 +253,7 @@ const CustomerEditDisplay = (props: FormikProps<CustomerViewModel>) => {
   );
 };
 
-const CustomerUpdate = withFormik<Props, CustomerViewModel>({
+const CustomerEdit = withFormik<Props, CustomerViewModel>({
   mapPropsToValues: props => {
     let response = new CustomerViewModel();
     response.setProperties(
@@ -292,7 +294,7 @@ const CustomerUpdate = withFormik<Props, CustomerViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'customers/' + values.customerID,
+        Constants.ApiEndpoint + ApiRoutes.Customers + '/' + values.customerID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -359,7 +361,10 @@ export default class CustomerEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl + 'customers/' + this.props.match.params.customerID,
+        Constants.ApiEndpoint +
+          ApiRoutes.Customers +
+          '/' +
+          this.props.match.params.customerID,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -396,20 +401,18 @@ export default class CustomerEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <CustomerUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <CustomerEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>41dfd6fc211e86e0c30224db91dbf7c2</Hash>
+    <Hash>d203caa2246ad2281f11bbc661cc7b80</Hash>
 </Codenesium>*/

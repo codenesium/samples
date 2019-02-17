@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -238,5 +238,5 @@ export default class SpaceFeatureEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ba37f53aa191b4ce109d1b99c7af0857</Hash>
+    <Hash>6627b8931d2a368ef266a74aef37961d</Hash>
 </Codenesium>*/

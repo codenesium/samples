@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiDepartmentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.DepartmentRepository.All(limit, offset, query);
+			List<Department> records = await this.DepartmentRepository.All(limit, offset, query);
 
-			return this.DalDepartmentMapper.MapBOToModel(records);
+			return this.DalDepartmentMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiDepartmentServerResponseModel> Get(short departmentID)
 		{
-			var record = await this.DepartmentRepository.Get(departmentID);
+			Department record = await this.DepartmentRepository.Get(departmentID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalDepartmentMapper.MapBOToModel(record);
+				return this.DalDepartmentMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalDepartmentMapper.MapModelToBO(default(short), model);
-				var record = await this.DepartmentRepository.Create(bo);
+				Department record = this.DalDepartmentMapper.MapModelToEntity(default(short), model);
+				record = await this.DepartmentRepository.Create(record);
 
-				response.SetRecord(this.DalDepartmentMapper.MapBOToModel(record));
+				response.SetRecord(this.DalDepartmentMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new DepartmentCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalDepartmentMapper.MapModelToBO(departmentID, model);
-				await this.DepartmentRepository.Update(bo);
+				Department record = this.DalDepartmentMapper.MapModelToEntity(departmentID, model);
+				await this.DepartmentRepository.Update(record);
 
-				var record = await this.DepartmentRepository.Get(departmentID);
+				record = await this.DepartmentRepository.Get(departmentID);
 
-				var apiModel = this.DalDepartmentMapper.MapBOToModel(record);
+				ApiDepartmentServerResponseModel apiModel = this.DalDepartmentMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new DepartmentUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiDepartmentServerResponseModel>.UpdateResponse(apiModel);
@@ -123,12 +123,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalDepartmentMapper.MapBOToModel(record);
+				return this.DalDepartmentMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c67623177f322e07ba9f5acd905473c2</Hash>
+    <Hash>17bfb0cdf913423ee5ea6400e4aea0ac</Hash>
 </Codenesium>*/

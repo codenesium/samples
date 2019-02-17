@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import CreditCardViewModel from './creditCardViewModel';
 import CreditCardMapper from './creditCardMapper';
 
@@ -223,7 +225,7 @@ const CreditCardEditDisplay = (props: FormikProps<CreditCardViewModel>) => {
   );
 };
 
-const CreditCardUpdate = withFormik<Props, CreditCardViewModel>({
+const CreditCardEdit = withFormik<Props, CreditCardViewModel>({
   mapPropsToValues: props => {
     let response = new CreditCardViewModel();
     response.setProperties(
@@ -269,7 +271,10 @@ const CreditCardUpdate = withFormik<Props, CreditCardViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'creditcards/' + values.creditCardID,
+        Constants.ApiEndpoint +
+          ApiRoutes.CreditCards +
+          '/' +
+          values.creditCardID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -336,8 +341,9 @@ export default class CreditCardEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'creditcards/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.CreditCards +
+          '/' +
           this.props.match.params.creditCardID,
         {
           headers: {
@@ -375,20 +381,18 @@ export default class CreditCardEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <CreditCardUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <CreditCardEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>22ffca6ceff576a83810903ccfd273b1</Hash>
+    <Hash>9efa2baa2eba9498463855e667fdf0c0</Hash>
 </Codenesium>*/

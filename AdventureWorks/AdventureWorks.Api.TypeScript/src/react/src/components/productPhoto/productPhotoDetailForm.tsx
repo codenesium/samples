@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ProductPhotoMapper from './productPhotoMapper';
 import ProductPhotoViewModel from './productPhotoViewModel';
 
 interface Props {
+  history: any;
   model?: ProductPhotoViewModel;
 }
 
 const ProductPhotoDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.ProductPhotoes + '/edit/' + model.model!.productPhotoID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="largePhoto" className={'col-sm-2 col-form-label'}>
           LargePhoto
         </label>
         <div className="col-sm-12">{String(model.model!.largePhoto)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="largePhotoFileName"
@@ -32,28 +44,24 @@ const ProductPhotoDetailDisplay = (model: Props) => {
           {String(model.model!.largePhotoFileName)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="productPhotoID" className={'col-sm-2 col-form-label'}>
           ProductPhotoID
         </label>
         <div className="col-sm-12">{String(model.model!.productPhotoID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="thumbNailPhoto" className={'col-sm-2 col-form-label'}>
           ThumbNailPhoto
         </label>
         <div className="col-sm-12">{String(model.model!.thumbNailPhoto)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="thumbnailPhotoFileName"
@@ -79,6 +87,7 @@ interface IMatch {
 
 interface ProductPhotoDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface ProductPhotoDetailComponentState {
@@ -106,8 +115,9 @@ export default class ProductPhotoDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'productphotoes/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductPhotoes +
+          '/' +
           this.props.match.params.productPhotoID,
         {
           headers: {
@@ -145,20 +155,23 @@ export default class ProductPhotoDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <ProductPhotoDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <ProductPhotoDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>0e784b39d906c0814fdded4aa170f541</Hash>
+    <Hash>d8ae811f178254c1c7dc9dc491a3a5b5</Hash>
 </Codenesium>*/

@@ -42,9 +42,13 @@ export default class TransactionHistoryArchiveViewModel {
     this.transactionID = transactionID;
     this.transactionType = transactionType;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>4ddd89bed0b4b58fdd86c9a48f4884d9</Hash>
+    <Hash>958cabaad3ed542bd17fcd40e044ec4b</Hash>
 </Codenesium>*/

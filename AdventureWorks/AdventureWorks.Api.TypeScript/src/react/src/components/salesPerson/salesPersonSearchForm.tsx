@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import SalesPersonMapper from './salesPersonMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import SalesPersonViewModel from './salesPersonViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class SalesPersonSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.SalesPersonClientResponseModel>(),
-    filteredRecords: new Array<Api.SalesPersonClientResponseModel>(),
+    records: new Array<SalesPersonViewModel>(),
+    filteredRecords: new Array<SalesPersonViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class SalesPersonSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.SalesPersonClientResponseModel) {
-    this.props.history.push('/salespersons/edit/' + row.businessEntityID);
+    this.props.history.push(
+      ClientRoutes.SalesPersons + '/edit/' + row.businessEntityID
+    );
   }
 
   handleDetailClick(e: any, row: Api.SalesPersonClientResponseModel) {
-    this.props.history.push('/salespersons/' + row.businessEntityID);
+    this.props.history.push(
+      ClientRoutes.SalesPersons + '/' + row.businessEntityID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/salespersons/create');
+    this.props.history.push(ClientRoutes.SalesPersons + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.SalesPersonClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'salespersons/' + row.businessEntityID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesPersons +
+          '/' +
+          row.businessEntityID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class SalesPersonSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'salespersons' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.SalesPersons + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +155,9 @@ export default class SalesPersonSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -258,7 +273,23 @@ export default class SalesPersonSearchComponent extends React.Component<
                     Header: 'TerritoryID',
                     accessor: 'territoryID',
                     Cell: props => {
-                      return <span>{String(props.original.territoryID)}</span>;
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.SalesTerritories +
+                                '/' +
+                                props.original.territoryID
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.territoryIDNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
                     },
                   },
                   {
@@ -309,17 +340,13 @@ export default class SalesPersonSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>fa3e686964d9c4ae2e3cf834f50eb0c7</Hash>
+    <Hash>ce7b98ec0d91ee2af3ed8ca473c3654e</Hash>
 </Codenesium>*/

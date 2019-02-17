@@ -93,13 +93,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Shift_Name.
 		public async virtual Task<Shift> ByName(string name)
 		{
-			return await this.Context.Set<Shift>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Shift>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_Shift_StartTime_EndTime.
 		public async virtual Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
 		{
-			return await this.Context.Set<Shift>().FirstOrDefaultAsync(x => x.StartTime == startTime && x.EndTime == endTime);
+			return await this.Context.Set<Shift>()
+
+			       .FirstOrDefaultAsync(x => x.StartTime == startTime && x.EndTime == endTime);
 		}
 
 		protected async Task<List<Shift>> Where(
@@ -113,7 +117,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ShiftID;
 			}
 
-			return await this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Shift>();
+			return await this.Context.Set<Shift>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Shift>();
 		}
 
 		private async Task<Shift> GetById(int shiftID)
@@ -126,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3017b1cc07bd67d0694c316937b5e9eb</Hash>
+    <Hash>2a25929d0a66df03d0d8e9cd5f32a68c</Hash>
 </Codenesium>*/

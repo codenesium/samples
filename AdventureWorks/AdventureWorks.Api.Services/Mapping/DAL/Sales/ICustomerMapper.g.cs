@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALCustomerMapper
 	{
-		Customer MapModelToBO(
+		Customer MapModelToEntity(
 			int customerID,
 			ApiCustomerServerRequestModel model);
 
-		ApiCustomerServerResponseModel MapBOToModel(
+		ApiCustomerServerResponseModel MapEntityToModel(
 			Customer item);
 
-		List<ApiCustomerServerResponseModel> MapBOToModel(
+		List<ApiCustomerServerResponseModel> MapEntityToModel(
 			List<Customer> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>78ad612567c86a6b847350cea3fe2eb5</Hash>
+    <Hash>ad143cb22c03fa62bedaf942ceb86444</Hash>
 </Codenesium>*/

@@ -93,7 +93,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Location_Name.
 		public async virtual Task<Location> ByName(string name)
 		{
-			return await this.Context.Set<Location>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Location>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<Location>> Where(
@@ -107,7 +109,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.LocationID;
 			}
 
-			return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
+			return await this.Context.Set<Location>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
 		}
 
 		private async Task<Location> GetById(short locationID)
@@ -120,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9cf360dee758de1622cf96de20aea57e</Hash>
+    <Hash>e951bee2a56063f0c1267b3ff1641a85</Hash>
 </Codenesium>*/

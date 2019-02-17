@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALAddressMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALAddressMapper();
 			ApiAddressServerRequestModel model = new ApiAddressServerRequestModel();
 			model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			Address response = mapper.MapModelToBO(1, model);
+			Address response = mapper.MapModelToEntity(1, model);
 
 			response.AddressLine1.Should().Be("A");
 			response.AddressLine2.Should().Be("A");
@@ -30,12 +30,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALAddressMapper();
 			Address item = new Address();
 			item.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			ApiAddressServerResponseModel response = mapper.MapBOToModel(item);
+			ApiAddressServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.AddressID.Should().Be(1);
 			response.AddressLine1.Should().Be("A");
@@ -48,12 +48,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALAddressMapper();
 			Address item = new Address();
 			item.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			List<ApiAddressServerResponseModel> response = mapper.MapBOToModel(new List<Address>() { { item} });
+			List<ApiAddressServerResponseModel> response = mapper.MapEntityToModel(new List<Address>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3be56cedc9331c1f8b4f8e81360e88b3</Hash>
+    <Hash>25c4052fd465c56b3c7d217a0b4ef31a</Hash>
 </Codenesium>*/

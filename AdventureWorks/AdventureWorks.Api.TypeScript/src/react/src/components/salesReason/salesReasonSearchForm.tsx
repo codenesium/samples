@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import SalesReasonMapper from './salesReasonMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import SalesReasonViewModel from './salesReasonViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class SalesReasonSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.SalesReasonClientResponseModel>(),
-    filteredRecords: new Array<Api.SalesReasonClientResponseModel>(),
+    records: new Array<SalesReasonViewModel>(),
+    filteredRecords: new Array<SalesReasonViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class SalesReasonSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.SalesReasonClientResponseModel) {
-    this.props.history.push('/salesreasons/edit/' + row.salesReasonID);
+    this.props.history.push(
+      ClientRoutes.SalesReasons + '/edit/' + row.salesReasonID
+    );
   }
 
   handleDetailClick(e: any, row: Api.SalesReasonClientResponseModel) {
-    this.props.history.push('/salesreasons/' + row.salesReasonID);
+    this.props.history.push(
+      ClientRoutes.SalesReasons + '/' + row.salesReasonID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/salesreasons/create');
+    this.props.history.push(ClientRoutes.SalesReasons + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.SalesReasonClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'salesreasons/' + row.salesReasonID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesReasons +
+          '/' +
+          row.salesReasonID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class SalesReasonSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'salesreasons' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.SalesReasons + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +155,9 @@ export default class SalesReasonSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -270,17 +285,13 @@ export default class SalesReasonSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>2676d2f0a5d07d0ff345fee5a85970a4</Hash>
+    <Hash>eba3e5a3ce38113233fde290a4d873f4</Hash>
 </Codenesium>*/

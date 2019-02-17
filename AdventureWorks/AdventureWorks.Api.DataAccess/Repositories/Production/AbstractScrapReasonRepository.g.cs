@@ -91,13 +91,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ScrapReason_Name.
 		public async virtual Task<ScrapReason> ByName(string name)
 		{
-			return await this.Context.Set<ScrapReason>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ScrapReason>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table WorkOrder via scrapReasonID.
 		public async virtual Task<List<WorkOrder>> WorkOrdersByScrapReasonID(short scrapReasonID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<WorkOrder>().Where(x => x.ScrapReasonID == scrapReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
+			return await this.Context.Set<WorkOrder>()
+			       .Where(x => x.ScrapReasonID == scrapReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
 
 		protected async Task<List<ScrapReason>> Where(
@@ -111,7 +114,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ScrapReasonID;
 			}
 
-			return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
+			return await this.Context.Set<ScrapReason>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
 		}
 
 		private async Task<ScrapReason> GetById(short scrapReasonID)
@@ -124,5 +129,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>efd417cab8ceec0535160fade09c7175</Hash>
+    <Hash>80df2eb60fa5c4418220c6d91394859d</Hash>
 </Codenesium>*/

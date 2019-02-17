@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALDepartmentMapper
 	{
-		public virtual Department MapModelToBO(
+		public virtual Department MapModelToEntity(
 			short departmentID,
 			ApiDepartmentServerRequestModel model
 			)
@@ -21,24 +21,27 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiDepartmentServerResponseModel MapBOToModel(
+		public virtual ApiDepartmentServerResponseModel MapEntityToModel(
 			Department item)
 		{
 			var model = new ApiDepartmentServerResponseModel();
 
-			model.SetProperties(item.DepartmentID, item.GroupName, item.ModifiedDate, item.Name);
+			model.SetProperties(item.DepartmentID,
+			                    item.GroupName,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiDepartmentServerResponseModel> MapBOToModel(
+		public virtual List<ApiDepartmentServerResponseModel> MapEntityToModel(
 			List<Department> items)
 		{
 			List<ApiDepartmentServerResponseModel> response = new List<ApiDepartmentServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -47,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>933eec9429cb4c90d63f82f66c102c60</Hash>
+    <Hash>ba74611e698a80b66d6c95b77f875bc2</Hash>
 </Codenesium>*/

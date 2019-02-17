@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALSpecialOfferMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALSpecialOfferMapper();
 			ApiSpecialOfferServerRequestModel model = new ApiSpecialOfferServerRequestModel();
 			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
-			SpecialOffer response = mapper.MapModelToBO(1, model);
+			SpecialOffer response = mapper.MapModelToEntity(1, model);
 
 			response.Category.Should().Be("A");
 			response.Description.Should().Be("A");
@@ -32,12 +32,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALSpecialOfferMapper();
 			SpecialOffer item = new SpecialOffer();
 			item.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
-			ApiSpecialOfferServerResponseModel response = mapper.MapBOToModel(item);
+			ApiSpecialOfferServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Category.Should().Be("A");
 			response.Description.Should().Be("A");
@@ -52,12 +52,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALSpecialOfferMapper();
 			SpecialOffer item = new SpecialOffer();
 			item.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
-			List<ApiSpecialOfferServerResponseModel> response = mapper.MapBOToModel(new List<SpecialOffer>() { { item} });
+			List<ApiSpecialOfferServerResponseModel> response = mapper.MapEntityToModel(new List<SpecialOffer>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>38bd9c1bc88314242f599fa73c6941fc</Hash>
+    <Hash>edc1b500e94d410a9aed170a387936a6</Hash>
 </Codenesium>*/

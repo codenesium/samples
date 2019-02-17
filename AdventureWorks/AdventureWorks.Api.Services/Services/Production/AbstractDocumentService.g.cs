@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiDocumentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.DocumentRepository.All(limit, offset, query);
+			List<Document> records = await this.DocumentRepository.All(limit, offset, query);
 
-			return this.DalDocumentMapper.MapBOToModel(records);
+			return this.DalDocumentMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiDocumentServerResponseModel> Get(Guid rowguid)
 		{
-			var record = await this.DocumentRepository.Get(rowguid);
+			Document record = await this.DocumentRepository.Get(rowguid);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalDocumentMapper.MapBOToModel(record);
+				return this.DalDocumentMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalDocumentMapper.MapModelToBO(default(Guid), model);
-				var record = await this.DocumentRepository.Create(bo);
+				Document record = this.DalDocumentMapper.MapModelToEntity(default(Guid), model);
+				record = await this.DocumentRepository.Create(record);
 
-				response.SetRecord(this.DalDocumentMapper.MapBOToModel(record));
+				response.SetRecord(this.DalDocumentMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new DocumentCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalDocumentMapper.MapModelToBO(rowguid, model);
-				await this.DocumentRepository.Update(bo);
+				Document record = this.DalDocumentMapper.MapModelToEntity(rowguid, model);
+				await this.DocumentRepository.Update(record);
 
-				var record = await this.DocumentRepository.Get(rowguid);
+				record = await this.DocumentRepository.Get(rowguid);
 
-				var apiModel = this.DalDocumentMapper.MapBOToModel(record);
+				ApiDocumentServerResponseModel apiModel = this.DalDocumentMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new DocumentUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiDocumentServerResponseModel>.UpdateResponse(apiModel);
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalDocumentMapper.MapBOToModel(record);
+				return this.DalDocumentMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -131,11 +131,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Document> records = await this.DocumentRepository.ByFileNameRevision(fileName, revision, limit, offset);
 
-			return this.DalDocumentMapper.MapBOToModel(records);
+			return this.DalDocumentMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ef28e8dfa65f111da3223986a479a7b</Hash>
+    <Hash>960ff983f026f1543ddc024b2d70c27c</Hash>
 </Codenesium>*/

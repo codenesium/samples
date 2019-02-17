@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALTransactionHistoryMapper
 	{
-		TransactionHistory MapModelToBO(
+		TransactionHistory MapModelToEntity(
 			int transactionID,
 			ApiTransactionHistoryServerRequestModel model);
 
-		ApiTransactionHistoryServerResponseModel MapBOToModel(
+		ApiTransactionHistoryServerResponseModel MapEntityToModel(
 			TransactionHistory item);
 
-		List<ApiTransactionHistoryServerResponseModel> MapBOToModel(
+		List<ApiTransactionHistoryServerResponseModel> MapEntityToModel(
 			List<TransactionHistory> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3b24ff363e5334980dd1f30be475151</Hash>
+    <Hash>48cda767068ce709525531c28e6bd18c</Hash>
 </Codenesium>*/

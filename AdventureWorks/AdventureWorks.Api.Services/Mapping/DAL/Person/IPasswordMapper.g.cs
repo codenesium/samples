@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALPasswordMapper
 	{
-		Password MapModelToBO(
+		Password MapModelToEntity(
 			int businessEntityID,
 			ApiPasswordServerRequestModel model);
 
-		ApiPasswordServerResponseModel MapBOToModel(
+		ApiPasswordServerResponseModel MapEntityToModel(
 			Password item);
 
-		List<ApiPasswordServerResponseModel> MapBOToModel(
+		List<ApiPasswordServerResponseModel> MapEntityToModel(
 			List<Password> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a9400f721cf29e9578fc4c5ee9b16d42</Hash>
+    <Hash>04e82a8d26e7871d42ff9e8e67f5482b</Hash>
 </Codenesium>*/

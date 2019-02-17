@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import PersonMapper from './personMapper';
 import PersonViewModel from './personViewModel';
 
 interface Props {
+  history: any;
   model?: PersonViewModel;
 }
 
 const PersonDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.People + '/edit/' + model.model!.businessEntityID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label
           htmlFor="additionalContactInfo"
@@ -25,84 +38,72 @@ const PersonDetailDisplay = (model: Props) => {
           {String(model.model!.additionalContactInfo)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="businessEntityID" className={'col-sm-2 col-form-label'}>
           BusinessEntityID
         </label>
         <div className="col-sm-12">{String(model.model!.businessEntityID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="demographic" className={'col-sm-2 col-form-label'}>
           Demographics
         </label>
         <div className="col-sm-12">{String(model.model!.demographic)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="emailPromotion" className={'col-sm-2 col-form-label'}>
           EmailPromotion
         </label>
         <div className="col-sm-12">{String(model.model!.emailPromotion)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
           FirstName
         </label>
         <div className="col-sm-12">{String(model.model!.firstName)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
           LastName
         </label>
         <div className="col-sm-12">{String(model.model!.lastName)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="middleName" className={'col-sm-2 col-form-label'}>
           MiddleName
         </label>
         <div className="col-sm-12">{String(model.model!.middleName)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="nameStyle" className={'col-sm-2 col-form-label'}>
           NameStyle
         </label>
         <div className="col-sm-12">{String(model.model!.nameStyle)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="personType" className={'col-sm-2 col-form-label'}>
           PersonType
         </label>
         <div className="col-sm-12">{String(model.model!.personType)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
           Rowguid
         </label>
         <div className="col-sm-12">{String(model.model!.rowguid)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="suffix" className={'col-sm-2 col-form-label'}>
           Suffix
         </label>
         <div className="col-sm-12">{String(model.model!.suffix)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="title" className={'col-sm-2 col-form-label'}>
           Title
@@ -123,6 +124,7 @@ interface IMatch {
 
 interface PersonDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface PersonDetailComponentState {
@@ -150,7 +152,10 @@ export default class PersonDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl + 'people/' + this.props.match.params.businessEntityID,
+        Constants.ApiEndpoint +
+          ApiRoutes.People +
+          '/' +
+          this.props.match.params.businessEntityID,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -187,20 +192,23 @@ export default class PersonDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <PersonDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <PersonDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>002e3031a7dfe6cc4a7919bfbc3ce07e</Hash>
+    <Hash>4e879d97c49f4597983e5c834e4fe75c</Hash>
 </Codenesium>*/

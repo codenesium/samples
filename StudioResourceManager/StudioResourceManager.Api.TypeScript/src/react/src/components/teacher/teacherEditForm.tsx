@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -386,5 +386,5 @@ export default class TeacherEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d8c02078a5cf2c2a8688da4deffcd472</Hash>
+    <Hash>d4e39cc22f0dcf2931eeda345db74924</Hash>
 </Codenesium>*/

@@ -32,6 +32,14 @@ namespace AdventureWorksNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiSalesTerritoryClientResponseModel TerritoryIDNavigation { get; private set; }
+
+		public void SetTerritoryIDNavigation(ApiSalesTerritoryClientResponseModel value)
+		{
+			this.TerritoryIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public decimal Bonus { get; private set; }
 
 		[JsonProperty]
@@ -64,5 +72,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a8b75f6ae5cb763d59b8485319ece4a3</Hash>
+    <Hash>68b13c39d3a2896a04da37f3496c23b1</Hash>
 </Codenesium>*/

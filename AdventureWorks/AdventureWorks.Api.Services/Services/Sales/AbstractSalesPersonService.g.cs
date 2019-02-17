@@ -46,14 +46,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiSalesPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SalesPersonRepository.All(limit, offset, query);
+			List<SalesPerson> records = await this.SalesPersonRepository.All(limit, offset, query);
 
-			return this.DalSalesPersonMapper.MapBOToModel(records);
+			return this.DalSalesPersonMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSalesPersonServerResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.SalesPersonRepository.Get(businessEntityID);
+			SalesPerson record = await this.SalesPersonRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesPersonMapper.MapBOToModel(record);
+				return this.DalSalesPersonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -72,10 +72,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalSalesPersonMapper.MapModelToBO(default(int), model);
-				var record = await this.SalesPersonRepository.Create(bo);
+				SalesPerson record = this.DalSalesPersonMapper.MapModelToEntity(default(int), model);
+				record = await this.SalesPersonRepository.Create(record);
 
-				response.SetRecord(this.DalSalesPersonMapper.MapBOToModel(record));
+				response.SetRecord(this.DalSalesPersonMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SalesPersonCreatedNotification(response.Record));
 			}
 
@@ -90,12 +90,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalSalesPersonMapper.MapModelToBO(businessEntityID, model);
-				await this.SalesPersonRepository.Update(bo);
+				SalesPerson record = this.DalSalesPersonMapper.MapModelToEntity(businessEntityID, model);
+				await this.SalesPersonRepository.Update(record);
 
-				var record = await this.SalesPersonRepository.Get(businessEntityID);
+				record = await this.SalesPersonRepository.Get(businessEntityID);
 
-				var apiModel = this.DalSalesPersonMapper.MapBOToModel(record);
+				ApiSalesPersonServerResponseModel apiModel = this.DalSalesPersonMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SalesPersonUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSalesPersonServerResponseModel>.UpdateResponse(apiModel);
@@ -131,7 +131,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesPersonMapper.MapBOToModel(record);
+				return this.DalSalesPersonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -139,18 +139,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<SalesOrderHeader> records = await this.SalesPersonRepository.SalesOrderHeadersBySalesPersonID(salesPersonID, limit, offset);
 
-			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
+			return this.DalSalesOrderHeaderMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiStoreServerResponseModel>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Store> records = await this.SalesPersonRepository.StoresBySalesPersonID(salesPersonID, limit, offset);
 
-			return this.DalStoreMapper.MapBOToModel(records);
+			return this.DalStoreMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae525f9fc3c1a61c4d9db9f55cee3037</Hash>
+    <Hash>49b1942bbec7bd28efe6e214727778c0</Hash>
 </Codenesium>*/

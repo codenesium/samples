@@ -95,13 +95,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_SalesTaxRate_rowguid.
 		public async virtual Task<SalesTaxRate> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<SalesTaxRate>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<SalesTaxRate>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// unique constraint AK_SalesTaxRate_StateProvinceID_TaxType.
 		public async virtual Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
 		{
-			return await this.Context.Set<SalesTaxRate>().FirstOrDefaultAsync(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
+			return await this.Context.Set<SalesTaxRate>()
+
+			       .FirstOrDefaultAsync(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
 		}
 
 		protected async Task<List<SalesTaxRate>> Where(
@@ -115,7 +119,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.SalesTaxRateID;
 			}
 
-			return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTaxRate>();
+			return await this.Context.Set<SalesTaxRate>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTaxRate>();
 		}
 
 		private async Task<SalesTaxRate> GetById(int salesTaxRateID)
@@ -128,5 +134,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2efbccfc77e5d90f9afc87859ab358ba</Hash>
+    <Hash>d4263e85840daf9d25bfa1952c7dda1b</Hash>
 </Codenesium>*/

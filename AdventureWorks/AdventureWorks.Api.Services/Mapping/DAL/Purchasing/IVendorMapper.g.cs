@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALVendorMapper
 	{
-		Vendor MapModelToBO(
+		Vendor MapModelToEntity(
 			int businessEntityID,
 			ApiVendorServerRequestModel model);
 
-		ApiVendorServerResponseModel MapBOToModel(
+		ApiVendorServerResponseModel MapEntityToModel(
 			Vendor item);
 
-		List<ApiVendorServerResponseModel> MapBOToModel(
+		List<ApiVendorServerResponseModel> MapEntityToModel(
 			List<Vendor> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>18e8bf780511685120f5983932011a2a</Hash>
+    <Hash>43e812a9aa8e2d95380fadcf7a638b42</Hash>
 </Codenesium>*/

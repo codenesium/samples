@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALSalesOrderHeaderMapper
 	{
-		SalesOrderHeader MapModelToBO(
+		SalesOrderHeader MapModelToEntity(
 			int salesOrderID,
 			ApiSalesOrderHeaderServerRequestModel model);
 
-		ApiSalesOrderHeaderServerResponseModel MapBOToModel(
+		ApiSalesOrderHeaderServerResponseModel MapEntityToModel(
 			SalesOrderHeader item);
 
-		List<ApiSalesOrderHeaderServerResponseModel> MapBOToModel(
+		List<ApiSalesOrderHeaderServerResponseModel> MapEntityToModel(
 			List<SalesOrderHeader> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d7f633b0eb71068b382562ba77e7791</Hash>
+    <Hash>ed11634068dc20d88a36424d81934f5a</Hash>
 </Codenesium>*/

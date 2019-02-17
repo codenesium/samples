@@ -38,9 +38,13 @@ export default class ProductReviewViewModel {
     this.reviewDate = reviewDate;
     this.reviewerName = reviewerName;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>e9ccb703d74410dd3d067d92577e75ff</Hash>
+    <Hash>b7a0628e8fd47d90799cc275a85a86a3</Hash>
 </Codenesium>*/

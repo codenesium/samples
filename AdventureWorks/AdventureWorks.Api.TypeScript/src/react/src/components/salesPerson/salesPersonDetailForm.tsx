@@ -1,80 +1,87 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import SalesPersonMapper from './salesPersonMapper';
 import SalesPersonViewModel from './salesPersonViewModel';
 
 interface Props {
+  history: any;
   model?: SalesPersonViewModel;
 }
 
 const SalesPersonDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.SalesPersons + '/edit/' + model.model!.businessEntityID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="bonus" className={'col-sm-2 col-form-label'}>
           Bonus
         </label>
         <div className="col-sm-12">{String(model.model!.bonus)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="businessEntityID" className={'col-sm-2 col-form-label'}>
           BusinessEntityID
         </label>
         <div className="col-sm-12">{String(model.model!.businessEntityID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="commissionPct" className={'col-sm-2 col-form-label'}>
           CommissionPct
         </label>
         <div className="col-sm-12">{String(model.model!.commissionPct)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
           Rowguid
         </label>
         <div className="col-sm-12">{String(model.model!.rowguid)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="salesLastYear" className={'col-sm-2 col-form-label'}>
           SalesLastYear
         </label>
         <div className="col-sm-12">{String(model.model!.salesLastYear)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="salesQuota" className={'col-sm-2 col-form-label'}>
           SalesQuota
         </label>
         <div className="col-sm-12">{String(model.model!.salesQuota)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="salesYTD" className={'col-sm-2 col-form-label'}>
           SalesYTD
         </label>
         <div className="col-sm-12">{String(model.model!.salesYTD)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="territoryID" className={'col-sm-2 col-form-label'}>
           TerritoryID
         </label>
-        <div className="col-sm-12">{String(model.model!.territoryID)}</div>
+        <div className="col-sm-12">
+          {model.model!.territoryIDNavigation!.toDisplay()}
+        </div>
       </div>
     </form>
   );
@@ -90,6 +97,7 @@ interface IMatch {
 
 interface SalesPersonDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface SalesPersonDetailComponentState {
@@ -117,8 +125,9 @@ export default class SalesPersonDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'salespersons/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesPersons +
+          '/' +
           this.props.match.params.businessEntityID,
         {
           headers: {
@@ -156,20 +165,23 @@ export default class SalesPersonDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <SalesPersonDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <SalesPersonDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>45165f798f2b63096dd9695142cafa97</Hash>
+    <Hash>2e121785b305699f31b17f05ee870d9a</Hash>
 </Codenesium>*/

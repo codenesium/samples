@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import SalesReasonViewModel from './salesReasonViewModel';
-
 export default class SalesReasonMapper {
   mapApiResponseToViewModel(
     dto: Api.SalesReasonClientResponseModel
@@ -12,6 +11,7 @@ export default class SalesReasonMapper {
       dto.reasonType,
       dto.salesReasonID
     );
+
     return response;
   }
 
@@ -31,5 +31,5 @@ export default class SalesReasonMapper {
 
 
 /*<Codenesium>
-    <Hash>466341d1f66bfe435ed125197a37d82e</Hash>
+    <Hash>e83ddca2147a7cd00f32fd3d6b9dcb8c</Hash>
 </Codenesium>*/

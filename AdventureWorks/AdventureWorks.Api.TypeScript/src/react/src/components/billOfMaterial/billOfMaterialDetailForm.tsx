@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import BillOfMaterialMapper from './billOfMaterialMapper';
 import BillOfMaterialViewModel from './billOfMaterialViewModel';
 
 interface Props {
+  history: any;
   model?: BillOfMaterialViewModel;
 }
 
 const BillOfMaterialDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.BillOfMaterials +
+              '/edit/' +
+              model.model!.billOfMaterialsID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label
           htmlFor="billOfMaterialsID"
@@ -25,42 +40,36 @@ const BillOfMaterialDetailDisplay = (model: Props) => {
           {String(model.model!.billOfMaterialsID)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="bOMLevel" className={'col-sm-2 col-form-label'}>
           BOMLevel
         </label>
         <div className="col-sm-12">{String(model.model!.bOMLevel)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="componentID" className={'col-sm-2 col-form-label'}>
           ComponentID
         </label>
         <div className="col-sm-12">{String(model.model!.componentID)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="endDate" className={'col-sm-2 col-form-label'}>
           EndDate
         </label>
         <div className="col-sm-12">{String(model.model!.endDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="perAssemblyQty" className={'col-sm-2 col-form-label'}>
           PerAssemblyQty
         </label>
         <div className="col-sm-12">{String(model.model!.perAssemblyQty)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="productAssemblyID"
@@ -72,14 +81,12 @@ const BillOfMaterialDetailDisplay = (model: Props) => {
           {String(model.model!.productAssemblyID)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="startDate" className={'col-sm-2 col-form-label'}>
           StartDate
         </label>
         <div className="col-sm-12">{String(model.model!.startDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="unitMeasureCode" className={'col-sm-2 col-form-label'}>
           UnitMeasureCode
@@ -100,6 +107,7 @@ interface IMatch {
 
 interface BillOfMaterialDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface BillOfMaterialDetailComponentState {
@@ -127,8 +135,9 @@ export default class BillOfMaterialDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'billofmaterials/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.BillOfMaterials +
+          '/' +
           this.props.match.params.billOfMaterialsID,
         {
           headers: {
@@ -166,20 +175,23 @@ export default class BillOfMaterialDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <BillOfMaterialDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <BillOfMaterialDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c2af291801381fb0334ff03b90948585</Hash>
+    <Hash>37f9a55df96c239881e692a703bd489d</Hash>
 </Codenesium>*/

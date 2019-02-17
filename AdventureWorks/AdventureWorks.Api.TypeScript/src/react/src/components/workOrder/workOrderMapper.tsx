@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import WorkOrderViewModel from './workOrderViewModel';
-
 export default class WorkOrderMapper {
   mapApiResponseToViewModel(
     dto: Api.WorkOrderClientResponseModel
@@ -18,6 +17,7 @@ export default class WorkOrderMapper {
       dto.stockedQty,
       dto.workOrderID
     );
+
     return response;
   }
 
@@ -43,5 +43,5 @@ export default class WorkOrderMapper {
 
 
 /*<Codenesium>
-    <Hash>9c08c5abc0d7f9d4c127feba6d50a6fa</Hash>
+    <Hash>ab5ac3849ebe573c850c8e5ee5111874</Hash>
 </Codenesium>*/

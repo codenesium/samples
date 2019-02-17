@@ -99,7 +99,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.PhoneNumberTypeID;
 			}
 
-			return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
+			return await this.Context.Set<PhoneNumberType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
 		}
 
 		private async Task<PhoneNumberType> GetById(int phoneNumberTypeID)
@@ -112,5 +114,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ccb1f1c8c3440488c00277c5e82677b4</Hash>
+    <Hash>9597aef1b1daeb12fba2a6006f1c7a3f</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALScrapReasonMapper
 	{
-		public virtual ScrapReason MapModelToBO(
+		public virtual ScrapReason MapModelToEntity(
 			short scrapReasonID,
 			ApiScrapReasonServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiScrapReasonServerResponseModel MapBOToModel(
+		public virtual ApiScrapReasonServerResponseModel MapEntityToModel(
 			ScrapReason item)
 		{
 			var model = new ApiScrapReasonServerResponseModel();
 
-			model.SetProperties(item.ScrapReasonID, item.ModifiedDate, item.Name);
+			model.SetProperties(item.ScrapReasonID,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiScrapReasonServerResponseModel> MapBOToModel(
+		public virtual List<ApiScrapReasonServerResponseModel> MapEntityToModel(
 			List<ScrapReason> items)
 		{
 			List<ApiScrapReasonServerResponseModel> response = new List<ApiScrapReasonServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd7f6050500e9ef1f8370b9d19acf9af</Hash>
+    <Hash>03cbe3a6c095d651cd3188212be2f28d</Hash>
 </Codenesium>*/

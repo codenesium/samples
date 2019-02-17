@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALCurrencyMapper
 	{
-		Currency MapModelToBO(
+		Currency MapModelToEntity(
 			string currencyCode,
 			ApiCurrencyServerRequestModel model);
 
-		ApiCurrencyServerResponseModel MapBOToModel(
+		ApiCurrencyServerResponseModel MapEntityToModel(
 			Currency item);
 
-		List<ApiCurrencyServerResponseModel> MapBOToModel(
+		List<ApiCurrencyServerResponseModel> MapEntityToModel(
 			List<Currency> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d883fb2d6118b0979a64151998f8918</Hash>
+    <Hash>6d9626251df2b50085699b889cf8caaf</Hash>
 </Codenesium>*/

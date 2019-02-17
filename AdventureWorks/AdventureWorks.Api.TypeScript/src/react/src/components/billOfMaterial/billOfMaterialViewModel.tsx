@@ -42,9 +42,13 @@ export default class BillOfMaterialViewModel {
     this.startDate = startDate;
     this.unitMeasureCode = unitMeasureCode;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>66d06e8d912908b8097a5b5391530851</Hash>
+    <Hash>7f176158d79c121ed4cffb5f5fc25e46</Hash>
 </Codenesium>*/

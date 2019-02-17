@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import StateProvinceMapper from './stateProvinceMapper';
 import StateProvinceViewModel from './stateProvinceViewModel';
 
@@ -288,9 +290,6 @@ const StateProvinceCreate = withFormik<Props, StateProvinceViewModel>({
     if (values.countryRegionCode == '') {
       errors.countryRegionCode = 'Required';
     }
-    if (values.isOnlyStateProvinceFlag == false) {
-      errors.isOnlyStateProvinceFlag = 'Required';
-    }
     if (values.modifiedDate == undefined) {
       errors.modifiedDate = 'Required';
     }
@@ -316,7 +315,7 @@ const StateProvinceCreate = withFormik<Props, StateProvinceViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'stateprovinces',
+        Constants.ApiEndpoint + ApiRoutes.StateProvinces,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -365,20 +364,18 @@ export default class StateProvinceCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <StateProvinceCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>d64a87556f918d722309217adae32055</Hash>
+    <Hash>b392c4f458b70d75f1c81b7e2b7046b6</Hash>
 </Codenesium>*/

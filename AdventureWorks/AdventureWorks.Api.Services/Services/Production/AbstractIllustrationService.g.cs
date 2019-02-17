@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiIllustrationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.IllustrationRepository.All(limit, offset, query);
+			List<Illustration> records = await this.IllustrationRepository.All(limit, offset, query);
 
-			return this.DalIllustrationMapper.MapBOToModel(records);
+			return this.DalIllustrationMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiIllustrationServerResponseModel> Get(int illustrationID)
 		{
-			var record = await this.IllustrationRepository.Get(illustrationID);
+			Illustration record = await this.IllustrationRepository.Get(illustrationID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalIllustrationMapper.MapBOToModel(record);
+				return this.DalIllustrationMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalIllustrationMapper.MapModelToBO(default(int), model);
-				var record = await this.IllustrationRepository.Create(bo);
+				Illustration record = this.DalIllustrationMapper.MapModelToEntity(default(int), model);
+				record = await this.IllustrationRepository.Create(record);
 
-				response.SetRecord(this.DalIllustrationMapper.MapBOToModel(record));
+				response.SetRecord(this.DalIllustrationMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new IllustrationCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalIllustrationMapper.MapModelToBO(illustrationID, model);
-				await this.IllustrationRepository.Update(bo);
+				Illustration record = this.DalIllustrationMapper.MapModelToEntity(illustrationID, model);
+				await this.IllustrationRepository.Update(record);
 
-				var record = await this.IllustrationRepository.Get(illustrationID);
+				record = await this.IllustrationRepository.Get(illustrationID);
 
-				var apiModel = this.DalIllustrationMapper.MapBOToModel(record);
+				ApiIllustrationServerResponseModel apiModel = this.DalIllustrationMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new IllustrationUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiIllustrationServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c851f063e6b3bedb327a07a414360420</Hash>
+    <Hash>baf8a0e98808694a88b55a4f3fbd72f2</Hash>
 </Codenesium>*/

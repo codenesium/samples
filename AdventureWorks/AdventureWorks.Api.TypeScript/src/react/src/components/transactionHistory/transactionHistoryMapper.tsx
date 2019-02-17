@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import TransactionHistoryViewModel from './transactionHistoryViewModel';
-
 export default class TransactionHistoryMapper {
   mapApiResponseToViewModel(
     dto: Api.TransactionHistoryClientResponseModel
@@ -17,6 +16,7 @@ export default class TransactionHistoryMapper {
       dto.transactionID,
       dto.transactionType
     );
+
     return response;
   }
 
@@ -41,5 +41,5 @@ export default class TransactionHistoryMapper {
 
 
 /*<Codenesium>
-    <Hash>1ee0a8dd5d12a44deb08f811d2836a06</Hash>
+    <Hash>66cecf270ae7dae4651f821573a559db</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALSalesPersonMapper
 	{
-		public virtual SalesPerson MapModelToBO(
+		public virtual SalesPerson MapModelToEntity(
 			int businessEntityID,
 			ApiSalesPersonServerRequestModel model
 			)
@@ -26,24 +26,48 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiSalesPersonServerResponseModel MapBOToModel(
+		public virtual ApiSalesPersonServerResponseModel MapEntityToModel(
 			SalesPerson item)
 		{
 			var model = new ApiSalesPersonServerResponseModel();
 
-			model.SetProperties(item.BusinessEntityID, item.Bonus, item.CommissionPct, item.ModifiedDate, item.Rowguid, item.SalesLastYear, item.SalesQuota, item.SalesYTD, item.TerritoryID);
+			model.SetProperties(item.BusinessEntityID,
+			                    item.Bonus,
+			                    item.CommissionPct,
+			                    item.ModifiedDate,
+			                    item.Rowguid,
+			                    item.SalesLastYear,
+			                    item.SalesQuota,
+			                    item.SalesYTD,
+			                    item.TerritoryID);
+			if (item.TerritoryIDNavigation != null)
+			{
+				var territoryIDModel = new ApiSalesTerritoryServerResponseModel();
+				territoryIDModel.SetProperties(
+					item.TerritoryIDNavigation.TerritoryID,
+					item.TerritoryIDNavigation.CostLastYear,
+					item.TerritoryIDNavigation.CostYTD,
+					item.TerritoryIDNavigation.CountryRegionCode,
+					item.TerritoryIDNavigation.ModifiedDate,
+					item.TerritoryIDNavigation.Name,
+					item.TerritoryIDNavigation.Rowguid,
+					item.TerritoryIDNavigation.SalesLastYear,
+					item.TerritoryIDNavigation.SalesYTD);
+
+				model.SetTerritoryIDNavigation(territoryIDModel);
+			}
 
 			return model;
 		}
 
-		public virtual List<ApiSalesPersonServerResponseModel> MapBOToModel(
+		public virtual List<ApiSalesPersonServerResponseModel> MapEntityToModel(
 			List<SalesPerson> items)
 		{
 			List<ApiSalesPersonServerResponseModel> response = new List<ApiSalesPersonServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -52,5 +76,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13230624544b01629636167191e2524a</Hash>
+    <Hash>555a26d9cde5309cfc711d8a7229a4b1</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALDocumentMapper
 	{
-		public virtual Document MapModelToBO(
+		public virtual Document MapModelToEntity(
 			Guid rowguid,
 			ApiDocumentServerRequestModel model
 			)
@@ -30,24 +30,36 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiDocumentServerResponseModel MapBOToModel(
+		public virtual ApiDocumentServerResponseModel MapEntityToModel(
 			Document item)
 		{
 			var model = new ApiDocumentServerResponseModel();
 
-			model.SetProperties(item.Rowguid, item.ChangeNumber, item.Document1, item.DocumentLevel, item.DocumentSummary, item.FileExtension, item.FileName, item.FolderFlag, item.ModifiedDate, item.Owner, item.Revision, item.Status, item.Title);
+			model.SetProperties(item.Rowguid,
+			                    item.ChangeNumber,
+			                    item.Document1,
+			                    item.DocumentLevel,
+			                    item.DocumentSummary,
+			                    item.FileExtension,
+			                    item.FileName,
+			                    item.FolderFlag,
+			                    item.ModifiedDate,
+			                    item.Owner,
+			                    item.Revision,
+			                    item.Status,
+			                    item.Title);
 
 			return model;
 		}
 
-		public virtual List<ApiDocumentServerResponseModel> MapBOToModel(
+		public virtual List<ApiDocumentServerResponseModel> MapEntityToModel(
 			List<Document> items)
 		{
 			List<ApiDocumentServerResponseModel> response = new List<ApiDocumentServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -56,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a2d8cfe2fc001d9c5ef4b1b8acae2653</Hash>
+    <Hash>c2788cdd22bd924c7dbfa4fa7f16c7de</Hash>
 </Codenesium>*/

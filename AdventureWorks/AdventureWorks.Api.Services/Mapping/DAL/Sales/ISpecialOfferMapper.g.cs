@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALSpecialOfferMapper
 	{
-		SpecialOffer MapModelToBO(
+		SpecialOffer MapModelToEntity(
 			int specialOfferID,
 			ApiSpecialOfferServerRequestModel model);
 
-		ApiSpecialOfferServerResponseModel MapBOToModel(
+		ApiSpecialOfferServerResponseModel MapEntityToModel(
 			SpecialOffer item);
 
-		List<ApiSpecialOfferServerResponseModel> MapBOToModel(
+		List<ApiSpecialOfferServerResponseModel> MapEntityToModel(
 			List<SpecialOffer> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>00a993c59e77aa86d44163a5310c8688</Hash>
+    <Hash>18bc84f24aee84792c7c28a3439ba474</Hash>
 </Codenesium>*/

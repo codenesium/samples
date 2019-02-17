@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiScrapReasonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ScrapReasonRepository.All(limit, offset, query);
+			List<ScrapReason> records = await this.ScrapReasonRepository.All(limit, offset, query);
 
-			return this.DalScrapReasonMapper.MapBOToModel(records);
+			return this.DalScrapReasonMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiScrapReasonServerResponseModel> Get(short scrapReasonID)
 		{
-			var record = await this.ScrapReasonRepository.Get(scrapReasonID);
+			ScrapReason record = await this.ScrapReasonRepository.Get(scrapReasonID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalScrapReasonMapper.MapBOToModel(record);
+				return this.DalScrapReasonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalScrapReasonMapper.MapModelToBO(default(short), model);
-				var record = await this.ScrapReasonRepository.Create(bo);
+				ScrapReason record = this.DalScrapReasonMapper.MapModelToEntity(default(short), model);
+				record = await this.ScrapReasonRepository.Create(record);
 
-				response.SetRecord(this.DalScrapReasonMapper.MapBOToModel(record));
+				response.SetRecord(this.DalScrapReasonMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ScrapReasonCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalScrapReasonMapper.MapModelToBO(scrapReasonID, model);
-				await this.ScrapReasonRepository.Update(bo);
+				ScrapReason record = this.DalScrapReasonMapper.MapModelToEntity(scrapReasonID, model);
+				await this.ScrapReasonRepository.Update(record);
 
-				var record = await this.ScrapReasonRepository.Get(scrapReasonID);
+				record = await this.ScrapReasonRepository.Get(scrapReasonID);
 
-				var apiModel = this.DalScrapReasonMapper.MapBOToModel(record);
+				ApiScrapReasonServerResponseModel apiModel = this.DalScrapReasonMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ScrapReasonUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiScrapReasonServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalScrapReasonMapper.MapBOToModel(record);
+				return this.DalScrapReasonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -135,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<WorkOrder> records = await this.ScrapReasonRepository.WorkOrdersByScrapReasonID(scrapReasonID, limit, offset);
 
-			return this.DalWorkOrderMapper.MapBOToModel(records);
+			return this.DalWorkOrderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c7b4f0aa800fcdfc3372682d5d93e6f</Hash>
+    <Hash>1f14621604a14153f429da5b43968fbf</Hash>
 </Codenesium>*/

@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALScrapReasonMapper
 	{
-		ScrapReason MapModelToBO(
+		ScrapReason MapModelToEntity(
 			short scrapReasonID,
 			ApiScrapReasonServerRequestModel model);
 
-		ApiScrapReasonServerResponseModel MapBOToModel(
+		ApiScrapReasonServerResponseModel MapEntityToModel(
 			ScrapReason item);
 
-		List<ApiScrapReasonServerResponseModel> MapBOToModel(
+		List<ApiScrapReasonServerResponseModel> MapEntityToModel(
 			List<ScrapReason> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>783d963cf70e2710659b991c20f6497c</Hash>
+    <Hash>23eb28a23b6b2c6e30a32b8e3b4f04df</Hash>
 </Codenesium>*/

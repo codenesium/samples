@@ -95,25 +95,32 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode.
 		public async virtual Task<CurrencyRate> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
 		{
-			return await this.Context.Set<CurrencyRate>().FirstOrDefaultAsync(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
+			return await this.Context.Set<CurrencyRate>()
+			       .Include(x => x.FromCurrencyCodeNavigation)
+			       .Include(x => x.ToCurrencyCodeNavigation)
+
+			       .FirstOrDefaultAsync(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
 		}
 
 		// Foreign key reference to this table SalesOrderHeader via currencyRateID.
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByCurrencyRateID(int currencyRateID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SalesOrderHeader>().Where(x => x.CurrencyRateID == currencyRateID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+			return await this.Context.Set<SalesOrderHeader>()
+			       .Where(x => x.CurrencyRateID == currencyRateID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
 		// Foreign key reference to table Currency via fromCurrencyCode.
 		public async virtual Task<Currency> CurrencyByFromCurrencyCode(string fromCurrencyCode)
 		{
-			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.CurrencyCode == fromCurrencyCode);
+			return await this.Context.Set<Currency>()
+			       .SingleOrDefaultAsync(x => x.CurrencyCode == fromCurrencyCode);
 		}
 
 		// Foreign key reference to table Currency via toCurrencyCode.
 		public async virtual Task<Currency> CurrencyByToCurrencyCode(string toCurrencyCode)
 		{
-			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.CurrencyCode == toCurrencyCode);
+			return await this.Context.Set<Currency>()
+			       .SingleOrDefaultAsync(x => x.CurrencyCode == toCurrencyCode);
 		}
 
 		protected async Task<List<CurrencyRate>> Where(
@@ -127,7 +134,11 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.CurrencyRateID;
 			}
 
-			return await this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
+			return await this.Context.Set<CurrencyRate>()
+			       .Include(x => x.FromCurrencyCodeNavigation)
+			       .Include(x => x.ToCurrencyCodeNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
 		}
 
 		private async Task<CurrencyRate> GetById(int currencyRateID)
@@ -140,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e1c62c10129619168901ec090ddc9a9</Hash>
+    <Hash>dfbf411f7772df804c1f7578c0a91237</Hash>
 </Codenesium>*/

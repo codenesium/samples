@@ -94,13 +94,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ProductModel_Name.
 		public async virtual Task<ProductModel> ByName(string name)
 		{
-			return await this.Context.Set<ProductModel>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ProductModel>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_ProductModel_rowguid.
 		public async virtual Task<ProductModel> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<ProductModel>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<ProductModel>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint PXML_ProductModel_CatalogDescription.
@@ -118,7 +122,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		// Foreign key reference to this table Product via productModelID.
 		public async virtual Task<List<Product>> ProductsByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Product>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+			return await this.Context.Set<Product>()
+			       .Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
 		protected async Task<List<ProductModel>> Where(
@@ -132,7 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ProductModelID;
 			}
 
-			return await this.Context.Set<ProductModel>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductModel>();
+			return await this.Context.Set<ProductModel>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductModel>();
 		}
 
 		private async Task<ProductModel> GetById(int productModelID)
@@ -145,5 +152,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>acd9f5d3f364d97043396095ca66b762</Hash>
+    <Hash>027d019e5167d52713dc7ca1a53a1b92</Hash>
 </Codenesium>*/

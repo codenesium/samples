@@ -56,23 +56,23 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual string ToCurrencyCode { get; private set; }
 
 		[ForeignKey("FromCurrencyCode")]
-		public virtual Currency CurrencyNavigation { get; private set; }
+		public virtual Currency FromCurrencyCodeNavigation { get; private set; }
 
-		public void SetCurrencyNavigation(Currency item)
+		public void SetFromCurrencyCodeNavigation(Currency item)
 		{
-			this.CurrencyNavigation = item;
+			this.FromCurrencyCodeNavigation = item;
 		}
 
 		[ForeignKey("ToCurrencyCode")]
-		public virtual Currency Currency1Navigation { get; private set; }
+		public virtual Currency ToCurrencyCodeNavigation { get; private set; }
 
-		public void SetCurrency1Navigation(Currency item)
+		public void SetToCurrencyCodeNavigation(Currency item)
 		{
-			this.Currency1Navigation = item;
+			this.ToCurrencyCodeNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>15c9d63334db2160abbd2e68931d6382</Hash>
+    <Hash>7ba9b16190c7761f846de22e304b35ce</Hash>
 </Codenesium>*/

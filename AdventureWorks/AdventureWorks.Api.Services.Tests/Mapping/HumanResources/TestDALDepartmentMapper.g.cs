@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALDepartmentMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALDepartmentMapper();
 			ApiDepartmentServerRequestModel model = new ApiDepartmentServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			Department response = mapper.MapModelToBO(1, model);
+			Department response = mapper.MapModelToEntity(1, model);
 
 			response.GroupName.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -26,12 +26,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALDepartmentMapper();
 			Department item = new Department();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiDepartmentServerResponseModel response = mapper.MapBOToModel(item);
+			ApiDepartmentServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.DepartmentID.Should().Be(1);
 			response.GroupName.Should().Be("A");
@@ -40,12 +40,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALDepartmentMapper();
 			Department item = new Department();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiDepartmentServerResponseModel> response = mapper.MapBOToModel(new List<Department>() { { item} });
+			List<ApiDepartmentServerResponseModel> response = mapper.MapEntityToModel(new List<Department>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5283d9bcfc7e93e11eec8d7d4bf6193</Hash>
+    <Hash>7386b295ec7eb3db893c831aebfd3d50</Hash>
 </Codenesium>*/

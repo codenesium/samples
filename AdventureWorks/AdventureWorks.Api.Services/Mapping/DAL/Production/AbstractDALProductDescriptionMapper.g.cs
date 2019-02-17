@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALProductDescriptionMapper
 	{
-		public virtual ProductDescription MapModelToBO(
+		public virtual ProductDescription MapModelToEntity(
 			int productDescriptionID,
 			ApiProductDescriptionServerRequestModel model
 			)
@@ -21,24 +21,27 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiProductDescriptionServerResponseModel MapBOToModel(
+		public virtual ApiProductDescriptionServerResponseModel MapEntityToModel(
 			ProductDescription item)
 		{
 			var model = new ApiProductDescriptionServerResponseModel();
 
-			model.SetProperties(item.ProductDescriptionID, item.Description, item.ModifiedDate, item.Rowguid);
+			model.SetProperties(item.ProductDescriptionID,
+			                    item.Description,
+			                    item.ModifiedDate,
+			                    item.Rowguid);
 
 			return model;
 		}
 
-		public virtual List<ApiProductDescriptionServerResponseModel> MapBOToModel(
+		public virtual List<ApiProductDescriptionServerResponseModel> MapEntityToModel(
 			List<ProductDescription> items)
 		{
 			List<ApiProductDescriptionServerResponseModel> response = new List<ApiProductDescriptionServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -47,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5fb99e44f4de68dd1f0791f4ad72390</Hash>
+    <Hash>376ca17e9a88b01b4ce2c9e567e8666b</Hash>
 </Codenesium>*/

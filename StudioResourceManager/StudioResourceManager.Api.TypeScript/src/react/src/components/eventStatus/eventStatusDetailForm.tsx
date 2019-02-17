@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -133,5 +133,5 @@ export default class EventStatusDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>04d5669f56b6b33f6d0dc652ac9ef614</Hash>
+    <Hash>6b1303591c084c73d20ba19893afa2a4</Hash>
 </Codenesium>*/

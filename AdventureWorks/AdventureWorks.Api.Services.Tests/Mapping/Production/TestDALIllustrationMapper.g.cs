@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALIllustrationMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALIllustrationMapper();
 			ApiIllustrationServerRequestModel model = new ApiIllustrationServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"));
-			Illustration response = mapper.MapModelToBO(1, model);
+			Illustration response = mapper.MapModelToEntity(1, model);
 
 			response.Diagram.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALIllustrationMapper();
 			Illustration item = new Illustration();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
-			ApiIllustrationServerResponseModel response = mapper.MapBOToModel(item);
+			ApiIllustrationServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Diagram.Should().Be("A");
 			response.IllustrationID.Should().Be(1);
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALIllustrationMapper();
 			Illustration item = new Illustration();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
-			List<ApiIllustrationServerResponseModel> response = mapper.MapBOToModel(new List<Illustration>() { { item} });
+			List<ApiIllustrationServerResponseModel> response = mapper.MapEntityToModel(new List<Illustration>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c898add701635cbc8601fd7ab6999961</Hash>
+    <Hash>ec516183a0dd38eeaa94b8df025ab9f0</Hash>
 </Codenesium>*/

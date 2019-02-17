@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALCultureMapper
 	{
-		Culture MapModelToBO(
+		Culture MapModelToEntity(
 			string cultureID,
 			ApiCultureServerRequestModel model);
 
-		ApiCultureServerResponseModel MapBOToModel(
+		ApiCultureServerResponseModel MapEntityToModel(
 			Culture item);
 
-		List<ApiCultureServerResponseModel> MapBOToModel(
+		List<ApiCultureServerResponseModel> MapEntityToModel(
 			List<Culture> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>65472a65af522494122f7c59b7927983</Hash>
+    <Hash>0661dc964709c942a128555b5b3a8b21</Hash>
 </Codenesium>*/

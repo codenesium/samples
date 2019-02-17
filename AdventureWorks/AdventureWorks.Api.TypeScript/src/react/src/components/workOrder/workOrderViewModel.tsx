@@ -46,9 +46,13 @@ export default class WorkOrderViewModel {
     this.stockedQty = stockedQty;
     this.workOrderID = workOrderID;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>75050a4557a06840af602bf21fbb7d3f</Hash>
+    <Hash>59d941316da6769b17742d85b91d2948</Hash>
 </Codenesium>*/

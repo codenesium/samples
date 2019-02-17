@@ -22,9 +22,13 @@ export default class JobCandidateViewModel {
     this.modifiedDate = modifiedDate;
     this.resume = resume;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>4b61cdd089828aa98709398095167d4d</Hash>
+    <Hash>31a59e90f0e7bdfbf8148232489624af</Hash>
 </Codenesium>*/

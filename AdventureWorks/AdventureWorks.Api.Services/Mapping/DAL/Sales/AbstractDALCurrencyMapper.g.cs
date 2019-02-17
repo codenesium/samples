@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALCurrencyMapper
 	{
-		public virtual Currency MapModelToBO(
+		public virtual Currency MapModelToEntity(
 			string currencyCode,
 			ApiCurrencyServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiCurrencyServerResponseModel MapBOToModel(
+		public virtual ApiCurrencyServerResponseModel MapEntityToModel(
 			Currency item)
 		{
 			var model = new ApiCurrencyServerResponseModel();
 
-			model.SetProperties(item.CurrencyCode, item.ModifiedDate, item.Name);
+			model.SetProperties(item.CurrencyCode,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCurrencyServerResponseModel> MapBOToModel(
+		public virtual List<ApiCurrencyServerResponseModel> MapEntityToModel(
 			List<Currency> items)
 		{
 			List<ApiCurrencyServerResponseModel> response = new List<ApiCurrencyServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31cd04b447eb688e70224426733d9eba</Hash>
+    <Hash>352e6a8eb98aeee3bd039abf2383a275</Hash>
 </Codenesium>*/

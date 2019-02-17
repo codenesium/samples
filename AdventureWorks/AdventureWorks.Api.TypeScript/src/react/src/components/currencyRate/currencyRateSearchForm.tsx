@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CurrencyRateMapper from './currencyRateMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import CurrencyRateViewModel from './currencyRateViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class CurrencyRateSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.CurrencyRateClientResponseModel>(),
-    filteredRecords: new Array<Api.CurrencyRateClientResponseModel>(),
+    records: new Array<CurrencyRateViewModel>(),
+    filteredRecords: new Array<CurrencyRateViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class CurrencyRateSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.CurrencyRateClientResponseModel) {
-    this.props.history.push('/currencyrates/edit/' + row.currencyRateID);
+    this.props.history.push(
+      ClientRoutes.CurrencyRates + '/edit/' + row.currencyRateID
+    );
   }
 
   handleDetailClick(e: any, row: Api.CurrencyRateClientResponseModel) {
-    this.props.history.push('/currencyrates/' + row.currencyRateID);
+    this.props.history.push(
+      ClientRoutes.CurrencyRates + '/' + row.currencyRateID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/currencyrates/create');
+    this.props.history.push(ClientRoutes.CurrencyRates + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.CurrencyRateClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'currencyrates/' + row.currencyRateID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.CurrencyRates +
+          '/' +
+          row.currencyRateID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class CurrencyRateSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'currencyrates' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.CurrencyRates + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -144,7 +157,9 @@ export default class CurrencyRateSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -231,7 +246,21 @@ export default class CurrencyRateSearchComponent extends React.Component<
                     accessor: 'fromCurrencyCode',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.fromCurrencyCode)}</span>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Currencies +
+                                '/' +
+                                props.original.fromCurrencyCode
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.fromCurrencyCodeNavigation.toDisplay()
+                          )}
+                        </a>
                       );
                     },
                   },
@@ -247,7 +276,21 @@ export default class CurrencyRateSearchComponent extends React.Component<
                     accessor: 'toCurrencyCode',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.toCurrencyCode)}</span>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Currencies +
+                                '/' +
+                                props.original.toCurrencyCode
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.toCurrencyCodeNavigation.toDisplay()
+                          )}
+                        </a>
                       );
                     },
                   },
@@ -299,17 +342,13 @@ export default class CurrencyRateSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>5155bb74b6f5372c4dc99f86901a99fd</Hash>
+    <Hash>ffaf776fcb63f4bdcfd88efae2fa0a38</Hash>
 </Codenesium>*/

@@ -66,9 +66,13 @@ export default class EmployeeViewModel {
     this.sickLeaveHour = sickLeaveHour;
     this.vacationHour = vacationHour;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>52d383590aebc17c8681dfe9dfb5df4c</Hash>
+    <Hash>80ec79571e3b995a408e3d3b4cb6cbe9</Hash>
 </Codenesium>*/

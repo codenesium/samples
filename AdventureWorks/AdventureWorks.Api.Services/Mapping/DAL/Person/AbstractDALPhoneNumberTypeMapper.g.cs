@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALPhoneNumberTypeMapper
 	{
-		public virtual PhoneNumberType MapModelToBO(
+		public virtual PhoneNumberType MapModelToEntity(
 			int phoneNumberTypeID,
 			ApiPhoneNumberTypeServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiPhoneNumberTypeServerResponseModel MapBOToModel(
+		public virtual ApiPhoneNumberTypeServerResponseModel MapEntityToModel(
 			PhoneNumberType item)
 		{
 			var model = new ApiPhoneNumberTypeServerResponseModel();
 
-			model.SetProperties(item.PhoneNumberTypeID, item.ModifiedDate, item.Name);
+			model.SetProperties(item.PhoneNumberTypeID,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiPhoneNumberTypeServerResponseModel> MapBOToModel(
+		public virtual List<ApiPhoneNumberTypeServerResponseModel> MapEntityToModel(
 			List<PhoneNumberType> items)
 		{
 			List<ApiPhoneNumberTypeServerResponseModel> response = new List<ApiPhoneNumberTypeServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9be665eb076f676001102ca13a0d9f3e</Hash>
+    <Hash>5364f60e7a4a6fa7c00389ab8404fa03</Hash>
 </Codenesium>*/

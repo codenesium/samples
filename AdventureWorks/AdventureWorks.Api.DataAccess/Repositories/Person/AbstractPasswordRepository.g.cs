@@ -101,7 +101,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			return await this.Context.Set<Password>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Password>();
+			return await this.Context.Set<Password>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Password>();
 		}
 
 		private async Task<Password> GetById(int businessEntityID)
@@ -114,5 +116,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9e846d229051097e8f3a63b0422b790a</Hash>
+    <Hash>95a39adefaa65dda43a1f46344e98429</Hash>
 </Codenesium>*/

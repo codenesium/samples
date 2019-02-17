@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALProductMapper
 	{
-		public virtual Product MapModelToBO(
+		public virtual Product MapModelToEntity(
 			int productID,
 			ApiProductServerRequestModel model
 			)
@@ -41,24 +41,47 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiProductServerResponseModel MapBOToModel(
+		public virtual ApiProductServerResponseModel MapEntityToModel(
 			Product item)
 		{
 			var model = new ApiProductServerResponseModel();
 
-			model.SetProperties(item.ProductID, item.Color, item.DaysToManufacture, item.DiscontinuedDate, item.FinishedGoodsFlag, item.ListPrice, item.MakeFlag, item.ModifiedDate, item.Name, item.ProductLine, item.ProductModelID, item.ProductNumber, item.ProductSubcategoryID, item.ReorderPoint, item.Rowguid, item.SafetyStockLevel, item.SellEndDate, item.SellStartDate, item.Size, item.SizeUnitMeasureCode, item.StandardCost, item.Style, item.Weight, item.WeightUnitMeasureCode);
+			model.SetProperties(item.ProductID,
+			                    item.Color,
+			                    item.DaysToManufacture,
+			                    item.DiscontinuedDate,
+			                    item.FinishedGoodsFlag,
+			                    item.ListPrice,
+			                    item.MakeFlag,
+			                    item.ModifiedDate,
+			                    item.Name,
+			                    item.ProductLine,
+			                    item.ProductModelID,
+			                    item.ProductNumber,
+			                    item.ProductSubcategoryID,
+			                    item.ReorderPoint,
+			                    item.Rowguid,
+			                    item.SafetyStockLevel,
+			                    item.SellEndDate,
+			                    item.SellStartDate,
+			                    item.Size,
+			                    item.SizeUnitMeasureCode,
+			                    item.StandardCost,
+			                    item.Style,
+			                    item.Weight,
+			                    item.WeightUnitMeasureCode);
 
 			return model;
 		}
 
-		public virtual List<ApiProductServerResponseModel> MapBOToModel(
+		public virtual List<ApiProductServerResponseModel> MapEntityToModel(
 			List<Product> items)
 		{
 			List<ApiProductServerResponseModel> response = new List<ApiProductServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -67,5 +90,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4f4fe289f195d77eadf58c93a7b872c2</Hash>
+    <Hash>4ba1055a867d41e8ef216a7182bc9bf5</Hash>
 </Codenesium>*/

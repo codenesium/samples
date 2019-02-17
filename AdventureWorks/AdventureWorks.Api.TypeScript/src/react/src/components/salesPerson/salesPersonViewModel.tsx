@@ -1,3 +1,5 @@
+import SalesTerritoryViewModel from '../salesTerritory/salesTerritoryViewModel';
+
 export default class SalesPersonViewModel {
   bonus: number;
   businessEntityID: number;
@@ -9,6 +11,7 @@ export default class SalesPersonViewModel {
   salesYTD: number;
   territoryID: any;
   territoryIDEntity: string;
+  territoryIDNavigation?: SalesTerritoryViewModel;
 
   constructor() {
     this.bonus = 0;
@@ -21,6 +24,7 @@ export default class SalesPersonViewModel {
     this.salesYTD = 0;
     this.territoryID = undefined;
     this.territoryIDEntity = '';
+    this.territoryIDNavigation = undefined;
   }
 
   setProperties(
@@ -44,9 +48,13 @@ export default class SalesPersonViewModel {
     this.salesYTD = salesYTD;
     this.territoryID = territoryID;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>6d6e2bc371bc01d5bc3c5d1d10c65e92</Hash>
+    <Hash>40bece27f6bae1ec71a7c35b3d15478b</Hash>
 </Codenesium>*/

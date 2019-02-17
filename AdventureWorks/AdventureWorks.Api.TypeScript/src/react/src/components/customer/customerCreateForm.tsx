@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import CustomerMapper from './customerMapper';
 import CustomerViewModel from './customerViewModel';
 
@@ -270,7 +272,7 @@ const CustomerCreate = withFormik<Props, CustomerViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'customers',
+        Constants.ApiEndpoint + ApiRoutes.Customers,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -319,20 +321,18 @@ export default class CustomerCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <CustomerCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>34dc645b527c0137c526e0606b54d069</Hash>
+    <Hash>e989896dbaebca4a797f5e49cdfc2860</Hash>
 </Codenesium>*/

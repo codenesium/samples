@@ -14,9 +14,13 @@ export default class ContactTypeViewModel {
     this.modifiedDate = modifiedDate;
     this.name = name;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>c30fca29ec6bfeeab26606fb1e9a82db</Hash>
+    <Hash>71a368589c9c3148351728d26677f888</Hash>
 </Codenesium>*/

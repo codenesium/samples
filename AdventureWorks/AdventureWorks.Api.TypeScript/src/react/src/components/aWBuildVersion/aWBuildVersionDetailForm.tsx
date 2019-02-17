@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import AWBuildVersionMapper from './aWBuildVersionMapper';
 import AWBuildVersionViewModel from './aWBuildVersionViewModel';
 
 interface Props {
+  history: any;
   model?: AWBuildVersionViewModel;
 }
 
 const AWBuildVersionDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.AWBuildVersions +
+              '/edit/' +
+              model.model!.systemInformationID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="database_Version" className={'col-sm-2 col-form-label'}>
           Database Version
         </label>
         <div className="col-sm-12">{String(model.model!.database_Version)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="systemInformationID"
@@ -39,7 +52,6 @@ const AWBuildVersionDetailDisplay = (model: Props) => {
           {String(model.model!.systemInformationID)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="versionDate" className={'col-sm-2 col-form-label'}>
           VersionDate
@@ -60,6 +72,7 @@ interface IMatch {
 
 interface AWBuildVersionDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface AWBuildVersionDetailComponentState {
@@ -87,8 +100,9 @@ export default class AWBuildVersionDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'awbuildversions/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.AWBuildVersions +
+          '/' +
           this.props.match.params.systemInformationID,
         {
           headers: {
@@ -126,20 +140,23 @@ export default class AWBuildVersionDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <AWBuildVersionDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <AWBuildVersionDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>eeb93dfa011d910b30e1da6f45e89e49</Hash>
+    <Hash>ccfe6632b35943c50aa2af695ad75443</Hash>
 </Codenesium>*/

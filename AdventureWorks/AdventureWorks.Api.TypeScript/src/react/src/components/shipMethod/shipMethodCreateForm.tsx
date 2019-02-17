@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import ShipMethodMapper from './shipMethodMapper';
 import ShipMethodViewModel from './shipMethodViewModel';
 
@@ -244,7 +246,7 @@ const ShipMethodCreate = withFormik<Props, ShipMethodViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'shipmethods',
+        Constants.ApiEndpoint + ApiRoutes.ShipMethods,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -293,20 +295,18 @@ export default class ShipMethodCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <ShipMethodCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>9db3d73770fb3c0ca74c4fa087aef65e</Hash>
+    <Hash>ac58d4f1fad12a65c9b7f01675aee0a1</Hash>
 </Codenesium>*/

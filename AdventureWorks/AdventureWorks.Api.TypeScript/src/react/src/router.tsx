@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
 import { App } from './app';
-import { Dashboard } from './components/dashboard';
+import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
 import AWBuildVersionCreateComponent from './components/aWBuildVersion/aWBuildVersionCreateForm';
 import AWBuildVersionDetailComponent from './components/aWBuildVersion/aWBuildVersionDetailForm';
@@ -419,5 +419,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>5b0caad3382ed1782a853eb0abd796ac</Hash>
+    <Hash>a6b43b70dc10c4a709ebcbe41518d92d</Hash>
 </Codenesium>*/

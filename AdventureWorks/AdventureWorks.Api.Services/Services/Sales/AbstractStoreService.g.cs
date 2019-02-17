@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiStoreServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.StoreRepository.All(limit, offset, query);
+			List<Store> records = await this.StoreRepository.All(limit, offset, query);
 
-			return this.DalStoreMapper.MapBOToModel(records);
+			return this.DalStoreMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiStoreServerResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.StoreRepository.Get(businessEntityID);
+			Store record = await this.StoreRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalStoreMapper.MapBOToModel(record);
+				return this.DalStoreMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalStoreMapper.MapModelToBO(default(int), model);
-				var record = await this.StoreRepository.Create(bo);
+				Store record = this.DalStoreMapper.MapModelToEntity(default(int), model);
+				record = await this.StoreRepository.Create(record);
 
-				response.SetRecord(this.DalStoreMapper.MapBOToModel(record));
+				response.SetRecord(this.DalStoreMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new StoreCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalStoreMapper.MapModelToBO(businessEntityID, model);
-				await this.StoreRepository.Update(bo);
+				Store record = this.DalStoreMapper.MapModelToEntity(businessEntityID, model);
+				await this.StoreRepository.Update(record);
 
-				var record = await this.StoreRepository.Get(businessEntityID);
+				record = await this.StoreRepository.Get(businessEntityID);
 
-				var apiModel = this.DalStoreMapper.MapBOToModel(record);
+				ApiStoreServerResponseModel apiModel = this.DalStoreMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new StoreUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiStoreServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalStoreMapper.MapBOToModel(record);
+				return this.DalStoreMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -135,25 +135,25 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Store> records = await this.StoreRepository.BySalesPersonID(salesPersonID, limit, offset);
 
-			return this.DalStoreMapper.MapBOToModel(records);
+			return this.DalStoreMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiStoreServerResponseModel>> ByDemographic(string demographic, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Store> records = await this.StoreRepository.ByDemographic(demographic, limit, offset);
 
-			return this.DalStoreMapper.MapBOToModel(records);
+			return this.DalStoreMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiCustomerServerResponseModel>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Customer> records = await this.StoreRepository.CustomersByStoreID(storeID, limit, offset);
 
-			return this.DalCustomerMapper.MapBOToModel(records);
+			return this.DalCustomerMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>54fadc128966457b67d68db47a17c1c5</Hash>
+    <Hash>a8ba08b769c7febd8d020ec18da839ac</Hash>
 </Codenesium>*/

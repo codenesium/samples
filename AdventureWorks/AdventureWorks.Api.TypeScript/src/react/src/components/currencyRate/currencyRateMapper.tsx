@@ -1,6 +1,6 @@
 import * as Api from '../../api/models';
 import CurrencyRateViewModel from './currencyRateViewModel';
-
+import CurrencyViewModel from '../currency/currencyViewModel';
 export default class CurrencyRateMapper {
   mapApiResponseToViewModel(
     dto: Api.CurrencyRateClientResponseModel
@@ -15,6 +15,24 @@ export default class CurrencyRateMapper {
       dto.modifiedDate,
       dto.toCurrencyCode
     );
+
+    if (dto.fromCurrencyCodeNavigation != null) {
+      response.fromCurrencyCodeNavigation = new CurrencyViewModel();
+      response.fromCurrencyCodeNavigation.setProperties(
+        dto.fromCurrencyCodeNavigation.currencyCode,
+        dto.fromCurrencyCodeNavigation.modifiedDate,
+        dto.fromCurrencyCodeNavigation.name
+      );
+    }
+    if (dto.toCurrencyCodeNavigation != null) {
+      response.toCurrencyCodeNavigation = new CurrencyViewModel();
+      response.toCurrencyCodeNavigation.setProperties(
+        dto.toCurrencyCodeNavigation.currencyCode,
+        dto.toCurrencyCodeNavigation.modifiedDate,
+        dto.toCurrencyCodeNavigation.name
+      );
+    }
+
     return response;
   }
 
@@ -37,5 +55,5 @@ export default class CurrencyRateMapper {
 
 
 /*<Codenesium>
-    <Hash>f44107e4586aee42dbb6e52a14174984</Hash>
+    <Hash>9f2d592e8720bd7ef424a771c5c4d4a0</Hash>
 </Codenesium>*/

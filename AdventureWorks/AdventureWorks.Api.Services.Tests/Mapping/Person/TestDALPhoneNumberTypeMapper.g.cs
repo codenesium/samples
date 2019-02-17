@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALPhoneNumberTypeMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALPhoneNumberTypeMapper();
 			ApiPhoneNumberTypeServerRequestModel model = new ApiPhoneNumberTypeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			PhoneNumberType response = mapper.MapModelToBO(1, model);
+			PhoneNumberType response = mapper.MapModelToEntity(1, model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALPhoneNumberTypeMapper();
 			PhoneNumberType item = new PhoneNumberType();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiPhoneNumberTypeServerResponseModel response = mapper.MapBOToModel(item);
+			ApiPhoneNumberTypeServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALPhoneNumberTypeMapper();
 			PhoneNumberType item = new PhoneNumberType();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiPhoneNumberTypeServerResponseModel> response = mapper.MapBOToModel(new List<PhoneNumberType>() { { item} });
+			List<ApiPhoneNumberTypeServerResponseModel> response = mapper.MapEntityToModel(new List<PhoneNumberType>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1533990700ddfa7d4b7b9f686574911a</Hash>
+    <Hash>2017ace22b10ad2baef1859ee76db421</Hash>
 </Codenesium>*/

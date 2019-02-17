@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -179,5 +179,5 @@ export default class FileTypeCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>706e1a492a44245b855a60fb17e60e64</Hash>
+    <Hash>f949ad7be5b514cc5a6503fcf3dc0e5d</Hash>
 </Codenesium>*/

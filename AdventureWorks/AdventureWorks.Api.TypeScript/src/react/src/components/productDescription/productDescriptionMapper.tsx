@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import ProductDescriptionViewModel from './productDescriptionViewModel';
-
 export default class ProductDescriptionMapper {
   mapApiResponseToViewModel(
     dto: Api.ProductDescriptionClientResponseModel
@@ -12,6 +11,7 @@ export default class ProductDescriptionMapper {
       dto.productDescriptionID,
       dto.rowguid
     );
+
     return response;
   }
 
@@ -31,5 +31,5 @@ export default class ProductDescriptionMapper {
 
 
 /*<Codenesium>
-    <Hash>b399992097b27f9d037d7170d0428b2d</Hash>
+    <Hash>04c35baecf9d7e9e1ca82dc08d21443d</Hash>
 </Codenesium>*/

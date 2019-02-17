@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiCultureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CultureRepository.All(limit, offset, query);
+			List<Culture> records = await this.CultureRepository.All(limit, offset, query);
 
-			return this.DalCultureMapper.MapBOToModel(records);
+			return this.DalCultureMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCultureServerResponseModel> Get(string cultureID)
 		{
-			var record = await this.CultureRepository.Get(cultureID);
+			Culture record = await this.CultureRepository.Get(cultureID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalCultureMapper.MapBOToModel(record);
+				return this.DalCultureMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalCultureMapper.MapModelToBO(default(string), model);
-				var record = await this.CultureRepository.Create(bo);
+				Culture record = this.DalCultureMapper.MapModelToEntity(default(string), model);
+				record = await this.CultureRepository.Create(record);
 
-				response.SetRecord(this.DalCultureMapper.MapBOToModel(record));
+				response.SetRecord(this.DalCultureMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CultureCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalCultureMapper.MapModelToBO(cultureID, model);
-				await this.CultureRepository.Update(bo);
+				Culture record = this.DalCultureMapper.MapModelToEntity(cultureID, model);
+				await this.CultureRepository.Update(record);
 
-				var record = await this.CultureRepository.Get(cultureID);
+				record = await this.CultureRepository.Get(cultureID);
 
-				var apiModel = this.DalCultureMapper.MapBOToModel(record);
+				ApiCultureServerResponseModel apiModel = this.DalCultureMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CultureUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCultureServerResponseModel>.UpdateResponse(apiModel);
@@ -123,12 +123,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalCultureMapper.MapBOToModel(record);
+				return this.DalCultureMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>772f978e7d8e44ac86c5698f3758192c</Hash>
+    <Hash>5168c67192cf1c130753da1a3abcc18f</Hash>
 </Codenesium>*/

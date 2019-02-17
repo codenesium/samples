@@ -18,9 +18,13 @@ export default class IllustrationViewModel {
     this.illustrationID = illustrationID;
     this.modifiedDate = modifiedDate;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>1856702d2b25b2e3447d3c756b5df0fe</Hash>
+    <Hash>45751f3ba266bdf21310ccfca187036b</Hash>
 </Codenesium>*/

@@ -32,7 +32,7 @@ namespace TicketingCRMNS.Api.Services
 			{
 				var countryIdModel = new ApiCountryServerResponseModel();
 				countryIdModel.SetProperties(
-					item.Id,
+					item.CountryIdNavigation.Id,
 					item.CountryIdNavigation.Name);
 
 				model.SetCountryIdNavigation(countryIdModel);
@@ -57,5 +57,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5b15687177ed1a0ece4016ac2111186</Hash>
+    <Hash>b718de42d3ad782ff54182decac2ce80</Hash>
 </Codenesium>*/

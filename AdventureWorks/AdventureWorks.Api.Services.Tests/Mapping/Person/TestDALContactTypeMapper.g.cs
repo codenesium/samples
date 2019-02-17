@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALContactTypeMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALContactTypeMapper();
 			ApiContactTypeServerRequestModel model = new ApiContactTypeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ContactType response = mapper.MapModelToBO(1, model);
+			ContactType response = mapper.MapModelToEntity(1, model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALContactTypeMapper();
 			ContactType item = new ContactType();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiContactTypeServerResponseModel response = mapper.MapBOToModel(item);
+			ApiContactTypeServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ContactTypeID.Should().Be(1);
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALContactTypeMapper();
 			ContactType item = new ContactType();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiContactTypeServerResponseModel> response = mapper.MapBOToModel(new List<ContactType>() { { item} });
+			List<ApiContactTypeServerResponseModel> response = mapper.MapEntityToModel(new List<ContactType>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ed3d88434b32ecc9d6f8fbc5d301691</Hash>
+    <Hash>65eeb5494a9ad6d675bebac6e469319c</Hash>
 </Codenesium>*/

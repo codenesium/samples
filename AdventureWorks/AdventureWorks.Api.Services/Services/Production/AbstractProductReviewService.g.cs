@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiProductReviewServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductReviewRepository.All(limit, offset, query);
+			List<ProductReview> records = await this.ProductReviewRepository.All(limit, offset, query);
 
-			return this.DalProductReviewMapper.MapBOToModel(records);
+			return this.DalProductReviewMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiProductReviewServerResponseModel> Get(int productReviewID)
 		{
-			var record = await this.ProductReviewRepository.Get(productReviewID);
+			ProductReview record = await this.ProductReviewRepository.Get(productReviewID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductReviewMapper.MapBOToModel(record);
+				return this.DalProductReviewMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalProductReviewMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductReviewRepository.Create(bo);
+				ProductReview record = this.DalProductReviewMapper.MapModelToEntity(default(int), model);
+				record = await this.ProductReviewRepository.Create(record);
 
-				response.SetRecord(this.DalProductReviewMapper.MapBOToModel(record));
+				response.SetRecord(this.DalProductReviewMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ProductReviewCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalProductReviewMapper.MapModelToBO(productReviewID, model);
-				await this.ProductReviewRepository.Update(bo);
+				ProductReview record = this.DalProductReviewMapper.MapModelToEntity(productReviewID, model);
+				await this.ProductReviewRepository.Update(record);
 
-				var record = await this.ProductReviewRepository.Get(productReviewID);
+				record = await this.ProductReviewRepository.Get(productReviewID);
 
-				var apiModel = this.DalProductReviewMapper.MapBOToModel(record);
+				ApiProductReviewServerResponseModel apiModel = this.DalProductReviewMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ProductReviewUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductReviewServerResponseModel>.UpdateResponse(apiModel);
@@ -117,11 +117,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ProductReview> records = await this.ProductReviewRepository.ByProductIDReviewerName(productID, reviewerName, limit, offset);
 
-			return this.DalProductReviewMapper.MapBOToModel(records);
+			return this.DalProductReviewMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>576ba0a05aa59bcfa4546aa63599ef4b</Hash>
+    <Hash>23b65403046bf29e1b782b7b895d3016</Hash>
 </Codenesium>*/

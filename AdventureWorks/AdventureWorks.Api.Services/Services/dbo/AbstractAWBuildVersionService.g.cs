@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiAWBuildVersionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AWBuildVersionRepository.All(limit, offset, query);
+			List<AWBuildVersion> records = await this.AWBuildVersionRepository.All(limit, offset, query);
 
-			return this.DalAWBuildVersionMapper.MapBOToModel(records);
+			return this.DalAWBuildVersionMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiAWBuildVersionServerResponseModel> Get(int systemInformationID)
 		{
-			var record = await this.AWBuildVersionRepository.Get(systemInformationID);
+			AWBuildVersion record = await this.AWBuildVersionRepository.Get(systemInformationID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalAWBuildVersionMapper.MapBOToModel(record);
+				return this.DalAWBuildVersionMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalAWBuildVersionMapper.MapModelToBO(default(int), model);
-				var record = await this.AWBuildVersionRepository.Create(bo);
+				AWBuildVersion record = this.DalAWBuildVersionMapper.MapModelToEntity(default(int), model);
+				record = await this.AWBuildVersionRepository.Create(record);
 
-				response.SetRecord(this.DalAWBuildVersionMapper.MapBOToModel(record));
+				response.SetRecord(this.DalAWBuildVersionMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new AWBuildVersionCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalAWBuildVersionMapper.MapModelToBO(systemInformationID, model);
-				await this.AWBuildVersionRepository.Update(bo);
+				AWBuildVersion record = this.DalAWBuildVersionMapper.MapModelToEntity(systemInformationID, model);
+				await this.AWBuildVersionRepository.Update(record);
 
-				var record = await this.AWBuildVersionRepository.Get(systemInformationID);
+				record = await this.AWBuildVersionRepository.Get(systemInformationID);
 
-				var apiModel = this.DalAWBuildVersionMapper.MapBOToModel(record);
+				ApiAWBuildVersionServerResponseModel apiModel = this.DalAWBuildVersionMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AWBuildVersionUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAWBuildVersionServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>675d9d1085984982fd0100bd249f5bc9</Hash>
+    <Hash>58c44ea4364761ab5d591b0aef040c00</Hash>
 </Codenesium>*/

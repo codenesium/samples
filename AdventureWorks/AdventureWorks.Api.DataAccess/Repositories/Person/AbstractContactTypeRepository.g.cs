@@ -91,7 +91,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ContactType_Name.
 		public async virtual Task<ContactType> ByName(string name)
 		{
-			return await this.Context.Set<ContactType>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ContactType>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<ContactType>> Where(
@@ -105,7 +107,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ContactTypeID;
 			}
 
-			return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ContactType>();
+			return await this.Context.Set<ContactType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ContactType>();
 		}
 
 		private async Task<ContactType> GetById(int contactTypeID)
@@ -118,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8456dadcfc36369a042cbafd94a4f495</Hash>
+    <Hash>9282449535c0d87612ca866dc117f178</Hash>
 </Codenesium>*/

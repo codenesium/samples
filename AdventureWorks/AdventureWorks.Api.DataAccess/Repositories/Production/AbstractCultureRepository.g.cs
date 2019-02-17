@@ -91,7 +91,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Culture_Name.
 		public async virtual Task<Culture> ByName(string name)
 		{
-			return await this.Context.Set<Culture>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Culture>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<Culture>> Where(
@@ -105,7 +107,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.CultureID;
 			}
 
-			return await this.Context.Set<Culture>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Culture>();
+			return await this.Context.Set<Culture>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Culture>();
 		}
 
 		private async Task<Culture> GetById(string cultureID)
@@ -118,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>72caa31205f0011b0861e10cd52e99c1</Hash>
+    <Hash>c76194aab39a65c408c3b6f823810d6d</Hash>
 </Codenesium>*/

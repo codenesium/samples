@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALPurchaseOrderHeaderMapper
 	{
-		PurchaseOrderHeader MapModelToBO(
+		PurchaseOrderHeader MapModelToEntity(
 			int purchaseOrderID,
 			ApiPurchaseOrderHeaderServerRequestModel model);
 
-		ApiPurchaseOrderHeaderServerResponseModel MapBOToModel(
+		ApiPurchaseOrderHeaderServerResponseModel MapEntityToModel(
 			PurchaseOrderHeader item);
 
-		List<ApiPurchaseOrderHeaderServerResponseModel> MapBOToModel(
+		List<ApiPurchaseOrderHeaderServerResponseModel> MapEntityToModel(
 			List<PurchaseOrderHeader> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0501da6890516dde2901f0f77b505340</Hash>
+    <Hash>4b75ab5efe5c237c73d9691343e3079e</Hash>
 </Codenesium>*/

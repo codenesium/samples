@@ -61,9 +61,17 @@ namespace AdventureWorksNS.Api.Services
 
 		[JsonProperty]
 		public string TerritoryIDEntity { get; private set; } = RouteConstants.SalesTerritories;
+
+		[JsonProperty]
+		public ApiSalesTerritoryServerResponseModel TerritoryIDNavigation { get; private set; }
+
+		public void SetTerritoryIDNavigation(ApiSalesTerritoryServerResponseModel value)
+		{
+			this.TerritoryIDNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e3ae729ff96ee41b7c6835bb42dfbe2</Hash>
+    <Hash>fc2caf21e6c8598ae857a4d11d2c1771</Hash>
 </Codenesium>*/

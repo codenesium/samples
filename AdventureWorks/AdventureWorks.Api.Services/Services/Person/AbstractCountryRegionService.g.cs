@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiCountryRegionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CountryRegionRepository.All(limit, offset, query);
+			List<CountryRegion> records = await this.CountryRegionRepository.All(limit, offset, query);
 
-			return this.DalCountryRegionMapper.MapBOToModel(records);
+			return this.DalCountryRegionMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCountryRegionServerResponseModel> Get(string countryRegionCode)
 		{
-			var record = await this.CountryRegionRepository.Get(countryRegionCode);
+			CountryRegion record = await this.CountryRegionRepository.Get(countryRegionCode);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalCountryRegionMapper.MapBOToModel(record);
+				return this.DalCountryRegionMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalCountryRegionMapper.MapModelToBO(default(string), model);
-				var record = await this.CountryRegionRepository.Create(bo);
+				CountryRegion record = this.DalCountryRegionMapper.MapModelToEntity(default(string), model);
+				record = await this.CountryRegionRepository.Create(record);
 
-				response.SetRecord(this.DalCountryRegionMapper.MapBOToModel(record));
+				response.SetRecord(this.DalCountryRegionMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CountryRegionCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalCountryRegionMapper.MapModelToBO(countryRegionCode, model);
-				await this.CountryRegionRepository.Update(bo);
+				CountryRegion record = this.DalCountryRegionMapper.MapModelToEntity(countryRegionCode, model);
+				await this.CountryRegionRepository.Update(record);
 
-				var record = await this.CountryRegionRepository.Get(countryRegionCode);
+				record = await this.CountryRegionRepository.Get(countryRegionCode);
 
-				var apiModel = this.DalCountryRegionMapper.MapBOToModel(record);
+				ApiCountryRegionServerResponseModel apiModel = this.DalCountryRegionMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CountryRegionUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCountryRegionServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalCountryRegionMapper.MapBOToModel(record);
+				return this.DalCountryRegionMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -135,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<StateProvince> records = await this.CountryRegionRepository.StateProvincesByCountryRegionCode(countryRegionCode, limit, offset);
 
-			return this.DalStateProvinceMapper.MapBOToModel(records);
+			return this.DalStateProvinceMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4b1a7a42e3c5b2c8ba3b2bd43f6251a</Hash>
+    <Hash>f8943ea45508e67e079a99b411fcde51</Hash>
 </Codenesium>*/

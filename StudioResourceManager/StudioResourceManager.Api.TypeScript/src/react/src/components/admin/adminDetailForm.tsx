@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -169,5 +169,5 @@ export default class AdminDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>79abc4971fcce87d48b7a646b5432fe4</Hash>
+    <Hash>62902e476bb803af68a3a58032a8ea13</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALVendorMapper
 	{
-		public virtual Vendor MapModelToBO(
+		public virtual Vendor MapModelToEntity(
 			int businessEntityID,
 			ApiVendorServerRequestModel model
 			)
@@ -25,24 +25,31 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiVendorServerResponseModel MapBOToModel(
+		public virtual ApiVendorServerResponseModel MapEntityToModel(
 			Vendor item)
 		{
 			var model = new ApiVendorServerResponseModel();
 
-			model.SetProperties(item.BusinessEntityID, item.AccountNumber, item.ActiveFlag, item.CreditRating, item.ModifiedDate, item.Name, item.PreferredVendorStatu, item.PurchasingWebServiceURL);
+			model.SetProperties(item.BusinessEntityID,
+			                    item.AccountNumber,
+			                    item.ActiveFlag,
+			                    item.CreditRating,
+			                    item.ModifiedDate,
+			                    item.Name,
+			                    item.PreferredVendorStatu,
+			                    item.PurchasingWebServiceURL);
 
 			return model;
 		}
 
-		public virtual List<ApiVendorServerResponseModel> MapBOToModel(
+		public virtual List<ApiVendorServerResponseModel> MapEntityToModel(
 			List<Vendor> items)
 		{
 			List<ApiVendorServerResponseModel> response = new List<ApiVendorServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -51,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>188b2d8adadbf1b4d336a72eb827beaa</Hash>
+    <Hash>9be40f35c4d33f249919ed9898b983c7</Hash>
 </Codenesium>*/

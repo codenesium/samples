@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALEmployeeMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALEmployeeMapper();
 			ApiEmployeeServerRequestModel model = new ApiEmployeeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-			Employee response = mapper.MapModelToBO(1, model);
+			Employee response = mapper.MapModelToEntity(1, model);
 
 			response.BirthDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.CurrentFlag.Should().Be(true);
@@ -37,12 +37,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALEmployeeMapper();
 			Employee item = new Employee();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-			ApiEmployeeServerResponseModel response = mapper.MapBOToModel(item);
+			ApiEmployeeServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.BirthDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.BusinessEntityID.Should().Be(1);
@@ -62,12 +62,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALEmployeeMapper();
 			Employee item = new Employee();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-			List<ApiEmployeeServerResponseModel> response = mapper.MapBOToModel(new List<Employee>() { { item} });
+			List<ApiEmployeeServerResponseModel> response = mapper.MapEntityToModel(new List<Employee>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb36a346c9cb9afe728a8bff0372e23e</Hash>
+    <Hash>cef066a8137657df1870e99be7b64650</Hash>
 </Codenesium>*/

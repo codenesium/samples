@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALStateProvinceMapper
 	{
-		StateProvince MapModelToBO(
+		StateProvince MapModelToEntity(
 			int stateProvinceID,
 			ApiStateProvinceServerRequestModel model);
 
-		ApiStateProvinceServerResponseModel MapBOToModel(
+		ApiStateProvinceServerResponseModel MapEntityToModel(
 			StateProvince item);
 
-		List<ApiStateProvinceServerResponseModel> MapBOToModel(
+		List<ApiStateProvinceServerResponseModel> MapEntityToModel(
 			List<StateProvince> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae6bff2fa8a179427ac34ac698b10cfb</Hash>
+    <Hash>64d628a814ddfde639e0922acfeb807d</Hash>
 </Codenesium>*/

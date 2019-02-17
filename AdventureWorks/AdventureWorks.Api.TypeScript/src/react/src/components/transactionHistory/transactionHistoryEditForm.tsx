@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import TransactionHistoryViewModel from './transactionHistoryViewModel';
 import TransactionHistoryMapper from './transactionHistoryMapper';
 
@@ -313,95 +315,96 @@ const TransactionHistoryEditDisplay = (
   );
 };
 
-const TransactionHistoryUpdate = withFormik<Props, TransactionHistoryViewModel>(
-  {
-    mapPropsToValues: props => {
-      let response = new TransactionHistoryViewModel();
-      response.setProperties(
-        props.model!.actualCost,
-        props.model!.modifiedDate,
-        props.model!.productID,
-        props.model!.quantity,
-        props.model!.referenceOrderID,
-        props.model!.referenceOrderLineID,
-        props.model!.transactionDate,
-        props.model!.transactionID,
-        props.model!.transactionType
-      );
-      return response;
-    },
+const TransactionHistoryEdit = withFormik<Props, TransactionHistoryViewModel>({
+  mapPropsToValues: props => {
+    let response = new TransactionHistoryViewModel();
+    response.setProperties(
+      props.model!.actualCost,
+      props.model!.modifiedDate,
+      props.model!.productID,
+      props.model!.quantity,
+      props.model!.referenceOrderID,
+      props.model!.referenceOrderLineID,
+      props.model!.transactionDate,
+      props.model!.transactionID,
+      props.model!.transactionType
+    );
+    return response;
+  },
 
-    // Custom sync validation
-    validate: values => {
-      let errors: FormikErrors<TransactionHistoryViewModel> = {};
+  // Custom sync validation
+  validate: values => {
+    let errors: FormikErrors<TransactionHistoryViewModel> = {};
 
-      if (values.actualCost == 0) {
-        errors.actualCost = 'Required';
-      }
-      if (values.modifiedDate == undefined) {
-        errors.modifiedDate = 'Required';
-      }
-      if (values.productID == 0) {
-        errors.productID = 'Required';
-      }
-      if (values.quantity == 0) {
-        errors.quantity = 'Required';
-      }
-      if (values.referenceOrderID == 0) {
-        errors.referenceOrderID = 'Required';
-      }
-      if (values.referenceOrderLineID == 0) {
-        errors.referenceOrderLineID = 'Required';
-      }
-      if (values.transactionDate == undefined) {
-        errors.transactionDate = 'Required';
-      }
-      if (values.transactionID == 0) {
-        errors.transactionID = 'Required';
-      }
-      if (values.transactionType == '') {
-        errors.transactionType = 'Required';
-      }
+    if (values.actualCost == 0) {
+      errors.actualCost = 'Required';
+    }
+    if (values.modifiedDate == undefined) {
+      errors.modifiedDate = 'Required';
+    }
+    if (values.productID == 0) {
+      errors.productID = 'Required';
+    }
+    if (values.quantity == 0) {
+      errors.quantity = 'Required';
+    }
+    if (values.referenceOrderID == 0) {
+      errors.referenceOrderID = 'Required';
+    }
+    if (values.referenceOrderLineID == 0) {
+      errors.referenceOrderLineID = 'Required';
+    }
+    if (values.transactionDate == undefined) {
+      errors.transactionDate = 'Required';
+    }
+    if (values.transactionID == 0) {
+      errors.transactionID = 'Required';
+    }
+    if (values.transactionType == '') {
+      errors.transactionType = 'Required';
+    }
 
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-      actions.setStatus(undefined);
+    return errors;
+  },
+  handleSubmit: (values, actions) => {
+    actions.setStatus(undefined);
 
-      let mapper = new TransactionHistoryMapper();
+    let mapper = new TransactionHistoryMapper();
 
-      axios
-        .put(
-          Constants.ApiUrl + 'transactionhistories/' + values.transactionID,
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.TransactionHistories +
+          '/' +
+          values.transactionID,
 
-          mapper.mapViewModelToApiRequest(values),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        .then(
-          resp => {
-            let response = resp.data as UpdateResponse<
-              Api.TransactionHistoryClientRequestModel
-            >;
-            actions.setStatus(response);
-            console.log(response);
+        mapper.mapViewModelToApiRequest(values),
+        {
+          headers: {
+            'Content-Type': 'application/json',
           },
-          error => {
-            console.log(error);
-            actions.setStatus('Error from API');
-          }
-        )
-        .then(response => {
-          // cleanup
-        });
-    },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as UpdateResponse<
+            Api.TransactionHistoryClientRequestModel
+          >;
+          actions.setStatus(response);
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          actions.setStatus('Error from API');
+        }
+      )
+      .then(response => {
+        // cleanup
+      });
+  },
 
-    displayName: 'TransactionHistoryEdit',
-  }
-)(TransactionHistoryEditDisplay);
+  displayName: 'TransactionHistoryEdit',
+})(TransactionHistoryEditDisplay);
 
 interface IParams {
   transactionID: number;
@@ -440,8 +443,9 @@ export default class TransactionHistoryEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'transactionhistories/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.TransactionHistories +
+          '/' +
           this.props.match.params.transactionID,
         {
           headers: {
@@ -479,20 +483,18 @@ export default class TransactionHistoryEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <TransactionHistoryUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <TransactionHistoryEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>503617737c497f8c346985f5506ac0f2</Hash>
+    <Hash>f9f5c01c11b82bb631356041938d038e</Hash>
 </Codenesium>*/

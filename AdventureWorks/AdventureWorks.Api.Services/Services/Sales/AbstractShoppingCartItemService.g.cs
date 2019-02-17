@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiShoppingCartItemServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ShoppingCartItemRepository.All(limit, offset, query);
+			List<ShoppingCartItem> records = await this.ShoppingCartItemRepository.All(limit, offset, query);
 
-			return this.DalShoppingCartItemMapper.MapBOToModel(records);
+			return this.DalShoppingCartItemMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiShoppingCartItemServerResponseModel> Get(int shoppingCartItemID)
 		{
-			var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
+			ShoppingCartItem record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalShoppingCartItemMapper.MapBOToModel(record);
+				return this.DalShoppingCartItemMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalShoppingCartItemMapper.MapModelToBO(default(int), model);
-				var record = await this.ShoppingCartItemRepository.Create(bo);
+				ShoppingCartItem record = this.DalShoppingCartItemMapper.MapModelToEntity(default(int), model);
+				record = await this.ShoppingCartItemRepository.Create(record);
 
-				response.SetRecord(this.DalShoppingCartItemMapper.MapBOToModel(record));
+				response.SetRecord(this.DalShoppingCartItemMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ShoppingCartItemCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
-				await this.ShoppingCartItemRepository.Update(bo);
+				ShoppingCartItem record = this.DalShoppingCartItemMapper.MapModelToEntity(shoppingCartItemID, model);
+				await this.ShoppingCartItemRepository.Update(record);
 
-				var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
+				record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
-				var apiModel = this.DalShoppingCartItemMapper.MapBOToModel(record);
+				ApiShoppingCartItemServerResponseModel apiModel = this.DalShoppingCartItemMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ShoppingCartItemUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiShoppingCartItemServerResponseModel>.UpdateResponse(apiModel);
@@ -117,11 +117,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ShoppingCartItem> records = await this.ShoppingCartItemRepository.ByShoppingCartIDProductID(shoppingCartID, productID, limit, offset);
 
-			return this.DalShoppingCartItemMapper.MapBOToModel(records);
+			return this.DalShoppingCartItemMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>18eb20314f3b85c3b93f176b26a5d81e</Hash>
+    <Hash>8f8a9808e0388d22168d7431d22c783a</Hash>
 </Codenesium>*/

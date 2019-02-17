@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiProductPhotoServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductPhotoRepository.All(limit, offset, query);
+			List<ProductPhoto> records = await this.ProductPhotoRepository.All(limit, offset, query);
 
-			return this.DalProductPhotoMapper.MapBOToModel(records);
+			return this.DalProductPhotoMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiProductPhotoServerResponseModel> Get(int productPhotoID)
 		{
-			var record = await this.ProductPhotoRepository.Get(productPhotoID);
+			ProductPhoto record = await this.ProductPhotoRepository.Get(productPhotoID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductPhotoMapper.MapBOToModel(record);
+				return this.DalProductPhotoMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalProductPhotoMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductPhotoRepository.Create(bo);
+				ProductPhoto record = this.DalProductPhotoMapper.MapModelToEntity(default(int), model);
+				record = await this.ProductPhotoRepository.Create(record);
 
-				response.SetRecord(this.DalProductPhotoMapper.MapBOToModel(record));
+				response.SetRecord(this.DalProductPhotoMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ProductPhotoCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalProductPhotoMapper.MapModelToBO(productPhotoID, model);
-				await this.ProductPhotoRepository.Update(bo);
+				ProductPhoto record = this.DalProductPhotoMapper.MapModelToEntity(productPhotoID, model);
+				await this.ProductPhotoRepository.Update(record);
 
-				var record = await this.ProductPhotoRepository.Get(productPhotoID);
+				record = await this.ProductPhotoRepository.Get(productPhotoID);
 
-				var apiModel = this.DalProductPhotoMapper.MapBOToModel(record);
+				ApiProductPhotoServerResponseModel apiModel = this.DalProductPhotoMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ProductPhotoUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductPhotoServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd7537d006e2a3eb67d35a9fdfeca797</Hash>
+    <Hash>303b482780ce0f9c644d2624493a46bc</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALPasswordMapper
 	{
-		public virtual Password MapModelToBO(
+		public virtual Password MapModelToEntity(
 			int businessEntityID,
 			ApiPasswordServerRequestModel model
 			)
@@ -22,24 +22,28 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiPasswordServerResponseModel MapBOToModel(
+		public virtual ApiPasswordServerResponseModel MapEntityToModel(
 			Password item)
 		{
 			var model = new ApiPasswordServerResponseModel();
 
-			model.SetProperties(item.BusinessEntityID, item.ModifiedDate, item.PasswordHash, item.PasswordSalt, item.Rowguid);
+			model.SetProperties(item.BusinessEntityID,
+			                    item.ModifiedDate,
+			                    item.PasswordHash,
+			                    item.PasswordSalt,
+			                    item.Rowguid);
 
 			return model;
 		}
 
-		public virtual List<ApiPasswordServerResponseModel> MapBOToModel(
+		public virtual List<ApiPasswordServerResponseModel> MapEntityToModel(
 			List<Password> items)
 		{
 			List<ApiPasswordServerResponseModel> response = new List<ApiPasswordServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -48,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>934cf0958b7cc4d2f018e99875ae6dfc</Hash>
+    <Hash>e3ee24125a65386c0a7da290931d3cc1</Hash>
 </Codenesium>*/

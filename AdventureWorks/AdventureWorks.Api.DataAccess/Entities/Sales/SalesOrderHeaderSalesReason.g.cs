@@ -35,23 +35,23 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int SalesReasonID { get; private set; }
 
 		[ForeignKey("SalesOrderID")]
-		public virtual SalesOrderHeader SalesOrderHeaderNavigation { get; private set; }
+		public virtual SalesOrderHeader SalesOrderIDNavigation { get; private set; }
 
-		public void SetSalesOrderHeaderNavigation(SalesOrderHeader item)
+		public void SetSalesOrderIDNavigation(SalesOrderHeader item)
 		{
-			this.SalesOrderHeaderNavigation = item;
+			this.SalesOrderIDNavigation = item;
 		}
 
 		[ForeignKey("SalesReasonID")]
-		public virtual SalesReason SalesReasonNavigation { get; private set; }
+		public virtual SalesReason SalesReasonIDNavigation { get; private set; }
 
-		public void SetSalesReasonNavigation(SalesReason item)
+		public void SetSalesReasonIDNavigation(SalesReason item)
 		{
-			this.SalesReasonNavigation = item;
+			this.SalesReasonIDNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ac3e751eeb4f4d4f70da04d8200e1b2</Hash>
+    <Hash>bfdffa5bb95a3c59f29eb279f4b3ee8e</Hash>
 </Codenesium>*/

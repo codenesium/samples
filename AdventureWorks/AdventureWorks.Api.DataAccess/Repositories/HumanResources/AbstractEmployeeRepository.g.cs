@@ -103,25 +103,32 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Employee_LoginID.
 		public async virtual Task<Employee> ByLoginID(string loginID)
 		{
-			return await this.Context.Set<Employee>().FirstOrDefaultAsync(x => x.LoginID == loginID);
+			return await this.Context.Set<Employee>()
+
+			       .FirstOrDefaultAsync(x => x.LoginID == loginID);
 		}
 
 		// unique constraint AK_Employee_NationalIDNumber.
 		public async virtual Task<Employee> ByNationalIDNumber(string nationalIDNumber)
 		{
-			return await this.Context.Set<Employee>().FirstOrDefaultAsync(x => x.NationalIDNumber == nationalIDNumber);
+			return await this.Context.Set<Employee>()
+
+			       .FirstOrDefaultAsync(x => x.NationalIDNumber == nationalIDNumber);
 		}
 
 		// unique constraint AK_Employee_rowguid.
 		public async virtual Task<Employee> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Employee>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Employee>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table JobCandidate via businessEntityID.
 		public async virtual Task<List<JobCandidate>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<JobCandidate>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<JobCandidate>();
+			return await this.Context.Set<JobCandidate>()
+			       .Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<JobCandidate>();
 		}
 
 		protected async Task<List<Employee>> Where(
@@ -135,7 +142,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
+			return await this.Context.Set<Employee>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
 		}
 
 		private async Task<Employee> GetById(int businessEntityID)
@@ -148,5 +157,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e65a915cb8c0986e2366253cc64d2cff</Hash>
+    <Hash>65e1501df6b7ec0898e2d55b3186c32f</Hash>
 </Codenesium>*/

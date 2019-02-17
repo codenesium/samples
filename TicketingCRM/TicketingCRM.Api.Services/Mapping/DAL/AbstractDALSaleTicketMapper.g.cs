@@ -32,7 +32,7 @@ namespace TicketingCRMNS.Api.Services
 			{
 				var saleIdModel = new ApiSaleServerResponseModel();
 				saleIdModel.SetProperties(
-					item.Id,
+					item.SaleIdNavigation.Id,
 					item.SaleIdNavigation.IpAddress,
 					item.SaleIdNavigation.Note,
 					item.SaleIdNavigation.SaleDate,
@@ -45,7 +45,7 @@ namespace TicketingCRMNS.Api.Services
 			{
 				var ticketIdModel = new ApiTicketServerResponseModel();
 				ticketIdModel.SetProperties(
-					item.Id,
+					item.TicketIdNavigation.Id,
 					item.TicketIdNavigation.PublicId,
 					item.TicketIdNavigation.TicketStatusId);
 
@@ -71,5 +71,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>32121a9087cea28af928a36222477b5f</Hash>
+    <Hash>f65d476b6a3b74ccff334075f3e8a468</Hash>
 </Codenesium>*/

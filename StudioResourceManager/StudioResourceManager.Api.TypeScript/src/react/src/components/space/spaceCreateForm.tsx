@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -215,5 +215,5 @@ export default class SpaceCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7ffe7771ee0b3def0520cf2f66d6705d</Hash>
+    <Hash>97c17543f4acd86b4d3fbd8ae2e6bacb</Hash>
 </Codenesium>*/

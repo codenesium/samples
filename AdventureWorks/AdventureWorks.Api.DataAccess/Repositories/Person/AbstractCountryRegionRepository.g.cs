@@ -91,13 +91,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_CountryRegion_Name.
 		public async virtual Task<CountryRegion> ByName(string name)
 		{
-			return await this.Context.Set<CountryRegion>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<CountryRegion>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table StateProvince via countryRegionCode.
 		public async virtual Task<List<StateProvince>> StateProvincesByCountryRegionCode(string countryRegionCode, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<StateProvince>().Where(x => x.CountryRegionCode == countryRegionCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<StateProvince>();
+			return await this.Context.Set<StateProvince>()
+			       .Where(x => x.CountryRegionCode == countryRegionCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<StateProvince>();
 		}
 
 		protected async Task<List<CountryRegion>> Where(
@@ -111,7 +114,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.CountryRegionCode;
 			}
 
-			return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRegion>();
+			return await this.Context.Set<CountryRegion>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRegion>();
 		}
 
 		private async Task<CountryRegion> GetById(string countryRegionCode)
@@ -124,5 +129,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa144dbde326759c57be2d787dfc93a7</Hash>
+    <Hash>1d8fabf90add04791399f1ba95f4eb4a</Hash>
 </Codenesium>*/

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import EmployeeViewModel from './employeeViewModel';
 import EmployeeMapper from './employeeMapper';
 
@@ -469,7 +471,7 @@ const EmployeeEditDisplay = (props: FormikProps<EmployeeViewModel>) => {
   );
 };
 
-const EmployeeUpdate = withFormik<Props, EmployeeViewModel>({
+const EmployeeEdit = withFormik<Props, EmployeeViewModel>({
   mapPropsToValues: props => {
     let response = new EmployeeViewModel();
     response.setProperties(
@@ -502,9 +504,6 @@ const EmployeeUpdate = withFormik<Props, EmployeeViewModel>({
     if (values.businessEntityID == 0) {
       errors.businessEntityID = 'Required';
     }
-    if (values.currentFlag == false) {
-      errors.currentFlag = 'Required';
-    }
     if (values.gender == '') {
       errors.gender = 'Required';
     }
@@ -529,9 +528,6 @@ const EmployeeUpdate = withFormik<Props, EmployeeViewModel>({
     if (values.rowguid == undefined) {
       errors.rowguid = 'Required';
     }
-    if (values.salariedFlag == false) {
-      errors.salariedFlag = 'Required';
-    }
     if (values.sickLeaveHour == 0) {
       errors.sickLeaveHour = 'Required';
     }
@@ -548,7 +544,10 @@ const EmployeeUpdate = withFormik<Props, EmployeeViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'employees/' + values.businessEntityID,
+        Constants.ApiEndpoint +
+          ApiRoutes.Employees +
+          '/' +
+          values.businessEntityID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -615,8 +614,9 @@ export default class EmployeeEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'employees/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.Employees +
+          '/' +
           this.props.match.params.businessEntityID,
         {
           headers: {
@@ -654,20 +654,18 @@ export default class EmployeeEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <EmployeeUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <EmployeeEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>eb77838d8a54e11e370ef6847e0cf18f</Hash>
+    <Hash>a58a52aef8e6ff16b59e0ef6290547e6</Hash>
 </Codenesium>*/

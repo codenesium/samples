@@ -1,12 +1,12 @@
 import * as Api from '../../api/models';
 import IllustrationViewModel from './illustrationViewModel';
-
 export default class IllustrationMapper {
   mapApiResponseToViewModel(
     dto: Api.IllustrationClientResponseModel
   ): IllustrationViewModel {
     let response = new IllustrationViewModel();
     response.setProperties(dto.diagram, dto.illustrationID, dto.modifiedDate);
+
     return response;
   }
 
@@ -25,5 +25,5 @@ export default class IllustrationMapper {
 
 
 /*<Codenesium>
-    <Hash>2b11de1f50c55171a8d9d6134c4eb26a</Hash>
+    <Hash>9e7937a30ff3d1d35048db5775a2aa3a</Hash>
 </Codenesium>*/

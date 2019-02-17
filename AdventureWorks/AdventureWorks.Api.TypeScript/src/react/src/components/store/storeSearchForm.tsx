@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import StoreMapper from './storeMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import StoreViewModel from './storeViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class StoreSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.StoreClientResponseModel>(),
-    filteredRecords: new Array<Api.StoreClientResponseModel>(),
+    records: new Array<StoreViewModel>(),
+    filteredRecords: new Array<StoreViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,29 @@ export default class StoreSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.StoreClientResponseModel) {
-    this.props.history.push('/stores/edit/' + row.businessEntityID);
+    this.props.history.push(
+      ClientRoutes.Stores + '/edit/' + row.businessEntityID
+    );
   }
 
   handleDetailClick(e: any, row: Api.StoreClientResponseModel) {
-    this.props.history.push('/stores/' + row.businessEntityID);
+    this.props.history.push(ClientRoutes.Stores + '/' + row.businessEntityID);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/stores/create');
+    this.props.history.push(ClientRoutes.Stores + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.StoreClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'stores/' + row.businessEntityID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint + ApiRoutes.Stores + '/' + row.businessEntityID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +100,8 @@ export default class StoreSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'stores' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.Stores + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +150,9 @@ export default class StoreSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -234,7 +244,21 @@ export default class StoreSearchComponent extends React.Component<
                     accessor: 'salesPersonID',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.salesPersonID)}</span>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.SalesPersons +
+                                '/' +
+                                props.original.salesPersonID
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.salesPersonIDNavigation.toDisplay()
+                          )}
+                        </a>
                       );
                     },
                   },
@@ -286,17 +310,13 @@ export default class StoreSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>74024ead47c42c3d44117d8cdec3c409</Hash>
+    <Hash>e0e1a0cc4659da99cdde99b89a17ff6a</Hash>
 </Codenesium>*/

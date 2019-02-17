@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALLocationMapper
 	{
-		public virtual Location MapModelToBO(
+		public virtual Location MapModelToEntity(
 			short locationID,
 			ApiLocationServerRequestModel model
 			)
@@ -22,24 +22,28 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiLocationServerResponseModel MapBOToModel(
+		public virtual ApiLocationServerResponseModel MapEntityToModel(
 			Location item)
 		{
 			var model = new ApiLocationServerResponseModel();
 
-			model.SetProperties(item.LocationID, item.Availability, item.CostRate, item.ModifiedDate, item.Name);
+			model.SetProperties(item.LocationID,
+			                    item.Availability,
+			                    item.CostRate,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiLocationServerResponseModel> MapBOToModel(
+		public virtual List<ApiLocationServerResponseModel> MapEntityToModel(
 			List<Location> items)
 		{
 			List<ApiLocationServerResponseModel> response = new List<ApiLocationServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -48,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6587d6ef083db8dc31c6f5a2790e7aa0</Hash>
+    <Hash>ee7c724076068bd7ad1e286ca1bc20cc</Hash>
 </Codenesium>*/

@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALDocumentMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALDocumentMapper();
 			ApiDocumentServerRequestModel model = new ApiDocumentServerRequestModel();
 			model.SetProperties(1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
-			Document response = mapper.MapModelToBO(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), model);
+			Document response = mapper.MapModelToEntity(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), model);
 
 			response.ChangeNumber.Should().Be(1);
 			response.Document1.Should().BeEquivalentTo(BitConverter.GetBytes(1));
@@ -35,12 +35,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALDocumentMapper();
 			Document item = new Document();
 			item.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
-			ApiDocumentServerResponseModel response = mapper.MapBOToModel(item);
+			ApiDocumentServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ChangeNumber.Should().Be(1);
 			response.Document1.Should().BeEquivalentTo(BitConverter.GetBytes(1));
@@ -58,12 +58,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALDocumentMapper();
 			Document item = new Document();
 			item.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
-			List<ApiDocumentServerResponseModel> response = mapper.MapBOToModel(new List<Document>() { { item} });
+			List<ApiDocumentServerResponseModel> response = mapper.MapEntityToModel(new List<Document>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7facc67dd65b9ba7b8e9a496e6286f71</Hash>
+    <Hash>245ed869e2f2da76c2d64b3fe2b9155d</Hash>
 </Codenesium>*/

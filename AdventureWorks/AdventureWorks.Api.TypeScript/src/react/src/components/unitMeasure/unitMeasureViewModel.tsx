@@ -18,9 +18,13 @@ export default class UnitMeasureViewModel {
     this.name = name;
     this.unitMeasureCode = unitMeasureCode;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>bd5af0615891df52b9f1e29f9a8fe502</Hash>
+    <Hash>bc308d05114ee62b43afbf551d04137c</Hash>
 </Codenesium>*/

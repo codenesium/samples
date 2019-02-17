@@ -14,9 +14,13 @@ export default class ScrapReasonViewModel {
     this.name = name;
     this.scrapReasonID = scrapReasonID;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>61a8125d9bf45add25d0563c14919f41</Hash>
+    <Hash>a78e7b923bbc4cc610b04096f6bfeb1c</Hash>
 </Codenesium>*/

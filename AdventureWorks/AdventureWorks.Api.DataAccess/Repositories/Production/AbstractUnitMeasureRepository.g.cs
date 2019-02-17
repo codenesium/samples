@@ -91,25 +91,30 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_UnitMeasure_Name.
 		public async virtual Task<UnitMeasure> ByName(string name)
 		{
-			return await this.Context.Set<UnitMeasure>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<UnitMeasure>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table BillOfMaterial via unitMeasureCode.
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<BillOfMaterial>().Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
+			return await this.Context.Set<BillOfMaterial>()
+			       .Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
 		// Foreign key reference to this table Product via sizeUnitMeasureCode.
 		public async virtual Task<List<Product>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Product>().Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+			return await this.Context.Set<Product>()
+			       .Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
 		// Foreign key reference to this table Product via weightUnitMeasureCode.
 		public async virtual Task<List<Product>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Product>().Where(x => x.WeightUnitMeasureCode == weightUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+			return await this.Context.Set<Product>()
+			       .Where(x => x.WeightUnitMeasureCode == weightUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
 		protected async Task<List<UnitMeasure>> Where(
@@ -123,7 +128,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.UnitMeasureCode;
 			}
 
-			return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
+			return await this.Context.Set<UnitMeasure>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
 		}
 
 		private async Task<UnitMeasure> GetById(string unitMeasureCode)
@@ -136,5 +143,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fe9303f340878b7beccdfbb6dc5dcddc</Hash>
+    <Hash>501c20c95c391ac52adad2bcae623e1d</Hash>
 </Codenesium>*/

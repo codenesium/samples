@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiLocationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.LocationRepository.All(limit, offset, query);
+			List<Location> records = await this.LocationRepository.All(limit, offset, query);
 
-			return this.DalLocationMapper.MapBOToModel(records);
+			return this.DalLocationMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiLocationServerResponseModel> Get(short locationID)
 		{
-			var record = await this.LocationRepository.Get(locationID);
+			Location record = await this.LocationRepository.Get(locationID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalLocationMapper.MapBOToModel(record);
+				return this.DalLocationMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalLocationMapper.MapModelToBO(default(short), model);
-				var record = await this.LocationRepository.Create(bo);
+				Location record = this.DalLocationMapper.MapModelToEntity(default(short), model);
+				record = await this.LocationRepository.Create(record);
 
-				response.SetRecord(this.DalLocationMapper.MapBOToModel(record));
+				response.SetRecord(this.DalLocationMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new LocationCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalLocationMapper.MapModelToBO(locationID, model);
-				await this.LocationRepository.Update(bo);
+				Location record = this.DalLocationMapper.MapModelToEntity(locationID, model);
+				await this.LocationRepository.Update(record);
 
-				var record = await this.LocationRepository.Get(locationID);
+				record = await this.LocationRepository.Get(locationID);
 
-				var apiModel = this.DalLocationMapper.MapBOToModel(record);
+				ApiLocationServerResponseModel apiModel = this.DalLocationMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new LocationUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(apiModel);
@@ -123,12 +123,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalLocationMapper.MapBOToModel(record);
+				return this.DalLocationMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>146e6ea3b64ad6913d486e70e59f9df3</Hash>
+    <Hash>7a3a95d927381637957d5fc680ca9493</Hash>
 </Codenesium>*/

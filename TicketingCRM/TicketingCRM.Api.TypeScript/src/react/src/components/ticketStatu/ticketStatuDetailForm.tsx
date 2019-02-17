@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -139,5 +139,5 @@ export default class TicketStatuDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e4e534b4190c3d0dd415d8ed9c7777e5</Hash>
+    <Hash>4ac7a249e96bde2f177cda76996b5b06</Hash>
 </Codenesium>*/

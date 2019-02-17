@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import BusinessEntityViewModel from './businessEntityViewModel';
 import BusinessEntityMapper from './businessEntityMapper';
 
@@ -147,7 +149,7 @@ const BusinessEntityEditDisplay = (
   );
 };
 
-const BusinessEntityUpdate = withFormik<Props, BusinessEntityViewModel>({
+const BusinessEntityEdit = withFormik<Props, BusinessEntityViewModel>({
   mapPropsToValues: props => {
     let response = new BusinessEntityViewModel();
     response.setProperties(
@@ -181,7 +183,10 @@ const BusinessEntityUpdate = withFormik<Props, BusinessEntityViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'businessentities/' + values.businessEntityID,
+        Constants.ApiEndpoint +
+          ApiRoutes.BusinessEntities +
+          '/' +
+          values.businessEntityID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -248,8 +253,9 @@ export default class BusinessEntityEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'businessentities/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.BusinessEntities +
+          '/' +
           this.props.match.params.businessEntityID,
         {
           headers: {
@@ -287,20 +293,18 @@ export default class BusinessEntityEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <BusinessEntityUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <BusinessEntityEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>e2901ea58f22c5ea961d168c384e4f14</Hash>
+    <Hash>282a0af4e33b010a5bdf4e78f896523b</Hash>
 </Codenesium>*/

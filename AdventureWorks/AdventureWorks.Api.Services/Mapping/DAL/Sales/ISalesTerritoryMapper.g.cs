@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALSalesTerritoryMapper
 	{
-		SalesTerritory MapModelToBO(
+		SalesTerritory MapModelToEntity(
 			int territoryID,
 			ApiSalesTerritoryServerRequestModel model);
 
-		ApiSalesTerritoryServerResponseModel MapBOToModel(
+		ApiSalesTerritoryServerResponseModel MapEntityToModel(
 			SalesTerritory item);
 
-		List<ApiSalesTerritoryServerResponseModel> MapBOToModel(
+		List<ApiSalesTerritoryServerResponseModel> MapEntityToModel(
 			List<SalesTerritory> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5eda3fbc6621bf6a8b81d30e04621daa</Hash>
+    <Hash>eb4bb494f4a07405eaea5861295a2fb9</Hash>
 </Codenesium>*/

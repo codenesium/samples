@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALCurrencyMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALCurrencyMapper();
 			ApiCurrencyServerRequestModel model = new ApiCurrencyServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			Currency response = mapper.MapModelToBO("A", model);
+			Currency response = mapper.MapModelToEntity("A", model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALCurrencyMapper();
 			Currency item = new Currency();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCurrencyServerResponseModel response = mapper.MapBOToModel(item);
+			ApiCurrencyServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.CurrencyCode.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALCurrencyMapper();
 			Currency item = new Currency();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCurrencyServerResponseModel> response = mapper.MapBOToModel(new List<Currency>() { { item} });
+			List<ApiCurrencyServerResponseModel> response = mapper.MapEntityToModel(new List<Currency>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa8407cb55fdb26063efe0060a55fc60</Hash>
+    <Hash>506a274a384a23baee391fa9c7a72153</Hash>
 </Codenesium>*/

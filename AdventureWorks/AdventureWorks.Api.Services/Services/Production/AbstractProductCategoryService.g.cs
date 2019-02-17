@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiProductCategoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductCategoryRepository.All(limit, offset, query);
+			List<ProductCategory> records = await this.ProductCategoryRepository.All(limit, offset, query);
 
-			return this.DalProductCategoryMapper.MapBOToModel(records);
+			return this.DalProductCategoryMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiProductCategoryServerResponseModel> Get(int productCategoryID)
 		{
-			var record = await this.ProductCategoryRepository.Get(productCategoryID);
+			ProductCategory record = await this.ProductCategoryRepository.Get(productCategoryID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductCategoryMapper.MapBOToModel(record);
+				return this.DalProductCategoryMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalProductCategoryMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductCategoryRepository.Create(bo);
+				ProductCategory record = this.DalProductCategoryMapper.MapModelToEntity(default(int), model);
+				record = await this.ProductCategoryRepository.Create(record);
 
-				response.SetRecord(this.DalProductCategoryMapper.MapBOToModel(record));
+				response.SetRecord(this.DalProductCategoryMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ProductCategoryCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalProductCategoryMapper.MapModelToBO(productCategoryID, model);
-				await this.ProductCategoryRepository.Update(bo);
+				ProductCategory record = this.DalProductCategoryMapper.MapModelToEntity(productCategoryID, model);
+				await this.ProductCategoryRepository.Update(record);
 
-				var record = await this.ProductCategoryRepository.Get(productCategoryID);
+				record = await this.ProductCategoryRepository.Get(productCategoryID);
 
-				var apiModel = this.DalProductCategoryMapper.MapBOToModel(record);
+				ApiProductCategoryServerResponseModel apiModel = this.DalProductCategoryMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ProductCategoryUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductCategoryServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductCategoryMapper.MapBOToModel(record);
+				return this.DalProductCategoryMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -141,7 +141,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductCategoryMapper.MapBOToModel(record);
+				return this.DalProductCategoryMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -149,11 +149,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ProductSubcategory> records = await this.ProductCategoryRepository.ProductSubcategoriesByProductCategoryID(productCategoryID, limit, offset);
 
-			return this.DalProductSubcategoryMapper.MapBOToModel(records);
+			return this.DalProductSubcategoryMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a922f49881a431f7b856e21c874d0061</Hash>
+    <Hash>6ab480d3e42a2729142980c4c96037f7</Hash>
 </Codenesium>*/

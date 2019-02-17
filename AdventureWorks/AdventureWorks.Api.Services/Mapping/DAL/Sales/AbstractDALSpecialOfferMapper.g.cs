@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALSpecialOfferMapper
 	{
-		public virtual SpecialOffer MapModelToBO(
+		public virtual SpecialOffer MapModelToEntity(
 			int specialOfferID,
 			ApiSpecialOfferServerRequestModel model
 			)
@@ -27,24 +27,33 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiSpecialOfferServerResponseModel MapBOToModel(
+		public virtual ApiSpecialOfferServerResponseModel MapEntityToModel(
 			SpecialOffer item)
 		{
 			var model = new ApiSpecialOfferServerResponseModel();
 
-			model.SetProperties(item.SpecialOfferID, item.Category, item.Description, item.DiscountPct, item.EndDate, item.MaxQty, item.MinQty, item.ModifiedDate, item.Rowguid, item.StartDate);
+			model.SetProperties(item.SpecialOfferID,
+			                    item.Category,
+			                    item.Description,
+			                    item.DiscountPct,
+			                    item.EndDate,
+			                    item.MaxQty,
+			                    item.MinQty,
+			                    item.ModifiedDate,
+			                    item.Rowguid,
+			                    item.StartDate);
 
 			return model;
 		}
 
-		public virtual List<ApiSpecialOfferServerResponseModel> MapBOToModel(
+		public virtual List<ApiSpecialOfferServerResponseModel> MapEntityToModel(
 			List<SpecialOffer> items)
 		{
 			List<ApiSpecialOfferServerResponseModel> response = new List<ApiSpecialOfferServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -53,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b54f45031f5708faeddec74c0c1d3a3</Hash>
+    <Hash>b5beaf3715dc6e76bac285b446c45fd6</Hash>
 </Codenesium>*/

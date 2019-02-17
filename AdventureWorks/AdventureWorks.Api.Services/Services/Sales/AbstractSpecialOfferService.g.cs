@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiSpecialOfferServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SpecialOfferRepository.All(limit, offset, query);
+			List<SpecialOffer> records = await this.SpecialOfferRepository.All(limit, offset, query);
 
-			return this.DalSpecialOfferMapper.MapBOToModel(records);
+			return this.DalSpecialOfferMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSpecialOfferServerResponseModel> Get(int specialOfferID)
 		{
-			var record = await this.SpecialOfferRepository.Get(specialOfferID);
+			SpecialOffer record = await this.SpecialOfferRepository.Get(specialOfferID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSpecialOfferMapper.MapBOToModel(record);
+				return this.DalSpecialOfferMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalSpecialOfferMapper.MapModelToBO(default(int), model);
-				var record = await this.SpecialOfferRepository.Create(bo);
+				SpecialOffer record = this.DalSpecialOfferMapper.MapModelToEntity(default(int), model);
+				record = await this.SpecialOfferRepository.Create(record);
 
-				response.SetRecord(this.DalSpecialOfferMapper.MapBOToModel(record));
+				response.SetRecord(this.DalSpecialOfferMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SpecialOfferCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalSpecialOfferMapper.MapModelToBO(specialOfferID, model);
-				await this.SpecialOfferRepository.Update(bo);
+				SpecialOffer record = this.DalSpecialOfferMapper.MapModelToEntity(specialOfferID, model);
+				await this.SpecialOfferRepository.Update(record);
 
-				var record = await this.SpecialOfferRepository.Get(specialOfferID);
+				record = await this.SpecialOfferRepository.Get(specialOfferID);
 
-				var apiModel = this.DalSpecialOfferMapper.MapBOToModel(record);
+				ApiSpecialOfferServerResponseModel apiModel = this.DalSpecialOfferMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SpecialOfferUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.UpdateResponse(apiModel);
@@ -123,12 +123,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSpecialOfferMapper.MapBOToModel(record);
+				return this.DalSpecialOfferMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe7a31cd72a42edf7605ac25462ece1f</Hash>
+    <Hash>d5c7a9a0f8fd6c17bf6c935589508696</Hash>
 </Codenesium>*/

@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALAddressTypeMapper
 	{
-		AddressType MapModelToBO(
+		AddressType MapModelToEntity(
 			int addressTypeID,
 			ApiAddressTypeServerRequestModel model);
 
-		ApiAddressTypeServerResponseModel MapBOToModel(
+		ApiAddressTypeServerResponseModel MapEntityToModel(
 			AddressType item);
 
-		List<ApiAddressTypeServerResponseModel> MapBOToModel(
+		List<ApiAddressTypeServerResponseModel> MapEntityToModel(
 			List<AddressType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a1bfcec9c7b218e1386235870a9bf78c</Hash>
+    <Hash>9488a3c70a53ddd79ddc246af53dc461</Hash>
 </Codenesium>*/

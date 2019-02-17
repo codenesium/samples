@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALProductCategoryMapper
 	{
-		ProductCategory MapModelToBO(
+		ProductCategory MapModelToEntity(
 			int productCategoryID,
 			ApiProductCategoryServerRequestModel model);
 
-		ApiProductCategoryServerResponseModel MapBOToModel(
+		ApiProductCategoryServerResponseModel MapEntityToModel(
 			ProductCategory item);
 
-		List<ApiProductCategoryServerResponseModel> MapBOToModel(
+		List<ApiProductCategoryServerResponseModel> MapEntityToModel(
 			List<ProductCategory> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d163d06bc1c94618dbd1f65ed3e6be0a</Hash>
+    <Hash>734e57b43b2809f8ad4da7e78bd648ea</Hash>
 </Codenesium>*/

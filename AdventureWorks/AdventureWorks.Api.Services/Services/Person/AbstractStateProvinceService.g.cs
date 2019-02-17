@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiStateProvinceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.StateProvinceRepository.All(limit, offset, query);
+			List<StateProvince> records = await this.StateProvinceRepository.All(limit, offset, query);
 
-			return this.DalStateProvinceMapper.MapBOToModel(records);
+			return this.DalStateProvinceMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiStateProvinceServerResponseModel> Get(int stateProvinceID)
 		{
-			var record = await this.StateProvinceRepository.Get(stateProvinceID);
+			StateProvince record = await this.StateProvinceRepository.Get(stateProvinceID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalStateProvinceMapper.MapBOToModel(record);
+				return this.DalStateProvinceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalStateProvinceMapper.MapModelToBO(default(int), model);
-				var record = await this.StateProvinceRepository.Create(bo);
+				StateProvince record = this.DalStateProvinceMapper.MapModelToEntity(default(int), model);
+				record = await this.StateProvinceRepository.Create(record);
 
-				response.SetRecord(this.DalStateProvinceMapper.MapBOToModel(record));
+				response.SetRecord(this.DalStateProvinceMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new StateProvinceCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalStateProvinceMapper.MapModelToBO(stateProvinceID, model);
-				await this.StateProvinceRepository.Update(bo);
+				StateProvince record = this.DalStateProvinceMapper.MapModelToEntity(stateProvinceID, model);
+				await this.StateProvinceRepository.Update(record);
 
-				var record = await this.StateProvinceRepository.Get(stateProvinceID);
+				record = await this.StateProvinceRepository.Get(stateProvinceID);
 
-				var apiModel = this.DalStateProvinceMapper.MapBOToModel(record);
+				ApiStateProvinceServerResponseModel apiModel = this.DalStateProvinceMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new StateProvinceUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiStateProvinceServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalStateProvinceMapper.MapBOToModel(record);
+				return this.DalStateProvinceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -141,7 +141,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalStateProvinceMapper.MapBOToModel(record);
+				return this.DalStateProvinceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -155,7 +155,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalStateProvinceMapper.MapBOToModel(record);
+				return this.DalStateProvinceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -163,11 +163,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Address> records = await this.StateProvinceRepository.AddressesByStateProvinceID(stateProvinceID, limit, offset);
 
-			return this.DalAddressMapper.MapBOToModel(records);
+			return this.DalAddressMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe79e5464b4658aca3818ed8719237f4</Hash>
+    <Hash>3fc7515b2d5b02a46bc0dc7572063934</Hash>
 </Codenesium>*/

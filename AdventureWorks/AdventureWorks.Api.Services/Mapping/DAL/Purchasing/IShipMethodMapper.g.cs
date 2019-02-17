@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALShipMethodMapper
 	{
-		ShipMethod MapModelToBO(
+		ShipMethod MapModelToEntity(
 			int shipMethodID,
 			ApiShipMethodServerRequestModel model);
 
-		ApiShipMethodServerResponseModel MapBOToModel(
+		ApiShipMethodServerResponseModel MapEntityToModel(
 			ShipMethod item);
 
-		List<ApiShipMethodServerResponseModel> MapBOToModel(
+		List<ApiShipMethodServerResponseModel> MapEntityToModel(
 			List<ShipMethod> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2f859a581d1c056a2bd5573e25b15bac</Hash>
+    <Hash>223a6b0c61b41a979dc4828f7a2d1afc</Hash>
 </Codenesium>*/

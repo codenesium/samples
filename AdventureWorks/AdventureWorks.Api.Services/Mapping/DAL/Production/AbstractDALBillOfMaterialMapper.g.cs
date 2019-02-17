@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALBillOfMaterialMapper
 	{
-		public virtual BillOfMaterial MapModelToBO(
+		public virtual BillOfMaterial MapModelToEntity(
 			int billOfMaterialsID,
 			ApiBillOfMaterialServerRequestModel model
 			)
@@ -26,24 +26,32 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiBillOfMaterialServerResponseModel MapBOToModel(
+		public virtual ApiBillOfMaterialServerResponseModel MapEntityToModel(
 			BillOfMaterial item)
 		{
 			var model = new ApiBillOfMaterialServerResponseModel();
 
-			model.SetProperties(item.BillOfMaterialsID, item.BOMLevel, item.ComponentID, item.EndDate, item.ModifiedDate, item.PerAssemblyQty, item.ProductAssemblyID, item.StartDate, item.UnitMeasureCode);
+			model.SetProperties(item.BillOfMaterialsID,
+			                    item.BOMLevel,
+			                    item.ComponentID,
+			                    item.EndDate,
+			                    item.ModifiedDate,
+			                    item.PerAssemblyQty,
+			                    item.ProductAssemblyID,
+			                    item.StartDate,
+			                    item.UnitMeasureCode);
 
 			return model;
 		}
 
-		public virtual List<ApiBillOfMaterialServerResponseModel> MapBOToModel(
+		public virtual List<ApiBillOfMaterialServerResponseModel> MapEntityToModel(
 			List<BillOfMaterial> items)
 		{
 			List<ApiBillOfMaterialServerResponseModel> response = new List<ApiBillOfMaterialServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -52,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bcfe7bdf5093e6f02b6687cc80bbd09a</Hash>
+    <Hash>a6e17d5ae3033cfe9c71c5c42a5e90a5</Hash>
 </Codenesium>*/

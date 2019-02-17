@@ -48,7 +48,7 @@ namespace TicketingCRMNS.Api.Services
 			{
 				var cityIdModel = new ApiCityServerResponseModel();
 				cityIdModel.SetProperties(
-					item.Id,
+					item.CityIdNavigation.Id,
 					item.CityIdNavigation.Name,
 					item.CityIdNavigation.ProvinceId);
 
@@ -74,5 +74,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8a9d857ccad82ba428668b5daaa2903</Hash>
+    <Hash>e9fab3fabbeef25a5d29883fc57d9a84</Hash>
 </Codenesium>*/

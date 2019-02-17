@@ -96,13 +96,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Address_rowguid.
 		public async virtual Task<Address> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Address>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Address>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// unique constraint IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode.
 		public async virtual Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
 		{
-			return await this.Context.Set<Address>().FirstOrDefaultAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
+			return await this.Context.Set<Address>()
+
+			       .FirstOrDefaultAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
 		}
 
 		// Non-unique constraint IX_Address_StateProvinceID.
@@ -122,7 +126,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.AddressID;
 			}
 
-			return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
+			return await this.Context.Set<Address>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
 		}
 
 		private async Task<Address> GetById(int addressID)
@@ -135,5 +141,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0f713037408f50b8a69e9c48667a75c9</Hash>
+    <Hash>a2371bddd4c8a1b45f8993c8ba06a475</Hash>
 </Codenesium>*/

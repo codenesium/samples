@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALCurrencyRateMapper
 	{
-		public virtual CurrencyRate MapModelToBO(
+		public virtual CurrencyRate MapModelToEntity(
 			int currencyRateID,
 			ApiCurrencyRateServerRequestModel model
 			)
@@ -24,24 +24,51 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiCurrencyRateServerResponseModel MapBOToModel(
+		public virtual ApiCurrencyRateServerResponseModel MapEntityToModel(
 			CurrencyRate item)
 		{
 			var model = new ApiCurrencyRateServerResponseModel();
 
-			model.SetProperties(item.CurrencyRateID, item.AverageRate, item.CurrencyRateDate, item.EndOfDayRate, item.FromCurrencyCode, item.ModifiedDate, item.ToCurrencyCode);
+			model.SetProperties(item.CurrencyRateID,
+			                    item.AverageRate,
+			                    item.CurrencyRateDate,
+			                    item.EndOfDayRate,
+			                    item.FromCurrencyCode,
+			                    item.ModifiedDate,
+			                    item.ToCurrencyCode);
+			if (item.FromCurrencyCodeNavigation != null)
+			{
+				var fromCurrencyCodeModel = new ApiCurrencyServerResponseModel();
+				fromCurrencyCodeModel.SetProperties(
+					item.FromCurrencyCodeNavigation.CurrencyCode,
+					item.FromCurrencyCodeNavigation.ModifiedDate,
+					item.FromCurrencyCodeNavigation.Name);
+
+				model.SetFromCurrencyCodeNavigation(fromCurrencyCodeModel);
+			}
+
+			if (item.ToCurrencyCodeNavigation != null)
+			{
+				var toCurrencyCodeModel = new ApiCurrencyServerResponseModel();
+				toCurrencyCodeModel.SetProperties(
+					item.ToCurrencyCodeNavigation.CurrencyCode,
+					item.ToCurrencyCodeNavigation.ModifiedDate,
+					item.ToCurrencyCodeNavigation.Name);
+
+				model.SetToCurrencyCodeNavigation(toCurrencyCodeModel);
+			}
 
 			return model;
 		}
 
-		public virtual List<ApiCurrencyRateServerResponseModel> MapBOToModel(
+		public virtual List<ApiCurrencyRateServerResponseModel> MapEntityToModel(
 			List<CurrencyRate> items)
 		{
 			List<ApiCurrencyRateServerResponseModel> response = new List<ApiCurrencyRateServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -50,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>32d660dbfde541509d2a5142928573cf</Hash>
+    <Hash>3d9b2e5d5f9c37ed11df5bf44d586d90</Hash>
 </Codenesium>*/

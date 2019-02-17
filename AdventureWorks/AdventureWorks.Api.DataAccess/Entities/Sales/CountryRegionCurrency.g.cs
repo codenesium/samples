@@ -37,15 +37,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual DateTime ModifiedDate { get; private set; }
 
 		[ForeignKey("CurrencyCode")]
-		public virtual Currency CurrencyNavigation { get; private set; }
+		public virtual Currency CurrencyCodeNavigation { get; private set; }
 
-		public void SetCurrencyNavigation(Currency item)
+		public void SetCurrencyCodeNavigation(Currency item)
 		{
-			this.CurrencyNavigation = item;
+			this.CurrencyCodeNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ea5885babbd71f9873c37df548ec17ba</Hash>
+    <Hash>b536500ac1b215ea68fa423b40e7aeda</Hash>
 </Codenesium>*/

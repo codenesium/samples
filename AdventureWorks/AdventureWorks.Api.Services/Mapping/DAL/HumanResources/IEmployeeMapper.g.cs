@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALEmployeeMapper
 	{
-		Employee MapModelToBO(
+		Employee MapModelToEntity(
 			int businessEntityID,
 			ApiEmployeeServerRequestModel model);
 
-		ApiEmployeeServerResponseModel MapBOToModel(
+		ApiEmployeeServerResponseModel MapEntityToModel(
 			Employee item);
 
-		List<ApiEmployeeServerResponseModel> MapBOToModel(
+		List<ApiEmployeeServerResponseModel> MapEntityToModel(
 			List<Employee> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ac0971afbb8d74a3a8a6acac386d4442</Hash>
+    <Hash>a7cb33c6425e602494fab76adc0e467f</Hash>
 </Codenesium>*/

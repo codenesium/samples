@@ -46,9 +46,17 @@ namespace AdventureWorksNS.Api.Services
 
 		[JsonProperty]
 		public string SalesPersonIDEntity { get; private set; } = RouteConstants.SalesPersons;
+
+		[JsonProperty]
+		public ApiSalesPersonServerResponseModel SalesPersonIDNavigation { get; private set; }
+
+		public void SetSalesPersonIDNavigation(ApiSalesPersonServerResponseModel value)
+		{
+			this.SalesPersonIDNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c414843329cc6abe272424aaddb378de</Hash>
+    <Hash>48581fb815e43f57d31ce8e46d12778e</Hash>
 </Codenesium>*/

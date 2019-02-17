@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import JobCandidateViewModel from './jobCandidateViewModel';
-
 export default class JobCandidateMapper {
   mapApiResponseToViewModel(
     dto: Api.JobCandidateClientResponseModel
@@ -12,6 +11,7 @@ export default class JobCandidateMapper {
       dto.modifiedDate,
       dto.resume
     );
+
     return response;
   }
 
@@ -31,5 +31,5 @@ export default class JobCandidateMapper {
 
 
 /*<Codenesium>
-    <Hash>deab249372d411299a0fd4f434179279</Hash>
+    <Hash>6f7b9b5cc6fc731afdf11422be1cc35c</Hash>
 </Codenesium>*/

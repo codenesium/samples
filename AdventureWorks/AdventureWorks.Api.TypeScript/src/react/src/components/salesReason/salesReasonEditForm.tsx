@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import SalesReasonViewModel from './salesReasonViewModel';
 import SalesReasonMapper from './salesReasonMapper';
 
@@ -173,7 +175,7 @@ const SalesReasonEditDisplay = (props: FormikProps<SalesReasonViewModel>) => {
   );
 };
 
-const SalesReasonUpdate = withFormik<Props, SalesReasonViewModel>({
+const SalesReasonEdit = withFormik<Props, SalesReasonViewModel>({
   mapPropsToValues: props => {
     let response = new SalesReasonViewModel();
     response.setProperties(
@@ -211,7 +213,10 @@ const SalesReasonUpdate = withFormik<Props, SalesReasonViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'salesreasons/' + values.salesReasonID,
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesReasons +
+          '/' +
+          values.salesReasonID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -278,8 +283,9 @@ export default class SalesReasonEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'salesreasons/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesReasons +
+          '/' +
           this.props.match.params.salesReasonID,
         {
           headers: {
@@ -317,20 +323,18 @@ export default class SalesReasonEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <SalesReasonUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <SalesReasonEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>9ed8d6f2a10e908b08552a788fb22055</Hash>
+    <Hash>92b5ec52c6c458c867296739173a2ff3</Hash>
 </Codenesium>*/

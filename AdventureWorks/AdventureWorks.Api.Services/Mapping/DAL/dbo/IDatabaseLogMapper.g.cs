@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALDatabaseLogMapper
 	{
-		DatabaseLog MapModelToBO(
+		DatabaseLog MapModelToEntity(
 			int databaseLogID,
 			ApiDatabaseLogServerRequestModel model);
 
-		ApiDatabaseLogServerResponseModel MapBOToModel(
+		ApiDatabaseLogServerResponseModel MapEntityToModel(
 			DatabaseLog item);
 
-		List<ApiDatabaseLogServerResponseModel> MapBOToModel(
+		List<ApiDatabaseLogServerResponseModel> MapEntityToModel(
 			List<DatabaseLog> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>acce92bb2f8f01e0ecbbe71cb1e42cc5</Hash>
+    <Hash>c34baa9631ee8f50c1fd020080d05733</Hash>
 </Codenesium>*/

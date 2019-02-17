@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALBillOfMaterialMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALBillOfMaterialMapper();
 			ApiBillOfMaterialServerRequestModel model = new ApiBillOfMaterialServerRequestModel();
 			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			BillOfMaterial response = mapper.MapModelToBO(1, model);
+			BillOfMaterial response = mapper.MapModelToEntity(1, model);
 
 			response.BOMLevel.Should().Be(1);
 			response.ComponentID.Should().Be(1);
@@ -31,12 +31,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALBillOfMaterialMapper();
 			BillOfMaterial item = new BillOfMaterial();
 			item.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiBillOfMaterialServerResponseModel response = mapper.MapBOToModel(item);
+			ApiBillOfMaterialServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.BillOfMaterialsID.Should().Be(1);
 			response.BOMLevel.Should().Be(1);
@@ -50,12 +50,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALBillOfMaterialMapper();
 			BillOfMaterial item = new BillOfMaterial();
 			item.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiBillOfMaterialServerResponseModel> response = mapper.MapBOToModel(new List<BillOfMaterial>() { { item} });
+			List<ApiBillOfMaterialServerResponseModel> response = mapper.MapEntityToModel(new List<BillOfMaterial>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>244d8cfd7efc718be934de9a7eae8807</Hash>
+    <Hash>67b283d623810ea8fcfeab0da82cb6e9</Hash>
 </Codenesium>*/

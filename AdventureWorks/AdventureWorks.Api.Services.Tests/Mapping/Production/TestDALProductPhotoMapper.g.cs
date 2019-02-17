@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALProductPhotoMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALProductPhotoMapper();
 			ApiProductPhotoServerRequestModel model = new ApiProductPhotoServerRequestModel();
 			model.SetProperties(BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
-			ProductPhoto response = mapper.MapModelToBO(1, model);
+			ProductPhoto response = mapper.MapModelToEntity(1, model);
 
 			response.LargePhoto.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.LargePhotoFileName.Should().Be("A");
@@ -28,12 +28,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALProductPhotoMapper();
 			ProductPhoto item = new ProductPhoto();
 			item.SetProperties(1, BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
-			ApiProductPhotoServerResponseModel response = mapper.MapBOToModel(item);
+			ApiProductPhotoServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.LargePhoto.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.LargePhotoFileName.Should().Be("A");
@@ -44,12 +44,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALProductPhotoMapper();
 			ProductPhoto item = new ProductPhoto();
 			item.SetProperties(1, BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
-			List<ApiProductPhotoServerResponseModel> response = mapper.MapBOToModel(new List<ProductPhoto>() { { item} });
+			List<ApiProductPhotoServerResponseModel> response = mapper.MapEntityToModel(new List<ProductPhoto>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2779d71bef45190f62cd567da3a71ba0</Hash>
+    <Hash>ea4f14ed1fdf830377df860c567add5a</Hash>
 </Codenesium>*/

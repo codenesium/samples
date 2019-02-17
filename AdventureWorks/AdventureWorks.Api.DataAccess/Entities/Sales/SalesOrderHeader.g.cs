@@ -154,47 +154,47 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual decimal TotalDue { get; private set; }
 
 		[ForeignKey("CreditCardID")]
-		public virtual CreditCard CreditCardNavigation { get; private set; }
+		public virtual CreditCard CreditCardIDNavigation { get; private set; }
 
-		public void SetCreditCardNavigation(CreditCard item)
+		public void SetCreditCardIDNavigation(CreditCard item)
 		{
-			this.CreditCardNavigation = item;
+			this.CreditCardIDNavigation = item;
 		}
 
 		[ForeignKey("CurrencyRateID")]
-		public virtual CurrencyRate CurrencyRateNavigation { get; private set; }
+		public virtual CurrencyRate CurrencyRateIDNavigation { get; private set; }
 
-		public void SetCurrencyRateNavigation(CurrencyRate item)
+		public void SetCurrencyRateIDNavigation(CurrencyRate item)
 		{
-			this.CurrencyRateNavigation = item;
+			this.CurrencyRateIDNavigation = item;
 		}
 
 		[ForeignKey("CustomerID")]
-		public virtual Customer CustomerNavigation { get; private set; }
+		public virtual Customer CustomerIDNavigation { get; private set; }
 
-		public void SetCustomerNavigation(Customer item)
+		public void SetCustomerIDNavigation(Customer item)
 		{
-			this.CustomerNavigation = item;
+			this.CustomerIDNavigation = item;
 		}
 
 		[ForeignKey("SalesPersonID")]
-		public virtual SalesPerson SalesPersonNavigation { get; private set; }
+		public virtual SalesPerson SalesPersonIDNavigation { get; private set; }
 
-		public void SetSalesPersonNavigation(SalesPerson item)
+		public void SetSalesPersonIDNavigation(SalesPerson item)
 		{
-			this.SalesPersonNavigation = item;
+			this.SalesPersonIDNavigation = item;
 		}
 
 		[ForeignKey("TerritoryID")]
-		public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
+		public virtual SalesTerritory TerritoryIDNavigation { get; private set; }
 
-		public void SetSalesTerritoryNavigation(SalesTerritory item)
+		public void SetTerritoryIDNavigation(SalesTerritory item)
 		{
-			this.SalesTerritoryNavigation = item;
+			this.TerritoryIDNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>302449c57f25b4b231af70cfbfaa2cf5</Hash>
+    <Hash>442cd372b839327d6d592784a93b63ce</Hash>
 </Codenesium>*/

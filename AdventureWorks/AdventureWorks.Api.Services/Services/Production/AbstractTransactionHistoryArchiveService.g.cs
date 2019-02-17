@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiTransactionHistoryArchiveServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TransactionHistoryArchiveRepository.All(limit, offset, query);
+			List<TransactionHistoryArchive> records = await this.TransactionHistoryArchiveRepository.All(limit, offset, query);
 
-			return this.DalTransactionHistoryArchiveMapper.MapBOToModel(records);
+			return this.DalTransactionHistoryArchiveMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTransactionHistoryArchiveServerResponseModel> Get(int transactionID)
 		{
-			var record = await this.TransactionHistoryArchiveRepository.Get(transactionID);
+			TransactionHistoryArchive record = await this.TransactionHistoryArchiveRepository.Get(transactionID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalTransactionHistoryArchiveMapper.MapBOToModel(record);
+				return this.DalTransactionHistoryArchiveMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalTransactionHistoryArchiveMapper.MapModelToBO(default(int), model);
-				var record = await this.TransactionHistoryArchiveRepository.Create(bo);
+				TransactionHistoryArchive record = this.DalTransactionHistoryArchiveMapper.MapModelToEntity(default(int), model);
+				record = await this.TransactionHistoryArchiveRepository.Create(record);
 
-				response.SetRecord(this.DalTransactionHistoryArchiveMapper.MapBOToModel(record));
+				response.SetRecord(this.DalTransactionHistoryArchiveMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TransactionHistoryArchiveCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalTransactionHistoryArchiveMapper.MapModelToBO(transactionID, model);
-				await this.TransactionHistoryArchiveRepository.Update(bo);
+				TransactionHistoryArchive record = this.DalTransactionHistoryArchiveMapper.MapModelToEntity(transactionID, model);
+				await this.TransactionHistoryArchiveRepository.Update(record);
 
-				var record = await this.TransactionHistoryArchiveRepository.Get(transactionID);
+				record = await this.TransactionHistoryArchiveRepository.Get(transactionID);
 
-				var apiModel = this.DalTransactionHistoryArchiveMapper.MapBOToModel(record);
+				ApiTransactionHistoryArchiveServerResponseModel apiModel = this.DalTransactionHistoryArchiveMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TransactionHistoryArchiveUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTransactionHistoryArchiveServerResponseModel>.UpdateResponse(apiModel);
@@ -117,18 +117,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<TransactionHistoryArchive> records = await this.TransactionHistoryArchiveRepository.ByProductID(productID, limit, offset);
 
-			return this.DalTransactionHistoryArchiveMapper.MapBOToModel(records);
+			return this.DalTransactionHistoryArchiveMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiTransactionHistoryArchiveServerResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<TransactionHistoryArchive> records = await this.TransactionHistoryArchiveRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID, limit, offset);
 
-			return this.DalTransactionHistoryArchiveMapper.MapBOToModel(records);
+			return this.DalTransactionHistoryArchiveMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>94f0eef54ddf949ce6ea28555c5d938a</Hash>
+    <Hash>612e714bf80551b516679c7a98c978a4</Hash>
 </Codenesium>*/

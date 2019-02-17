@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import SalesTerritoryMapper from './salesTerritoryMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import SalesTerritoryViewModel from './salesTerritoryViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class SalesTerritorySearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.SalesTerritoryClientResponseModel>(),
-    filteredRecords: new Array<Api.SalesTerritoryClientResponseModel>(),
+    records: new Array<SalesTerritoryViewModel>(),
+    filteredRecords: new Array<SalesTerritoryViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class SalesTerritorySearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.SalesTerritoryClientResponseModel) {
-    this.props.history.push('/salesterritories/edit/' + row.territoryID);
+    this.props.history.push(
+      ClientRoutes.SalesTerritories + '/edit/' + row.territoryID
+    );
   }
 
   handleDetailClick(e: any, row: Api.SalesTerritoryClientResponseModel) {
-    this.props.history.push('/salesterritories/' + row.territoryID);
+    this.props.history.push(
+      ClientRoutes.SalesTerritories + '/' + row.territoryID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/salesterritories/create');
+    this.props.history.push(ClientRoutes.SalesTerritories + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.SalesTerritoryClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'salesterritories/' + row.territoryID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesTerritories +
+          '/' +
+          row.territoryID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class SalesTerritorySearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'salesterritories' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.SalesTerritories + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -144,7 +157,9 @@ export default class SalesTerritorySearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -309,17 +324,13 @@ export default class SalesTerritorySearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>afe7d6bfbc9c071040f0f6a48155df1f</Hash>
+    <Hash>f189cba8d5b9a0c2ee1bb228ca6c6b87</Hash>
 </Codenesium>*/

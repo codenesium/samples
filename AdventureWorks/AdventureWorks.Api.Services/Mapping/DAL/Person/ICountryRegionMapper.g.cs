@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALCountryRegionMapper
 	{
-		CountryRegion MapModelToBO(
+		CountryRegion MapModelToEntity(
 			string countryRegionCode,
 			ApiCountryRegionServerRequestModel model);
 
-		ApiCountryRegionServerResponseModel MapBOToModel(
+		ApiCountryRegionServerResponseModel MapEntityToModel(
 			CountryRegion item);
 
-		List<ApiCountryRegionServerResponseModel> MapBOToModel(
+		List<ApiCountryRegionServerResponseModel> MapEntityToModel(
 			List<CountryRegion> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8674be51a42e26fc9744c7582db23aac</Hash>
+    <Hash>f610446751e9bf365f68bbc089771a3a</Hash>
 </Codenesium>*/

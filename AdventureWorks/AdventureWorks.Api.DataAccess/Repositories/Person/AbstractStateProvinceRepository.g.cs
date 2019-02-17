@@ -96,25 +96,32 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_StateProvince_Name.
 		public async virtual Task<StateProvince> ByName(string name)
 		{
-			return await this.Context.Set<StateProvince>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<StateProvince>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_StateProvince_rowguid.
 		public async virtual Task<StateProvince> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<StateProvince>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<StateProvince>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// unique constraint AK_StateProvince_StateProvinceCode_CountryRegionCode.
 		public async virtual Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
-			return await this.Context.Set<StateProvince>().FirstOrDefaultAsync(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
+			return await this.Context.Set<StateProvince>()
+
+			       .FirstOrDefaultAsync(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 		}
 
 		// Foreign key reference to this table Address via stateProvinceID.
 		public async virtual Task<List<Address>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Address>().Where(x => x.StateProvinceID == stateProvinceID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Address>();
+			return await this.Context.Set<Address>()
+			       .Where(x => x.StateProvinceID == stateProvinceID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Address>();
 		}
 
 		protected async Task<List<StateProvince>> Where(
@@ -128,7 +135,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.StateProvinceID;
 			}
 
-			return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
+			return await this.Context.Set<StateProvince>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
 		}
 
 		private async Task<StateProvince> GetById(int stateProvinceID)
@@ -141,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff2f02841f2b5d4c237a4e57fc419513</Hash>
+    <Hash>3fc9eddf8d3f4d9d1c320330df2270e4</Hash>
 </Codenesium>*/

@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALCountryRegionMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALCountryRegionMapper();
 			ApiCountryRegionServerRequestModel model = new ApiCountryRegionServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			CountryRegion response = mapper.MapModelToBO("A", model);
+			CountryRegion response = mapper.MapModelToEntity("A", model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALCountryRegionMapper();
 			CountryRegion item = new CountryRegion();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCountryRegionServerResponseModel response = mapper.MapBOToModel(item);
+			ApiCountryRegionServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.CountryRegionCode.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALCountryRegionMapper();
 			CountryRegion item = new CountryRegion();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCountryRegionServerResponseModel> response = mapper.MapBOToModel(new List<CountryRegion>() { { item} });
+			List<ApiCountryRegionServerResponseModel> response = mapper.MapEntityToModel(new List<CountryRegion>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>19ef048ee26f80451ffbd51ba555257f</Hash>
+    <Hash>03695c58ea227cbcd82790f3e4144336</Hash>
 </Codenesium>*/

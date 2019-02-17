@@ -18,9 +18,13 @@ export default class CountryRegionViewModel {
     this.modifiedDate = modifiedDate;
     this.name = name;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>1815a428f3cc7939ca95739c1e05d110</Hash>
+    <Hash>396cad80e2a3d01996ace2115cb3ee2c</Hash>
 </Codenesium>*/

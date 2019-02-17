@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiContactTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ContactTypeRepository.All(limit, offset, query);
+			List<ContactType> records = await this.ContactTypeRepository.All(limit, offset, query);
 
-			return this.DalContactTypeMapper.MapBOToModel(records);
+			return this.DalContactTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiContactTypeServerResponseModel> Get(int contactTypeID)
 		{
-			var record = await this.ContactTypeRepository.Get(contactTypeID);
+			ContactType record = await this.ContactTypeRepository.Get(contactTypeID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalContactTypeMapper.MapBOToModel(record);
+				return this.DalContactTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalContactTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.ContactTypeRepository.Create(bo);
+				ContactType record = this.DalContactTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.ContactTypeRepository.Create(record);
 
-				response.SetRecord(this.DalContactTypeMapper.MapBOToModel(record));
+				response.SetRecord(this.DalContactTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ContactTypeCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalContactTypeMapper.MapModelToBO(contactTypeID, model);
-				await this.ContactTypeRepository.Update(bo);
+				ContactType record = this.DalContactTypeMapper.MapModelToEntity(contactTypeID, model);
+				await this.ContactTypeRepository.Update(record);
 
-				var record = await this.ContactTypeRepository.Get(contactTypeID);
+				record = await this.ContactTypeRepository.Get(contactTypeID);
 
-				var apiModel = this.DalContactTypeMapper.MapBOToModel(record);
+				ApiContactTypeServerResponseModel apiModel = this.DalContactTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ContactTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiContactTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -123,12 +123,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalContactTypeMapper.MapBOToModel(record);
+				return this.DalContactTypeMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5595db0d5431f21c927fd26f33d4568c</Hash>
+    <Hash>f4cd289956fd5a5ea04d40e603e0cbad</Hash>
 </Codenesium>*/

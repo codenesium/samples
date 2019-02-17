@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiShipMethodServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ShipMethodRepository.All(limit, offset, query);
+			List<ShipMethod> records = await this.ShipMethodRepository.All(limit, offset, query);
 
-			return this.DalShipMethodMapper.MapBOToModel(records);
+			return this.DalShipMethodMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiShipMethodServerResponseModel> Get(int shipMethodID)
 		{
-			var record = await this.ShipMethodRepository.Get(shipMethodID);
+			ShipMethod record = await this.ShipMethodRepository.Get(shipMethodID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalShipMethodMapper.MapBOToModel(record);
+				return this.DalShipMethodMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalShipMethodMapper.MapModelToBO(default(int), model);
-				var record = await this.ShipMethodRepository.Create(bo);
+				ShipMethod record = this.DalShipMethodMapper.MapModelToEntity(default(int), model);
+				record = await this.ShipMethodRepository.Create(record);
 
-				response.SetRecord(this.DalShipMethodMapper.MapBOToModel(record));
+				response.SetRecord(this.DalShipMethodMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ShipMethodCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalShipMethodMapper.MapModelToBO(shipMethodID, model);
-				await this.ShipMethodRepository.Update(bo);
+				ShipMethod record = this.DalShipMethodMapper.MapModelToEntity(shipMethodID, model);
+				await this.ShipMethodRepository.Update(record);
 
-				var record = await this.ShipMethodRepository.Get(shipMethodID);
+				record = await this.ShipMethodRepository.Get(shipMethodID);
 
-				var apiModel = this.DalShipMethodMapper.MapBOToModel(record);
+				ApiShipMethodServerResponseModel apiModel = this.DalShipMethodMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ShipMethodUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiShipMethodServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalShipMethodMapper.MapBOToModel(record);
+				return this.DalShipMethodMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -141,7 +141,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalShipMethodMapper.MapBOToModel(record);
+				return this.DalShipMethodMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -149,11 +149,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<PurchaseOrderHeader> records = await this.ShipMethodRepository.PurchaseOrderHeadersByShipMethodID(shipMethodID, limit, offset);
 
-			return this.DalPurchaseOrderHeaderMapper.MapBOToModel(records);
+			return this.DalPurchaseOrderHeaderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ede4316b21ca9a21133dabbea2fe30b3</Hash>
+    <Hash>05013bbf7adbd488a63b6180b3fc80f4</Hash>
 </Codenesium>*/

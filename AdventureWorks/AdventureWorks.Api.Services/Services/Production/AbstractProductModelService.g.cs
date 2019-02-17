@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiProductModelServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductModelRepository.All(limit, offset, query);
+			List<ProductModel> records = await this.ProductModelRepository.All(limit, offset, query);
 
-			return this.DalProductModelMapper.MapBOToModel(records);
+			return this.DalProductModelMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiProductModelServerResponseModel> Get(int productModelID)
 		{
-			var record = await this.ProductModelRepository.Get(productModelID);
+			ProductModel record = await this.ProductModelRepository.Get(productModelID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductModelMapper.MapBOToModel(record);
+				return this.DalProductModelMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalProductModelMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductModelRepository.Create(bo);
+				ProductModel record = this.DalProductModelMapper.MapModelToEntity(default(int), model);
+				record = await this.ProductModelRepository.Create(record);
 
-				response.SetRecord(this.DalProductModelMapper.MapBOToModel(record));
+				response.SetRecord(this.DalProductModelMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ProductModelCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalProductModelMapper.MapModelToBO(productModelID, model);
-				await this.ProductModelRepository.Update(bo);
+				ProductModel record = this.DalProductModelMapper.MapModelToEntity(productModelID, model);
+				await this.ProductModelRepository.Update(record);
 
-				var record = await this.ProductModelRepository.Get(productModelID);
+				record = await this.ProductModelRepository.Get(productModelID);
 
-				var apiModel = this.DalProductModelMapper.MapBOToModel(record);
+				ApiProductModelServerResponseModel apiModel = this.DalProductModelMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ProductModelUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductModelServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductModelMapper.MapBOToModel(record);
+				return this.DalProductModelMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -141,7 +141,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductModelMapper.MapBOToModel(record);
+				return this.DalProductModelMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -149,25 +149,25 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ProductModel> records = await this.ProductModelRepository.ByCatalogDescription(catalogDescription, limit, offset);
 
-			return this.DalProductModelMapper.MapBOToModel(records);
+			return this.DalProductModelMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiProductModelServerResponseModel>> ByInstruction(string instruction, int limit = 0, int offset = int.MaxValue)
 		{
 			List<ProductModel> records = await this.ProductModelRepository.ByInstruction(instruction, limit, offset);
 
-			return this.DalProductModelMapper.MapBOToModel(records);
+			return this.DalProductModelMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiProductServerResponseModel>> ProductsByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Product> records = await this.ProductModelRepository.ProductsByProductModelID(productModelID, limit, offset);
 
-			return this.DalProductMapper.MapBOToModel(records);
+			return this.DalProductMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8dfedb8598e072f548fb1fe569bae5d1</Hash>
+    <Hash>edb71dfba5f1da405961060690d44392</Hash>
 </Codenesium>*/

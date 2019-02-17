@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiAddressServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AddressRepository.All(limit, offset, query);
+			List<Address> records = await this.AddressRepository.All(limit, offset, query);
 
-			return this.DalAddressMapper.MapBOToModel(records);
+			return this.DalAddressMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiAddressServerResponseModel> Get(int addressID)
 		{
-			var record = await this.AddressRepository.Get(addressID);
+			Address record = await this.AddressRepository.Get(addressID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalAddressMapper.MapBOToModel(record);
+				return this.DalAddressMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalAddressMapper.MapModelToBO(default(int), model);
-				var record = await this.AddressRepository.Create(bo);
+				Address record = this.DalAddressMapper.MapModelToEntity(default(int), model);
+				record = await this.AddressRepository.Create(record);
 
-				response.SetRecord(this.DalAddressMapper.MapBOToModel(record));
+				response.SetRecord(this.DalAddressMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new AddressCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalAddressMapper.MapModelToBO(addressID, model);
-				await this.AddressRepository.Update(bo);
+				Address record = this.DalAddressMapper.MapModelToEntity(addressID, model);
+				await this.AddressRepository.Update(record);
 
-				var record = await this.AddressRepository.Get(addressID);
+				record = await this.AddressRepository.Get(addressID);
 
-				var apiModel = this.DalAddressMapper.MapBOToModel(record);
+				ApiAddressServerResponseModel apiModel = this.DalAddressMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AddressUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAddressServerResponseModel>.UpdateResponse(apiModel);
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalAddressMapper.MapBOToModel(record);
+				return this.DalAddressMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalAddressMapper.MapBOToModel(record);
+				return this.DalAddressMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -145,11 +145,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Address> records = await this.AddressRepository.ByStateProvinceID(stateProvinceID, limit, offset);
 
-			return this.DalAddressMapper.MapBOToModel(records);
+			return this.DalAddressMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9da7d574681d9d49fdbe76ba8a494cc4</Hash>
+    <Hash>8f0d5ac9b88b49a420a26494164c2733</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALAddressMapper
 	{
-		public virtual Address MapModelToBO(
+		public virtual Address MapModelToEntity(
 			int addressID,
 			ApiAddressServerRequestModel model
 			)
@@ -25,24 +25,31 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiAddressServerResponseModel MapBOToModel(
+		public virtual ApiAddressServerResponseModel MapEntityToModel(
 			Address item)
 		{
 			var model = new ApiAddressServerResponseModel();
 
-			model.SetProperties(item.AddressID, item.AddressLine1, item.AddressLine2, item.City, item.ModifiedDate, item.PostalCode, item.Rowguid, item.StateProvinceID);
+			model.SetProperties(item.AddressID,
+			                    item.AddressLine1,
+			                    item.AddressLine2,
+			                    item.City,
+			                    item.ModifiedDate,
+			                    item.PostalCode,
+			                    item.Rowguid,
+			                    item.StateProvinceID);
 
 			return model;
 		}
 
-		public virtual List<ApiAddressServerResponseModel> MapBOToModel(
+		public virtual List<ApiAddressServerResponseModel> MapEntityToModel(
 			List<Address> items)
 		{
 			List<ApiAddressServerResponseModel> response = new List<ApiAddressServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -51,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6ddbb2555811e2d64eb5588e8646627</Hash>
+    <Hash>fab34ec41a871fcd76841fda8948a42e</Hash>
 </Codenesium>*/

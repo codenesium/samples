@@ -30,9 +30,13 @@ export default class ShoppingCartItemViewModel {
     this.shoppingCartID = shoppingCartID;
     this.shoppingCartItemID = shoppingCartItemID;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>8ce26e84ae34225984b5e036b9939610</Hash>
+    <Hash>c6bdabc690a118c58c65135b457da877</Hash>
 </Codenesium>*/

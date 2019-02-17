@@ -92,7 +92,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ProductDescription_rowguid.
 		public async virtual Task<ProductDescription> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<ProductDescription>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<ProductDescription>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		protected async Task<List<ProductDescription>> Where(
@@ -106,7 +108,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ProductDescriptionID;
 			}
 
-			return await this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductDescription>();
+			return await this.Context.Set<ProductDescription>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductDescription>();
 		}
 
 		private async Task<ProductDescription> GetById(int productDescriptionID)
@@ -119,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fac73f0525471198e84f39e79c102733</Hash>
+    <Hash>b637638e0ba9896af9038cbf35e25fa7</Hash>
 </Codenesium>*/

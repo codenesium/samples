@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALDepartmentMapper
 	{
-		Department MapModelToBO(
+		Department MapModelToEntity(
 			short departmentID,
 			ApiDepartmentServerRequestModel model);
 
-		ApiDepartmentServerResponseModel MapBOToModel(
+		ApiDepartmentServerResponseModel MapEntityToModel(
 			Department item);
 
-		List<ApiDepartmentServerResponseModel> MapBOToModel(
+		List<ApiDepartmentServerResponseModel> MapEntityToModel(
 			List<Department> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7430b1c1b56afcd30702d7240470c5c</Hash>
+    <Hash>b6af90d0b5f18cb1434dc2a4739b6926</Hash>
 </Codenesium>*/

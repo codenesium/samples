@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiDatabaseLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.DatabaseLogRepository.All(limit, offset, query);
+			List<DatabaseLog> records = await this.DatabaseLogRepository.All(limit, offset, query);
 
-			return this.DalDatabaseLogMapper.MapBOToModel(records);
+			return this.DalDatabaseLogMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiDatabaseLogServerResponseModel> Get(int databaseLogID)
 		{
-			var record = await this.DatabaseLogRepository.Get(databaseLogID);
+			DatabaseLog record = await this.DatabaseLogRepository.Get(databaseLogID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalDatabaseLogMapper.MapBOToModel(record);
+				return this.DalDatabaseLogMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalDatabaseLogMapper.MapModelToBO(default(int), model);
-				var record = await this.DatabaseLogRepository.Create(bo);
+				DatabaseLog record = this.DalDatabaseLogMapper.MapModelToEntity(default(int), model);
+				record = await this.DatabaseLogRepository.Create(record);
 
-				response.SetRecord(this.DalDatabaseLogMapper.MapBOToModel(record));
+				response.SetRecord(this.DalDatabaseLogMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new DatabaseLogCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalDatabaseLogMapper.MapModelToBO(databaseLogID, model);
-				await this.DatabaseLogRepository.Update(bo);
+				DatabaseLog record = this.DalDatabaseLogMapper.MapModelToEntity(databaseLogID, model);
+				await this.DatabaseLogRepository.Update(record);
 
-				var record = await this.DatabaseLogRepository.Get(databaseLogID);
+				record = await this.DatabaseLogRepository.Get(databaseLogID);
 
-				var apiModel = this.DalDatabaseLogMapper.MapBOToModel(record);
+				ApiDatabaseLogServerResponseModel apiModel = this.DalDatabaseLogMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new DatabaseLogUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiDatabaseLogServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>192f4452a0c33ba38ab0b43d7b79a86d</Hash>
+    <Hash>a955c7d1d30743fab851ad5b5671f290</Hash>
 </Codenesium>*/

@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiErrorLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ErrorLogRepository.All(limit, offset, query);
+			List<ErrorLog> records = await this.ErrorLogRepository.All(limit, offset, query);
 
-			return this.DalErrorLogMapper.MapBOToModel(records);
+			return this.DalErrorLogMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiErrorLogServerResponseModel> Get(int errorLogID)
 		{
-			var record = await this.ErrorLogRepository.Get(errorLogID);
+			ErrorLog record = await this.ErrorLogRepository.Get(errorLogID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalErrorLogMapper.MapBOToModel(record);
+				return this.DalErrorLogMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalErrorLogMapper.MapModelToBO(default(int), model);
-				var record = await this.ErrorLogRepository.Create(bo);
+				ErrorLog record = this.DalErrorLogMapper.MapModelToEntity(default(int), model);
+				record = await this.ErrorLogRepository.Create(record);
 
-				response.SetRecord(this.DalErrorLogMapper.MapBOToModel(record));
+				response.SetRecord(this.DalErrorLogMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ErrorLogCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalErrorLogMapper.MapModelToBO(errorLogID, model);
-				await this.ErrorLogRepository.Update(bo);
+				ErrorLog record = this.DalErrorLogMapper.MapModelToEntity(errorLogID, model);
+				await this.ErrorLogRepository.Update(record);
 
-				var record = await this.ErrorLogRepository.Get(errorLogID);
+				record = await this.ErrorLogRepository.Get(errorLogID);
 
-				var apiModel = this.DalErrorLogMapper.MapBOToModel(record);
+				ApiErrorLogServerResponseModel apiModel = this.DalErrorLogMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ErrorLogUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiErrorLogServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>703c7b3189fca351be1142be409484e4</Hash>
+    <Hash>c7340dfe8d74e051c1f2e4e7ad331b16</Hash>
 </Codenesium>*/

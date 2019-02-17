@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import TransactionHistoryArchiveMapper from './transactionHistoryArchiveMapper';
 import TransactionHistoryArchiveViewModel from './transactionHistoryArchiveViewModel';
 
@@ -353,7 +355,7 @@ const TransactionHistoryArchiveCreate = withFormik<
 
     axios
       .post(
-        Constants.ApiUrl + 'transactionhistoryarchives',
+        Constants.ApiEndpoint + ApiRoutes.TransactionHistoryArchives,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -402,20 +404,18 @@ export default class TransactionHistoryArchiveCreateComponent extends React.Comp
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <TransactionHistoryArchiveCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ef308e007bbe9728078f907b84f16831</Hash>
+    <Hash>eefd16fd88699302ba1d2b66f36239ba</Hash>
 </Codenesium>*/

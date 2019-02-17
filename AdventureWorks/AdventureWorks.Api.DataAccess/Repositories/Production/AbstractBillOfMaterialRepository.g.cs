@@ -111,7 +111,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.BillOfMaterialsID;
 			}
 
-			return await this.Context.Set<BillOfMaterial>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
+			return await this.Context.Set<BillOfMaterial>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
 		private async Task<BillOfMaterial> GetById(int billOfMaterialsID)
@@ -124,5 +126,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a1175305c96fa0ed3ff2ef54a05562d7</Hash>
+    <Hash>dbf9209db827d087925f7a2b556a984d</Hash>
 </Codenesium>*/

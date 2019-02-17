@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import CurrencyMapper from './currencyMapper';
 import CurrencyViewModel from './currencyViewModel';
 
 interface Props {
+  history: any;
   model?: CurrencyViewModel;
 }
 
 const CurrencyDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.Currencies + '/edit/' + model.model!.currencyCode
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="currencyCode" className={'col-sm-2 col-form-label'}>
           CurrencyCode
         </label>
         <div className="col-sm-12">{String(model.model!.currencyCode)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
@@ -48,6 +59,7 @@ interface IMatch {
 
 interface CurrencyDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface CurrencyDetailComponentState {
@@ -75,7 +87,10 @@ export default class CurrencyDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl + 'currencies/' + this.props.match.params.currencyCode,
+        Constants.ApiEndpoint +
+          ApiRoutes.Currencies +
+          '/' +
+          this.props.match.params.currencyCode,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -112,20 +127,23 @@ export default class CurrencyDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <CurrencyDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <CurrencyDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>b7b251e0bd98b1346607fdb449d0338c</Hash>
+    <Hash>c9d0f7b2b82e929bd0b0f449331cb325</Hash>
 </Codenesium>*/

@@ -94,19 +94,24 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ShipMethod_Name.
 		public async virtual Task<ShipMethod> ByName(string name)
 		{
-			return await this.Context.Set<ShipMethod>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ShipMethod>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_ShipMethod_rowguid.
 		public async virtual Task<ShipMethod> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<ShipMethod>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<ShipMethod>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table PurchaseOrderHeader via shipMethodID.
 		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.ShipMethodID == shipMethodID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+			return await this.Context.Set<PurchaseOrderHeader>()
+			       .Where(x => x.ShipMethodID == shipMethodID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
 		}
 
 		protected async Task<List<ShipMethod>> Where(
@@ -120,7 +125,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.ShipMethodID;
 			}
 
-			return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
+			return await this.Context.Set<ShipMethod>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
 		}
 
 		private async Task<ShipMethod> GetById(int shipMethodID)
@@ -133,5 +140,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cefe28d9f288a1ce54bef6b07c7938b6</Hash>
+    <Hash>346bac4c650202cfc79b3f7b83b2d03f</Hash>
 </Codenesium>*/

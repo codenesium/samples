@@ -1,12 +1,12 @@
 import * as Api from '../../api/models';
 import CultureViewModel from './cultureViewModel';
-
 export default class CultureMapper {
   mapApiResponseToViewModel(
     dto: Api.CultureClientResponseModel
   ): CultureViewModel {
     let response = new CultureViewModel();
     response.setProperties(dto.cultureID, dto.modifiedDate, dto.name);
+
     return response;
   }
 
@@ -21,5 +21,5 @@ export default class CultureMapper {
 
 
 /*<Codenesium>
-    <Hash>322cdfc814a0dc6330a096891a836482</Hash>
+    <Hash>04e9f2a0ff69dd7c8b079332a923356a</Hash>
 </Codenesium>*/

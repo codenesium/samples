@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALStoreMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALStoreMapper();
 			ApiStoreServerRequestModel model = new ApiStoreServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			Store response = mapper.MapModelToBO(1, model);
+			Store response = mapper.MapModelToEntity(1, model);
 
 			response.Demographic.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -28,12 +28,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALStoreMapper();
 			Store item = new Store();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			ApiStoreServerResponseModel response = mapper.MapBOToModel(item);
+			ApiStoreServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.BusinessEntityID.Should().Be(1);
 			response.Demographic.Should().Be("A");
@@ -44,12 +44,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALStoreMapper();
 			Store item = new Store();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			List<ApiStoreServerResponseModel> response = mapper.MapBOToModel(new List<Store>() { { item} });
+			List<ApiStoreServerResponseModel> response = mapper.MapEntityToModel(new List<Store>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3436235608293f88fb55143b865481b8</Hash>
+    <Hash>ce84c698adeaae9308db32d0698359f9</Hash>
 </Codenesium>*/

@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALSalesOrderHeaderMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALSalesOrderHeaderMapper();
 			ApiSalesOrderHeaderServerRequestModel model = new ApiSalesOrderHeaderServerRequestModel();
 			model.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
-			SalesOrderHeader response = mapper.MapModelToBO(1, model);
+			SalesOrderHeader response = mapper.MapModelToEntity(1, model);
 
 			response.AccountNumber.Should().Be("A");
 			response.BillToAddressID.Should().Be(1);
@@ -48,12 +48,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALSalesOrderHeaderMapper();
 			SalesOrderHeader item = new SalesOrderHeader();
 			item.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
-			ApiSalesOrderHeaderServerResponseModel response = mapper.MapBOToModel(item);
+			ApiSalesOrderHeaderServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.AccountNumber.Should().Be("A");
 			response.BillToAddressID.Should().Be(1);
@@ -84,12 +84,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALSalesOrderHeaderMapper();
 			SalesOrderHeader item = new SalesOrderHeader();
 			item.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
-			List<ApiSalesOrderHeaderServerResponseModel> response = mapper.MapBOToModel(new List<SalesOrderHeader>() { { item} });
+			List<ApiSalesOrderHeaderServerResponseModel> response = mapper.MapEntityToModel(new List<SalesOrderHeader>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -97,5 +97,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>804620d8e824f1560a9c1b7d791d52f5</Hash>
+    <Hash>38b970211125dbd26553ca78898941dd</Hash>
 </Codenesium>*/

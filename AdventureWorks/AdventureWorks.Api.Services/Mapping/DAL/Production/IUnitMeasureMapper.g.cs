@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALUnitMeasureMapper
 	{
-		UnitMeasure MapModelToBO(
+		UnitMeasure MapModelToEntity(
 			string unitMeasureCode,
 			ApiUnitMeasureServerRequestModel model);
 
-		ApiUnitMeasureServerResponseModel MapBOToModel(
+		ApiUnitMeasureServerResponseModel MapEntityToModel(
 			UnitMeasure item);
 
-		List<ApiUnitMeasureServerResponseModel> MapBOToModel(
+		List<ApiUnitMeasureServerResponseModel> MapEntityToModel(
 			List<UnitMeasure> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5cb852be2545a5402f26c2a40afd808</Hash>
+    <Hash>fa2f097cb28dd9c7146b087cec110b74</Hash>
 </Codenesium>*/

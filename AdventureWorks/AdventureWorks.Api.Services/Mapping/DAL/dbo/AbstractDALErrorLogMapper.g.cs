@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALErrorLogMapper
 	{
-		public virtual ErrorLog MapModelToBO(
+		public virtual ErrorLog MapModelToEntity(
 			int errorLogID,
 			ApiErrorLogServerRequestModel model
 			)
@@ -26,24 +26,32 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiErrorLogServerResponseModel MapBOToModel(
+		public virtual ApiErrorLogServerResponseModel MapEntityToModel(
 			ErrorLog item)
 		{
 			var model = new ApiErrorLogServerResponseModel();
 
-			model.SetProperties(item.ErrorLogID, item.ErrorLine, item.ErrorMessage, item.ErrorNumber, item.ErrorProcedure, item.ErrorSeverity, item.ErrorState, item.ErrorTime, item.UserName);
+			model.SetProperties(item.ErrorLogID,
+			                    item.ErrorLine,
+			                    item.ErrorMessage,
+			                    item.ErrorNumber,
+			                    item.ErrorProcedure,
+			                    item.ErrorSeverity,
+			                    item.ErrorState,
+			                    item.ErrorTime,
+			                    item.UserName);
 
 			return model;
 		}
 
-		public virtual List<ApiErrorLogServerResponseModel> MapBOToModel(
+		public virtual List<ApiErrorLogServerResponseModel> MapEntityToModel(
 			List<ErrorLog> items)
 		{
 			List<ApiErrorLogServerResponseModel> response = new List<ApiErrorLogServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -52,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>916195886e5ad2518224f19226c6b6d4</Hash>
+    <Hash>b5aa5c13e00695c3194cbf1d3c8b8665</Hash>
 </Codenesium>*/

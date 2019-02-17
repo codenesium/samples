@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALScrapReasonMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALScrapReasonMapper();
 			ApiScrapReasonServerRequestModel model = new ApiScrapReasonServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ScrapReason response = mapper.MapModelToBO(1, model);
+			ScrapReason response = mapper.MapModelToEntity(1, model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALScrapReasonMapper();
 			ScrapReason item = new ScrapReason();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiScrapReasonServerResponseModel response = mapper.MapBOToModel(item);
+			ApiScrapReasonServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALScrapReasonMapper();
 			ScrapReason item = new ScrapReason();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiScrapReasonServerResponseModel> response = mapper.MapBOToModel(new List<ScrapReason>() { { item} });
+			List<ApiScrapReasonServerResponseModel> response = mapper.MapEntityToModel(new List<ScrapReason>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c72afc7301964d3b7b6f1796396761d2</Hash>
+    <Hash>bd72b270ee793a5060e15f9fd883278d</Hash>
 </Codenesium>*/

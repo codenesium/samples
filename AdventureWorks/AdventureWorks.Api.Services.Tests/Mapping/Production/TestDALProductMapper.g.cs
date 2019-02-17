@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALProductMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALProductMapper();
 			ApiProductServerRequestModel model = new ApiProductServerRequestModel();
 			model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
-			Product response = mapper.MapModelToBO(1, model);
+			Product response = mapper.MapModelToEntity(1, model);
 
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
@@ -46,12 +46,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALProductMapper();
 			Product item = new Product();
 			item.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
-			ApiProductServerResponseModel response = mapper.MapBOToModel(item);
+			ApiProductServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
@@ -80,12 +80,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALProductMapper();
 			Product item = new Product();
 			item.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
-			List<ApiProductServerResponseModel> response = mapper.MapBOToModel(new List<Product>() { { item} });
+			List<ApiProductServerResponseModel> response = mapper.MapEntityToModel(new List<Product>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f3adc966551d1f032a7665dd1005a8c</Hash>
+    <Hash>5f411a3616b72574d0677ff03dfafee6</Hash>
 </Codenesium>*/

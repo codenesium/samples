@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALAWBuildVersionMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALAWBuildVersionMapper();
 			ApiAWBuildVersionServerRequestModel model = new ApiAWBuildVersionServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
-			AWBuildVersion response = mapper.MapModelToBO(1, model);
+			AWBuildVersion response = mapper.MapModelToEntity(1, model);
 
 			response.Database_Version.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -26,12 +26,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALAWBuildVersionMapper();
 			AWBuildVersion item = new AWBuildVersion();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
-			ApiAWBuildVersionServerResponseModel response = mapper.MapBOToModel(item);
+			ApiAWBuildVersionServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Database_Version.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -40,12 +40,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALAWBuildVersionMapper();
 			AWBuildVersion item = new AWBuildVersion();
 			item.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
-			List<ApiAWBuildVersionServerResponseModel> response = mapper.MapBOToModel(new List<AWBuildVersion>() { { item} });
+			List<ApiAWBuildVersionServerResponseModel> response = mapper.MapEntityToModel(new List<AWBuildVersion>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e46026e7aa2906555d9965900d7b60b</Hash>
+    <Hash>6df55f1e3d3475981c49ce03feb6a429</Hash>
 </Codenesium>*/

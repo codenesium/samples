@@ -26,6 +26,14 @@ namespace AdventureWorksNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiSalesPersonClientResponseModel SalesPersonIDNavigation { get; private set; }
+
+		public void SetSalesPersonIDNavigation(ApiSalesPersonClientResponseModel value)
+		{
+			this.SalesPersonIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public int BusinessEntityID { get; private set; }
 
 		[JsonProperty]
@@ -49,5 +57,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9a6f253da360e001aa3338fa81fa6acc</Hash>
+    <Hash>6f0b7d531a3317b70ac5346f4551b61f</Hash>
 </Codenesium>*/

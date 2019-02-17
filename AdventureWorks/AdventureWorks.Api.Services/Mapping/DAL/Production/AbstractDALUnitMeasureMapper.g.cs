@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALUnitMeasureMapper
 	{
-		public virtual UnitMeasure MapModelToBO(
+		public virtual UnitMeasure MapModelToEntity(
 			string unitMeasureCode,
 			ApiUnitMeasureServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiUnitMeasureServerResponseModel MapBOToModel(
+		public virtual ApiUnitMeasureServerResponseModel MapEntityToModel(
 			UnitMeasure item)
 		{
 			var model = new ApiUnitMeasureServerResponseModel();
 
-			model.SetProperties(item.UnitMeasureCode, item.ModifiedDate, item.Name);
+			model.SetProperties(item.UnitMeasureCode,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiUnitMeasureServerResponseModel> MapBOToModel(
+		public virtual List<ApiUnitMeasureServerResponseModel> MapEntityToModel(
 			List<UnitMeasure> items)
 		{
 			List<ApiUnitMeasureServerResponseModel> response = new List<ApiUnitMeasureServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98be6486fd1ee7804b70df804fb98a48</Hash>
+    <Hash>660c8e71385afc78df85897d9f44ed47</Hash>
 </Codenesium>*/

@@ -102,9 +102,13 @@ export default class ProductViewModel {
     this.weight = weight;
     this.weightUnitMeasureCode = weightUnitMeasureCode;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>9aa0db6afd695b5df24a27d2dbdf5606</Hash>
+    <Hash>707801320bdadcc46cddd011891ae1c4</Hash>
 </Codenesium>*/

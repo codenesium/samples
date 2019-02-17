@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALTransactionHistoryArchiveMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALTransactionHistoryArchiveMapper();
 			ApiTransactionHistoryArchiveServerRequestModel model = new ApiTransactionHistoryArchiveServerRequestModel();
 			model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			TransactionHistoryArchive response = mapper.MapModelToBO(1, model);
+			TransactionHistoryArchive response = mapper.MapModelToEntity(1, model);
 
 			response.ActualCost.Should().Be(1m);
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -31,12 +31,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALTransactionHistoryArchiveMapper();
 			TransactionHistoryArchive item = new TransactionHistoryArchive();
 			item.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiTransactionHistoryArchiveServerResponseModel response = mapper.MapBOToModel(item);
+			ApiTransactionHistoryArchiveServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ActualCost.Should().Be(1m);
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -50,12 +50,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALTransactionHistoryArchiveMapper();
 			TransactionHistoryArchive item = new TransactionHistoryArchive();
 			item.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiTransactionHistoryArchiveServerResponseModel> response = mapper.MapBOToModel(new List<TransactionHistoryArchive>() { { item} });
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = mapper.MapEntityToModel(new List<TransactionHistoryArchive>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1bd9b9cec4b6ef0d63b8df814983ee52</Hash>
+    <Hash>722c8e5adef169b3d029e1a8d0ed7bd3</Hash>
 </Codenesium>*/

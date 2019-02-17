@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import SalesTaxRateViewModel from './salesTaxRateViewModel';
-
 export default class SalesTaxRateMapper {
   mapApiResponseToViewModel(
     dto: Api.SalesTaxRateClientResponseModel
@@ -15,6 +14,7 @@ export default class SalesTaxRateMapper {
       dto.taxRate,
       dto.taxType
     );
+
     return response;
   }
 
@@ -37,5 +37,5 @@ export default class SalesTaxRateMapper {
 
 
 /*<Codenesium>
-    <Hash>b82274bf034571408ea5f786d4ab8ff7</Hash>
+    <Hash>8af98edcffda6dde1b4bdc40b663f2e0</Hash>
 </Codenesium>*/

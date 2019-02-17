@@ -40,7 +40,7 @@ namespace StudioResourceManagerNS.Api.Services
 			{
 				var userIdModel = new ApiUserServerResponseModel();
 				userIdModel.SetProperties(
-					item.Id,
+					item.UserIdNavigation.Id,
 					item.UserIdNavigation.Password,
 					item.UserIdNavigation.Username);
 
@@ -66,5 +66,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30e74e0fdf3b66367e958bfc5bd5d89e</Hash>
+    <Hash>a2ade547c45a5e2b974213ec962e6717</Hash>
 </Codenesium>*/

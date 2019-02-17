@@ -92,7 +92,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Department_Name.
 		public async virtual Task<Department> ByName(string name)
 		{
-			return await this.Context.Set<Department>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Department>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<Department>> Where(
@@ -106,7 +108,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.DepartmentID;
 			}
 
-			return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Department>();
+			return await this.Context.Set<Department>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Department>();
 		}
 
 		private async Task<Department> GetById(short departmentID)
@@ -119,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5c132b8ca233ddf33537814cbc677b9e</Hash>
+    <Hash>03ae9357a12b8f4e8339602e89c109dc</Hash>
 </Codenesium>*/

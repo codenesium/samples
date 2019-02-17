@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALShipMethodMapper
 	{
-		public virtual ShipMethod MapModelToBO(
+		public virtual ShipMethod MapModelToEntity(
 			int shipMethodID,
 			ApiShipMethodServerRequestModel model
 			)
@@ -23,24 +23,29 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiShipMethodServerResponseModel MapBOToModel(
+		public virtual ApiShipMethodServerResponseModel MapEntityToModel(
 			ShipMethod item)
 		{
 			var model = new ApiShipMethodServerResponseModel();
 
-			model.SetProperties(item.ShipMethodID, item.ModifiedDate, item.Name, item.Rowguid, item.ShipBase, item.ShipRate);
+			model.SetProperties(item.ShipMethodID,
+			                    item.ModifiedDate,
+			                    item.Name,
+			                    item.Rowguid,
+			                    item.ShipBase,
+			                    item.ShipRate);
 
 			return model;
 		}
 
-		public virtual List<ApiShipMethodServerResponseModel> MapBOToModel(
+		public virtual List<ApiShipMethodServerResponseModel> MapEntityToModel(
 			List<ShipMethod> items)
 		{
 			List<ApiShipMethodServerResponseModel> response = new List<ApiShipMethodServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -49,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62a8d3d6a0984af945c78b13293c5946</Hash>
+    <Hash>e95dbfb889dfc52b4e9d7c67c7183d46</Hash>
 </Codenesium>*/

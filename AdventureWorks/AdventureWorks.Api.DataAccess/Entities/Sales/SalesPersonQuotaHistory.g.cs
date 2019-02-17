@@ -45,15 +45,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual decimal SalesQuota { get; private set; }
 
 		[ForeignKey("BusinessEntityID")]
-		public virtual SalesPerson SalesPersonNavigation { get; private set; }
+		public virtual SalesPerson BusinessEntityIDNavigation { get; private set; }
 
-		public void SetSalesPersonNavigation(SalesPerson item)
+		public void SetBusinessEntityIDNavigation(SalesPerson item)
 		{
-			this.SalesPersonNavigation = item;
+			this.BusinessEntityIDNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2d6fec5e7cf1fd0d16050b8a8ccae29</Hash>
+    <Hash>7d797dfcfcb88d471060d296b26688d8</Hash>
 </Codenesium>*/

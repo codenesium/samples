@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import ProductReviewViewModel from './productReviewViewModel';
-
 export default class ProductReviewMapper {
   mapApiResponseToViewModel(
     dto: Api.ProductReviewClientResponseModel
@@ -16,6 +15,7 @@ export default class ProductReviewMapper {
       dto.reviewDate,
       dto.reviewerName
     );
+
     return response;
   }
 
@@ -39,5 +39,5 @@ export default class ProductReviewMapper {
 
 
 /*<Codenesium>
-    <Hash>b2ce90a5225a5fb25b7adaf2da655f1c</Hash>
+    <Hash>2d287d35a69a10026945301624cd969d</Hash>
 </Codenesium>*/

@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALPurchaseOrderHeaderMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALPurchaseOrderHeaderMapper();
 			ApiPurchaseOrderHeaderServerRequestModel model = new ApiPurchaseOrderHeaderServerRequestModel();
 			model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, 1m, 1m, 1);
-			PurchaseOrderHeader response = mapper.MapModelToBO(1, model);
+			PurchaseOrderHeader response = mapper.MapModelToEntity(1, model);
 
 			response.EmployeeID.Should().Be(1);
 			response.Freight.Should().Be(1m);
@@ -35,12 +35,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALPurchaseOrderHeaderMapper();
 			PurchaseOrderHeader item = new PurchaseOrderHeader();
 			item.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, 1m, 1m, 1);
-			ApiPurchaseOrderHeaderServerResponseModel response = mapper.MapBOToModel(item);
+			ApiPurchaseOrderHeaderServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.EmployeeID.Should().Be(1);
 			response.Freight.Should().Be(1m);
@@ -58,12 +58,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALPurchaseOrderHeaderMapper();
 			PurchaseOrderHeader item = new PurchaseOrderHeader();
 			item.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, 1m, 1m, 1);
-			List<ApiPurchaseOrderHeaderServerResponseModel> response = mapper.MapBOToModel(new List<PurchaseOrderHeader>() { { item} });
+			List<ApiPurchaseOrderHeaderServerResponseModel> response = mapper.MapEntityToModel(new List<PurchaseOrderHeader>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d6dcbd7afde7754c16bc979ef4bd733</Hash>
+    <Hash>0230f56de677cad788c4f400673055db</Hash>
 </Codenesium>*/

@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiProductDescriptionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductDescriptionRepository.All(limit, offset, query);
+			List<ProductDescription> records = await this.ProductDescriptionRepository.All(limit, offset, query);
 
-			return this.DalProductDescriptionMapper.MapBOToModel(records);
+			return this.DalProductDescriptionMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiProductDescriptionServerResponseModel> Get(int productDescriptionID)
 		{
-			var record = await this.ProductDescriptionRepository.Get(productDescriptionID);
+			ProductDescription record = await this.ProductDescriptionRepository.Get(productDescriptionID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductDescriptionMapper.MapBOToModel(record);
+				return this.DalProductDescriptionMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalProductDescriptionMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductDescriptionRepository.Create(bo);
+				ProductDescription record = this.DalProductDescriptionMapper.MapModelToEntity(default(int), model);
+				record = await this.ProductDescriptionRepository.Create(record);
 
-				response.SetRecord(this.DalProductDescriptionMapper.MapBOToModel(record));
+				response.SetRecord(this.DalProductDescriptionMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ProductDescriptionCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalProductDescriptionMapper.MapModelToBO(productDescriptionID, model);
-				await this.ProductDescriptionRepository.Update(bo);
+				ProductDescription record = this.DalProductDescriptionMapper.MapModelToEntity(productDescriptionID, model);
+				await this.ProductDescriptionRepository.Update(record);
 
-				var record = await this.ProductDescriptionRepository.Get(productDescriptionID);
+				record = await this.ProductDescriptionRepository.Get(productDescriptionID);
 
-				var apiModel = this.DalProductDescriptionMapper.MapBOToModel(record);
+				ApiProductDescriptionServerResponseModel apiModel = this.DalProductDescriptionMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ProductDescriptionUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductDescriptionServerResponseModel>.UpdateResponse(apiModel);
@@ -123,12 +123,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductDescriptionMapper.MapBOToModel(record);
+				return this.DalProductDescriptionMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>92c0e1f13ee1b782499f9c9c0f9d6143</Hash>
+    <Hash>640aef2764587b45077df97d30de2aea</Hash>
 </Codenesium>*/

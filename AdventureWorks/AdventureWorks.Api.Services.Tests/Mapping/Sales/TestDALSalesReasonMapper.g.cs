@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALSalesReasonMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALSalesReasonMapper();
 			ApiSalesReasonServerRequestModel model = new ApiSalesReasonServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
-			SalesReason response = mapper.MapModelToBO(1, model);
+			SalesReason response = mapper.MapModelToEntity(1, model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -26,12 +26,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALSalesReasonMapper();
 			SalesReason item = new SalesReason();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
-			ApiSalesReasonServerResponseModel response = mapper.MapBOToModel(item);
+			ApiSalesReasonServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -40,12 +40,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALSalesReasonMapper();
 			SalesReason item = new SalesReason();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
-			List<ApiSalesReasonServerResponseModel> response = mapper.MapBOToModel(new List<SalesReason>() { { item} });
+			List<ApiSalesReasonServerResponseModel> response = mapper.MapEntityToModel(new List<SalesReason>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c14f4c60a58ef2ef9f4f80158082455</Hash>
+    <Hash>b0907c3e164dd057067548d696f25024</Hash>
 </Codenesium>*/

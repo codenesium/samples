@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiWorkOrderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.WorkOrderRepository.All(limit, offset, query);
+			List<WorkOrder> records = await this.WorkOrderRepository.All(limit, offset, query);
 
-			return this.DalWorkOrderMapper.MapBOToModel(records);
+			return this.DalWorkOrderMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiWorkOrderServerResponseModel> Get(int workOrderID)
 		{
-			var record = await this.WorkOrderRepository.Get(workOrderID);
+			WorkOrder record = await this.WorkOrderRepository.Get(workOrderID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalWorkOrderMapper.MapBOToModel(record);
+				return this.DalWorkOrderMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalWorkOrderMapper.MapModelToBO(default(int), model);
-				var record = await this.WorkOrderRepository.Create(bo);
+				WorkOrder record = this.DalWorkOrderMapper.MapModelToEntity(default(int), model);
+				record = await this.WorkOrderRepository.Create(record);
 
-				response.SetRecord(this.DalWorkOrderMapper.MapBOToModel(record));
+				response.SetRecord(this.DalWorkOrderMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new WorkOrderCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalWorkOrderMapper.MapModelToBO(workOrderID, model);
-				await this.WorkOrderRepository.Update(bo);
+				WorkOrder record = this.DalWorkOrderMapper.MapModelToEntity(workOrderID, model);
+				await this.WorkOrderRepository.Update(record);
 
-				var record = await this.WorkOrderRepository.Get(workOrderID);
+				record = await this.WorkOrderRepository.Get(workOrderID);
 
-				var apiModel = this.DalWorkOrderMapper.MapBOToModel(record);
+				ApiWorkOrderServerResponseModel apiModel = this.DalWorkOrderMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new WorkOrderUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiWorkOrderServerResponseModel>.UpdateResponse(apiModel);
@@ -117,18 +117,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<WorkOrder> records = await this.WorkOrderRepository.ByProductID(productID, limit, offset);
 
-			return this.DalWorkOrderMapper.MapBOToModel(records);
+			return this.DalWorkOrderMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiWorkOrderServerResponseModel>> ByScrapReasonID(short? scrapReasonID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<WorkOrder> records = await this.WorkOrderRepository.ByScrapReasonID(scrapReasonID, limit, offset);
 
-			return this.DalWorkOrderMapper.MapBOToModel(records);
+			return this.DalWorkOrderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97672c0f660a360635a4f469e6d623cb</Hash>
+    <Hash>28b97ff41d85566e6f987ca4c89610df</Hash>
 </Codenesium>*/

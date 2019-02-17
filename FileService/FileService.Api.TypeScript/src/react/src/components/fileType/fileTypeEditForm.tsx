@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -262,5 +262,5 @@ export default class FileTypeEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9774b466e3f9e5ffad6b40c8cf072bd8</Hash>
+    <Hash>501f6bc3bcca229b73eb1c06a2d09717</Hash>
 </Codenesium>*/

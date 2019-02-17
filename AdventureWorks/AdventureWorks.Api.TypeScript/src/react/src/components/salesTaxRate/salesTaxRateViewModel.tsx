@@ -34,9 +34,13 @@ export default class SalesTaxRateViewModel {
     this.taxRate = taxRate;
     this.taxType = taxType;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>404c53929ce967024f10a84571e09082</Hash>
+    <Hash>811c0f9334c682fe607856578e225f0d</Hash>
 </Codenesium>*/

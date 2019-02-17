@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiAddressTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AddressTypeRepository.All(limit, offset, query);
+			List<AddressType> records = await this.AddressTypeRepository.All(limit, offset, query);
 
-			return this.DalAddressTypeMapper.MapBOToModel(records);
+			return this.DalAddressTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiAddressTypeServerResponseModel> Get(int addressTypeID)
 		{
-			var record = await this.AddressTypeRepository.Get(addressTypeID);
+			AddressType record = await this.AddressTypeRepository.Get(addressTypeID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalAddressTypeMapper.MapBOToModel(record);
+				return this.DalAddressTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalAddressTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.AddressTypeRepository.Create(bo);
+				AddressType record = this.DalAddressTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.AddressTypeRepository.Create(record);
 
-				response.SetRecord(this.DalAddressTypeMapper.MapBOToModel(record));
+				response.SetRecord(this.DalAddressTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new AddressTypeCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalAddressTypeMapper.MapModelToBO(addressTypeID, model);
-				await this.AddressTypeRepository.Update(bo);
+				AddressType record = this.DalAddressTypeMapper.MapModelToEntity(addressTypeID, model);
+				await this.AddressTypeRepository.Update(record);
 
-				var record = await this.AddressTypeRepository.Get(addressTypeID);
+				record = await this.AddressTypeRepository.Get(addressTypeID);
 
-				var apiModel = this.DalAddressTypeMapper.MapBOToModel(record);
+				ApiAddressTypeServerResponseModel apiModel = this.DalAddressTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AddressTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAddressTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalAddressTypeMapper.MapBOToModel(record);
+				return this.DalAddressTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -137,12 +137,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalAddressTypeMapper.MapBOToModel(record);
+				return this.DalAddressTypeMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ab3ae41fc0f27c1f8865ce10229d6c2</Hash>
+    <Hash>d223505e9ae8cfad665aba606d5fcbc3</Hash>
 </Codenesium>*/

@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ProductCategoryMapper from './productCategoryMapper';
 import ProductCategoryViewModel from './productCategoryViewModel';
 
 interface Props {
+  history: any;
   model?: ProductCategoryViewModel;
 }
 
 const ProductCategoryDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.ProductCategories +
+              '/edit/' +
+              model.model!.productCategoryID
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
         <div className="col-sm-12">{String(model.model!.name)}</div>
       </div>
-
       <div className="form-group row">
         <label
           htmlFor="productCategoryID"
@@ -39,7 +52,6 @@ const ProductCategoryDetailDisplay = (model: Props) => {
           {String(model.model!.productCategoryID)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
           Rowguid
@@ -60,6 +72,7 @@ interface IMatch {
 
 interface ProductCategoryDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface ProductCategoryDetailComponentState {
@@ -87,8 +100,9 @@ export default class ProductCategoryDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'productcategories/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductCategories +
+          '/' +
           this.props.match.params.productCategoryID,
         {
           headers: {
@@ -126,20 +140,23 @@ export default class ProductCategoryDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <ProductCategoryDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <ProductCategoryDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>bcdbc5b74ea4307efeea5a22fac2a519</Hash>
+    <Hash>2928e356ce5aba5fab082e8d2aec9de8</Hash>
 </Codenesium>*/

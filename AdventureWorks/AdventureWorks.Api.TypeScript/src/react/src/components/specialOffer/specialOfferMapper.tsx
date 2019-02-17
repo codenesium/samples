@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import SpecialOfferViewModel from './specialOfferViewModel';
-
 export default class SpecialOfferMapper {
   mapApiResponseToViewModel(
     dto: Api.SpecialOfferClientResponseModel
@@ -18,6 +17,7 @@ export default class SpecialOfferMapper {
       dto.specialOfferID,
       dto.startDate
     );
+
     return response;
   }
 
@@ -43,5 +43,5 @@ export default class SpecialOfferMapper {
 
 
 /*<Codenesium>
-    <Hash>99bff50b00a9823996c37ec4dae79479</Hash>
+    <Hash>5338fb7a4b932cc6d57d058142a646f6</Hash>
 </Codenesium>*/

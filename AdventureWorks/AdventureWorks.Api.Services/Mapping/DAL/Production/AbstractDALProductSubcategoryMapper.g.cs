@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALProductSubcategoryMapper
 	{
-		public virtual ProductSubcategory MapModelToBO(
+		public virtual ProductSubcategory MapModelToEntity(
 			int productSubcategoryID,
 			ApiProductSubcategoryServerRequestModel model
 			)
@@ -22,24 +22,28 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiProductSubcategoryServerResponseModel MapBOToModel(
+		public virtual ApiProductSubcategoryServerResponseModel MapEntityToModel(
 			ProductSubcategory item)
 		{
 			var model = new ApiProductSubcategoryServerResponseModel();
 
-			model.SetProperties(item.ProductSubcategoryID, item.ModifiedDate, item.Name, item.ProductCategoryID, item.Rowguid);
+			model.SetProperties(item.ProductSubcategoryID,
+			                    item.ModifiedDate,
+			                    item.Name,
+			                    item.ProductCategoryID,
+			                    item.Rowguid);
 
 			return model;
 		}
 
-		public virtual List<ApiProductSubcategoryServerResponseModel> MapBOToModel(
+		public virtual List<ApiProductSubcategoryServerResponseModel> MapEntityToModel(
 			List<ProductSubcategory> items)
 		{
 			List<ApiProductSubcategoryServerResponseModel> response = new List<ApiProductSubcategoryServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -48,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>598685cdf8abfa1bd27e884c082018db</Hash>
+    <Hash>120499a6dbcbf415176204bb88c5e27c</Hash>
 </Codenesium>*/

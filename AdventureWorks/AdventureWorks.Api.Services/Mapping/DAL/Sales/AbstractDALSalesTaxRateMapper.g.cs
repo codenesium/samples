@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALSalesTaxRateMapper
 	{
-		public virtual SalesTaxRate MapModelToBO(
+		public virtual SalesTaxRate MapModelToEntity(
 			int salesTaxRateID,
 			ApiSalesTaxRateServerRequestModel model
 			)
@@ -24,24 +24,30 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiSalesTaxRateServerResponseModel MapBOToModel(
+		public virtual ApiSalesTaxRateServerResponseModel MapEntityToModel(
 			SalesTaxRate item)
 		{
 			var model = new ApiSalesTaxRateServerResponseModel();
 
-			model.SetProperties(item.SalesTaxRateID, item.ModifiedDate, item.Name, item.Rowguid, item.StateProvinceID, item.TaxRate, item.TaxType);
+			model.SetProperties(item.SalesTaxRateID,
+			                    item.ModifiedDate,
+			                    item.Name,
+			                    item.Rowguid,
+			                    item.StateProvinceID,
+			                    item.TaxRate,
+			                    item.TaxType);
 
 			return model;
 		}
 
-		public virtual List<ApiSalesTaxRateServerResponseModel> MapBOToModel(
+		public virtual List<ApiSalesTaxRateServerResponseModel> MapEntityToModel(
 			List<SalesTaxRate> items)
 		{
 			List<ApiSalesTaxRateServerResponseModel> response = new List<ApiSalesTaxRateServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -50,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a96468fd83c6ce8e6addf15dab2f3f8</Hash>
+    <Hash>b576b2cfe17ecc0bae651ce1742e3b1a</Hash>
 </Codenesium>*/

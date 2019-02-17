@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import DocumentViewModel from './documentViewModel';
 import DocumentMapper from './documentMapper';
 
@@ -411,7 +413,7 @@ const DocumentEditDisplay = (props: FormikProps<DocumentViewModel>) => {
   );
 };
 
-const DocumentUpdate = withFormik<Props, DocumentViewModel>({
+const DocumentEdit = withFormik<Props, DocumentViewModel>({
   mapPropsToValues: props => {
     let response = new DocumentViewModel();
     response.setProperties(
@@ -445,9 +447,6 @@ const DocumentUpdate = withFormik<Props, DocumentViewModel>({
     if (values.fileName == '') {
       errors.fileName = 'Required';
     }
-    if (values.folderFlag == false) {
-      errors.folderFlag = 'Required';
-    }
     if (values.modifiedDate == undefined) {
       errors.modifiedDate = 'Required';
     }
@@ -476,7 +475,7 @@ const DocumentUpdate = withFormik<Props, DocumentViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'documents/' + values.rowguid,
+        Constants.ApiEndpoint + ApiRoutes.Documents + '/' + values.rowguid,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -542,11 +541,17 @@ export default class DocumentEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(Constants.ApiUrl + 'documents/' + this.props.match.params.rowguid, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Documents +
+          '/' +
+          this.props.match.params.rowguid,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Api.DocumentClientResponseModel;
@@ -577,20 +582,18 @@ export default class DocumentEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <DocumentUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <DocumentEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>1c755c2328a5f40c446dda23754d6a16</Hash>
+    <Hash>3f6991af915cc9ad773e413ce8233690</Hash>
 </Codenesium>*/

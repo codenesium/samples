@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import UnitMeasureMapper from './unitMeasureMapper';
 import UnitMeasureViewModel from './unitMeasureViewModel';
 
@@ -153,7 +155,7 @@ const UnitMeasureCreate = withFormik<Props, UnitMeasureViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'unitmeasures',
+        Constants.ApiEndpoint + ApiRoutes.UnitMeasures,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -202,20 +204,18 @@ export default class UnitMeasureCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <UnitMeasureCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>d559b4d2b7500314dc3d1987e2d4fe3d</Hash>
+    <Hash>6352fdfd47522ee17cffd32f32562319</Hash>
 </Codenesium>*/

@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALSalesTaxRateMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALSalesTaxRateMapper();
 			ApiSalesTaxRateServerRequestModel model = new ApiSalesTaxRateServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1m, 1);
-			SalesTaxRate response = mapper.MapModelToBO(1, model);
+			SalesTaxRate response = mapper.MapModelToEntity(1, model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -29,12 +29,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALSalesTaxRateMapper();
 			SalesTaxRate item = new SalesTaxRate();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1m, 1);
-			ApiSalesTaxRateServerResponseModel response = mapper.MapBOToModel(item);
+			ApiSalesTaxRateServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -46,12 +46,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALSalesTaxRateMapper();
 			SalesTaxRate item = new SalesTaxRate();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1m, 1);
-			List<ApiSalesTaxRateServerResponseModel> response = mapper.MapBOToModel(new List<SalesTaxRate>() { { item} });
+			List<ApiSalesTaxRateServerResponseModel> response = mapper.MapEntityToModel(new List<SalesTaxRate>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00ac4b728a15cebf723adf82956e727a</Hash>
+    <Hash>92d59f8f579e7ccd77b4916b5e9d6879</Hash>
 </Codenesium>*/

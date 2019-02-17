@@ -117,7 +117,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.TransactionID;
 			}
 
-			return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
+			return await this.Context.Set<TransactionHistoryArchive>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
 		}
 
 		private async Task<TransactionHistoryArchive> GetById(int transactionID)
@@ -130,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a9200668b3d6d3da6492bee258e4cc96</Hash>
+    <Hash>b187b191974483b519a57b15802cbfdd</Hash>
 </Codenesium>*/

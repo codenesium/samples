@@ -30,9 +30,13 @@ export default class DatabaseLogViewModel {
     this.tsql = tsql;
     this.xmlEvent = xmlEvent;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>95081dd7d424254115570029e2cb8f63</Hash>
+    <Hash>671d6f305ad455c8ad309a1d487c78d4</Hash>
 </Codenesium>*/

@@ -30,9 +30,13 @@ export default class ShipMethodViewModel {
     this.shipMethodID = shipMethodID;
     this.shipRate = shipRate;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>65a95768cb61b8519fda480f7339f39f</Hash>
+    <Hash>a3c717b4709e36f2f999653c61ea0c99</Hash>
 </Codenesium>*/

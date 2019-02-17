@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiSalesTaxRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SalesTaxRateRepository.All(limit, offset, query);
+			List<SalesTaxRate> records = await this.SalesTaxRateRepository.All(limit, offset, query);
 
-			return this.DalSalesTaxRateMapper.MapBOToModel(records);
+			return this.DalSalesTaxRateMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSalesTaxRateServerResponseModel> Get(int salesTaxRateID)
 		{
-			var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
+			SalesTaxRate record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesTaxRateMapper.MapBOToModel(record);
+				return this.DalSalesTaxRateMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalSalesTaxRateMapper.MapModelToBO(default(int), model);
-				var record = await this.SalesTaxRateRepository.Create(bo);
+				SalesTaxRate record = this.DalSalesTaxRateMapper.MapModelToEntity(default(int), model);
+				record = await this.SalesTaxRateRepository.Create(record);
 
-				response.SetRecord(this.DalSalesTaxRateMapper.MapBOToModel(record));
+				response.SetRecord(this.DalSalesTaxRateMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SalesTaxRateCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalSalesTaxRateMapper.MapModelToBO(salesTaxRateID, model);
-				await this.SalesTaxRateRepository.Update(bo);
+				SalesTaxRate record = this.DalSalesTaxRateMapper.MapModelToEntity(salesTaxRateID, model);
+				await this.SalesTaxRateRepository.Update(record);
 
-				var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
+				record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
-				var apiModel = this.DalSalesTaxRateMapper.MapBOToModel(record);
+				ApiSalesTaxRateServerResponseModel apiModel = this.DalSalesTaxRateMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SalesTaxRateUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.UpdateResponse(apiModel);
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesTaxRateMapper.MapBOToModel(record);
+				return this.DalSalesTaxRateMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -137,12 +137,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesTaxRateMapper.MapBOToModel(record);
+				return this.DalSalesTaxRateMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3c77330c2bd68c70f8dd5996dd8cd2af</Hash>
+    <Hash>34af3b0c9621c4c9afe958ee9ee0a090</Hash>
 </Codenesium>*/

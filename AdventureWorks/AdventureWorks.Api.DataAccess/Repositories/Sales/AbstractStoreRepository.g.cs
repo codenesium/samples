@@ -94,7 +94,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Store_rowguid.
 		public async virtual Task<Store> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Store>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Store>()
+			       .Include(x => x.SalesPersonIDNavigation)
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint IX_Store_SalesPersonID.
@@ -112,13 +115,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		// Foreign key reference to this table Customer via storeID.
 		public async virtual Task<List<Customer>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Customer>().Where(x => x.StoreID == storeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
+			return await this.Context.Set<Customer>()
+			       .Where(x => x.StoreID == storeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
 		// Foreign key reference to table SalesPerson via salesPersonID.
 		public async virtual Task<SalesPerson> SalesPersonBySalesPersonID(int? salesPersonID)
 		{
-			return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
+			return await this.Context.Set<SalesPerson>()
+			       .SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
 		}
 
 		protected async Task<List<Store>> Where(
@@ -132,7 +137,10 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			return await this.Context.Set<Store>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Store>();
+			return await this.Context.Set<Store>()
+			       .Include(x => x.SalesPersonIDNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Store>();
 		}
 
 		private async Task<Store> GetById(int businessEntityID)
@@ -145,5 +153,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>de40cc5732d07b333f8c87ee10c52a05</Hash>
+    <Hash>88d74d551ebfdf633393c6c64a98e3b1</Hash>
 </Codenesium>*/

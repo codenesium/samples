@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ProductDescriptionViewModel from './productDescriptionViewModel';
 import ProductDescriptionMapper from './productDescriptionMapper';
 
@@ -175,77 +177,76 @@ const ProductDescriptionEditDisplay = (
   );
 };
 
-const ProductDescriptionUpdate = withFormik<Props, ProductDescriptionViewModel>(
-  {
-    mapPropsToValues: props => {
-      let response = new ProductDescriptionViewModel();
-      response.setProperties(
-        props.model!.description,
-        props.model!.modifiedDate,
-        props.model!.productDescriptionID,
-        props.model!.rowguid
-      );
-      return response;
-    },
+const ProductDescriptionEdit = withFormik<Props, ProductDescriptionViewModel>({
+  mapPropsToValues: props => {
+    let response = new ProductDescriptionViewModel();
+    response.setProperties(
+      props.model!.description,
+      props.model!.modifiedDate,
+      props.model!.productDescriptionID,
+      props.model!.rowguid
+    );
+    return response;
+  },
 
-    // Custom sync validation
-    validate: values => {
-      let errors: FormikErrors<ProductDescriptionViewModel> = {};
+  // Custom sync validation
+  validate: values => {
+    let errors: FormikErrors<ProductDescriptionViewModel> = {};
 
-      if (values.description == '') {
-        errors.description = 'Required';
-      }
-      if (values.modifiedDate == undefined) {
-        errors.modifiedDate = 'Required';
-      }
-      if (values.productDescriptionID == 0) {
-        errors.productDescriptionID = 'Required';
-      }
-      if (values.rowguid == undefined) {
-        errors.rowguid = 'Required';
-      }
+    if (values.description == '') {
+      errors.description = 'Required';
+    }
+    if (values.modifiedDate == undefined) {
+      errors.modifiedDate = 'Required';
+    }
+    if (values.productDescriptionID == 0) {
+      errors.productDescriptionID = 'Required';
+    }
+    if (values.rowguid == undefined) {
+      errors.rowguid = 'Required';
+    }
 
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-      actions.setStatus(undefined);
+    return errors;
+  },
+  handleSubmit: (values, actions) => {
+    actions.setStatus(undefined);
 
-      let mapper = new ProductDescriptionMapper();
+    let mapper = new ProductDescriptionMapper();
 
-      axios
-        .put(
-          Constants.ApiUrl +
-            'productdescriptions/' +
-            values.productDescriptionID,
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductDescriptions +
+          '/' +
+          values.productDescriptionID,
 
-          mapper.mapViewModelToApiRequest(values),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        .then(
-          resp => {
-            let response = resp.data as UpdateResponse<
-              Api.ProductDescriptionClientRequestModel
-            >;
-            actions.setStatus(response);
-            console.log(response);
+        mapper.mapViewModelToApiRequest(values),
+        {
+          headers: {
+            'Content-Type': 'application/json',
           },
-          error => {
-            console.log(error);
-            actions.setStatus('Error from API');
-          }
-        )
-        .then(response => {
-          // cleanup
-        });
-    },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as UpdateResponse<
+            Api.ProductDescriptionClientRequestModel
+          >;
+          actions.setStatus(response);
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          actions.setStatus('Error from API');
+        }
+      )
+      .then(response => {
+        // cleanup
+      });
+  },
 
-    displayName: 'ProductDescriptionEdit',
-  }
-)(ProductDescriptionEditDisplay);
+  displayName: 'ProductDescriptionEdit',
+})(ProductDescriptionEditDisplay);
 
 interface IParams {
   productDescriptionID: number;
@@ -284,8 +285,9 @@ export default class ProductDescriptionEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'productdescriptions/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductDescriptions +
+          '/' +
           this.props.match.params.productDescriptionID,
         {
           headers: {
@@ -323,20 +325,18 @@ export default class ProductDescriptionEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <ProductDescriptionUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <ProductDescriptionEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ce0662a5c2e56873e1c3d4663d099c6d</Hash>
+    <Hash>8035f0011d3b504af00cdc5269392540</Hash>
 </Codenesium>*/

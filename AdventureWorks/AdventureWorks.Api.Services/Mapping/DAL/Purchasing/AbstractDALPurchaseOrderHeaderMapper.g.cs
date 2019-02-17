@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALPurchaseOrderHeaderMapper
 	{
-		public virtual PurchaseOrderHeader MapModelToBO(
+		public virtual PurchaseOrderHeader MapModelToEntity(
 			int purchaseOrderID,
 			ApiPurchaseOrderHeaderServerRequestModel model
 			)
@@ -30,24 +30,36 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiPurchaseOrderHeaderServerResponseModel MapBOToModel(
+		public virtual ApiPurchaseOrderHeaderServerResponseModel MapEntityToModel(
 			PurchaseOrderHeader item)
 		{
 			var model = new ApiPurchaseOrderHeaderServerResponseModel();
 
-			model.SetProperties(item.PurchaseOrderID, item.EmployeeID, item.Freight, item.ModifiedDate, item.OrderDate, item.RevisionNumber, item.ShipDate, item.ShipMethodID, item.Status, item.SubTotal, item.TaxAmt, item.TotalDue, item.VendorID);
+			model.SetProperties(item.PurchaseOrderID,
+			                    item.EmployeeID,
+			                    item.Freight,
+			                    item.ModifiedDate,
+			                    item.OrderDate,
+			                    item.RevisionNumber,
+			                    item.ShipDate,
+			                    item.ShipMethodID,
+			                    item.Status,
+			                    item.SubTotal,
+			                    item.TaxAmt,
+			                    item.TotalDue,
+			                    item.VendorID);
 
 			return model;
 		}
 
-		public virtual List<ApiPurchaseOrderHeaderServerResponseModel> MapBOToModel(
+		public virtual List<ApiPurchaseOrderHeaderServerResponseModel> MapEntityToModel(
 			List<PurchaseOrderHeader> items)
 		{
 			List<ApiPurchaseOrderHeaderServerResponseModel> response = new List<ApiPurchaseOrderHeaderServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -56,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4fc423589ed1cbeb468ce72afa6083b2</Hash>
+    <Hash>d1deb7723ef1df27222ef30c2b112b19</Hash>
 </Codenesium>*/

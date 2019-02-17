@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import AddressTypeViewModel from './addressTypeViewModel';
-
 export default class AddressTypeMapper {
   mapApiResponseToViewModel(
     dto: Api.AddressTypeClientResponseModel
@@ -12,6 +11,7 @@ export default class AddressTypeMapper {
       dto.name,
       dto.rowguid
     );
+
     return response;
   }
 
@@ -31,5 +31,5 @@ export default class AddressTypeMapper {
 
 
 /*<Codenesium>
-    <Hash>aca649e56ab064c680569d1148c09382</Hash>
+    <Hash>aa29d2e5f0f25260f261c20006fa6a39</Hash>
 </Codenesium>*/

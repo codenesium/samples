@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALCurrencyRateMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALCurrencyRateMapper();
 			ApiCurrencyRateServerRequestModel model = new ApiCurrencyRateServerRequestModel();
 			model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			CurrencyRate response = mapper.MapModelToBO(1, model);
+			CurrencyRate response = mapper.MapModelToEntity(1, model);
 
 			response.AverageRate.Should().Be(1m);
 			response.CurrencyRateDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -29,12 +29,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALCurrencyRateMapper();
 			CurrencyRate item = new CurrencyRate();
 			item.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCurrencyRateServerResponseModel response = mapper.MapBOToModel(item);
+			ApiCurrencyRateServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.AverageRate.Should().Be(1m);
 			response.CurrencyRateDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -46,12 +46,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALCurrencyRateMapper();
 			CurrencyRate item = new CurrencyRate();
 			item.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCurrencyRateServerResponseModel> response = mapper.MapBOToModel(new List<CurrencyRate>() { { item} });
+			List<ApiCurrencyRateServerResponseModel> response = mapper.MapEntityToModel(new List<CurrencyRate>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>129a76836103995bfaa9b6521e270579</Hash>
+    <Hash>e77b10f26a115cd3430ac687e73ce9bc</Hash>
 </Codenesium>*/

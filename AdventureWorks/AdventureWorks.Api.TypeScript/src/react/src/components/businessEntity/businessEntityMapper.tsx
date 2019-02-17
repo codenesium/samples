@@ -1,12 +1,12 @@
 import * as Api from '../../api/models';
 import BusinessEntityViewModel from './businessEntityViewModel';
-
 export default class BusinessEntityMapper {
   mapApiResponseToViewModel(
     dto: Api.BusinessEntityClientResponseModel
   ): BusinessEntityViewModel {
     let response = new BusinessEntityViewModel();
     response.setProperties(dto.businessEntityID, dto.modifiedDate, dto.rowguid);
+
     return response;
   }
 
@@ -25,5 +25,5 @@ export default class BusinessEntityMapper {
 
 
 /*<Codenesium>
-    <Hash>30ec9f4bdd153c6695fadc47b69269d5</Hash>
+    <Hash>a9ee35ddcd5e3f37ec31e832555d230c</Hash>
 </Codenesium>*/

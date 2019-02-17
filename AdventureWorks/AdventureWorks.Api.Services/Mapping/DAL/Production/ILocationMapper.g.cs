@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALLocationMapper
 	{
-		Location MapModelToBO(
+		Location MapModelToEntity(
 			short locationID,
 			ApiLocationServerRequestModel model);
 
-		ApiLocationServerResponseModel MapBOToModel(
+		ApiLocationServerResponseModel MapEntityToModel(
 			Location item);
 
-		List<ApiLocationServerResponseModel> MapBOToModel(
+		List<ApiLocationServerResponseModel> MapEntityToModel(
 			List<Location> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>19cc6a1370735059b4bc982deb72bc0b</Hash>
+    <Hash>31316b3bc8c287fcaac603623a12405f</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALIllustrationMapper
 	{
-		public virtual Illustration MapModelToBO(
+		public virtual Illustration MapModelToEntity(
 			int illustrationID,
 			ApiIllustrationServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiIllustrationServerResponseModel MapBOToModel(
+		public virtual ApiIllustrationServerResponseModel MapEntityToModel(
 			Illustration item)
 		{
 			var model = new ApiIllustrationServerResponseModel();
 
-			model.SetProperties(item.IllustrationID, item.Diagram, item.ModifiedDate);
+			model.SetProperties(item.IllustrationID,
+			                    item.Diagram,
+			                    item.ModifiedDate);
 
 			return model;
 		}
 
-		public virtual List<ApiIllustrationServerResponseModel> MapBOToModel(
+		public virtual List<ApiIllustrationServerResponseModel> MapEntityToModel(
 			List<Illustration> items)
 		{
 			List<ApiIllustrationServerResponseModel> response = new List<ApiIllustrationServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>257b5c71e551bbbc37be3ff1c88ce636</Hash>
+    <Hash>dccbae91f8a40705beab9d69c5cc04c0</Hash>
 </Codenesium>*/

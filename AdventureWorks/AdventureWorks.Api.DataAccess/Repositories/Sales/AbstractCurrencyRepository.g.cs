@@ -91,19 +91,23 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Currency_Name.
 		public async virtual Task<Currency> ByName(string name)
 		{
-			return await this.Context.Set<Currency>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Currency>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table CurrencyRate via fromCurrencyCode.
 		public async virtual Task<List<CurrencyRate>> CurrencyRatesByFromCurrencyCode(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<CurrencyRate>().Where(x => x.FromCurrencyCode == fromCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
+			return await this.Context.Set<CurrencyRate>()
+			       .Where(x => x.FromCurrencyCode == fromCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
 		}
 
 		// Foreign key reference to this table CurrencyRate via toCurrencyCode.
 		public async virtual Task<List<CurrencyRate>> CurrencyRatesByToCurrencyCode(string toCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<CurrencyRate>().Where(x => x.ToCurrencyCode == toCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
+			return await this.Context.Set<CurrencyRate>()
+			       .Where(x => x.ToCurrencyCode == toCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
 		}
 
 		protected async Task<List<Currency>> Where(
@@ -117,7 +121,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.CurrencyCode;
 			}
 
-			return await this.Context.Set<Currency>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Currency>();
+			return await this.Context.Set<Currency>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Currency>();
 		}
 
 		private async Task<Currency> GetById(string currencyCode)
@@ -130,5 +136,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a52d6011def22cb9863ccdff403aa689</Hash>
+    <Hash>12c050adef34f3a107932b9f61300ab7</Hash>
 </Codenesium>*/

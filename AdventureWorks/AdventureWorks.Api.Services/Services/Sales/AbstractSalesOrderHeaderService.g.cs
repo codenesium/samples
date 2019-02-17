@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiSalesOrderHeaderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SalesOrderHeaderRepository.All(limit, offset, query);
+			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.All(limit, offset, query);
 
-			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
+			return this.DalSalesOrderHeaderMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSalesOrderHeaderServerResponseModel> Get(int salesOrderID)
 		{
-			var record = await this.SalesOrderHeaderRepository.Get(salesOrderID);
+			SalesOrderHeader record = await this.SalesOrderHeaderRepository.Get(salesOrderID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesOrderHeaderMapper.MapBOToModel(record);
+				return this.DalSalesOrderHeaderMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalSalesOrderHeaderMapper.MapModelToBO(default(int), model);
-				var record = await this.SalesOrderHeaderRepository.Create(bo);
+				SalesOrderHeader record = this.DalSalesOrderHeaderMapper.MapModelToEntity(default(int), model);
+				record = await this.SalesOrderHeaderRepository.Create(record);
 
-				response.SetRecord(this.DalSalesOrderHeaderMapper.MapBOToModel(record));
+				response.SetRecord(this.DalSalesOrderHeaderMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SalesOrderHeaderCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalSalesOrderHeaderMapper.MapModelToBO(salesOrderID, model);
-				await this.SalesOrderHeaderRepository.Update(bo);
+				SalesOrderHeader record = this.DalSalesOrderHeaderMapper.MapModelToEntity(salesOrderID, model);
+				await this.SalesOrderHeaderRepository.Update(record);
 
-				var record = await this.SalesOrderHeaderRepository.Get(salesOrderID);
+				record = await this.SalesOrderHeaderRepository.Get(salesOrderID);
 
-				var apiModel = this.DalSalesOrderHeaderMapper.MapBOToModel(record);
+				ApiSalesOrderHeaderServerResponseModel apiModel = this.DalSalesOrderHeaderMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SalesOrderHeaderUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSalesOrderHeaderServerResponseModel>.UpdateResponse(apiModel);
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesOrderHeaderMapper.MapBOToModel(record);
+				return this.DalSalesOrderHeaderMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesOrderHeaderMapper.MapBOToModel(record);
+				return this.DalSalesOrderHeaderMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -145,18 +145,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.ByCustomerID(customerID, limit, offset);
 
-			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
+			return this.DalSalesOrderHeaderMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> BySalesPersonID(int? salesPersonID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.BySalesPersonID(salesPersonID, limit, offset);
 
-			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
+			return this.DalSalesOrderHeaderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf26d67163afc80bf6a97e81abba281f</Hash>
+    <Hash>fce8f31a50b7e2a14b07d5222a961888</Hash>
 </Codenesium>*/

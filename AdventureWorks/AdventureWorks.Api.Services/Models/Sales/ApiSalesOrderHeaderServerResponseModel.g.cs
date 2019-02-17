@@ -86,6 +86,14 @@ namespace AdventureWorksNS.Api.Services
 		[JsonProperty]
 		public string CreditCardIDEntity { get; private set; } = RouteConstants.CreditCards;
 
+		[JsonProperty]
+		public ApiCreditCardServerResponseModel CreditCardIDNavigation { get; private set; }
+
+		public void SetCreditCardIDNavigation(ApiCreditCardServerResponseModel value)
+		{
+			this.CreditCardIDNavigation = value;
+		}
+
 		[Required]
 		[JsonProperty]
 		public int? CurrencyRateID { get; private set; }
@@ -94,10 +102,26 @@ namespace AdventureWorksNS.Api.Services
 		public string CurrencyRateIDEntity { get; private set; } = RouteConstants.CurrencyRates;
 
 		[JsonProperty]
+		public ApiCurrencyRateServerResponseModel CurrencyRateIDNavigation { get; private set; }
+
+		public void SetCurrencyRateIDNavigation(ApiCurrencyRateServerResponseModel value)
+		{
+			this.CurrencyRateIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public int CustomerID { get; private set; }
 
 		[JsonProperty]
 		public string CustomerIDEntity { get; private set; } = RouteConstants.Customers;
+
+		[JsonProperty]
+		public ApiCustomerServerResponseModel CustomerIDNavigation { get; private set; }
+
+		public void SetCustomerIDNavigation(ApiCustomerServerResponseModel value)
+		{
+			this.CustomerIDNavigation = value;
+		}
 
 		[JsonProperty]
 		public DateTime DueDate { get; private set; }
@@ -137,6 +161,14 @@ namespace AdventureWorksNS.Api.Services
 		[JsonProperty]
 		public string SalesPersonIDEntity { get; private set; } = RouteConstants.SalesPersons;
 
+		[JsonProperty]
+		public ApiSalesPersonServerResponseModel SalesPersonIDNavigation { get; private set; }
+
+		public void SetSalesPersonIDNavigation(ApiSalesPersonServerResponseModel value)
+		{
+			this.SalesPersonIDNavigation = value;
+		}
+
 		[Required]
 		[JsonProperty]
 		public DateTime? ShipDate { get; private set; }
@@ -164,10 +196,18 @@ namespace AdventureWorksNS.Api.Services
 		public string TerritoryIDEntity { get; private set; } = RouteConstants.SalesTerritories;
 
 		[JsonProperty]
+		public ApiSalesTerritoryServerResponseModel TerritoryIDNavigation { get; private set; }
+
+		public void SetTerritoryIDNavigation(ApiSalesTerritoryServerResponseModel value)
+		{
+			this.TerritoryIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public decimal TotalDue { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>06782b766c6178671fdbc88227f69796</Hash>
+    <Hash>ae620bc1120a1ad32d3aadf47e8a57a3</Hash>
 </Codenesium>*/

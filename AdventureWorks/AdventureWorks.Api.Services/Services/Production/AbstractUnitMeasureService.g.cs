@@ -46,14 +46,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiUnitMeasureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.UnitMeasureRepository.All(limit, offset, query);
+			List<UnitMeasure> records = await this.UnitMeasureRepository.All(limit, offset, query);
 
-			return this.DalUnitMeasureMapper.MapBOToModel(records);
+			return this.DalUnitMeasureMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiUnitMeasureServerResponseModel> Get(string unitMeasureCode)
 		{
-			var record = await this.UnitMeasureRepository.Get(unitMeasureCode);
+			UnitMeasure record = await this.UnitMeasureRepository.Get(unitMeasureCode);
 
 			if (record == null)
 			{
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalUnitMeasureMapper.MapBOToModel(record);
+				return this.DalUnitMeasureMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -72,10 +72,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalUnitMeasureMapper.MapModelToBO(default(string), model);
-				var record = await this.UnitMeasureRepository.Create(bo);
+				UnitMeasure record = this.DalUnitMeasureMapper.MapModelToEntity(default(string), model);
+				record = await this.UnitMeasureRepository.Create(record);
 
-				response.SetRecord(this.DalUnitMeasureMapper.MapBOToModel(record));
+				response.SetRecord(this.DalUnitMeasureMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new UnitMeasureCreatedNotification(response.Record));
 			}
 
@@ -90,12 +90,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalUnitMeasureMapper.MapModelToBO(unitMeasureCode, model);
-				await this.UnitMeasureRepository.Update(bo);
+				UnitMeasure record = this.DalUnitMeasureMapper.MapModelToEntity(unitMeasureCode, model);
+				await this.UnitMeasureRepository.Update(record);
 
-				var record = await this.UnitMeasureRepository.Get(unitMeasureCode);
+				record = await this.UnitMeasureRepository.Get(unitMeasureCode);
 
-				var apiModel = this.DalUnitMeasureMapper.MapBOToModel(record);
+				ApiUnitMeasureServerResponseModel apiModel = this.DalUnitMeasureMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new UnitMeasureUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiUnitMeasureServerResponseModel>.UpdateResponse(apiModel);
@@ -131,7 +131,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalUnitMeasureMapper.MapBOToModel(record);
+				return this.DalUnitMeasureMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -139,25 +139,25 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<BillOfMaterial> records = await this.UnitMeasureRepository.BillOfMaterialsByUnitMeasureCode(unitMeasureCode, limit, offset);
 
-			return this.DalBillOfMaterialMapper.MapBOToModel(records);
+			return this.DalBillOfMaterialMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiProductServerResponseModel>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Product> records = await this.UnitMeasureRepository.ProductsBySizeUnitMeasureCode(sizeUnitMeasureCode, limit, offset);
 
-			return this.DalProductMapper.MapBOToModel(records);
+			return this.DalProductMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiProductServerResponseModel>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Product> records = await this.UnitMeasureRepository.ProductsByWeightUnitMeasureCode(weightUnitMeasureCode, limit, offset);
 
-			return this.DalProductMapper.MapBOToModel(records);
+			return this.DalProductMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6f51da531cf3a19eab7ff62477cc759</Hash>
+    <Hash>71114f01480935e4883d6f979cd4f6b6</Hash>
 </Codenesium>*/

@@ -13,24 +13,24 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALCultureMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALCultureMapper();
 			ApiCultureServerRequestModel model = new ApiCultureServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			Culture response = mapper.MapModelToBO("A", model);
+			Culture response = mapper.MapModelToEntity("A", model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALCultureMapper();
 			Culture item = new Culture();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCultureServerResponseModel response = mapper.MapBOToModel(item);
+			ApiCultureServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.CultureID.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALCultureMapper();
 			Culture item = new Culture();
 			item.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCultureServerResponseModel> response = mapper.MapBOToModel(new List<Culture>() { { item} });
+			List<ApiCultureServerResponseModel> response = mapper.MapEntityToModel(new List<Culture>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f565029493032b2521fb5fd53192c3f</Hash>
+    <Hash>d0e0183541d20fe3ef74404355b958a3</Hash>
 </Codenesium>*/

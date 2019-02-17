@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import AddressTypeMapper from './addressTypeMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import AddressTypeViewModel from './addressTypeViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class AddressTypeSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.AddressTypeClientResponseModel>(),
-    filteredRecords: new Array<Api.AddressTypeClientResponseModel>(),
+    records: new Array<AddressTypeViewModel>(),
+    filteredRecords: new Array<AddressTypeViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,34 @@ export default class AddressTypeSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.AddressTypeClientResponseModel) {
-    this.props.history.push('/addresstypes/edit/' + row.addressTypeID);
+    this.props.history.push(
+      ClientRoutes.AddressTypes + '/edit/' + row.addressTypeID
+    );
   }
 
   handleDetailClick(e: any, row: Api.AddressTypeClientResponseModel) {
-    this.props.history.push('/addresstypes/' + row.addressTypeID);
+    this.props.history.push(
+      ClientRoutes.AddressTypes + '/' + row.addressTypeID
+    );
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/addresstypes/create');
+    this.props.history.push(ClientRoutes.AddressTypes + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.AddressTypeClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'addresstypes/' + row.addressTypeID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint +
+          ApiRoutes.AddressTypes +
+          '/' +
+          row.addressTypeID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +105,8 @@ export default class AddressTypeSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'addresstypes' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.AddressTypes + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +155,9 @@ export default class AddressTypeSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -270,17 +285,13 @@ export default class AddressTypeSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>d38c722860239d2fd1da7a0a319652ac</Hash>
+    <Hash>d3db087cd3245abc51d8d31723da485c</Hash>
 </Codenesium>*/

@@ -22,9 +22,13 @@ export default class AddressTypeViewModel {
     this.name = name;
     this.rowguid = rowguid;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>8d1489ddb5758b988dadda25430c2fff</Hash>
+    <Hash>a087b44a4820457923f84e01cd6c85bd</Hash>
 </Codenesium>*/

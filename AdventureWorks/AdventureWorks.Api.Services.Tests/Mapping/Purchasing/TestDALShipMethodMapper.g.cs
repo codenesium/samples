@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALShipMethodMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALShipMethodMapper();
 			ApiShipMethodServerRequestModel model = new ApiShipMethodServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
-			ShipMethod response = mapper.MapModelToBO(1, model);
+			ShipMethod response = mapper.MapModelToEntity(1, model);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -28,12 +28,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALShipMethodMapper();
 			ShipMethod item = new ShipMethod();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
-			ApiShipMethodServerResponseModel response = mapper.MapBOToModel(item);
+			ApiShipMethodServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -44,12 +44,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALShipMethodMapper();
 			ShipMethod item = new ShipMethod();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
-			List<ApiShipMethodServerResponseModel> response = mapper.MapBOToModel(new List<ShipMethod>() { { item} });
+			List<ApiShipMethodServerResponseModel> response = mapper.MapEntityToModel(new List<ShipMethod>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>50f6b69e058472b9285e64dc07dfed96</Hash>
+    <Hash>9f6b1ee8aa2cf73604d6e78383606dad</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALShoppingCartItemMapper
 	{
-		public virtual ShoppingCartItem MapModelToBO(
+		public virtual ShoppingCartItem MapModelToEntity(
 			int shoppingCartItemID,
 			ApiShoppingCartItemServerRequestModel model
 			)
@@ -23,24 +23,29 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiShoppingCartItemServerResponseModel MapBOToModel(
+		public virtual ApiShoppingCartItemServerResponseModel MapEntityToModel(
 			ShoppingCartItem item)
 		{
 			var model = new ApiShoppingCartItemServerResponseModel();
 
-			model.SetProperties(item.ShoppingCartItemID, item.DateCreated, item.ModifiedDate, item.ProductID, item.Quantity, item.ShoppingCartID);
+			model.SetProperties(item.ShoppingCartItemID,
+			                    item.DateCreated,
+			                    item.ModifiedDate,
+			                    item.ProductID,
+			                    item.Quantity,
+			                    item.ShoppingCartID);
 
 			return model;
 		}
 
-		public virtual List<ApiShoppingCartItemServerResponseModel> MapBOToModel(
+		public virtual List<ApiShoppingCartItemServerResponseModel> MapEntityToModel(
 			List<ShoppingCartItem> items)
 		{
 			List<ApiShoppingCartItemServerResponseModel> response = new List<ApiShoppingCartItemServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -49,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfc9b4bac2839e01f4d2f9ee9e796f53</Hash>
+    <Hash>e15e8739e3ce4691bcf5055d53913881</Hash>
 </Codenesium>*/

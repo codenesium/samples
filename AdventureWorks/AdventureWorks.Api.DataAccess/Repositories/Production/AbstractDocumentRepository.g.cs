@@ -100,7 +100,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Document_rowguid.
 		public async virtual Task<Document> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Document>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Document>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint IX_Document_FileName_Revision.
@@ -120,7 +122,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.Rowguid;
 			}
 
-			return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Document>();
+			return await this.Context.Set<Document>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Document>();
 		}
 
 		private async Task<Document> GetById(Guid rowguid)
@@ -133,5 +137,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f7315eecfe4d0d8ca0ea2255cdec06e</Hash>
+    <Hash>7f2318139ea9d7f1ae8144ad697210ee</Hash>
 </Codenesium>*/

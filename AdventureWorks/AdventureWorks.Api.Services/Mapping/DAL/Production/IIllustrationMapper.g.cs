@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALIllustrationMapper
 	{
-		Illustration MapModelToBO(
+		Illustration MapModelToEntity(
 			int illustrationID,
 			ApiIllustrationServerRequestModel model);
 
-		ApiIllustrationServerResponseModel MapBOToModel(
+		ApiIllustrationServerResponseModel MapEntityToModel(
 			Illustration item);
 
-		List<ApiIllustrationServerResponseModel> MapBOToModel(
+		List<ApiIllustrationServerResponseModel> MapEntityToModel(
 			List<Illustration> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>07a2986e5c41e0cef97fc6763fdb807c</Hash>
+    <Hash>95fc5d8980819cd7ddece25737e6263d</Hash>
 </Codenesium>*/

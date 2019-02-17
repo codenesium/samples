@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import CountryRegionMapper from './countryRegionMapper';
 import CountryRegionViewModel from './countryRegionViewModel';
 
@@ -153,7 +155,7 @@ const CountryRegionCreate = withFormik<Props, CountryRegionViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'countryregions',
+        Constants.ApiEndpoint + ApiRoutes.CountryRegions,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -202,20 +204,18 @@ export default class CountryRegionCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <CountryRegionCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>f048841205cd6692a0957cdcfd423b03</Hash>
+    <Hash>1cdaa64778d3cb99713ff6ad7bc56cdf</Hash>
 </Codenesium>*/

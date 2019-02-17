@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALShiftMapper
 	{
-		Shift MapModelToBO(
+		Shift MapModelToEntity(
 			int shiftID,
 			ApiShiftServerRequestModel model);
 
-		ApiShiftServerResponseModel MapBOToModel(
+		ApiShiftServerResponseModel MapEntityToModel(
 			Shift item);
 
-		List<ApiShiftServerResponseModel> MapBOToModel(
+		List<ApiShiftServerResponseModel> MapEntityToModel(
 			List<Shift> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d80ee9da4997dd9ced053f41eda93c7c</Hash>
+    <Hash>7f4b4b292bae5132f9bf88845e13a3bf</Hash>
 </Codenesium>*/

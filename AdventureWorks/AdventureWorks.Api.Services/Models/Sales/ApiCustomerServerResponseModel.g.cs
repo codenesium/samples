@@ -49,15 +49,31 @@ namespace AdventureWorksNS.Api.Services
 		[JsonProperty]
 		public string StoreIDEntity { get; private set; } = RouteConstants.Stores;
 
+		[JsonProperty]
+		public ApiStoreServerResponseModel StoreIDNavigation { get; private set; }
+
+		public void SetStoreIDNavigation(ApiStoreServerResponseModel value)
+		{
+			this.StoreIDNavigation = value;
+		}
+
 		[Required]
 		[JsonProperty]
 		public int? TerritoryID { get; private set; }
 
 		[JsonProperty]
 		public string TerritoryIDEntity { get; private set; } = RouteConstants.SalesTerritories;
+
+		[JsonProperty]
+		public ApiSalesTerritoryServerResponseModel TerritoryIDNavigation { get; private set; }
+
+		public void SetTerritoryIDNavigation(ApiSalesTerritoryServerResponseModel value)
+		{
+			this.TerritoryIDNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>30061db2bae5143ad6e95903f0f7e573</Hash>
+    <Hash>1566d41913d0ea753aba00f1c430e0e7</Hash>
 </Codenesium>*/

@@ -50,7 +50,7 @@ namespace FileServiceNS.Api.Services
 			{
 				var bucketIdModel = new ApiBucketServerResponseModel();
 				bucketIdModel.SetProperties(
-					item.Id,
+					item.BucketIdNavigation.Id,
 					item.BucketIdNavigation.ExternalId,
 					item.BucketIdNavigation.Name);
 
@@ -61,7 +61,7 @@ namespace FileServiceNS.Api.Services
 			{
 				var fileTypeIdModel = new ApiFileTypeServerResponseModel();
 				fileTypeIdModel.SetProperties(
-					item.Id,
+					item.FileTypeIdNavigation.Id,
 					item.FileTypeIdNavigation.Name);
 
 				model.SetFileTypeIdNavigation(fileTypeIdModel);
@@ -86,5 +86,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65664e518e10ad6811ba694e1472d999</Hash>
+    <Hash>319ff3ad6800ca7cf8228dfa036e1f34</Hash>
 </Codenesium>*/

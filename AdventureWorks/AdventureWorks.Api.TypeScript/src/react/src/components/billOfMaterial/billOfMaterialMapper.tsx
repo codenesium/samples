@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import BillOfMaterialViewModel from './billOfMaterialViewModel';
-
 export default class BillOfMaterialMapper {
   mapApiResponseToViewModel(
     dto: Api.BillOfMaterialClientResponseModel
@@ -17,6 +16,7 @@ export default class BillOfMaterialMapper {
       dto.startDate,
       dto.unitMeasureCode
     );
+
     return response;
   }
 
@@ -41,5 +41,5 @@ export default class BillOfMaterialMapper {
 
 
 /*<Codenesium>
-    <Hash>65d4bbe4082d024fbb43e4a7b7cf3c97</Hash>
+    <Hash>ad0bf9be5113c794fb22a4a2c6cd4818</Hash>
 </Codenesium>*/

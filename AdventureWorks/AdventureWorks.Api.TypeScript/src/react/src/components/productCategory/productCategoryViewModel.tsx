@@ -22,9 +22,13 @@ export default class ProductCategoryViewModel {
     this.productCategoryID = productCategoryID;
     this.rowguid = rowguid;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>4366083b347acfffb1a28a2fa0e1017b</Hash>
+    <Hash>c1256eab9a908f49985e7f4ec882a70e</Hash>
 </Codenesium>*/

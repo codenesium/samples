@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALWorkOrderMapper
 	{
-		public virtual WorkOrder MapModelToBO(
+		public virtual WorkOrder MapModelToEntity(
 			int workOrderID,
 			ApiWorkOrderServerRequestModel model
 			)
@@ -27,24 +27,33 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiWorkOrderServerResponseModel MapBOToModel(
+		public virtual ApiWorkOrderServerResponseModel MapEntityToModel(
 			WorkOrder item)
 		{
 			var model = new ApiWorkOrderServerResponseModel();
 
-			model.SetProperties(item.WorkOrderID, item.DueDate, item.EndDate, item.ModifiedDate, item.OrderQty, item.ProductID, item.ScrappedQty, item.ScrapReasonID, item.StartDate, item.StockedQty);
+			model.SetProperties(item.WorkOrderID,
+			                    item.DueDate,
+			                    item.EndDate,
+			                    item.ModifiedDate,
+			                    item.OrderQty,
+			                    item.ProductID,
+			                    item.ScrappedQty,
+			                    item.ScrapReasonID,
+			                    item.StartDate,
+			                    item.StockedQty);
 
 			return model;
 		}
 
-		public virtual List<ApiWorkOrderServerResponseModel> MapBOToModel(
+		public virtual List<ApiWorkOrderServerResponseModel> MapEntityToModel(
 			List<WorkOrder> items)
 		{
 			List<ApiWorkOrderServerResponseModel> response = new List<ApiWorkOrderServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -53,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a91d561b9d7042b0cea1ea806b6ea18f</Hash>
+    <Hash>589229b419bfcaf87e162bedeb65ac4e</Hash>
 </Codenesium>*/

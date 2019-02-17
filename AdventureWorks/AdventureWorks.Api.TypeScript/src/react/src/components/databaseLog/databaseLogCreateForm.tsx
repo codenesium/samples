@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import DatabaseLogMapper from './databaseLogMapper';
 import DatabaseLogViewModel from './databaseLogViewModel';
 
@@ -243,7 +245,7 @@ const DatabaseLogCreate = withFormik<Props, DatabaseLogViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'databaselogs',
+        Constants.ApiEndpoint + ApiRoutes.DatabaseLogs,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -292,20 +294,18 @@ export default class DatabaseLogCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <DatabaseLogCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>dc10cfbd1cb5e6a3c8af15fca6b94e94</Hash>
+    <Hash>20f0c14788fc23ed57cf6519ebae761b</Hash>
 </Codenesium>*/

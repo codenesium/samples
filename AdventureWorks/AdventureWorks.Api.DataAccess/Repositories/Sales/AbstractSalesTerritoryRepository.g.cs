@@ -97,31 +97,38 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_SalesTerritory_Name.
 		public async virtual Task<SalesTerritory> ByName(string name)
 		{
-			return await this.Context.Set<SalesTerritory>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<SalesTerritory>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_SalesTerritory_rowguid.
 		public async virtual Task<SalesTerritory> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<SalesTerritory>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<SalesTerritory>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table Customer via territoryID.
 		public async virtual Task<List<Customer>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Customer>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
+			return await this.Context.Set<Customer>()
+			       .Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
 		// Foreign key reference to this table SalesOrderHeader via territoryID.
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SalesOrderHeader>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+			return await this.Context.Set<SalesOrderHeader>()
+			       .Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
 		// Foreign key reference to this table SalesPerson via territoryID.
 		public async virtual Task<List<SalesPerson>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SalesPerson>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
+			return await this.Context.Set<SalesPerson>()
+			       .Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
 		}
 
 		protected async Task<List<SalesTerritory>> Where(
@@ -135,7 +142,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.TerritoryID;
 			}
 
-			return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
+			return await this.Context.Set<SalesTerritory>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
 		}
 
 		private async Task<SalesTerritory> GetById(int territoryID)
@@ -148,5 +157,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5718548ef7c433743d00d44959ed1e72</Hash>
+    <Hash>7569145c0f8d1ebbb0f83e09bf77261a</Hash>
 </Codenesium>*/

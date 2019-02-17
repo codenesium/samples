@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CultureMapper from './cultureMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import CultureViewModel from './cultureViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class CultureSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.CultureClientResponseModel>(),
-    filteredRecords: new Array<Api.CultureClientResponseModel>(),
+    records: new Array<CultureViewModel>(),
+    filteredRecords: new Array<CultureViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,27 @@ export default class CultureSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.CultureClientResponseModel) {
-    this.props.history.push('/cultures/edit/' + row.cultureID);
+    this.props.history.push(ClientRoutes.Cultures + '/edit/' + row.cultureID);
   }
 
   handleDetailClick(e: any, row: Api.CultureClientResponseModel) {
-    this.props.history.push('/cultures/' + row.cultureID);
+    this.props.history.push(ClientRoutes.Cultures + '/' + row.cultureID);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/cultures/create');
+    this.props.history.push(ClientRoutes.Cultures + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.CultureClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'cultures/' + row.cultureID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint + ApiRoutes.Cultures + '/' + row.cultureID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +98,8 @@ export default class CultureSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'cultures' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.Cultures + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +148,9 @@ export default class CultureSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -261,17 +269,13 @@ export default class CultureSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>1eb7eb30383615a186c0ea80ed090d05</Hash>
+    <Hash>71cab494abdc74c2671c3402b22dec77</Hash>
 </Codenesium>*/

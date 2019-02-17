@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALCurrencyRateMapper
 	{
-		CurrencyRate MapModelToBO(
+		CurrencyRate MapModelToEntity(
 			int currencyRateID,
 			ApiCurrencyRateServerRequestModel model);
 
-		ApiCurrencyRateServerResponseModel MapBOToModel(
+		ApiCurrencyRateServerResponseModel MapEntityToModel(
 			CurrencyRate item);
 
-		List<ApiCurrencyRateServerResponseModel> MapBOToModel(
+		List<ApiCurrencyRateServerResponseModel> MapEntityToModel(
 			List<CurrencyRate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2f4ec4d55454959d161cc86b13817a11</Hash>
+    <Hash>3fa81436b50cfbaba5c1cd3c02a35a35</Hash>
 </Codenesium>*/

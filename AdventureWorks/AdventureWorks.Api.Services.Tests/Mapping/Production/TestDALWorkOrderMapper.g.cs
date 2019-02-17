@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALWorkOrderMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALWorkOrderMapper();
 			ApiWorkOrderServerRequestModel model = new ApiWorkOrderServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			WorkOrder response = mapper.MapModelToBO(1, model);
+			WorkOrder response = mapper.MapModelToEntity(1, model);
 
 			response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -32,12 +32,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALWorkOrderMapper();
 			WorkOrder item = new WorkOrder();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			ApiWorkOrderServerResponseModel response = mapper.MapBOToModel(item);
+			ApiWorkOrderServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -52,12 +52,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALWorkOrderMapper();
 			WorkOrder item = new WorkOrder();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			List<ApiWorkOrderServerResponseModel> response = mapper.MapBOToModel(new List<WorkOrder>() { { item} });
+			List<ApiWorkOrderServerResponseModel> response = mapper.MapEntityToModel(new List<WorkOrder>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ea14a8adb161134f82be991bdbe0e91</Hash>
+    <Hash>e1c323781ae8a38f0fbbe0b54652f584</Hash>
 </Codenesium>*/

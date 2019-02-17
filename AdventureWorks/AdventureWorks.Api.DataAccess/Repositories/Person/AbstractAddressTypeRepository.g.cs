@@ -92,13 +92,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_AddressType_Name.
 		public async virtual Task<AddressType> ByName(string name)
 		{
-			return await this.Context.Set<AddressType>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<AddressType>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_AddressType_rowguid.
 		public async virtual Task<AddressType> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<AddressType>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<AddressType>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		protected async Task<List<AddressType>> Where(
@@ -112,7 +116,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.AddressTypeID;
 			}
 
-			return await this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AddressType>();
+			return await this.Context.Set<AddressType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AddressType>();
 		}
 
 		private async Task<AddressType> GetById(int addressTypeID)
@@ -125,5 +131,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7b705ee3bda4ec0ebd2cb5822d9419ab</Hash>
+    <Hash>23f6396cc6c89f688166078a4471c94d</Hash>
 </Codenesium>*/

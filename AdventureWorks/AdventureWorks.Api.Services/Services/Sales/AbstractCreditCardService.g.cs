@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiCreditCardServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CreditCardRepository.All(limit, offset, query);
+			List<CreditCard> records = await this.CreditCardRepository.All(limit, offset, query);
 
-			return this.DalCreditCardMapper.MapBOToModel(records);
+			return this.DalCreditCardMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCreditCardServerResponseModel> Get(int creditCardID)
 		{
-			var record = await this.CreditCardRepository.Get(creditCardID);
+			CreditCard record = await this.CreditCardRepository.Get(creditCardID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalCreditCardMapper.MapBOToModel(record);
+				return this.DalCreditCardMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalCreditCardMapper.MapModelToBO(default(int), model);
-				var record = await this.CreditCardRepository.Create(bo);
+				CreditCard record = this.DalCreditCardMapper.MapModelToEntity(default(int), model);
+				record = await this.CreditCardRepository.Create(record);
 
-				response.SetRecord(this.DalCreditCardMapper.MapBOToModel(record));
+				response.SetRecord(this.DalCreditCardMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CreditCardCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalCreditCardMapper.MapModelToBO(creditCardID, model);
-				await this.CreditCardRepository.Update(bo);
+				CreditCard record = this.DalCreditCardMapper.MapModelToEntity(creditCardID, model);
+				await this.CreditCardRepository.Update(record);
 
-				var record = await this.CreditCardRepository.Get(creditCardID);
+				record = await this.CreditCardRepository.Get(creditCardID);
 
-				var apiModel = this.DalCreditCardMapper.MapBOToModel(record);
+				ApiCreditCardServerResponseModel apiModel = this.DalCreditCardMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CreditCardUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCreditCardServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalCreditCardMapper.MapBOToModel(record);
+				return this.DalCreditCardMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -135,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<SalesOrderHeader> records = await this.CreditCardRepository.SalesOrderHeadersByCreditCardID(creditCardID, limit, offset);
 
-			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
+			return this.DalSalesOrderHeaderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ed88ae77da29f7c8ea3bb765a4d446b</Hash>
+    <Hash>4bef2615259f0a6edbbfa9c57a6bf314</Hash>
 </Codenesium>*/

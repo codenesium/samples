@@ -1,12 +1,12 @@
 import * as Api from '../../api/models';
 import ScrapReasonViewModel from './scrapReasonViewModel';
-
 export default class ScrapReasonMapper {
   mapApiResponseToViewModel(
     dto: Api.ScrapReasonClientResponseModel
   ): ScrapReasonViewModel {
     let response = new ScrapReasonViewModel();
     response.setProperties(dto.modifiedDate, dto.name, dto.scrapReasonID);
+
     return response;
   }
 
@@ -21,5 +21,5 @@ export default class ScrapReasonMapper {
 
 
 /*<Codenesium>
-    <Hash>3a97facf566336a43c777ac9f67d800c</Hash>
+    <Hash>b3ddc8c4d2df79c52ee332acd55fc8d1</Hash>
 </Codenesium>*/

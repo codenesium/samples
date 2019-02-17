@@ -94,13 +94,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_CreditCard_CardNumber.
 		public async virtual Task<CreditCard> ByCardNumber(string cardNumber)
 		{
-			return await this.Context.Set<CreditCard>().FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
+			return await this.Context.Set<CreditCard>()
+
+			       .FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
 		}
 
 		// Foreign key reference to this table SalesOrderHeader via creditCardID.
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SalesOrderHeader>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+			return await this.Context.Set<SalesOrderHeader>()
+			       .Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
 		protected async Task<List<CreditCard>> Where(
@@ -114,7 +117,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.CreditCardID;
 			}
 
-			return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CreditCard>();
+			return await this.Context.Set<CreditCard>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CreditCard>();
 		}
 
 		private async Task<CreditCard> GetById(int creditCardID)
@@ -127,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bdc50c33c692e7e5054d27b5c1c5efcd</Hash>
+    <Hash>1c09e02aae4887e72edee3467511729f</Hash>
 </Codenesium>*/

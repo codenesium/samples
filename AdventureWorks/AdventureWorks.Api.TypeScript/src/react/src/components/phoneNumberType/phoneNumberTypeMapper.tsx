@@ -1,12 +1,12 @@
 import * as Api from '../../api/models';
 import PhoneNumberTypeViewModel from './phoneNumberTypeViewModel';
-
 export default class PhoneNumberTypeMapper {
   mapApiResponseToViewModel(
     dto: Api.PhoneNumberTypeClientResponseModel
   ): PhoneNumberTypeViewModel {
     let response = new PhoneNumberTypeViewModel();
     response.setProperties(dto.modifiedDate, dto.name, dto.phoneNumberTypeID);
+
     return response;
   }
 
@@ -25,5 +25,5 @@ export default class PhoneNumberTypeMapper {
 
 
 /*<Codenesium>
-    <Hash>8f3eee147f48d685a8c93eb5b2e52aa2</Hash>
+    <Hash>3049f1a79f30e0aac968d615fe95a136</Hash>
 </Codenesium>*/

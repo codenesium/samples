@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import CountryRegionMapper from './countryRegionMapper';
 import CountryRegionViewModel from './countryRegionViewModel';
 
 interface Props {
+  history: any;
   model?: CountryRegionViewModel;
 }
 
 const CountryRegionDetailDisplay = (model: Props) => {
   return (
     <form role="form">
+      <button
+        className="btn btn-primary btn-sm align-middle float-right vertically-center"
+        onClick={e => {
+          model.history.push(
+            ClientRoutes.CountryRegions +
+              '/edit/' +
+              model.model!.countryRegionCode
+          );
+        }}
+      >
+        <i className="fas fa-edit" />
+      </button>
       <div className="form-group row">
         <label
           htmlFor="countryRegionCode"
@@ -25,14 +40,12 @@ const CountryRegionDetailDisplay = (model: Props) => {
           {String(model.model!.countryRegionCode)}
         </div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
           ModifiedDate
         </label>
         <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
       </div>
-
       <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
@@ -53,6 +66,7 @@ interface IMatch {
 
 interface CountryRegionDetailComponentProps {
   match: IMatch;
+  history: any;
 }
 
 interface CountryRegionDetailComponentState {
@@ -80,8 +94,9 @@ export default class CountryRegionDetailComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'countryregions/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.CountryRegions +
+          '/' +
           this.props.match.params.countryRegionCode,
         {
           headers: {
@@ -119,20 +134,23 @@ export default class CountryRegionDetailComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <CountryRegionDetailDisplay model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
       return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
+        <CountryRegionDetailDisplay
+          history={this.props.history}
+          model={this.state.model}
+        />
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>9e0c58fd0fa74d6019d356cee1dca307</Hash>
+    <Hash>add0d4cbf6775b419a07b737a17bd343</Hash>
 </Codenesium>*/

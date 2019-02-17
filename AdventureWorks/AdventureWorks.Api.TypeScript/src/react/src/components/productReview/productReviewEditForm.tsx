@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ProductReviewViewModel from './productReviewViewModel';
 import ProductReviewMapper from './productReviewMapper';
 
@@ -283,7 +285,7 @@ const ProductReviewEditDisplay = (
   );
 };
 
-const ProductReviewUpdate = withFormik<Props, ProductReviewViewModel>({
+const ProductReviewEdit = withFormik<Props, ProductReviewViewModel>({
   mapPropsToValues: props => {
     let response = new ProductReviewViewModel();
     response.setProperties(
@@ -334,7 +336,10 @@ const ProductReviewUpdate = withFormik<Props, ProductReviewViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'productreviews/' + values.productReviewID,
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductReviews +
+          '/' +
+          values.productReviewID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -401,8 +406,9 @@ export default class ProductReviewEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'productreviews/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductReviews +
+          '/' +
           this.props.match.params.productReviewID,
         {
           headers: {
@@ -440,20 +446,18 @@ export default class ProductReviewEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <ProductReviewUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <ProductReviewEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>49efed2b2115d4787b52bb9a091d073d</Hash>
+    <Hash>0a458aa3aa39d2508f027357617b1c95</Hash>
 </Codenesium>*/

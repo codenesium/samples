@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import SalesTerritoryViewModel from './salesTerritoryViewModel';
-
 export default class SalesTerritoryMapper {
   mapApiResponseToViewModel(
     dto: Api.SalesTerritoryClientResponseModel
@@ -17,6 +16,7 @@ export default class SalesTerritoryMapper {
       dto.salesYTD,
       dto.territoryID
     );
+
     return response;
   }
 
@@ -41,5 +41,5 @@ export default class SalesTerritoryMapper {
 
 
 /*<Codenesium>
-    <Hash>7c8fd7a1274025b2eba735f5d0bf9081</Hash>
+    <Hash>aa68d82b7415206f415e93e82542db7f</Hash>
 </Codenesium>*/

@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import AddressMapper from './addressMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import AddressViewModel from './addressViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class AddressSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.AddressClientResponseModel>(),
-    filteredRecords: new Array<Api.AddressClientResponseModel>(),
+    records: new Array<AddressViewModel>(),
+    filteredRecords: new Array<AddressViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,24 +49,27 @@ export default class AddressSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.AddressClientResponseModel) {
-    this.props.history.push('/addresses/edit/' + row.addressID);
+    this.props.history.push(ClientRoutes.Addresses + '/edit/' + row.addressID);
   }
 
   handleDetailClick(e: any, row: Api.AddressClientResponseModel) {
-    this.props.history.push('/addresses/' + row.addressID);
+    this.props.history.push(ClientRoutes.Addresses + '/' + row.addressID);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/addresses/create');
+    this.props.history.push(ClientRoutes.Addresses + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.AddressClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'addresses/' + row.addressID, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .delete(
+        Constants.ApiEndpoint + ApiRoutes.Addresses + '/' + row.addressID,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           this.setState({
@@ -93,7 +98,8 @@ export default class AddressSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'addresses' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.Addresses + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +148,9 @@ export default class AddressSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -298,17 +306,13 @@ export default class AddressSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>cbe3b221e32d5a539d8de0f51a751d4d</Hash>
+    <Hash>b3eb32f5cd2c3c888e6a5f9a5e02cd84</Hash>
 </Codenesium>*/

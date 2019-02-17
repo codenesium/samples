@@ -42,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiBusinessEntityServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.BusinessEntityRepository.All(limit, offset, query);
+			List<BusinessEntity> records = await this.BusinessEntityRepository.All(limit, offset, query);
 
-			return this.DalBusinessEntityMapper.MapBOToModel(records);
+			return this.DalBusinessEntityMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiBusinessEntityServerResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.BusinessEntityRepository.Get(businessEntityID);
+			BusinessEntity record = await this.BusinessEntityRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalBusinessEntityMapper.MapBOToModel(record);
+				return this.DalBusinessEntityMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,10 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalBusinessEntityMapper.MapModelToBO(default(int), model);
-				var record = await this.BusinessEntityRepository.Create(bo);
+				BusinessEntity record = this.DalBusinessEntityMapper.MapModelToEntity(default(int), model);
+				record = await this.BusinessEntityRepository.Create(record);
 
-				response.SetRecord(this.DalBusinessEntityMapper.MapBOToModel(record));
+				response.SetRecord(this.DalBusinessEntityMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new BusinessEntityCreatedNotification(response.Record));
 			}
 
@@ -86,12 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalBusinessEntityMapper.MapModelToBO(businessEntityID, model);
-				await this.BusinessEntityRepository.Update(bo);
+				BusinessEntity record = this.DalBusinessEntityMapper.MapModelToEntity(businessEntityID, model);
+				await this.BusinessEntityRepository.Update(record);
 
-				var record = await this.BusinessEntityRepository.Get(businessEntityID);
+				record = await this.BusinessEntityRepository.Get(businessEntityID);
 
-				var apiModel = this.DalBusinessEntityMapper.MapBOToModel(record);
+				ApiBusinessEntityServerResponseModel apiModel = this.DalBusinessEntityMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new BusinessEntityUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiBusinessEntityServerResponseModel>.UpdateResponse(apiModel);
@@ -127,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalBusinessEntityMapper.MapBOToModel(record);
+				return this.DalBusinessEntityMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -135,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Person> records = await this.BusinessEntityRepository.PeopleByBusinessEntityID(businessEntityID, limit, offset);
 
-			return this.DalPersonMapper.MapBOToModel(records);
+			return this.DalPersonMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>86211cd0a560098a93e16eb8e19fe47f</Hash>
+    <Hash>e32ff3a5a736e79a29df57042187a1ec</Hash>
 </Codenesium>*/

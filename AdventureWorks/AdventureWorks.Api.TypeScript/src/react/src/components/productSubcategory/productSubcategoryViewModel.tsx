@@ -26,9 +26,13 @@ export default class ProductSubcategoryViewModel {
     this.productSubcategoryID = productSubcategoryID;
     this.rowguid = rowguid;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>6a42a71cf9113b059390c09e25de5446</Hash>
+    <Hash>edb8861454edcc1e64abde4e045ffc9d</Hash>
 </Codenesium>*/

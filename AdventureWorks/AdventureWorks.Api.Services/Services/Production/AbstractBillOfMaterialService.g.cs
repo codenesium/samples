@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.BillOfMaterialRepository.All(limit, offset, query);
+			List<BillOfMaterial> records = await this.BillOfMaterialRepository.All(limit, offset, query);
 
-			return this.DalBillOfMaterialMapper.MapBOToModel(records);
+			return this.DalBillOfMaterialMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiBillOfMaterialServerResponseModel> Get(int billOfMaterialsID)
 		{
-			var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
+			BillOfMaterial record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalBillOfMaterialMapper.MapBOToModel(record);
+				return this.DalBillOfMaterialMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalBillOfMaterialMapper.MapModelToBO(default(int), model);
-				var record = await this.BillOfMaterialRepository.Create(bo);
+				BillOfMaterial record = this.DalBillOfMaterialMapper.MapModelToEntity(default(int), model);
+				record = await this.BillOfMaterialRepository.Create(record);
 
-				response.SetRecord(this.DalBillOfMaterialMapper.MapBOToModel(record));
+				response.SetRecord(this.DalBillOfMaterialMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new BillOfMaterialCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalBillOfMaterialMapper.MapModelToBO(billOfMaterialsID, model);
-				await this.BillOfMaterialRepository.Update(bo);
+				BillOfMaterial record = this.DalBillOfMaterialMapper.MapModelToEntity(billOfMaterialsID, model);
+				await this.BillOfMaterialRepository.Update(record);
 
-				var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
+				record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
-				var apiModel = this.DalBillOfMaterialMapper.MapBOToModel(record);
+				ApiBillOfMaterialServerResponseModel apiModel = this.DalBillOfMaterialMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new BillOfMaterialUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.UpdateResponse(apiModel);
@@ -117,11 +117,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<BillOfMaterial> records = await this.BillOfMaterialRepository.ByUnitMeasureCode(unitMeasureCode, limit, offset);
 
-			return this.DalBillOfMaterialMapper.MapBOToModel(records);
+			return this.DalBillOfMaterialMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>400182300c89492afa029bfcf06f7f65</Hash>
+    <Hash>8cd5f5afa1d99aa483ff4ec861887cb9</Hash>
 </Codenesium>*/

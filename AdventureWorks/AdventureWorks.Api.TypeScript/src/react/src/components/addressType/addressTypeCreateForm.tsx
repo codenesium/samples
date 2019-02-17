@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import AddressTypeMapper from './addressTypeMapper';
 import AddressTypeViewModel from './addressTypeViewModel';
 
@@ -184,7 +186,7 @@ const AddressTypeCreate = withFormik<Props, AddressTypeViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'addresstypes',
+        Constants.ApiEndpoint + ApiRoutes.AddressTypes,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -233,20 +235,18 @@ export default class AddressTypeCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <AddressTypeCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ff10bc22fbaea2bef4f39d549a1c5129</Hash>
+    <Hash>dbfff789e26cb47203c75f944f0154cf</Hash>
 </Codenesium>*/

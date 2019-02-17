@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALProductPhotoMapper
 	{
-		public virtual ProductPhoto MapModelToBO(
+		public virtual ProductPhoto MapModelToEntity(
 			int productPhotoID,
 			ApiProductPhotoServerRequestModel model
 			)
@@ -23,24 +23,29 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiProductPhotoServerResponseModel MapBOToModel(
+		public virtual ApiProductPhotoServerResponseModel MapEntityToModel(
 			ProductPhoto item)
 		{
 			var model = new ApiProductPhotoServerResponseModel();
 
-			model.SetProperties(item.ProductPhotoID, item.LargePhoto, item.LargePhotoFileName, item.ModifiedDate, item.ThumbNailPhoto, item.ThumbnailPhotoFileName);
+			model.SetProperties(item.ProductPhotoID,
+			                    item.LargePhoto,
+			                    item.LargePhotoFileName,
+			                    item.ModifiedDate,
+			                    item.ThumbNailPhoto,
+			                    item.ThumbnailPhotoFileName);
 
 			return model;
 		}
 
-		public virtual List<ApiProductPhotoServerResponseModel> MapBOToModel(
+		public virtual List<ApiProductPhotoServerResponseModel> MapEntityToModel(
 			List<ProductPhoto> items)
 		{
 			List<ApiProductPhotoServerResponseModel> response = new List<ApiProductPhotoServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -49,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ec90c1ff7a8fc0eb271678c8a91fcf6</Hash>
+    <Hash>b5b32f3f2a47d9e31040960526d9420c</Hash>
 </Codenesium>*/

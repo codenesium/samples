@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import ShipMethodViewModel from './shipMethodViewModel';
-
 export default class ShipMethodMapper {
   mapApiResponseToViewModel(
     dto: Api.ShipMethodClientResponseModel
@@ -14,6 +13,7 @@ export default class ShipMethodMapper {
       dto.shipMethodID,
       dto.shipRate
     );
+
     return response;
   }
 
@@ -35,5 +35,5 @@ export default class ShipMethodMapper {
 
 
 /*<Codenesium>
-    <Hash>5d3c7cd57174d7f0bfcf0f6a25f6bb02</Hash>
+    <Hash>24059e605f11f90d5fd8c3849b5f7531</Hash>
 </Codenesium>*/

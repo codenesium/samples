@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALLocationMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALLocationMapper();
 			ApiLocationServerRequestModel model = new ApiLocationServerRequestModel();
 			model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			Location response = mapper.MapModelToBO(1, model);
+			Location response = mapper.MapModelToEntity(1, model);
 
 			response.Availability.Should().Be(1);
 			response.CostRate.Should().Be(1m);
@@ -27,12 +27,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALLocationMapper();
 			Location item = new Location();
 			item.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiLocationServerResponseModel response = mapper.MapBOToModel(item);
+			ApiLocationServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Availability.Should().Be(1);
 			response.CostRate.Should().Be(1m);
@@ -42,12 +42,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALLocationMapper();
 			Location item = new Location();
 			item.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiLocationServerResponseModel> response = mapper.MapBOToModel(new List<Location>() { { item} });
+			List<ApiLocationServerResponseModel> response = mapper.MapEntityToModel(new List<Location>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -55,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59ddb838862ba76713640e7765f2186b</Hash>
+    <Hash>6a696d7567e12a1138e80c9c967c7e5d</Hash>
 </Codenesium>*/

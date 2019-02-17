@@ -1,12 +1,12 @@
 import * as Api from '../../api/models';
 import ContactTypeViewModel from './contactTypeViewModel';
-
 export default class ContactTypeMapper {
   mapApiResponseToViewModel(
     dto: Api.ContactTypeClientResponseModel
   ): ContactTypeViewModel {
     let response = new ContactTypeViewModel();
     response.setProperties(dto.contactTypeID, dto.modifiedDate, dto.name);
+
     return response;
   }
 
@@ -21,5 +21,5 @@ export default class ContactTypeMapper {
 
 
 /*<Codenesium>
-    <Hash>736bd7241ad6d1a39235da7685f7d543</Hash>
+    <Hash>870c387a6ea247fbd21955ce18323116</Hash>
 </Codenesium>*/

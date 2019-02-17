@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import ShiftMapper from './shiftMapper';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import ShiftViewModel from './shiftViewModel';
 import 'react-table/react-table.css';
@@ -33,8 +35,8 @@ export default class ShiftSearchComponent extends React.Component<
     deleteSubmitted: false,
     deleteSuccess: false,
     deleteResponse: '',
-    records: new Array<Api.ShiftClientResponseModel>(),
-    filteredRecords: new Array<Api.ShiftClientResponseModel>(),
+    records: new Array<ShiftViewModel>(),
+    filteredRecords: new Array<ShiftViewModel>(),
     searchValue: '',
     loading: false,
     loaded: true,
@@ -47,20 +49,20 @@ export default class ShiftSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: Api.ShiftClientResponseModel) {
-    this.props.history.push('/shifts/edit/' + row.shiftID);
+    this.props.history.push(ClientRoutes.Shifts + '/edit/' + row.shiftID);
   }
 
   handleDetailClick(e: any, row: Api.ShiftClientResponseModel) {
-    this.props.history.push('/shifts/' + row.shiftID);
+    this.props.history.push(ClientRoutes.Shifts + '/' + row.shiftID);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push('/shifts/create');
+    this.props.history.push(ClientRoutes.Shifts + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.ShiftClientResponseModel) {
     axios
-      .delete(Constants.ApiUrl + 'shifts/' + row.shiftID, {
+      .delete(Constants.ApiEndpoint + ApiRoutes.Shifts + '/' + row.shiftID, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -93,7 +95,8 @@ export default class ShiftSearchComponent extends React.Component<
 
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint = Constants.ApiUrl + 'shifts' + '?limit=100';
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.Shifts + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -142,7 +145,9 @@ export default class ShiftSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -275,17 +280,13 @@ export default class ShiftSearchComponent extends React.Component<
           />
         </div>
       );
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c4ec36e96118016ec91be0c731642d7d</Hash>
+    <Hash>955a744df3b03d9597d96d09730809f3</Hash>
 </Codenesium>*/

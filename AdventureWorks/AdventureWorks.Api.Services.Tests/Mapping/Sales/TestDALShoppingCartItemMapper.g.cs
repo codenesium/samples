@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALShoppingCartItemMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALShoppingCartItemMapper();
 			ApiShoppingCartItemServerRequestModel model = new ApiShoppingCartItemServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
-			ShoppingCartItem response = mapper.MapModelToBO(1, model);
+			ShoppingCartItem response = mapper.MapModelToEntity(1, model);
 
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -28,12 +28,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALShoppingCartItemMapper();
 			ShoppingCartItem item = new ShoppingCartItem();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
-			ApiShoppingCartItemServerResponseModel response = mapper.MapBOToModel(item);
+			ApiShoppingCartItemServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -44,12 +44,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALShoppingCartItemMapper();
 			ShoppingCartItem item = new ShoppingCartItem();
 			item.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
-			List<ApiShoppingCartItemServerResponseModel> response = mapper.MapBOToModel(new List<ShoppingCartItem>() { { item} });
+			List<ApiShoppingCartItemServerResponseModel> response = mapper.MapEntityToModel(new List<ShoppingCartItem>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6db9dd041cdaa37f645634af271c8c40</Hash>
+    <Hash>81f93175935302f3812586eed9e6c573</Hash>
 </Codenesium>*/

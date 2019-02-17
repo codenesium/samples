@@ -42,9 +42,13 @@ export default class ErrorLogViewModel {
     this.errorTime = errorTime;
     this.userName = userName;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>e52556941cd7dd5c14673e7b769f5bba</Hash>
+    <Hash>36a466edc31c44c16f797f3f5cc6322f</Hash>
 </Codenesium>*/

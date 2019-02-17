@@ -100,7 +100,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.SystemInformationID;
 			}
 
-			return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
+			return await this.Context.Set<AWBuildVersion>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
 		}
 
 		private async Task<AWBuildVersion> GetById(int systemInformationID)
@@ -113,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4891e6c1ae73bc00d6b4b2cf50bc1b27</Hash>
+    <Hash>27ab9d84209d8a48c49ac690c4035d3d</Hash>
 </Codenesium>*/

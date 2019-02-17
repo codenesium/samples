@@ -1,3 +1,9 @@
+import CreditCardViewModel from '../creditCard/creditCardViewModel';
+import CurrencyRateViewModel from '../currencyRate/currencyRateViewModel';
+import CustomerViewModel from '../customer/customerViewModel';
+import SalesPersonViewModel from '../salesPerson/salesPersonViewModel';
+import SalesTerritoryViewModel from '../salesTerritory/salesTerritoryViewModel';
+
 export default class SalesOrderHeaderViewModel {
   accountNumber: string;
   billToAddressID: number;
@@ -5,10 +11,13 @@ export default class SalesOrderHeaderViewModel {
   creditCardApprovalCode: string;
   creditCardID: any;
   creditCardIDEntity: string;
+  creditCardIDNavigation?: CreditCardViewModel;
   currencyRateID: any;
   currencyRateIDEntity: string;
+  currencyRateIDNavigation?: CurrencyRateViewModel;
   customerID: number;
   customerIDEntity: string;
+  customerIDNavigation?: CustomerViewModel;
   dueDate: any;
   freight: number;
   modifiedDate: any;
@@ -21,6 +30,7 @@ export default class SalesOrderHeaderViewModel {
   salesOrderNumber: string;
   salesPersonID: any;
   salesPersonIDEntity: string;
+  salesPersonIDNavigation?: SalesPersonViewModel;
   shipDate: any;
   shipMethodID: number;
   shipToAddressID: number;
@@ -29,6 +39,7 @@ export default class SalesOrderHeaderViewModel {
   taxAmt: number;
   territoryID: any;
   territoryIDEntity: string;
+  territoryIDNavigation?: SalesTerritoryViewModel;
   totalDue: number;
 
   constructor() {
@@ -38,10 +49,13 @@ export default class SalesOrderHeaderViewModel {
     this.creditCardApprovalCode = '';
     this.creditCardID = undefined;
     this.creditCardIDEntity = '';
+    this.creditCardIDNavigation = undefined;
     this.currencyRateID = undefined;
     this.currencyRateIDEntity = '';
+    this.currencyRateIDNavigation = undefined;
     this.customerID = 0;
     this.customerIDEntity = '';
+    this.customerIDNavigation = undefined;
     this.dueDate = undefined;
     this.freight = 0;
     this.modifiedDate = undefined;
@@ -54,6 +68,7 @@ export default class SalesOrderHeaderViewModel {
     this.salesOrderNumber = '';
     this.salesPersonID = undefined;
     this.salesPersonIDEntity = '';
+    this.salesPersonIDNavigation = undefined;
     this.shipDate = undefined;
     this.shipMethodID = 0;
     this.shipToAddressID = 0;
@@ -62,6 +77,7 @@ export default class SalesOrderHeaderViewModel {
     this.taxAmt = 0;
     this.territoryID = undefined;
     this.territoryIDEntity = '';
+    this.territoryIDNavigation = undefined;
     this.totalDue = 0;
   }
 
@@ -120,9 +136,13 @@ export default class SalesOrderHeaderViewModel {
     this.territoryID = territoryID;
     this.totalDue = totalDue;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>cf89d6054e755d1f75c34af8639e31ba</Hash>
+    <Hash>2990605968246a86504429f6b9324c34</Hash>
 </Codenesium>*/

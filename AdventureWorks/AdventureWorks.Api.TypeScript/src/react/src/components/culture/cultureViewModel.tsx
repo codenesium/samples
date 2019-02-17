@@ -14,9 +14,13 @@ export default class CultureViewModel {
     this.modifiedDate = modifiedDate;
     this.name = name;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>01b45832791f34e9d1da0e4037a55901</Hash>
+    <Hash>9f29af8c8b57beaa084414db03fb0cad</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALTransactionHistoryMapper
 	{
-		public virtual TransactionHistory MapModelToBO(
+		public virtual TransactionHistory MapModelToEntity(
 			int transactionID,
 			ApiTransactionHistoryServerRequestModel model
 			)
@@ -26,24 +26,32 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiTransactionHistoryServerResponseModel MapBOToModel(
+		public virtual ApiTransactionHistoryServerResponseModel MapEntityToModel(
 			TransactionHistory item)
 		{
 			var model = new ApiTransactionHistoryServerResponseModel();
 
-			model.SetProperties(item.TransactionID, item.ActualCost, item.ModifiedDate, item.ProductID, item.Quantity, item.ReferenceOrderID, item.ReferenceOrderLineID, item.TransactionDate, item.TransactionType);
+			model.SetProperties(item.TransactionID,
+			                    item.ActualCost,
+			                    item.ModifiedDate,
+			                    item.ProductID,
+			                    item.Quantity,
+			                    item.ReferenceOrderID,
+			                    item.ReferenceOrderLineID,
+			                    item.TransactionDate,
+			                    item.TransactionType);
 
 			return model;
 		}
 
-		public virtual List<ApiTransactionHistoryServerResponseModel> MapBOToModel(
+		public virtual List<ApiTransactionHistoryServerResponseModel> MapEntityToModel(
 			List<TransactionHistory> items)
 		{
 			List<ApiTransactionHistoryServerResponseModel> response = new List<ApiTransactionHistoryServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -52,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e99769bec6c9faeb62cb1541b232f36e</Hash>
+    <Hash>d26df0da84f761d9bc46298958b3298d</Hash>
 </Codenesium>*/

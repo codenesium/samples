@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALStateProvinceMapper
 	{
-		public virtual StateProvince MapModelToBO(
+		public virtual StateProvince MapModelToEntity(
 			int stateProvinceID,
 			ApiStateProvinceServerRequestModel model
 			)
@@ -25,24 +25,31 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiStateProvinceServerResponseModel MapBOToModel(
+		public virtual ApiStateProvinceServerResponseModel MapEntityToModel(
 			StateProvince item)
 		{
 			var model = new ApiStateProvinceServerResponseModel();
 
-			model.SetProperties(item.StateProvinceID, item.CountryRegionCode, item.IsOnlyStateProvinceFlag, item.ModifiedDate, item.Name, item.Rowguid, item.StateProvinceCode, item.TerritoryID);
+			model.SetProperties(item.StateProvinceID,
+			                    item.CountryRegionCode,
+			                    item.IsOnlyStateProvinceFlag,
+			                    item.ModifiedDate,
+			                    item.Name,
+			                    item.Rowguid,
+			                    item.StateProvinceCode,
+			                    item.TerritoryID);
 
 			return model;
 		}
 
-		public virtual List<ApiStateProvinceServerResponseModel> MapBOToModel(
+		public virtual List<ApiStateProvinceServerResponseModel> MapEntityToModel(
 			List<StateProvince> items)
 		{
 			List<ApiStateProvinceServerResponseModel> response = new List<ApiStateProvinceServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -51,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ec921102114fb88db2ca23dc6c95209</Hash>
+    <Hash>70c805909000986551e1358785cfd2f8</Hash>
 </Codenesium>*/

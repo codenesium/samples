@@ -50,15 +50,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int? SalesPersonID { get; private set; }
 
 		[ForeignKey("SalesPersonID")]
-		public virtual SalesPerson SalesPersonNavigation { get; private set; }
+		public virtual SalesPerson SalesPersonIDNavigation { get; private set; }
 
-		public void SetSalesPersonNavigation(SalesPerson item)
+		public void SetSalesPersonIDNavigation(SalesPerson item)
 		{
-			this.SalesPersonNavigation = item;
+			this.SalesPersonIDNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cc1dfed132fe1ce46f95c419c01e410d</Hash>
+    <Hash>afb1c747732641fc92738ce5f4f1ec61</Hash>
 </Codenesium>*/

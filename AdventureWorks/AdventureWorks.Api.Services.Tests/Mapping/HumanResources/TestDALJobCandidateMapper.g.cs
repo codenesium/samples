@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALJobCandidateMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALJobCandidateMapper();
 			ApiJobCandidateServerRequestModel model = new ApiJobCandidateServerRequestModel();
 			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			JobCandidate response = mapper.MapModelToBO(1, model);
+			JobCandidate response = mapper.MapModelToEntity(1, model);
 
 			response.BusinessEntityID.Should().Be(1);
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -26,12 +26,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALJobCandidateMapper();
 			JobCandidate item = new JobCandidate();
 			item.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiJobCandidateServerResponseModel response = mapper.MapBOToModel(item);
+			ApiJobCandidateServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.BusinessEntityID.Should().Be(1);
 			response.JobCandidateID.Should().Be(1);
@@ -40,12 +40,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALJobCandidateMapper();
 			JobCandidate item = new JobCandidate();
 			item.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiJobCandidateServerResponseModel> response = mapper.MapBOToModel(new List<JobCandidate>() { { item} });
+			List<ApiJobCandidateServerResponseModel> response = mapper.MapEntityToModel(new List<JobCandidate>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6e84da0c8d072b0f89e0c135d07a2298</Hash>
+    <Hash>3ea289321b50cd10db3b327ad844f0a0</Hash>
 </Codenesium>*/

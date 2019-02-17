@@ -98,7 +98,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_SpecialOffer_rowguid.
 		public async virtual Task<SpecialOffer> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<SpecialOffer>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<SpecialOffer>()
+
+			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		protected async Task<List<SpecialOffer>> Where(
@@ -112,7 +114,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.SpecialOfferID;
 			}
 
-			return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
+			return await this.Context.Set<SpecialOffer>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
 		}
 
 		private async Task<SpecialOffer> GetById(int specialOfferID)
@@ -125,5 +129,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>faca27c335053a61aeba483a547588fd</Hash>
+    <Hash>78d1c7ffce341979e890cc25f9a8a798</Hash>
 </Codenesium>*/

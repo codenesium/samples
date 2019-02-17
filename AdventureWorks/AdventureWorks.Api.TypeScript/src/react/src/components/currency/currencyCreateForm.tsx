@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import CurrencyMapper from './currencyMapper';
 import CurrencyViewModel from './currencyViewModel';
 
@@ -151,7 +153,7 @@ const CurrencyCreate = withFormik<Props, CurrencyViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'currencies',
+        Constants.ApiEndpoint + ApiRoutes.Currencies,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -200,20 +202,18 @@ export default class CurrencyCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <CurrencyCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>796dcc47dbc5e36dbf514771df477001</Hash>
+    <Hash>21c34f620da4c98689975a0520833fec</Hash>
 </Codenesium>*/

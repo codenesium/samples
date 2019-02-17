@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiShiftServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ShiftRepository.All(limit, offset, query);
+			List<Shift> records = await this.ShiftRepository.All(limit, offset, query);
 
-			return this.DalShiftMapper.MapBOToModel(records);
+			return this.DalShiftMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiShiftServerResponseModel> Get(int shiftID)
 		{
-			var record = await this.ShiftRepository.Get(shiftID);
+			Shift record = await this.ShiftRepository.Get(shiftID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalShiftMapper.MapBOToModel(record);
+				return this.DalShiftMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalShiftMapper.MapModelToBO(default(int), model);
-				var record = await this.ShiftRepository.Create(bo);
+				Shift record = this.DalShiftMapper.MapModelToEntity(default(int), model);
+				record = await this.ShiftRepository.Create(record);
 
-				response.SetRecord(this.DalShiftMapper.MapBOToModel(record));
+				response.SetRecord(this.DalShiftMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ShiftCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalShiftMapper.MapModelToBO(shiftID, model);
-				await this.ShiftRepository.Update(bo);
+				Shift record = this.DalShiftMapper.MapModelToEntity(shiftID, model);
+				await this.ShiftRepository.Update(record);
 
-				var record = await this.ShiftRepository.Get(shiftID);
+				record = await this.ShiftRepository.Get(shiftID);
 
-				var apiModel = this.DalShiftMapper.MapBOToModel(record);
+				ApiShiftServerResponseModel apiModel = this.DalShiftMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ShiftUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiShiftServerResponseModel>.UpdateResponse(apiModel);
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalShiftMapper.MapBOToModel(record);
+				return this.DalShiftMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -137,12 +137,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalShiftMapper.MapBOToModel(record);
+				return this.DalShiftMapper.MapEntityToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>898cc0fc45e29da8bd0255f588ffac1b</Hash>
+    <Hash>e8703e6ea140415373cea110219d5e34</Hash>
 </Codenesium>*/

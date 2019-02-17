@@ -54,14 +54,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiProductServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductRepository.All(limit, offset, query);
+			List<Product> records = await this.ProductRepository.All(limit, offset, query);
 
-			return this.DalProductMapper.MapBOToModel(records);
+			return this.DalProductMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiProductServerResponseModel> Get(int productID)
 		{
-			var record = await this.ProductRepository.Get(productID);
+			Product record = await this.ProductRepository.Get(productID);
 
 			if (record == null)
 			{
@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductMapper.MapBOToModel(record);
+				return this.DalProductMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -80,10 +80,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalProductMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductRepository.Create(bo);
+				Product record = this.DalProductMapper.MapModelToEntity(default(int), model);
+				record = await this.ProductRepository.Create(record);
 
-				response.SetRecord(this.DalProductMapper.MapBOToModel(record));
+				response.SetRecord(this.DalProductMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ProductCreatedNotification(response.Record));
 			}
 
@@ -98,12 +98,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalProductMapper.MapModelToBO(productID, model);
-				await this.ProductRepository.Update(bo);
+				Product record = this.DalProductMapper.MapModelToEntity(productID, model);
+				await this.ProductRepository.Update(record);
 
-				var record = await this.ProductRepository.Get(productID);
+				record = await this.ProductRepository.Get(productID);
 
-				var apiModel = this.DalProductMapper.MapBOToModel(record);
+				ApiProductServerResponseModel apiModel = this.DalProductMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ProductUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductServerResponseModel>.UpdateResponse(apiModel);
@@ -139,7 +139,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductMapper.MapBOToModel(record);
+				return this.DalProductMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -153,7 +153,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductMapper.MapBOToModel(record);
+				return this.DalProductMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalProductMapper.MapBOToModel(record);
+				return this.DalProductMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -175,39 +175,39 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterialsByProductAssemblyID(productAssemblyID, limit, offset);
 
-			return this.DalBillOfMaterialMapper.MapBOToModel(records);
+			return this.DalBillOfMaterialMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiBillOfMaterialServerResponseModel>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterialsByComponentID(componentID, limit, offset);
 
-			return this.DalBillOfMaterialMapper.MapBOToModel(records);
+			return this.DalBillOfMaterialMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiProductReviewServerResponseModel>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<ProductReview> records = await this.ProductRepository.ProductReviewsByProductID(productID, limit, offset);
 
-			return this.DalProductReviewMapper.MapBOToModel(records);
+			return this.DalProductReviewMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiTransactionHistoryServerResponseModel>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<TransactionHistory> records = await this.ProductRepository.TransactionHistoriesByProductID(productID, limit, offset);
 
-			return this.DalTransactionHistoryMapper.MapBOToModel(records);
+			return this.DalTransactionHistoryMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiWorkOrderServerResponseModel>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<WorkOrder> records = await this.ProductRepository.WorkOrdersByProductID(productID, limit, offset);
 
-			return this.DalWorkOrderMapper.MapBOToModel(records);
+			return this.DalWorkOrderMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c0d2f96c4bc9dcdfcff36533c86ba36</Hash>
+    <Hash>23d4cf4d67f1e40dd1173740c1a065da</Hash>
 </Codenesium>*/

@@ -46,9 +46,13 @@ export default class SpecialOfferViewModel {
     this.specialOfferID = specialOfferID;
     this.startDate = startDate;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>d33671cab802a1221fd45478b4daf310</Hash>
+    <Hash>2b12e24f9fd992469c3df5caacc6764c</Hash>
 </Codenesium>*/

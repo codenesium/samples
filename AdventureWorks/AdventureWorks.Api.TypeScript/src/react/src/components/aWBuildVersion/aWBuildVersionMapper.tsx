@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import AWBuildVersionViewModel from './aWBuildVersionViewModel';
-
 export default class AWBuildVersionMapper {
   mapApiResponseToViewModel(
     dto: Api.AWBuildVersionClientResponseModel
@@ -12,6 +11,7 @@ export default class AWBuildVersionMapper {
       dto.systemInformationID,
       dto.versionDate
     );
+
     return response;
   }
 
@@ -31,5 +31,5 @@ export default class AWBuildVersionMapper {
 
 
 /*<Codenesium>
-    <Hash>5a525cfa70ae9993554ba089fff2c4b0</Hash>
+    <Hash>b75d9ca9a1fb7d7ec4a3c941bf14d472</Hash>
 </Codenesium>*/

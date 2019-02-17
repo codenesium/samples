@@ -102,7 +102,9 @@ namespace AdventureWorksNS.Api.DataAccess
 				orderBy = x => x.DatabaseLogID;
 			}
 
-			return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
+			return await this.Context.Set<DatabaseLog>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
 		}
 
 		private async Task<DatabaseLog> GetById(int databaseLogID)
@@ -115,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bf193af4b114a9727ebdfc8472742e24</Hash>
+    <Hash>a54eb4bfcbfddbf6d870214c0112f94b</Hash>
 </Codenesium>*/

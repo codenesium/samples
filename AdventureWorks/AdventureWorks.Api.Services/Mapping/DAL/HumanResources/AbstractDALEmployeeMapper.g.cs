@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALEmployeeMapper
 	{
-		public virtual Employee MapModelToBO(
+		public virtual Employee MapModelToEntity(
 			int businessEntityID,
 			ApiEmployeeServerRequestModel model
 			)
@@ -32,24 +32,38 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiEmployeeServerResponseModel MapBOToModel(
+		public virtual ApiEmployeeServerResponseModel MapEntityToModel(
 			Employee item)
 		{
 			var model = new ApiEmployeeServerResponseModel();
 
-			model.SetProperties(item.BusinessEntityID, item.BirthDate, item.CurrentFlag, item.Gender, item.HireDate, item.JobTitle, item.LoginID, item.MaritalStatu, item.ModifiedDate, item.NationalIDNumber, item.OrganizationLevel, item.Rowguid, item.SalariedFlag, item.SickLeaveHour, item.VacationHour);
+			model.SetProperties(item.BusinessEntityID,
+			                    item.BirthDate,
+			                    item.CurrentFlag,
+			                    item.Gender,
+			                    item.HireDate,
+			                    item.JobTitle,
+			                    item.LoginID,
+			                    item.MaritalStatu,
+			                    item.ModifiedDate,
+			                    item.NationalIDNumber,
+			                    item.OrganizationLevel,
+			                    item.Rowguid,
+			                    item.SalariedFlag,
+			                    item.SickLeaveHour,
+			                    item.VacationHour);
 
 			return model;
 		}
 
-		public virtual List<ApiEmployeeServerResponseModel> MapBOToModel(
+		public virtual List<ApiEmployeeServerResponseModel> MapEntityToModel(
 			List<Employee> items)
 		{
 			List<ApiEmployeeServerResponseModel> response = new List<ApiEmployeeServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -58,5 +72,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d833a2da02c6f5d113e177c95ef07700</Hash>
+    <Hash>ae0dcbbcc304530e19bd07d1cbb75ff3</Hash>
 </Codenesium>*/

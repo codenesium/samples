@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import ErrorLogViewModel from './errorLogViewModel';
-
 export default class ErrorLogMapper {
   mapApiResponseToViewModel(
     dto: Api.ErrorLogClientResponseModel
@@ -17,6 +16,7 @@ export default class ErrorLogMapper {
       dto.errorTime,
       dto.userName
     );
+
     return response;
   }
 
@@ -41,5 +41,5 @@ export default class ErrorLogMapper {
 
 
 /*<Codenesium>
-    <Hash>e5f726f5e8babfc9aa18bd44b86871c6</Hash>
+    <Hash>3ebbfa5688f0b9a3fd0c8c744be30bf6</Hash>
 </Codenesium>*/

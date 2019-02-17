@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALContactTypeMapper
 	{
-		ContactType MapModelToBO(
+		ContactType MapModelToEntity(
 			int contactTypeID,
 			ApiContactTypeServerRequestModel model);
 
-		ApiContactTypeServerResponseModel MapBOToModel(
+		ApiContactTypeServerResponseModel MapEntityToModel(
 			ContactType item);
 
-		List<ApiContactTypeServerResponseModel> MapBOToModel(
+		List<ApiContactTypeServerResponseModel> MapEntityToModel(
 			List<ContactType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>060c74bc822f5c15526e02320e2381bd</Hash>
+    <Hash>76ea082a8090f48d689d41003a5b2776</Hash>
 </Codenesium>*/

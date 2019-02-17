@@ -7,18 +7,18 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IDALWorkOrderMapper
 	{
-		WorkOrder MapModelToBO(
+		WorkOrder MapModelToEntity(
 			int workOrderID,
 			ApiWorkOrderServerRequestModel model);
 
-		ApiWorkOrderServerResponseModel MapBOToModel(
+		ApiWorkOrderServerResponseModel MapEntityToModel(
 			WorkOrder item);
 
-		List<ApiWorkOrderServerResponseModel> MapBOToModel(
+		List<ApiWorkOrderServerResponseModel> MapEntityToModel(
 			List<WorkOrder> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3155a7bce72b5683269375c0f98f47ee</Hash>
+    <Hash>dd3e0dd071de06c5e475e5d460950814</Hash>
 </Codenesium>*/

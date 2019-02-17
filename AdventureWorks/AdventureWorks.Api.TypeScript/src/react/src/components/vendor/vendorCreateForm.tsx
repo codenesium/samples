@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import * as Api from '../../api/models';
-import Constants from '../../constants';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import VendorMapper from './vendorMapper';
 import VendorViewModel from './vendorViewModel';
 
@@ -288,9 +290,6 @@ const VendorCreate = withFormik<Props, VendorViewModel>({
     if (values.accountNumber == '') {
       errors.accountNumber = 'Required';
     }
-    if (values.activeFlag == false) {
-      errors.activeFlag = 'Required';
-    }
     if (values.creditRating == 0) {
       errors.creditRating = 'Required';
     }
@@ -299,9 +298,6 @@ const VendorCreate = withFormik<Props, VendorViewModel>({
     }
     if (values.name == '') {
       errors.name = 'Required';
-    }
-    if (values.preferredVendorStatu == false) {
-      errors.preferredVendorStatu = 'Required';
     }
 
     return errors;
@@ -313,7 +309,7 @@ const VendorCreate = withFormik<Props, VendorViewModel>({
 
     axios
       .post(
-        Constants.ApiUrl + 'vendors',
+        Constants.ApiEndpoint + ApiRoutes.Vendors,
         mapper.mapViewModelToApiRequest(values),
         {
           headers: {
@@ -362,20 +358,18 @@ export default class VendorCreateComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <LoadingForm />;
+    } else if (this.state.errorOccurred) {
+      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return <VendorCreate model={this.state.model} />;
-    } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>eca6cfea8129fc4941324ce2c825e174</Hash>
+    <Hash>1a0f613b7ace3c0535d19bd4eccfc946</Hash>
 </Codenesium>*/

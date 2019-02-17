@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import PasswordViewModel from './passwordViewModel';
 import PasswordMapper from './passwordMapper';
 
@@ -199,7 +201,7 @@ const PasswordEditDisplay = (props: FormikProps<PasswordViewModel>) => {
   );
 };
 
-const PasswordUpdate = withFormik<Props, PasswordViewModel>({
+const PasswordEdit = withFormik<Props, PasswordViewModel>({
   mapPropsToValues: props => {
     let response = new PasswordViewModel();
     response.setProperties(
@@ -241,7 +243,10 @@ const PasswordUpdate = withFormik<Props, PasswordViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'passwords/' + values.businessEntityID,
+        Constants.ApiEndpoint +
+          ApiRoutes.Passwords +
+          '/' +
+          values.businessEntityID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -308,8 +313,9 @@ export default class PasswordEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl +
-          'passwords/' +
+        Constants.ApiEndpoint +
+          ApiRoutes.Passwords +
+          '/' +
           this.props.match.params.businessEntityID,
         {
           headers: {
@@ -347,20 +353,18 @@ export default class PasswordEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <PasswordUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <PasswordEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>0b69c50be08b0f9304aa2237ced90207</Hash>
+    <Hash>ed7ed2aa5cf1843d657a654732ca570a</Hash>
 </Codenesium>*/

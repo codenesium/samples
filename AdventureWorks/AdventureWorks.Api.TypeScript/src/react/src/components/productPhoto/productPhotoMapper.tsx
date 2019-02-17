@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import ProductPhotoViewModel from './productPhotoViewModel';
-
 export default class ProductPhotoMapper {
   mapApiResponseToViewModel(
     dto: Api.ProductPhotoClientResponseModel
@@ -14,6 +13,7 @@ export default class ProductPhotoMapper {
       dto.thumbNailPhoto,
       dto.thumbnailPhotoFileName
     );
+
     return response;
   }
 
@@ -35,5 +35,5 @@ export default class ProductPhotoMapper {
 
 
 /*<Codenesium>
-    <Hash>9731776725173ea8df6de5f2cdc64cd5</Hash>
+    <Hash>76d06dcb1c4fc04c2bf58c7a0027fed0</Hash>
 </Codenesium>*/

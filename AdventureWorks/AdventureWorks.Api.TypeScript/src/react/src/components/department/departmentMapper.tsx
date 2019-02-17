@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import DepartmentViewModel from './departmentViewModel';
-
 export default class DepartmentMapper {
   mapApiResponseToViewModel(
     dto: Api.DepartmentClientResponseModel
@@ -12,6 +11,7 @@ export default class DepartmentMapper {
       dto.modifiedDate,
       dto.name
     );
+
     return response;
   }
 
@@ -31,5 +31,5 @@ export default class DepartmentMapper {
 
 
 /*<Codenesium>
-    <Hash>eaedc472518e425609478fb6ba2a516d</Hash>
+    <Hash>4c9ba76798889eb1962ce318035304e1</Hash>
 </Codenesium>*/

@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiPhoneNumberTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PhoneNumberTypeRepository.All(limit, offset, query);
+			List<PhoneNumberType> records = await this.PhoneNumberTypeRepository.All(limit, offset, query);
 
-			return this.DalPhoneNumberTypeMapper.MapBOToModel(records);
+			return this.DalPhoneNumberTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPhoneNumberTypeServerResponseModel> Get(int phoneNumberTypeID)
 		{
-			var record = await this.PhoneNumberTypeRepository.Get(phoneNumberTypeID);
+			PhoneNumberType record = await this.PhoneNumberTypeRepository.Get(phoneNumberTypeID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalPhoneNumberTypeMapper.MapBOToModel(record);
+				return this.DalPhoneNumberTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalPhoneNumberTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.PhoneNumberTypeRepository.Create(bo);
+				PhoneNumberType record = this.DalPhoneNumberTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.PhoneNumberTypeRepository.Create(record);
 
-				response.SetRecord(this.DalPhoneNumberTypeMapper.MapBOToModel(record));
+				response.SetRecord(this.DalPhoneNumberTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PhoneNumberTypeCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
-				await this.PhoneNumberTypeRepository.Update(bo);
+				PhoneNumberType record = this.DalPhoneNumberTypeMapper.MapModelToEntity(phoneNumberTypeID, model);
+				await this.PhoneNumberTypeRepository.Update(record);
 
-				var record = await this.PhoneNumberTypeRepository.Get(phoneNumberTypeID);
+				record = await this.PhoneNumberTypeRepository.Get(phoneNumberTypeID);
 
-				var apiModel = this.DalPhoneNumberTypeMapper.MapBOToModel(record);
+				ApiPhoneNumberTypeServerResponseModel apiModel = this.DalPhoneNumberTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PhoneNumberTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPhoneNumberTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b511b95ce85eead2d830a76386d7bea3</Hash>
+    <Hash>5435d63840da0282bfa0bd868329333f</Hash>
 </Codenesium>*/

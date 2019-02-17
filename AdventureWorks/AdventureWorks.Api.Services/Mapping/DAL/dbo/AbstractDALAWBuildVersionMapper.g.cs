@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALAWBuildVersionMapper
 	{
-		public virtual AWBuildVersion MapModelToBO(
+		public virtual AWBuildVersion MapModelToEntity(
 			int systemInformationID,
 			ApiAWBuildVersionServerRequestModel model
 			)
@@ -21,24 +21,27 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiAWBuildVersionServerResponseModel MapBOToModel(
+		public virtual ApiAWBuildVersionServerResponseModel MapEntityToModel(
 			AWBuildVersion item)
 		{
 			var model = new ApiAWBuildVersionServerResponseModel();
 
-			model.SetProperties(item.SystemInformationID, item.Database_Version, item.ModifiedDate, item.VersionDate);
+			model.SetProperties(item.SystemInformationID,
+			                    item.Database_Version,
+			                    item.ModifiedDate,
+			                    item.VersionDate);
 
 			return model;
 		}
 
-		public virtual List<ApiAWBuildVersionServerResponseModel> MapBOToModel(
+		public virtual List<ApiAWBuildVersionServerResponseModel> MapEntityToModel(
 			List<AWBuildVersion> items)
 		{
 			List<ApiAWBuildVersionServerResponseModel> response = new List<ApiAWBuildVersionServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -47,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5cd38ac38a4c2965ac59ad48d6675cc</Hash>
+    <Hash>69a1ae663d5c3bafbbfb1eedd87c342f</Hash>
 </Codenesium>*/

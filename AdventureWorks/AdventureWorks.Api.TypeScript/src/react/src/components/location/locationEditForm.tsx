@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
-import Constants from '../../constants';
+import { UpdateResponse } from '../../api/apiObjects';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import LocationViewModel from './locationViewModel';
 import LocationMapper from './locationMapper';
 
@@ -197,7 +199,7 @@ const LocationEditDisplay = (props: FormikProps<LocationViewModel>) => {
   );
 };
 
-const LocationUpdate = withFormik<Props, LocationViewModel>({
+const LocationEdit = withFormik<Props, LocationViewModel>({
   mapPropsToValues: props => {
     let response = new LocationViewModel();
     response.setProperties(
@@ -239,7 +241,7 @@ const LocationUpdate = withFormik<Props, LocationViewModel>({
 
     axios
       .put(
-        Constants.ApiUrl + 'locations/' + values.locationID,
+        Constants.ApiEndpoint + ApiRoutes.Locations + '/' + values.locationID,
 
         mapper.mapViewModelToApiRequest(values),
         {
@@ -306,7 +308,10 @@ export default class LocationEditComponent extends React.Component<
 
     axios
       .get(
-        Constants.ApiUrl + 'locations/' + this.props.match.params.locationID,
+        Constants.ApiEndpoint +
+          ApiRoutes.Locations +
+          '/' +
+          this.props.match.params.locationID,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -343,20 +348,18 @@ export default class LocationEditComponent extends React.Component<
   }
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
-    } else if (this.state.loaded) {
-      return <LocationUpdate model={this.state.model} />;
+      return <LoadingForm />;
     } else if (this.state.errorOccurred) {
-      return (
-        <div className="alert alert-danger">{this.state.errorMessage}</div>
-      );
+      return <ErrorForm message={this.state.errorMessage} />;
+    } else if (this.state.loaded) {
+      return <LocationEdit model={this.state.model} />;
     } else {
-      return <div />;
+      return null;
     }
   }
 }
 
 
 /*<Codenesium>
-    <Hash>5ba0799a7f6cae94ba8ff71383abfa96</Hash>
+    <Hash>ac5ba5fb97920dc186e98e43cfa3b168</Hash>
 </Codenesium>*/

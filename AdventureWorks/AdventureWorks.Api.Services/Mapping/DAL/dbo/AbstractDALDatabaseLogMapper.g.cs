@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALDatabaseLogMapper
 	{
-		public virtual DatabaseLog MapModelToBO(
+		public virtual DatabaseLog MapModelToEntity(
 			int databaseLogID,
 			ApiDatabaseLogServerRequestModel model
 			)
@@ -23,24 +23,29 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiDatabaseLogServerResponseModel MapBOToModel(
+		public virtual ApiDatabaseLogServerResponseModel MapEntityToModel(
 			DatabaseLog item)
 		{
 			var model = new ApiDatabaseLogServerResponseModel();
 
-			model.SetProperties(item.DatabaseLogID, item.DatabaseUser, item.PostTime, item.Schema, item.Tsql, item.XmlEvent);
+			model.SetProperties(item.DatabaseLogID,
+			                    item.DatabaseUser,
+			                    item.PostTime,
+			                    item.Schema,
+			                    item.Tsql,
+			                    item.XmlEvent);
 
 			return model;
 		}
 
-		public virtual List<ApiDatabaseLogServerResponseModel> MapBOToModel(
+		public virtual List<ApiDatabaseLogServerResponseModel> MapEntityToModel(
 			List<DatabaseLog> items)
 		{
 			List<ApiDatabaseLogServerResponseModel> response = new List<ApiDatabaseLogServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -49,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>493c7409e874ad2bd63bc1b37424e06f</Hash>
+    <Hash>01a6aea752eac7918bec83b123de8548</Hash>
 </Codenesium>*/

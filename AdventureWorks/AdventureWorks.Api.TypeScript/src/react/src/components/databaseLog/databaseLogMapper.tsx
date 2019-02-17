@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import DatabaseLogViewModel from './databaseLogViewModel';
-
 export default class DatabaseLogMapper {
   mapApiResponseToViewModel(
     dto: Api.DatabaseLogClientResponseModel
@@ -14,6 +13,7 @@ export default class DatabaseLogMapper {
       dto.tsql,
       dto.xmlEvent
     );
+
     return response;
   }
 
@@ -35,5 +35,5 @@ export default class DatabaseLogMapper {
 
 
 /*<Codenesium>
-    <Hash>33fcb2889a9c378bbb0891d2d2e45cfb</Hash>
+    <Hash>ef8e7b54e9743520ac2668a48da86afb</Hash>
 </Codenesium>*/

@@ -38,14 +38,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual async Task<List<ApiSalesReasonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SalesReasonRepository.All(limit, offset, query);
+			List<SalesReason> records = await this.SalesReasonRepository.All(limit, offset, query);
 
-			return this.DalSalesReasonMapper.MapBOToModel(records);
+			return this.DalSalesReasonMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSalesReasonServerResponseModel> Get(int salesReasonID)
 		{
-			var record = await this.SalesReasonRepository.Get(salesReasonID);
+			SalesReason record = await this.SalesReasonRepository.Get(salesReasonID);
 
 			if (record == null)
 			{
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.DalSalesReasonMapper.MapBOToModel(record);
+				return this.DalSalesReasonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.DalSalesReasonMapper.MapModelToBO(default(int), model);
-				var record = await this.SalesReasonRepository.Create(bo);
+				SalesReason record = this.DalSalesReasonMapper.MapModelToEntity(default(int), model);
+				record = await this.SalesReasonRepository.Create(record);
 
-				response.SetRecord(this.DalSalesReasonMapper.MapBOToModel(record));
+				response.SetRecord(this.DalSalesReasonMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SalesReasonCreatedNotification(response.Record));
 			}
 
@@ -82,12 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.DalSalesReasonMapper.MapModelToBO(salesReasonID, model);
-				await this.SalesReasonRepository.Update(bo);
+				SalesReason record = this.DalSalesReasonMapper.MapModelToEntity(salesReasonID, model);
+				await this.SalesReasonRepository.Update(record);
 
-				var record = await this.SalesReasonRepository.Get(salesReasonID);
+				record = await this.SalesReasonRepository.Get(salesReasonID);
 
-				var apiModel = this.DalSalesReasonMapper.MapBOToModel(record);
+				ApiSalesReasonServerResponseModel apiModel = this.DalSalesReasonMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SalesReasonUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSalesReasonServerResponseModel>.UpdateResponse(apiModel);
@@ -116,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2c0f204f8b94838104afb36e31747f75</Hash>
+    <Hash>dec2ea670f873da52b3f1147fad89650</Hash>
 </Codenesium>*/

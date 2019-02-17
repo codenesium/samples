@@ -22,9 +22,13 @@ export default class ProductDescriptionViewModel {
     this.productDescriptionID = productDescriptionID;
     this.rowguid = rowguid;
   }
+
+  toDisplay(): string {
+    return String();
+  }
 }
 
 
 /*<Codenesium>
-    <Hash>2cb4a1a3ef018a492549fa0e15fca6e6</Hash>
+    <Hash>b36034a641a822d0a283661a9d45c38b</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALCountryRegionMapper
 	{
-		public virtual CountryRegion MapModelToBO(
+		public virtual CountryRegion MapModelToEntity(
 			string countryRegionCode,
 			ApiCountryRegionServerRequestModel model
 			)
@@ -20,24 +20,26 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiCountryRegionServerResponseModel MapBOToModel(
+		public virtual ApiCountryRegionServerResponseModel MapEntityToModel(
 			CountryRegion item)
 		{
 			var model = new ApiCountryRegionServerResponseModel();
 
-			model.SetProperties(item.CountryRegionCode, item.ModifiedDate, item.Name);
+			model.SetProperties(item.CountryRegionCode,
+			                    item.ModifiedDate,
+			                    item.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCountryRegionServerResponseModel> MapBOToModel(
+		public virtual List<ApiCountryRegionServerResponseModel> MapEntityToModel(
 			List<CountryRegion> items)
 		{
 			List<ApiCountryRegionServerResponseModel> response = new List<ApiCountryRegionServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -46,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0bb2039e210b2dd3b6935229ca9da1d9</Hash>
+    <Hash>d113b67fed03ca35f363b621461032c6</Hash>
 </Codenesium>*/

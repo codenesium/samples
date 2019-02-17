@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -143,5 +143,5 @@ export default class BucketDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d6829a842e22655022ff06937172f778</Hash>
+    <Hash>bb64ba2d9604ef904cab201493d7d879</Hash>
 </Codenesium>*/

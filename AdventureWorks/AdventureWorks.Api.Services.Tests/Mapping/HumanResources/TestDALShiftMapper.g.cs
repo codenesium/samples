@@ -13,12 +13,12 @@ namespace AdventureWorksNS.Api.Services
 	public class TestDALShiftMapper
 	{
 		[Fact]
-		public void MapModelToBO()
+		public void MapModelToEntity()
 		{
 			var mapper = new DALShiftMapper();
 			ApiShiftServerRequestModel model = new ApiShiftServerRequestModel();
 			model.SetProperties(TimeSpan.Parse("01:00:00"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", TimeSpan.Parse("01:00:00"));
-			Shift response = mapper.MapModelToBO(1, model);
+			Shift response = mapper.MapModelToEntity(1, model);
 
 			response.EndTime.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,12 +27,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModel()
+		public void MapEntityToModel()
 		{
 			var mapper = new DALShiftMapper();
 			Shift item = new Shift();
 			item.SetProperties(1, TimeSpan.Parse("01:00:00"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", TimeSpan.Parse("01:00:00"));
-			ApiShiftServerResponseModel response = mapper.MapBOToModel(item);
+			ApiShiftServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.EndTime.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -42,12 +42,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[Fact]
-		public void MapBOToModelList()
+		public void MapEntityToModelList()
 		{
 			var mapper = new DALShiftMapper();
 			Shift item = new Shift();
 			item.SetProperties(1, TimeSpan.Parse("01:00:00"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", TimeSpan.Parse("01:00:00"));
-			List<ApiShiftServerResponseModel> response = mapper.MapBOToModel(new List<Shift>() { { item} });
+			List<ApiShiftServerResponseModel> response = mapper.MapEntityToModel(new List<Shift>() { { item} });
 
 			response.Count.Should().Be(1);
 		}
@@ -55,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>490d002ef02aae09a7c73c00d9c69a10</Hash>
+    <Hash>4327ae159ff6142567ab5329f32cff5c</Hash>
 </Codenesium>*/

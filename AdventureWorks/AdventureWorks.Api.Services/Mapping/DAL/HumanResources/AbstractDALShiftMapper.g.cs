@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALShiftMapper
 	{
-		public virtual Shift MapModelToBO(
+		public virtual Shift MapModelToEntity(
 			int shiftID,
 			ApiShiftServerRequestModel model
 			)
@@ -22,24 +22,28 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiShiftServerResponseModel MapBOToModel(
+		public virtual ApiShiftServerResponseModel MapEntityToModel(
 			Shift item)
 		{
 			var model = new ApiShiftServerResponseModel();
 
-			model.SetProperties(item.ShiftID, item.EndTime, item.ModifiedDate, item.Name, item.StartTime);
+			model.SetProperties(item.ShiftID,
+			                    item.EndTime,
+			                    item.ModifiedDate,
+			                    item.Name,
+			                    item.StartTime);
 
 			return model;
 		}
 
-		public virtual List<ApiShiftServerResponseModel> MapBOToModel(
+		public virtual List<ApiShiftServerResponseModel> MapEntityToModel(
 			List<Shift> items)
 		{
 			List<ApiShiftServerResponseModel> response = new List<ApiShiftServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -48,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0fef9e462f2aaa68288e29a5585f3170</Hash>
+    <Hash>b9c4ae10b9a88432700865c620b1bcdf</Hash>
 </Codenesium>*/

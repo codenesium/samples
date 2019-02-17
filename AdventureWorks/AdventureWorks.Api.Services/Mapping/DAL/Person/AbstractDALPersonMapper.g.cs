@@ -7,7 +7,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDALPersonMapper
 	{
-		public virtual Person MapModelToBO(
+		public virtual Person MapModelToEntity(
 			int businessEntityID,
 			ApiPersonServerRequestModel model
 			)
@@ -30,24 +30,36 @@ namespace AdventureWorksNS.Api.Services
 			return item;
 		}
 
-		public virtual ApiPersonServerResponseModel MapBOToModel(
+		public virtual ApiPersonServerResponseModel MapEntityToModel(
 			Person item)
 		{
 			var model = new ApiPersonServerResponseModel();
 
-			model.SetProperties(item.BusinessEntityID, item.AdditionalContactInfo, item.Demographic, item.EmailPromotion, item.FirstName, item.LastName, item.MiddleName, item.ModifiedDate, item.NameStyle, item.PersonType, item.Rowguid, item.Suffix, item.Title);
+			model.SetProperties(item.BusinessEntityID,
+			                    item.AdditionalContactInfo,
+			                    item.Demographic,
+			                    item.EmailPromotion,
+			                    item.FirstName,
+			                    item.LastName,
+			                    item.MiddleName,
+			                    item.ModifiedDate,
+			                    item.NameStyle,
+			                    item.PersonType,
+			                    item.Rowguid,
+			                    item.Suffix,
+			                    item.Title);
 
 			return model;
 		}
 
-		public virtual List<ApiPersonServerResponseModel> MapBOToModel(
+		public virtual List<ApiPersonServerResponseModel> MapEntityToModel(
 			List<Person> items)
 		{
 			List<ApiPersonServerResponseModel> response = new List<ApiPersonServerResponseModel>();
 
-			items.ForEach(d =>
+			items.ForEach(x =>
 			{
-				response.Add(this.MapBOToModel(d));
+				response.Add(this.MapEntityToModel(x));
 			});
 
 			return response;
@@ -56,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f6177d232dbefdc2dcf9b5f7e33692b</Hash>
+    <Hash>7e79b7a7135797b150b4cf5d05ddedc6</Hash>
 </Codenesium>*/
