@@ -18,8 +18,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IDALTeacherMapper DalTeacherMapper { get; private set; }
 
-		protected IDALRateMapper DalRateMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractTeacherService(
@@ -27,14 +25,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			ITeacherRepository teacherRepository,
 			IApiTeacherServerRequestModelValidator teacherModelValidator,
-			IDALTeacherMapper dalTeacherMapper,
-			IDALRateMapper dalRateMapper)
+			IDALTeacherMapper dalTeacherMapper)
 			: base()
 		{
 			this.TeacherRepository = teacherRepository;
 			this.TeacherModelValidator = teacherModelValidator;
 			this.DalTeacherMapper = dalTeacherMapper;
-			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -116,23 +112,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiTeacherServerResponseModel>> ByUserId(int userId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Teacher> records = await this.TeacherRepository.ByUserId(userId, limit, offset);
-
-			return this.DalTeacherMapper.MapEntityToModel(records);
-		}
-
-		public async virtual Task<List<ApiRateServerResponseModel>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Rate> records = await this.TeacherRepository.RatesByTeacherId(teacherId, limit, offset);
-
-			return this.DalRateMapper.MapEntityToModel(records);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb25d84cfbba902b0afec220211ba777</Hash>
+    <Hash>2f06260dfef5f77c6ed340fdb2c1bc21</Hash>
 </Codenesium>*/

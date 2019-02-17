@@ -16,17 +16,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		Task<Rate> Get(int id);
 
 		Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0, string query = "");
-
-		Task<List<Rate>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<Rate>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
-
-		Task<Teacher> TeacherByTeacherId(int teacherId);
-
-		Task<TeacherSkill> TeacherSkillByTeacherSkillId(int teacherSkillId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4702e733f0ddde1441da173f6cb9301c</Hash>
+    <Hash>b22bcb7c246a0961fcbd6b44249b2233</Hash>
 </Codenesium>*/

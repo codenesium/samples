@@ -73,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new StudentRepository(loggerMoc.Object, context);
 
 			Student entity = new Student();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", true, "B", "B", true, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 2, "B", true, "B", "B", true, 2);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new StudentRepository(loggerMoc.Object, context);
 
 			var entity = new Student();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", true, "B", "B", true, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 2, "B", true, "B", "B", true, 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Student>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = StudentRepositoryMoc.GetContext();
 			var repository = new StudentRepository(loggerMoc.Object, context);
 			Student entity = new Student();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", true, "B", "B", true, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 2, "B", true, "B", "B", true, 2);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = StudentRepositoryMoc.GetContext();
 			var repository = new StudentRepository(loggerMoc.Object, context);
 			Student entity = new Student();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", true, "B", "B", true, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 2, "B", true, "B", "B", true, 2);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = StudentRepositoryMoc.GetContext();
 			var repository = new StudentRepository(loggerMoc.Object, context);
 			Student entity = new Student();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", true, "B", "B", true, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 2, "B", true, "B", "B", true, 2);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ef7fece8d55b354e21e19379e0a3aab2</Hash>
+    <Hash>9387c14b0f8608a497ce2e01bfe9bde4</Hash>
 </Codenesium>*/

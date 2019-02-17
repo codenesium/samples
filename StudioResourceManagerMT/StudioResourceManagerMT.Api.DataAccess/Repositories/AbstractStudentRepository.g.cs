@@ -96,32 +96,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
-		// Non-unique constraint IX_Student_familyId.
-		public async virtual Task<List<Student>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Where(x => x.FamilyId == familyId, limit, offset);
-		}
-
-		// Non-unique constraint IX_Student_userId.
-		public async virtual Task<List<Student>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Where(x => x.UserId == userId, limit, offset);
-		}
-
-		// Foreign key reference to table Family via familyId.
-		public async virtual Task<Family> FamilyByFamilyId(int familyId)
-		{
-			return await this.Context.Set<Family>()
-			       .SingleOrDefaultAsync(x => x.Id == familyId);
-		}
-
-		// Foreign key reference to table User via userId.
-		public async virtual Task<User> UserByUserId(int userId)
-		{
-			return await this.Context.Set<User>()
-			       .SingleOrDefaultAsync(x => x.Id == userId);
-		}
-
 		protected async Task<List<Student>> Where(
 			Expression<Func<Student, bool>> predicate,
 			int limit = int.MaxValue,
@@ -134,8 +108,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Student>()
-			       .Include(x => x.FamilyIdNavigation)
-			       .Include(x => x.UserIdNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
 		}
@@ -150,5 +122,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ccae5e11f0cbfe0733e748562ebf115</Hash>
+    <Hash>dd3fb3419dc783b3cce41148df9850eb</Hash>
 </Codenesium>*/

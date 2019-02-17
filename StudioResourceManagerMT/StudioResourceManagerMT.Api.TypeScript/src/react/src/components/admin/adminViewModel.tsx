@@ -1,5 +1,3 @@
-import UserViewModel from '../user/userViewModel';
-
 export default class AdminViewModel {
   birthday: any;
   email: string;
@@ -8,8 +6,6 @@ export default class AdminViewModel {
   lastName: string;
   phone: string;
   userId: number;
-  userIdEntity: string;
-  userIdNavigation?: UserViewModel;
 
   constructor() {
     this.birthday = undefined;
@@ -19,8 +15,6 @@ export default class AdminViewModel {
     this.lastName = '';
     this.phone = '';
     this.userId = 0;
-    this.userIdEntity = '';
-    this.userIdNavigation = undefined;
   }
 
   setProperties(
@@ -48,5 +42,5 @@ export default class AdminViewModel {
 
 
 /*<Codenesium>
-    <Hash>67b515a347772d0d70e3c7b4a57e5c80</Hash>
+    <Hash>23ad54ef6863ae009c47bb035c3e8746</Hash>
 </Codenesium>*/

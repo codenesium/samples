@@ -36,16 +36,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 			                    item.LastName,
 			                    item.Phone,
 			                    item.UserId);
-			if (item.UserIdNavigation != null)
-			{
-				var userIdModel = new ApiUserServerResponseModel();
-				userIdModel.SetProperties(
-					item.UserIdNavigation.Id,
-					item.UserIdNavigation.Password,
-					item.UserIdNavigation.Username);
-
-				model.SetUserIdNavigation(userIdModel);
-			}
 
 			return model;
 		}
@@ -66,5 +56,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab50ef93261e9ef76e8674201b8d199d</Hash>
+    <Hash>7aa50d588bc5473bb144e578b94dccb0</Hash>
 </Codenesium>*/

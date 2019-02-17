@@ -40,7 +40,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void EventStatusIdRules()
 		{
-			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatuByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ScheduledEndDateRules()
@@ -60,16 +59,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
-
-		protected async Task<bool> BeValidEventStatuByEventStatusId(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.EventRepository.EventStatuByEventStatusId(id);
-
-			return record != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b3156fcca796b364bef5b187157b66b</Hash>
+    <Hash>33d5e456011eeea0427b7eb65cc6d97b</Hash>
 </Codenesium>*/

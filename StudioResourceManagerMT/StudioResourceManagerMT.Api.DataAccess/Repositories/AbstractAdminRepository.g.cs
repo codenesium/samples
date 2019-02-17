@@ -92,19 +92,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
-		// Non-unique constraint IX_Admin_userId.
-		public async virtual Task<List<Admin>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Where(x => x.UserId == userId, limit, offset);
-		}
-
-		// Foreign key reference to table User via userId.
-		public async virtual Task<User> UserByUserId(int userId)
-		{
-			return await this.Context.Set<User>()
-			       .SingleOrDefaultAsync(x => x.Id == userId);
-		}
-
 		protected async Task<List<Admin>> Where(
 			Expression<Func<Admin, bool>> predicate,
 			int limit = int.MaxValue,
@@ -117,7 +104,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Admin>()
-			       .Include(x => x.UserIdNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
@@ -132,5 +118,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4111d0d0cdff4b47644e42a59f6afba7</Hash>
+    <Hash>cf698543e27c2d81cf63e7f3c3c57b26</Hash>
 </Codenesium>*/

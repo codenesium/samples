@@ -56,17 +56,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		[Column("userId")]
 		public virtual int UserId { get; private set; }
-
-		[ForeignKey("UserId")]
-		public virtual User UserIdNavigation { get; private set; }
-
-		public void SetUserIdNavigation(User item)
-		{
-			this.UserIdNavigation = item;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce71a443336cc0242d22aa9f54595ed4</Hash>
+    <Hash>972bb8221fad9413355c81a9c8fd0daa</Hash>
 </Codenesium>*/

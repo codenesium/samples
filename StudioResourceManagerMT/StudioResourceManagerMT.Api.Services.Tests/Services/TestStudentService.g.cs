@@ -201,81 +201,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void ByFamilyId_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			var records = new List<Student>();
-			records.Add(new Student());
-			mock.RepositoryMock.Setup(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.ByFamilyId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByFamilyId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.ByFamilyId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByUserId_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			var records = new List<Student>();
-			records.Add(new Student());
-			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.ByUserId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByUserId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.ByUserId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0479adf45c8ac01b0f18790fbdc90ae2</Hash>
+    <Hash>2118c5e83466138519292d61a826c49c</Hash>
 </Codenesium>*/

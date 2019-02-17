@@ -37,25 +37,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		[Column("teacherSkillId")]
 		public virtual int TeacherSkillId { get; private set; }
-
-		[ForeignKey("TeacherId")]
-		public virtual Teacher TeacherIdNavigation { get; private set; }
-
-		public void SetTeacherIdNavigation(Teacher item)
-		{
-			this.TeacherIdNavigation = item;
-		}
-
-		[ForeignKey("TeacherSkillId")]
-		public virtual TeacherSkill TeacherSkillIdNavigation { get; private set; }
-
-		public void SetTeacherSkillIdNavigation(TeacherSkill item)
-		{
-			this.TeacherSkillIdNavigation = item;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b81bd92a8f603733a46ac1f0a1c8d0c</Hash>
+    <Hash>ac956995e6218adc007828ee194c1f3b</Hash>
 </Codenesium>*/

@@ -46,7 +46,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int EventStatusId { get; private set; }
+		public int EventStatusId { get; private set; } = default(int);
 
 		[JsonProperty]
 		public DateTime? ScheduledEndDate { get; private set; } = null;
@@ -63,5 +63,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>661b90376e65993ec3367e4f0a91c189</Hash>
+    <Hash>fd0c9965ac8b5833aefcd00106790134</Hash>
 </Codenesium>*/

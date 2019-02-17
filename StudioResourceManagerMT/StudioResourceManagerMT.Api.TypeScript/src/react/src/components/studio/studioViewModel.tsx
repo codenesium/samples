@@ -1,44 +1,50 @@
 export default class StudioViewModel {
-    address1:string;
-address2:string;
-city:string;
-id:number;
-name:string;
-province:string;
-website:string;
-zip:string;
+  address1: string;
+  address2: string;
+  city: string;
+  id: number;
+  name: string;
+  province: string;
+  website: string;
+  zip: string;
 
-    constructor() {
-		this.address1 = '';
-this.address2 = '';
-this.city = '';
-this.id = 0;
-this.name = '';
-this.province = '';
-this.website = '';
-this.zip = '';
+  constructor() {
+    this.address1 = '';
+    this.address2 = '';
+    this.city = '';
+    this.id = 0;
+    this.name = '';
+    this.province = '';
+    this.website = '';
+    this.zip = '';
+  }
 
-    }
+  setProperties(
+    address1: string,
+    address2: string,
+    city: string,
+    id: number,
+    name: string,
+    province: string,
+    website: string,
+    zip: string
+  ): void {
+    this.address1 = address1;
+    this.address2 = address2;
+    this.city = city;
+    this.id = id;
+    this.name = name;
+    this.province = province;
+    this.website = website;
+    this.zip = zip;
+  }
 
-	setProperties(address1 : string,address2 : string,city : string,id : number,name : string,province : string,website : string,zip : string) : void
-	{
-		this.address1 = address1;
-this.address2 = address2;
-this.city = city;
-this.id = id;
-this.name = name;
-this.province = province;
-this.website = website;
-this.zip = zip;
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>e5cc41f6e3882c4bfa1c021c58d086c0</Hash>
+    <Hash>5fdd66d5c1b6b9df07a210a5d6c050b7</Hash>
 </Codenesium>*/

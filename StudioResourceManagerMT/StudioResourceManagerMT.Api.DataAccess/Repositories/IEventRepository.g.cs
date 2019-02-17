@@ -16,13 +16,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		Task<Event> Get(int id);
 
 		Task<List<Event>> All(int limit = int.MaxValue, int offset = 0, string query = "");
-
-		Task<List<Event>> ByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0);
-
-		Task<EventStatu> EventStatuByEventStatusId(int eventStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>37195ddaf2b8fc9228b1e3e7a844c4d1</Hash>
+    <Hash>385a230b575f68089c8d2a11e405d148</Hash>
 </Codenesium>*/

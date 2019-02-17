@@ -182,90 +182,6 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyAdminsByUserIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiAdminClientResponseModel> response = await client.AdminsByUserId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyAdminsByUserIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiAdminClientResponseModel> response = await client.AdminsByUserId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyStudentsByUserIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiStudentClientResponseModel> response = await client.StudentsByUserId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyStudentsByUserIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiStudentClientResponseModel> response = await client.StudentsByUserId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyTeachersByUserIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiTeacherClientResponseModel> response = await client.TeachersByUserId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyTeachersByUserIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiTeacherClientResponseModel> response = await client.TeachersByUserId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -288,5 +204,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a9e62e4c73cb8aeb6f5ab72a744c5cc6</Hash>
+    <Hash>cde43962ba777437bafabf7bec983f41</Hash>
 </Codenesium>*/

@@ -187,11 +187,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                       Header: 'UserId',
                       accessor: 'userId',
                       Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.userId); }}>
-                          {String(
-                            props.original.userIdNavigation.toDisplay()
-                          )}
-                        </a>
+                      return <span>{String(props.original.userId)}</span>;
                       }           
                     },
                     {
@@ -212,5 +208,5 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
 }
 
 /*<Codenesium>
-    <Hash>a3d37ef5c0d9b654d3527376b21b8904</Hash>
+    <Hash>9daa584a26ee7e596e8cec5bd234cc9d</Hash>
 </Codenesium>*/

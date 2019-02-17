@@ -201,45 +201,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void ByEventStatusId_Exists()
-		{
-			var mock = new ServiceMockFacade<IEventRepository>();
-			var records = new List<Event>();
-			records.Add(new Event());
-			mock.RepositoryMock.Setup(x => x.ByEventStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new EventService(mock.LoggerMock.Object,
-			                               mock.MediatorMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
-
-			List<ApiEventServerResponseModel> response = await service.ByEventStatusId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByEventStatusId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IEventRepository>();
-			mock.RepositoryMock.Setup(x => x.ByEventStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
-			var service = new EventService(mock.LoggerMock.Object,
-			                               mock.MediatorMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
-
-			List<ApiEventServerResponseModel> response = await service.ByEventStatusId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>438308854875ef3a9e4febda62df5402</Hash>
+    <Hash>d1b7c24a872ea47741da41bf99beab1c</Hash>
 </Codenesium>*/

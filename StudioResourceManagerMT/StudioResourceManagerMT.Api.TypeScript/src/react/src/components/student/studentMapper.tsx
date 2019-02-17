@@ -1,7 +1,5 @@
 import * as Api from '../../api/models';
 import StudentViewModel from './studentViewModel';
-import FamilyViewModel from '../family/familyViewModel';
-import UserViewModel from '../user/userViewModel';
 export default class StudentMapper {
   mapApiResponseToViewModel(
     dto: Api.StudentClientResponseModel
@@ -20,26 +18,6 @@ export default class StudentMapper {
       dto.smsRemindersEnabled,
       dto.userId
     );
-
-    if (dto.familyIdNavigation != null) {
-      response.familyIdNavigation = new FamilyViewModel();
-      response.familyIdNavigation.setProperties(
-        dto.familyIdNavigation.id,
-        dto.familyIdNavigation.note,
-        dto.familyIdNavigation.primaryContactEmail,
-        dto.familyIdNavigation.primaryContactFirstName,
-        dto.familyIdNavigation.primaryContactLastName,
-        dto.familyIdNavigation.primaryContactPhone
-      );
-    }
-    if (dto.userIdNavigation != null) {
-      response.userIdNavigation = new UserViewModel();
-      response.userIdNavigation.setProperties(
-        dto.userIdNavigation.id,
-        dto.userIdNavigation.password,
-        dto.userIdNavigation.username
-      );
-    }
 
     return response;
   }
@@ -67,5 +45,5 @@ export default class StudentMapper {
 
 
 /*<Codenesium>
-    <Hash>e85c036ed6f9473b6d97a0a9c691e4de</Hash>
+    <Hash>4ba452db78619a4daca6cfc64e144853</Hash>
 </Codenesium>*/

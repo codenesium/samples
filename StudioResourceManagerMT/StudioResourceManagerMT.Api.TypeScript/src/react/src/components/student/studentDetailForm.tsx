@@ -54,9 +54,7 @@ const StudentDetailDisplay = (model: Props) => {
         <label htmlFor="familyId" className={'col-sm-2 col-form-label'}>
           FamilyId
         </label>
-        <div className="col-sm-12">
-          {model.model!.familyIdNavigation!.toDisplay()}
-        </div>
+        <div className="col-sm-12">{String(model.model!.familyId)}</div>
       </div>
       <div className="form-group row">
         <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
@@ -103,9 +101,7 @@ const StudentDetailDisplay = (model: Props) => {
         <label htmlFor="userId" className={'col-sm-2 col-form-label'}>
           UserId
         </label>
-        <div className="col-sm-12">
-          {model.model!.userIdNavigation!.toDisplay()}
-        </div>
+        <div className="col-sm-12">{String(model.model!.userId)}</div>
       </div>
     </form>
   );
@@ -207,5 +203,5 @@ export default class StudentDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f07d875281349bde9b16691f9f799b3c</Hash>
+    <Hash>01ed071cd5c1617b0d17638f63a59fc9</Hash>
 </Codenesium>*/

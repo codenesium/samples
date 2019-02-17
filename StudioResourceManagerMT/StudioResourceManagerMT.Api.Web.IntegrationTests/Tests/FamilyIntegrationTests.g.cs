@@ -206,34 +206,6 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyStudentsByFamilyIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiStudentClientResponseModel> response = await client.StudentsByFamilyId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyStudentsByFamilyIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiStudentClientResponseModel> response = await client.StudentsByFamilyId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -256,5 +228,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c2945d1c8157710bf4fa58a8d427431b</Hash>
+    <Hash>f118ad300e5c50f76c9814e2cb7fc599</Hash>
 </Codenesium>*/

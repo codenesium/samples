@@ -12,23 +12,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
-			IDALUserMapper dalUserMapper,
-			IDALAdminMapper dalAdminMapper,
-			IDALStudentMapper dalStudentMapper,
-			IDALTeacherMapper dalTeacherMapper)
+			IDALUserMapper dalUserMapper)
 			: base(logger,
 			       mediator,
 			       userRepository,
 			       userModelValidator,
-			       dalUserMapper,
-			       dalAdminMapper,
-			       dalStudentMapper,
-			       dalTeacherMapper)
+			       dalUserMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>40f1495cdff31cfa96f6b13182155645</Hash>
+    <Hash>6a72b9d769d11d13be06fca5310eb28c</Hash>
 </Codenesium>*/

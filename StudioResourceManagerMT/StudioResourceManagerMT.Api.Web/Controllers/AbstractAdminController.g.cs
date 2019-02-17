@@ -216,23 +216,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("byUserId/{userId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAdminServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByUserId(int userId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiAdminServerResponseModel> response = await this.AdminService.ByUserId(userId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiAdminServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiAdminServerRequestModel> patch)
 		{
 			var record = await this.AdminService.Get(id);
@@ -252,5 +235,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fe4fe7a585aabc5385375bdd8ecd6525</Hash>
+    <Hash>4a8da93522eff59d9c021d4f9971d5ea</Hash>
 </Codenesium>*/

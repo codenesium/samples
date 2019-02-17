@@ -40,25 +40,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 			                    item.ScheduledStartDate,
 			                    item.StudentNote,
 			                    item.TeacherNote);
-			if (item.EventStatusIdNavigation != null)
-			{
-				var eventStatusIdModel = new ApiEventStatuServerResponseModel();
-				eventStatusIdModel.SetProperties(
-					item.EventStatusIdNavigation.Id,
-					item.EventStatusIdNavigation.Name);
-
-				model.SetEventStatusIdNavigation(eventStatusIdModel);
-			}
-
-			if (item.TenantIdNavigation != null)
-			{
-				var tenantIdModel = new ApiEventStatuServerResponseModel();
-				tenantIdModel.SetProperties(
-					item.TenantIdNavigation.Id,
-					item.TenantIdNavigation.Name);
-
-				model.SetTenantIdNavigation(tenantIdModel);
-			}
 
 			return model;
 		}
@@ -79,5 +60,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a4689ac13d6cd22f29d86d8465248bd</Hash>
+    <Hash>da7b37764fa2228008f73925ae3d7e56</Hash>
 </Codenesium>*/

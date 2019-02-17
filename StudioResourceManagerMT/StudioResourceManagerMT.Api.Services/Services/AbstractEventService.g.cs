@@ -112,16 +112,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiEventServerResponseModel>> ByEventStatusId(int eventStatusId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Event> records = await this.EventRepository.ByEventStatusId(eventStatusId, limit, offset);
-
-			return this.DalEventMapper.MapEntityToModel(records);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46b070ec08d7dd2af47f66ffe73c6a38</Hash>
+    <Hash>a701c2ce48a42514f535de61591cf214</Hash>
 </Codenesium>*/

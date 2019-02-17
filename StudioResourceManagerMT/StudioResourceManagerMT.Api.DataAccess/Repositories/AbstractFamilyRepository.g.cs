@@ -91,13 +91,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
-		// Foreign key reference to this table Student via familyId.
-		public async virtual Task<List<Student>> StudentsByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<Student>()
-			       .Where(x => x.FamilyId == familyId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
-		}
-
 		protected async Task<List<Family>> Where(
 			Expression<Func<Family, bool>> predicate,
 			int limit = int.MaxValue,
@@ -124,5 +117,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>95a8bb76bf069cade8d884c566503581</Hash>
+    <Hash>20ee16ead24e465c1ed701918c205c45</Hash>
 </Codenesium>*/

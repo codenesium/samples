@@ -35,9 +35,9 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiAdminClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 			var model2 = new ApiAdminClientRequestModel();
-			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C", "C", 1);
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C", "C", 3);
 			var request = new List<ApiAdminClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiAdminClientResponseModel>> result = await client.AdminBulkInsertAsync(request);
 
@@ -49,14 +49,14 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Admin>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Admin>().ToList()[1].LastName.Should().Be("B");
 			context.Set<Admin>().ToList()[1].Phone.Should().Be("B");
-			context.Set<Admin>().ToList()[1].UserId.Should().Be(1);
+			context.Set<Admin>().ToList()[1].UserId.Should().Be(2);
 
 			context.Set<Admin>().ToList()[2].Birthday.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Admin>().ToList()[2].Email.Should().Be("C");
 			context.Set<Admin>().ToList()[2].FirstName.Should().Be("C");
 			context.Set<Admin>().ToList()[2].LastName.Should().Be("C");
 			context.Set<Admin>().ToList()[2].Phone.Should().Be("C");
-			context.Set<Admin>().ToList()[2].UserId.Should().Be(1);
+			context.Set<Admin>().ToList()[2].UserId.Should().Be(3);
 		}
 
 		[Fact]
@@ -70,7 +70,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiAdminClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 			CreateResponse<ApiAdminClientResponseModel> result = await client.AdminCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -80,14 +80,14 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Admin>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Admin>().ToList()[1].LastName.Should().Be("B");
 			context.Set<Admin>().ToList()[1].Phone.Should().Be("B");
-			context.Set<Admin>().ToList()[1].UserId.Should().Be(1);
+			context.Set<Admin>().ToList()[1].UserId.Should().Be(2);
 
 			result.Record.Birthday.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Email.Should().Be("B");
 			result.Record.FirstName.Should().Be("B");
 			result.Record.LastName.Should().Be("B");
 			result.Record.Phone.Should().Be("B");
-			result.Record.UserId.Should().Be(1);
+			result.Record.UserId.Should().Be(2);
 		}
 
 		[Fact]
@@ -105,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApiAdminServerResponseModel model = await service.Get(1);
 
 			ApiAdminClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 
 			UpdateResponse<ApiAdminClientResponseModel> updateResponse = await client.AdminUpdateAsync(model.Id, request);
 
@@ -118,7 +118,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Admin>().ToList()[0].FirstName.Should().Be("B");
 			context.Set<Admin>().ToList()[0].LastName.Should().Be("B");
 			context.Set<Admin>().ToList()[0].Phone.Should().Be("B");
-			context.Set<Admin>().ToList()[0].UserId.Should().Be(1);
+			context.Set<Admin>().ToList()[0].UserId.Should().Be(2);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.Birthday.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -126,7 +126,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			updateResponse.Record.FirstName.Should().Be("B");
 			updateResponse.Record.LastName.Should().Be("B");
 			updateResponse.Record.Phone.Should().Be("B");
-			updateResponse.Record.UserId.Should().Be(1);
+			updateResponse.Record.UserId.Should().Be(2);
 		}
 
 		[Fact]
@@ -141,7 +141,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			IAdminService service = testServer.Host.Services.GetService(typeof(IAdminService)) as IAdminService;
 			var model = new ApiAdminServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 			CreateResponse<ApiAdminServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -214,41 +214,6 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestByUserIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiAdminClientResponseModel> response = await client.ByAdminByUserId(1);
-
-			response.Should().NotBeEmpty();
-			response[0].Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response[0].Email.Should().Be("A");
-			response[0].FirstName.Should().Be("A");
-			response[0].Id.Should().Be(1);
-			response[0].LastName.Should().Be("A");
-			response[0].Phone.Should().Be("A");
-			response[0].UserId.Should().Be(1);
-		}
-
-		[Fact]
-		public virtual async void TestByUserIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiAdminClientResponseModel> response = await client.ByAdminByUserId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -271,5 +236,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>156fb002704266f59d7b5c29247d35e0</Hash>
+    <Hash>f97cae32545a4eb7797b0e830e858d32</Hash>
 </Codenesium>*/

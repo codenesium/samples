@@ -31,10 +31,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			List<ApiUserServerResponseModel> response = await service.All();
 
@@ -52,10 +49,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ApiUserServerResponseModel response = await service.Get(default(int));
 
@@ -72,10 +66,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ApiUserServerResponseModel response = await service.Get(default(int));
 
@@ -93,10 +84,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
 
@@ -118,10 +106,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
 
@@ -142,10 +127,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
 
@@ -168,10 +150,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
 
@@ -191,10 +170,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -216,10 +192,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -228,135 +201,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void AdminsByUserId_Exists()
-		{
-			var mock = new ServiceMockFacade<IUserRepository>();
-			var records = new List<Admin>();
-			records.Add(new Admin());
-			mock.RepositoryMock.Setup(x => x.AdminsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new UserService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
-
-			List<ApiAdminServerResponseModel> response = await service.AdminsByUserId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.AdminsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void AdminsByUserId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.AdminsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Admin>>(new List<Admin>()));
-			var service = new UserService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
-
-			List<ApiAdminServerResponseModel> response = await service.AdminsByUserId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.AdminsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void StudentsByUserId_Exists()
-		{
-			var mock = new ServiceMockFacade<IUserRepository>();
-			var records = new List<Student>();
-			records.Add(new Student());
-			mock.RepositoryMock.Setup(x => x.StudentsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new UserService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.StudentsByUserId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.StudentsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void StudentsByUserId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.StudentsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
-			var service = new UserService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.StudentsByUserId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.StudentsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void TeachersByUserId_Exists()
-		{
-			var mock = new ServiceMockFacade<IUserRepository>();
-			var records = new List<Teacher>();
-			records.Add(new Teacher());
-			mock.RepositoryMock.Setup(x => x.TeachersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new UserService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
-
-			List<ApiTeacherServerResponseModel> response = await service.TeachersByUserId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.TeachersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void TeachersByUserId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.TeachersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Teacher>>(new List<Teacher>()));
-			var service = new UserService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
-
-			List<ApiTeacherServerResponseModel> response = await service.TeachersByUserId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.TeachersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1136c8169782d2cba9d1a7f8b7e7e0b4</Hash>
+    <Hash>52cca137236645b9801cfea8cd86f8ff</Hash>
 </Codenesium>*/

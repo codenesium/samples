@@ -122,14 +122,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiAdminClientResponseModel>> ByAdminByUserId(int userId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Admins/byUserId/{userId}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiAdminClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<CreateResponse<List<ApiEventClientResponseModel>>> EventBulkInsertAsync(List<ApiEventClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Events/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -193,14 +185,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			}
 
 			return response;
-		}
-
-		public virtual async Task<List<ApiEventClientResponseModel>> ByEventByEventStatusId(int eventStatusId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Events/byEventStatusId/{eventStatusId}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiEventClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiEventStatuClientResponseModel>>> EventStatuBulkInsertAsync(List<ApiEventStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -268,14 +252,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiEventClientResponseModel>> EventsByEventStatusId(int eventStatusId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/EventStatus/{eventStatusId}/Events", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiEventClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<CreateResponse<List<ApiFamilyClientResponseModel>>> FamilyBulkInsertAsync(List<ApiFamilyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Families/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -341,14 +317,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiStudentClientResponseModel>> StudentsByFamilyId(int familyId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Families/{familyId}/Students", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiStudentClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<CreateResponse<List<ApiRateClientResponseModel>>> RateBulkInsertAsync(List<ApiRateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Rates/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -412,22 +380,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			}
 
 			return response;
-		}
-
-		public virtual async Task<List<ApiRateClientResponseModel>> ByRateByTeacherId(int teacherId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Rates/byTeacherId/{teacherId}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiRateClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiRateClientResponseModel>> ByRateByTeacherSkillId(int teacherSkillId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Rates/byTeacherSkillId/{teacherSkillId}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiRateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiSpaceClientResponseModel>>> SpaceBulkInsertAsync(List<ApiSpaceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -625,22 +577,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiStudentClientResponseModel>> ByStudentByFamilyId(int familyId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Students/byFamilyId/{familyId}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiStudentClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiStudentClientResponseModel>> ByStudentByUserId(int userId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Students/byUserId/{userId}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiStudentClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<CreateResponse<List<ApiStudioClientResponseModel>>> StudioBulkInsertAsync(List<ApiStudioClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Studios/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -771,22 +707,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiTeacherClientResponseModel>> ByTeacherByUserId(int userId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Teachers/byUserId/{userId}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiTeacherClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiRateClientResponseModel>> RatesByTeacherId(int teacherId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Teachers/{teacherId}/Rates", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiRateClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<CreateResponse<List<ApiTeacherSkillClientResponseModel>>> TeacherSkillBulkInsertAsync(List<ApiTeacherSkillClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/TeacherSkills/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -850,14 +770,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			}
 
 			return response;
-		}
-
-		public virtual async Task<List<ApiRateClientResponseModel>> RatesByTeacherSkillId(int teacherSkillId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/TeacherSkills/{teacherSkillId}/Rates", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiRateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>>> UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -925,30 +837,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiAdminClientResponseModel>> AdminsByUserId(int userId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Users/{userId}/Admins", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiAdminClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiStudentClientResponseModel>> StudentsByUserId(int userId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Users/{userId}/Students", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiStudentClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiTeacherClientResponseModel>> TeachersByUserId(int userId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Users/{userId}/Teachers", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiTeacherClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
@@ -977,5 +865,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>36280b41140b768e42942ca123580cb2</Hash>
+    <Hash>71184a35ed295aae8a76a04ac7634ae8</Hash>
 </Codenesium>*/

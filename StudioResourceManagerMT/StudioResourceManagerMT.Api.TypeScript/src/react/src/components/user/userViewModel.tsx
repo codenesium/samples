@@ -1,29 +1,26 @@
 export default class UserViewModel {
-    id:number;
-password:string;
-username:string;
+  id: number;
+  password: string;
+  username: string;
 
-    constructor() {
-		this.id = 0;
-this.password = '';
-this.username = '';
+  constructor() {
+    this.id = 0;
+    this.password = '';
+    this.username = '';
+  }
 
-    }
+  setProperties(id: number, password: string, username: string): void {
+    this.id = id;
+    this.password = password;
+    this.username = username;
+  }
 
-	setProperties(id : number,password : string,username : string) : void
-	{
-		this.id = id;
-this.password = password;
-this.username = username;
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>9c2954998bd834a91108cb8a6cc80436</Hash>
+    <Hash>94baf2a33301664b40502edd9024d374</Hash>
 </Codenesium>*/

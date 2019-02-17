@@ -1,6 +1,5 @@
 import * as Api from '../../api/models';
 import TeacherViewModel from './teacherViewModel';
-import UserViewModel from '../user/userViewModel';
 export default class TeacherMapper {
   mapApiResponseToViewModel(
     dto: Api.TeacherClientResponseModel
@@ -15,15 +14,6 @@ export default class TeacherMapper {
       dto.phone,
       dto.userId
     );
-
-    if (dto.userIdNavigation != null) {
-      response.userIdNavigation = new UserViewModel();
-      response.userIdNavigation.setProperties(
-        dto.userIdNavigation.id,
-        dto.userIdNavigation.password,
-        dto.userIdNavigation.username
-      );
-    }
 
     return response;
   }
@@ -47,5 +37,5 @@ export default class TeacherMapper {
 
 
 /*<Codenesium>
-    <Hash>7a75fa95cdd6ad020c2bc2e732e45a68</Hash>
+    <Hash>dd71dae53a88eb12ca875debae04d60c</Hash>
 </Codenesium>*/

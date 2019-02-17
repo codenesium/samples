@@ -112,16 +112,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiAdminServerResponseModel>> ByUserId(int userId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Admin> records = await this.AdminRepository.ByUserId(userId, limit, offset);
-
-			return this.DalAdminMapper.MapEntityToModel(records);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91bc5b28d0ad9023a5d09b08b3528fa6</Hash>
+    <Hash>65e7a8a66480b8696f8c0201fde1bac5</Hash>
 </Codenesium>*/

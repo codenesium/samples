@@ -31,8 +31,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			List<ApiFamilyServerResponseModel> response = await service.All();
 
@@ -50,8 +49,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			ApiFamilyServerResponseModel response = await service.Get(default(int));
 
@@ -68,8 +66,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			ApiFamilyServerResponseModel response = await service.Get(default(int));
 
@@ -87,8 +84,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			CreateResponse<ApiFamilyServerResponseModel> response = await service.Create(model);
 
@@ -110,8 +106,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			CreateResponse<ApiFamilyServerResponseModel> response = await service.Create(model);
 
@@ -132,8 +127,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			UpdateResponse<ApiFamilyServerResponseModel> response = await service.Update(default(int), model);
 
@@ -156,8 +150,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			UpdateResponse<ApiFamilyServerResponseModel> response = await service.Update(default(int), model);
 
@@ -177,8 +170,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -200,8 +192,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -210,47 +201,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FamilyDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void StudentsByFamilyId_Exists()
-		{
-			var mock = new ServiceMockFacade<IFamilyRepository>();
-			var records = new List<Student>();
-			records.Add(new Student());
-			mock.RepositoryMock.Setup(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new FamilyService(mock.LoggerMock.Object,
-			                                mock.MediatorMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.StudentsByFamilyId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void StudentsByFamilyId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IFamilyRepository>();
-			mock.RepositoryMock.Setup(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
-			var service = new FamilyService(mock.LoggerMock.Object,
-			                                mock.MediatorMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock);
-
-			List<ApiStudentServerResponseModel> response = await service.StudentsByFamilyId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b19d6fb37e8254f9ff1b337101fdda5</Hash>
+    <Hash>d8f3d6513b1ef7453e2d2e876b0df2e0</Hash>
 </Codenesium>*/

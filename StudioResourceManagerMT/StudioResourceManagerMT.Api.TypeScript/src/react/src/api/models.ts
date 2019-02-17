@@ -6,8 +6,6 @@ id:number;
 lastName:string;
 phone:string;
 userId:number;
-userIdEntity : string;
-userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -18,8 +16,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.userIdEntity = '';
-this.userIdNavigation = undefined;
 
 				}
 
@@ -44,8 +40,6 @@ id:number;
 lastName:string;
 phone:string;
 userId:number;
-userIdEntity : string;
-userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -56,8 +50,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.userIdEntity = '';
-this.userIdNavigation = undefined;
 
 				}
 
@@ -78,8 +70,6 @@ this.userId = userId;
 actualStartDate:any;
 billAmount:any;
 eventStatusId:number;
-eventStatusIdEntity : string;
-eventStatusIdNavigation? : EventStatuClientResponseModel;
 id:number;
 scheduledEndDate:any;
 scheduledStartDate:any;
@@ -92,8 +82,6 @@ teacherNote:string;
 this.actualStartDate = undefined;
 this.billAmount = undefined;
 this.eventStatusId = 0;
-this.eventStatusIdEntity = '';
-this.eventStatusIdNavigation = undefined;
 this.id = 0;
 this.scheduledEndDate = undefined;
 this.scheduledStartDate = undefined;
@@ -122,8 +110,6 @@ this.teacherNote = teacherNote;
 actualStartDate:any;
 billAmount:any;
 eventStatusId:number;
-eventStatusIdEntity : string;
-eventStatusIdNavigation? : EventStatuClientResponseModel;
 id:number;
 scheduledEndDate:any;
 scheduledStartDate:any;
@@ -136,8 +122,6 @@ teacherNote:string;
 this.actualStartDate = undefined;
 this.billAmount = undefined;
 this.eventStatusId = 0;
-this.eventStatusIdEntity = '';
-this.eventStatusIdNavigation = undefined;
 this.id = 0;
 this.scheduledEndDate = undefined;
 this.scheduledStartDate = undefined;
@@ -262,22 +246,14 @@ this.primaryContactPhone = primaryContactPhone;
 				amountPerMinute:number;
 id:number;
 teacherId:number;
-teacherIdEntity : string;
-teacherIdNavigation? : TeacherClientResponseModel;
 teacherSkillId:number;
-teacherSkillIdEntity : string;
-teacherSkillIdNavigation? : TeacherSkillClientResponseModel;
 
 	
 				constructor() {
 					this.amountPerMinute = 0;
 this.id = 0;
 this.teacherId = 0;
-this.teacherIdEntity = '';
-this.teacherIdNavigation = undefined;
 this.teacherSkillId = 0;
-this.teacherSkillIdEntity = '';
-this.teacherSkillIdNavigation = undefined;
 
 				}
 
@@ -295,22 +271,14 @@ this.teacherSkillId = teacherSkillId;
 				amountPerMinute:number;
 id:number;
 teacherId:number;
-teacherIdEntity : string;
-teacherIdNavigation? : TeacherClientResponseModel;
 teacherSkillId:number;
-teacherSkillIdEntity : string;
-teacherSkillIdNavigation? : TeacherSkillClientResponseModel;
 
 	
 				constructor() {
 					this.amountPerMinute = 0;
 this.id = 0;
 this.teacherId = 0;
-this.teacherIdEntity = '';
-this.teacherIdNavigation = undefined;
 this.teacherSkillId = 0;
-this.teacherSkillIdEntity = '';
-this.teacherSkillIdNavigation = undefined;
 
 				}
 
@@ -408,8 +376,6 @@ this.name = name;
 email:string;
 emailRemindersEnabled:boolean;
 familyId:number;
-familyIdEntity : string;
-familyIdNavigation? : FamilyClientResponseModel;
 firstName:string;
 id:number;
 isAdult:boolean;
@@ -417,8 +383,6 @@ lastName:string;
 phone:string;
 smsRemindersEnabled:boolean;
 userId:number;
-userIdEntity : string;
-userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -426,8 +390,6 @@ userIdNavigation? : UserClientResponseModel;
 this.email = '';
 this.emailRemindersEnabled = false;
 this.familyId = 0;
-this.familyIdEntity = '';
-this.familyIdNavigation = undefined;
 this.firstName = '';
 this.id = 0;
 this.isAdult = false;
@@ -435,8 +397,6 @@ this.lastName = '';
 this.phone = '';
 this.smsRemindersEnabled = false;
 this.userId = 0;
-this.userIdEntity = '';
-this.userIdNavigation = undefined;
 
 				}
 
@@ -462,8 +422,6 @@ this.userId = userId;
 email:string;
 emailRemindersEnabled:boolean;
 familyId:number;
-familyIdEntity : string;
-familyIdNavigation? : FamilyClientResponseModel;
 firstName:string;
 id:number;
 isAdult:boolean;
@@ -471,8 +429,6 @@ lastName:string;
 phone:string;
 smsRemindersEnabled:boolean;
 userId:number;
-userIdEntity : string;
-userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -480,8 +436,6 @@ userIdNavigation? : UserClientResponseModel;
 this.email = '';
 this.emailRemindersEnabled = false;
 this.familyId = 0;
-this.familyIdEntity = '';
-this.familyIdNavigation = undefined;
 this.firstName = '';
 this.id = 0;
 this.isAdult = false;
@@ -489,8 +443,6 @@ this.lastName = '';
 this.phone = '';
 this.smsRemindersEnabled = false;
 this.userId = 0;
-this.userIdEntity = '';
-this.userIdNavigation = undefined;
 
 				}
 
@@ -591,8 +543,6 @@ id:number;
 lastName:string;
 phone:string;
 userId:number;
-userIdEntity : string;
-userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -603,8 +553,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.userIdEntity = '';
-this.userIdNavigation = undefined;
 
 				}
 
@@ -629,8 +577,6 @@ id:number;
 lastName:string;
 phone:string;
 userId:number;
-userIdEntity : string;
-userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -641,8 +587,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.userIdEntity = '';
-this.userIdNavigation = undefined;
 
 				}
 
@@ -740,5 +684,5 @@ this.username = username;
 			}
 
 /*<Codenesium>
-    <Hash>d7ad08cef88f81023f3230384dc44bd9</Hash>
+    <Hash>291dfbd2bc34cdf5b75d9ee1af7e7db1</Hash>
 </Codenesium>*/

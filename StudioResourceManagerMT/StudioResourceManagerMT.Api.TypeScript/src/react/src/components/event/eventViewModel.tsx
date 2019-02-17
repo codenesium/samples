@@ -1,12 +1,8 @@
-import EventStatuViewModel from '../eventStatu/eventStatuViewModel';
-
 export default class EventViewModel {
   actualEndDate: any;
   actualStartDate: any;
   billAmount: any;
   eventStatusId: number;
-  eventStatusIdEntity: string;
-  eventStatusIdNavigation?: EventStatuViewModel;
   id: number;
   scheduledEndDate: any;
   scheduledStartDate: any;
@@ -18,8 +14,6 @@ export default class EventViewModel {
     this.actualStartDate = undefined;
     this.billAmount = undefined;
     this.eventStatusId = 0;
-    this.eventStatusIdEntity = '';
-    this.eventStatusIdNavigation = undefined;
     this.id = 0;
     this.scheduledEndDate = undefined;
     this.scheduledStartDate = undefined;
@@ -56,5 +50,5 @@ export default class EventViewModel {
 
 
 /*<Codenesium>
-    <Hash>0e3d5710680215bef67bb11da050ec43</Hash>
+    <Hash>160dbb139328dd9c043151ff372fb273</Hash>
 </Codenesium>*/

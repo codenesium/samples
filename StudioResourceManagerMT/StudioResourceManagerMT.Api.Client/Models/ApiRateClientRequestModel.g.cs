@@ -28,13 +28,13 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public decimal AmountPerMinute { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public int TeacherId { get; private set; }
+		public int TeacherId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int TeacherSkillId { get; private set; }
+		public int TeacherSkillId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef98fa81f8a29d159628617eaab1bba9</Hash>
+    <Hash>b3768fc676c74b6f178fd3d7adc52c64</Hash>
 </Codenesium>*/

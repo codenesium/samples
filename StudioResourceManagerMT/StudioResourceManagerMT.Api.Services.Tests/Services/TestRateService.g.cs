@@ -201,81 +201,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RateDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void ByTeacherId_Exists()
-		{
-			var mock = new ServiceMockFacade<IRateRepository>();
-			var records = new List<Rate>();
-			records.Add(new Rate());
-			mock.RepositoryMock.Setup(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new RateService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALRateMapperMock);
-
-			List<ApiRateServerResponseModel> response = await service.ByTeacherId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByTeacherId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IRateRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
-			var service = new RateService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALRateMapperMock);
-
-			List<ApiRateServerResponseModel> response = await service.ByTeacherId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByTeacherSkillId_Exists()
-		{
-			var mock = new ServiceMockFacade<IRateRepository>();
-			var records = new List<Rate>();
-			records.Add(new Rate());
-			mock.RepositoryMock.Setup(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new RateService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALRateMapperMock);
-
-			List<ApiRateServerResponseModel> response = await service.ByTeacherSkillId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByTeacherSkillId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IRateRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
-			var service = new RateService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALRateMapperMock);
-
-			List<ApiRateServerResponseModel> response = await service.ByTeacherSkillId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b9197ad8578af34fac323683322593a6</Hash>
+    <Hash>86afe1b8ce6183dd0eb21a83a38cc62a</Hash>
 </Codenesium>*/

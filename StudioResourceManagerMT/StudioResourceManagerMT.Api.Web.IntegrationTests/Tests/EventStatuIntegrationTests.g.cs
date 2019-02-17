@@ -174,34 +174,6 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyEventsByEventStatusIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiEventClientResponseModel> response = await client.EventsByEventStatusId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyEventsByEventStatusIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiEventClientResponseModel> response = await client.EventsByEventStatusId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -224,5 +196,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>1aeb071393ba3645e167944a81bc2d8d</Hash>
+    <Hash>db1b49c00f2e5c95419176320f2f8d85</Hash>
 </Codenesium>*/

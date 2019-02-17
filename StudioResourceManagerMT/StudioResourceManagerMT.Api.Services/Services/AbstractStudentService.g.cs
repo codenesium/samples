@@ -112,23 +112,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiStudentServerResponseModel>> ByFamilyId(int familyId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Student> records = await this.StudentRepository.ByFamilyId(familyId, limit, offset);
-
-			return this.DalStudentMapper.MapEntityToModel(records);
-		}
-
-		public async virtual Task<List<ApiStudentServerResponseModel>> ByUserId(int userId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Student> records = await this.StudentRepository.ByUserId(userId, limit, offset);
-
-			return this.DalStudentMapper.MapEntityToModel(records);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ce69c998c8b8af5889159b793b154a0</Hash>
+    <Hash>b0df32e6bc071a0ab0eeec9f179f9bdb</Hash>
 </Codenesium>*/

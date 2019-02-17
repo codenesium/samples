@@ -27,16 +27,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 			this.ScheduledStartDate = scheduledStartDate;
 			this.StudentNote = studentNote;
 			this.TeacherNote = teacherNote;
-
-			this.EventStatusIdEntity = nameof(ApiResponse.EventStatus);
-		}
-
-		[JsonProperty]
-		public ApiEventStatuClientResponseModel EventStatusIdNavigation { get; private set; }
-
-		public void SetEventStatusIdNavigation(ApiEventStatuClientResponseModel value)
-		{
-			this.EventStatusIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -50,9 +40,6 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		[JsonProperty]
 		public int EventStatusId { get; private set; }
-
-		[JsonProperty]
-		public string EventStatusIdEntity { get; set; }
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -72,5 +59,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>09e39d40ef767a4aa75ea692e126040b</Hash>
+    <Hash>7837cf6ebb1fbeada19859290fcbf300</Hash>
 </Codenesium>*/

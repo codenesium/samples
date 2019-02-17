@@ -35,9 +35,9 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTeacherClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 			var model2 = new ApiTeacherClientRequestModel();
-			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C", "C", 1);
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C", "C", 3);
 			var request = new List<ApiTeacherClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiTeacherClientResponseModel>> result = await client.TeacherBulkInsertAsync(request);
 
@@ -49,14 +49,14 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Teacher>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].LastName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].Phone.Should().Be("B");
-			context.Set<Teacher>().ToList()[1].UserId.Should().Be(1);
+			context.Set<Teacher>().ToList()[1].UserId.Should().Be(2);
 
 			context.Set<Teacher>().ToList()[2].Birthday.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Teacher>().ToList()[2].Email.Should().Be("C");
 			context.Set<Teacher>().ToList()[2].FirstName.Should().Be("C");
 			context.Set<Teacher>().ToList()[2].LastName.Should().Be("C");
 			context.Set<Teacher>().ToList()[2].Phone.Should().Be("C");
-			context.Set<Teacher>().ToList()[2].UserId.Should().Be(1);
+			context.Set<Teacher>().ToList()[2].UserId.Should().Be(3);
 		}
 
 		[Fact]
@@ -70,7 +70,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTeacherClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 			CreateResponse<ApiTeacherClientResponseModel> result = await client.TeacherCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -80,14 +80,14 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Teacher>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].LastName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].Phone.Should().Be("B");
-			context.Set<Teacher>().ToList()[1].UserId.Should().Be(1);
+			context.Set<Teacher>().ToList()[1].UserId.Should().Be(2);
 
 			result.Record.Birthday.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Email.Should().Be("B");
 			result.Record.FirstName.Should().Be("B");
 			result.Record.LastName.Should().Be("B");
 			result.Record.Phone.Should().Be("B");
-			result.Record.UserId.Should().Be(1);
+			result.Record.UserId.Should().Be(2);
 		}
 
 		[Fact]
@@ -105,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApiTeacherServerResponseModel model = await service.Get(1);
 
 			ApiTeacherClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 
 			UpdateResponse<ApiTeacherClientResponseModel> updateResponse = await client.TeacherUpdateAsync(model.Id, request);
 
@@ -118,7 +118,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Teacher>().ToList()[0].FirstName.Should().Be("B");
 			context.Set<Teacher>().ToList()[0].LastName.Should().Be("B");
 			context.Set<Teacher>().ToList()[0].Phone.Should().Be("B");
-			context.Set<Teacher>().ToList()[0].UserId.Should().Be(1);
+			context.Set<Teacher>().ToList()[0].UserId.Should().Be(2);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.Birthday.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -126,7 +126,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			updateResponse.Record.FirstName.Should().Be("B");
 			updateResponse.Record.LastName.Should().Be("B");
 			updateResponse.Record.Phone.Should().Be("B");
-			updateResponse.Record.UserId.Should().Be(1);
+			updateResponse.Record.UserId.Should().Be(2);
 		}
 
 		[Fact]
@@ -141,7 +141,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			ITeacherService service = testServer.Host.Services.GetService(typeof(ITeacherService)) as ITeacherService;
 			var model = new ApiTeacherServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
 			CreateResponse<ApiTeacherServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -214,69 +214,6 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestByUserIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiTeacherClientResponseModel> response = await client.ByTeacherByUserId(1);
-
-			response.Should().NotBeEmpty();
-			response[0].Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response[0].Email.Should().Be("A");
-			response[0].FirstName.Should().Be("A");
-			response[0].Id.Should().Be(1);
-			response[0].LastName.Should().Be("A");
-			response[0].Phone.Should().Be("A");
-			response[0].UserId.Should().Be(1);
-		}
-
-		[Fact]
-		public virtual async void TestByUserIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiTeacherClientResponseModel> response = await client.ByTeacherByUserId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyRatesByTeacherIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiRateClientResponseModel> response = await client.RatesByTeacherId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyRatesByTeacherIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiRateClientResponseModel> response = await client.RatesByTeacherId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -299,5 +236,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>1a1b18356916b46008f01048bbe0ad98</Hash>
+    <Hash>f6d1b7cd97cfffb46c0828d79e7d8de7</Hash>
 </Codenesium>*/

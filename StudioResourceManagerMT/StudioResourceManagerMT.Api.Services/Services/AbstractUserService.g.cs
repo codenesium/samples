@@ -18,12 +18,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IDALUserMapper DalUserMapper { get; private set; }
 
-		protected IDALAdminMapper DalAdminMapper { get; private set; }
-
-		protected IDALStudentMapper DalStudentMapper { get; private set; }
-
-		protected IDALTeacherMapper DalTeacherMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractUserService(
@@ -31,18 +25,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
-			IDALUserMapper dalUserMapper,
-			IDALAdminMapper dalAdminMapper,
-			IDALStudentMapper dalStudentMapper,
-			IDALTeacherMapper dalTeacherMapper)
+			IDALUserMapper dalUserMapper)
 			: base()
 		{
 			this.UserRepository = userRepository;
 			this.UserModelValidator = userModelValidator;
 			this.DalUserMapper = dalUserMapper;
-			this.DalAdminMapper = dalAdminMapper;
-			this.DalStudentMapper = dalStudentMapper;
-			this.DalTeacherMapper = dalTeacherMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -124,30 +112,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiAdminServerResponseModel>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Admin> records = await this.UserRepository.AdminsByUserId(userId, limit, offset);
-
-			return this.DalAdminMapper.MapEntityToModel(records);
-		}
-
-		public async virtual Task<List<ApiStudentServerResponseModel>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Student> records = await this.UserRepository.StudentsByUserId(userId, limit, offset);
-
-			return this.DalStudentMapper.MapEntityToModel(records);
-		}
-
-		public async virtual Task<List<ApiTeacherServerResponseModel>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Teacher> records = await this.UserRepository.TeachersByUserId(userId, limit, offset);
-
-			return this.DalTeacherMapper.MapEntityToModel(records);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d893f71867f3502080a286b4caba0d1a</Hash>
+    <Hash>7c0a797c3a6fccbea80717dfff9c1b2e</Hash>
 </Codenesium>*/

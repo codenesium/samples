@@ -201,45 +201,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AdminDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void ByUserId_Exists()
-		{
-			var mock = new ServiceMockFacade<IAdminRepository>();
-			var records = new List<Admin>();
-			records.Add(new Admin());
-			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new AdminService(mock.LoggerMock.Object,
-			                               mock.MediatorMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALAdminMapperMock);
-
-			List<ApiAdminServerResponseModel> response = await service.ByUserId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByUserId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IAdminRepository>();
-			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Admin>>(new List<Admin>()));
-			var service = new AdminService(mock.LoggerMock.Object,
-			                               mock.MediatorMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALAdminMapperMock);
-
-			List<ApiAdminServerResponseModel> response = await service.ByUserId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dae88e9fa97fb9e9faf4f3d60e673146</Hash>
+    <Hash>3ee0266b60c2a950c1cc8d8c2dc6b62a</Hash>
 </Codenesium>*/

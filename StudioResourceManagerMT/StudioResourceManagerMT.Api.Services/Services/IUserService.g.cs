@@ -19,15 +19,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 		Task<ApiUserServerResponseModel> Get(int id);
 
 		Task<List<ApiUserServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
-
-		Task<List<ApiAdminServerResponseModel>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiStudentServerResponseModel>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiTeacherServerResponseModel>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4dc00a50e00c95c616f1b1e8d48efbc3</Hash>
+    <Hash>2e96e50b6f3b9d7f6fa486548d083385</Hash>
 </Codenesium>*/

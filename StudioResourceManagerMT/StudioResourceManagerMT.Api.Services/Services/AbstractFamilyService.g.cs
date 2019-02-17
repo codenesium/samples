@@ -18,8 +18,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IDALFamilyMapper DalFamilyMapper { get; private set; }
 
-		protected IDALStudentMapper DalStudentMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractFamilyService(
@@ -27,14 +25,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IFamilyRepository familyRepository,
 			IApiFamilyServerRequestModelValidator familyModelValidator,
-			IDALFamilyMapper dalFamilyMapper,
-			IDALStudentMapper dalStudentMapper)
+			IDALFamilyMapper dalFamilyMapper)
 			: base()
 		{
 			this.FamilyRepository = familyRepository;
 			this.FamilyModelValidator = familyModelValidator;
 			this.DalFamilyMapper = dalFamilyMapper;
-			this.DalStudentMapper = dalStudentMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -116,16 +112,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiStudentServerResponseModel>> StudentsByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Student> records = await this.FamilyRepository.StudentsByFamilyId(familyId, limit, offset);
-
-			return this.DalStudentMapper.MapEntityToModel(records);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d145c23dccfdabf90de2b2b2e615763</Hash>
+    <Hash>d2adf04813a96b6c47a94d16dcf791f4</Hash>
 </Codenesium>*/

@@ -216,23 +216,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{familyId}/Students")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudentServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> StudentsByFamilyId(int familyId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiStudentServerResponseModel> response = await this.FamilyService.StudentsByFamilyId(familyId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiFamilyServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiFamilyServerRequestModel> patch)
 		{
 			var record = await this.FamilyService.Get(id);
@@ -252,5 +235,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ee58aed9ded14467581305d7531cc99a</Hash>
+    <Hash>6128552330f9e738aef88a6840b2107c</Hash>
 </Codenesium>*/

@@ -48,7 +48,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public bool EmailRemindersEnabled { get; private set; } = default(bool);
 
 		[JsonProperty]
-		public int FamilyId { get; private set; }
+		public int FamilyId { get; private set; } = default(int);
 
 		[JsonProperty]
 		public string FirstName { get; private set; } = default(string);
@@ -66,10 +66,10 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public bool SmsRemindersEnabled { get; private set; } = default(bool);
 
 		[JsonProperty]
-		public int UserId { get; private set; }
+		public int UserId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c8ad28def2dd8114a1cf61b2657ab5b2</Hash>
+    <Hash>e0c7284c05cd7b8be1454a9bf05928dd</Hash>
 </Codenesium>*/

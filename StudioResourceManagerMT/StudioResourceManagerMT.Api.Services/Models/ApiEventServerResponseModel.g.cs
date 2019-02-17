@@ -46,17 +46,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 		public int EventStatusId { get; private set; }
 
 		[JsonProperty]
-		public string EventStatusIdEntity { get; private set; } = RouteConstants.EventStatus;
-
-		[JsonProperty]
-		public ApiEventStatuServerResponseModel EventStatusIdNavigation { get; private set; }
-
-		public void SetEventStatusIdNavigation(ApiEventStatuServerResponseModel value)
-		{
-			this.EventStatusIdNavigation = value;
-		}
-
-		[JsonProperty]
 		public int Id { get; private set; }
 
 		[Required]
@@ -78,5 +67,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>04e2fc0ff1871010da877626b03cb89b</Hash>
+    <Hash>4929993b6bdb0c26810c476eaa40e910</Hash>
 </Codenesium>*/

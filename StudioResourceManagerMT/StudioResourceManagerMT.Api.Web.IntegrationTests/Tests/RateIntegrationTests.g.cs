@@ -35,9 +35,9 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiRateClientRequestModel();
-			model.SetProperties(2m, 1, 1);
+			model.SetProperties(2m, 2, 2);
 			var model2 = new ApiRateClientRequestModel();
-			model2.SetProperties(3m, 1, 1);
+			model2.SetProperties(3m, 3, 3);
 			var request = new List<ApiRateClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiRateClientResponseModel>> result = await client.RateBulkInsertAsync(request);
 
@@ -45,12 +45,12 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			result.Record.Should().NotBeNull();
 
 			context.Set<Rate>().ToList()[1].AmountPerMinute.Should().Be(2m);
-			context.Set<Rate>().ToList()[1].TeacherId.Should().Be(1);
-			context.Set<Rate>().ToList()[1].TeacherSkillId.Should().Be(1);
+			context.Set<Rate>().ToList()[1].TeacherId.Should().Be(2);
+			context.Set<Rate>().ToList()[1].TeacherSkillId.Should().Be(2);
 
 			context.Set<Rate>().ToList()[2].AmountPerMinute.Should().Be(3m);
-			context.Set<Rate>().ToList()[2].TeacherId.Should().Be(1);
-			context.Set<Rate>().ToList()[2].TeacherSkillId.Should().Be(1);
+			context.Set<Rate>().ToList()[2].TeacherId.Should().Be(3);
+			context.Set<Rate>().ToList()[2].TeacherSkillId.Should().Be(3);
 		}
 
 		[Fact]
@@ -64,18 +64,18 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiRateClientRequestModel();
-			model.SetProperties(2m, 1, 1);
+			model.SetProperties(2m, 2, 2);
 			CreateResponse<ApiRateClientResponseModel> result = await client.RateCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 			context.Set<Rate>().ToList()[1].AmountPerMinute.Should().Be(2m);
-			context.Set<Rate>().ToList()[1].TeacherId.Should().Be(1);
-			context.Set<Rate>().ToList()[1].TeacherSkillId.Should().Be(1);
+			context.Set<Rate>().ToList()[1].TeacherId.Should().Be(2);
+			context.Set<Rate>().ToList()[1].TeacherSkillId.Should().Be(2);
 
 			result.Record.AmountPerMinute.Should().Be(2m);
-			result.Record.TeacherId.Should().Be(1);
-			result.Record.TeacherSkillId.Should().Be(1);
+			result.Record.TeacherId.Should().Be(2);
+			result.Record.TeacherSkillId.Should().Be(2);
 		}
 
 		[Fact]
@@ -93,7 +93,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApiRateServerResponseModel model = await service.Get(1);
 
 			ApiRateClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(2m, 1, 1);
+			request.SetProperties(2m, 2, 2);
 
 			UpdateResponse<ApiRateClientResponseModel> updateResponse = await client.RateUpdateAsync(model.Id, request);
 
@@ -102,13 +102,13 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
 			context.Set<Rate>().ToList()[0].AmountPerMinute.Should().Be(2m);
-			context.Set<Rate>().ToList()[0].TeacherId.Should().Be(1);
-			context.Set<Rate>().ToList()[0].TeacherSkillId.Should().Be(1);
+			context.Set<Rate>().ToList()[0].TeacherId.Should().Be(2);
+			context.Set<Rate>().ToList()[0].TeacherSkillId.Should().Be(2);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.AmountPerMinute.Should().Be(2m);
-			updateResponse.Record.TeacherId.Should().Be(1);
-			updateResponse.Record.TeacherSkillId.Should().Be(1);
+			updateResponse.Record.TeacherId.Should().Be(2);
+			updateResponse.Record.TeacherSkillId.Should().Be(2);
 		}
 
 		[Fact]
@@ -123,7 +123,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			IRateService service = testServer.Host.Services.GetService(typeof(IRateService)) as IRateService;
 			var model = new ApiRateServerRequestModel();
-			model.SetProperties(2m, 1, 1);
+			model.SetProperties(2m, 2, 2);
 			CreateResponse<ApiRateServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -190,70 +190,6 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestByTeacherIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiRateClientResponseModel> response = await client.ByRateByTeacherId(1);
-
-			response.Should().NotBeEmpty();
-			response[0].AmountPerMinute.Should().Be(1m);
-			response[0].Id.Should().Be(1);
-			response[0].TeacherId.Should().Be(1);
-			response[0].TeacherSkillId.Should().Be(1);
-		}
-
-		[Fact]
-		public virtual async void TestByTeacherIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiRateClientResponseModel> response = await client.ByRateByTeacherId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestByTeacherSkillIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiRateClientResponseModel> response = await client.ByRateByTeacherSkillId(1);
-
-			response.Should().NotBeEmpty();
-			response[0].AmountPerMinute.Should().Be(1m);
-			response[0].Id.Should().Be(1);
-			response[0].TeacherId.Should().Be(1);
-			response[0].TeacherSkillId.Should().Be(1);
-		}
-
-		[Fact]
-		public virtual async void TestByTeacherSkillIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiRateClientResponseModel> response = await client.ByRateByTeacherSkillId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -276,5 +212,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>575ea640847cb8e9228057f883e7a2ea</Hash>
+    <Hash>cbeb83ff4a36573e3552d2058f6ba6d3</Hash>
 </Codenesium>*/

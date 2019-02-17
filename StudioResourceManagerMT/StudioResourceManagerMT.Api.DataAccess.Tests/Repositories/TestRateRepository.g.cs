@@ -73,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new RateRepository(loggerMoc.Object, context);
 
 			Rate entity = new Rate();
-			entity.SetProperties(default(int), 2m, 1, 1);
+			entity.SetProperties(default(int), 2m, 2, 2);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new RateRepository(loggerMoc.Object, context);
 
 			var entity = new Rate();
-			entity.SetProperties(default(int), 2m, 1, 1);
+			entity.SetProperties(default(int), 2m, 2, 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Rate>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = RateRepositoryMoc.GetContext();
 			var repository = new RateRepository(loggerMoc.Object, context);
 			Rate entity = new Rate();
-			entity.SetProperties(default(int), 2m, 1, 1);
+			entity.SetProperties(default(int), 2m, 2, 2);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = RateRepositoryMoc.GetContext();
 			var repository = new RateRepository(loggerMoc.Object, context);
 			Rate entity = new Rate();
-			entity.SetProperties(default(int), 2m, 1, 1);
+			entity.SetProperties(default(int), 2m, 2, 2);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = RateRepositoryMoc.GetContext();
 			var repository = new RateRepository(loggerMoc.Object, context);
 			Rate entity = new Rate();
-			entity.SetProperties(default(int), 2m, 1, 1);
+			entity.SetProperties(default(int), 2m, 2, 2);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7d31a7670b478cd11120f36d32bd084b</Hash>
+    <Hash>bca202da6478553aedf506c574ee4cd6</Hash>
 </Codenesium>*/

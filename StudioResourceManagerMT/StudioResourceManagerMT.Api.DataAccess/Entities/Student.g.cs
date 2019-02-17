@@ -76,25 +76,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		[Column("userId")]
 		public virtual int UserId { get; private set; }
-
-		[ForeignKey("FamilyId")]
-		public virtual Family FamilyIdNavigation { get; private set; }
-
-		public void SetFamilyIdNavigation(Family item)
-		{
-			this.FamilyIdNavigation = item;
-		}
-
-		[ForeignKey("UserId")]
-		public virtual User UserIdNavigation { get; private set; }
-
-		public void SetUserIdNavigation(User item)
-		{
-			this.UserIdNavigation = item;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca44290f5ad5eb9207940b22b8d208bc</Hash>
+    <Hash>1a42b6694a0e1ce55ca985fd1e01bd4d</Hash>
 </Codenesium>*/

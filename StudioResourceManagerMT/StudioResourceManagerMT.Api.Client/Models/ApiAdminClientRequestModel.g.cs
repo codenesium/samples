@@ -46,10 +46,10 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public string Phone { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int UserId { get; private set; }
+		public int UserId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd761f69f091c9b7957d8e240124a038</Hash>
+    <Hash>c13ec6a835431773324a09aa85f0c1c3</Hash>
 </Codenesium>*/

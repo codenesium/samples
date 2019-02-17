@@ -73,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventRepository(loggerMoc.Object, context);
 
 			Event entity = new Event();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<Event>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventRepository(loggerMoc.Object, context);
 
 			var entity = new Event();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Event>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventRepositoryMoc.GetContext();
 			var repository = new EventRepository(loggerMoc.Object, context);
 			Event entity = new Event();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<Event>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventRepositoryMoc.GetContext();
 			var repository = new EventRepository(loggerMoc.Object, context);
 			Event entity = new Event();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<Event>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventRepositoryMoc.GetContext();
 			var repository = new EventRepository(loggerMoc.Object, context);
 			Event entity = new Event();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<Event>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>90e613b3ba9a6f2ba3d09d7f9ded0ff4</Hash>
+    <Hash>3e813b8b45e0a6aa3b7c177dddc40fa5</Hash>
 </Codenesium>*/

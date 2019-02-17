@@ -44,44 +44,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 			                    item.Phone,
 			                    item.SmsRemindersEnabled,
 			                    item.UserId);
-			if (item.FamilyIdNavigation != null)
-			{
-				var familyIdModel = new ApiFamilyServerResponseModel();
-				familyIdModel.SetProperties(
-					item.FamilyIdNavigation.Id,
-					item.FamilyIdNavigation.Note,
-					item.FamilyIdNavigation.PrimaryContactEmail,
-					item.FamilyIdNavigation.PrimaryContactFirstName,
-					item.FamilyIdNavigation.PrimaryContactLastName,
-					item.FamilyIdNavigation.PrimaryContactPhone);
-
-				model.SetFamilyIdNavigation(familyIdModel);
-			}
-
-			if (item.TenantIdNavigation != null)
-			{
-				var tenantIdModel = new ApiFamilyServerResponseModel();
-				tenantIdModel.SetProperties(
-					item.TenantIdNavigation.Id,
-					item.TenantIdNavigation.Note,
-					item.TenantIdNavigation.PrimaryContactEmail,
-					item.TenantIdNavigation.PrimaryContactFirstName,
-					item.TenantIdNavigation.PrimaryContactLastName,
-					item.TenantIdNavigation.PrimaryContactPhone);
-
-				model.SetTenantIdNavigation(tenantIdModel);
-			}
-
-			if (item.UserIdNavigation != null)
-			{
-				var userIdModel = new ApiUserServerResponseModel();
-				userIdModel.SetProperties(
-					item.UserIdNavigation.Id,
-					item.UserIdNavigation.Password,
-					item.UserIdNavigation.Username);
-
-				model.SetUserIdNavigation(userIdModel);
-			}
 
 			return model;
 		}
@@ -102,5 +64,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9518dd0222c9b47c872e8325f416ac21</Hash>
+    <Hash>26aa204aab3d21cdbbd84a63ad851319</Hash>
 </Codenesium>*/
