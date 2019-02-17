@@ -31,11 +31,6 @@ GO
 --ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_penId_Pen_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Pet_speciesId_Species_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_speciesId_Species_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_Sale_paymentTypeId_PaymentType_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_paymentTypeId_PaymentType_id]
@@ -44,6 +39,11 @@ GO
 --IF (OBJECT_ID('dbo.FK_Sale_petId_Pet_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_petId_Pet_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_breed_speciesid_species_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Breed] DROP CONSTRAINT [fk_breed_speciesid_species_id]
 --END
 --GO
 
@@ -81,6 +81,7 @@ GO
 CREATE TABLE [dbo].[Breed](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (128)   NOT NULL,
+[speciesId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -103,7 +104,6 @@ CREATE TABLE [dbo].[Pet](
 [description] [text]     NOT NULL,
 [penId] [int]     NOT NULL,
 [price] [money]     NOT NULL,
-[speciesId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -129,6 +129,11 @@ ADD CONSTRAINT[PK_Breed] PRIMARY KEY CLUSTERED
 (
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[IX_Breed_speciesId] ON[dbo].[Breed]
+(
+[speciesId] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[PaymentType]
 ADD CONSTRAINT[PK_PaymentType] PRIMARY KEY CLUSTERED
@@ -172,11 +177,6 @@ REFERENCES[dbo].[Pen]([id]) on delete no action on update no action
 GO
 ALTER TABLE[dbo].[Pet] CHECK CONSTRAINT[FK_Pet_penId_Pen_id]
 GO
-ALTER TABLE[dbo].[Pet]  WITH CHECK ADD  CONSTRAINT[FK_Pet_speciesId_Species_id] FOREIGN KEY([speciesId])
-REFERENCES[dbo].[Species]([id]) on delete no action on update no action
-GO
-ALTER TABLE[dbo].[Pet] CHECK CONSTRAINT[FK_Pet_speciesId_Species_id]
-GO
 ALTER TABLE[dbo].[Sale]  WITH CHECK ADD  CONSTRAINT[FK_Sale_paymentTypeId_PaymentType_id] FOREIGN KEY([paymentTypeId])
 REFERENCES[dbo].[PaymentType]([id]) on delete no action on update no action
 GO
@@ -186,6 +186,11 @@ ALTER TABLE[dbo].[Sale]  WITH CHECK ADD  CONSTRAINT[FK_Sale_petId_Pet_id] FOREIG
 REFERENCES[dbo].[Pet]([id]) on delete no action on update no action
 GO
 ALTER TABLE[dbo].[Sale] CHECK CONSTRAINT[FK_Sale_petId_Pet_id]
+GO
+ALTER TABLE[dbo].[Breed]  WITH CHECK ADD  CONSTRAINT[fk_breed_speciesid_species_id] FOREIGN KEY([speciesId])
+REFERENCES[dbo].[Species]([id]) on delete no action on update no action
+GO
+ALTER TABLE[dbo].[Breed] CHECK CONSTRAINT[fk_breed_speciesid_species_id]
 GO
 
 ");

@@ -20,7 +20,7 @@ import SaleViewModel from  './saleViewModel';
 				{
 				  response.petIdNavigation = new PetViewModel();
 				  response.petIdNavigation.setProperties(
-				  dto.petIdNavigation.acquiredDate,dto.petIdNavigation.breedId,dto.petIdNavigation.description,dto.petIdNavigation.id,dto.petIdNavigation.penId,dto.petIdNavigation.price,dto.petIdNavigation.speciesId
+				  dto.petIdNavigation.acquiredDate,dto.petIdNavigation.breedId,dto.petIdNavigation.description,dto.petIdNavigation.id,dto.petIdNavigation.penId,dto.petIdNavigation.price
 				  );
 				}
 					
@@ -39,5 +39,5 @@ import SaleViewModel from  './saleViewModel';
 };
 
 /*<Codenesium>
-    <Hash>6803056344c61b0f0ca853c17ce75230</Hash>
+    <Hash>cb35e6114e17281cc80c4f4f14c06827</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace PetStoreNS.Api.Services
 
 		protected IDALSpeciesMapper DalSpeciesMapper { get; private set; }
 
-		protected IDALPetMapper DalPetMapper { get; private set; }
+		protected IDALBreedMapper DalBreedMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -28,13 +28,13 @@ namespace PetStoreNS.Api.Services
 			ISpeciesRepository speciesRepository,
 			IApiSpeciesServerRequestModelValidator speciesModelValidator,
 			IDALSpeciesMapper dalSpeciesMapper,
-			IDALPetMapper dalPetMapper)
+			IDALBreedMapper dalBreedMapper)
 			: base()
 		{
 			this.SpeciesRepository = speciesRepository;
 			this.SpeciesModelValidator = speciesModelValidator;
 			this.DalSpeciesMapper = dalSpeciesMapper;
-			this.DalPetMapper = dalPetMapper;
+			this.DalBreedMapper = dalBreedMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -117,15 +117,15 @@ namespace PetStoreNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiPetServerResponseModel>> PetsBySpeciesId(int speciesId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBreedServerResponseModel>> BreedsBySpeciesId(int speciesId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Pet> records = await this.SpeciesRepository.PetsBySpeciesId(speciesId, limit, offset);
+			List<Breed> records = await this.SpeciesRepository.BreedsBySpeciesId(speciesId, limit, offset);
 
-			return this.DalPetMapper.MapEntityToModel(records);
+			return this.DalBreedMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9a9971bac9516ee1ffa63c0246188be</Hash>
+    <Hash>fe27e1a540553b43c18512b8217b5401</Hash>
 </Codenesium>*/

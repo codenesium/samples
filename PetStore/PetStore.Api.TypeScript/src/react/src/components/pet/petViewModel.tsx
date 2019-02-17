@@ -1,6 +1,5 @@
 import BreedViewModel from '../breed/breedViewModel';
 import PenViewModel from '../pen/penViewModel';
-import SpeciesViewModel from '../species/speciesViewModel';
 
 export default class PetViewModel {
   acquiredDate: any;
@@ -13,9 +12,6 @@ export default class PetViewModel {
   penIdEntity: string;
   penIdNavigation?: PenViewModel;
   price: number;
-  speciesId: number;
-  speciesIdEntity: string;
-  speciesIdNavigation?: SpeciesViewModel;
 
   constructor() {
     this.acquiredDate = undefined;
@@ -28,9 +24,6 @@ export default class PetViewModel {
     this.penIdEntity = '';
     this.penIdNavigation = undefined;
     this.price = 0;
-    this.speciesId = 0;
-    this.speciesIdEntity = '';
-    this.speciesIdNavigation = undefined;
   }
 
   setProperties(
@@ -39,8 +32,7 @@ export default class PetViewModel {
     description: string,
     id: number,
     penId: number,
-    price: number,
-    speciesId: number
+    price: number
   ): void {
     this.acquiredDate = acquiredDate;
     this.breedId = breedId;
@@ -48,7 +40,6 @@ export default class PetViewModel {
     this.id = id;
     this.penId = penId;
     this.price = price;
-    this.speciesId = speciesId;
   }
 
   toDisplay(): string {
@@ -58,5 +49,5 @@ export default class PetViewModel {
 
 
 /*<Codenesium>
-    <Hash>73f34fb728ca050dbf60a9cb215992f8</Hash>
+    <Hash>47f27689a2cd4d05eef2fcc6f34cb47d</Hash>
 </Codenesium>*/

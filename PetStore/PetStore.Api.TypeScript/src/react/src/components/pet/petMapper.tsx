@@ -2,7 +2,6 @@ import * as Api from '../../api/models';
 import PetViewModel from './petViewModel';
 import BreedViewModel from '../breed/breedViewModel';
 import PenViewModel from '../pen/penViewModel';
-import SpeciesViewModel from '../species/speciesViewModel';
 export default class PetMapper {
   mapApiResponseToViewModel(dto: Api.PetClientResponseModel): PetViewModel {
     let response = new PetViewModel();
@@ -12,15 +11,15 @@ export default class PetMapper {
       dto.description,
       dto.id,
       dto.penId,
-      dto.price,
-      dto.speciesId
+      dto.price
     );
 
     if (dto.breedIdNavigation != null) {
       response.breedIdNavigation = new BreedViewModel();
       response.breedIdNavigation.setProperties(
         dto.breedIdNavigation.id,
-        dto.breedIdNavigation.name
+        dto.breedIdNavigation.name,
+        dto.breedIdNavigation.speciesId
       );
     }
     if (dto.penIdNavigation != null) {
@@ -28,13 +27,6 @@ export default class PetMapper {
       response.penIdNavigation.setProperties(
         dto.penIdNavigation.id,
         dto.penIdNavigation.name
-      );
-    }
-    if (dto.speciesIdNavigation != null) {
-      response.speciesIdNavigation = new SpeciesViewModel();
-      response.speciesIdNavigation.setProperties(
-        dto.speciesIdNavigation.id,
-        dto.speciesIdNavigation.name
       );
     }
 
@@ -49,8 +41,7 @@ export default class PetMapper {
       model.description,
       model.id,
       model.penId,
-      model.price,
-      model.speciesId
+      model.price
     );
     return response;
   }
@@ -58,5 +49,5 @@ export default class PetMapper {
 
 
 /*<Codenesium>
-    <Hash>ad4823770d3e3faf18a93bd4a1d39f82</Hash>
+    <Hash>8a2f7af4fa42bfe89cfe8fcedecfe642</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -397,5 +397,5 @@ export default class FollowerEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6df1eb488039229bf683e873e161d9ee</Hash>
+    <Hash>20a6ba4ed13ea58a8bb0f95b3b4b523b</Hash>
 </Codenesium>*/

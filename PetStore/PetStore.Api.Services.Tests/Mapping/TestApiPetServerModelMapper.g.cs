@@ -16,7 +16,7 @@ namespace PetStoreNS.Api.Services.Tests
 		{
 			var mapper = new ApiPetServerModelMapper();
 			var model = new ApiPetServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m);
 			ApiPetServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -24,7 +24,6 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Description.Should().Be("A");
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
-			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -32,7 +31,7 @@ namespace PetStoreNS.Api.Services.Tests
 		{
 			var mapper = new ApiPetServerModelMapper();
 			var model = new ApiPetServerResponseModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m);
 			ApiPetServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -40,7 +39,6 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Description.Should().Be("A");
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
-			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -48,7 +46,7 @@ namespace PetStoreNS.Api.Services.Tests
 		{
 			var mapper = new ApiPetServerModelMapper();
 			var model = new ApiPetServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m);
 
 			JsonPatchDocument<ApiPetServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiPetServerRequestModel();
@@ -58,11 +56,10 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Description.Should().Be("A");
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
-			response.SpeciesId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e36570cd5b3a927cf635bd45fba9d6c7</Hash>
+    <Hash>5ee08bc0c34ba9dba70c59b816c155ea</Hash>
 </Codenesium>*/

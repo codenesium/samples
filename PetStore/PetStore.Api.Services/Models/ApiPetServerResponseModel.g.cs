@@ -14,8 +14,7 @@ namespace PetStoreNS.Api.Services
 			int breedId,
 			string description,
 			int penId,
-			decimal price,
-			int speciesId)
+			decimal price)
 		{
 			this.Id = id;
 			this.AcquiredDate = acquiredDate;
@@ -23,7 +22,6 @@ namespace PetStoreNS.Api.Services
 			this.Description = description;
 			this.PenId = penId;
 			this.Price = price;
-			this.SpeciesId = speciesId;
 		}
 
 		[JsonProperty]
@@ -65,23 +63,9 @@ namespace PetStoreNS.Api.Services
 
 		[JsonProperty]
 		public decimal Price { get; private set; }
-
-		[JsonProperty]
-		public int SpeciesId { get; private set; }
-
-		[JsonProperty]
-		public string SpeciesIdEntity { get; private set; } = RouteConstants.Species;
-
-		[JsonProperty]
-		public ApiSpeciesServerResponseModel SpeciesIdNavigation { get; private set; }
-
-		public void SetSpeciesIdNavigation(ApiSpeciesServerResponseModel value)
-		{
-			this.SpeciesIdNavigation = value;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8aad1f65863f12cd497b12b8409919a7</Hash>
+    <Hash>bff770c844b1bcd1415adba68fe585d4</Hash>
 </Codenesium>*/

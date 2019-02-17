@@ -16,17 +16,23 @@ namespace PetStoreNS.Api.Services
 		}
 
 		public virtual void SetProperties(
-			string name)
+			string name,
+			int speciesId)
 		{
 			this.Name = name;
+			this.SpeciesId = speciesId;
 		}
 
 		[Required]
 		[JsonProperty]
 		public string Name { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public int SpeciesId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>68f0e78413f636ef7436783ed5d9ab9d</Hash>
+    <Hash>72330c6459432dbdb6e84476960cd536</Hash>
 </Codenesium>*/

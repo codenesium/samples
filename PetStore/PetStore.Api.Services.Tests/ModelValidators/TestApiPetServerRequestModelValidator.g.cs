@@ -147,59 +147,9 @@ namespace PetStoreNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.PenId, 1);
 		}
-
-		[Fact]
-		public async void SpeciesId_Create_Valid_Reference()
-		{
-			Mock<IPetRepository> petRepository = new Mock<IPetRepository>();
-			petRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
-
-			var validator = new ApiPetServerRequestModelValidator(petRepository.Object);
-			await validator.ValidateCreateAsync(new ApiPetServerRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
-		}
-
-		[Fact]
-		public async void SpeciesId_Create_Invalid_Reference()
-		{
-			Mock<IPetRepository> petRepository = new Mock<IPetRepository>();
-			petRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
-
-			var validator = new ApiPetServerRequestModelValidator(petRepository.Object);
-
-			await validator.ValidateCreateAsync(new ApiPetServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
-		}
-
-		[Fact]
-		public async void SpeciesId_Update_Valid_Reference()
-		{
-			Mock<IPetRepository> petRepository = new Mock<IPetRepository>();
-			petRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
-
-			var validator = new ApiPetServerRequestModelValidator(petRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiPetServerRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
-		}
-
-		[Fact]
-		public async void SpeciesId_Update_Invalid_Reference()
-		{
-			Mock<IPetRepository> petRepository = new Mock<IPetRepository>();
-			petRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
-
-			var validator = new ApiPetServerRequestModelValidator(petRepository.Object);
-
-			await validator.ValidateUpdateAsync(default(int), new ApiPetServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91715895acc573f90eb47851dfc3f68d</Hash>
+    <Hash>ce6f5c096e5dbc65aa036717366f1f73</Hash>
 </Codenesium>*/

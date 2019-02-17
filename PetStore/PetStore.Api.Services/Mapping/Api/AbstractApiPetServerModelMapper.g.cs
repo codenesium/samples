@@ -18,8 +18,7 @@ namespace PetStoreNS.Api.Services
 			                       request.BreedId,
 			                       request.Description,
 			                       request.PenId,
-			                       request.Price,
-			                       request.SpeciesId);
+			                       request.Price);
 			return response;
 		}
 
@@ -32,8 +31,7 @@ namespace PetStoreNS.Api.Services
 				response.BreedId,
 				response.Description,
 				response.PenId,
-				response.Price,
-				response.SpeciesId);
+				response.Price);
 			return request;
 		}
 
@@ -46,8 +44,7 @@ namespace PetStoreNS.Api.Services
 				response.BreedId,
 				response.Description,
 				response.PenId,
-				response.Price,
-				response.SpeciesId);
+				response.Price);
 			return request;
 		}
 
@@ -59,12 +56,11 @@ namespace PetStoreNS.Api.Services
 			patch.Replace(x => x.Description, model.Description);
 			patch.Replace(x => x.PenId, model.PenId);
 			patch.Replace(x => x.Price, model.Price);
-			patch.Replace(x => x.SpeciesId, model.SpeciesId);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f57b85e1d8bbaf18ef7f4e768dd3d41</Hash>
+    <Hash>b9a056306659bfe629a47c86ca41a41e</Hash>
 </Codenesium>*/

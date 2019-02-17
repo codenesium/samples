@@ -14,7 +14,8 @@ namespace PetStoreNS.Api.Services
 		{
 			var response = new ApiBreedServerResponseModel();
 			response.SetProperties(id,
-			                       request.Name);
+			                       request.Name,
+			                       request.SpeciesId);
 			return response;
 		}
 
@@ -23,7 +24,8 @@ namespace PetStoreNS.Api.Services
 		{
 			var request = new ApiBreedServerRequestModel();
 			request.SetProperties(
-				response.Name);
+				response.Name,
+				response.SpeciesId);
 			return request;
 		}
 
@@ -32,7 +34,8 @@ namespace PetStoreNS.Api.Services
 		{
 			var request = new ApiBreedClientRequestModel();
 			request.SetProperties(
-				response.Name);
+				response.Name,
+				response.SpeciesId);
 			return request;
 		}
 
@@ -40,11 +43,12 @@ namespace PetStoreNS.Api.Services
 		{
 			var patch = new JsonPatchDocument<ApiBreedServerRequestModel>();
 			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.SpeciesId, model.SpeciesId);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f03f3bdb0d722e9f00a0c8c3a8d39c0</Hash>
+    <Hash>996b9e05f0c47162cf9a0ef907c9e561</Hash>
 </Codenesium>*/

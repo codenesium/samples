@@ -16,10 +16,11 @@ namespace PetStoreNS.Api.Services.Tests
 		{
 			var mapper = new ApiBreedServerModelMapper();
 			var model = new ApiBreedServerRequestModel();
-			model.SetProperties("A");
+			model.SetProperties("A", 1);
 			ApiBreedServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -27,10 +28,11 @@ namespace PetStoreNS.Api.Services.Tests
 		{
 			var mapper = new ApiBreedServerModelMapper();
 			var model = new ApiBreedServerResponseModel();
-			model.SetProperties(1, "A");
+			model.SetProperties(1, "A", 1);
 			ApiBreedServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -38,16 +40,17 @@ namespace PetStoreNS.Api.Services.Tests
 		{
 			var mapper = new ApiBreedServerModelMapper();
 			var model = new ApiBreedServerRequestModel();
-			model.SetProperties("A");
+			model.SetProperties("A", 1);
 
 			JsonPatchDocument<ApiBreedServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiBreedServerRequestModel();
 			patch.ApplyTo(response);
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>66d1e1199331751092e9bf37bae2cd38</Hash>
+    <Hash>3e69467103c882ea62a51a731e81d7c1</Hash>
 </Codenesium>*/

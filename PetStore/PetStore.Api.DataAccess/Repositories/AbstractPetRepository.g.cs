@@ -40,8 +40,7 @@ namespace PetStoreNS.Api.DataAccess
 				                  x.Description.StartsWith(query) ||
 				                  x.Id == query.ToInt() ||
 				                  x.PenId == query.ToInt() ||
-				                  x.Price.ToDecimal() == query.ToDecimal() ||
-				                  x.SpeciesId == query.ToInt(),
+				                  x.Price.ToDecimal() == query.ToDecimal(),
 				                  limit,
 				                  offset);
 			}
@@ -113,13 +112,6 @@ namespace PetStoreNS.Api.DataAccess
 			       .SingleOrDefaultAsync(x => x.Id == penId);
 		}
 
-		// Foreign key reference to table Species via speciesId.
-		public async virtual Task<Species> SpeciesBySpeciesId(int speciesId)
-		{
-			return await this.Context.Set<Species>()
-			       .SingleOrDefaultAsync(x => x.Id == speciesId);
-		}
-
 		protected async Task<List<Pet>> Where(
 			Expression<Func<Pet, bool>> predicate,
 			int limit = int.MaxValue,
@@ -134,7 +126,6 @@ namespace PetStoreNS.Api.DataAccess
 			return await this.Context.Set<Pet>()
 			       .Include(x => x.BreedIdNavigation)
 			       .Include(x => x.PenIdNavigation)
-			       .Include(x => x.SpeciesIdNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
@@ -149,5 +140,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a9c5a00da013acc4ee886411771b8f64</Hash>
+    <Hash>03aae9c7f01b08dedfe000b2c41fda68</Hash>
 </Codenesium>*/

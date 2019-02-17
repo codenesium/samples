@@ -16,11 +16,11 @@ export default class TimestampCheckViewModel {
   }
 
   toDisplay(): string {
-    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String();
   }
 }
 
 
 /*<Codenesium>
-    <Hash>4b04da10f42a634000a6149f1d82c8fa</Hash>
+    <Hash>27211c83a745eb1b60b737443cdc37cd</Hash>
 </Codenesium>*/

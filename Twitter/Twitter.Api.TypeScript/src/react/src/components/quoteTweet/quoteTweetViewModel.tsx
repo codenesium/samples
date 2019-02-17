@@ -43,11 +43,11 @@ export default class QuoteTweetViewModel {
   }
 
   toDisplay(): string {
-    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String();
   }
 }
 
 
 /*<Codenesium>
-    <Hash>3be6522c957c0fd10240e6f141bf3b63</Hash>
+    <Hash>34185d7ad9f8094e3f57d026e3250828</Hash>
 </Codenesium>*/

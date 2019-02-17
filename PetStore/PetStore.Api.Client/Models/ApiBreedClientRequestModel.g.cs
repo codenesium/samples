@@ -15,16 +15,21 @@ namespace PetStoreNS.Api.Client
 		}
 
 		public virtual void SetProperties(
-			string name)
+			string name,
+			int speciesId)
 		{
 			this.Name = name;
+			this.SpeciesId = speciesId;
 		}
 
 		[JsonProperty]
 		public string Name { get; private set; } = default(string);
+
+		[JsonProperty]
+		public int SpeciesId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e4e51e23e30a62b155a3fa45122a1d2</Hash>
+    <Hash>edc777257e890cd3fece52eaf4cad5d3</Hash>
 </Codenesium>*/

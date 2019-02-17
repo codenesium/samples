@@ -13,11 +13,11 @@ export default class TableViewModel {
   }
 
   toDisplay(): string {
-    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String();
   }
 }
 
 
 /*<Codenesium>
-    <Hash>f4ef4be962256f8a001aa12008266b99</Hash>
+    <Hash>0765497894786eaab6b256e5b9662922</Hash>
 </Codenesium>*/

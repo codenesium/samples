@@ -22,11 +22,9 @@ namespace PetStoreNS.Api.DataAccess
 		Task<Breed> BreedByBreedId(int breedId);
 
 		Task<Pen> PenByPenId(int penId);
-
-		Task<Species> SpeciesBySpeciesId(int speciesId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab222baa47d6a85b6a135ff4d6f859d6</Hash>
+    <Hash>253b4166816d71cba766ff36328757c8</Hash>
 </Codenesium>*/

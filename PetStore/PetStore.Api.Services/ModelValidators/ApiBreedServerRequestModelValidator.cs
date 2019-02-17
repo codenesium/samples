@@ -16,12 +16,14 @@ namespace PetStoreNS.Api.Services
 		public async Task<ValidationResult> ValidateCreateAsync(ApiBreedServerRequestModel model)
 		{
 			this.NameRules();
+			this.SpeciesIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiBreedServerRequestModel model)
 		{
 			this.NameRules();
+			this.SpeciesIdRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -33,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f82606a4a19484ac539ea8df1b71c1d0</Hash>
+    <Hash>0eab77e2eb1647254a9fb9f8eb702a2f</Hash>
 </Codenesium>*/

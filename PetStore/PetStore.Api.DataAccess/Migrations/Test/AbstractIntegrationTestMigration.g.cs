@@ -19,7 +19,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var breedItem1 = new Breed();
-			breedItem1.SetProperties(1, "A");
+			breedItem1.SetProperties(1, "A", 1);
 			this.Context.Breeds.Add(breedItem1);
 
 			var paymentTypeItem1 = new PaymentType();
@@ -31,7 +31,7 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context.Pens.Add(penItem1);
 
 			var petItem1 = new Pet();
-			petItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			petItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m);
 			this.Context.Pets.Add(petItem1);
 
 			var saleItem1 = new Sale();
@@ -48,5 +48,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9e66ac2715406c405c290d4d941b287a</Hash>
+    <Hash>c4ad203e4249bde18d20f6d625608e79</Hash>
 </Codenesium>*/

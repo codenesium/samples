@@ -122,6 +122,14 @@ namespace PetStoreNS.Api.Client
 			return response;
 		}
 
+		public virtual async Task<List<ApiBreedClientResponseModel>> ByBreedBySpeciesId(int speciesId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Breeds/bySpeciesId/{speciesId}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiBreedClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiPetClientResponseModel>> PetsByBreedId(int breedId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Breeds/{breedId}/Pets", cancellationToken).ConfigureAwait(false);
@@ -479,12 +487,12 @@ namespace PetStoreNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiPetClientResponseModel>> PetsBySpeciesId(int speciesId, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiBreedClientResponseModel>> BreedsBySpeciesId(int speciesId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Species/{speciesId}/Pets", cancellationToken).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Species/{speciesId}/Breeds", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiPetClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiBreedClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		protected void HandleResponseCode(HttpResponseMessage httpResponse)
@@ -515,5 +523,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>2f3bc2fe9e255bdfe0a4ff2a30d33181</Hash>
+    <Hash>708ec9021ee83da0afa45ef6aeafb429</Hash>
 </Codenesium>*/

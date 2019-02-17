@@ -73,7 +73,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new PetRepository(loggerMoc.Object, context);
 
 			Pet entity = new Pet();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			context.Set<Pet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new PetRepository(loggerMoc.Object, context);
 
 			var entity = new Pet();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			await repository.Create(entity);
 
 			var records = await context.Set<Pet>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PetRepositoryMoc.GetContext();
 			var repository = new PetRepository(loggerMoc.Object, context);
 			Pet entity = new Pet();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			context.Set<Pet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PetRepositoryMoc.GetContext();
 			var repository = new PetRepository(loggerMoc.Object, context);
 			Pet entity = new Pet();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			context.Set<Pet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PetRepositoryMoc.GetContext();
 			var repository = new PetRepository(loggerMoc.Object, context);
 			Pet entity = new Pet();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			context.Set<Pet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>95a2a3b372a9801119c9a5312aa0c48b</Hash>
+    <Hash>91cd6e51f6ca2241e0e205f8de830668</Hash>
 </Codenesium>*/

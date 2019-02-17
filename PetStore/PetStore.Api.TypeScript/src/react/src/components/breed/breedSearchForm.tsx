@@ -205,6 +205,29 @@ export default class BreedSearchComponent extends React.Component<
                     },
                   },
                   {
+                    Header: 'SpeciesId',
+                    accessor: 'speciesId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Species +
+                                '/' +
+                                props.original.speciesId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.speciesIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Actions',
                     Cell: row => (
                       <div>
@@ -260,5 +283,5 @@ export default class BreedSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a34785bf9c3e1f3d6f9781e7247b8128</Hash>
+    <Hash>6c29d325a9e6b6b25119fe8727288862</Hash>
 </Codenesium>*/

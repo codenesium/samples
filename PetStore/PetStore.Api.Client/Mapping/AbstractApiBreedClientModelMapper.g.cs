@@ -12,7 +12,8 @@ namespace PetStoreNS.Api.Client
 		{
 			var response = new ApiBreedClientResponseModel();
 			response.SetProperties(id,
-			                       request.Name);
+			                       request.Name,
+			                       request.SpeciesId);
 			return response;
 		}
 
@@ -21,12 +22,13 @@ namespace PetStoreNS.Api.Client
 		{
 			var request = new ApiBreedClientRequestModel();
 			request.SetProperties(
-				response.Name);
+				response.Name,
+				response.SpeciesId);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d3040d5b4ebc2056994ebe2a89b34382</Hash>
+    <Hash>af6c2e8b3fa33117bf2a2397d46f5d6c</Hash>
 </Codenesium>*/

@@ -20,7 +20,6 @@ namespace PetStoreNS.Api.Services
 			this.DescriptionRules();
 			this.PenIdRules();
 			this.PriceRules();
-			this.SpeciesIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -31,7 +30,6 @@ namespace PetStoreNS.Api.Services
 			this.DescriptionRules();
 			this.PenIdRules();
 			this.PriceRules();
-			this.SpeciesIdRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -43,5 +41,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5c4fd917d9f581982fce455e7afc918</Hash>
+    <Hash>cc7f73204212551e5af2dedc4d70981d</Hash>
 </Codenesium>*/

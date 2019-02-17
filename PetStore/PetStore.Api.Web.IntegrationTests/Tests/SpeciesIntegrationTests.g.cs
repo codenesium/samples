@@ -174,7 +174,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyPetsBySpeciesIdFound()
+		public virtual async void TestForeignKeyBreedsBySpeciesIdFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -182,13 +182,13 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			List<ApiPetClientResponseModel> response = await client.PetsBySpeciesId(1);
+			List<ApiBreedClientResponseModel> response = await client.BreedsBySpeciesId(1);
 
 			response.Should().NotBeEmpty();
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyPetsBySpeciesIdNotFound()
+		public virtual async void TestForeignKeyBreedsBySpeciesIdNotFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -196,7 +196,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			List<ApiPetClientResponseModel> response = await client.PetsBySpeciesId(default(int));
+			List<ApiBreedClientResponseModel> response = await client.BreedsBySpeciesId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -224,5 +224,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>67be0f3b7e566218331d4fe68258adec</Hash>
+    <Hash>c05f227530bb000a0c2eecfb84ad92e3</Hash>
 </Codenesium>*/

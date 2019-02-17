@@ -124,11 +124,11 @@ export default class TestAllFieldTypeViewModel {
   }
 
   toDisplay(): string {
-    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String();
   }
 }
 
 
 /*<Codenesium>
-    <Hash>8705d1f6efbbdc122bb69a13fde321c0</Hash>
+    <Hash>315db567abf9aa2c6eead426b03d63c3</Hash>
 </Codenesium>*/

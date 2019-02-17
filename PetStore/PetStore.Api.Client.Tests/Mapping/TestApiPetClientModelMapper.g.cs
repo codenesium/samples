@@ -15,7 +15,7 @@ namespace PetStoreNS.Api.Client.Tests
 		{
 			var mapper = new ApiPetModelMapper();
 			var model = new ApiPetClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m);
 			ApiPetClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -23,7 +23,6 @@ namespace PetStoreNS.Api.Client.Tests
 			response.Description.Should().Be("A");
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
-			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -31,7 +30,7 @@ namespace PetStoreNS.Api.Client.Tests
 		{
 			var mapper = new ApiPetModelMapper();
 			var model = new ApiPetClientResponseModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m);
 			ApiPetClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -39,11 +38,10 @@ namespace PetStoreNS.Api.Client.Tests
 			response.Description.Should().Be("A");
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
-			response.SpeciesId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>62062bf1c6790c3617ca14c29e5e7851</Hash>
+    <Hash>7c0ec3df260b086e9c163ef4e31bff77</Hash>
 </Codenesium>*/

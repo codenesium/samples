@@ -15,7 +15,8 @@ namespace PetStoreNS.Api.Services
 			Breed item = new Breed();
 			item.SetProperties(
 				id,
-				model.Name);
+				model.Name,
+				model.SpeciesId);
 			return item;
 		}
 
@@ -25,7 +26,17 @@ namespace PetStoreNS.Api.Services
 			var model = new ApiBreedServerResponseModel();
 
 			model.SetProperties(item.Id,
-			                    item.Name);
+			                    item.Name,
+			                    item.SpeciesId);
+			if (item.SpeciesIdNavigation != null)
+			{
+				var speciesIdModel = new ApiSpeciesServerResponseModel();
+				speciesIdModel.SetProperties(
+					item.SpeciesIdNavigation.Id,
+					item.SpeciesIdNavigation.Name);
+
+				model.SetSpeciesIdNavigation(speciesIdModel);
+			}
 
 			return model;
 		}
@@ -46,5 +57,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1fcbea0a090abef3175a2135f5d37970</Hash>
+    <Hash>3db1c0576661d13487a4340e763080eb</Hash>
 </Codenesium>*/

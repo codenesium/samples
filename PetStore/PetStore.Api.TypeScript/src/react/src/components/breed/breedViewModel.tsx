@@ -1,23 +1,36 @@
+import SpeciesViewModel from '../species/speciesViewModel'
+	
+
 export default class BreedViewModel {
-  id: number;
-  name: string;
+    id:number;
+name:string;
+speciesId:number;
+speciesIdEntity : string;
+speciesIdNavigation? : SpeciesViewModel;
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-  }
+    constructor() {
+		this.id = 0;
+this.name = '';
+this.speciesId = 0;
+this.speciesIdEntity = '';
+this.speciesIdNavigation = undefined;
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
-  }
+    }
 
-  toDisplay(): string {
-    return String(this.id);
-  }
-}
+	setProperties(id : number,name : string,speciesId : number) : void
+	{
+		this.id = id;
+this.name = name;
+this.speciesId = speciesId;
 
+	}
+
+	toDisplay() : string
+	{
+		return String(this.name);
+	}
+};
 
 /*<Codenesium>
-    <Hash>5cb84bad5829f0b83256a6dfabe53690</Hash>
+    <Hash>69b46b947cb324647ec1a6ea5debb395</Hash>
 </Codenesium>*/

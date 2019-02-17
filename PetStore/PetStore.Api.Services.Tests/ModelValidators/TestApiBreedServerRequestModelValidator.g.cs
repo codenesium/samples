@@ -71,9 +71,59 @@ namespace PetStoreNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
 		}
+
+		[Fact]
+		public async void SpeciesId_Create_Valid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
+
+			var validator = new ApiBreedServerRequestModelValidator(breedRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBreedServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
+
+		[Fact]
+		public async void SpeciesId_Create_Invalid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
+
+			var validator = new ApiBreedServerRequestModelValidator(breedRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiBreedServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
+
+		[Fact]
+		public async void SpeciesId_Update_Valid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
+
+			var validator = new ApiBreedServerRequestModelValidator(breedRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBreedServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
+
+		[Fact]
+		public async void SpeciesId_Update_Invalid_Reference()
+		{
+			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
+
+			var validator = new ApiBreedServerRequestModelValidator(breedRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiBreedServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.SpeciesId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0c5b1b1d3360be1ff3a602f1821da2fa</Hash>
+    <Hash>aa53e20547e3a1316a5ffa13f763851f</Hash>
 </Codenesium>*/

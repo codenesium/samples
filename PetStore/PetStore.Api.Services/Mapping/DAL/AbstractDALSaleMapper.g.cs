@@ -55,8 +55,7 @@ namespace PetStoreNS.Api.Services
 					item.PetIdNavigation.BreedId,
 					item.PetIdNavigation.Description,
 					item.PetIdNavigation.PenId,
-					item.PetIdNavigation.Price,
-					item.PetIdNavigation.SpeciesId);
+					item.PetIdNavigation.Price);
 
 				model.SetPetIdNavigation(petIdModel);
 			}
@@ -80,5 +79,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bbc4aa5b91e23073f98be347a4b93c31</Hash>
+    <Hash>89aafe9c78d050cbde0186b4efbc9022</Hash>
 </Codenesium>*/

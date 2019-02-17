@@ -20,15 +20,13 @@ namespace PetStoreNS.Api.Services
 			int breedId,
 			string description,
 			int penId,
-			decimal price,
-			int speciesId)
+			decimal price)
 		{
 			this.AcquiredDate = acquiredDate;
 			this.BreedId = breedId;
 			this.Description = description;
 			this.PenId = penId;
 			this.Price = price;
-			this.SpeciesId = speciesId;
 		}
 
 		[Required]
@@ -50,13 +48,9 @@ namespace PetStoreNS.Api.Services
 		[Required]
 		[JsonProperty]
 		public decimal Price { get; private set; } = default(decimal);
-
-		[Required]
-		[JsonProperty]
-		public int SpeciesId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>46af944a06e73146a80d807f481e7cb8</Hash>
+    <Hash>709a74e8a72b8d9fb9c277392f335e92</Hash>
 </Codenesium>*/

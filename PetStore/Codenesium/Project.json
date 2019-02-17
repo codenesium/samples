@@ -32,18 +32,27 @@
                 "MaxLength": 128,
                 "IsNullable": false,
                 "DatabaseGenerated": false
+              },
+              {
+                "$id": "7",
+                "Name": "speciesId",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
               }
             ],
             "Constraints": [
               {
-                "$id": "7",
+                "$id": "8",
                 "Name": "PK_Breed",
                 "TableName": "Breed",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "8",
+                    "$id": "9",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -53,17 +62,36 @@
                 ],
                 "SchemaName": "dbo",
                 "IsUnique": true
+              },
+              {
+                "$id": "10",
+                "Name": "IX_Breed_speciesId",
+                "TableName": "Breed",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "11",
+                    "Name": "speciesId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
               }
             ],
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "9",
+            "$id": "12",
             "Name": "PaymentType",
             "Columns": [
               {
-                "$id": "10",
+                "$id": "13",
                 "Name": "id",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -72,7 +100,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "11",
+                "$id": "14",
                 "Name": "name",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -83,14 +111,14 @@
             ],
             "Constraints": [
               {
-                "$id": "12",
+                "$id": "15",
                 "Name": "PK_PaymentType",
                 "TableName": "PaymentType",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "13",
+                    "$id": "16",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -106,11 +134,11 @@
             "IsView": false
           },
           {
-            "$id": "14",
+            "$id": "17",
             "Name": "Pen",
             "Columns": [
               {
-                "$id": "15",
+                "$id": "18",
                 "Name": "id",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -119,7 +147,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "16",
+                "$id": "19",
                 "Name": "name",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -130,14 +158,14 @@
             ],
             "Constraints": [
               {
-                "$id": "17",
+                "$id": "20",
                 "Name": "PK_Pen",
                 "TableName": "Pen",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "18",
+                    "$id": "21",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -153,11 +181,11 @@
             "IsView": false
           },
           {
-            "$id": "19",
+            "$id": "22",
             "Name": "Pet",
             "Columns": [
               {
-                "$id": "20",
+                "$id": "23",
                 "Name": "acquiredDate",
                 "DataType": "date",
                 "NumericPrecision": 0,
@@ -166,7 +194,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "21",
+                "$id": "24",
                 "Name": "breedId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -175,7 +203,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "22",
+                "$id": "25",
                 "Name": "description",
                 "DataType": "text",
                 "NumericPrecision": 0,
@@ -184,7 +212,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "23",
+                "$id": "26",
                 "Name": "id",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -193,7 +221,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "24",
+                "$id": "27",
                 "Name": "penId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -202,19 +230,10 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "25",
+                "$id": "28",
                 "Name": "price",
                 "DataType": "money",
                 "NumericPrecision": 19,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              },
-              {
-                "$id": "26",
-                "Name": "speciesId",
-                "DataType": "int",
-                "NumericPrecision": 10,
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
@@ -222,14 +241,14 @@
             ],
             "Constraints": [
               {
-                "$id": "27",
+                "$id": "29",
                 "Name": "PK_Pet",
                 "TableName": "Pet",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "28",
+                    "$id": "30",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -245,11 +264,11 @@
             "IsView": false
           },
           {
-            "$id": "29",
+            "$id": "31",
             "Name": "Sale",
             "Columns": [
               {
-                "$id": "30",
+                "$id": "32",
                 "Name": "amount",
                 "DataType": "money",
                 "NumericPrecision": 19,
@@ -258,7 +277,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "31",
+                "$id": "33",
                 "Name": "firstName",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -267,7 +286,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "32",
+                "$id": "34",
                 "Name": "id",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -276,7 +295,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "33",
+                "$id": "35",
                 "Name": "lastName",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -285,7 +304,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "34",
+                "$id": "36",
                 "Name": "paymentTypeId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -294,7 +313,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "35",
+                "$id": "37",
                 "Name": "petId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -303,7 +322,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "36",
+                "$id": "38",
                 "Name": "phone",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -314,14 +333,14 @@
             ],
             "Constraints": [
               {
-                "$id": "37",
+                "$id": "39",
                 "Name": "PK_Sale",
                 "TableName": "Sale",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "38",
+                    "$id": "40",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -337,11 +356,11 @@
             "IsView": false
           },
           {
-            "$id": "39",
+            "$id": "41",
             "Name": "Species",
             "Columns": [
               {
-                "$id": "40",
+                "$id": "42",
                 "Name": "id",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -350,7 +369,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "41",
+                "$id": "43",
                 "Name": "name",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -361,14 +380,14 @@
             ],
             "Constraints": [
               {
-                "$id": "42",
+                "$id": "44",
                 "Name": "PK_Species",
                 "TableName": "Species",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "43",
+                    "$id": "45",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -386,10 +405,10 @@
         ],
         "ForeignKeys": [
           {
-            "$id": "44",
+            "$id": "46",
             "Columns": [
               {
-                "$id": "45",
+                "$id": "47",
                 "ForeignKeyTableName": "Pet",
                 "ForeignKeyColumnName": "breedId",
                 "PrimaryKeyTableName": "Breed",
@@ -402,10 +421,10 @@
             "ForeignKeyName": "FK_Pet_breedId_Breed_id"
           },
           {
-            "$id": "46",
+            "$id": "48",
             "Columns": [
               {
-                "$id": "47",
+                "$id": "49",
                 "ForeignKeyTableName": "Pet",
                 "ForeignKeyColumnName": "penId",
                 "PrimaryKeyTableName": "Pen",
@@ -416,22 +435,6 @@
               }
             ],
             "ForeignKeyName": "FK_Pet_penId_Pen_id"
-          },
-          {
-            "$id": "48",
-            "Columns": [
-              {
-                "$id": "49",
-                "ForeignKeyTableName": "Pet",
-                "ForeignKeyColumnName": "speciesId",
-                "PrimaryKeyTableName": "Species",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_Pet_speciesId_Species_id"
           },
           {
             "$id": "50",
@@ -464,6 +467,22 @@
               }
             ],
             "ForeignKeyName": "FK_Sale_petId_Pet_id"
+          },
+          {
+            "$id": "54",
+            "Columns": [
+              {
+                "$id": "55",
+                "ForeignKeyTableName": "Breed",
+                "ForeignKeyColumnName": "speciesId",
+                "PrimaryKeyTableName": "Species",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 0
+              }
+            ],
+            "ForeignKeyName": "fk_breed_speciesid_species_id"
           }
         ]
       }
@@ -472,23 +491,23 @@
     "DatabaseType": "MSSQL"
   },
   "Project": {
-    "$id": "54",
+    "$id": "56",
     "Schemas": [
       {
-        "$id": "55",
+        "$id": "57",
         "AppSchemaName": "dbo",
-        "AppSchemaId": "17b7024c-a04d-4db9-b2ce-e31e06bc7b7c",
+        "AppSchemaId": "2bd084c2-87a2-4be8-9ff9-9b11ccba8000",
         "Tables": [
           {
-            "$id": "56",
+            "$id": "58",
             "AppTableName": "Breed",
             "AppTableNamePlural": "Breeds",
             "AppDoNotProcess": false,
-            "AppTableId": "59b11a09-7ca2-4ca8-9135-cd692d305a12",
+            "AppTableId": "ec68242f-d159-4079-8744-8ac8450232cf",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "57",
+                "$id": "59",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -505,7 +524,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "56"
+                  "$ref": "58"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -521,7 +540,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "58",
+                "$id": "60",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -538,7 +557,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "56"
+                  "$ref": "58"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -552,16 +571,49 @@
                 "MaxLength": 128,
                 "IsNullable": false,
                 "DatabaseGenerated": false
+              },
+              {
+                "$id": "61",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "SpeciesId",
+                "AppNamePlural": "SpeciesIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "58"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "speciesId",
+                "GenerationEnabled": true,
+                "Name": "speciesId",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
               }
             ],
             "Constraints": [
               {
-                "$id": "59",
+                "$id": "62",
                 "Columns": [
                   {
-                    "$id": "60",
+                    "$id": "63",
                     "Column": {
-                      "$ref": "57"
+                      "$ref": "59"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -578,7 +630,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Breed",
                 "Table": {
-                  "$ref": "56"
+                  "$ref": "58"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Breed",
@@ -587,10 +639,43 @@
                 "ConstraintType": "CLUSTERED",
                 "SchemaName": "dbo",
                 "IsUnique": true
+              },
+              {
+                "$id": "64",
+                "Columns": [
+                  {
+                    "$id": "65",
+                    "Column": {
+                      "$ref": "61"
+                    },
+                    "Name": "SpeciesId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "BySpeciesId",
+                "ControllerRoute": "bySpeciesId",
+                "AppName": "IX_Breed_speciesId",
+                "Table": {
+                  "$ref": "58"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_Breed_speciesId",
+                "TableName": "Breed",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
               }
             ],
             "Schema": {
-              "$ref": "55"
+              "$ref": "57"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -617,148 +702,11 @@
             "IsView": false
           },
           {
-            "$id": "61",
+            "$id": "66",
             "AppTableName": "PaymentType",
             "AppTableNamePlural": "PaymentTypes",
             "AppDoNotProcess": false,
-            "AppTableId": "099ca2c5-b5f8-4d7c-a05e-8ee19564a994",
-            "AppGenerationEnabled": true,
-            "Columns": [
-              {
-                "$id": "62",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Id",
-                "AppNamePlural": "Ids",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "61"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
-                "AppViewControlLabel": "id",
-                "GenerationEnabled": true,
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "63",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Name",
-                "AppNamePlural": "Names",
-                "AppFieldType": "varchar",
-                "AppFieldMaxLength": 128,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "string",
-                "AppTypescriptType": "string",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "61"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": true,
-                "AppViewControlLabel": "name",
-                "GenerationEnabled": true,
-                "Name": "name",
-                "DataType": "varchar",
-                "NumericPrecision": 0,
-                "MaxLength": 128,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              }
-            ],
-            "Constraints": [
-              {
-                "$id": "64",
-                "Columns": [
-                  {
-                    "$id": "65",
-                    "Column": {
-                      "$ref": "62"
-                    },
-                    "Name": "Id",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": true
-                  }
-                ],
-                "Virtual": false,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
-                "AppName": "PK_PaymentType",
-                "Table": {
-                  "$ref": "61"
-                },
-                "GenerationEnabled": true,
-                "Name": "PK_PaymentType",
-                "TableName": "PaymentType",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "SchemaName": "dbo",
-                "IsUnique": true
-              }
-            ],
-            "Schema": {
-              "$ref": "55"
-            },
-            "AppParentTable": null,
-            "AppReferenceTable": false,
-            "AppIsView": false,
-            "AppControllerAttribute": "",
-            "AppGenerateBulkInsertMethod": true,
-            "AppGenerateCreateMethod": true,
-            "AppGenerateUpdateMethod": true,
-            "AppGenerateDeleteMethod": true,
-            "AppGenerateAllMethod": true,
-            "AppGenerateGetMethod": true,
-            "AppGeneratePatchMethod": true,
-            "AppBulkInsertMethodAttribute": "",
-            "AppCreateMethodAttribute": "",
-            "AppUpdateMethodAttribute": "",
-            "AppDeleteMethodAttribute": "",
-            "AppAllMethodAttribute": "",
-            "AppGetMethodAttribute": "",
-            "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
-            "GenerationEnabled": true,
-            "Name": "PaymentType",
-            "DefaultConstraints": [],
-            "IsView": false
-          },
-          {
-            "$id": "66",
-            "AppTableName": "Pen",
-            "AppTableNamePlural": "Pens",
-            "AppDoNotProcess": false,
-            "AppTableId": "04661aa1-6cf5-4a42-8bf0-667681d1fe0d",
+            "AppTableId": "16765d3f-b490-4320-8b1a-4b7e61f673ac",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -850,9 +798,146 @@
                 "AppShowInController": true,
                 "ControllerMethodName": "ById",
                 "ControllerRoute": "byId",
-                "AppName": "PK_Pen",
+                "AppName": "PK_PaymentType",
                 "Table": {
                   "$ref": "66"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_PaymentType",
+                "TableName": "PaymentType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "57"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.id",
+            "GenerationEnabled": true,
+            "Name": "PaymentType",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "71",
+            "AppTableName": "Pen",
+            "AppTableNamePlural": "Pens",
+            "AppDoNotProcess": false,
+            "AppTableId": "af9bb049-72c1-4f81-bb90-e2aca23d4a50",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "72",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "73",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "name",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "74",
+                "Columns": [
+                  {
+                    "$id": "75",
+                    "Column": {
+                      "$ref": "72"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Pen",
+                "Table": {
+                  "$ref": "71"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Pen",
@@ -864,7 +949,7 @@
               }
             ],
             "Schema": {
-              "$ref": "55"
+              "$ref": "57"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -891,15 +976,15 @@
             "IsView": false
           },
           {
-            "$id": "71",
+            "$id": "76",
             "AppTableName": "Pet",
             "AppTableNamePlural": "Pets",
             "AppDoNotProcess": false,
-            "AppTableId": "796d91b2-af2a-41d7-8c95-8de18501edbd",
+            "AppTableId": "e1ea6a50-4d73-4e0b-85c6-bae9a6810f71",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "72",
+                "$id": "77",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -916,7 +1001,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "71"
+                  "$ref": "76"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -932,7 +1017,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "73",
+                "$id": "78",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -949,7 +1034,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "71"
+                  "$ref": "76"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -965,7 +1050,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "74",
+                "$id": "79",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -982,7 +1067,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "71"
+                  "$ref": "76"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -998,7 +1083,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "75",
+                "$id": "80",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1015,7 +1100,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "71"
+                  "$ref": "76"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1031,7 +1116,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "76",
+                "$id": "81",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1048,7 +1133,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "71"
+                  "$ref": "76"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1064,7 +1149,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "77",
+                "$id": "82",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1081,7 +1166,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "71"
+                  "$ref": "76"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1095,49 +1180,16 @@
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
-              },
-              {
-                "$id": "78",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "SpeciesId",
-                "AppNamePlural": "SpeciesIds",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "71"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": true,
-                "AppViewControlLabel": "speciesId",
-                "GenerationEnabled": true,
-                "Name": "speciesId",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": false
               }
             ],
             "Constraints": [
               {
-                "$id": "79",
+                "$id": "83",
                 "Columns": [
                   {
-                    "$id": "80",
+                    "$id": "84",
                     "Column": {
-                      "$ref": "75"
+                      "$ref": "80"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -1154,7 +1206,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Pet",
                 "Table": {
-                  "$ref": "71"
+                  "$ref": "76"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Pet",
@@ -1166,7 +1218,7 @@
               }
             ],
             "Schema": {
-              "$ref": "55"
+              "$ref": "57"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -1193,15 +1245,15 @@
             "IsView": false
           },
           {
-            "$id": "81",
+            "$id": "85",
             "AppTableName": "Sale",
             "AppTableNamePlural": "Sales",
             "AppDoNotProcess": false,
-            "AppTableId": "17e67ecc-199b-4d01-a8e0-9d68c48a40c7",
+            "AppTableId": "edaa0afb-9226-4e04-a168-e0a5049cf008",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "82",
+                "$id": "86",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1218,7 +1270,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1234,7 +1286,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "83",
+                "$id": "87",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1251,7 +1303,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1267,7 +1319,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "84",
+                "$id": "88",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1284,7 +1336,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1300,7 +1352,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "85",
+                "$id": "89",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1317,7 +1369,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1333,7 +1385,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "86",
+                "$id": "90",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1350,7 +1402,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1366,7 +1418,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "87",
+                "$id": "91",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1383,7 +1435,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1399,7 +1451,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "88",
+                "$id": "92",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1416,7 +1468,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1434,12 +1486,12 @@
             ],
             "Constraints": [
               {
-                "$id": "89",
+                "$id": "93",
                 "Columns": [
                   {
-                    "$id": "90",
+                    "$id": "94",
                     "Column": {
-                      "$ref": "84"
+                      "$ref": "88"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -1456,7 +1508,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Sale",
                 "Table": {
-                  "$ref": "81"
+                  "$ref": "85"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Sale",
@@ -1468,7 +1520,7 @@
               }
             ],
             "Schema": {
-              "$ref": "55"
+              "$ref": "57"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -1495,15 +1547,15 @@
             "IsView": false
           },
           {
-            "$id": "91",
+            "$id": "95",
             "AppTableName": "Species",
             "AppTableNamePlural": "Species",
             "AppDoNotProcess": false,
-            "AppTableId": "215c9093-836c-44be-9317-476e6c27d847",
+            "AppTableId": "1e278986-884a-4895-8030-e360b76b70a7",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "92",
+                "$id": "96",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1520,7 +1572,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "91"
+                  "$ref": "95"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1536,7 +1588,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "93",
+                "$id": "97",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1553,7 +1605,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "91"
+                  "$ref": "95"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1571,12 +1623,12 @@
             ],
             "Constraints": [
               {
-                "$id": "94",
+                "$id": "98",
                 "Columns": [
                   {
-                    "$id": "95",
+                    "$id": "99",
                     "Column": {
-                      "$ref": "92"
+                      "$ref": "96"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -1593,7 +1645,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Species",
                 "Table": {
-                  "$ref": "91"
+                  "$ref": "95"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Species",
@@ -1605,7 +1657,7 @@
               }
             ],
             "Schema": {
-              "$ref": "55"
+              "$ref": "57"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -1634,42 +1686,6 @@
         ],
         "ForeignKeys": [
           {
-            "$id": "96",
-            "Columns": [
-              {
-                "$id": "97",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "73"
-                },
-                "PrimaryColumn": {
-                  "$ref": "57"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Pet_BreedId_Breed_Id"
-          },
-          {
-            "$id": "98",
-            "Columns": [
-              {
-                "$id": "99",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "76"
-                },
-                "PrimaryColumn": {
-                  "$ref": "67"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Pet_PenId_Pen_Id"
-          },
-          {
             "$id": "100",
             "Columns": [
               {
@@ -1679,13 +1695,13 @@
                   "$ref": "78"
                 },
                 "PrimaryColumn": {
-                  "$ref": "92"
+                  "$ref": "59"
                 }
               }
             ],
             "Virtual": false,
             "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Pet_SpeciesId_Species_Id"
+            "ForeignKeyName": "FK_Pet_BreedId_Breed_Id"
           },
           {
             "$id": "102",
@@ -1694,16 +1710,16 @@
                 "$id": "103",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "86"
+                  "$ref": "81"
                 },
                 "PrimaryColumn": {
-                  "$ref": "62"
+                  "$ref": "72"
                 }
               }
             ],
             "Virtual": false,
             "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Sale_PaymentTypeId_PaymentType_Id"
+            "ForeignKeyName": "FK_Pet_PenId_Pen_Id"
           },
           {
             "$id": "104",
@@ -1712,28 +1728,64 @@
                 "$id": "105",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "87"
+                  "$ref": "90"
                 },
                 "PrimaryColumn": {
-                  "$ref": "75"
+                  "$ref": "67"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Sale_PaymentTypeId_PaymentType_Id"
+          },
+          {
+            "$id": "106",
+            "Columns": [
+              {
+                "$id": "107",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "91"
+                },
+                "PrimaryColumn": {
+                  "$ref": "80"
                 }
               }
             ],
             "Virtual": false,
             "AppDoNotProcess": false,
             "ForeignKeyName": "FK_Sale_PetId_Pet_Id"
+          },
+          {
+            "$id": "108",
+            "Columns": [
+              {
+                "$id": "109",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "61"
+                },
+                "PrimaryColumn": {
+                  "$ref": "96"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Breed_SpeciesId_Species_Id"
           }
         ],
         "ReferenceForeignKeys": [],
         "ApplicationApiContainer": {
-          "$ref": "54"
+          "$ref": "56"
         },
         "Name": "dbo"
       }
     ],
     "ApplicationVersion": "1.0",
     "ApiSettings": {
-      "$id": "106",
+      "$id": "110",
       "NamespacePrefix": "",
       "IsMultiTenant": false,
       "UseSoftDeletes": false
@@ -1743,7 +1795,7 @@
     "DatabaseType": ""
   },
   "Settings": {
-    "$id": "107",
+    "$id": "111",
     "SettingsVersion": "1.0",
     "ApiSettings": {
       "NamespacePrefix": "",
@@ -1752,7 +1804,7 @@
     },
     "TableParameterSettings": [
       {
-        "$id": "108",
+        "$id": "112",
         "Table": "Pen",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -1777,7 +1829,7 @@
         "ForeignKeyDisplayColumn": "this.name"
       },
       {
-        "$id": "109",
+        "$id": "113",
         "Table": "Pet",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -1802,7 +1854,7 @@
         "ForeignKeyDisplayColumn": "this.description"
       },
       {
-        "$id": "110",
+        "$id": "114",
         "Table": "Sale",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -1827,7 +1879,7 @@
         "ForeignKeyDisplayColumn": "this.id"
       },
       {
-        "$id": "111",
+        "$id": "115",
         "Table": "Species",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -1852,12 +1904,37 @@
         "ForeignKeyDisplayColumn": "this.name"
       },
       {
-        "$id": "112",
+        "$id": "116",
         "Table": "PaymentType",
         "Schema": "dbo",
         "AppDoNotProcess": false,
         "AppTableName": "PaymentType",
         "AppTableNamePlural": "PaymentTypes",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.name"
+      },
+      {
+        "$id": "117",
+        "Table": "Breed",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Breed",
+        "AppTableNamePlural": "Breeds",
         "AppReferenceTable": false,
         "AppControllerAttribute": "",
         "AppGenerateBulkInsertMethod": true,

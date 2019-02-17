@@ -212,6 +212,44 @@ namespace PetStoreNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void BySpeciesId_Exists()
+		{
+			var mock = new ServiceMockFacade<IBreedRepository>();
+			var records = new List<Breed>();
+			records.Add(new Breed());
+			mock.RepositoryMock.Setup(x => x.BySpeciesId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
+
+			List<ApiBreedServerResponseModel> response = await service.BySpeciesId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.BySpeciesId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void BySpeciesId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IBreedRepository>();
+			mock.RepositoryMock.Setup(x => x.BySpeciesId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Breed>>(new List<Breed>()));
+			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
+
+			List<ApiBreedServerResponseModel> response = await service.BySpeciesId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.BySpeciesId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
 		public async void PetsByBreedId_Exists()
 		{
 			var mock = new ServiceMockFacade<IBreedRepository>();
@@ -252,5 +290,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e8d13a64f652b1d8c37f2f50b008ce22</Hash>
+    <Hash>6e024fa4ff008ee58ac79740b37173f0</Hash>
 </Codenesium>*/

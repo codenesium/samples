@@ -217,10 +217,10 @@ namespace PetStoreNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{speciesId}/Pets")]
+		[Route("{speciesId}/Breeds")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPetServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> PetsBySpeciesId(int speciesId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiBreedServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> BreedsBySpeciesId(int speciesId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -228,7 +228,7 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPetServerResponseModel> response = await this.SpeciesService.PetsBySpeciesId(speciesId, query.Limit, query.Offset);
+			List<ApiBreedServerResponseModel> response = await this.SpeciesService.BreedsBySpeciesId(speciesId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -252,5 +252,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1954a49a73711435adaf6d8d7d09fdf5</Hash>
+    <Hash>023999a771bb9c770ad16c3b4bbe1ad2</Hash>
 </Codenesium>*/

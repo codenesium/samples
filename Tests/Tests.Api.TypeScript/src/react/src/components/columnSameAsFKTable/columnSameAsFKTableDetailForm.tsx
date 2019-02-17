@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -149,5 +149,5 @@ export default class ColumnSameAsFKTableDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0bbe82ec69c54cb65ffce939236be320</Hash>
+    <Hash>9d7aec574d3f19167bb1e93a502e114f</Hash>
 </Codenesium>*/

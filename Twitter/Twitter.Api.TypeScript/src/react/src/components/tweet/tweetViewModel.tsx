@@ -43,11 +43,11 @@ export default class TweetViewModel {
   }
 
   toDisplay(): string {
-    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String();
   }
 }
 
 
 /*<Codenesium>
-    <Hash>4e046e700b2c501706ab08297b438c6e</Hash>
+    <Hash>381ab874026ac258e26d4a7fa16bfd5d</Hash>
 </Codenesium>*/

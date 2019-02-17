@@ -15,10 +15,12 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int id,
-			string name)
+			string name,
+			int speciesId)
 		{
 			this.Id = id;
 			this.Name = name;
+			this.SpeciesId = speciesId;
 		}
 
 		[Key]
@@ -28,9 +30,20 @@ namespace PetStoreNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("name")]
 		public virtual string Name { get; private set; }
+
+		[Column("speciesId")]
+		public virtual int SpeciesId { get; private set; }
+
+		[ForeignKey("SpeciesId")]
+		public virtual Species SpeciesIdNavigation { get; private set; }
+
+		public void SetSpeciesIdNavigation(Species item)
+		{
+			this.SpeciesIdNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ed2d87c98dc90edb1f5416144f79bcb</Hash>
+    <Hash>61e9cd7268dcf307abde27fe655a5997</Hash>
 </Codenesium>*/

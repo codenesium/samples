@@ -9,10 +9,22 @@ namespace PetStoreNS.Api.Client
 	{
 		public virtual void SetProperties(
 			int id,
-			string name)
+			string name,
+			int speciesId)
 		{
 			this.Id = id;
 			this.Name = name;
+			this.SpeciesId = speciesId;
+
+			this.SpeciesIdEntity = nameof(ApiResponse.Species);
+		}
+
+		[JsonProperty]
+		public ApiSpeciesClientResponseModel SpeciesIdNavigation { get; private set; }
+
+		public void SetSpeciesIdNavigation(ApiSpeciesClientResponseModel value)
+		{
+			this.SpeciesIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -20,9 +32,15 @@ namespace PetStoreNS.Api.Client
 
 		[JsonProperty]
 		public string Name { get; private set; }
+
+		[JsonProperty]
+		public int SpeciesId { get; private set; }
+
+		[JsonProperty]
+		public string SpeciesIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>11cfb4fc0b258c10c966baa75be961ff</Hash>
+    <Hash>fdbf1650cadbe0fde7b05ceea901ae3a</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -366,5 +366,5 @@ export default class QuoteTweetEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8b71caaa2596b46aa1ec24c114d73817</Hash>
+    <Hash>dafe4bf43f5930b15c4f6d2c5ede7f0e</Hash>
 </Codenesium>*/

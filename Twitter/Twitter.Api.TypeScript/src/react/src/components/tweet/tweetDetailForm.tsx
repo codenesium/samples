@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -161,5 +161,5 @@ export default class TweetDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>10e950d97f89795efd5c6a3502a376b7</Hash>
+    <Hash>f07a7ccd888964d005dbac24e827a14f</Hash>
 </Codenesium>*/

@@ -19,8 +19,7 @@ namespace PetStoreNS.Api.Services
 				model.BreedId,
 				model.Description,
 				model.PenId,
-				model.Price,
-				model.SpeciesId);
+				model.Price);
 			return item;
 		}
 
@@ -34,14 +33,14 @@ namespace PetStoreNS.Api.Services
 			                    item.BreedId,
 			                    item.Description,
 			                    item.PenId,
-			                    item.Price,
-			                    item.SpeciesId);
+			                    item.Price);
 			if (item.BreedIdNavigation != null)
 			{
 				var breedIdModel = new ApiBreedServerResponseModel();
 				breedIdModel.SetProperties(
 					item.BreedIdNavigation.Id,
-					item.BreedIdNavigation.Name);
+					item.BreedIdNavigation.Name,
+					item.BreedIdNavigation.SpeciesId);
 
 				model.SetBreedIdNavigation(breedIdModel);
 			}
@@ -54,16 +53,6 @@ namespace PetStoreNS.Api.Services
 					item.PenIdNavigation.Name);
 
 				model.SetPenIdNavigation(penIdModel);
-			}
-
-			if (item.SpeciesIdNavigation != null)
-			{
-				var speciesIdModel = new ApiSpeciesServerResponseModel();
-				speciesIdModel.SetProperties(
-					item.SpeciesIdNavigation.Id,
-					item.SpeciesIdNavigation.Name);
-
-				model.SetSpeciesIdNavigation(speciesIdModel);
 			}
 
 			return model;
@@ -85,5 +74,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cef3b4d245c0ceb6cb4d2d4f103d1bc6</Hash>
+    <Hash>4c9fb4f7e53d418abfb1899cc8d5ad40</Hash>
 </Codenesium>*/

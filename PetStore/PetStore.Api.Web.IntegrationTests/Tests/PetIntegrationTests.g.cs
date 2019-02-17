@@ -35,9 +35,9 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiPetClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			var model2 = new ApiPetClientRequestModel();
-			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), 1, "C", 1, 3m, 1);
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), 1, "C", 1, 3m);
 			var request = new List<ApiPetClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiPetClientResponseModel>> result = await client.PetBulkInsertAsync(request);
 
@@ -49,14 +49,12 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			context.Set<Pet>().ToList()[1].Description.Should().Be("B");
 			context.Set<Pet>().ToList()[1].PenId.Should().Be(1);
 			context.Set<Pet>().ToList()[1].Price.Should().Be(2m);
-			context.Set<Pet>().ToList()[1].SpeciesId.Should().Be(1);
 
 			context.Set<Pet>().ToList()[2].AcquiredDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Pet>().ToList()[2].BreedId.Should().Be(1);
 			context.Set<Pet>().ToList()[2].Description.Should().Be("C");
 			context.Set<Pet>().ToList()[2].PenId.Should().Be(1);
 			context.Set<Pet>().ToList()[2].Price.Should().Be(3m);
-			context.Set<Pet>().ToList()[2].SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -70,7 +68,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiPetClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			CreateResponse<ApiPetClientResponseModel> result = await client.PetCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -80,14 +78,12 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			context.Set<Pet>().ToList()[1].Description.Should().Be("B");
 			context.Set<Pet>().ToList()[1].PenId.Should().Be(1);
 			context.Set<Pet>().ToList()[1].Price.Should().Be(2m);
-			context.Set<Pet>().ToList()[1].SpeciesId.Should().Be(1);
 
 			result.Record.AcquiredDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.BreedId.Should().Be(1);
 			result.Record.Description.Should().Be("B");
 			result.Record.PenId.Should().Be(1);
 			result.Record.Price.Should().Be(2m);
-			result.Record.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -105,7 +101,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApiPetServerResponseModel model = await service.Get(1);
 
 			ApiPetClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 
 			UpdateResponse<ApiPetClientResponseModel> updateResponse = await client.PetUpdateAsync(model.Id, request);
 
@@ -118,7 +114,6 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			context.Set<Pet>().ToList()[0].Description.Should().Be("B");
 			context.Set<Pet>().ToList()[0].PenId.Should().Be(1);
 			context.Set<Pet>().ToList()[0].Price.Should().Be(2m);
-			context.Set<Pet>().ToList()[0].SpeciesId.Should().Be(1);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.AcquiredDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -126,7 +121,6 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			updateResponse.Record.Description.Should().Be("B");
 			updateResponse.Record.PenId.Should().Be(1);
 			updateResponse.Record.Price.Should().Be(2m);
-			updateResponse.Record.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -141,7 +135,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 
 			IPetService service = testServer.Host.Services.GetService(typeof(IPetService)) as IPetService;
 			var model = new ApiPetServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m, 1);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B", 1, 2m);
 			CreateResponse<ApiPetServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -174,7 +168,6 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response.Id.Should().Be(1);
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
-			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -210,7 +203,6 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response[0].Id.Should().Be(1);
 			response[0].PenId.Should().Be(1);
 			response[0].Price.Should().Be(1m);
-			response[0].SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -264,5 +256,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c8e212e0c672b70fbf74e313314d1f83</Hash>
+    <Hash>efb3d9b8648c321c538533bb58b82bd9</Hash>
 </Codenesium>*/

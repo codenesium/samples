@@ -50,11 +50,6 @@ namespace PetStoreNS.Api.Services
 		{
 		}
 
-		public virtual void SpeciesIdRules()
-		{
-			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => !x?.SpeciesId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
-		}
-
 		protected async Task<bool> BeValidBreedByBreedId(int id,  CancellationToken cancellationToken)
 		{
 			var record = await this.PetRepository.BreedByBreedId(id);
@@ -68,16 +63,9 @@ namespace PetStoreNS.Api.Services
 
 			return record != null;
 		}
-
-		protected async Task<bool> BeValidSpeciesBySpeciesId(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.PetRepository.SpeciesBySpeciesId(id);
-
-			return record != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cca539b1c5d24253beaa866e35d566e4</Hash>
+    <Hash>512bbba2182b2c71aaae122bb7a0ff63</Hash>
 </Codenesium>*/

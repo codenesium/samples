@@ -19,8 +19,7 @@ namespace PetStoreNS.Api.DataAccess
 			int breedId,
 			string description,
 			int penId,
-			decimal price,
-			int speciesId)
+			decimal price)
 		{
 			this.Id = id;
 			this.AcquiredDate = acquiredDate;
@@ -28,7 +27,6 @@ namespace PetStoreNS.Api.DataAccess
 			this.Description = description;
 			this.PenId = penId;
 			this.Price = price;
-			this.SpeciesId = speciesId;
 		}
 
 		[Column("acquiredDate")]
@@ -51,9 +49,6 @@ namespace PetStoreNS.Api.DataAccess
 		[Column("price")]
 		public virtual decimal Price { get; private set; }
 
-		[Column("speciesId")]
-		public virtual int SpeciesId { get; private set; }
-
 		[ForeignKey("BreedId")]
 		public virtual Breed BreedIdNavigation { get; private set; }
 
@@ -69,17 +64,9 @@ namespace PetStoreNS.Api.DataAccess
 		{
 			this.PenIdNavigation = item;
 		}
-
-		[ForeignKey("SpeciesId")]
-		public virtual Species SpeciesIdNavigation { get; private set; }
-
-		public void SetSpeciesIdNavigation(Species item)
-		{
-			this.SpeciesIdNavigation = item;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76b2c458b5f621b8a12c87a21d4ae6b3</Hash>
+    <Hash>75a21e3ef8e65f8b6db2a9c3b4974bd1</Hash>
 </Codenesium>*/

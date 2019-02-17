@@ -17,10 +17,11 @@ namespace PetStoreNS.Api.Services
 		{
 			var mapper = new DALBreedMapper();
 			ApiBreedServerRequestModel model = new ApiBreedServerRequestModel();
-			model.SetProperties("A");
+			model.SetProperties("A", 1);
 			Breed response = mapper.MapModelToEntity(1, model);
 
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -28,11 +29,12 @@ namespace PetStoreNS.Api.Services
 		{
 			var mapper = new DALBreedMapper();
 			Breed item = new Breed();
-			item.SetProperties(1, "A");
+			item.SetProperties(1, "A", 1);
 			ApiBreedServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -40,7 +42,7 @@ namespace PetStoreNS.Api.Services
 		{
 			var mapper = new DALBreedMapper();
 			Breed item = new Breed();
-			item.SetProperties(1, "A");
+			item.SetProperties(1, "A", 1);
 			List<ApiBreedServerResponseModel> response = mapper.MapEntityToModel(new List<Breed>() { { item} });
 
 			response.Count.Should().Be(1);
@@ -49,5 +51,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2695fb8ce15d1d1f346f5ebfef72d282</Hash>
+    <Hash>edd1c83dd9604291e03c5caae477da79</Hash>
 </Codenesium>*/

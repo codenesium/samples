@@ -73,7 +73,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new BreedRepository(loggerMoc.Object, context);
 
 			Breed entity = new Breed();
-			entity.SetProperties(default(int), "B");
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new BreedRepository(loggerMoc.Object, context);
 
 			var entity = new Breed();
-			entity.SetProperties(default(int), "B");
+			entity.SetProperties(default(int), "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Breed>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
 			var repository = new BreedRepository(loggerMoc.Object, context);
 			Breed entity = new Breed();
-			entity.SetProperties(default(int), "B");
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
 			var repository = new BreedRepository(loggerMoc.Object, context);
 			Breed entity = new Breed();
-			entity.SetProperties(default(int), "B");
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
 			var repository = new BreedRepository(loggerMoc.Object, context);
 			Breed entity = new Breed();
-			entity.SetProperties(default(int), "B");
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d288d0af0ee352c84a6ad07c32e2105</Hash>
+    <Hash>180c0981a67bbb86097a3a62b9c2c4d1</Hash>
 </Codenesium>*/

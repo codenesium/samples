@@ -27,11 +27,11 @@ export default class ColumnSameAsFKTableViewModel {
   }
 
   toDisplay(): string {
-    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String();
   }
 }
 
 
 /*<Codenesium>
-    <Hash>b4e7a34abdf2ce9601827bbb4d02a40d</Hash>
+    <Hash>4ce925d144175d1c234767e8a2a8770c</Hash>
 </Codenesium>*/

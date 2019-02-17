@@ -35,9 +35,9 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiBreedClientRequestModel();
-			model.SetProperties("B");
+			model.SetProperties("B", 1);
 			var model2 = new ApiBreedClientRequestModel();
-			model2.SetProperties("C");
+			model2.SetProperties("C", 1);
 			var request = new List<ApiBreedClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiBreedClientResponseModel>> result = await client.BreedBulkInsertAsync(request);
 
@@ -45,8 +45,10 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			result.Record.Should().NotBeNull();
 
 			context.Set<Breed>().ToList()[1].Name.Should().Be("B");
+			context.Set<Breed>().ToList()[1].SpeciesId.Should().Be(1);
 
 			context.Set<Breed>().ToList()[2].Name.Should().Be("C");
+			context.Set<Breed>().ToList()[2].SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -60,14 +62,16 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiBreedClientRequestModel();
-			model.SetProperties("B");
+			model.SetProperties("B", 1);
 			CreateResponse<ApiBreedClientResponseModel> result = await client.BreedCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 			context.Set<Breed>().ToList()[1].Name.Should().Be("B");
+			context.Set<Breed>().ToList()[1].SpeciesId.Should().Be(1);
 
 			result.Record.Name.Should().Be("B");
+			result.Record.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -85,7 +89,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApiBreedServerResponseModel model = await service.Get(1);
 
 			ApiBreedClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B");
+			request.SetProperties("B", 1);
 
 			UpdateResponse<ApiBreedClientResponseModel> updateResponse = await client.BreedUpdateAsync(model.Id, request);
 
@@ -94,9 +98,11 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
 			context.Set<Breed>().ToList()[0].Name.Should().Be("B");
+			context.Set<Breed>().ToList()[0].SpeciesId.Should().Be(1);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.Name.Should().Be("B");
+			updateResponse.Record.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -111,7 +117,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 
 			IBreedService service = testServer.Host.Services.GetService(typeof(IBreedService)) as IBreedService;
 			var model = new ApiBreedServerRequestModel();
-			model.SetProperties("B");
+			model.SetProperties("B", 1);
 			CreateResponse<ApiBreedServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -140,6 +146,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response.Should().NotBeNull();
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -171,6 +178,38 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response.Count.Should().BeGreaterThan(0);
 			response[0].Id.Should().Be(1);
 			response[0].Name.Should().Be("A");
+			response[0].SpeciesId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestBySpeciesIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiBreedClientResponseModel> response = await client.ByBreedBySpeciesId(1);
+
+			response.Should().NotBeEmpty();
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
+			response[0].SpeciesId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestBySpeciesIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiBreedClientResponseModel> response = await client.ByBreedBySpeciesId(default(int));
+
+			response.Should().BeEmpty();
 		}
 
 		[Fact]
@@ -224,5 +263,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>10a9dc77f2cb31a42f5025d43b6781d2</Hash>
+    <Hash>6789c501d3663941b97ebe3496b373c5</Hash>
 </Codenesium>*/

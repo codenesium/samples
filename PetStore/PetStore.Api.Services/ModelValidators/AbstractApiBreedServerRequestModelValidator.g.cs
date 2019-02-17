@@ -31,9 +31,21 @@ namespace PetStoreNS.Api.Services
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
+
+		public virtual void SpeciesIdRules()
+		{
+			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => !x?.SpeciesId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidSpeciesBySpeciesId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.BreedRepository.SpeciesBySpeciesId(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b92fbc6fbacfbefc3ecd41c7645ef4e9</Hash>
+    <Hash>b47b4eda3581ef73a1ee22ad0e09e9ef</Hash>
 </Codenesium>*/

@@ -47,11 +47,11 @@ export default class FollowerViewModel {
   }
 
   toDisplay(): string {
-    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String();
   }
 }
 
 
 /*<Codenesium>
-    <Hash>a6b8591d32bee080fab43bdc8f3b3dcd</Hash>
+    <Hash>8d73a2954efc98455b94e5ee2e65ba98</Hash>
 </Codenesium>*/

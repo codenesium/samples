@@ -16,8 +16,7 @@ namespace PetStoreNS.Api.Client
 			                       request.BreedId,
 			                       request.Description,
 			                       request.PenId,
-			                       request.Price,
-			                       request.SpeciesId);
+			                       request.Price);
 			return response;
 		}
 
@@ -30,13 +29,12 @@ namespace PetStoreNS.Api.Client
 				response.BreedId,
 				response.Description,
 				response.PenId,
-				response.Price,
-				response.SpeciesId);
+				response.Price);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0c75c09f44f7f71316d6f0dd9ab448c</Hash>
+    <Hash>657ec19ecc1a87aadae95901f4a286d5</Hash>
 </Codenesium>*/

@@ -15,10 +15,11 @@ namespace PetStoreNS.Api.Client.Tests
 		{
 			var mapper = new ApiBreedModelMapper();
 			var model = new ApiBreedClientRequestModel();
-			model.SetProperties("A");
+			model.SetProperties("A", 1);
 			ApiBreedClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 
 		[Fact]
@@ -26,14 +27,15 @@ namespace PetStoreNS.Api.Client.Tests
 		{
 			var mapper = new ApiBreedModelMapper();
 			var model = new ApiBreedClientResponseModel();
-			model.SetProperties(1, "A");
+			model.SetProperties(1, "A", 1);
 			ApiBreedClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.Name.Should().Be("A");
+			response.SpeciesId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5fe1fc1da9132e970825c737a838fa0</Hash>
+    <Hash>febf14b201ea2783e3f952d4f9bbb595</Hash>
 </Codenesium>*/
