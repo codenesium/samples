@@ -102,10 +102,10 @@ namespace TicketingCRMNS.Api.DataAccess
 			       .Where(x => x.TransactionId == transactionId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
-		// Foreign key reference to table TransactionStatu via transactionStatusId.
-		public async virtual Task<TransactionStatu> TransactionStatuByTransactionStatusId(int transactionStatusId)
+		// Foreign key reference to table TransactionStatus via transactionStatusId.
+		public async virtual Task<TransactionStatus> TransactionStatusByTransactionStatusId(int transactionStatusId)
 		{
-			return await this.Context.Set<TransactionStatu>()
+			return await this.Context.Set<TransactionStatus>()
 			       .SingleOrDefaultAsync(x => x.Id == transactionStatusId);
 		}
 
@@ -136,5 +136,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5030517d9dd44b271605b764e0ce3296</Hash>
+    <Hash>f66bafce4dcfc99ad4b97c2923006c9a</Hash>
 </Codenesium>*/

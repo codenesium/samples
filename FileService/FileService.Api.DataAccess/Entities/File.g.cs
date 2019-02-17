@@ -21,7 +21,7 @@ namespace FileServiceNS.Api.DataAccess
 			DateTime expiration,
 			string extension,
 			Guid externalId,
-			double fileSizeInByte,
+			decimal fileSizeInByte,
 			int fileTypeId,
 			string location,
 			string privateKey,
@@ -62,7 +62,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual Guid ExternalId { get; private set; }
 
 		[Column("fileSizeInBytes")]
-		public virtual double FileSizeInByte { get; private set; }
+		public virtual decimal FileSizeInByte { get; private set; }
 
 		[Column("fileTypeId")]
 		public virtual int FileTypeId { get; private set; }
@@ -102,5 +102,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3601a330c6bc2212c643bbe7681aeba3</Hash>
+    <Hash>1879759c5a8c815492e5b196dc8e64a0</Hash>
 </Codenesium>*/

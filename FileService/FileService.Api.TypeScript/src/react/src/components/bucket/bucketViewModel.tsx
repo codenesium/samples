@@ -16,11 +16,11 @@ export default class BucketViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c72114aff1a1e68528e858875dbeea20</Hash>
+    <Hash>192382de5a3395c9cf5261b7741af072</Hash>
 </Codenesium>*/

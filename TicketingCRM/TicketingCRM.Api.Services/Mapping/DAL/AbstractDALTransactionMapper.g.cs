@@ -32,7 +32,7 @@ namespace TicketingCRMNS.Api.Services
 			                    item.TransactionStatusId);
 			if (item.TransactionStatusIdNavigation != null)
 			{
-				var transactionStatusIdModel = new ApiTransactionStatuServerResponseModel();
+				var transactionStatusIdModel = new ApiTransactionStatusServerResponseModel();
 				transactionStatusIdModel.SetProperties(
 					item.TransactionStatusIdNavigation.Id,
 					item.TransactionStatusIdNavigation.Name);
@@ -59,5 +59,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f354052d9094354b1024c66cdcac7bd7</Hash>
+    <Hash>6792bd5f4f018a2c05b972e4fca1bb33</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Services
 		{
 			var mapper = new DALFileMapper();
 			ApiFileServerRequestModel model = new ApiFileServerRequestModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
 			File response = mapper.MapModelToEntity(1, model);
 
 			response.BucketId.Should().Be(1);
@@ -26,7 +26,7 @@ namespace FileServiceNS.Api.Services
 			response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Extension.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			response.FileSizeInByte.Should().Be(1);
+			response.FileSizeInByte.Should().Be(1m);
 			response.FileTypeId.Should().Be(1);
 			response.Location.Should().Be("A");
 			response.PrivateKey.Should().Be("A");
@@ -38,7 +38,7 @@ namespace FileServiceNS.Api.Services
 		{
 			var mapper = new DALFileMapper();
 			File item = new File();
-			item.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+			item.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
 			ApiFileServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.BucketId.Should().Be(1);
@@ -47,7 +47,7 @@ namespace FileServiceNS.Api.Services
 			response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Extension.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			response.FileSizeInByte.Should().Be(1);
+			response.FileSizeInByte.Should().Be(1m);
 			response.FileTypeId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Location.Should().Be("A");
@@ -60,7 +60,7 @@ namespace FileServiceNS.Api.Services
 		{
 			var mapper = new DALFileMapper();
 			File item = new File();
-			item.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+			item.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
 			List<ApiFileServerResponseModel> response = mapper.MapEntityToModel(new List<File>() { { item} });
 
 			response.Count.Should().Be(1);
@@ -69,5 +69,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1df8d21b8c73757d9666c80f973af7d6</Hash>
+    <Hash>52142794e3dce523f5bdfefef1fa3d60</Hash>
 </Codenesium>*/

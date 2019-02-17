@@ -85,7 +85,7 @@ const FileEditDisplay = (props: FormikProps<FileViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="textbox"
+            type="datetime-local"
             name="dateCreated"
             className={
               errorExistForField('dateCreated')
@@ -223,7 +223,7 @@ const FileEditDisplay = (props: FormikProps<FileViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="textbox"
+            type="number"
             name="fileSizeInByte"
             className={
               errorExistForField('fileSizeInByte')
@@ -573,5 +573,5 @@ export default class FileEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>80fd90e3484a3923714ab1b4bc7a967b</Hash>
+    <Hash>cc825e3eb6d72e8e864e01f6b15dcae6</Hash>
 </Codenesium>*/

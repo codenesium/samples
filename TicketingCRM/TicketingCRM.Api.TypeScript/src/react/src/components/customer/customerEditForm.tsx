@@ -59,7 +59,7 @@ const CustomerEditDisplay = (props: FormikProps<CustomerViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="email"
             name="email"
             className={
               errorExistForField('email')
@@ -85,7 +85,7 @@ const CustomerEditDisplay = (props: FormikProps<CustomerViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="firstName"
             className={
               errorExistForField('firstName')
@@ -137,7 +137,7 @@ const CustomerEditDisplay = (props: FormikProps<CustomerViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="lastName"
             className={
               errorExistForField('lastName')
@@ -163,7 +163,7 @@ const CustomerEditDisplay = (props: FormikProps<CustomerViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="tel"
             name="phone"
             className={
               errorExistForField('phone')
@@ -355,5 +355,5 @@ export default class CustomerEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>fdba7da43ab10ae8a9097b4ad0c083d1</Hash>
+    <Hash>51519b7ce8d98187d748e62e592e22e3</Hash>
 </Codenesium>*/

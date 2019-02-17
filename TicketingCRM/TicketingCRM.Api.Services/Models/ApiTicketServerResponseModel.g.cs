@@ -31,9 +31,9 @@ namespace TicketingCRMNS.Api.Services
 		public string TicketStatusIdEntity { get; private set; } = RouteConstants.TicketStatus;
 
 		[JsonProperty]
-		public ApiTicketStatuServerResponseModel TicketStatusIdNavigation { get; private set; }
+		public ApiTicketStatusServerResponseModel TicketStatusIdNavigation { get; private set; }
 
-		public void SetTicketStatusIdNavigation(ApiTicketStatuServerResponseModel value)
+		public void SetTicketStatusIdNavigation(ApiTicketStatusServerResponseModel value)
 		{
 			this.TicketStatusIdNavigation = value;
 		}
@@ -41,5 +41,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61d7a68b3baa540f28a8a558cb1e68b1</Hash>
+    <Hash>3ba6272e31e7d42f9b52024b69a1ec8b</Hash>
 </Codenesium>*/

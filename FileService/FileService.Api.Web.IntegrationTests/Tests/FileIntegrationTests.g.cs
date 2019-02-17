@@ -35,9 +35,9 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiFileClientRequestModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
+			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 1, "B", "B", "B");
 			var model2 = new ApiFileClientRequestModel();
-			model2.SetProperties(1, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3, 1, "C", "C", "C");
+			model2.SetProperties(1, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3m, 1, "C", "C", "C");
 			var request = new List<ApiFileClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiFileClientResponseModel>> result = await client.FileBulkInsertAsync(request);
 
@@ -50,7 +50,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			context.Set<File>().ToList()[1].Expiration.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<File>().ToList()[1].Extension.Should().Be("B");
 			context.Set<File>().ToList()[1].ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			context.Set<File>().ToList()[1].FileSizeInByte.Should().Be(2);
+			context.Set<File>().ToList()[1].FileSizeInByte.Should().Be(2m);
 			context.Set<File>().ToList()[1].FileTypeId.Should().Be(1);
 			context.Set<File>().ToList()[1].Location.Should().Be("B");
 			context.Set<File>().ToList()[1].PrivateKey.Should().Be("B");
@@ -62,7 +62,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			context.Set<File>().ToList()[2].Expiration.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<File>().ToList()[2].Extension.Should().Be("C");
 			context.Set<File>().ToList()[2].ExternalId.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
-			context.Set<File>().ToList()[2].FileSizeInByte.Should().Be(3);
+			context.Set<File>().ToList()[2].FileSizeInByte.Should().Be(3m);
 			context.Set<File>().ToList()[2].FileTypeId.Should().Be(1);
 			context.Set<File>().ToList()[2].Location.Should().Be("C");
 			context.Set<File>().ToList()[2].PrivateKey.Should().Be("C");
@@ -80,7 +80,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiFileClientRequestModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
+			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 1, "B", "B", "B");
 			CreateResponse<ApiFileClientResponseModel> result = await client.FileCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -91,7 +91,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			context.Set<File>().ToList()[1].Expiration.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<File>().ToList()[1].Extension.Should().Be("B");
 			context.Set<File>().ToList()[1].ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			context.Set<File>().ToList()[1].FileSizeInByte.Should().Be(2);
+			context.Set<File>().ToList()[1].FileSizeInByte.Should().Be(2m);
 			context.Set<File>().ToList()[1].FileTypeId.Should().Be(1);
 			context.Set<File>().ToList()[1].Location.Should().Be("B");
 			context.Set<File>().ToList()[1].PrivateKey.Should().Be("B");
@@ -103,7 +103,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			result.Record.Expiration.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Extension.Should().Be("B");
 			result.Record.ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			result.Record.FileSizeInByte.Should().Be(2);
+			result.Record.FileSizeInByte.Should().Be(2m);
 			result.Record.FileTypeId.Should().Be(1);
 			result.Record.Location.Should().Be("B");
 			result.Record.PrivateKey.Should().Be("B");
@@ -125,7 +125,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			ApiFileServerResponseModel model = await service.Get(1);
 
 			ApiFileClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
+			request.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 1, "B", "B", "B");
 
 			UpdateResponse<ApiFileClientResponseModel> updateResponse = await client.FileUpdateAsync(model.Id, request);
 
@@ -139,7 +139,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			context.Set<File>().ToList()[0].Expiration.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<File>().ToList()[0].Extension.Should().Be("B");
 			context.Set<File>().ToList()[0].ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			context.Set<File>().ToList()[0].FileSizeInByte.Should().Be(2);
+			context.Set<File>().ToList()[0].FileSizeInByte.Should().Be(2m);
 			context.Set<File>().ToList()[0].FileTypeId.Should().Be(1);
 			context.Set<File>().ToList()[0].Location.Should().Be("B");
 			context.Set<File>().ToList()[0].PrivateKey.Should().Be("B");
@@ -152,7 +152,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			updateResponse.Record.Expiration.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Extension.Should().Be("B");
 			updateResponse.Record.ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			updateResponse.Record.FileSizeInByte.Should().Be(2);
+			updateResponse.Record.FileSizeInByte.Should().Be(2m);
 			updateResponse.Record.FileTypeId.Should().Be(1);
 			updateResponse.Record.Location.Should().Be("B");
 			updateResponse.Record.PrivateKey.Should().Be("B");
@@ -171,7 +171,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 
 			IFileService service = testServer.Host.Services.GetService(typeof(IFileService)) as IFileService;
 			var model = new ApiFileServerRequestModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
+			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 1, "B", "B", "B");
 			CreateResponse<ApiFileServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -204,7 +204,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Extension.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			response.FileSizeInByte.Should().Be(1);
+			response.FileSizeInByte.Should().Be(1m);
 			response.FileTypeId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Location.Should().Be("A");
@@ -245,7 +245,7 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 			response[0].Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].Extension.Should().Be("A");
 			response[0].ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			response[0].FileSizeInByte.Should().Be(1);
+			response[0].FileSizeInByte.Should().Be(1m);
 			response[0].FileTypeId.Should().Be(1);
 			response[0].Id.Should().Be(1);
 			response[0].Location.Should().Be("A");
@@ -276,5 +276,5 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>5bc969882d2a525b04278986bd27f6d9</Hash>
+    <Hash>dc5d9b69f3d9ae603017b7fec23dd1a1</Hash>
 </Codenesium>*/

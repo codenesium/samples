@@ -89,7 +89,7 @@ const FileCreateDisplay: React.SFC<FormikProps<FileViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="textbox"
+            type="datetime-local"
             name="dateCreated"
             className={
               errorExistForField('dateCreated')
@@ -232,7 +232,7 @@ const FileCreateDisplay: React.SFC<FormikProps<FileViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="textbox"
+            type="number"
             name="fileSizeInByte"
             className={
               errorExistForField('fileSizeInByte')
@@ -500,5 +500,5 @@ export default class FileCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a15d7c139e0935aff77d4131f0cc34c6</Hash>
+    <Hash>a0bc5603ac977684969901be7f97a4ad</Hash>
 </Codenesium>*/

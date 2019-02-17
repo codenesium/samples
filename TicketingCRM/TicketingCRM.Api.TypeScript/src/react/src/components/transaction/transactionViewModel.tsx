@@ -1,4 +1,4 @@
-import TransactionStatuViewModel from '../transactionStatu/transactionStatuViewModel';
+import TransactionStatusViewModel from '../transactionStatus/transactionStatusViewModel';
 
 export default class TransactionViewModel {
   amount: number;
@@ -6,7 +6,7 @@ export default class TransactionViewModel {
   id: number;
   transactionStatusId: number;
   transactionStatusIdEntity: string;
-  transactionStatusIdNavigation?: TransactionStatuViewModel;
+  transactionStatusIdNavigation?: TransactionStatusViewModel;
 
   constructor() {
     this.amount = 0;
@@ -30,11 +30,11 @@ export default class TransactionViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>4f7fd915d579d37198a564adb0ab9ab7</Hash>
+    <Hash>028fd09a92b7fb5feb5501ab8331dc67</Hash>
 </Codenesium>*/

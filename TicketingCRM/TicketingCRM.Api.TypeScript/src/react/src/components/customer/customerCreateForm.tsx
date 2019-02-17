@@ -62,7 +62,7 @@ const CustomerCreateDisplay: React.SFC<FormikProps<CustomerViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="email"
             name="email"
             className={
               errorExistForField('email')
@@ -89,7 +89,7 @@ const CustomerCreateDisplay: React.SFC<FormikProps<CustomerViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="firstName"
             className={
               errorExistForField('firstName')
@@ -116,7 +116,7 @@ const CustomerCreateDisplay: React.SFC<FormikProps<CustomerViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="lastName"
             className={
               errorExistForField('lastName')
@@ -143,7 +143,7 @@ const CustomerCreateDisplay: React.SFC<FormikProps<CustomerViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="tel"
             name="phone"
             className={
               errorExistForField('phone')
@@ -275,5 +275,5 @@ export default class CustomerCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a8b1ecc5c973fbe7b2d89bdeb3eb5e12</Hash>
+    <Hash>e8a462547fea9cd96d84f49631909c4f</Hash>
 </Codenesium>*/

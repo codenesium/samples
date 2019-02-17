@@ -22,9 +22,9 @@ namespace TicketingCRMNS.Api.Client
 			from.Sales.ForEach(x => this.AddSale(x));
 			from.SaleTickets.ForEach(x => this.AddSaleTicket(x));
 			from.Tickets.ForEach(x => this.AddTicket(x));
-			from.TicketStatus.ForEach(x => this.AddTicketStatu(x));
+			from.TicketStatus.ForEach(x => this.AddTicketStatus(x));
 			from.Transactions.ForEach(x => this.AddTransaction(x));
-			from.TransactionStatus.ForEach(x => this.AddTransactionStatu(x));
+			from.TransactionStatus.ForEach(x => this.AddTransactionStatus(x));
 			from.Venues.ForEach(x => this.AddVenue(x));
 		}
 
@@ -46,11 +46,11 @@ namespace TicketingCRMNS.Api.Client
 
 		public List<ApiTicketClientResponseModel> Tickets { get; private set; } = new List<ApiTicketClientResponseModel>();
 
-		public List<ApiTicketStatuClientResponseModel> TicketStatus { get; private set; } = new List<ApiTicketStatuClientResponseModel>();
+		public List<ApiTicketStatusClientResponseModel> TicketStatus { get; private set; } = new List<ApiTicketStatusClientResponseModel>();
 
 		public List<ApiTransactionClientResponseModel> Transactions { get; private set; } = new List<ApiTransactionClientResponseModel>();
 
-		public List<ApiTransactionStatuClientResponseModel> TransactionStatus { get; private set; } = new List<ApiTransactionStatuClientResponseModel>();
+		public List<ApiTransactionStatusClientResponseModel> TransactionStatus { get; private set; } = new List<ApiTransactionStatusClientResponseModel>();
 
 		public List<ApiVenueClientResponseModel> Venues { get; private set; } = new List<ApiVenueClientResponseModel>();
 
@@ -126,7 +126,7 @@ namespace TicketingCRMNS.Api.Client
 			}
 		}
 
-		public void AddTicketStatu(ApiTicketStatuClientResponseModel item)
+		public void AddTicketStatus(ApiTicketStatusClientResponseModel item)
 		{
 			if (!this.TicketStatus.Any(x => x.Id == item.Id))
 			{
@@ -142,7 +142,7 @@ namespace TicketingCRMNS.Api.Client
 			}
 		}
 
-		public void AddTransactionStatu(ApiTransactionStatuClientResponseModel item)
+		public void AddTransactionStatus(ApiTransactionStatusClientResponseModel item)
 		{
 			if (!this.TransactionStatus.Any(x => x.Id == item.Id))
 			{
@@ -161,5 +161,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>3421bb3861fd78551d3f0fe5d19d185c</Hash>
+    <Hash>bce424bcbdcd6ca0fbb139f57260c7f4</Hash>
 </Codenesium>*/

@@ -50,11 +50,11 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		public virtual DbSet<Ticket> Tickets { get; set; }
 
-		public virtual DbSet<TicketStatu> TicketStatus { get; set; }
+		public virtual DbSet<TicketStatus> TicketStatus { get; set; }
 
 		public virtual DbSet<Transaction> Transactions { get; set; }
 
-		public virtual DbSet<TransactionStatu> TransactionStatus { get; set; }
+		public virtual DbSet<TransactionStatus> TransactionStatus { get; set; }
 
 		public virtual DbSet<Venue> Venues { get; set; }
 
@@ -191,13 +191,13 @@ namespace TicketingCRMNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<TicketStatu>()
+			modelBuilder.Entity<TicketStatus>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<TicketStatu>()
+			modelBuilder.Entity<TicketStatus>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -213,13 +213,13 @@ namespace TicketingCRMNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<TransactionStatu>()
+			modelBuilder.Entity<TransactionStatus>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<TransactionStatu>()
+			modelBuilder.Entity<TransactionStatus>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -241,5 +241,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dbab15df7b1873c73ea462bfa4fcfb59</Hash>
+    <Hash>3f4450f2b253312c2fe646000b628d54</Hash>
 </Codenesium>*/

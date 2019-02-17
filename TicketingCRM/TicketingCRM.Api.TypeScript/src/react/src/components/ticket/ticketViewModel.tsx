@@ -1,11 +1,11 @@
-import TicketStatuViewModel from '../ticketStatu/ticketStatuViewModel';
+import TicketStatusViewModel from '../ticketStatus/ticketStatusViewModel';
 
 export default class TicketViewModel {
   id: number;
   publicId: string;
   ticketStatusId: number;
   ticketStatusIdEntity: string;
-  ticketStatusIdNavigation?: TicketStatuViewModel;
+  ticketStatusIdNavigation?: TicketStatusViewModel;
 
   constructor() {
     this.id = 0;
@@ -22,11 +22,11 @@ export default class TicketViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>68de00ef4eaa287e8b18483368eb95ad</Hash>
+    <Hash>28b8c9757ba7b061d49423b56a1e2ced</Hash>
 </Codenesium>*/

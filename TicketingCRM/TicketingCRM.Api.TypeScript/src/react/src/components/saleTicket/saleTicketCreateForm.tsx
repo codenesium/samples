@@ -62,7 +62,7 @@ const SaleTicketCreateDisplay: React.SFC<FormikProps<SaleTicketViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="saleId"
             className={
               errorExistForField('saleId')
@@ -89,7 +89,7 @@ const SaleTicketCreateDisplay: React.SFC<FormikProps<SaleTicketViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="ticketId"
             className={
               errorExistForField('ticketId')
@@ -213,5 +213,5 @@ export default class SaleTicketCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f0d8e36c2606cfed5e6cc925b61ee002</Hash>
+    <Hash>4dd403c179dbcc8eec4ea769550d91be</Hash>
 </Codenesium>*/

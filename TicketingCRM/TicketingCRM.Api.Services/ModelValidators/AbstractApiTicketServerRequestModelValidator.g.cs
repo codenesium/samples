@@ -34,12 +34,12 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void TicketStatusIdRules()
 		{
-			this.RuleFor(x => x.TicketStatusId).MustAsync(this.BeValidTicketStatuByTicketStatusId).When(x => !x?.TicketStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+			this.RuleFor(x => x.TicketStatusId).MustAsync(this.BeValidTicketStatusByTicketStatusId).When(x => !x?.TicketStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		protected async Task<bool> BeValidTicketStatuByTicketStatusId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTicketStatusByTicketStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.TicketRepository.TicketStatuByTicketStatusId(id);
+			var record = await this.TicketRepository.TicketStatusByTicketStatusId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a87cf8acef6793ffd69bded06d451578</Hash>
+    <Hash>7b0d5ba65a638f8b0ef24b96f8d5760b</Hash>
 </Codenesium>*/

@@ -36,9 +36,9 @@ namespace TicketingCRMNS.Api.Services
 		public string TransactionStatusIdEntity { get; private set; } = RouteConstants.TransactionStatus;
 
 		[JsonProperty]
-		public ApiTransactionStatuServerResponseModel TransactionStatusIdNavigation { get; private set; }
+		public ApiTransactionStatusServerResponseModel TransactionStatusIdNavigation { get; private set; }
 
-		public void SetTransactionStatusIdNavigation(ApiTransactionStatuServerResponseModel value)
+		public void SetTransactionStatusIdNavigation(ApiTransactionStatusServerResponseModel value)
 		{
 			this.TransactionStatusIdNavigation = value;
 		}
@@ -46,5 +46,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4af57d77f1f2b9a113ce91e8a31569f2</Hash>
+    <Hash>3d48fe69bb6e1128429fe81ff3b20e46</Hash>
 </Codenesium>*/

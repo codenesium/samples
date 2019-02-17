@@ -34,11 +34,11 @@ export default class SaleViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.transactionId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>8ef937cbbc0e50d72033de500cc45f08</Hash>
+    <Hash>600cf651fd62ba7eb52b52c42970b177</Hash>
 </Codenesium>*/

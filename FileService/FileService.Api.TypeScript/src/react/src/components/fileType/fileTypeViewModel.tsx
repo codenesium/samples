@@ -13,11 +13,11 @@ export default class FileTypeViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>01bbc161b27a4fd7c33bb1771a7b1dea</Hash>
+    <Hash>262fe0a89042905e2f35c0cee7f2ac09</Hash>
 </Codenesium>*/

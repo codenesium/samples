@@ -58,11 +58,11 @@ export default class EventViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>131e960d34cf74982db24d869ca1b71c</Hash>
+    <Hash>f600c838b2809d72846d7028f6480412</Hash>
 </Codenesium>*/

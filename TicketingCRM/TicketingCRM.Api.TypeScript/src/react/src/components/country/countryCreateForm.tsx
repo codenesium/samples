@@ -62,7 +62,7 @@ const CountryCreateDisplay: React.SFC<FormikProps<CountryViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -179,5 +179,5 @@ export default class CountryCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>09c57646efe9c713d56dd9a5c8e17fd5</Hash>
+    <Hash>81f1aef68a4f27529a1a00227793b14e</Hash>
 </Codenesium>*/

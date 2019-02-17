@@ -62,7 +62,7 @@ const CityCreateDisplay: React.SFC<FormikProps<CityViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -89,7 +89,7 @@ const CityCreateDisplay: React.SFC<FormikProps<CityViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="provinceId"
             className={
               errorExistForField('provinceId')
@@ -215,5 +215,5 @@ export default class CityCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cd40602ea4b049c92a97b9a24064358d</Hash>
+    <Hash>67dfe63ac226c9ce50eddcef64759750</Hash>
 </Codenesium>*/

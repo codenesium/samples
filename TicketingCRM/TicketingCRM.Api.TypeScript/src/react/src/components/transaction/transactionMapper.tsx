@@ -1,6 +1,6 @@
 import * as Api from '../../api/models';
 import TransactionViewModel from './transactionViewModel';
-import TransactionStatuViewModel from '../transactionStatu/transactionStatuViewModel';
+import TransactionStatusViewModel from '../transactionStatus/transactionStatusViewModel';
 export default class TransactionMapper {
   mapApiResponseToViewModel(
     dto: Api.TransactionClientResponseModel
@@ -14,7 +14,7 @@ export default class TransactionMapper {
     );
 
     if (dto.transactionStatusIdNavigation != null) {
-      response.transactionStatusIdNavigation = new TransactionStatuViewModel();
+      response.transactionStatusIdNavigation = new TransactionStatusViewModel();
       response.transactionStatusIdNavigation.setProperties(
         dto.transactionStatusIdNavigation.id,
         dto.transactionStatusIdNavigation.name
@@ -40,5 +40,5 @@ export default class TransactionMapper {
 
 
 /*<Codenesium>
-    <Hash>9802eed25c5e2461845166ca66e496ff</Hash>
+    <Hash>8fd8ebde15c3a7a3bd4fdfeb052e3c70</Hash>
 </Codenesium>*/

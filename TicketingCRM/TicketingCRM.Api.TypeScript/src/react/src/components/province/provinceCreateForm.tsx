@@ -41,7 +41,7 @@ interface Props {
             			<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("countryId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CountryId</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="countryId" className={errorExistForField("countryId") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="countryId" className={errorExistForField("countryId") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("countryId") && <small className="text-danger">{errorsForField("countryId")}</small>}
                         </div>
                     </div>
@@ -49,7 +49,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
                         </div>
                     </div>
@@ -153,5 +153,5 @@ const ProvinceCreate = withFormik<Props, ProvinceViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>0fba9d6f57a9af1a13cb9f60cbe68516</Hash>
+    <Hash>dae856c0378fb69ee3765e8fd0a5696b</Hash>
 </Codenesium>*/

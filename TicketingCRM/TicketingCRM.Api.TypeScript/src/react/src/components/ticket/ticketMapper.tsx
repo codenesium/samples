@@ -1,6 +1,6 @@
 import * as Api from '../../api/models';
 import TicketViewModel from './ticketViewModel';
-import TicketStatuViewModel from '../ticketStatu/ticketStatuViewModel';
+import TicketStatusViewModel from '../ticketStatus/ticketStatusViewModel';
 export default class TicketMapper {
   mapApiResponseToViewModel(
     dto: Api.TicketClientResponseModel
@@ -9,7 +9,7 @@ export default class TicketMapper {
     response.setProperties(dto.id, dto.publicId, dto.ticketStatusId);
 
     if (dto.ticketStatusIdNavigation != null) {
-      response.ticketStatusIdNavigation = new TicketStatuViewModel();
+      response.ticketStatusIdNavigation = new TicketStatusViewModel();
       response.ticketStatusIdNavigation.setProperties(
         dto.ticketStatusIdNavigation.id,
         dto.ticketStatusIdNavigation.name
@@ -30,5 +30,5 @@ export default class TicketMapper {
 
 
 /*<Codenesium>
-    <Hash>389aad4be4d6b1f9cb73d21ca1cead3a</Hash>
+    <Hash>01258126e0475747bdeb1e8fcff48548</Hash>
 </Codenesium>*/

@@ -54,17 +54,17 @@ namespace TicketingCRMNS.Api.DataAccess
 			ticketItem1.SetProperties(1, "A", 1);
 			this.Context.Tickets.Add(ticketItem1);
 
-			var ticketStatuItem1 = new TicketStatu();
-			ticketStatuItem1.SetProperties(1, "A");
-			this.Context.TicketStatus.Add(ticketStatuItem1);
+			var ticketStatusItem1 = new TicketStatus();
+			ticketStatusItem1.SetProperties(1, "A");
+			this.Context.TicketStatus.Add(ticketStatusItem1);
 
 			var transactionItem1 = new Transaction();
 			transactionItem1.SetProperties(1, 1m, "A", 1);
 			this.Context.Transactions.Add(transactionItem1);
 
-			var transactionStatuItem1 = new TransactionStatu();
-			transactionStatuItem1.SetProperties(1, "A");
-			this.Context.TransactionStatus.Add(transactionStatuItem1);
+			var transactionStatusItem1 = new TransactionStatus();
+			transactionStatusItem1.SetProperties(1, "A");
+			this.Context.TransactionStatus.Add(transactionStatusItem1);
 
 			var venueItem1 = new Venue();
 			venueItem1.SetProperties(1, "A", "A", 1, "A", "A", "A", "A", 1, "A");
@@ -76,5 +76,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8f0edfb0112029385309e47baf5a3c7b</Hash>
+    <Hash>c935f38088a6d43db6236227f220cbd4</Hash>
 </Codenesium>*/

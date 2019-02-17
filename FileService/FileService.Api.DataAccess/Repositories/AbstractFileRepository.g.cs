@@ -41,7 +41,7 @@ namespace FileServiceNS.Api.DataAccess
 				                  x.Expiration == query.ToDateTime() ||
 				                  x.Extension.StartsWith(query) ||
 				                  x.ExternalId == query.ToGuid() ||
-				                  x.FileSizeInByte == query.ToDouble() ||
+				                  x.FileSizeInByte.ToDecimal() == query.ToDecimal() ||
 				                  x.FileTypeId == query.ToInt() ||
 				                  x.Id == query.ToInt() ||
 				                  x.Location.StartsWith(query) ||
@@ -139,5 +139,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67a3952732175ad80634e2dac2fb7075</Hash>
+    <Hash>f950437cb6d19829a390353f0c183984</Hash>
 </Codenesium>*/

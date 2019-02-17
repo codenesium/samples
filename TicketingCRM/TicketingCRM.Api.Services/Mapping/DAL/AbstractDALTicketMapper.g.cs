@@ -30,7 +30,7 @@ namespace TicketingCRMNS.Api.Services
 			                    item.TicketStatusId);
 			if (item.TicketStatusIdNavigation != null)
 			{
-				var ticketStatusIdModel = new ApiTicketStatuServerResponseModel();
+				var ticketStatusIdModel = new ApiTicketStatusServerResponseModel();
 				ticketStatusIdModel.SetProperties(
 					item.TicketStatusIdNavigation.Id,
 					item.TicketStatusIdNavigation.Name);
@@ -57,5 +57,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7bdba9381c300edc2c496fbadba5f0cf</Hash>
+    <Hash>70d2dbf6ca047db1bf30f45c854feef5</Hash>
 </Codenesium>*/

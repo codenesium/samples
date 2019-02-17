@@ -36,11 +36,11 @@ export default class AdminViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.username);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>4bfba233b24dad2413d5c0053576c9f6</Hash>
+    <Hash>4e10ca9e1349da040f177a6dbb37d243</Hash>
 </Codenesium>*/

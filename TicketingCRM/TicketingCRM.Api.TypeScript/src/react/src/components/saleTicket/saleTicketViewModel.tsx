@@ -27,11 +27,11 @@ export default class SaleTicketViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>fee41aaff0f38d2f175a27639a43db85</Hash>
+    <Hash>26cb547a1201a5e93c4f62d7489e419e</Hash>
 </Codenesium>*/

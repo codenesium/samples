@@ -16,7 +16,7 @@ namespace FileServiceNS.Api.Services.Tests
 		{
 			var mapper = new ApiFileServerModelMapper();
 			var model = new ApiFileServerRequestModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
 			ApiFileServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.BucketId.Should().Be(1);
@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Extension.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			response.FileSizeInByte.Should().Be(1);
+			response.FileSizeInByte.Should().Be(1m);
 			response.FileTypeId.Should().Be(1);
 			response.Location.Should().Be("A");
 			response.PrivateKey.Should().Be("A");
@@ -37,7 +37,7 @@ namespace FileServiceNS.Api.Services.Tests
 		{
 			var mapper = new ApiFileServerModelMapper();
 			var model = new ApiFileServerResponseModel();
-			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
 			ApiFileServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.BucketId.Should().Be(1);
@@ -46,7 +46,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Extension.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			response.FileSizeInByte.Should().Be(1);
+			response.FileSizeInByte.Should().Be(1m);
 			response.FileTypeId.Should().Be(1);
 			response.Location.Should().Be("A");
 			response.PrivateKey.Should().Be("A");
@@ -58,7 +58,7 @@ namespace FileServiceNS.Api.Services.Tests
 		{
 			var mapper = new ApiFileServerModelMapper();
 			var model = new ApiFileServerRequestModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1, "A", "A", "A");
 
 			JsonPatchDocument<ApiFileServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiFileServerRequestModel();
@@ -69,7 +69,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Expiration.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Extension.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			response.FileSizeInByte.Should().Be(1);
+			response.FileSizeInByte.Should().Be(1m);
 			response.FileTypeId.Should().Be(1);
 			response.Location.Should().Be("A");
 			response.PrivateKey.Should().Be("A");
@@ -79,5 +79,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2a652d89413ec32590109fbedad92a00</Hash>
+    <Hash>c36a6594d0e3f585ba6bbaf10708019c</Hash>
 </Codenesium>*/

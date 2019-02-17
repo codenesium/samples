@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.Client
 			DateTime expiration,
 			string extension,
 			Guid externalId,
-			double fileSizeInByte,
+			decimal fileSizeInByte,
 			int fileTypeId,
 			string location,
 			string privateKey,
@@ -77,7 +77,7 @@ namespace FileServiceNS.Api.Client
 		public Guid ExternalId { get; private set; }
 
 		[JsonProperty]
-		public double FileSizeInByte { get; private set; }
+		public decimal FileSizeInByte { get; private set; }
 
 		[JsonProperty]
 		public int FileTypeId { get; private set; }
@@ -100,5 +100,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>aec6f253751967a698517e3c14b49e98</Hash>
+    <Hash>bcfc0e9789cd03106eb5d3b610bd5158</Hash>
 </Codenesium>*/

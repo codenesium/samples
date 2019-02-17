@@ -67,11 +67,11 @@ export default class FileViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>e9c415ac45ad0a93a341619ec2262bb2</Hash>
+    <Hash>3b3ae98dccc0dda5572d958cfe682d53</Hash>
 </Codenesium>*/

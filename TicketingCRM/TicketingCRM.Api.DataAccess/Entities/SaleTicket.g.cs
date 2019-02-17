@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-	[Table("SaleTickets", Schema="dbo")]
+	[Table("SaleTicket", Schema="dbo")]
 	public partial class SaleTicket : AbstractEntity
 	{
 		public SaleTicket()
@@ -52,5 +52,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b69a76f2dd97860d933738f155d8d69f</Hash>
+    <Hash>df834a0052439e8201a950dc1a0ecc61</Hash>
 </Codenesium>*/

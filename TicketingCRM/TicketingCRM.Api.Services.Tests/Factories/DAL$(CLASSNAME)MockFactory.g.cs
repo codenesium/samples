@@ -26,11 +26,11 @@ namespace TicketingCRMNS.Api.Services.Tests
 
 		public IDALTicketMapper DALTicketMapperMock { get; set; } = new DALTicketMapper();
 
-		public IDALTicketStatuMapper DALTicketStatuMapperMock { get; set; } = new DALTicketStatuMapper();
+		public IDALTicketStatusMapper DALTicketStatusMapperMock { get; set; } = new DALTicketStatusMapper();
 
 		public IDALTransactionMapper DALTransactionMapperMock { get; set; } = new DALTransactionMapper();
 
-		public IDALTransactionStatuMapper DALTransactionStatuMapperMock { get; set; } = new DALTransactionStatuMapper();
+		public IDALTransactionStatusMapper DALTransactionStatusMapperMock { get; set; } = new DALTransactionStatusMapper();
 
 		public IDALVenueMapper DALVenueMapperMock { get; set; } = new DALVenueMapper();
 
@@ -41,5 +41,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e73ddca8c9a7c09a3904e96c06fb2d82</Hash>
+    <Hash>ea94b8c009bd396a33eb3223eb1fe199</Hash>
 </Codenesium>*/

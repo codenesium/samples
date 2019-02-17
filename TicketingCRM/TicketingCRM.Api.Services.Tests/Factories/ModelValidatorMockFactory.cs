@@ -27,11 +27,11 @@ namespace TicketingCRMNS.Api.Services.Tests
 
 		public Mock<IApiTicketServerRequestModelValidator> TicketModelValidatorMock { get; set; } = new Mock<IApiTicketServerRequestModelValidator>();
 
-		public Mock<IApiTicketStatuServerRequestModelValidator> TicketStatuModelValidatorMock { get; set; } = new Mock<IApiTicketStatuServerRequestModelValidator>();
+		public Mock<IApiTicketStatusServerRequestModelValidator> TicketStatusModelValidatorMock { get; set; } = new Mock<IApiTicketStatusServerRequestModelValidator>();
 
 		public Mock<IApiTransactionServerRequestModelValidator> TransactionModelValidatorMock { get; set; } = new Mock<IApiTransactionServerRequestModelValidator>();
 
-		public Mock<IApiTransactionStatuServerRequestModelValidator> TransactionStatuModelValidatorMock { get; set; } = new Mock<IApiTransactionStatuServerRequestModelValidator>();
+		public Mock<IApiTransactionStatusServerRequestModelValidator> TransactionStatusModelValidatorMock { get; set; } = new Mock<IApiTransactionStatusServerRequestModelValidator>();
 
 		public Mock<IApiVenueServerRequestModelValidator> VenueModelValidatorMock { get; set; } = new Mock<IApiVenueServerRequestModelValidator>();
 
@@ -73,17 +73,17 @@ namespace TicketingCRMNS.Api.Services.Tests
 			this.TicketModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TicketModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.TicketStatuModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTicketStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TicketStatuModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TicketStatuModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TicketStatusModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTicketStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TicketStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TicketStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.TransactionModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TransactionModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TransactionModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.TransactionStatuModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TransactionStatuModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TransactionStatuModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TransactionStatusModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TransactionStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TransactionStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.VenueModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.VenueModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -93,5 +93,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b146d9134d629a2527ebc71942142027</Hash>
+    <Hash>2244d6bb6fe6ffa824884143e878e2e9</Hash>
 </Codenesium>*/

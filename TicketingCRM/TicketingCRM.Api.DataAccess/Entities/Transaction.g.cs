@@ -40,9 +40,9 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual int TransactionStatusId { get; private set; }
 
 		[ForeignKey("TransactionStatusId")]
-		public virtual TransactionStatu TransactionStatusIdNavigation { get; private set; }
+		public virtual TransactionStatus TransactionStatusIdNavigation { get; private set; }
 
-		public void SetTransactionStatusIdNavigation(TransactionStatu item)
+		public void SetTransactionStatusIdNavigation(TransactionStatus item)
 		{
 			this.TransactionStatusIdNavigation = item;
 		}
@@ -50,5 +50,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dafd8631a99f35fb1b266e999dcc7356</Hash>
+    <Hash>670bc6c6d7ae418915d527806ab3851a</Hash>
 </Codenesium>*/
