@@ -198,13 +198,6 @@ export default class TicketSearchComponent extends React.Component<
                 Header: 'Ticket',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PublicId',
                     accessor: 'publicId',
                     Cell: props => {
@@ -290,5 +283,5 @@ export default class TicketSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6cb0b0694dbbd9035b70d8f505e446e9</Hash>
+    <Hash>d6851838f040995f0fe2f4834a589cb1</Hash>
 </Codenesium>*/

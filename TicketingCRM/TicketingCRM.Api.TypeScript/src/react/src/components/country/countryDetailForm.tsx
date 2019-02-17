@@ -28,12 +28,6 @@ const CountryDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -139,5 +133,5 @@ export default class CountryDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1b68d751f7e3876a12241289a4d8d7ab</Hash>
+    <Hash>fd7f9cd05d96a11a6aa959d19e27294b</Hash>
 </Codenesium>*/

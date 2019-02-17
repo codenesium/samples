@@ -198,13 +198,6 @@ export default class SaleTicketSearchComponent extends React.Component<
                 Header: 'SaleTicket',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'SaleId',
                     accessor: 'saleId',
                     Cell: props => {
@@ -302,5 +295,5 @@ export default class SaleTicketSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2dbe0a634372b4f0d43e919d0e424d1f</Hash>
+    <Hash>592185f4ec17f44913b4eec5be705900</Hash>
 </Codenesium>*/

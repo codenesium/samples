@@ -28,12 +28,6 @@ const TransactionStatusDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -139,5 +133,5 @@ export default class TransactionStatusDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>660e4af5628642b75bfb05b8e3295cbb</Hash>
+    <Hash>8fedf91b5538f26fb2bca06e195ef571</Hash>
 </Codenesium>*/

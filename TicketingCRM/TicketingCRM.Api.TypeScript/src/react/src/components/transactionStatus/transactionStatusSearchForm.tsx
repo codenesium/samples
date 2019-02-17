@@ -203,13 +203,6 @@ export default class TransactionStatusSearchComponent extends React.Component<
                 Header: 'TransactionStatus',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -272,5 +265,5 @@ export default class TransactionStatusSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0a245af15987b1c0307c0642ff794151</Hash>
+    <Hash>9bbf98dec9ca58214b3ed5432dacfeef</Hash>
 </Codenesium>*/

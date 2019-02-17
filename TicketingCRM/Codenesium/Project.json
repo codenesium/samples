@@ -5036,11 +5036,36 @@
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
         "ForeignKeyDisplayColumn": "this.name"
+      },
+      {
+        "$id": "298",
+        "Table": "Venue",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Venue",
+        "AppTableNamePlural": "Venues",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.name"
       }
     ],
     "ColumnParameterSettings": [
       {
-        "$id": "298",
+        "$id": "299",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Email",
@@ -5060,7 +5085,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "299",
+        "$id": "300",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -5080,7 +5105,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "300",
+        "$id": "301",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "LastName",
@@ -5100,7 +5125,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "301",
+        "$id": "302",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Password",
@@ -5120,7 +5145,7 @@
         "AppNamePlural": "Passwords"
       },
       {
-        "$id": "302",
+        "$id": "303",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Phone",
@@ -5140,7 +5165,7 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "303",
+        "$id": "304",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Username",
@@ -5160,7 +5185,7 @@
         "AppNamePlural": "Usernames"
       },
       {
-        "$id": "304",
+        "$id": "305",
         "Table": "City",
         "Schema": "dbo",
         "Column": "Name",
@@ -5180,7 +5205,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "305",
+        "$id": "306",
         "Table": "City",
         "Schema": "dbo",
         "Column": "ProvinceId",
@@ -5200,7 +5225,7 @@
         "AppNamePlural": "ProvinceIds"
       },
       {
-        "$id": "306",
+        "$id": "307",
         "Table": "Country",
         "Schema": "dbo",
         "Column": "Name",
@@ -5220,7 +5245,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "307",
+        "$id": "308",
         "Table": "Customer",
         "Schema": "dbo",
         "Column": "Email",
@@ -5240,7 +5265,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "308",
+        "$id": "309",
         "Table": "Customer",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -5260,7 +5285,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "309",
+        "$id": "310",
         "Table": "Customer",
         "Schema": "dbo",
         "Column": "LastName",
@@ -5280,7 +5305,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "310",
+        "$id": "311",
         "Table": "Customer",
         "Schema": "dbo",
         "Column": "Phone",
@@ -5300,7 +5325,7 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "311",
+        "$id": "312",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Address1",
@@ -5320,7 +5345,7 @@
         "AppNamePlural": "Address1"
       },
       {
-        "$id": "312",
+        "$id": "313",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Address2",
@@ -5340,7 +5365,7 @@
         "AppNamePlural": "Address2"
       },
       {
-        "$id": "313",
+        "$id": "314",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "CityId",
@@ -5360,7 +5385,7 @@
         "AppNamePlural": "CityIds"
       },
       {
-        "$id": "314",
+        "$id": "315",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Date",
@@ -5380,7 +5405,7 @@
         "AppNamePlural": "Dates"
       },
       {
-        "$id": "315",
+        "$id": "316",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Description",
@@ -5400,7 +5425,7 @@
         "AppNamePlural": "Descriptions"
       },
       {
-        "$id": "316",
+        "$id": "317",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "EndDate",
@@ -5420,7 +5445,7 @@
         "AppNamePlural": "EndDates"
       },
       {
-        "$id": "317",
+        "$id": "318",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Facebook",
@@ -5440,7 +5465,7 @@
         "AppNamePlural": "Facebooks"
       },
       {
-        "$id": "318",
+        "$id": "319",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Name",
@@ -5460,7 +5485,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "319",
+        "$id": "320",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "StartDate",
@@ -5480,7 +5505,7 @@
         "AppNamePlural": "StartDates"
       },
       {
-        "$id": "320",
+        "$id": "321",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Website",
@@ -5500,7 +5525,7 @@
         "AppNamePlural": "Websites"
       },
       {
-        "$id": "321",
+        "$id": "322",
         "Table": "Province",
         "Schema": "dbo",
         "Column": "CountryId",
@@ -5520,7 +5545,7 @@
         "AppNamePlural": "CountryIds"
       },
       {
-        "$id": "322",
+        "$id": "323",
         "Table": "Province",
         "Schema": "dbo",
         "Column": "Name",
@@ -5540,7 +5565,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "323",
+        "$id": "324",
         "Table": "Sale",
         "Schema": "dbo",
         "Column": "IpAddress",
@@ -5560,7 +5585,7 @@
         "AppNamePlural": "IpAddresses"
       },
       {
-        "$id": "324",
+        "$id": "325",
         "Table": "Sale",
         "Schema": "dbo",
         "Column": "Note",
@@ -5580,7 +5605,7 @@
         "AppNamePlural": "Notes"
       },
       {
-        "$id": "325",
+        "$id": "326",
         "Table": "Sale",
         "Schema": "dbo",
         "Column": "SaleDate",
@@ -5600,7 +5625,7 @@
         "AppNamePlural": "SaleDates"
       },
       {
-        "$id": "326",
+        "$id": "327",
         "Table": "Sale",
         "Schema": "dbo",
         "Column": "TransactionId",
@@ -5620,7 +5645,7 @@
         "AppNamePlural": "TransactionIds"
       },
       {
-        "$id": "327",
+        "$id": "328",
         "Table": "SaleTicket",
         "Schema": "dbo",
         "Column": "SaleId",
@@ -5640,7 +5665,7 @@
         "AppNamePlural": "SaleIds"
       },
       {
-        "$id": "328",
+        "$id": "329",
         "Table": "SaleTicket",
         "Schema": "dbo",
         "Column": "TicketId",
@@ -5660,7 +5685,7 @@
         "AppNamePlural": "TicketIds"
       },
       {
-        "$id": "329",
+        "$id": "330",
         "Table": "Ticket",
         "Schema": "dbo",
         "Column": "PublicId",
@@ -5680,7 +5705,7 @@
         "AppNamePlural": "PublicIds"
       },
       {
-        "$id": "330",
+        "$id": "331",
         "Table": "Ticket",
         "Schema": "dbo",
         "Column": "TicketStatusId",
@@ -5698,26 +5723,6 @@
         "AppViewControlLabel": "ticketStatusId",
         "AppName": "TicketStatusId",
         "AppNamePlural": "TicketStatusIds"
-      },
-      {
-        "$id": "331",
-        "Table": "TicketStatu",
-        "Schema": "dbo",
-        "Column": "Id",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 11,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "id",
-        "AppName": "Id",
-        "AppNamePlural": "Ids"
       },
       {
         "$id": "332",
@@ -5798,6 +5803,266 @@
         "AppViewControlLabel": "name",
         "AppName": "Name",
         "AppNamePlural": "Names"
+      },
+      {
+        "$id": "336",
+        "Table": "Admin",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "337",
+        "Table": "City",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "338",
+        "Table": "Country",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "339",
+        "Table": "Customer",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "340",
+        "Table": "Event",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "341",
+        "Table": "Province",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "342",
+        "Table": "Sale",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "343",
+        "Table": "SaleTicket",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "344",
+        "Table": "Ticket",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "345",
+        "Table": "TicketStatu",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 11,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "346",
+        "Table": "Transaction",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "347",
+        "Table": "TransactionStatu",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "348",
+        "Table": "Venue",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 4,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
       }
     ],
     "VirtualForeignKeys": [],

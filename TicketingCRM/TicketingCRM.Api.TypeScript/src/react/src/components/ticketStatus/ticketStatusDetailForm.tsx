@@ -28,12 +28,6 @@ const TicketStatusDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -139,5 +133,5 @@ export default class TicketStatusDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a079d6fb47b529590fe9315422ad0ade</Hash>
+    <Hash>ffd5d5914776eec7e776594a4660c9cc</Hash>
 </Codenesium>*/

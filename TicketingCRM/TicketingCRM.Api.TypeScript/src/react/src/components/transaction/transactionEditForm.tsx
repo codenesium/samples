@@ -106,32 +106,6 @@ const TransactionEditDisplay = (props: FormikProps<TransactionViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('transactionStatusId')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -331,5 +305,5 @@ export default class TransactionEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9c70169d08b85c51efa27134bed3c96c</Hash>
+    <Hash>70fda680c28ed62c95eeec9480bdb88b</Hash>
 </Codenesium>*/

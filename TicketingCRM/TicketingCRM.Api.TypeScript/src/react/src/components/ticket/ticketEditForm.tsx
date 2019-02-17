@@ -50,32 +50,6 @@ const TicketEditDisplay = (props: FormikProps<TicketViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('publicId')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -297,5 +271,5 @@ export default class TicketEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d082d8757c708917d600a5e01998cb0c</Hash>
+    <Hash>2e2c97debca4166c2c7f8e56be78398a</Hash>
 </Codenesium>*/

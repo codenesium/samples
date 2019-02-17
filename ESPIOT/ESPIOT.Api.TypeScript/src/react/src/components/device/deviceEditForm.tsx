@@ -43,14 +43,14 @@ interface Props {
 							<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("dateOfLastPing") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>DateOfLastPing</label>
 					    <div className="col-sm-12">
-                             <Field type="textbox" name="dateOfLastPing" className={errorExistForField("dateOfLastPing") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="datetime-local" name="dateOfLastPing" className={errorExistForField("dateOfLastPing") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("dateOfLastPing") && <small className="text-danger">{errorsForField("dateOfLastPing")}</small>}
                         </div>
                     </div>
 							<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("isActive") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>IsActive</label>
 					    <div className="col-sm-12">
-                             <Field type="textbox" name="isActive" className={errorExistForField("isActive") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="checkbox" checked={props.values.isActive} name="isActive" className={errorExistForField("isActive") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("isActive") && <small className="text-danger">{errorsForField("isActive")}</small>}
                         </div>
                     </div>
@@ -210,5 +210,5 @@ const DeviceEdit = withFormik<Props, DeviceViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>5140e896760df34d0e94d203d88eca72</Hash>
+    <Hash>513219b035423db7424f7f02d8bb6c43</Hash>
 </Codenesium>*/

@@ -50,32 +50,6 @@ const CityEditDisplay = (props: FormikProps<CityViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('name')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -297,5 +271,5 @@ export default class CityEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5bd51981372cec0ca615379e07a2c8ec</Hash>
+    <Hash>6799304752333c60e1ba6b9a5076e48f</Hash>
 </Codenesium>*/
