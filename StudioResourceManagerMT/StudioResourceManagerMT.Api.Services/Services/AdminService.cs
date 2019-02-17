@@ -12,13 +12,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
-			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper)
 			: base(logger,
 			       mediator,
 			       adminRepository,
 			       adminModelValidator,
-			       bolAdminMapper,
 			       dalAdminMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88da5656975bb5b036a482a272201803</Hash>
+    <Hash>763435249b1ba67238c407643c88271e</Hash>
 </Codenesium>*/

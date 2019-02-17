@@ -14,12 +14,12 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string description,
 			int id,
+			string description,
 			string name)
 		{
-			this.Description = description;
 			this.Id = id;
+			this.Description = description;
 			this.Name = name;
 		}
 
@@ -38,5 +38,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2bfb311897c35f78e99ab40c8c0c789</Hash>
+    <Hash>7f9ec6d083063a43163bec4c9895ec5e</Hash>
 </Codenesium>*/

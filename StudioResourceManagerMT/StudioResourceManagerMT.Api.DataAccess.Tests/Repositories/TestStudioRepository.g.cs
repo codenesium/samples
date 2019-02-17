@@ -47,10 +47,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			Mock<ILogger<StudioRepository>> loggerMoc = StudioRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<StudioRepository>> loggerMoc = StudioRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
+			var repository = new StudioRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new StudioRepository(loggerMoc.Object, context);
 
 			Studio entity = new Studio();
-			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new StudioRepository(loggerMoc.Object, context);
 
 			var entity = new Studio();
-			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Studio>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
 			Studio entity = new Studio();
-			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
 			Studio entity = new Studio();
-			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
 			Studio entity = new Studio();
-			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f9e990915ab61bfabf933b0c9c427b1a</Hash>
+    <Hash>2eb8de175a68c0676d815ce99ccb7fe8</Hash>
 </Codenesium>*/

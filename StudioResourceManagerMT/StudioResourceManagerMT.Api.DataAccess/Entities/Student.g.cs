@@ -14,24 +14,24 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime birthday,
 			string email,
 			bool emailRemindersEnabled,
 			int familyId,
 			string firstName,
-			int id,
 			bool isAdult,
 			string lastName,
 			string phone,
 			bool smsRemindersEnabled,
 			int userId)
 		{
+			this.Id = id;
 			this.Birthday = birthday;
 			this.Email = email;
 			this.EmailRemindersEnabled = emailRemindersEnabled;
 			this.FamilyId = familyId;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.IsAdult = isAdult;
 			this.LastName = lastName;
 			this.Phone = phone;
@@ -78,23 +78,23 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		public virtual int UserId { get; private set; }
 
 		[ForeignKey("FamilyId")]
-		public virtual Family FamilyNavigation { get; private set; }
+		public virtual Family FamilyIdNavigation { get; private set; }
 
-		public void SetFamilyNavigation(Family item)
+		public void SetFamilyIdNavigation(Family item)
 		{
-			this.FamilyNavigation = item;
+			this.FamilyIdNavigation = item;
 		}
 
 		[ForeignKey("UserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User UserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.UserIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9eb7b5672a98a85487387a3e0dcbc57</Hash>
+    <Hash>ca44290f5ad5eb9207940b22b8d208bc</Hash>
 </Codenesium>*/

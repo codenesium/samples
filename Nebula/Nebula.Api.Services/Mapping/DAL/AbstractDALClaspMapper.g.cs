@@ -32,7 +32,7 @@ namespace NebulaNS.Api.Services
 			{
 				var nextChainIdModel = new ApiChainServerResponseModel();
 				nextChainIdModel.SetProperties(
-					item.Id,
+					item.NextChainIdNavigation.Id,
 					item.NextChainIdNavigation.ChainStatusId,
 					item.NextChainIdNavigation.ExternalId,
 					item.NextChainIdNavigation.Name,
@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Services
 			{
 				var previousChainIdModel = new ApiChainServerResponseModel();
 				previousChainIdModel.SetProperties(
-					item.Id,
+					item.PreviousChainIdNavigation.Id,
 					item.PreviousChainIdNavigation.ChainStatusId,
 					item.PreviousChainIdNavigation.ExternalId,
 					item.PreviousChainIdNavigation.Name,
@@ -73,5 +73,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbe3c13e29410f02e8eed9121fed698f</Hash>
+    <Hash>200583b156af56c9279c3eb161397cb4</Hash>
 </Codenesium>*/

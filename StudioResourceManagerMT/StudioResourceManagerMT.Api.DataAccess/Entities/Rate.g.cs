@@ -14,13 +14,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			decimal amountPerMinute,
 			int id,
+			decimal amountPerMinute,
 			int teacherId,
 			int teacherSkillId)
 		{
-			this.AmountPerMinute = amountPerMinute;
 			this.Id = id;
+			this.AmountPerMinute = amountPerMinute;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
 		}
@@ -39,23 +39,23 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		public virtual int TeacherSkillId { get; private set; }
 
 		[ForeignKey("TeacherId")]
-		public virtual Teacher TeacherNavigation { get; private set; }
+		public virtual Teacher TeacherIdNavigation { get; private set; }
 
-		public void SetTeacherNavigation(Teacher item)
+		public void SetTeacherIdNavigation(Teacher item)
 		{
-			this.TeacherNavigation = item;
+			this.TeacherIdNavigation = item;
 		}
 
 		[ForeignKey("TeacherSkillId")]
-		public virtual TeacherSkill TeacherSkillNavigation { get; private set; }
+		public virtual TeacherSkill TeacherSkillIdNavigation { get; private set; }
 
-		public void SetTeacherSkillNavigation(TeacherSkill item)
+		public void SetTeacherSkillIdNavigation(TeacherSkill item)
 		{
-			this.TeacherSkillNavigation = item;
+			this.TeacherSkillIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>456b4cbee56e2eacdd84d106fffa9f6d</Hash>
+    <Hash>8b81bd92a8f603733a46ac1f0a1c8d0c</Hash>
 </Codenesium>*/

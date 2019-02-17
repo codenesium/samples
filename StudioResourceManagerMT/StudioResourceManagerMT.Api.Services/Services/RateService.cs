@@ -12,13 +12,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IRateRepository rateRepository,
 			IApiRateServerRequestModelValidator rateModelValidator,
-			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base(logger,
 			       mediator,
 			       rateRepository,
 			       rateModelValidator,
-			       bolRateMapper,
 			       dalRateMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9309fa30fcaaa59c102bc14607f618c6</Hash>
+    <Hash>e4d4ee82d7d3aab9f86c65ff53b9273a</Hash>
 </Codenesium>*/

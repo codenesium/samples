@@ -39,11 +39,11 @@ export default class RetweetViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>75e8f4bd18e26674dfc38d5a68e73329</Hash>
+    <Hash>bb40a771f2715a7a969109a01e367cd0</Hash>
 </Codenesium>*/

@@ -18,12 +18,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		Task<ApiEventStatuServerResponseModel> Get(int id);
 
-		Task<List<ApiEventStatuServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEventStatuServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiEventServerResponseModel>> EventsByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>19517fb7ced8d890013281f50e3b5d38</Hash>
+    <Hash>fb52d3b51e2e009aecb788ac711ae787</Hash>
 </Codenesium>*/

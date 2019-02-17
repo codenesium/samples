@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var handlerIdModel = new ApiHandlerServerResponseModel();
 				handlerIdModel.SetProperties(
-					item.Id,
+					item.HandlerIdNavigation.Id,
 					item.HandlerIdNavigation.CountryId,
 					item.HandlerIdNavigation.Email,
 					item.HandlerIdNavigation.FirstName,
@@ -69,5 +69,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e586f5fde912c7fd29f8e197e73b96c3</Hash>
+    <Hash>71bcacd72e8f2e782c9083bc467f366b</Hash>
 </Codenesium>*/

@@ -32,7 +32,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var destinationIdModel = new ApiDestinationServerResponseModel();
 				destinationIdModel.SetProperties(
-					item.Id,
+					item.DestinationIdNavigation.Id,
 					item.DestinationIdNavigation.CountryId,
 					item.DestinationIdNavigation.Name,
 					item.DestinationIdNavigation.Order);
@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var pipelineStepIdModel = new ApiPipelineStepServerResponseModel();
 				pipelineStepIdModel.SetProperties(
-					item.Id,
+					item.PipelineStepIdNavigation.Id,
 					item.PipelineStepIdNavigation.Name,
 					item.PipelineStepIdNavigation.PipelineStepStatusId,
 					item.PipelineStepIdNavigation.ShipperId);
@@ -71,5 +71,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9737da0a5b97ab263e45dd0d571fed41</Hash>
+    <Hash>7509f5c14e65302093ebaeeca3e0f4ad</Hash>
 </Codenesium>*/

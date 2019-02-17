@@ -47,10 +47,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			Mock<ILogger<EventStatuRepository>> loggerMoc = EventStatuRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<EventStatuRepository>> loggerMoc = EventStatuRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
+			var repository = new EventStatuRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 
 			EventStatu entity = new EventStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 
 			var entity = new EventStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 			EventStatu entity = new EventStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 			EventStatu entity = new EventStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 			EventStatu entity = new EventStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2e9932bfa8ffd491db1bb7cc8ce2643</Hash>
+    <Hash>22cbdb50cf0b0dda843918df0668bd25</Hash>
 </Codenesium>*/

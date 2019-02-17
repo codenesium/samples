@@ -34,7 +34,7 @@ namespace NebulaNS.Api.Services
 			{
 				var linkIdModel = new ApiLinkServerResponseModel();
 				linkIdModel.SetProperties(
-					item.Id,
+					item.LinkIdNavigation.Id,
 					item.LinkIdNavigation.AssignedMachineId,
 					item.LinkIdNavigation.ChainId,
 					item.LinkIdNavigation.DateCompleted,
@@ -70,5 +70,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c06d9b099533431619f5e9605a10950</Hash>
+    <Hash>a50c8d916d77cfe349a1622f779c726a</Hash>
 </Codenesium>*/

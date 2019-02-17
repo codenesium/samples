@@ -26,9 +26,24 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Family>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Family>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Note.StartsWith(query) ||
+				                  x.PrimaryContactEmail.StartsWith(query) ||
+				                  x.PrimaryContactFirstName.StartsWith(query) ||
+				                  x.PrimaryContactLastName.StartsWith(query) ||
+				                  x.PrimaryContactPhone.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Family> Get(int id)
@@ -79,7 +94,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		// Foreign key reference to this table Student via familyId.
 		public async virtual Task<List<Student>> StudentsByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Student>().Where(x => x.FamilyId == familyId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+			return await this.Context.Set<Student>()
+			       .Where(x => x.FamilyId == familyId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
 		protected async Task<List<Family>> Where(
@@ -93,7 +109,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Family>();
+			return await this.Context.Set<Family>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Family>();
 		}
 
 		private async Task<Family> GetById(int id)
@@ -106,5 +124,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5a109fb79defe077b3f42b2252cb9dc9</Hash>
+    <Hash>95a8bb76bf069cade8d884c566503581</Hash>
 </Codenesium>*/

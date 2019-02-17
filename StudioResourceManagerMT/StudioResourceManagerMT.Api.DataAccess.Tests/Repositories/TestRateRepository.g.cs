@@ -47,10 +47,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			Mock<ILogger<RateRepository>> loggerMoc = RateRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = RateRepositoryMoc.GetContext();
 			var repository = new RateRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<RateRepository>> loggerMoc = RateRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = RateRepositoryMoc.GetContext();
+			var repository = new RateRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1m.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new RateRepository(loggerMoc.Object, context);
 
 			Rate entity = new Rate();
-			entity.SetProperties(2m, 2, 1, 1);
+			entity.SetProperties(default(int), 2m, 1, 1);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new RateRepository(loggerMoc.Object, context);
 
 			var entity = new Rate();
-			entity.SetProperties(2m, 2, 1, 1);
+			entity.SetProperties(default(int), 2m, 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Rate>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = RateRepositoryMoc.GetContext();
 			var repository = new RateRepository(loggerMoc.Object, context);
 			Rate entity = new Rate();
-			entity.SetProperties(2m, 2, 1, 1);
+			entity.SetProperties(default(int), 2m, 1, 1);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = RateRepositoryMoc.GetContext();
 			var repository = new RateRepository(loggerMoc.Object, context);
 			Rate entity = new Rate();
-			entity.SetProperties(2m, 2, 1, 1);
+			entity.SetProperties(default(int), 2m, 1, 1);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = RateRepositoryMoc.GetContext();
 			var repository = new RateRepository(loggerMoc.Object, context);
 			Rate entity = new Rate();
-			entity.SetProperties(2m, 2, 1, 1);
+			entity.SetProperties(default(int), 2m, 1, 1);
 			context.Set<Rate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>802021d726e27912cde3afa0de9aad45</Hash>
+    <Hash>7d31a7670b478cd11120f36d32bd084b</Hash>
 </Codenesium>*/

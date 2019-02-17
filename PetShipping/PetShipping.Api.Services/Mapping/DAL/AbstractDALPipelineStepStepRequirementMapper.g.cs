@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var pipelineStepIdModel = new ApiPipelineStepServerResponseModel();
 				pipelineStepIdModel.SetProperties(
-					item.Id,
+					item.PipelineStepIdNavigation.Id,
 					item.PipelineStepIdNavigation.Name,
 					item.PipelineStepIdNavigation.PipelineStepStatusId,
 					item.PipelineStepIdNavigation.ShipperId);
@@ -61,5 +61,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd6b95a8f62206655a5daf21442a84c9</Hash>
+    <Hash>f5af32e081a9c253f7e273bf3397dc34</Hash>
 </Codenesium>*/

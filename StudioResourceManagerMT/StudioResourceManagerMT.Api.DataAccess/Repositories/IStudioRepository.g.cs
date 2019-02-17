@@ -15,10 +15,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task<Studio> Get(int id);
 
-		Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7fc0391d58d2cf426c462dfc08651833</Hash>
+    <Hash>381fbb51bcda2b526a9afae03d4f36a0</Hash>
 </Codenesium>*/

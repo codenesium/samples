@@ -16,8 +16,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IApiAdminServerRequestModelValidator AdminModelValidator { get; private set; }
 
-		protected IBOLAdminMapper BolAdminMapper { get; private set; }
-
 		protected IDALAdminMapper DalAdminMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
-			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper)
 			: base()
 		{
 			this.AdminRepository = adminRepository;
 			this.AdminModelValidator = adminModelValidator;
-			this.BolAdminMapper = bolAdminMapper;
 			this.DalAdminMapper = dalAdminMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AdminRepository.All(limit, offset);
+			List<Admin> records = await this.AdminRepository.All(limit, offset, query);
 
-			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
+			return this.DalAdminMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiAdminServerResponseModel> Get(int id)
 		{
-			var record = await this.AdminRepository.Get(id);
+			Admin record = await this.AdminRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 			}
 			else
 			{
-				return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record));
+				return this.DalAdminMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
-				var record = await this.AdminRepository.Create(this.DalAdminMapper.MapBOToEF(bo));
+				Admin record = this.DalAdminMapper.MapModelToEntity(default(int), model);
+				record = await this.AdminRepository.Create(record);
 
-				var businessObject = this.DalAdminMapper.MapEFToBO(record);
-				response.SetRecord(this.BolAdminMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalAdminMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new AdminCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolAdminMapper.MapModelToBO(id, model);
-				await this.AdminRepository.Update(this.DalAdminMapper.MapBOToEF(bo));
+				Admin record = this.DalAdminMapper.MapModelToEntity(id, model);
+				await this.AdminRepository.Update(record);
 
-				var record = await this.AdminRepository.Get(id);
+				record = await this.AdminRepository.Get(id);
 
-				var businessObject = this.DalAdminMapper.MapEFToBO(record);
-				var apiModel = this.BolAdminMapper.MapBOToModel(businessObject);
+				ApiAdminServerResponseModel apiModel = this.DalAdminMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AdminUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			List<Admin> records = await this.AdminRepository.ByUserId(userId, limit, offset);
 
-			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
+			return this.DalAdminMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69f890d5966853d3f884d757d6396dbc</Hash>
+    <Hash>91bc5b28d0ad9023a5d09b08b3528fa6</Hash>
 </Codenesium>*/

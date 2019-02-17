@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -163,5 +163,5 @@ export default class CustomerDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cb49dcf112087a3b00f4ab540c19a195</Hash>
+    <Hash>4e1aec368151cd260c502226266abb96</Hash>
 </Codenesium>*/

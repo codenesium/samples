@@ -149,5 +149,5 @@ export default class DeviceDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5e2af423e2d16017d253c6c3987cff23</Hash>
+    <Hash>e7e4ea659d8264ebbf12257427783a17</Hash>
 </Codenesium>*/

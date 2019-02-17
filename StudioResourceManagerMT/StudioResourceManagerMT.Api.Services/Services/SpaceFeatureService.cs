@@ -12,13 +12,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			ISpaceFeatureRepository spaceFeatureRepository,
 			IApiSpaceFeatureServerRequestModelValidator spaceFeatureModelValidator,
-			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
 			IDALSpaceFeatureMapper dalSpaceFeatureMapper)
 			: base(logger,
 			       mediator,
 			       spaceFeatureRepository,
 			       spaceFeatureModelValidator,
-			       bolSpaceFeatureMapper,
 			       dalSpaceFeatureMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6259e1241aa98928d0c1fde76542f83a</Hash>
+    <Hash>2e6325e4c65c8b85f178f77c583363aa</Hash>
 </Codenesium>*/

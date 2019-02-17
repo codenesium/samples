@@ -19,11 +19,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var adminItem1 = new Admin();
-			adminItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			adminItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			this.Context.Admins.Add(adminItem1);
 
 			var eventItem1 = new Event();
-			eventItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+			eventItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 			this.Context.Events.Add(eventItem1);
 
 			var eventStatuItem1 = new EventStatu();
@@ -35,11 +35,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context.Families.Add(familyItem1);
 
 			var rateItem1 = new Rate();
-			rateItem1.SetProperties(1m, 1, 1, 1);
+			rateItem1.SetProperties(1, 1m, 1, 1);
 			this.Context.Rates.Add(rateItem1);
 
 			var spaceItem1 = new Space();
-			spaceItem1.SetProperties("A", 1, "A");
+			spaceItem1.SetProperties(1, "A", "A");
 			this.Context.Spaces.Add(spaceItem1);
 
 			var spaceFeatureItem1 = new SpaceFeature();
@@ -47,15 +47,15 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context.SpaceFeatures.Add(spaceFeatureItem1);
 
 			var studentItem1 = new Student();
-			studentItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
+			studentItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 			this.Context.Students.Add(studentItem1);
 
 			var studioItem1 = new Studio();
-			studioItem1.SetProperties("A", "A", "A", 1, "A", "A", "A", "A");
+			studioItem1.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
 			this.Context.Studios.Add(studioItem1);
 
 			var teacherItem1 = new Teacher();
-			teacherItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			teacherItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			this.Context.Teachers.Add(teacherItem1);
 
 			var teacherSkillItem1 = new TeacherSkill();
@@ -72,5 +72,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6a15c60c2a42030afc3b6dc1ed23177</Hash>
+    <Hash>d48c7218f602fca7033c092221caacb6</Hash>
 </Codenesium>*/

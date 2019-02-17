@@ -26,9 +26,25 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Birthday == query.ToNullableDateTime() ||
+				                  x.Email.StartsWith(query) ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.Phone.StartsWith(query) ||
+				                  x.UserId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Admin> Get(int id)
@@ -85,7 +101,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int userId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.Id == userId);
 		}
 
 		protected async Task<List<Admin>> Where(
@@ -99,7 +116,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
+			return await this.Context.Set<Admin>()
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
 		private async Task<Admin> GetById(int id)
@@ -112,5 +132,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>10fe2da0e670ed76c885342d18d947ec</Hash>
+    <Hash>4111d0d0cdff4b47644e42a59f6afba7</Hash>
 </Codenesium>*/

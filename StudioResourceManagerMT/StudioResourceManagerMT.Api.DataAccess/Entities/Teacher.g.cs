@@ -14,18 +14,18 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime birthday,
 			string email,
 			string firstName,
-			int id,
 			string lastName,
 			string phone,
 			int userId)
 		{
+			this.Id = id;
 			this.Birthday = birthday;
 			this.Email = email;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.UserId = userId;
@@ -58,15 +58,15 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		public virtual int UserId { get; private set; }
 
 		[ForeignKey("UserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User UserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.UserIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ba7c9982cb9ab2e14aa9fdb3c1c4b75</Hash>
+    <Hash>ce71a443336cc0242d22aa9f54595ed4</Hash>
 </Codenesium>*/

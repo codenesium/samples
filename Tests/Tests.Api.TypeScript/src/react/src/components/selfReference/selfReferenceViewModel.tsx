@@ -32,10 +32,10 @@ this.selfReferenceId2 = selfReferenceId2;
 
 	toDisplay() : string
 	{
-		return String();
+		return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
 	}
 };
 
 /*<Codenesium>
-    <Hash>9618699eebefb4ec56568ee3dbce2f13</Hash>
+    <Hash>a192527793799b8d7ca9c9eaa92e13e5</Hash>
 </Codenesium>*/

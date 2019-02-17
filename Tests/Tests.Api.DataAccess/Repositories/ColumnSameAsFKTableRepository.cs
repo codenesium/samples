@@ -16,7 +16,6 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(logger, context)
 		{
-
 		}
 	}
 }

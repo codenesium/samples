@@ -12,13 +12,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IStudentRepository studentRepository,
 			IApiStudentServerRequestModelValidator studentModelValidator,
-			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper)
 			: base(logger,
 			       mediator,
 			       studentRepository,
 			       studentModelValidator,
-			       bolStudentMapper,
 			       dalStudentMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34bd237a7aeea7c46d73f255b3368cfc</Hash>
+    <Hash>9cbea441f39e424b8a9edf773708889b</Hash>
 </Codenesium>*/

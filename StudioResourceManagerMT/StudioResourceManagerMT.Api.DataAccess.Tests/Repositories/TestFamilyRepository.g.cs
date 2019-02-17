@@ -47,10 +47,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
+			var repository = new FamilyRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 
 			Family entity = new Family();
-			entity.SetProperties(2, "B", "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 
 			var entity = new Family();
-			entity.SetProperties(2, "B", "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Family>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 			Family entity = new Family();
-			entity.SetProperties(2, "B", "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 			Family entity = new Family();
-			entity.SetProperties(2, "B", "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 			Family entity = new Family();
-			entity.SetProperties(2, "B", "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0fb1662ec3f7124b9012c2c207af9461</Hash>
+    <Hash>2024fcafabb8af0d794d0bb6ef957cd6</Hash>
 </Codenesium>*/

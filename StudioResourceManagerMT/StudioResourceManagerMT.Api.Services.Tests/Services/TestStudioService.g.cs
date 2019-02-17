@@ -26,18 +26,17 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStudioRepository>();
 			var records = new List<Studio>();
 			records.Add(new Studio());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new StudioService(mock.LoggerMock.Object,
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			List<ApiStudioServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			ApiStudioServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			ApiStudioServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			CreateResponse<ApiStudioServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			CreateResponse<ApiStudioServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			UpdateResponse<ApiStudioServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			UpdateResponse<ApiStudioServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8a26f1e184ff7fb60a394d9f8f5dc83c</Hash>
+    <Hash>4b5660778f89feeaac43082a28807afc</Hash>
 </Codenesium>*/

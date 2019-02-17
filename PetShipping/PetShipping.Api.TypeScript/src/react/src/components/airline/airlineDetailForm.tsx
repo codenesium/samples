@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -139,5 +139,5 @@ export default class AirlineDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c76c180df63042d0d730bca074733715</Hash>
+    <Hash>d8a53be7c167dd21505d1698e5e1e898</Hash>
 </Codenesium>*/

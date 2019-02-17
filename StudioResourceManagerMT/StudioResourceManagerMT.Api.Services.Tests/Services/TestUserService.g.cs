@@ -26,24 +26,20 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<User>();
 			records.Add(new User());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			List<ApiUserServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -56,13 +52,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			ApiUserServerResponseModel response = await service.Get(default(int));
@@ -80,13 +72,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			ApiUserServerResponseModel response = await service.Get(default(int));
@@ -105,13 +93,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
@@ -134,13 +118,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
@@ -162,13 +142,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
@@ -192,13 +168,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
@@ -219,13 +191,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -248,13 +216,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -276,13 +240,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			List<ApiAdminServerResponseModel> response = await service.AdminsByUserId(default(int));
@@ -300,13 +260,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			List<ApiAdminServerResponseModel> response = await service.AdminsByUserId(default(int));
@@ -326,13 +282,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			List<ApiStudentServerResponseModel> response = await service.StudentsByUserId(default(int));
@@ -350,13 +302,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			List<ApiStudentServerResponseModel> response = await service.StudentsByUserId(default(int));
@@ -376,13 +324,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			List<ApiTeacherServerResponseModel> response = await service.TeachersByUserId(default(int));
@@ -400,13 +344,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
-			                              mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                              mock.DALMapperMockFactory.DALAdminMapperMock,
-			                              mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                              mock.DALMapperMockFactory.DALStudentMapperMock,
-			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
 			List<ApiTeacherServerResponseModel> response = await service.TeachersByUserId(default(int));
@@ -418,5 +358,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>df54b1e1f82cf4bdbbfcba8ab89beb7f</Hash>
+    <Hash>1136c8169782d2cba9d1a7f8b7e7e0b4</Hash>
 </Codenesium>*/

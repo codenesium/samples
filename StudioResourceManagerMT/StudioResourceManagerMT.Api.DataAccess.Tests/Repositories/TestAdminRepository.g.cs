@@ -47,10 +47,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new AdminRepository(loggerMoc.Object, context);
 
 			Admin entity = new Admin();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new AdminRepository(loggerMoc.Object, context);
 
 			var entity = new Admin();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Admin>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
 			Admin entity = new Admin();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
 			Admin entity = new Admin();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
 			Admin entity = new Admin();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b980ce6c52be54e5957bd5765ca5c614</Hash>
+    <Hash>5ead8329f774d6cbd6e207a31e689fbf</Hash>
 </Codenesium>*/

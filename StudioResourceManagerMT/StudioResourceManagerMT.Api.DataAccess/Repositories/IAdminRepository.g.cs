@@ -15,7 +15,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task<Admin> Get(int id);
 
-		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Admin>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ddf0783f103575edec657ee93f046fea</Hash>
+    <Hash>99f0e323f1bf2d7fd97255d40b71dc50</Hash>
 </Codenesium>*/

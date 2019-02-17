@@ -46,15 +46,15 @@ namespace StudioResourceManagerMTNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSpaceFeatureServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiSpaceFeatureServerResponseModel> response = await this.SpaceFeatureService.All(query.Limit, query.Offset);
+			List<ApiSpaceFeatureServerResponseModel> response = await this.SpaceFeatureService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e1d29d0f8cb5d957df550f68831a848d</Hash>
+    <Hash>2fc86aa3811cb232d69f85a2867c3d92</Hash>
 </Codenesium>*/

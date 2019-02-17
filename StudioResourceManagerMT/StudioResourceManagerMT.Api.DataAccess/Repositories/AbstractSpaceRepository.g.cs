@@ -26,9 +26,21 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Space>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Space>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Description.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Space> Get(int id)
@@ -87,7 +99,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Space>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Space>();
+			return await this.Context.Set<Space>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Space>();
 		}
 
 		private async Task<Space> GetById(int id)
@@ -100,5 +114,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>df61f37b0a8ad4638b99957562536207</Hash>
+    <Hash>630e09428e48ef2be3f0ec6b40ed2ee5</Hash>
 </Codenesium>*/

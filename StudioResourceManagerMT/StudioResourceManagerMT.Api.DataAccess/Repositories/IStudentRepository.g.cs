@@ -15,7 +15,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task<Student> Get(int id);
 
-		Task<List<Student>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Student>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Student>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c9b58086b2a4f40d586d5423dc60c579</Hash>
+    <Hash>9cbf02fe49ff2c17f34b4d92e24dae66</Hash>
 </Codenesium>*/

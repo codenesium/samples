@@ -26,18 +26,17 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IAdminRepository>();
 			var records = new List<Admin>();
 			records.Add(new Admin());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new AdminService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			List<ApiAdminServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			ApiAdminServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			ApiAdminServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			CreateResponse<ApiAdminServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			CreateResponse<ApiAdminServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			UpdateResponse<ApiAdminServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			UpdateResponse<ApiAdminServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			List<ApiAdminServerResponseModel> response = await service.ByUserId(default(int));
@@ -240,7 +230,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock);
 
 			List<ApiAdminServerResponseModel> response = await service.ByUserId(default(int));
@@ -252,5 +241,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a666fc47d2be14c1de83e03510e57bac</Hash>
+    <Hash>dae88e9fa97fb9e9faf4f3d60e673146</Hash>
 </Codenesium>*/

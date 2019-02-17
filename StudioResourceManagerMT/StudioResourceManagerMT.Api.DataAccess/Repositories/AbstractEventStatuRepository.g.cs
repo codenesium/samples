@@ -26,9 +26,20 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<EventStatu>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<EventStatu>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<EventStatu> Get(int id)
@@ -79,7 +90,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		// Foreign key reference to this table Event via eventStatusId.
 		public async virtual Task<List<Event>> EventsByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Event>().Where(x => x.EventStatusId == eventStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
+			return await this.Context.Set<Event>()
+			       .Where(x => x.EventStatusId == eventStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
 		}
 
 		protected async Task<List<EventStatu>> Where(
@@ -93,7 +105,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<EventStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<EventStatu>();
+			return await this.Context.Set<EventStatu>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<EventStatu>();
 		}
 
 		private async Task<EventStatu> GetById(int id)
@@ -106,5 +120,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>82748aa04f4b7e2f9ff0d08361ecf878</Hash>
+    <Hash>153b19bb445743dd54745fdc8a76dbf3</Hash>
 </Codenesium>*/

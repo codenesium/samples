@@ -33,7 +33,24 @@ namespace StudioResourceManagerMTNS.Api.Client
 			this.UserId = userId;
 
 			this.FamilyIdEntity = nameof(ApiResponse.Families);
+
 			this.UserIdEntity = nameof(ApiResponse.Users);
+		}
+
+		[JsonProperty]
+		public ApiFamilyClientResponseModel FamilyIdNavigation { get; private set; }
+
+		public void SetFamilyIdNavigation(ApiFamilyClientResponseModel value)
+		{
+			this.FamilyIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.UserIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -78,5 +95,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>f5d0610f4fb5770401f2eef4b6a1b7c6</Hash>
+    <Hash>69ceb8d279b135262e36d9573e8b87ac</Hash>
 </Codenesium>*/

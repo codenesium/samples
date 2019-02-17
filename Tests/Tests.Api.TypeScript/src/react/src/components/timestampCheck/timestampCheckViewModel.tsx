@@ -1,29 +1,26 @@
 export default class TimestampCheckViewModel {
-    id:number;
-name:string;
-timestamp:any;
+  id: number;
+  name: string;
+  timestamp: any;
 
-    constructor() {
-		this.id = 0;
-this.name = '';
-this.timestamp = undefined;
+  constructor() {
+    this.id = 0;
+    this.name = '';
+    this.timestamp = undefined;
+  }
 
-    }
+  setProperties(id: number, name: string, timestamp: any): void {
+    this.id = id;
+    this.name = name;
+    this.timestamp = timestamp;
+  }
 
-	setProperties(id : number,name : string,timestamp : any) : void
-	{
-		this.id = id;
-this.name = name;
-this.timestamp = timestamp;
+  toDisplay(): string {
+    return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>ccc759c1512bf96f9a1471f9c7cf76cc</Hash>
+    <Hash>4b04da10f42a634000a6149f1d82c8fa</Hash>
 </Codenesium>*/

@@ -26,9 +26,26 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Address1.StartsWith(query) ||
+				                  x.Address2.StartsWith(query) ||
+				                  x.City.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Province.StartsWith(query) ||
+				                  x.Website.StartsWith(query) ||
+				                  x.Zip.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Studio> Get(int id)
@@ -87,7 +104,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Studio>();
+			return await this.Context.Set<Studio>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Studio>();
 		}
 
 		private async Task<Studio> GetById(int id)
@@ -100,5 +119,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>41fc83488d39507e1c8d2eb6d8f8c178</Hash>
+    <Hash>ba3c20a3b714dec85389c57efe1295fe</Hash>
 </Codenesium>*/

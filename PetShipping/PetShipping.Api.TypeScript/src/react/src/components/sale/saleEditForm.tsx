@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -417,5 +417,5 @@ export default class SaleEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7873dd620cab74c087528a3ab9517784</Hash>
+    <Hash>215db4987f456d4350d9cfe2326ef0c7</Hash>
 </Codenesium>*/

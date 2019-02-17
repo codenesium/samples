@@ -32,7 +32,7 @@ namespace NebulaNS.Api.Services
 			{
 				var organizationIdModel = new ApiOrganizationServerResponseModel();
 				organizationIdModel.SetProperties(
-					item.Id,
+					item.OrganizationIdNavigation.Id,
 					item.OrganizationIdNavigation.Name);
 
 				model.SetOrganizationIdNavigation(organizationIdModel);
@@ -57,5 +57,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fdb14e82dc0625a35251d76a85f40007</Hash>
+    <Hash>81c0d94e3b740c97eb0d4603d166a4ff</Hash>
 </Codenesium>*/

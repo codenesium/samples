@@ -18,7 +18,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		Task<ApiStudentServerResponseModel> Get(int id);
 
-		Task<List<ApiStudentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiStudentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiStudentServerResponseModel>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0);
 
@@ -27,5 +27,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6545324ef73eaa9685c9b42d7c591dbe</Hash>
+    <Hash>12367cb9a5537f37fecbf7ad0dbcefef</Hash>
 </Codenesium>*/

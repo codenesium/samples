@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var pipelineStepStatusIdModel = new ApiPipelineStepStatuServerResponseModel();
 				pipelineStepStatusIdModel.SetProperties(
-					item.Id,
+					item.PipelineStepStatusIdNavigation.Id,
 					item.PipelineStepStatusIdNavigation.Name);
 
 				model.SetPipelineStepStatusIdNavigation(pipelineStepStatusIdModel);
@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var shipperIdModel = new ApiEmployeeServerResponseModel();
 				shipperIdModel.SetProperties(
-					item.Id,
+					item.ShipperIdNavigation.Id,
 					item.ShipperIdNavigation.FirstName,
 					item.ShipperIdNavigation.IsSalesPerson,
 					item.ShipperIdNavigation.IsShipper,
@@ -72,5 +72,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db2d62bed3c467d809bcf35ecdd86055</Hash>
+    <Hash>3abcbd1c537956e66fb48eb6f1cb4c70</Hash>
 </Codenesium>*/

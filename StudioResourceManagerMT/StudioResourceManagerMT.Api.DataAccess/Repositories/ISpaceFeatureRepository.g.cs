@@ -15,10 +15,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task<SpaceFeature> Get(int id);
 
-		Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5940aeed693d6d750a892dd7505f477</Hash>
+    <Hash>6602f64561de6f56be905cf8bb098937</Hash>
 </Codenesium>*/

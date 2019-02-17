@@ -52,7 +52,7 @@ namespace NebulaNS.Api.Services
 			{
 				var assignedMachineIdModel = new ApiMachineServerResponseModel();
 				assignedMachineIdModel.SetProperties(
-					item.Id,
+					item.AssignedMachineIdNavigation.Id,
 					item.AssignedMachineIdNavigation.Description,
 					item.AssignedMachineIdNavigation.JwtKey,
 					item.AssignedMachineIdNavigation.LastIpAddress,
@@ -66,7 +66,7 @@ namespace NebulaNS.Api.Services
 			{
 				var chainIdModel = new ApiChainServerResponseModel();
 				chainIdModel.SetProperties(
-					item.Id,
+					item.ChainIdNavigation.Id,
 					item.ChainIdNavigation.ChainStatusId,
 					item.ChainIdNavigation.ExternalId,
 					item.ChainIdNavigation.Name,
@@ -79,7 +79,7 @@ namespace NebulaNS.Api.Services
 			{
 				var linkStatusIdModel = new ApiLinkStatusServerResponseModel();
 				linkStatusIdModel.SetProperties(
-					item.Id,
+					item.LinkStatusIdNavigation.Id,
 					item.LinkStatusIdNavigation.Name);
 
 				model.SetLinkStatusIdNavigation(linkStatusIdModel);
@@ -104,5 +104,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f47c9ac9c10be300cfefff11e8eb821f</Hash>
+    <Hash>c49c32ac279ea4cb36d5d775795f1038</Hash>
 </Codenesium>*/

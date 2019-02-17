@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -147,5 +147,5 @@ export default class PipelineDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d4c182c1f275cc054e7718585bda4bab</Hash>
+    <Hash>6a379aecd7a999459343a31503e509da</Hash>
 </Codenesium>*/

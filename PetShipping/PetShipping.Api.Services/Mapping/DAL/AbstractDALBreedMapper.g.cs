@@ -32,7 +32,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var speciesIdModel = new ApiSpeciesServerResponseModel();
 				speciesIdModel.SetProperties(
-					item.Id,
+					item.SpeciesIdNavigation.Id,
 					item.SpeciesIdNavigation.Name);
 
 				model.SetSpeciesIdNavigation(speciesIdModel);
@@ -57,5 +57,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2df6673eb5a77dc49effb16bce7feb0c</Hash>
+    <Hash>cac3861fea83989b5acc1332cd6b612e</Hash>
 </Codenesium>*/

@@ -4,287 +4,183 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import MessageMapper from './messageMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import ReactTable from 'react-table';
+import { LoadingForm } from '../../lib/components/loadingForm'
+import { ErrorForm } from '../../lib/components/errorForm'
+import ReactTable from "react-table";
 import MessageViewModel from './messageViewModel';
-import 'react-table/react-table.css';
+import "react-table/react-table.css";
 
-interface MessageSearchComponentProps {
-  history: any;
+interface MessageSearchComponentProps
+{
+    history:any;
 }
 
-interface MessageSearchComponentState {
-  records: Array<MessageViewModel>;
-  filteredRecords: Array<MessageViewModel>;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-  searchValue: string;
-  deleteSubmitted: boolean;
-  deleteSuccess: boolean;
-  deleteResponse: string;
+interface MessageSearchComponentState
+{
+    records:Array<MessageViewModel>;
+    filteredRecords:Array<MessageViewModel>;
+    loading:boolean;
+    loaded:boolean;
+    errorOccurred:boolean;
+    errorMessage:string;
+    searchValue:string;
+    deleteSubmitted:boolean;
+    deleteSuccess:boolean;
+    deleteResponse:string;
 }
 
-export default class MessageSearchComponent extends React.Component<
-  MessageSearchComponentProps,
-  MessageSearchComponentState
-> {
-  state = {
-    deleteSubmitted: false,
-    deleteSuccess: false,
-    deleteResponse: '',
-    records: new Array<MessageViewModel>(),
-    filteredRecords: new Array<MessageViewModel>(),
-    searchValue: '',
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
-  };
+export default class MessageSearchComponent extends React.Component<MessageSearchComponentProps, MessageSearchComponentState> {
 
-  componentDidMount() {
-    this.loadRecords();
-  }
-
-  handleEditClick(e: any, row: Api.MessageClientResponseModel) {
-    this.props.history.push(ClientRoutes.Messages + '/edit/' + row.messageId);
-  }
-
-  handleDetailClick(e: any, row: Api.MessageClientResponseModel) {
-    this.props.history.push(ClientRoutes.Messages + '/' + row.messageId);
-  }
-
-  handleCreateClick(e: any) {
-    this.props.history.push(ClientRoutes.Messages + '/create');
-  }
-
-  handleDeleteClick(e: any, row: Api.MessageClientResponseModel) {
-    axios
-      .delete(
-        Constants.ApiEndpoint + ApiRoutes.Messages + '/' + row.messageId,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
-  }
-
-  handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
-    this.loadRecords(e.currentTarget.value);
-  }
-
-  loadRecords(query: string = '') {
-    this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint =
-      Constants.ApiEndpoint + ApiRoutes.Messages + '?limit=100';
-
-    if (query) {
-      searchEndpoint += '&query=' + query;
+    state = ({deleteSubmitted:false, deleteSuccess:false, deleteResponse:'', records:new Array<MessageViewModel>(), filteredRecords:new Array<MessageViewModel>(), searchValue:'', loading:false, loaded:true, errorOccurred:false, errorMessage:''});
+    
+    componentDidMount () {
+        this.loadRecords();
     }
 
-    axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.MessageClientResponseModel>;
-          let viewModels: Array<MessageViewModel> = [];
-          let mapper = new MessageMapper();
+    handleEditClick(e:any, row:Api.MessageClientResponseModel) {
+         this.props.history.push(ClientRoutes.Messages + '/edit/' + row.messageId);
+    }
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+    handleDetailClick(e:any, row:Api.MessageClientResponseModel) {
+         this.props.history.push(ClientRoutes.Messages + '/' + row.messageId);
+    }
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<MessageViewModel>(),
-            filteredRecords: new Array<MessageViewModel>(),
-            loading: false,
-            loaded: false,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+    handleCreateClick(e:any) {
+        this.props.history.push(ClientRoutes.Messages + '/create');
+    }
+
+    handleDeleteClick(e:any, row:Api.MessageClientResponseModel) {
+        axios.delete(Constants.ApiEndpoint + ApiRoutes.Messages + '/' + row.messageId,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(resp => {
+            this.setState({...this.state, deleteResponse:'Record deleted', deleteSuccess:true, deleteSubmitted:true});
+            this.loadRecords(this.state.searchValue);
+        }, error => {
+            console.log(error);
+            this.setState({...this.state, deleteResponse:'Error deleting record', deleteSuccess:false, deleteSubmitted:true});
+        })
+    }
+
+   handleSearchChanged(e:React.FormEvent<HTMLInputElement>) {
+		this.loadRecords(e.currentTarget.value);
+   }
+   
+   loadRecords(query:string = '') {
+	   this.setState({...this.state, searchValue:query});
+	   let searchEndpoint = Constants.ApiEndpoint + ApiRoutes.Messages + '?limit=100';
+
+	   if(query)
+	   {
+		   searchEndpoint += '&query=' +  query;
+	   }
+
+	   axios.get(searchEndpoint,
+	   {
+		   headers: {
+			   'Content-Type': 'application/json',
+		   }
+	   })
+	   .then(resp => {
+		    let response = resp.data as Array<Api.MessageClientResponseModel>;
+		    let viewModels : Array<MessageViewModel> = [];
+			let mapper = new MessageMapper();
+
+			response.forEach(x =>
+			{
+				viewModels.push(mapper.mapApiResponseToViewModel(x));
+			})
+
+            this.setState({records:viewModels, filteredRecords:viewModels, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
+
+	   }, error => {
+		   console.log(error);
+		   this.setState({records:new Array<MessageViewModel>(),filteredRecords:new Array<MessageViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+	   })
+    }
+
+    filterGrid() {
+
+    }
+    
+    render () {
+        if(this.state.loading) {
+            return <LoadingForm />;
+        } 
+		else if(this.state.errorOccurred) {
+            return <ErrorForm message={this.state.errorMessage} />;
         }
-      );
-  }
+        else if(this.state.loaded) {
 
-  filterGrid() {}
+            let errorResponse:JSX.Element = <span></span>;
 
-  render() {
-    if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      let errorResponse: JSX.Element = <span />;
-
-      if (this.state.deleteSubmitted) {
-        if (this.state.deleteSuccess) {
-          errorResponse = (
-            <div className="alert alert-success">
-              {this.state.deleteResponse}
-            </div>
-          );
-        } else {
-          errorResponse = (
-            <div className="alert alert-danger">
-              {this.state.deleteResponse}
-            </div>
-          );
-        }
-      }
-      return (
-        <div>
-          {errorResponse}
-          <form>
-            <div className="form-group row">
-              <div className="col-sm-4" />
-              <div className="col-sm-4">
-                <input
-                  name="search"
-                  className="form-control"
-                  placeholder={'Search'}
-                  value={this.state.searchValue}
-                  onChange={e => this.handleSearchChanged(e)}
-                />
-              </div>
-              <div className="col-sm-4">
-                <button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center search-create-button"
-                  onClick={e => this.handleCreateClick(e)}
-                >
-                  <i className="fas fa-plus" />
-                </button>
-              </div>
-            </div>
-          </form>
-          <ReactTable
-            data={this.state.filteredRecords}
-            columns={[
-              {
-                Header: 'Message',
-                columns: [
-                  {
-                    Header: 'Content',
-                    accessor: 'content',
-                    Cell: props => {
+            if(this.state.deleteSubmitted){
+                if(this.state.deleteSuccess){
+                    errorResponse =<div className="alert alert-success">{this.state.deleteResponse}</div>   
+                }
+                else {
+                    errorResponse = <div className="alert alert-danger">{this.state.deleteResponse}</div>   
+                }
+            }
+            return (
+            <div>
+                { 
+                    errorResponse
+                }
+            <form>
+                <div className="form-group row">
+                    <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4">
+                        <input name="search" className="form-control" placeholder={"Search"} value={this.state.searchValue} onChange={e => this.handleSearchChanged(e)}/>
+                    </div>
+                    <div className="col-sm-4">
+                        <button className="btn btn-primary btn-sm align-middle float-right vertically-center search-create-button" onClick={e => this.handleCreateClick(e)}><i className="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </form>
+            <ReactTable 
+                data={this.state.filteredRecords}
+                columns={[{
+                    Header: 'Message',
+                    columns: [
+					  {
+                      Header: 'Content',
+                      accessor: 'content',
+                      Cell: (props) => {
                       return <span>{String(props.original.content)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Sender_user_id',
-                    accessor: 'senderUserId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Users +
-                                '/' +
-                                props.original.senderUserId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'Sender_user_id',
+                      accessor: 'senderUserId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.senderUserId); }}>
                           {String(
                             props.original.senderUserIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <button
-                          className="btn btn-sm"
-                          onClick={e => {
-                            this.handleDetailClick(
-                              e,
-                              row.original as Api.MessageClientResponseModel
-                            );
-                          }}
-                        >
-                          <i className="fas fa-search" />
-                        </button>
-                        &nbsp;
-                        <button
-                          className="btn btn-primary btn-sm"
-                          onClick={e => {
-                            this.handleEditClick(
-                              e,
-                              row.original as Api.MessageClientResponseModel
-                            );
-                          }}
-                        >
-                          <i className="fas fa-edit" />
-                        </button>
-                        &nbsp;
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={e => {
-                            this.handleDeleteClick(
-                              e,
-                              row.original as Api.MessageClientResponseModel
-                            );
-                          }}
-                        >
-                          <i className="far fa-trash-alt" />
-                        </button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
-      );
-    } else {
-      return null;
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div><button className="btn btn-sm" onClick={e => {this.handleDetailClick(e, row.original as Api.MessageClientResponseModel)}} ><i className="fas fa-search"></i></button>
+                        &nbsp;<button className="btn btn-primary btn-sm" onClick={e => {this.handleEditClick(e, row.original as Api.MessageClientResponseModel)}} ><i className="fas fa-edit"></i></button>
+                        &nbsp;<button className="btn btn-danger btn-sm" onClick={e => {this.handleDeleteClick(e, row.original as Api.MessageClientResponseModel)}} ><i className="far fa-trash-alt"></i></button>
+                        </div>)
+                    }],
+                    
+                  }]} />
+                  </div>);
+        } 
+		else {
+		  return null;
+		}
     }
-  }
 }
 
-
 /*<Codenesium>
-    <Hash>73d1aa6dc290d301dd062b9d01f5ccf6</Hash>
+    <Hash>7610825c114a3aaad457d9ca0290a342</Hash>
 </Codenesium>*/

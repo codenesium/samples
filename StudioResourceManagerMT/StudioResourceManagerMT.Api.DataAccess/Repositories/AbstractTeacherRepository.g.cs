@@ -26,9 +26,25 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Teacher>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Teacher>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Birthday == query.ToDateTime() ||
+				                  x.Email.StartsWith(query) ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.Phone.StartsWith(query) ||
+				                  x.UserId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Teacher> Get(int id)
@@ -85,13 +101,15 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		// Foreign key reference to this table Rate via teacherId.
 		public async virtual Task<List<Rate>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Rate>().Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
+			return await this.Context.Set<Rate>()
+			       .Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
 		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int userId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.Id == userId);
 		}
 
 		protected async Task<List<Teacher>> Where(
@@ -105,7 +123,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Teacher>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Teacher>();
+			return await this.Context.Set<Teacher>()
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Teacher>();
 		}
 
 		private async Task<Teacher> GetById(int id)
@@ -118,5 +139,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>40e00c57c13e8dc82b901dc1ebce4e3a</Hash>
+    <Hash>2c563c277e1d2f5b0d47ce5fdc65dfd6</Hash>
 </Codenesium>*/

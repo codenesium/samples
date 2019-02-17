@@ -16,11 +16,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IApiEventStatuServerRequestModelValidator EventStatuModelValidator { get; private set; }
 
-		protected IBOLEventStatuMapper BolEventStatuMapper { get; private set; }
-
 		protected IDALEventStatuMapper DalEventStatuMapper { get; private set; }
-
-		protected IBOLEventMapper BolEventMapper { get; private set; }
 
 		protected IDALEventMapper DalEventMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IEventStatuRepository eventStatuRepository,
 			IApiEventStatuServerRequestModelValidator eventStatuModelValidator,
-			IBOLEventStatuMapper bolEventStatuMapper,
 			IDALEventStatuMapper dalEventStatuMapper,
-			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base()
 		{
 			this.EventStatuRepository = eventStatuRepository;
 			this.EventStatuModelValidator = eventStatuModelValidator;
-			this.BolEventStatuMapper = bolEventStatuMapper;
 			this.DalEventStatuMapper = dalEventStatuMapper;
-			this.BolEventMapper = bolEventMapper;
 			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiEventStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiEventStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.EventStatuRepository.All(limit, offset);
+			List<EventStatu> records = await this.EventStatuRepository.All(limit, offset, query);
 
-			return this.BolEventStatuMapper.MapBOToModel(this.DalEventStatuMapper.MapEFToBO(records));
+			return this.DalEventStatuMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiEventStatuServerResponseModel> Get(int id)
 		{
-			var record = await this.EventStatuRepository.Get(id);
+			EventStatu record = await this.EventStatuRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 			}
 			else
 			{
-				return this.BolEventStatuMapper.MapBOToModel(this.DalEventStatuMapper.MapEFToBO(record));
+				return this.DalEventStatuMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolEventStatuMapper.MapModelToBO(default(int), model);
-				var record = await this.EventStatuRepository.Create(this.DalEventStatuMapper.MapBOToEF(bo));
+				EventStatu record = this.DalEventStatuMapper.MapModelToEntity(default(int), model);
+				record = await this.EventStatuRepository.Create(record);
 
-				var businessObject = this.DalEventStatuMapper.MapEFToBO(record);
-				response.SetRecord(this.BolEventStatuMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalEventStatuMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new EventStatuCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolEventStatuMapper.MapModelToBO(id, model);
-				await this.EventStatuRepository.Update(this.DalEventStatuMapper.MapBOToEF(bo));
+				EventStatu record = this.DalEventStatuMapper.MapModelToEntity(id, model);
+				await this.EventStatuRepository.Update(record);
 
-				var record = await this.EventStatuRepository.Get(id);
+				record = await this.EventStatuRepository.Get(id);
 
-				var businessObject = this.DalEventStatuMapper.MapEFToBO(record);
-				var apiModel = this.BolEventStatuMapper.MapBOToModel(businessObject);
+				ApiEventStatuServerResponseModel apiModel = this.DalEventStatuMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new EventStatuUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiEventStatuServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			List<Event> records = await this.EventStatuRepository.EventsByEventStatusId(eventStatusId, limit, offset);
 
-			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+			return this.DalEventMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eaabfbb81c70f919a671190c2df6b692</Hash>
+    <Hash>46b8caa2748cc6639e557a601a7eded6</Hash>
 </Codenesium>*/

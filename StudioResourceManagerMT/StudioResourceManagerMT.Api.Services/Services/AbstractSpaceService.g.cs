@@ -16,8 +16,6 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IApiSpaceServerRequestModelValidator SpaceModelValidator { get; private set; }
 
-		protected IBOLSpaceMapper BolSpaceMapper { get; private set; }
-
 		protected IDALSpaceMapper DalSpaceMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			ISpaceRepository spaceRepository,
 			IApiSpaceServerRequestModelValidator spaceModelValidator,
-			IBOLSpaceMapper bolSpaceMapper,
 			IDALSpaceMapper dalSpaceMapper)
 			: base()
 		{
 			this.SpaceRepository = spaceRepository;
 			this.SpaceModelValidator = spaceModelValidator;
-			this.BolSpaceMapper = bolSpaceMapper;
 			this.DalSpaceMapper = dalSpaceMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSpaceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSpaceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SpaceRepository.All(limit, offset);
+			List<Space> records = await this.SpaceRepository.All(limit, offset, query);
 
-			return this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(records));
+			return this.DalSpaceMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSpaceServerResponseModel> Get(int id)
 		{
-			var record = await this.SpaceRepository.Get(id);
+			Space record = await this.SpaceRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 			}
 			else
 			{
-				return this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(record));
+				return this.DalSpaceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSpaceMapper.MapModelToBO(default(int), model);
-				var record = await this.SpaceRepository.Create(this.DalSpaceMapper.MapBOToEF(bo));
+				Space record = this.DalSpaceMapper.MapModelToEntity(default(int), model);
+				record = await this.SpaceRepository.Create(record);
 
-				var businessObject = this.DalSpaceMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSpaceMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSpaceMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SpaceCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSpaceMapper.MapModelToBO(id, model);
-				await this.SpaceRepository.Update(this.DalSpaceMapper.MapBOToEF(bo));
+				Space record = this.DalSpaceMapper.MapModelToEntity(id, model);
+				await this.SpaceRepository.Update(record);
 
-				var record = await this.SpaceRepository.Get(id);
+				record = await this.SpaceRepository.Get(id);
 
-				var businessObject = this.DalSpaceMapper.MapEFToBO(record);
-				var apiModel = this.BolSpaceMapper.MapBOToModel(businessObject);
+				ApiSpaceServerResponseModel apiModel = this.DalSpaceMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SpaceUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSpaceServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9fa33ecd76eeb108af3a532f3cd5489a</Hash>
+    <Hash>5a64b473c3ac2698484761bf22bc48c0</Hash>
 </Codenesium>*/

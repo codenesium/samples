@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var customerIdModel = new ApiCustomerServerResponseModel();
 				customerIdModel.SetProperties(
-					item.Id,
+					item.CustomerIdNavigation.Id,
 					item.CustomerIdNavigation.Email,
 					item.CustomerIdNavigation.FirstName,
 					item.CustomerIdNavigation.LastName,
@@ -50,7 +50,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var employeeIdModel = new ApiEmployeeServerResponseModel();
 				employeeIdModel.SetProperties(
-					item.Id,
+					item.EmployeeIdNavigation.Id,
 					item.EmployeeIdNavigation.FirstName,
 					item.EmployeeIdNavigation.IsSalesPerson,
 					item.EmployeeIdNavigation.IsShipper,
@@ -78,5 +78,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7567ab271cceb381e539605d8c8ef1aa</Hash>
+    <Hash>7bc9da89569b23868a9ea1f994967c34</Hash>
 </Codenesium>*/

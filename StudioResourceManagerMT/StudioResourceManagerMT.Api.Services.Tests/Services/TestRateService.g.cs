@@ -26,18 +26,17 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRateRepository>();
 			var records = new List<Rate>();
 			records.Add(new Rate());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new RateService(mock.LoggerMock.Object,
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiRateServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ApiRateServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ApiRateServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			CreateResponse<ApiRateServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			CreateResponse<ApiRateServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			UpdateResponse<ApiRateServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			UpdateResponse<ApiRateServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiRateServerResponseModel> response = await service.ByTeacherId(default(int));
@@ -240,7 +230,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiRateServerResponseModel> response = await service.ByTeacherId(default(int));
@@ -260,7 +249,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiRateServerResponseModel> response = await service.ByTeacherSkillId(default(int));
@@ -278,7 +266,6 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                              mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiRateServerResponseModel> response = await service.ByTeacherSkillId(default(int));
@@ -290,5 +277,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>860377bb0cf5dba6863bde916a089ade</Hash>
+    <Hash>b9197ad8578af34fac323683322593a6</Hash>
 </Codenesium>*/

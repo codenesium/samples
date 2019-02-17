@@ -36,7 +36,7 @@ namespace NebulaNS.Api.Services
 			{
 				var chainStatusIdModel = new ApiChainStatusServerResponseModel();
 				chainStatusIdModel.SetProperties(
-					item.Id,
+					item.ChainStatusIdNavigation.Id,
 					item.ChainStatusIdNavigation.Name);
 
 				model.SetChainStatusIdNavigation(chainStatusIdModel);
@@ -46,7 +46,7 @@ namespace NebulaNS.Api.Services
 			{
 				var teamIdModel = new ApiTeamServerResponseModel();
 				teamIdModel.SetProperties(
-					item.Id,
+					item.TeamIdNavigation.Id,
 					item.TeamIdNavigation.Name,
 					item.TeamIdNavigation.OrganizationId);
 
@@ -72,5 +72,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>506ff5a42dc0f286485ebe29f917d31d</Hash>
+    <Hash>af842f7a6b91f08185abb1c195518770</Hash>
 </Codenesium>*/

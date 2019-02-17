@@ -14,19 +14,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string address1,
 			string address2,
 			string city,
-			int id,
 			string name,
 			string province,
 			string website,
 			string zip)
 		{
+			this.Id = id;
 			this.Address1 = address1;
 			this.Address2 = address2;
 			this.City = city;
-			this.Id = id;
 			this.Name = name;
 			this.Province = province;
 			this.Website = website;
@@ -68,5 +68,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fbb6deba0f2b47fcd7638082f3ad7bcd</Hash>
+    <Hash>2f9a31de3ea0a3f5776d7efe65ec596d</Hash>
 </Codenesium>*/

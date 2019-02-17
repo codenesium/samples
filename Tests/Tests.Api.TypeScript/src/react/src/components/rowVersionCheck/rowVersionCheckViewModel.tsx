@@ -20,10 +20,10 @@ this.rowVersion = rowVersion;
 
 	toDisplay() : string
 	{
-		return String();
+		return String(NULL_STRING_PASSED_ToLowerCaseFirstLetter);
 	}
 };
 
 /*<Codenesium>
-    <Hash>4ada0e598cac69238de743eafbacb6ec</Hash>
+    <Hash>35cddab18909cc96bc0640dd11920810</Hash>
 </Codenesium>*/

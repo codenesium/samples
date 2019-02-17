@@ -7,6 +7,7 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity : string;
+userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -18,19 +19,18 @@ this.lastName = '';
 this.phone = '';
 this.userId = 0;
 this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(birthday : any,email : string,firstName : string,id : number,isDeleted : boolean,lastName : string,phone : string,tenantId : number,userId : number) : void
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
 				{
 					this.birthday = birthday;
 this.email = email;
 this.firstName = firstName;
 this.id = id;
-this.isDeleted = isDeleted;
 this.lastName = lastName;
 this.phone = phone;
-this.tenantId = tenantId;
 this.userId = userId;
 
 				}
@@ -45,6 +45,7 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity : string;
+userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -56,19 +57,18 @@ this.lastName = '';
 this.phone = '';
 this.userId = 0;
 this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(birthday : any,email : string,firstName : string,id : number,isDeleted : boolean,lastName : string,phone : string,tenantId : number,userId : number) : void
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
 				{
 					this.birthday = birthday;
 this.email = email;
 this.firstName = firstName;
 this.id = id;
-this.isDeleted = isDeleted;
 this.lastName = lastName;
 this.phone = phone;
-this.tenantId = tenantId;
 this.userId = userId;
 
 				}
@@ -79,6 +79,7 @@ actualStartDate:any;
 billAmount:any;
 eventStatusId:number;
 eventStatusIdEntity : string;
+eventStatusIdNavigation? : EventStatuClientResponseModel;
 id:number;
 scheduledEndDate:any;
 scheduledStartDate:any;
@@ -92,6 +93,7 @@ this.actualStartDate = undefined;
 this.billAmount = undefined;
 this.eventStatusId = 0;
 this.eventStatusIdEntity = '';
+this.eventStatusIdNavigation = undefined;
 this.id = 0;
 this.scheduledEndDate = undefined;
 this.scheduledStartDate = undefined;
@@ -100,19 +102,17 @@ this.teacherNote = '';
 
 				}
 
-				setProperties(actualEndDate : any,actualStartDate : any,billAmount : any,eventStatusId : number,id : number,isDeleted : boolean,scheduledEndDate : any,scheduledStartDate : any,studentNote : string,teacherNote : string,tenantId : number) : void
+				setProperties(actualEndDate : any,actualStartDate : any,billAmount : any,eventStatusId : number,id : number,scheduledEndDate : any,scheduledStartDate : any,studentNote : string,teacherNote : string) : void
 				{
 					this.actualEndDate = actualEndDate;
 this.actualStartDate = actualStartDate;
 this.billAmount = billAmount;
 this.eventStatusId = eventStatusId;
 this.id = id;
-this.isDeleted = isDeleted;
 this.scheduledEndDate = scheduledEndDate;
 this.scheduledStartDate = scheduledStartDate;
 this.studentNote = studentNote;
 this.teacherNote = teacherNote;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -123,6 +123,7 @@ actualStartDate:any;
 billAmount:any;
 eventStatusId:number;
 eventStatusIdEntity : string;
+eventStatusIdNavigation? : EventStatuClientResponseModel;
 id:number;
 scheduledEndDate:any;
 scheduledStartDate:any;
@@ -136,6 +137,7 @@ this.actualStartDate = undefined;
 this.billAmount = undefined;
 this.eventStatusId = 0;
 this.eventStatusIdEntity = '';
+this.eventStatusIdNavigation = undefined;
 this.id = 0;
 this.scheduledEndDate = undefined;
 this.scheduledStartDate = undefined;
@@ -144,19 +146,17 @@ this.teacherNote = '';
 
 				}
 
-				setProperties(actualEndDate : any,actualStartDate : any,billAmount : any,eventStatusId : number,id : number,isDeleted : boolean,scheduledEndDate : any,scheduledStartDate : any,studentNote : string,teacherNote : string,tenantId : number) : void
+				setProperties(actualEndDate : any,actualStartDate : any,billAmount : any,eventStatusId : number,id : number,scheduledEndDate : any,scheduledStartDate : any,studentNote : string,teacherNote : string) : void
 				{
 					this.actualEndDate = actualEndDate;
 this.actualStartDate = actualStartDate;
 this.billAmount = billAmount;
 this.eventStatusId = eventStatusId;
 this.id = id;
-this.isDeleted = isDeleted;
 this.scheduledEndDate = scheduledEndDate;
 this.scheduledStartDate = scheduledStartDate;
 this.studentNote = studentNote;
 this.teacherNote = teacherNote;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -171,12 +171,10 @@ this.name = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(id : number,name : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -192,12 +190,10 @@ this.name = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(id : number,name : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -220,16 +216,14 @@ this.primaryContactPhone = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string,tenantId : number) : void
+				setProperties(id : number,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.note = note;
 this.primaryContactEmail = primaryContactEmail;
 this.primaryContactFirstName = primaryContactFirstName;
 this.primaryContactLastName = primaryContactLastName;
 this.primaryContactPhone = primaryContactPhone;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -253,16 +247,14 @@ this.primaryContactPhone = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string,tenantId : number) : void
+				setProperties(id : number,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.note = note;
 this.primaryContactEmail = primaryContactEmail;
 this.primaryContactFirstName = primaryContactFirstName;
 this.primaryContactLastName = primaryContactLastName;
 this.primaryContactPhone = primaryContactPhone;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -271,8 +263,10 @@ this.tenantId = tenantId;
 id:number;
 teacherId:number;
 teacherIdEntity : string;
+teacherIdNavigation? : TeacherClientResponseModel;
 teacherSkillId:number;
 teacherSkillIdEntity : string;
+teacherSkillIdNavigation? : TeacherSkillClientResponseModel;
 
 	
 				constructor() {
@@ -280,19 +274,19 @@ teacherSkillIdEntity : string;
 this.id = 0;
 this.teacherId = 0;
 this.teacherIdEntity = '';
+this.teacherIdNavigation = undefined;
 this.teacherSkillId = 0;
 this.teacherSkillIdEntity = '';
+this.teacherSkillIdNavigation = undefined;
 
 				}
 
-				setProperties(amountPerMinute : number,id : number,isDeleted : boolean,teacherId : number,teacherSkillId : number,tenantId : number) : void
+				setProperties(amountPerMinute : number,id : number,teacherId : number,teacherSkillId : number) : void
 				{
 					this.amountPerMinute = amountPerMinute;
 this.id = id;
-this.isDeleted = isDeleted;
 this.teacherId = teacherId;
 this.teacherSkillId = teacherSkillId;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -302,8 +296,10 @@ this.tenantId = tenantId;
 id:number;
 teacherId:number;
 teacherIdEntity : string;
+teacherIdNavigation? : TeacherClientResponseModel;
 teacherSkillId:number;
 teacherSkillIdEntity : string;
+teacherSkillIdNavigation? : TeacherSkillClientResponseModel;
 
 	
 				constructor() {
@@ -311,19 +307,19 @@ teacherSkillIdEntity : string;
 this.id = 0;
 this.teacherId = 0;
 this.teacherIdEntity = '';
+this.teacherIdNavigation = undefined;
 this.teacherSkillId = 0;
 this.teacherSkillIdEntity = '';
+this.teacherSkillIdNavigation = undefined;
 
 				}
 
-				setProperties(amountPerMinute : number,id : number,isDeleted : boolean,teacherId : number,teacherSkillId : number,tenantId : number) : void
+				setProperties(amountPerMinute : number,id : number,teacherId : number,teacherSkillId : number) : void
 				{
 					this.amountPerMinute = amountPerMinute;
 this.id = id;
-this.isDeleted = isDeleted;
 this.teacherId = teacherId;
 this.teacherSkillId = teacherSkillId;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -340,13 +336,11 @@ this.name = '';
 
 				}
 
-				setProperties(description : string,id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(description : string,id : number,name : string) : void
 				{
 					this.description = description;
 this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -364,13 +358,11 @@ this.name = '';
 
 				}
 
-				setProperties(description : string,id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(description : string,id : number,name : string) : void
 				{
 					this.description = description;
 this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -385,12 +377,10 @@ this.name = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(id : number,name : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -406,12 +396,10 @@ this.name = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(id : number,name : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -421,6 +409,7 @@ email:string;
 emailRemindersEnabled:boolean;
 familyId:number;
 familyIdEntity : string;
+familyIdNavigation? : FamilyClientResponseModel;
 firstName:string;
 id:number;
 isAdult:boolean;
@@ -429,6 +418,7 @@ phone:string;
 smsRemindersEnabled:boolean;
 userId:number;
 userIdEntity : string;
+userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -437,6 +427,7 @@ this.email = '';
 this.emailRemindersEnabled = false;
 this.familyId = 0;
 this.familyIdEntity = '';
+this.familyIdNavigation = undefined;
 this.firstName = '';
 this.id = 0;
 this.isAdult = false;
@@ -445,10 +436,11 @@ this.phone = '';
 this.smsRemindersEnabled = false;
 this.userId = 0;
 this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(birthday : any,email : string,emailRemindersEnabled : boolean,familyId : number,firstName : string,id : number,isAdult : boolean,isDeleted : boolean,lastName : string,phone : string,smsRemindersEnabled : boolean,tenantId : number,userId : number) : void
+				setProperties(birthday : any,email : string,emailRemindersEnabled : boolean,familyId : number,firstName : string,id : number,isAdult : boolean,lastName : string,phone : string,smsRemindersEnabled : boolean,userId : number) : void
 				{
 					this.birthday = birthday;
 this.email = email;
@@ -457,11 +449,9 @@ this.familyId = familyId;
 this.firstName = firstName;
 this.id = id;
 this.isAdult = isAdult;
-this.isDeleted = isDeleted;
 this.lastName = lastName;
 this.phone = phone;
 this.smsRemindersEnabled = smsRemindersEnabled;
-this.tenantId = tenantId;
 this.userId = userId;
 
 				}
@@ -473,6 +463,7 @@ email:string;
 emailRemindersEnabled:boolean;
 familyId:number;
 familyIdEntity : string;
+familyIdNavigation? : FamilyClientResponseModel;
 firstName:string;
 id:number;
 isAdult:boolean;
@@ -481,6 +472,7 @@ phone:string;
 smsRemindersEnabled:boolean;
 userId:number;
 userIdEntity : string;
+userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -489,6 +481,7 @@ this.email = '';
 this.emailRemindersEnabled = false;
 this.familyId = 0;
 this.familyIdEntity = '';
+this.familyIdNavigation = undefined;
 this.firstName = '';
 this.id = 0;
 this.isAdult = false;
@@ -497,10 +490,11 @@ this.phone = '';
 this.smsRemindersEnabled = false;
 this.userId = 0;
 this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(birthday : any,email : string,emailRemindersEnabled : boolean,familyId : number,firstName : string,id : number,isAdult : boolean,isDeleted : boolean,lastName : string,phone : string,smsRemindersEnabled : boolean,tenantId : number,userId : number) : void
+				setProperties(birthday : any,email : string,emailRemindersEnabled : boolean,familyId : number,firstName : string,id : number,isAdult : boolean,lastName : string,phone : string,smsRemindersEnabled : boolean,userId : number) : void
 				{
 					this.birthday = birthday;
 this.email = email;
@@ -509,11 +503,9 @@ this.familyId = familyId;
 this.firstName = firstName;
 this.id = id;
 this.isAdult = isAdult;
-this.isDeleted = isDeleted;
 this.lastName = lastName;
 this.phone = phone;
 this.smsRemindersEnabled = smsRemindersEnabled;
-this.tenantId = tenantId;
 this.userId = userId;
 
 				}
@@ -541,16 +533,14 @@ this.zip = '';
 
 				}
 
-				setProperties(address1 : string,address2 : string,city : string,id : number,isDeleted : boolean,name : string,province : string,tenantId : number,website : string,zip : string) : void
+				setProperties(address1 : string,address2 : string,city : string,id : number,name : string,province : string,website : string,zip : string) : void
 				{
 					this.address1 = address1;
 this.address2 = address2;
 this.city = city;
 this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
 this.province = province;
-this.tenantId = tenantId;
 this.website = website;
 this.zip = zip;
 
@@ -580,16 +570,14 @@ this.zip = '';
 
 				}
 
-				setProperties(address1 : string,address2 : string,city : string,id : number,isDeleted : boolean,name : string,province : string,tenantId : number,website : string,zip : string) : void
+				setProperties(address1 : string,address2 : string,city : string,id : number,name : string,province : string,website : string,zip : string) : void
 				{
 					this.address1 = address1;
 this.address2 = address2;
 this.city = city;
 this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
 this.province = province;
-this.tenantId = tenantId;
 this.website = website;
 this.zip = zip;
 
@@ -604,6 +592,7 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity : string;
+userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -615,19 +604,18 @@ this.lastName = '';
 this.phone = '';
 this.userId = 0;
 this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(birthday : any,email : string,firstName : string,id : number,isDeleted : boolean,lastName : string,phone : string,tenantId : number,userId : number) : void
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
 				{
 					this.birthday = birthday;
 this.email = email;
 this.firstName = firstName;
 this.id = id;
-this.isDeleted = isDeleted;
 this.lastName = lastName;
 this.phone = phone;
-this.tenantId = tenantId;
 this.userId = userId;
 
 				}
@@ -642,6 +630,7 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity : string;
+userIdNavigation? : UserClientResponseModel;
 
 	
 				constructor() {
@@ -653,19 +642,18 @@ this.lastName = '';
 this.phone = '';
 this.userId = 0;
 this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(birthday : any,email : string,firstName : string,id : number,isDeleted : boolean,lastName : string,phone : string,tenantId : number,userId : number) : void
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
 				{
 					this.birthday = birthday;
 this.email = email;
 this.firstName = firstName;
 this.id = id;
-this.isDeleted = isDeleted;
 this.lastName = lastName;
 this.phone = phone;
-this.tenantId = tenantId;
 this.userId = userId;
 
 				}
@@ -681,12 +669,10 @@ this.name = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(id : number,name : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -702,12 +688,10 @@ this.name = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,name : string,tenantId : number) : void
+				setProperties(id : number,name : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.name = name;
-this.tenantId = tenantId;
 
 				}
 			}
@@ -724,12 +708,10 @@ this.username = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,password : string,tenantId : number,username : string) : void
+				setProperties(id : number,password : string,username : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.password = password;
-this.tenantId = tenantId;
 this.username = username;
 
 				}
@@ -748,17 +730,15 @@ this.username = '';
 
 				}
 
-				setProperties(id : number,isDeleted : boolean,password : string,tenantId : number,username : string) : void
+				setProperties(id : number,password : string,username : string) : void
 				{
 					this.id = id;
-this.isDeleted = isDeleted;
 this.password = password;
-this.tenantId = tenantId;
 this.username = username;
 
 				}
 			}
 
 /*<Codenesium>
-    <Hash>2f180cf82d3f5fcd0f070e44daaadfa7</Hash>
+    <Hash>d7ad08cef88f81023f3230384dc44bd9</Hash>
 </Codenesium>*/

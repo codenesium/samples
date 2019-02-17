@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services
 			{
 				var breedIdModel = new ApiBreedServerResponseModel();
 				breedIdModel.SetProperties(
-					item.Id,
+					item.BreedIdNavigation.Id,
 					item.BreedIdNavigation.Name,
 					item.BreedIdNavigation.SpeciesId);
 
@@ -62,5 +62,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebb6fbc63336aeeed5c8afce01d85349</Hash>
+    <Hash>4579dfccc7d0985dac2ac706eae02455</Hash>
 </Codenesium>*/
