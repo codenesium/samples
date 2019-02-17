@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -149,5 +149,5 @@ export default class TagDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>99fdd72f3b081cb4c9079612f317d546</Hash>
+    <Hash>d0c46867a9a49468d50f9b39fecedd77</Hash>
 </Codenesium>*/

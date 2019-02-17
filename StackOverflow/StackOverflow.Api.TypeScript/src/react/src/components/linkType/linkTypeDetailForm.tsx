@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -133,5 +133,5 @@ export default class LinkTypeDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a63f107f25ea83964f1d859d250ce8e1</Hash>
+    <Hash>1c17ee0fbfb1104ecd5f904403155cb7</Hash>
 </Codenesium>*/

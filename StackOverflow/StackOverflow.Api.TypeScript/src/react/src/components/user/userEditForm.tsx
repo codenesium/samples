@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects'
+import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm'
@@ -281,5 +281,5 @@ const UserEdit = withFormik<Props, UserViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>bba2bed7b1624067f097fad9baf28d99</Hash>
+    <Hash>96a5af0f7e3f44862239a79cefef9f34</Hash>
 </Codenesium>*/

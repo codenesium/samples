@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -133,5 +133,5 @@ export default class VoteTypeDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>59663f3a017f41f0a420042a617a5fe7</Hash>
+    <Hash>d419ba6b201beb6d523e4cde0012b420</Hash>
 </Codenesium>*/

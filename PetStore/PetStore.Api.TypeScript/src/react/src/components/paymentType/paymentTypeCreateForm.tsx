@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/ApiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -181,5 +181,5 @@ export default class PaymentTypeCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5f4edc759481b5ddab98b65bde38fa48</Hash>
+    <Hash>12bd86a8c6667596966a879fd5ca44fe</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -133,5 +133,5 @@ export default class PaymentTypeDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b0df4ab519dd94cbc9ee9d111698170f</Hash>
+    <Hash>d7d741aaf150b11af947cc1b62fcddd0</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -157,5 +157,5 @@ export default class CommentDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>980177555f6c5561090485db6bed17ae</Hash>
+    <Hash>a7933ef48f19b464bdd8d0bbbe48a195</Hash>
 </Codenesium>*/

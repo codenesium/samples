@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -131,5 +131,5 @@ export default class SpeciesDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c0f6547dcab5a824d45145d68356fd22</Hash>
+    <Hash>62a8d7e0d3b77468f3b5b2a0a42e1a15</Hash>
 </Codenesium>*/

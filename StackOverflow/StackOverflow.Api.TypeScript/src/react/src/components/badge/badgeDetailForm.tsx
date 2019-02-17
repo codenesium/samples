@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects';
+import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
@@ -143,5 +143,5 @@ export default class BadgeDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>60bc610afd5a930555ea3c7f59c1b05f</Hash>
+    <Hash>985fafe6411ef12455b5b1d7e5077f66</Hash>
 </Codenesium>*/
