@@ -1,56 +1,57 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
-import { App } from './app';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
-import AdminCreateComponent from './components/admin/adminCreateForm';
-import AdminDetailComponent from './components/admin/adminDetailForm';
-import AdminEditComponent from './components/admin/adminEditForm';
-import AdminSearchComponent from './components/admin/adminSearchForm';
-import EventCreateComponent from './components/event/eventCreateForm';
-import EventDetailComponent from './components/event/eventDetailForm';
-import EventEditComponent from './components/event/eventEditForm';
-import EventSearchComponent from './components/event/eventSearchForm';
-import EventStatusCreateComponent from './components/eventStatus/eventStatusCreateForm';
-import EventStatusDetailComponent from './components/eventStatus/eventStatusDetailForm';
-import EventStatusEditComponent from './components/eventStatus/eventStatusEditForm';
-import EventStatusSearchComponent from './components/eventStatus/eventStatusSearchForm';
-import FamilyCreateComponent from './components/family/familyCreateForm';
-import FamilyDetailComponent from './components/family/familyDetailForm';
-import FamilyEditComponent from './components/family/familyEditForm';
-import FamilySearchComponent from './components/family/familySearchForm';
-import RateCreateComponent from './components/rate/rateCreateForm';
-import RateDetailComponent from './components/rate/rateDetailForm';
-import RateEditComponent from './components/rate/rateEditForm';
-import RateSearchComponent from './components/rate/rateSearchForm';
-import SpaceCreateComponent from './components/space/spaceCreateForm';
-import SpaceDetailComponent from './components/space/spaceDetailForm';
-import SpaceEditComponent from './components/space/spaceEditForm';
-import SpaceSearchComponent from './components/space/spaceSearchForm';
-import SpaceFeatureCreateComponent from './components/spaceFeature/spaceFeatureCreateForm';
-import SpaceFeatureDetailComponent from './components/spaceFeature/spaceFeatureDetailForm';
-import SpaceFeatureEditComponent from './components/spaceFeature/spaceFeatureEditForm';
-import SpaceFeatureSearchComponent from './components/spaceFeature/spaceFeatureSearchForm';
-import StudentCreateComponent from './components/student/studentCreateForm';
-import StudentDetailComponent from './components/student/studentDetailForm';
-import StudentEditComponent from './components/student/studentEditForm';
-import StudentSearchComponent from './components/student/studentSearchForm';
-import StudioCreateComponent from './components/studio/studioCreateForm';
-import StudioDetailComponent from './components/studio/studioDetailForm';
-import StudioEditComponent from './components/studio/studioEditForm';
-import StudioSearchComponent from './components/studio/studioSearchForm';
-import TeacherCreateComponent from './components/teacher/teacherCreateForm';
-import TeacherDetailComponent from './components/teacher/teacherDetailForm';
-import TeacherEditComponent from './components/teacher/teacherEditForm';
-import TeacherSearchComponent from './components/teacher/teacherSearchForm';
-import TeacherSkillCreateComponent from './components/teacherSkill/teacherSkillCreateForm';
-import TeacherSkillDetailComponent from './components/teacherSkill/teacherSkillDetailForm';
-import TeacherSkillEditComponent from './components/teacherSkill/teacherSkillEditForm';
-import TeacherSkillSearchComponent from './components/teacherSkill/teacherSkillSearchForm';
-import UserCreateComponent from './components/user/userCreateForm';
-import UserDetailComponent from './components/user/userDetailForm';
-import UserEditComponent from './components/user/userEditForm';
-import UserSearchComponent from './components/user/userSearchForm';
+import { wrapperHeader } from './components/header';
+import { ClientRoutes, Constants } from './constants';
+import { WrappedAdminCreateComponent } from './components/admin/adminCreateForm';
+import { WrappedAdminDetailComponent } from './components/admin/adminDetailForm';
+import { WrappedAdminEditComponent } from './components/admin/adminEditForm';
+import { WrappedAdminSearchComponent } from './components/admin/adminSearchForm';
+import { WrappedEventCreateComponent } from './components/event/eventCreateForm';
+import { WrappedEventDetailComponent } from './components/event/eventDetailForm';
+import { WrappedEventEditComponent } from './components/event/eventEditForm';
+import { WrappedEventSearchComponent } from './components/event/eventSearchForm';
+import { WrappedEventStatusCreateComponent } from './components/eventStatus/eventStatusCreateForm';
+import { WrappedEventStatusDetailComponent } from './components/eventStatus/eventStatusDetailForm';
+import { WrappedEventStatusEditComponent } from './components/eventStatus/eventStatusEditForm';
+import { WrappedEventStatusSearchComponent } from './components/eventStatus/eventStatusSearchForm';
+import { WrappedFamilyCreateComponent } from './components/family/familyCreateForm';
+import { WrappedFamilyDetailComponent } from './components/family/familyDetailForm';
+import { WrappedFamilyEditComponent } from './components/family/familyEditForm';
+import { WrappedFamilySearchComponent } from './components/family/familySearchForm';
+import { WrappedRateCreateComponent } from './components/rate/rateCreateForm';
+import { WrappedRateDetailComponent } from './components/rate/rateDetailForm';
+import { WrappedRateEditComponent } from './components/rate/rateEditForm';
+import { WrappedRateSearchComponent } from './components/rate/rateSearchForm';
+import { WrappedSpaceCreateComponent } from './components/space/spaceCreateForm';
+import { WrappedSpaceDetailComponent } from './components/space/spaceDetailForm';
+import { WrappedSpaceEditComponent } from './components/space/spaceEditForm';
+import { WrappedSpaceSearchComponent } from './components/space/spaceSearchForm';
+import { WrappedSpaceFeatureCreateComponent } from './components/spaceFeature/spaceFeatureCreateForm';
+import { WrappedSpaceFeatureDetailComponent } from './components/spaceFeature/spaceFeatureDetailForm';
+import { WrappedSpaceFeatureEditComponent } from './components/spaceFeature/spaceFeatureEditForm';
+import { WrappedSpaceFeatureSearchComponent } from './components/spaceFeature/spaceFeatureSearchForm';
+import { WrappedStudentCreateComponent } from './components/student/studentCreateForm';
+import { WrappedStudentDetailComponent } from './components/student/studentDetailForm';
+import { WrappedStudentEditComponent } from './components/student/studentEditForm';
+import { WrappedStudentSearchComponent } from './components/student/studentSearchForm';
+import { WrappedStudioCreateComponent } from './components/studio/studioCreateForm';
+import { WrappedStudioDetailComponent } from './components/studio/studioDetailForm';
+import { WrappedStudioEditComponent } from './components/studio/studioEditForm';
+import { WrappedStudioSearchComponent } from './components/studio/studioSearchForm';
+import { WrappedTeacherCreateComponent } from './components/teacher/teacherCreateForm';
+import { WrappedTeacherDetailComponent } from './components/teacher/teacherDetailForm';
+import { WrappedTeacherEditComponent } from './components/teacher/teacherEditForm';
+import { WrappedTeacherSearchComponent } from './components/teacher/teacherSearchForm';
+import { WrappedTeacherSkillCreateComponent } from './components/teacherSkill/teacherSkillCreateForm';
+import { WrappedTeacherSkillDetailComponent } from './components/teacherSkill/teacherSkillDetailForm';
+import { WrappedTeacherSkillEditComponent } from './components/teacherSkill/teacherSkillEditForm';
+import { WrappedTeacherSkillSearchComponent } from './components/teacherSkill/teacherSkillSearchForm';
+import { WrappedUserCreateComponent } from './components/user/userCreateForm';
+import { WrappedUserDetailComponent } from './components/user/userDetailForm';
+import { WrappedUserEditComponent } from './components/user/userEditForm';
+import { WrappedUserSearchComponent } from './components/user/userSearchForm';
 
 const config = {
   oidc: {
@@ -71,97 +72,205 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}
       >
-        <div className="container-fluid">
-          <Route component={App} />
-          <SecureRoute
-            path="/protected"
-            component={() => '<div>secure route</div>'}
+        <SecureRoute
+          path="/protected"
+          component={() => '<div>secure route</div>'}
+        />
+        <Switch>
+          <Route exact path="/" component={wrapperHeader(Dashboard)} />
+          <Route
+            path={ClientRoutes.Admins + '/create'}
+            component={wrapperHeader(WrappedAdminCreateComponent)}
           />
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/admins/create" component={AdminCreateComponent} />
-            <Route path="/admins/edit/:id" component={AdminEditComponent} />
-            <Route path="/admins/:id" component={AdminDetailComponent} />
-            <Route path="/admins" component={AdminSearchComponent} />
-            <Route path="/events/create" component={EventCreateComponent} />
-            <Route path="/events/edit/:id" component={EventEditComponent} />
-            <Route path="/events/:id" component={EventDetailComponent} />
-            <Route path="/events" component={EventSearchComponent} />
-            <Route
-              path="/eventstatus/create"
-              component={EventStatusCreateComponent}
-            />
-            <Route
-              path="/eventstatus/edit/:id"
-              component={EventStatusEditComponent}
-            />
-            <Route
-              path="/eventstatus/:id"
-              component={EventStatusDetailComponent}
-            />
-            <Route path="/eventstatus" component={EventStatusSearchComponent} />
-            <Route path="/families/create" component={FamilyCreateComponent} />
-            <Route path="/families/edit/:id" component={FamilyEditComponent} />
-            <Route path="/families/:id" component={FamilyDetailComponent} />
-            <Route path="/families" component={FamilySearchComponent} />
-            <Route path="/rates/create" component={RateCreateComponent} />
-            <Route path="/rates/edit/:id" component={RateEditComponent} />
-            <Route path="/rates/:id" component={RateDetailComponent} />
-            <Route path="/rates" component={RateSearchComponent} />
-            <Route path="/spaces/create" component={SpaceCreateComponent} />
-            <Route path="/spaces/edit/:id" component={SpaceEditComponent} />
-            <Route path="/spaces/:id" component={SpaceDetailComponent} />
-            <Route path="/spaces" component={SpaceSearchComponent} />
-            <Route
-              path="/spacefeatures/create"
-              component={SpaceFeatureCreateComponent}
-            />
-            <Route
-              path="/spacefeatures/edit/:id"
-              component={SpaceFeatureEditComponent}
-            />
-            <Route
-              path="/spacefeatures/:id"
-              component={SpaceFeatureDetailComponent}
-            />
-            <Route
-              path="/spacefeatures"
-              component={SpaceFeatureSearchComponent}
-            />
-            <Route path="/students/create" component={StudentCreateComponent} />
-            <Route path="/students/edit/:id" component={StudentEditComponent} />
-            <Route path="/students/:id" component={StudentDetailComponent} />
-            <Route path="/students" component={StudentSearchComponent} />
-            <Route path="/studios/create" component={StudioCreateComponent} />
-            <Route path="/studios/edit/:id" component={StudioEditComponent} />
-            <Route path="/studios/:id" component={StudioDetailComponent} />
-            <Route path="/studios" component={StudioSearchComponent} />
-            <Route path="/teachers/create" component={TeacherCreateComponent} />
-            <Route path="/teachers/edit/:id" component={TeacherEditComponent} />
-            <Route path="/teachers/:id" component={TeacherDetailComponent} />
-            <Route path="/teachers" component={TeacherSearchComponent} />
-            <Route
-              path="/teacherskills/create"
-              component={TeacherSkillCreateComponent}
-            />
-            <Route
-              path="/teacherskills/edit/:id"
-              component={TeacherSkillEditComponent}
-            />
-            <Route
-              path="/teacherskills/:id"
-              component={TeacherSkillDetailComponent}
-            />
-            <Route
-              path="/teacherskills"
-              component={TeacherSkillSearchComponent}
-            />
-            <Route path="/users/create" component={UserCreateComponent} />
-            <Route path="/users/edit/:id" component={UserEditComponent} />
-            <Route path="/users/:id" component={UserDetailComponent} />
-            <Route path="/users" component={UserSearchComponent} />
-          </Switch>
-        </div>
+          <Route
+            path={ClientRoutes.Admins + '/edit/:id'}
+            component={wrapperHeader(WrappedAdminEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Admins + '/:id'}
+            component={wrapperHeader(WrappedAdminDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Admins}
+            component={wrapperHeader(WrappedAdminSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events + '/create'}
+            component={wrapperHeader(WrappedEventCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events + '/edit/:id'}
+            component={wrapperHeader(WrappedEventEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events + '/:id'}
+            component={wrapperHeader(WrappedEventDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events}
+            component={wrapperHeader(WrappedEventSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.EventStatus + '/create'}
+            component={wrapperHeader(WrappedEventStatusCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.EventStatus + '/edit/:id'}
+            component={wrapperHeader(WrappedEventStatusEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.EventStatus + '/:id'}
+            component={wrapperHeader(WrappedEventStatusDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.EventStatus}
+            component={wrapperHeader(WrappedEventStatusSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Families + '/create'}
+            component={wrapperHeader(WrappedFamilyCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Families + '/edit/:id'}
+            component={wrapperHeader(WrappedFamilyEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Families + '/:id'}
+            component={wrapperHeader(WrappedFamilyDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Families}
+            component={wrapperHeader(WrappedFamilySearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Rates + '/create'}
+            component={wrapperHeader(WrappedRateCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Rates + '/edit/:id'}
+            component={wrapperHeader(WrappedRateEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Rates + '/:id'}
+            component={wrapperHeader(WrappedRateDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Rates}
+            component={wrapperHeader(WrappedRateSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Spaces + '/create'}
+            component={wrapperHeader(WrappedSpaceCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Spaces + '/edit/:id'}
+            component={wrapperHeader(WrappedSpaceEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Spaces + '/:id'}
+            component={wrapperHeader(WrappedSpaceDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Spaces}
+            component={wrapperHeader(WrappedSpaceSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.SpaceFeatures + '/create'}
+            component={wrapperHeader(WrappedSpaceFeatureCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.SpaceFeatures + '/edit/:id'}
+            component={wrapperHeader(WrappedSpaceFeatureEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.SpaceFeatures + '/:id'}
+            component={wrapperHeader(WrappedSpaceFeatureDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.SpaceFeatures}
+            component={wrapperHeader(WrappedSpaceFeatureSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Students + '/create'}
+            component={wrapperHeader(WrappedStudentCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Students + '/edit/:id'}
+            component={wrapperHeader(WrappedStudentEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Students + '/:id'}
+            component={wrapperHeader(WrappedStudentDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Students}
+            component={wrapperHeader(WrappedStudentSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Studios + '/create'}
+            component={wrapperHeader(WrappedStudioCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Studios + '/edit/:id'}
+            component={wrapperHeader(WrappedStudioEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Studios + '/:id'}
+            component={wrapperHeader(WrappedStudioDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Studios}
+            component={wrapperHeader(WrappedStudioSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Teachers + '/create'}
+            component={wrapperHeader(WrappedTeacherCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Teachers + '/edit/:id'}
+            component={wrapperHeader(WrappedTeacherEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Teachers + '/:id'}
+            component={wrapperHeader(WrappedTeacherDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Teachers}
+            component={wrapperHeader(WrappedTeacherSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.TeacherSkills + '/create'}
+            component={wrapperHeader(WrappedTeacherSkillCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.TeacherSkills + '/edit/:id'}
+            component={wrapperHeader(WrappedTeacherSkillEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.TeacherSkills + '/:id'}
+            component={wrapperHeader(WrappedTeacherSkillDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.TeacherSkills}
+            component={wrapperHeader(WrappedTeacherSkillSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Users + '/create'}
+            component={wrapperHeader(WrappedUserCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Users + '/edit/:id'}
+            component={wrapperHeader(WrappedUserEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Users + '/:id'}
+            component={wrapperHeader(WrappedUserDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Users}
+            component={wrapperHeader(WrappedUserSearchComponent)}
+          />
+        </Switch>
       </Security>
     </BrowserRouter>
   );
@@ -169,5 +278,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>eacb0f41f4a968bc26a9d0bd29171e16</Hash>
+    <Hash>922e86639456f75ea7b1c68ddaf60b8f</Hash>
 </Codenesium>*/

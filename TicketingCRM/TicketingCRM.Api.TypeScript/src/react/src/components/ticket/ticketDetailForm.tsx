@@ -1,59 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import TicketMapper from './ticketMapper';
 import TicketViewModel from './ticketViewModel';
-
-interface Props {
-  history: any;
-  model?: TicketViewModel;
-}
-
-const TicketDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Tickets + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="publicId" className={'col-sm-2 col-form-label'}>
-          PublicId
-        </label>
-        <div className="col-sm-12">{String(model.model!.publicId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="ticketStatusId" className={'col-sm-2 col-form-label'}>
-          TicketStatusId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.ticketStatusIdNavigation!.toDisplay()}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface TicketDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface TicketDetailComponentState {
@@ -64,17 +23,23 @@ interface TicketDetailComponentState {
   errorMessage: string;
 }
 
-export default class TicketDetailComponent extends React.Component<
+class TicketDetailComponent extends React.Component<
   TicketDetailComponentProps,
   TicketDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new TicketViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Tickets + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -95,9 +60,9 @@ export default class TicketDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.TicketClientResponseModel;
 
-          let mapper = new TicketMapper();
-
           console.log(response);
+
+          let mapper = new TicketMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -119,17 +84,41 @@ export default class TicketDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <TicketDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>publicId</div>
+              <div>{this.state.model!.publicId}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>ticketStatusId</h3>
+              <div>
+                {this.state.model!.ticketStatusIdNavigation!.toDisplay()}
+              </div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -137,7 +126,11 @@ export default class TicketDetailComponent extends React.Component<
   }
 }
 
+export const WrappedTicketDetailComponent = Form.create({
+  name: 'Ticket Detail',
+})(TicketDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>4460721ac4c3abe244700c24795bb908</Hash>
+    <Hash>2393669b0cc4bcf9871c6fde02e47969</Hash>
 </Codenesium>*/

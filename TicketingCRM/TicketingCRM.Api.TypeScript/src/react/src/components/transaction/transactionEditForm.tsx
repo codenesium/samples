@@ -1,230 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { CreateResponse } from '../../api/apiObjects';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import TransactionViewModel from './transactionViewModel';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import TransactionMapper from './transactionMapper';
-
-interface Props {
-  model?: TransactionViewModel;
-}
-
-const TransactionEditDisplay = (props: FormikProps<TransactionViewModel>) => {
-  let status = props.status as UpdateResponse<
-    Api.TransactionClientRequestModel
-  >;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof TransactionViewModel] &&
-      props.errors[name as keyof TransactionViewModel]
-    ) {
-      response += props.errors[name as keyof TransactionViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('amount')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Amount
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="number"
-            name="amount"
-            className={
-              errorExistForField('amount')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('amount') && (
-            <small className="text-danger">{errorsForField('amount')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('gatewayConfirmationNumber')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          GatewayConfirmationNumber
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="gatewayConfirmationNumber"
-            className={
-              errorExistForField('gatewayConfirmationNumber')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('gatewayConfirmationNumber') && (
-            <small className="text-danger">
-              {errorsForField('gatewayConfirmationNumber')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('transactionStatusId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          TransactionStatusId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="transactionStatusId"
-            className={
-              errorExistForField('transactionStatusId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('transactionStatusId') && (
-            <small className="text-danger">
-              {errorsForField('transactionStatusId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const TransactionEdit = withFormik<Props, TransactionViewModel>({
-  mapPropsToValues: props => {
-    let response = new TransactionViewModel();
-    response.setProperties(
-      props.model!.amount,
-      props.model!.gatewayConfirmationNumber,
-      props.model!.id,
-      props.model!.transactionStatusId
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<TransactionViewModel> = {};
-
-    if (values.amount == 0) {
-      errors.amount = 'Required';
-    }
-    if (values.gatewayConfirmationNumber == '') {
-      errors.gatewayConfirmationNumber = 'Required';
-    }
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-    if (values.transactionStatusId == 0) {
-      errors.transactionStatusId = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new TransactionMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Transactions + '/' + values.id,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.TransactionClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'TransactionEdit',
-})(TransactionEditDisplay);
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import TransactionViewModel from './transactionViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface TransactionEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface TransactionEditComponentState {
@@ -233,21 +23,23 @@ interface TransactionEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class TransactionEditComponent extends React.Component<
+class TransactionEditComponent extends React.Component<
   TransactionEditComponentProps,
   TransactionEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new TransactionViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -277,6 +69,8 @@ export default class TransactionEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -289,21 +83,113 @@ export default class TransactionEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as TransactionViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:TransactionViewModel) =>
+  {  
+    let mapper = new TransactionMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Transactions + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.TransactionClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <TransactionEdit model={this.state.model} />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='amount'>amount</label>
+              <br />             
+{getFieldDecorator('amount', {
+              rules:[],
+              })
+              ( <InputNumber placeholder={"amount"} id={"amount"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='gatewayConfirmationNumber'>gatewayConfirmationNumber</label>
+              <br />             
+{getFieldDecorator('gatewayConfirmationNumber', {
+              rules:[],
+              })
+              ( <Input placeholder={"gatewayConfirmationNumber"} id={"gatewayConfirmationNumber"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='transactionStatusId'>transactionStatusId</label>
+              <br />             
+{getFieldDecorator('transactionStatusId', {
+              rules:[],
+              })
+              ( <Input placeholder={"transactionStatusId"} id={"transactionStatusId"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedTransactionEditComponent = Form.create({ name: 'Transaction Edit' })(TransactionEditComponent);
 
 /*<Codenesium>
-    <Hash>70fda680c28ed62c95eeec9480bdb88b</Hash>
+    <Hash>b70289fb4bc680768c1ceec2373731bf</Hash>
 </Codenesium>*/

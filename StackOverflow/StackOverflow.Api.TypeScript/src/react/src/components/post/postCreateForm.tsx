@@ -1,672 +1,61 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import PostMapper from './postMapper';
 import PostViewModel from './postViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-  model?: PostViewModel;
+interface PostCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const PostCreateDisplay: React.SFC<FormikProps<PostViewModel>> = (
-  props: FormikProps<PostViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.PostClientRequestModel>;
+interface PostCreateComponentState {
+  model?: PostViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof PostViewModel] &&
-      props.errors[name as keyof PostViewModel]
-    ) {
-      response += props.errors[name as keyof PostViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class PostCreateComponent extends React.Component<
+  PostCreateComponentProps,
+  PostCreateComponentState
+> {
+  state = {
+    model: new PostViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as PostViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('acceptedAnswerId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          AcceptedAnswerId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="acceptedAnswerId"
-            className={
-              errorExistForField('acceptedAnswerId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('acceptedAnswerId') && (
-            <small className="text-danger">
-              {errorsForField('acceptedAnswerId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('answerCount')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          AnswerCount
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="answerCount"
-            className={
-              errorExistForField('answerCount')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('answerCount') && (
-            <small className="text-danger">
-              {errorsForField('answerCount')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('body')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Body
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="body"
-            className={
-              errorExistForField('body')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('body') && (
-            <small className="text-danger">{errorsForField('body')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('closedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ClosedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="closedDate"
-            className={
-              errorExistForField('closedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('closedDate') && (
-            <small className="text-danger">
-              {errorsForField('closedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('commentCount')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CommentCount
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="commentCount"
-            className={
-              errorExistForField('commentCount')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('commentCount') && (
-            <small className="text-danger">
-              {errorsForField('commentCount')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('communityOwnedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CommunityOwnedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="communityOwnedDate"
-            className={
-              errorExistForField('communityOwnedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('communityOwnedDate') && (
-            <small className="text-danger">
-              {errorsForField('communityOwnedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('creationDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CreationDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="creationDate"
-            className={
-              errorExistForField('creationDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('creationDate') && (
-            <small className="text-danger">
-              {errorsForField('creationDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('favoriteCount')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          FavoriteCount
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="favoriteCount"
-            className={
-              errorExistForField('favoriteCount')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('favoriteCount') && (
-            <small className="text-danger">
-              {errorsForField('favoriteCount')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('lastActivityDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LastActivityDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="lastActivityDate"
-            className={
-              errorExistForField('lastActivityDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('lastActivityDate') && (
-            <small className="text-danger">
-              {errorsForField('lastActivityDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('lastEditDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LastEditDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="lastEditDate"
-            className={
-              errorExistForField('lastEditDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('lastEditDate') && (
-            <small className="text-danger">
-              {errorsForField('lastEditDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('lastEditorDisplayName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LastEditorDisplayName
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="lastEditorDisplayName"
-            className={
-              errorExistForField('lastEditorDisplayName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('lastEditorDisplayName') && (
-            <small className="text-danger">
-              {errorsForField('lastEditorDisplayName')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('lastEditorUserId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LastEditorUserId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="lastEditorUserId"
-            className={
-              errorExistForField('lastEditorUserId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('lastEditorUserId') && (
-            <small className="text-danger">
-              {errorsForField('lastEditorUserId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('ownerUserId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          OwnerUserId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="ownerUserId"
-            className={
-              errorExistForField('ownerUserId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('ownerUserId') && (
-            <small className="text-danger">
-              {errorsForField('ownerUserId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('parentId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ParentId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="parentId"
-            className={
-              errorExistForField('parentId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('parentId') && (
-            <small className="text-danger">{errorsForField('parentId')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('postTypeId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PostTypeId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="postTypeId"
-            className={
-              errorExistForField('postTypeId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('postTypeId') && (
-            <small className="text-danger">
-              {errorsForField('postTypeId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('score')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Score
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="score"
-            className={
-              errorExistForField('score')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('score') && (
-            <small className="text-danger">{errorsForField('score')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('tag')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Tags
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="tag"
-            className={
-              errorExistForField('tag')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('tag') && (
-            <small className="text-danger">{errorsForField('tag')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('title')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Title
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="title"
-            className={
-              errorExistForField('title')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('title') && (
-            <small className="text-danger">{errorsForField('title')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('viewCount')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ViewCount
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="viewCount"
-            className={
-              errorExistForField('viewCount')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('viewCount') && (
-            <small className="text-danger">{errorsForField('viewCount')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const PostCreate = withFormik<Props, PostViewModel>({
-  mapPropsToValues: props => {
-    let response = new PostViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.acceptedAnswerId,
-        props.model!.answerCount,
-        props.model!.body,
-        props.model!.closedDate,
-        props.model!.commentCount,
-        props.model!.communityOwnedDate,
-        props.model!.creationDate,
-        props.model!.favoriteCount,
-        props.model!.id,
-        props.model!.lastActivityDate,
-        props.model!.lastEditDate,
-        props.model!.lastEditorDisplayName,
-        props.model!.lastEditorUserId,
-        props.model!.ownerUserId,
-        props.model!.parentId,
-        props.model!.postTypeId,
-        props.model!.score,
-        props.model!.tag,
-        props.model!.title,
-        props.model!.viewCount
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<PostViewModel> = {};
-
-    if (values.body == '') {
-      errors.body = 'Required';
-    }
-    if (values.creationDate == undefined) {
-      errors.creationDate = 'Required';
-    }
-    if (values.lastActivityDate == undefined) {
-      errors.lastActivityDate = 'Required';
-    }
-    if (values.postTypeId == 0) {
-      errors.postTypeId = 'Required';
-    }
-    if (values.score == 0) {
-      errors.score = 'Required';
-    }
-    if (values.viewCount == 0) {
-      errors.viewCount = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: PostViewModel) => {
     let mapper = new PostMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Posts,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -678,54 +67,236 @@ const PostCreate = withFormik<Props, PostViewModel>({
           let response = resp.data as CreateResponse<
             Api.PostClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'PostCreate',
-})(PostCreateDisplay);
-
-interface PostCreateComponentProps {}
-
-interface PostCreateComponentState {
-  model?: PostViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class PostCreateComponent extends React.Component<
-  PostCreateComponentProps,
-  PostCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
-      return <PostCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="acceptedAnswerId">AcceptedAnswerId</label>
+            <br />
+            {getFieldDecorator('acceptedAnswerId', {
+              rules: [],
+            })(
+              <Input placeholder={'AcceptedAnswerId'} id={'acceptedAnswerId'} />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="answerCount">AnswerCount</label>
+            <br />
+            {getFieldDecorator('answerCount', {
+              rules: [],
+            })(<Input placeholder={'AnswerCount'} id={'answerCount'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="body">Body</label>
+            <br />
+            {getFieldDecorator('body', {
+              rules: [],
+            })(<Input placeholder={'Body'} id={'body'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="closedDate">ClosedDate</label>
+            <br />
+            {getFieldDecorator('closedDate', {
+              rules: [],
+            })(<Input placeholder={'ClosedDate'} id={'closedDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="commentCount">CommentCount</label>
+            <br />
+            {getFieldDecorator('commentCount', {
+              rules: [],
+            })(<Input placeholder={'CommentCount'} id={'commentCount'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="communityOwnedDate">CommunityOwnedDate</label>
+            <br />
+            {getFieldDecorator('communityOwnedDate', {
+              rules: [],
+            })(
+              <Input
+                placeholder={'CommunityOwnedDate'}
+                id={'communityOwnedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="creationDate">CreationDate</label>
+            <br />
+            {getFieldDecorator('creationDate', {
+              rules: [],
+            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="favoriteCount">FavoriteCount</label>
+            <br />
+            {getFieldDecorator('favoriteCount', {
+              rules: [],
+            })(<Input placeholder={'FavoriteCount'} id={'favoriteCount'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="lastActivityDate">LastActivityDate</label>
+            <br />
+            {getFieldDecorator('lastActivityDate', {
+              rules: [],
+            })(
+              <Input placeholder={'LastActivityDate'} id={'lastActivityDate'} />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="lastEditDate">LastEditDate</label>
+            <br />
+            {getFieldDecorator('lastEditDate', {
+              rules: [],
+            })(<Input placeholder={'LastEditDate'} id={'lastEditDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="lastEditorDisplayName">LastEditorDisplayName</label>
+            <br />
+            {getFieldDecorator('lastEditorDisplayName', {
+              rules: [],
+            })(
+              <Input
+                placeholder={'LastEditorDisplayName'}
+                id={'lastEditorDisplayName'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="lastEditorUserId">LastEditorUserId</label>
+            <br />
+            {getFieldDecorator('lastEditorUserId', {
+              rules: [],
+            })(
+              <Input placeholder={'LastEditorUserId'} id={'lastEditorUserId'} />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="ownerUserId">OwnerUserId</label>
+            <br />
+            {getFieldDecorator('ownerUserId', {
+              rules: [],
+            })(<Input placeholder={'OwnerUserId'} id={'ownerUserId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="parentId">ParentId</label>
+            <br />
+            {getFieldDecorator('parentId', {
+              rules: [],
+            })(<Input placeholder={'ParentId'} id={'parentId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="postTypeId">PostTypeId</label>
+            <br />
+            {getFieldDecorator('postTypeId', {
+              rules: [],
+            })(<Input placeholder={'PostTypeId'} id={'postTypeId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="score">Score</label>
+            <br />
+            {getFieldDecorator('score', {
+              rules: [],
+            })(<Input placeholder={'Score'} id={'score'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="tag">Tags</label>
+            <br />
+            {getFieldDecorator('tag', {
+              rules: [],
+            })(<Input placeholder={'Tags'} id={'tag'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="title">Title</label>
+            <br />
+            {getFieldDecorator('title', {
+              rules: [],
+            })(<Input placeholder={'Title'} id={'title'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="viewCount">ViewCount</label>
+            <br />
+            {getFieldDecorator('viewCount', {
+              rules: [],
+            })(<Input placeholder={'ViewCount'} id={'viewCount'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedPostCreateComponent = Form.create({ name: 'Post Create' })(
+  PostCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>785ab9ca9995ead2a2f8774a1e748db4</Hash>
+    <Hash>7f705dc8a20be8f761b9bcda13a8b6cd</Hash>
 </Codenesium>*/

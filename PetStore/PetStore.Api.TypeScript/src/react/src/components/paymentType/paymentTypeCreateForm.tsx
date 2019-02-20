@@ -1,126 +1,61 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import PaymentTypeMapper from './paymentTypeMapper';
 import PaymentTypeViewModel from './paymentTypeViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-  model?: PaymentTypeViewModel;
+interface PaymentTypeCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const PaymentTypeCreateDisplay: React.SFC<FormikProps<PaymentTypeViewModel>> = (
-  props: FormikProps<PaymentTypeViewModel>
-) => {
-  let status = props.status as CreateResponse<
-    Api.PaymentTypeClientRequestModel
-  >;
+interface PaymentTypeCreateComponentState {
+  model?: PaymentTypeViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof PaymentTypeViewModel] &&
-      props.errors[name as keyof PaymentTypeViewModel]
-    ) {
-      response += props.errors[name as keyof PaymentTypeViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class PaymentTypeCreateComponent extends React.Component<
+  PaymentTypeCreateComponentProps,
+  PaymentTypeCreateComponentState
+> {
+  state = {
+    model: new PaymentTypeViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as PaymentTypeViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const PaymentTypeCreate = withFormik<Props, PaymentTypeViewModel>({
-  mapPropsToValues: props => {
-    let response = new PaymentTypeViewModel();
-    if (props.model != undefined) {
-      response.setProperties(props.model!.id, props.model!.name);
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<PaymentTypeViewModel> = {};
-
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: PaymentTypeViewModel) => {
     let mapper = new PaymentTypeMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.PaymentTypes,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -132,54 +67,76 @@ const PaymentTypeCreate = withFormik<Props, PaymentTypeViewModel>({
           let response = resp.data as CreateResponse<
             Api.PaymentTypeClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'PaymentTypeCreate',
-})(PaymentTypeCreateDisplay);
-
-interface PaymentTypeCreateComponentProps {}
-
-interface PaymentTypeCreateComponentState {
-  model?: PaymentTypeViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class PaymentTypeCreateComponent extends React.Component<
-  PaymentTypeCreateComponentProps,
-  PaymentTypeCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
-      return <PaymentTypeCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="name">name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [],
+            })(<Input placeholder={'name'} id={'name'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedPaymentTypeCreateComponent = Form.create({
+  name: 'PaymentType Create',
+})(PaymentTypeCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>12bd86a8c6667596966a879fd5ca44fe</Hash>
+    <Hash>923d8293e018c516f7e25f128cf72572</Hash>
 </Codenesium>*/

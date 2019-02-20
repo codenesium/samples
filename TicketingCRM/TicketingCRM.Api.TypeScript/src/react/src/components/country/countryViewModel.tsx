@@ -1,26 +1,23 @@
 export default class CountryViewModel {
-    id:number;
-name:string;
+  id: number;
+  name: string;
 
-    constructor() {
-		this.id = 0;
-this.name = '';
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
 
-    }
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
 
-	setProperties(id : number,name : string) : void
-	{
-		this.id = id;
-this.name = name;
+  toDisplay(): string {
+    return String(this.name);
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String(this.name);
-	}
-};
 
 /*<Codenesium>
-    <Hash>20bf0089c2ee196fedf43d48ec3780b5</Hash>
+    <Hash>9fe29b4fb9c006689f5587f08d4ac777</Hash>
 </Codenesium>*/

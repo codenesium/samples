@@ -1,224 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { CreateResponse } from '../../api/apiObjects';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import BadgeViewModel from './badgeViewModel';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import BadgeMapper from './badgeMapper';
-
-interface Props {
-  model?: BadgeViewModel;
-}
-
-const BadgeEditDisplay = (props: FormikProps<BadgeViewModel>) => {
-  let status = props.status as UpdateResponse<Api.BadgeClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof BadgeViewModel] &&
-      props.errors[name as keyof BadgeViewModel]
-    ) {
-      response += props.errors[name as keyof BadgeViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('date')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Date
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="date"
-            className={
-              errorExistForField('date')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('date') && (
-            <small className="text-danger">{errorsForField('date')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('userId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          UserId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="userId"
-            className={
-              errorExistForField('userId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('userId') && (
-            <small className="text-danger">{errorsForField('userId')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const BadgeEdit = withFormik<Props, BadgeViewModel>({
-  mapPropsToValues: props => {
-    let response = new BadgeViewModel();
-    response.setProperties(
-      props.model!.date,
-      props.model!.id,
-      props.model!.name,
-      props.model!.userId
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<BadgeViewModel> = {};
-
-    if (values.date == undefined) {
-      errors.date = 'Required';
-    }
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-    if (values.userId == 0) {
-      errors.userId = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new BadgeMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Badges + '/' + values.id,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.BadgeClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'BadgeEdit',
-})(BadgeEditDisplay);
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import BadgeViewModel from './badgeViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface BadgeEditComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface BadgeEditComponentState {
@@ -227,18 +23,20 @@ interface BadgeEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
-export default class BadgeEditComponent extends React.Component<
+class BadgeEditComponent extends React.Component<
   BadgeEditComponentProps,
   BadgeEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new BadgeViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+    submitted: false,
   };
 
   componentDidMount() {
@@ -271,6 +69,10 @@ export default class BadgeEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -284,20 +86,121 @@ export default class BadgeEditComponent extends React.Component<
         }
       );
   }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as BadgeViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: BadgeViewModel) => {
+    let mapper = new BadgeMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Badges + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.BadgeClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
-      return <BadgeEdit model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="date">Date</label>
+            <br />
+            {getFieldDecorator('date', {
+              rules: [],
+            })(<Input placeholder={'Date'} id={'date'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [],
+            })(<Input placeholder={'Name'} id={'name'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="userId">UserId</label>
+            <br />
+            {getFieldDecorator('userId', {
+              rules: [],
+            })(<Input placeholder={'UserId'} id={'userId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedBadgeEditComponent = Form.create({ name: 'Badge Edit' })(
+  BadgeEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>d87c342fb2cece62f354211cecf32b98</Hash>
+    <Hash>cc5a71cfa317bbe1603af0c5d83fbeb0</Hash>
 </Codenesium>*/

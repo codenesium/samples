@@ -1,445 +1,61 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-  model?: FileViewModel;
+interface FileCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const FileCreateDisplay: React.SFC<FormikProps<FileViewModel>> = (
-  props: FormikProps<FileViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.FileClientRequestModel>;
+interface FileCreateComponentState {
+  model?: FileViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof FileViewModel] &&
-      props.errors[name as keyof FileViewModel]
-    ) {
-      response += props.errors[name as keyof FileViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class FileCreateComponent extends React.Component<
+  FileCreateComponentProps,
+  FileCreateComponentState
+> {
+  state = {
+    model: new FileViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as FileViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('bucketId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          BucketId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="bucketId"
-            className={
-              errorExistForField('bucketId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('bucketId') && (
-            <small className="text-danger">{errorsForField('bucketId')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('dateCreated')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          DateCreated
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="dateCreated"
-            className={
-              errorExistForField('dateCreated')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('dateCreated') && (
-            <small className="text-danger">
-              {errorsForField('dateCreated')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('description')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Description
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="description"
-            className={
-              errorExistForField('description')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('description') && (
-            <small className="text-danger">
-              {errorsForField('description')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('expiration')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Expiration
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="expiration"
-            className={
-              errorExistForField('expiration')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('expiration') && (
-            <small className="text-danger">
-              {errorsForField('expiration')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('extension')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Extension
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="extension"
-            className={
-              errorExistForField('extension')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('extension') && (
-            <small className="text-danger">{errorsForField('extension')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('externalId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ExternalId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="externalId"
-            className={
-              errorExistForField('externalId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('externalId') && (
-            <small className="text-danger">
-              {errorsForField('externalId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('fileSizeInByte')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          FileSizeInByte
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="number"
-            name="fileSizeInByte"
-            className={
-              errorExistForField('fileSizeInByte')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('fileSizeInByte') && (
-            <small className="text-danger">
-              {errorsForField('fileSizeInByte')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('fileTypeId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          FileTypeId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="fileTypeId"
-            className={
-              errorExistForField('fileTypeId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('fileTypeId') && (
-            <small className="text-danger">
-              {errorsForField('fileTypeId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('location')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Location
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="location"
-            className={
-              errorExistForField('location')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('location') && (
-            <small className="text-danger">{errorsForField('location')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('privateKey')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PrivateKey
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="privateKey"
-            className={
-              errorExistForField('privateKey')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('privateKey') && (
-            <small className="text-danger">
-              {errorsForField('privateKey')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('publicKey')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PublicKey
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="publicKey"
-            className={
-              errorExistForField('publicKey')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('publicKey') && (
-            <small className="text-danger">{errorsForField('publicKey')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const FileCreate = withFormik<Props, FileViewModel>({
-  mapPropsToValues: props => {
-    let response = new FileViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.bucketId,
-        props.model!.dateCreated,
-        props.model!.description,
-        props.model!.expiration,
-        props.model!.extension,
-        props.model!.externalId,
-        props.model!.fileSizeInByte,
-        props.model!.fileTypeId,
-        props.model!.id,
-        props.model!.location,
-        props.model!.privateKey,
-        props.model!.publicKey
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<FileViewModel> = {};
-
-    if (values.dateCreated == undefined) {
-      errors.dateCreated = 'Required';
-    }
-    if (values.expiration == undefined) {
-      errors.expiration = 'Required';
-    }
-    if (values.extension == '') {
-      errors.extension = 'Required';
-    }
-    if (values.externalId == undefined) {
-      errors.externalId = 'Required';
-    }
-    if (values.fileSizeInByte == 0) {
-      errors.fileSizeInByte = 'Required';
-    }
-    if (values.fileTypeId == 0) {
-      errors.fileTypeId = 'Required';
-    }
-    if (values.location == '') {
-      errors.location = 'Required';
-    }
-    if (values.privateKey == '') {
-      errors.privateKey = 'Required';
-    }
-    if (values.publicKey == '') {
-      errors.publicKey = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: FileViewModel) => {
     let mapper = new FileMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Files,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -451,54 +67,161 @@ const FileCreate = withFormik<Props, FileViewModel>({
           let response = resp.data as CreateResponse<
             Api.FileClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'FileCreate',
-})(FileCreateDisplay);
-
-interface FileCreateComponentProps {}
-
-interface FileCreateComponentState {
-  model?: FileViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class FileCreateComponent extends React.Component<
-  FileCreateComponentProps,
-  FileCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
-      return <FileCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="bucketId">BucketId</label>
+            <br />
+            {getFieldDecorator('bucketId', {
+              rules: [],
+            })(<Input placeholder={'BucketId'} id={'bucketId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="dateCreated">DateCreated</label>
+            <br />
+            {getFieldDecorator('dateCreated', {
+              rules: [],
+            })(<DatePicker placeholder={'DateCreated'} id={'dateCreated'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="description">Description</label>
+            <br />
+            {getFieldDecorator('description', {
+              rules: [],
+            })(<Input placeholder={'Description'} id={'description'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="expiration">Expiration</label>
+            <br />
+            {getFieldDecorator('expiration', {
+              rules: [],
+            })(<Input placeholder={'Expiration'} id={'expiration'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="extension">Extension</label>
+            <br />
+            {getFieldDecorator('extension', {
+              rules: [],
+            })(<Input placeholder={'Extension'} id={'extension'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="externalId">ExternalId</label>
+            <br />
+            {getFieldDecorator('externalId', {
+              rules: [],
+            })(<Input placeholder={'ExternalId'} id={'externalId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="fileSizeInByte">FileSizeInByte</label>
+            <br />
+            {getFieldDecorator('fileSizeInByte', {
+              rules: [],
+            })(
+              <InputNumber
+                placeholder={'FileSizeInByte'}
+                id={'fileSizeInByte'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="fileTypeId">FileTypeId</label>
+            <br />
+            {getFieldDecorator('fileTypeId', {
+              rules: [],
+            })(<Input placeholder={'FileTypeId'} id={'fileTypeId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="location">Location</label>
+            <br />
+            {getFieldDecorator('location', {
+              rules: [],
+            })(<Input placeholder={'Location'} id={'location'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="privateKey">PrivateKey</label>
+            <br />
+            {getFieldDecorator('privateKey', {
+              rules: [],
+            })(<Input placeholder={'PrivateKey'} id={'privateKey'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="publicKey">PublicKey</label>
+            <br />
+            {getFieldDecorator('publicKey', {
+              rules: [],
+            })(<Input placeholder={'PublicKey'} id={'publicKey'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(
+  FileCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>a0bc5603ac977684969901be7f97a4ad</Hash>
+    <Hash>32cdf41f9d2caf47b4b28d6ac71ab723</Hash>
 </Codenesium>*/

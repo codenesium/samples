@@ -1,157 +1,162 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import VenueMapper from './venueMapper';
 import VenueViewModel from './venueViewModel';
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-	history:any;
-    model?:VenueViewModel
+interface VenueDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const VenueDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Venues + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="address1" className={"col-sm-2 col-form-label"}>Address1</label>
-							<div className="col-sm-12">
-								{String(model.model!.address1)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="address2" className={"col-sm-2 col-form-label"}>Address2</label>
-							<div className="col-sm-12">
-								{String(model.model!.address2)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="adminId" className={"col-sm-2 col-form-label"}>AdminId</label>
-							<div className="col-sm-12">
-								{model.model!.adminIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="email" className={"col-sm-2 col-form-label"}>Email</label>
-							<div className="col-sm-12">
-								{String(model.model!.email)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="facebook" className={"col-sm-2 col-form-label"}>Facebook</label>
-							<div className="col-sm-12">
-								{String(model.model!.facebook)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="phone" className={"col-sm-2 col-form-label"}>Phone</label>
-							<div className="col-sm-12">
-								{String(model.model!.phone)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="provinceId" className={"col-sm-2 col-form-label"}>ProvinceId</label>
-							<div className="col-sm-12">
-								{model.model!.provinceIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="website" className={"col-sm-2 col-form-label"}>Website</label>
-							<div className="col-sm-12">
-								{String(model.model!.website)}
-							</div>
-						</div>
-					             </form>
-  );
+interface VenueDetailComponentState {
+  model?: VenueViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class VenueDetailComponent extends React.Component<
+  VenueDetailComponentProps,
+  VenueDetailComponentState
+> {
+  state = {
+    model: new VenueViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface VenueDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface VenueDetailComponentState
-  {
-      model?:VenueViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Venues + '/edit/' + this.state.model!.id
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class VenueDetailComponent extends React.Component<VenueDetailComponentProps, VenueDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Venues + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Venues +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.VenueClientResponseModel;
-            
-			let mapper = new VenueMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<VenueDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.VenueClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new VenueMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <LoadingForm />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>address1</div>
+              <div>{this.state.model!.address1}</div>
+            </div>
+            <div>
+              <div>address2</div>
+              <div>{this.state.model!.address2}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>adminId</h3>
+              <div>{this.state.model!.adminIdNavigation!.toDisplay()}</div>
+            </div>
+            <div>
+              <div>email</div>
+              <div>{this.state.model!.email}</div>
+            </div>
+            <div>
+              <div>facebook</div>
+              <div>{this.state.model!.facebook}</div>
+            </div>
+            <div>
+              <div>name</div>
+              <div>{this.state.model!.name}</div>
+            </div>
+            <div>
+              <div>phone</div>
+              <div>{this.state.model!.phone}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>provinceId</h3>
+              <div>{this.state.model!.provinceIdNavigation!.toDisplay()}</div>
+            </div>
+            <div>
+              <div>website</div>
+              <div>{this.state.model!.website}</div>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedVenueDetailComponent = Form.create({
+  name: 'Venue Detail',
+})(VenueDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>104c2721dcc702babab55684f23b47b2</Hash>
+    <Hash>f55229c6bd3d17ca13bdf22ffd8d53ea</Hash>
 </Codenesium>*/

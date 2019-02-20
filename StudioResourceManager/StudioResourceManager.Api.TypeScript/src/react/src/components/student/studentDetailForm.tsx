@@ -1,121 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import StudentMapper from './studentMapper';
 import StudentViewModel from './studentViewModel';
-
-interface Props {
-  history: any;
-  model?: StudentViewModel;
-}
-
-const StudentDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Students + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="birthday" className={'col-sm-2 col-form-label'}>
-          Birthday
-        </label>
-        <div className="col-sm-12">{String(model.model!.birthday)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="email" className={'col-sm-2 col-form-label'}>
-          Email
-        </label>
-        <div className="col-sm-12">{String(model.model!.email)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="emailRemindersEnabled"
-          className={'col-sm-2 col-form-label'}
-        >
-          Email Reminders Enabled
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.emailRemindersEnabled)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="familyId" className={'col-sm-2 col-form-label'}>
-          FamilyId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.familyIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
-          First Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.firstName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="isAdult" className={'col-sm-2 col-form-label'}>
-          Is Adult
-        </label>
-        <div className="col-sm-12">{String(model.model!.isAdult)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
-          Last Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="phone" className={'col-sm-2 col-form-label'}>
-          Phone
-        </label>
-        <div className="col-sm-12">{String(model.model!.phone)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="smsRemindersEnabled"
-          className={'col-sm-2 col-form-label'}
-        >
-          SMS Reminders Enabled
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.smsRemindersEnabled)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="userId" className={'col-sm-2 col-form-label'}>
-          UserId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.userIdNavigation!.toDisplay()}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface StudentDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface StudentDetailComponentState {
@@ -126,17 +23,23 @@ interface StudentDetailComponentState {
   errorMessage: string;
 }
 
-export default class StudentDetailComponent extends React.Component<
+class StudentDetailComponent extends React.Component<
   StudentDetailComponentProps,
   StudentDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new StudentViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Students + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -157,9 +60,9 @@ export default class StudentDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.StudentClientResponseModel;
 
-          let mapper = new StudentMapper();
-
           console.log(response);
+
+          let mapper = new StudentMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -181,17 +84,71 @@ export default class StudentDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <StudentDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>birthday</div>
+              <div>{this.state.model!.birthday}</div>
+            </div>
+            <div>
+              <div>email</div>
+              <div>{this.state.model!.email}</div>
+            </div>
+            <div>
+              <div>emailRemindersEnabled</div>
+              <div>{this.state.model!.emailRemindersEnabled}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>familyId</h3>
+              <div>{this.state.model!.familyIdNavigation!.toDisplay()}</div>
+            </div>
+            <div>
+              <div>firstName</div>
+              <div>{this.state.model!.firstName}</div>
+            </div>
+            <div>
+              <div>isAdult</div>
+              <div>{this.state.model!.isAdult}</div>
+            </div>
+            <div>
+              <div>lastName</div>
+              <div>{this.state.model!.lastName}</div>
+            </div>
+            <div>
+              <div>phone</div>
+              <div>{this.state.model!.phone}</div>
+            </div>
+            <div>
+              <div>smsRemindersEnabled</div>
+              <div>{this.state.model!.smsRemindersEnabled}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>userId</h3>
+              <div>{this.state.model!.userIdNavigation!.toDisplay()}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -199,7 +156,11 @@ export default class StudentDetailComponent extends React.Component<
   }
 }
 
+export const WrappedStudentDetailComponent = Form.create({
+  name: 'Student Detail',
+})(StudentDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>6babf01d85c19d30871242e58b62a77c</Hash>
+    <Hash>26bea170f3912a9e8e5f3787e04bd563</Hash>
 </Codenesium>*/

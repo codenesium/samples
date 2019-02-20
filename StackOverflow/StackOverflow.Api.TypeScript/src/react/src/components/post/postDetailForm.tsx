@@ -1,169 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import PostMapper from './postMapper';
 import PostViewModel from './postViewModel';
-
-interface Props {
-  history: any;
-  model?: PostViewModel;
-}
-
-const PostDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Posts + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="acceptedAnswerId" className={'col-sm-2 col-form-label'}>
-          AcceptedAnswerId
-        </label>
-        <div className="col-sm-12">{String(model.model!.acceptedAnswerId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="answerCount" className={'col-sm-2 col-form-label'}>
-          AnswerCount
-        </label>
-        <div className="col-sm-12">{String(model.model!.answerCount)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="body" className={'col-sm-2 col-form-label'}>
-          Body
-        </label>
-        <div className="col-sm-12">{String(model.model!.body)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="closedDate" className={'col-sm-2 col-form-label'}>
-          ClosedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.closedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="commentCount" className={'col-sm-2 col-form-label'}>
-          CommentCount
-        </label>
-        <div className="col-sm-12">{String(model.model!.commentCount)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="communityOwnedDate"
-          className={'col-sm-2 col-form-label'}
-        >
-          CommunityOwnedDate
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.communityOwnedDate)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="creationDate" className={'col-sm-2 col-form-label'}>
-          CreationDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.creationDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="favoriteCount" className={'col-sm-2 col-form-label'}>
-          FavoriteCount
-        </label>
-        <div className="col-sm-12">{String(model.model!.favoriteCount)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastActivityDate" className={'col-sm-2 col-form-label'}>
-          LastActivityDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastActivityDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastEditDate" className={'col-sm-2 col-form-label'}>
-          LastEditDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastEditDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="lastEditorDisplayName"
-          className={'col-sm-2 col-form-label'}
-        >
-          LastEditorDisplayName
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.lastEditorDisplayName)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastEditorUserId" className={'col-sm-2 col-form-label'}>
-          LastEditorUserId
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastEditorUserId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="ownerUserId" className={'col-sm-2 col-form-label'}>
-          OwnerUserId
-        </label>
-        <div className="col-sm-12">{String(model.model!.ownerUserId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="parentId" className={'col-sm-2 col-form-label'}>
-          ParentId
-        </label>
-        <div className="col-sm-12">{String(model.model!.parentId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="postTypeId" className={'col-sm-2 col-form-label'}>
-          PostTypeId
-        </label>
-        <div className="col-sm-12">{String(model.model!.postTypeId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="score" className={'col-sm-2 col-form-label'}>
-          Score
-        </label>
-        <div className="col-sm-12">{String(model.model!.score)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="tag" className={'col-sm-2 col-form-label'}>
-          Tags
-        </label>
-        <div className="col-sm-12">{String(model.model!.tag)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="title" className={'col-sm-2 col-form-label'}>
-          Title
-        </label>
-        <div className="col-sm-12">{String(model.model!.title)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="viewCount" className={'col-sm-2 col-form-label'}>
-          ViewCount
-        </label>
-        <div className="col-sm-12">{String(model.model!.viewCount)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface PostDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface PostDetailComponentState {
@@ -174,17 +23,23 @@ interface PostDetailComponentState {
   errorMessage: string;
 }
 
-export default class PostDetailComponent extends React.Component<
+class PostDetailComponent extends React.Component<
   PostDetailComponentProps,
   PostDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new PostViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Posts + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -205,9 +60,9 @@ export default class PostDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.PostClientResponseModel;
 
-          let mapper = new PostMapper();
-
           console.log(response);
+
+          let mapper = new PostMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -229,17 +84,107 @@ export default class PostDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <PostDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>acceptedAnswerId</div>
+              <div>{this.state.model!.acceptedAnswerId}</div>
+            </div>
+            <div>
+              <div>answerCount</div>
+              <div>{this.state.model!.answerCount}</div>
+            </div>
+            <div>
+              <div>body</div>
+              <div>{this.state.model!.body}</div>
+            </div>
+            <div>
+              <div>closedDate</div>
+              <div>{this.state.model!.closedDate}</div>
+            </div>
+            <div>
+              <div>commentCount</div>
+              <div>{this.state.model!.commentCount}</div>
+            </div>
+            <div>
+              <div>communityOwnedDate</div>
+              <div>{this.state.model!.communityOwnedDate}</div>
+            </div>
+            <div>
+              <div>creationDate</div>
+              <div>{this.state.model!.creationDate}</div>
+            </div>
+            <div>
+              <div>favoriteCount</div>
+              <div>{this.state.model!.favoriteCount}</div>
+            </div>
+            <div>
+              <div>lastActivityDate</div>
+              <div>{this.state.model!.lastActivityDate}</div>
+            </div>
+            <div>
+              <div>lastEditDate</div>
+              <div>{this.state.model!.lastEditDate}</div>
+            </div>
+            <div>
+              <div>lastEditorDisplayName</div>
+              <div>{this.state.model!.lastEditorDisplayName}</div>
+            </div>
+            <div>
+              <div>lastEditorUserId</div>
+              <div>{this.state.model!.lastEditorUserId}</div>
+            </div>
+            <div>
+              <div>ownerUserId</div>
+              <div>{this.state.model!.ownerUserId}</div>
+            </div>
+            <div>
+              <div>parentId</div>
+              <div>{this.state.model!.parentId}</div>
+            </div>
+            <div>
+              <div>postTypeId</div>
+              <div>{this.state.model!.postTypeId}</div>
+            </div>
+            <div>
+              <div>score</div>
+              <div>{this.state.model!.score}</div>
+            </div>
+            <div>
+              <div>tag</div>
+              <div>{this.state.model!.tag}</div>
+            </div>
+            <div>
+              <div>title</div>
+              <div>{this.state.model!.title}</div>
+            </div>
+            <div>
+              <div>viewCount</div>
+              <div>{this.state.model!.viewCount}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -247,7 +192,11 @@ export default class PostDetailComponent extends React.Component<
   }
 }
 
+export const WrappedPostDetailComponent = Form.create({ name: 'Post Detail' })(
+  PostDetailComponent
+);
+
 
 /*<Codenesium>
-    <Hash>143ad2a963270152660089bc2b8b009c</Hash>
+    <Hash>99c310fe256d01449c7d5a9ee963706e</Hash>
 </Codenesium>*/

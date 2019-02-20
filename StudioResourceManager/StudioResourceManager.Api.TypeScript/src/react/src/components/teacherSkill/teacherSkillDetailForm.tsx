@@ -1,109 +1,128 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import TeacherSkillMapper from './teacherSkillMapper';
 import TeacherSkillViewModel from './teacherSkillViewModel';
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-	history:any;
-    model?:TeacherSkillViewModel
+interface TeacherSkillDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const TeacherSkillDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.TeacherSkills + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					             </form>
-  );
+interface TeacherSkillDetailComponentState {
+  model?: TeacherSkillViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
+class TeacherSkillDetailComponent extends React.Component<
+TeacherSkillDetailComponentProps,
+TeacherSkillDetailComponentState
+> {
+  state = {
+    model: new TeacherSkillViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: ''
+  };
+
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.TeacherSkills + '/edit/' + this.state.model!.id);
   }
   
-  interface IMatch
-  {
-     params: IParams;
-  }
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  interface TeacherSkillDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface TeacherSkillDetailComponentState
-  {
-      model?:TeacherSkillViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-
-  export default class TeacherSkillDetailComponent extends React.Component<TeacherSkillDetailComponentProps, TeacherSkillDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.TeacherSkills + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.TeacherSkills +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.TeacherSkillClientResponseModel;
-            
-			let mapper = new TeacherSkillMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<TeacherSkillDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.TeacherSkillClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new TeacherSkillMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
+    if (this.state.loading) {
+      return <LoadingForm />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<div>name</div>
+							<div>{this.state.model!.name}</div>
+						 </div>
+					   		  </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
+export const WrappedTeacherSkillDetailComponent = Form.create({ name: 'TeacherSkill Detail' })(
+  TeacherSkillDetailComponent
+);
+
 /*<Codenesium>
-    <Hash>e2c2b1d5e2c1738b8de957a57d3e03e1</Hash>
+    <Hash>253b56b6a836e9af0f9ed05d05f2ae21</Hash>
 </Codenesium>*/

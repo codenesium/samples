@@ -9,10 +9,14 @@ import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import SpeciesViewModel from './speciesViewModel';
 import "react-table/react-table.css";
+import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SpeciesSearchComponentProps
 {
-    history:any;
+     form:WrappedFormUtils;
+	 history:any;
+	 match:any;
 }
 
 interface SpeciesSearchComponentState
@@ -117,31 +121,45 @@ export default class SpeciesSearchComponent extends React.Component<SpeciesSearc
 
             let errorResponse:JSX.Element = <span></span>;
 
-            if(this.state.deleteSubmitted){
-                if(this.state.deleteSuccess){
-                    errorResponse =<div className="alert alert-success">{this.state.deleteResponse}</div>   
-                }
-                else {
-                    errorResponse = <div className="alert alert-danger">{this.state.deleteResponse}</div>   
-                }
-            }
-            return (
+            if (this.state.deleteSubmitted) {
+				if (this.state.deleteSuccess) {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="success" style={{marginBottom:"25px"}} />
+				  );
+				} else {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="error" style={{marginBottom:"25px"}} />
+				  );
+				}
+			}
+            
+			return (
             <div>
-                { 
-                    errorResponse
-                }
-            <form>
-                <div className="form-group row">
-                    <div className="col-sm-4">
-                    </div>
-                    <div className="col-sm-4">
-                        <input name="search" className="form-control" placeholder={"Search"} value={this.state.searchValue} onChange={e => this.handleSearchChanged(e)}/>
-                    </div>
-                    <div className="col-sm-4">
-                        <button className="btn btn-primary btn-sm align-middle float-right vertically-center search-create-button" onClick={e => this.handleCreateClick(e)}><i className="fas fa-plus"></i></button>
-                    </div>
-                </div>
-            </form>
+            {errorResponse}
+            <Row>
+				<Col span={8}></Col>
+				<Col span={8}>   
+				   <Input 
+					placeholder={"Search"} 
+					id={"search"} 
+					onChange={(e:any) => {
+					  this.handleSearchChanged(e)
+				   }}/>
+				</Col>
+				<Col span={8}>  
+				  <Button 
+				  style={{'float':'right'}}
+				  type="primary" 
+				  onClick={(e:any) => {
+                        this.handleCreateClick(e)
+						}}
+				  >
+				  +
+				  </Button>
+				</Col>
+			</Row>
+			<br />
+			<br />
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
@@ -156,9 +174,43 @@ export default class SpeciesSearchComponent extends React.Component<SpeciesSearc
                     },
                     {
                         Header: 'Actions',
-                        Cell: row => (<div><button className="btn btn-sm" onClick={e => {this.handleDetailClick(e, row.original as Api.SpeciesClientResponseModel)}} ><i className="fas fa-search"></i></button>
-                        &nbsp;<button className="btn btn-primary btn-sm" onClick={e => {this.handleEditClick(e, row.original as Api.SpeciesClientResponseModel)}} ><i className="fas fa-edit"></i></button>
-                        &nbsp;<button className="btn btn-danger btn-sm" onClick={e => {this.handleDeleteClick(e, row.original as Api.SpeciesClientResponseModel)}} ><i className="far fa-trash-alt"></i></button>
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
+                            this.handleDetailClick(
+                              e,
+                              row.original as Api.SpeciesClientResponseModel
+                            );
+                          }}
+                        >
+                          <i className="fas fa-search" />
+                        </Button>
+                        &nbsp;
+                        <Button
+                          type="primary" 
+                          onClick={(e:any) => {
+                            this.handleEditClick(
+                              e,
+                              row.original as Api.SpeciesClientResponseModel
+                            );
+                          }}
+                        >
+                          <i className="fas fa-edit" />
+                        </Button>
+                        &nbsp;
+                        <Button
+                          type="danger" 
+                          onClick={(e:any) => {
+                            this.handleDeleteClick(
+                              e,
+                              row.original as Api.SpeciesClientResponseModel
+                            );
+                          }}
+                        >
+                          <i className="far fa-trash-alt" />
+                        </Button>
+
                         </div>)
                     }],
                     
@@ -171,6 +223,8 @@ export default class SpeciesSearchComponent extends React.Component<SpeciesSearc
     }
 }
 
+export const WrappedSpeciesSearchComponent = Form.create({ name: 'Species Search' })(SpeciesSearchComponent);
+
 /*<Codenesium>
-    <Hash>4d2097dadde115d7a92121b870e4909b</Hash>
+    <Hash>4fdeb339a47aef8c33d71c93d57c96f5</Hash>
 </Codenesium>*/

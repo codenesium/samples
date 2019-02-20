@@ -1,139 +1,152 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-	history:any;
-    model?:SaleViewModel
+interface SaleDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const SaleDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Sales + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="amount" className={"col-sm-2 col-form-label"}>Amount</label>
-							<div className="col-sm-12">
-								{String(model.model!.amount)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="firstName" className={"col-sm-2 col-form-label"}>FirstName</label>
-							<div className="col-sm-12">
-								{String(model.model!.firstName)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="lastName" className={"col-sm-2 col-form-label"}>LastName</label>
-							<div className="col-sm-12">
-								{String(model.model!.lastName)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="paymentTypeId" className={"col-sm-2 col-form-label"}>PaymentTypeId</label>
-							<div className="col-sm-12">
-								{model.model!.paymentTypeIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="petId" className={"col-sm-2 col-form-label"}>PetId</label>
-							<div className="col-sm-12">
-								{model.model!.petIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="phone" className={"col-sm-2 col-form-label"}>Phone</label>
-							<div className="col-sm-12">
-								{String(model.model!.phone)}
-							</div>
-						</div>
-					             </form>
-  );
+interface SaleDetailComponentState {
+  model?: SaleViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class SaleDetailComponent extends React.Component<
+  SaleDetailComponentProps,
+  SaleDetailComponentState
+> {
+  state = {
+    model: new SaleViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface SaleDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface SaleDetailComponentState
-  {
-      model?:SaleViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Sales + '/edit/' + this.state.model!.id
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class SaleDetailComponent extends React.Component<SaleDetailComponentProps, SaleDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Sales + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Sales +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.SaleClientResponseModel;
-            
-			let mapper = new SaleMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<SaleDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.SaleClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new SaleMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <LoadingForm />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>amount</div>
+              <div>{this.state.model!.amount}</div>
+            </div>
+            <div>
+              <div>firstName</div>
+              <div>{this.state.model!.firstName}</div>
+            </div>
+            <div>
+              <div>lastName</div>
+              <div>{this.state.model!.lastName}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>paymentTypeId</h3>
+              <div>
+                {this.state.model!.paymentTypeIdNavigation!.toDisplay()}
+              </div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>petId</h3>
+              <div>{this.state.model!.petIdNavigation!.toDisplay()}</div>
+            </div>
+            <div>
+              <div>phone</div>
+              <div>{this.state.model!.phone}</div>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
+  SaleDetailComponent
+);
+
 
 /*<Codenesium>
-    <Hash>f9c58cb1f5f0655cadd6d63a8c8161f9</Hash>
+    <Hash>c8d1f7a669cebba46f261de50a1ba4de</Hash>
 </Codenesium>*/

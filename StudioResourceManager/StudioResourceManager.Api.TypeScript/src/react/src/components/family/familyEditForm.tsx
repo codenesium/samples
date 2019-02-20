@@ -1,280 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { CreateResponse } from '../../api/apiObjects';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import FamilyViewModel from './familyViewModel';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import FamilyMapper from './familyMapper';
-
-interface Props {
-  model?: FamilyViewModel;
-}
-
-const FamilyEditDisplay = (props: FormikProps<FamilyViewModel>) => {
-  let status = props.status as UpdateResponse<Api.FamilyClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof FamilyViewModel] &&
-      props.errors[name as keyof FamilyViewModel]
-    ) {
-      response += props.errors[name as keyof FamilyViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('note')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Notes
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="note"
-            className={
-              errorExistForField('note')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('note') && (
-            <small className="text-danger">{errorsForField('note')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('primaryContactEmail')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Primary Contact Email
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="email"
-            name="primaryContactEmail"
-            className={
-              errorExistForField('primaryContactEmail')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('primaryContactEmail') && (
-            <small className="text-danger">
-              {errorsForField('primaryContactEmail')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('primaryContactFirstName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Primary Contact First Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="primaryContactFirstName"
-            className={
-              errorExistForField('primaryContactFirstName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('primaryContactFirstName') && (
-            <small className="text-danger">
-              {errorsForField('primaryContactFirstName')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('primaryContactLastName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Primary Contact Last Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="primaryContactLastName"
-            className={
-              errorExistForField('primaryContactLastName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('primaryContactLastName') && (
-            <small className="text-danger">
-              {errorsForField('primaryContactLastName')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('primaryContactPhone')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Primary Contact Phone
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="tel"
-            name="primaryContactPhone"
-            className={
-              errorExistForField('primaryContactPhone')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('primaryContactPhone') && (
-            <small className="text-danger">
-              {errorsForField('primaryContactPhone')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const FamilyEdit = withFormik<Props, FamilyViewModel>({
-  mapPropsToValues: props => {
-    let response = new FamilyViewModel();
-    response.setProperties(
-      props.model!.id,
-      props.model!.note,
-      props.model!.primaryContactEmail,
-      props.model!.primaryContactFirstName,
-      props.model!.primaryContactLastName,
-      props.model!.primaryContactPhone
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<FamilyViewModel> = {};
-
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-    if (values.primaryContactPhone == '') {
-      errors.primaryContactPhone = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new FamilyMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Families + '/' + values.id,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.FamilyClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'FamilyEdit',
-})(FamilyEditDisplay);
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import FamilyViewModel from './familyViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface FamilyEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface FamilyEditComponentState {
@@ -283,21 +23,23 @@ interface FamilyEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class FamilyEditComponent extends React.Component<
+class FamilyEditComponent extends React.Component<
   FamilyEditComponentProps,
   FamilyEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new FamilyViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -327,6 +69,8 @@ export default class FamilyEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -339,21 +83,131 @@ export default class FamilyEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as FamilyViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:FamilyViewModel) =>
+  {  
+    let mapper = new FamilyMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Families + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.FamilyClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <FamilyEdit model={this.state.model} />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='note'>notes</label>
+              <br />             
+{getFieldDecorator('note', {
+              rules:[],
+              })
+              ( <Input placeholder={"notes"} id={"note"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='primaryContactEmail'>Primary Contact Email</label>
+              <br />             
+{getFieldDecorator('primaryContactEmail', {
+              rules:[],
+              })
+              ( <Input placeholder={"Primary Contact Email"} id={"primaryContactEmail"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='primaryContactFirstName'>Primary Contact First Name</label>
+              <br />             
+{getFieldDecorator('primaryContactFirstName', {
+              rules:[],
+              })
+              ( <Input placeholder={"Primary Contact First Name"} id={"primaryContactFirstName"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='primaryContactLastName'>Primary Contact Last Name</label>
+              <br />             
+{getFieldDecorator('primaryContactLastName', {
+              rules:[],
+              })
+              ( <Input placeholder={"Primary Contact Last Name"} id={"primaryContactLastName"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='primaryContactPhone'>Primary Contact Phone</label>
+              <br />             
+{getFieldDecorator('primaryContactPhone', {
+              rules:[],
+              })
+              ( <InputNumber placeholder={"Primary Contact Phone"} id={"primaryContactPhone"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedFamilyEditComponent = Form.create({ name: 'Family Edit' })(FamilyEditComponent);
 
 /*<Codenesium>
-    <Hash>ce1526bf9e440bd2018cbcb8dc86d171</Hash>
+    <Hash>ce419fd5b258bddc38b2f20c00c26c5b</Hash>
 </Codenesium>*/

@@ -1,115 +1,134 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import SaleTicketMapper from './saleTicketMapper';
 import SaleTicketViewModel from './saleTicketViewModel';
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-	history:any;
-    model?:SaleTicketViewModel
+interface SaleTicketDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const SaleTicketDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.SaleTickets + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="saleId" className={"col-sm-2 col-form-label"}>SaleId</label>
-							<div className="col-sm-12">
-								{model.model!.saleIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="ticketId" className={"col-sm-2 col-form-label"}>TicketId</label>
-							<div className="col-sm-12">
-								{model.model!.ticketIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					             </form>
-  );
+interface SaleTicketDetailComponentState {
+  model?: SaleTicketViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class SaleTicketDetailComponent extends React.Component<
+  SaleTicketDetailComponentProps,
+  SaleTicketDetailComponentState
+> {
+  state = {
+    model: new SaleTicketViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface SaleTicketDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface SaleTicketDetailComponentState
-  {
-      model?:SaleTicketViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.SaleTickets + '/edit/' + this.state.model!.id
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class SaleTicketDetailComponent extends React.Component<SaleTicketDetailComponentProps, SaleTicketDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.SaleTickets + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.SaleTickets +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.SaleTicketClientResponseModel;
-            
-			let mapper = new SaleTicketMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<SaleTicketDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.SaleTicketClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new SaleTicketMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <LoadingForm />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>saleId</h3>
+              <div>{this.state.model!.saleIdNavigation!.toDisplay()}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>ticketId</h3>
+              <div>{this.state.model!.ticketIdNavigation!.toDisplay()}</div>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedSaleTicketDetailComponent = Form.create({
+  name: 'SaleTicket Detail',
+})(SaleTicketDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>57725960c001cf88685b224720c8c11d</Hash>
+    <Hash>16b0b96b41b3e8e2bea0310c8d1fbbf9</Hash>
 </Codenesium>*/

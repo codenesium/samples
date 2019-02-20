@@ -1,157 +1,150 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import TicketMapper from './ticketMapper';
 import TicketViewModel from './ticketViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-    model?:TicketViewModel
+interface TicketCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const TicketCreateDisplay: React.SFC<FormikProps<TicketViewModel>> = (props: FormikProps<TicketViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.TicketClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof TicketViewModel]  && props.errors[name as keyof TicketViewModel]) {
-            response += props.errors[name as keyof TicketViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("publicId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>PublicId</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="publicId" className={errorExistForField("publicId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("publicId") && <small className="text-danger">{errorsForField("publicId")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("ticketStatusId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TicketStatusId</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="ticketStatusId" className={errorExistForField("ticketStatusId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("ticketStatusId") && <small className="text-danger">{errorsForField("ticketStatusId")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface TicketCreateComponentState {
+  model?: TicketViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class TicketCreateComponent extends React.Component<
+  TicketCreateComponentProps,
+  TicketCreateComponentState
+> {
+  state = {
+    model: new TicketViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const TicketCreate = withFormik<Props, TicketViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new TicketViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.id,props.model!.publicId,props.model!.ticketStatusId);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<TicketViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as TicketViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  if(values.publicId == '') {
-                errors.publicId = "Required"
-                    }if(values.ticketStatusId == 0) {
-                errors.ticketStatusId = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new TicketMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.Tickets,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: TicketViewModel) => {
+    let mapper = new TicketMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.Tickets,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.TicketClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'TicketCreate', 
-  })(TicketCreateDisplay);
-
-  interface TicketCreateComponentProps
-  {
-  }
-
-  interface TicketCreateComponentState
-  {
-      model?:TicketViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class TicketCreateComponent extends React.Component<TicketCreateComponentProps, TicketCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<TicketCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.TicketClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <LoadingForm />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="publicId">publicId</label>
+            <br />
+            {getFieldDecorator('publicId', {
+              rules: [],
+            })(<Input placeholder={'publicId'} id={'publicId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="ticketStatusId">ticketStatusId</label>
+            <br />
+            {getFieldDecorator('ticketStatusId', {
+              rules: [],
+            })(<Input placeholder={'ticketStatusId'} id={'ticketStatusId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedTicketCreateComponent = Form.create({
+  name: 'Ticket Create',
+})(TicketCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>1cc9bc592517ab0fd907bd852822056f</Hash>
+    <Hash>950af8ccc40ed509f5ad78d9ba3f3118</Hash>
 </Codenesium>*/

@@ -1,247 +1,61 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import CommentMapper from './commentMapper';
 import CommentViewModel from './commentViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-  model?: CommentViewModel;
+interface CommentCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const CommentCreateDisplay: React.SFC<FormikProps<CommentViewModel>> = (
-  props: FormikProps<CommentViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.CommentClientRequestModel>;
+interface CommentCreateComponentState {
+  model?: CommentViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof CommentViewModel] &&
-      props.errors[name as keyof CommentViewModel]
-    ) {
-      response += props.errors[name as keyof CommentViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class CommentCreateComponent extends React.Component<
+  CommentCreateComponentProps,
+  CommentCreateComponentState
+> {
+  state = {
+    model: new CommentViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as CommentViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('creationDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CreationDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="creationDate"
-            className={
-              errorExistForField('creationDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('creationDate') && (
-            <small className="text-danger">
-              {errorsForField('creationDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('postId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PostId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="postId"
-            className={
-              errorExistForField('postId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('postId') && (
-            <small className="text-danger">{errorsForField('postId')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('score')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Score
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="score"
-            className={
-              errorExistForField('score')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('score') && (
-            <small className="text-danger">{errorsForField('score')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('text')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Text
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="text"
-            className={
-              errorExistForField('text')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('text') && (
-            <small className="text-danger">{errorsForField('text')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('userId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          UserId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="userId"
-            className={
-              errorExistForField('userId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('userId') && (
-            <small className="text-danger">{errorsForField('userId')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const CommentCreate = withFormik<Props, CommentViewModel>({
-  mapPropsToValues: props => {
-    let response = new CommentViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.creationDate,
-        props.model!.id,
-        props.model!.postId,
-        props.model!.score,
-        props.model!.text,
-        props.model!.userId
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<CommentViewModel> = {};
-
-    if (values.creationDate == undefined) {
-      errors.creationDate = 'Required';
-    }
-    if (values.postId == 0) {
-      errors.postId = 'Required';
-    }
-    if (values.text == '') {
-      errors.text = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: CommentViewModel) => {
     let mapper = new CommentMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Comments,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -253,54 +67,108 @@ const CommentCreate = withFormik<Props, CommentViewModel>({
           let response = resp.data as CreateResponse<
             Api.CommentClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'CommentCreate',
-})(CommentCreateDisplay);
-
-interface CommentCreateComponentProps {}
-
-interface CommentCreateComponentState {
-  model?: CommentViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class CommentCreateComponent extends React.Component<
-  CommentCreateComponentProps,
-  CommentCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
-      return <CommentCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="creationDate">CreationDate</label>
+            <br />
+            {getFieldDecorator('creationDate', {
+              rules: [],
+            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="postId">PostId</label>
+            <br />
+            {getFieldDecorator('postId', {
+              rules: [],
+            })(<Input placeholder={'PostId'} id={'postId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="score">Score</label>
+            <br />
+            {getFieldDecorator('score', {
+              rules: [],
+            })(<Input placeholder={'Score'} id={'score'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="text">Text</label>
+            <br />
+            {getFieldDecorator('text', {
+              rules: [],
+            })(<Input placeholder={'Text'} id={'text'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="userId">UserId</label>
+            <br />
+            {getFieldDecorator('userId', {
+              rules: [],
+            })(<Input placeholder={'UserId'} id={'userId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedCommentCreateComponent = Form.create({
+  name: 'Comment Create',
+})(CommentCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>2f237ed46ccc6837841a01a99970acdd</Hash>
+    <Hash>81026a1e1067e0ae4373e8594e6a98e6</Hash>
 </Codenesium>*/

@@ -1,88 +1,105 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ClientRoutes, Constants } from '../constants';
+const { Header, Content, Footer, Sider } = Layout;
 
-interface Props {}
+const SubMenu = Menu.SubMenu;
 
-interface State {
-  menuExpanded: boolean;
+interface WrapperHeaderProps {}
+
+interface WrapperHeaderState {
+  collapsed: boolean;
 }
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
+    state = { collapsed: false };
 
-export class Header extends React.Component<Props, State> {
-  state = { menuExpanded: false };
-
-  handleClick(e: React.FormEvent) {
-    this.setState({ menuExpanded: !this.state.menuExpanded });
-  }
-
-  render() {
-    return (
-      <div className="row col-12">
-        <nav
-          className="navbar navbar-expand-lg navbar-light bg-white"
-          id="navbar"
-        >
-          <a className="navbar-brand" href="/">
-            FileService
-          </a>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            onClick={e => this.handleClick(e)}
+    onCollapse = () => {
+      this.setState({ ...this.state, collapsed: !this.state.collapsed });
+    };
+    render() {
+      return (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            collapsible
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
           >
-            <span className="navbar-toggler-icon" />
-          </button>
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+              <MenuItem
+                key="Dashboard"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Dashboard</span>
+                  </span>
+                }
+              >
+                <Link to={'/'}>Dashboard</Link>
+              </MenuItem>
 
-          <div
-            className={
-              this.state.menuExpanded
-                ? 'collapse.expand navbar-collapse'
-                : 'collapse navbar-collapse'
-            }
-            id="navbarSupportedContent"
-          >
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/buckets"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Buckets
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/files"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Files
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/filetypes"
-                  onClick={e => this.handleClick(e)}
-                >
-                  FileTypes
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
+              <MenuItem
+                key="bucket"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Bucket</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.Buckets}>Buckets</Link>
+              </MenuItem>
+
+              <MenuItem
+                key="file"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>File</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.Files}>Files</Link>
+              </MenuItem>
+
+              <MenuItem
+                key="fileType"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>FileType</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.FileTypes}>FileTypes</Link>
+              </MenuItem>
+            </Menu>
+          </Sider>
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }} />
+            <Content style={{ margin: '0 16px' }}>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <Component {...this.props} />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+          </Layout>
+        </Layout>
+      );
+    }
   }
-}
+  return WrapperHeaderComponent;
+};
 
 
 /*<Codenesium>
-    <Hash>ee40c831330381a11e7fd19d229e66b5</Hash>
+    <Hash>e5d1f4779870ac95ba8ae67b4ada389b</Hash>
 </Codenesium>*/

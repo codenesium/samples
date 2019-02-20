@@ -1,198 +1,186 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import SaleTicketViewModel from './saleTicketViewModel';
+import * as Api from '../../api/models';
 import SaleTicketMapper from './saleTicketMapper';
+import SaleTicketViewModel from './saleTicketViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-    model?:SaleTicketViewModel
+interface SaleTicketEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-  const SaleTicketEditDisplay = (props: FormikProps<SaleTicketViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.SaleTicketClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof SaleTicketViewModel]  && props.errors[name as keyof SaleTicketViewModel]) {
-            response += props.errors[name as keyof SaleTicketViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("saleId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SaleId</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="saleId" className={errorExistForField("saleId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("saleId") && <small className="text-danger">{errorsForField("saleId")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("ticketId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TicketId</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="ticketId" className={errorExistForField("ticketId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("ticketId") && <small className="text-danger">{errorsForField("ticketId")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface SaleTicketEditComponentState {
+  model?: SaleTicketViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
 }
 
+class SaleTicketEditComponent extends React.Component<
+  SaleTicketEditComponentProps,
+  SaleTicketEditComponentState
+> {
+  state = {
+    model: new SaleTicketViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
 
-const SaleTicketEdit = withFormik<Props, SaleTicketViewModel>({
-    mapPropsToValues: props => {
-        let response = new SaleTicketViewModel();
-		response.setProperties(props.model!.id,props.model!.saleId,props.model!.ticketId);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<SaleTicketViewModel> = { };
+    componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.id == 0) {
-                errors.id = "Required"
-                    }if(values.saleId == 0) {
-                errors.saleId = "Required"
-                    }if(values.ticketId == 0) {
-                errors.ticketId = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new SaleTicketMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.SaleTickets +'/' + values.id,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.SaleTickets +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.SaleTicketClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'SaleTicketEdit', 
-  })(SaleTicketEditDisplay);
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.SaleTicketClientResponseModel;
 
+          console.log(response);
+
+          let mapper = new SaleTicketMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+ }
  
-  interface IParams 
-  {
-     id:number;
-  }
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as SaleTicketViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-  interface IMatch
-  {
-     params: IParams;
+  submit = (model:SaleTicketViewModel) =>
+  {  
+    let mapper = new SaleTicketMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.SaleTickets + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.SaleTicketClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
   
-  interface SaleTicketEditComponentProps
-  {
-     match:IMatch;
-  }
+  render() {
 
-  interface SaleTicketEditComponentState
-  {
-      model?:SaleTicketViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class SaleTicketEditComponent extends React.Component<SaleTicketEditComponentProps, SaleTicketEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.SaleTickets + '/' + this.props.match.params.id, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.SaleTicketClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new SaleTicketMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
     }
-    render () {
 
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<SaleTicketEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+    if (this.state.loading) {
+      return <LoadingForm />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='saleId'>saleId</label>
+              <br />             
+{getFieldDecorator('saleId', {
+              rules:[],
+              })
+              ( <Input placeholder={"saleId"} id={"saleId"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='ticketId'>ticketId</label>
+              <br />             
+{getFieldDecorator('ticketId', {
+              rules:[],
+              })
+              ( <Input placeholder={"ticketId"} id={"ticketId"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedSaleTicketEditComponent = Form.create({ name: 'SaleTicket Edit' })(SaleTicketEditComponent);
 
 /*<Codenesium>
-    <Hash>3a8f9f78be93f6af6681f6e73ca0c6ef</Hash>
+    <Hash>c76fefc5a0ca68fed9f4b28c4c5b9792</Hash>
 </Codenesium>*/

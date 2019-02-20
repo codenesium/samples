@@ -1,260 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { CreateResponse } from '../../api/apiObjects';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import PostLinkViewModel from './postLinkViewModel';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import PostLinkMapper from './postLinkMapper';
-
-interface Props {
-  model?: PostLinkViewModel;
-}
-
-const PostLinkEditDisplay = (props: FormikProps<PostLinkViewModel>) => {
-  let status = props.status as UpdateResponse<Api.PostLinkClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof PostLinkViewModel] &&
-      props.errors[name as keyof PostLinkViewModel]
-    ) {
-      response += props.errors[name as keyof PostLinkViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('creationDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CreationDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="creationDate"
-            className={
-              errorExistForField('creationDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('creationDate') && (
-            <small className="text-danger">
-              {errorsForField('creationDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('linkTypeId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LinkTypeId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="linkTypeId"
-            className={
-              errorExistForField('linkTypeId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('linkTypeId') && (
-            <small className="text-danger">
-              {errorsForField('linkTypeId')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('postId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PostId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="postId"
-            className={
-              errorExistForField('postId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('postId') && (
-            <small className="text-danger">{errorsForField('postId')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('relatedPostId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          RelatedPostId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="relatedPostId"
-            className={
-              errorExistForField('relatedPostId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('relatedPostId') && (
-            <small className="text-danger">
-              {errorsForField('relatedPostId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const PostLinkEdit = withFormik<Props, PostLinkViewModel>({
-  mapPropsToValues: props => {
-    let response = new PostLinkViewModel();
-    response.setProperties(
-      props.model!.creationDate,
-      props.model!.id,
-      props.model!.linkTypeId,
-      props.model!.postId,
-      props.model!.relatedPostId
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<PostLinkViewModel> = {};
-
-    if (values.creationDate == undefined) {
-      errors.creationDate = 'Required';
-    }
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-    if (values.linkTypeId == 0) {
-      errors.linkTypeId = 'Required';
-    }
-    if (values.postId == 0) {
-      errors.postId = 'Required';
-    }
-    if (values.relatedPostId == 0) {
-      errors.relatedPostId = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new PostLinkMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.PostLinks + '/' + values.id,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.PostLinkClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'PostLinkEdit',
-})(PostLinkEditDisplay);
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import PostLinkViewModel from './postLinkViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface PostLinkEditComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface PostLinkEditComponentState {
@@ -263,18 +23,20 @@ interface PostLinkEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
-export default class PostLinkEditComponent extends React.Component<
+class PostLinkEditComponent extends React.Component<
   PostLinkEditComponentProps,
   PostLinkEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new PostLinkViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+    submitted: false,
   };
 
   componentDidMount() {
@@ -307,6 +69,10 @@ export default class PostLinkEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -320,20 +86,132 @@ export default class PostLinkEditComponent extends React.Component<
         }
       );
   }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as PostLinkViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: PostLinkViewModel) => {
+    let mapper = new PostLinkMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.PostLinks +
+          '/' +
+          this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.PostLinkClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
-      return <PostLinkEdit model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="creationDate">CreationDate</label>
+            <br />
+            {getFieldDecorator('creationDate', {
+              rules: [],
+            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="linkTypeId">LinkTypeId</label>
+            <br />
+            {getFieldDecorator('linkTypeId', {
+              rules: [],
+            })(<Input placeholder={'LinkTypeId'} id={'linkTypeId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="postId">PostId</label>
+            <br />
+            {getFieldDecorator('postId', {
+              rules: [],
+            })(<Input placeholder={'PostId'} id={'postId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="relatedPostId">RelatedPostId</label>
+            <br />
+            {getFieldDecorator('relatedPostId', {
+              rules: [],
+            })(<Input placeholder={'RelatedPostId'} id={'relatedPostId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedPostLinkEditComponent = Form.create({
+  name: 'PostLink Edit',
+})(PostLinkEditComponent);
+
 
 /*<Codenesium>
-    <Hash>49d15ab827197929079ddf693caeb190</Hash>
+    <Hash>45e2a11dd38a96fb761cd8a858339771</Hash>
 </Codenesium>*/

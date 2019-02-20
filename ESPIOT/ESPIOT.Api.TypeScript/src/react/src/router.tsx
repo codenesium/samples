@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
-import { App } from './app';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
-import DeviceCreateComponent from './components/device/deviceCreateForm';
-import DeviceDetailComponent from './components/device/deviceDetailForm';
-import DeviceEditComponent from './components/device/deviceEditForm';
-import DeviceSearchComponent from './components/device/deviceSearchForm';
-import DeviceActionCreateComponent from './components/deviceAction/deviceActionCreateForm';
-import DeviceActionDetailComponent from './components/deviceAction/deviceActionDetailForm';
-import DeviceActionEditComponent from './components/deviceAction/deviceActionEditForm';
-import DeviceActionSearchComponent from './components/deviceAction/deviceActionSearchForm';
+import { wrapperHeader } from './components/header';
+import { ClientRoutes, Constants } from './constants';
+import { WrappedDeviceCreateComponent } from './components/device/deviceCreateForm';
+import { WrappedDeviceDetailComponent } from './components/device/deviceDetailForm';
+import { WrappedDeviceEditComponent } from './components/device/deviceEditForm';
+import { WrappedDeviceSearchComponent } from './components/device/deviceSearchForm';
+import { WrappedDeviceActionCreateComponent } from './components/deviceAction/deviceActionCreateForm';
+import { WrappedDeviceActionDetailComponent } from './components/deviceAction/deviceActionDetailForm';
+import { WrappedDeviceActionEditComponent } from './components/deviceAction/deviceActionEditForm';
+import { WrappedDeviceActionSearchComponent } from './components/deviceAction/deviceActionSearchForm';
 
 const config = {
   oidc: {
@@ -31,36 +32,45 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}
       >
-        <div className="container-fluid">
-          <Route component={App} />
-          <SecureRoute
-            path="/protected"
-            component={() => '<div>secure route</div>'}
+        <SecureRoute
+          path="/protected"
+          component={() => '<div>secure route</div>'}
+        />
+        <Switch>
+          <Route exact path="/" component={wrapperHeader(Dashboard)} />
+          <Route
+            path={ClientRoutes.Devices + '/create'}
+            component={wrapperHeader(WrappedDeviceCreateComponent)}
           />
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/devices/create" component={DeviceCreateComponent} />
-            <Route path="/devices/edit/:id" component={DeviceEditComponent} />
-            <Route path="/devices/:id" component={DeviceDetailComponent} />
-            <Route path="/devices" component={DeviceSearchComponent} />
-            <Route
-              path="/deviceactions/create"
-              component={DeviceActionCreateComponent}
-            />
-            <Route
-              path="/deviceactions/edit/:id"
-              component={DeviceActionEditComponent}
-            />
-            <Route
-              path="/deviceactions/:id"
-              component={DeviceActionDetailComponent}
-            />
-            <Route
-              path="/deviceactions"
-              component={DeviceActionSearchComponent}
-            />
-          </Switch>
-        </div>
+          <Route
+            path={ClientRoutes.Devices + '/edit/:id'}
+            component={wrapperHeader(WrappedDeviceEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Devices + '/:id'}
+            component={wrapperHeader(WrappedDeviceDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Devices}
+            component={wrapperHeader(WrappedDeviceSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.DeviceActions + '/create'}
+            component={wrapperHeader(WrappedDeviceActionCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.DeviceActions + '/edit/:id'}
+            component={wrapperHeader(WrappedDeviceActionEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.DeviceActions + '/:id'}
+            component={wrapperHeader(WrappedDeviceActionDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.DeviceActions}
+            component={wrapperHeader(WrappedDeviceActionSearchComponent)}
+          />
+        </Switch>
       </Security>
     </BrowserRouter>
   );
@@ -68,5 +78,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>421222d6d0f22b08d817dc7db947d089</Hash>
+    <Hash>0d123c39c1335197c36eeca5d6ea772b</Hash>
 </Codenesium>*/

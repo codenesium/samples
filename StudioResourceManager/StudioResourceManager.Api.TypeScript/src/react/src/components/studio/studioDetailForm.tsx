@@ -1,87 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import StudioMapper from './studioMapper';
 import StudioViewModel from './studioViewModel';
-
-interface Props {
-  history: any;
-  model?: StudioViewModel;
-}
-
-const StudioDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Studios + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="address1" className={'col-sm-2 col-form-label'}>
-          Address1
-        </label>
-        <div className="col-sm-12">{String(model.model!.address1)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="address2" className={'col-sm-2 col-form-label'}>
-          Address2
-        </label>
-        <div className="col-sm-12">{String(model.model!.address2)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="city" className={'col-sm-2 col-form-label'}>
-          City
-        </label>
-        <div className="col-sm-12">{String(model.model!.city)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="province" className={'col-sm-2 col-form-label'}>
-          Province
-        </label>
-        <div className="col-sm-12">{String(model.model!.province)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="website" className={'col-sm-2 col-form-label'}>
-          Website
-        </label>
-        <div className="col-sm-12">{String(model.model!.website)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="zip" className={'col-sm-2 col-form-label'}>
-          Zip
-        </label>
-        <div className="col-sm-12">{String(model.model!.zip)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface StudioDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface StudioDetailComponentState {
@@ -92,17 +23,23 @@ interface StudioDetailComponentState {
   errorMessage: string;
 }
 
-export default class StudioDetailComponent extends React.Component<
+class StudioDetailComponent extends React.Component<
   StudioDetailComponentProps,
   StudioDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new StudioViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Studios + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -123,9 +60,9 @@ export default class StudioDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.StudioClientResponseModel;
 
-          let mapper = new StudioMapper();
-
           console.log(response);
+
+          let mapper = new StudioMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -147,17 +84,59 @@ export default class StudioDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <StudioDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>address1</div>
+              <div>{this.state.model!.address1}</div>
+            </div>
+            <div>
+              <div>address2</div>
+              <div>{this.state.model!.address2}</div>
+            </div>
+            <div>
+              <div>city</div>
+              <div>{this.state.model!.city}</div>
+            </div>
+            <div>
+              <div>name</div>
+              <div>{this.state.model!.name}</div>
+            </div>
+            <div>
+              <div>province</div>
+              <div>{this.state.model!.province}</div>
+            </div>
+            <div>
+              <div>website</div>
+              <div>{this.state.model!.website}</div>
+            </div>
+            <div>
+              <div>zip</div>
+              <div>{this.state.model!.zip}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -165,7 +144,11 @@ export default class StudioDetailComponent extends React.Component<
   }
 }
 
+export const WrappedStudioDetailComponent = Form.create({
+  name: 'Studio Detail',
+})(StudioDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>0db6644c678fc4a9490aaed00bfea4ed</Hash>
+    <Hash>8ef850f96279ec0f7b98d0bacb6890a6</Hash>
 </Codenesium>*/

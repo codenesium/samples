@@ -1,53 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import LinkTypeMapper from './linkTypeMapper';
 import LinkTypeViewModel from './linkTypeViewModel';
-
-interface Props {
-  history: any;
-  model?: LinkTypeViewModel;
-}
-
-const LinkTypeDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.LinkTypes + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="rwType" className={'col-sm-2 col-form-label'}>
-          Type
-        </label>
-        <div className="col-sm-12">{String(model.model!.rwType)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface LinkTypeDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface LinkTypeDetailComponentState {
@@ -58,17 +23,23 @@ interface LinkTypeDetailComponentState {
   errorMessage: string;
 }
 
-export default class LinkTypeDetailComponent extends React.Component<
+class LinkTypeDetailComponent extends React.Component<
   LinkTypeDetailComponentProps,
   LinkTypeDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new LinkTypeViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.LinkTypes + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -89,9 +60,9 @@ export default class LinkTypeDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.LinkTypeClientResponseModel;
 
-          let mapper = new LinkTypeMapper();
-
           console.log(response);
+
+          let mapper = new LinkTypeMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -113,17 +84,35 @@ export default class LinkTypeDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <LinkTypeDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>rwType</div>
+              <div>{this.state.model!.rwType}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -131,7 +120,11 @@ export default class LinkTypeDetailComponent extends React.Component<
   }
 }
 
+export const WrappedLinkTypeDetailComponent = Form.create({
+  name: 'LinkType Detail',
+})(LinkTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>1c17ee0fbfb1104ecd5f904403155cb7</Hash>
+    <Hash>7a09d73b95c07c56c99b893d2d99e892</Hash>
 </Codenesium>*/

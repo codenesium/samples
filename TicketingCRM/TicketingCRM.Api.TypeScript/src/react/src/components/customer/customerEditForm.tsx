@@ -1,216 +1,217 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
+import { LoadingForm } from '../../lib/components/loadingForm';
+import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import CustomerViewModel from './customerViewModel';
+import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
+import CustomerViewModel from './customerViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-    model?:CustomerViewModel
+interface CustomerEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-  const CustomerEditDisplay = (props: FormikProps<CustomerViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.CustomerClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof CustomerViewModel]  && props.errors[name as keyof CustomerViewModel]) {
-            response += props.errors[name as keyof CustomerViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("email") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Email</label>
-					    <div className="col-sm-12">
-                             <Field type="email" name="email" className={errorExistForField("email") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("email") && <small className="text-danger">{errorsForField("email")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("firstName") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FirstName</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="firstName" className={errorExistForField("firstName") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("firstName") && <small className="text-danger">{errorsForField("firstName")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("lastName") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>LastName</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="lastName" className={errorExistForField("lastName") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("lastName") && <small className="text-danger">{errorsForField("lastName")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("phone") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Phone</label>
-					    <div className="col-sm-12">
-                             <Field type="tel" name="phone" className={errorExistForField("phone") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("phone") && <small className="text-danger">{errorsForField("phone")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface CustomerEditComponentState {
+  model?: CustomerViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class CustomerEditComponent extends React.Component<
+  CustomerEditComponentProps,
+  CustomerEditComponentState
+> {
+  state = {
+    model: new CustomerViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const CustomerEdit = withFormik<Props, CustomerViewModel>({
-    mapPropsToValues: props => {
-        let response = new CustomerViewModel();
-		response.setProperties(props.model!.email,props.model!.firstName,props.model!.id,props.model!.lastName,props.model!.phone);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<CustomerViewModel> = { };
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.email == '') {
-                errors.email = "Required"
-                    }if(values.firstName == '') {
-                errors.firstName = "Required"
-                    }if(values.id == 0) {
-                errors.id = "Required"
-                    }if(values.lastName == '') {
-                errors.lastName = "Required"
-                    }if(values.phone == '') {
-                errors.phone = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new CustomerMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.Customers +'/' + values.id,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Customers +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.CustomerClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'CustomerEdit', 
-  })(CustomerEditDisplay);
-
- 
-  interface IParams 
-  {
-     id:number;
-  }
-
-  interface IMatch
-  {
-     params: IParams;
-  }
-  
-  interface CustomerEditComponentProps
-  {
-     match:IMatch;
-  }
-
-  interface CustomerEditComponentState
-  {
-      model?:CustomerViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class CustomerEditComponent extends React.Component<CustomerEditComponentProps, CustomerEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Customers + '/' + this.props.match.params.id, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.CustomerClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new CustomerMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<CustomerEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.CustomerClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new CustomerMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as CustomerViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: CustomerViewModel) => {
+    let mapper = new CustomerMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.Customers +
+          '/' +
+          this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.CustomerClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <LoadingForm />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="email">email</label>
+            <br />
+            {getFieldDecorator('email', {
+              rules: [],
+            })(<Input placeholder={'email'} id={'email'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="firstName">firstName</label>
+            <br />
+            {getFieldDecorator('firstName', {
+              rules: [],
+            })(<Input placeholder={'firstName'} id={'firstName'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="lastName">lastName</label>
+            <br />
+            {getFieldDecorator('lastName', {
+              rules: [],
+            })(<Input placeholder={'lastName'} id={'lastName'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="phone">phone</label>
+            <br />
+            {getFieldDecorator('phone', {
+              rules: [],
+            })(<InputNumber placeholder={'phone'} id={'phone'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedCustomerEditComponent = Form.create({
+  name: 'Customer Edit',
+})(CustomerEditComponent);
+
 
 /*<Codenesium>
-    <Hash>4eb4db810a9f58560bcadf76444cd632</Hash>
+    <Hash>154f06489f70d6f62a6f6ecd4461326c</Hash>
 </Codenesium>*/

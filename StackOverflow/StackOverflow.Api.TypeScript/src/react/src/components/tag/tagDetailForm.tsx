@@ -1,69 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import TagMapper from './tagMapper';
 import TagViewModel from './tagViewModel';
-
-interface Props {
-  history: any;
-  model?: TagViewModel;
-}
-
-const TagDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Tags + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="count" className={'col-sm-2 col-form-label'}>
-          Count
-        </label>
-        <div className="col-sm-12">{String(model.model!.count)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="excerptPostId" className={'col-sm-2 col-form-label'}>
-          ExcerptPostId
-        </label>
-        <div className="col-sm-12">{String(model.model!.excerptPostId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="tagName" className={'col-sm-2 col-form-label'}>
-          TagName
-        </label>
-        <div className="col-sm-12">{String(model.model!.tagName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="wikiPostId" className={'col-sm-2 col-form-label'}>
-          WikiPostId
-        </label>
-        <div className="col-sm-12">{String(model.model!.wikiPostId)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface TagDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface TagDetailComponentState {
@@ -74,17 +23,23 @@ interface TagDetailComponentState {
   errorMessage: string;
 }
 
-export default class TagDetailComponent extends React.Component<
+class TagDetailComponent extends React.Component<
   TagDetailComponentProps,
   TagDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new TagViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Tags + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -105,9 +60,9 @@ export default class TagDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.TagClientResponseModel;
 
-          let mapper = new TagMapper();
-
           console.log(response);
+
+          let mapper = new TagMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -129,17 +84,47 @@ export default class TagDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <TagDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>count</div>
+              <div>{this.state.model!.count}</div>
+            </div>
+            <div>
+              <div>excerptPostId</div>
+              <div>{this.state.model!.excerptPostId}</div>
+            </div>
+            <div>
+              <div>tagName</div>
+              <div>{this.state.model!.tagName}</div>
+            </div>
+            <div>
+              <div>wikiPostId</div>
+              <div>{this.state.model!.wikiPostId}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -147,7 +132,11 @@ export default class TagDetailComponent extends React.Component<
   }
 }
 
+export const WrappedTagDetailComponent = Form.create({ name: 'Tag Detail' })(
+  TagDetailComponent
+);
+
 
 /*<Codenesium>
-    <Hash>d0c46867a9a49468d50f9b39fecedd77</Hash>
+    <Hash>e2dee8572d3f94355d7cb746f28b9c36</Hash>
 </Codenesium>*/

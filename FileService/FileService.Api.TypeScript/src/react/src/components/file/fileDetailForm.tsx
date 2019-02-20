@@ -1,121 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
-
-interface Props {
-  history: any;
-  model?: FileViewModel;
-}
-
-const FileDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Files + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="bucketId" className={'col-sm-2 col-form-label'}>
-          BucketId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.bucketIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="dateCreated" className={'col-sm-2 col-form-label'}>
-          DateCreated
-        </label>
-        <div className="col-sm-12">{String(model.model!.dateCreated)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="description" className={'col-sm-2 col-form-label'}>
-          Description
-        </label>
-        <div className="col-sm-12">{String(model.model!.description)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="expiration" className={'col-sm-2 col-form-label'}>
-          Expiration
-        </label>
-        <div className="col-sm-12">{String(model.model!.expiration)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="extension" className={'col-sm-2 col-form-label'}>
-          Extension
-        </label>
-        <div className="col-sm-12">{String(model.model!.extension)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="externalId" className={'col-sm-2 col-form-label'}>
-          ExternalId
-        </label>
-        <div className="col-sm-12">{String(model.model!.externalId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="fileSizeInByte" className={'col-sm-2 col-form-label'}>
-          FileSizeInByte
-        </label>
-        <div className="col-sm-12">{String(model.model!.fileSizeInByte)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="fileTypeId" className={'col-sm-2 col-form-label'}>
-          FileTypeId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.fileTypeIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="location" className={'col-sm-2 col-form-label'}>
-          Location
-        </label>
-        <div className="col-sm-12">{String(model.model!.location)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="privateKey" className={'col-sm-2 col-form-label'}>
-          PrivateKey
-        </label>
-        <div className="col-sm-12">{String(model.model!.privateKey)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="publicKey" className={'col-sm-2 col-form-label'}>
-          PublicKey
-        </label>
-        <div className="col-sm-12">{String(model.model!.publicKey)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface FileDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface FileDetailComponentState {
@@ -126,17 +23,23 @@ interface FileDetailComponentState {
   errorMessage: string;
 }
 
-export default class FileDetailComponent extends React.Component<
+class FileDetailComponent extends React.Component<
   FileDetailComponentProps,
   FileDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new FileViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Files + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -157,9 +60,9 @@ export default class FileDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.FileClientResponseModel;
 
-          let mapper = new FileMapper();
-
           console.log(response);
+
+          let mapper = new FileMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -181,17 +84,75 @@ export default class FileDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <FileDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>bucketId</h3>
+              <div>{this.state.model!.bucketIdNavigation!.toDisplay()}</div>
+            </div>
+            <div>
+              <div>dateCreated</div>
+              <div>{this.state.model!.dateCreated}</div>
+            </div>
+            <div>
+              <div>description</div>
+              <div>{this.state.model!.description}</div>
+            </div>
+            <div>
+              <div>expiration</div>
+              <div>{this.state.model!.expiration}</div>
+            </div>
+            <div>
+              <div>extension</div>
+              <div>{this.state.model!.extension}</div>
+            </div>
+            <div>
+              <div>externalId</div>
+              <div>{this.state.model!.externalId}</div>
+            </div>
+            <div>
+              <div>fileSizeInByte</div>
+              <div>{this.state.model!.fileSizeInByte}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>fileTypeId</h3>
+              <div>{this.state.model!.fileTypeIdNavigation!.toDisplay()}</div>
+            </div>
+            <div>
+              <div>location</div>
+              <div>{this.state.model!.location}</div>
+            </div>
+            <div>
+              <div>privateKey</div>
+              <div>{this.state.model!.privateKey}</div>
+            </div>
+            <div>
+              <div>publicKey</div>
+              <div>{this.state.model!.publicKey}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -199,7 +160,11 @@ export default class FileDetailComponent extends React.Component<
   }
 }
 
+export const WrappedFileDetailComponent = Form.create({ name: 'File Detail' })(
+  FileDetailComponent
+);
+
 
 /*<Codenesium>
-    <Hash>0024e6c7fdfaab020d73fcf73aed541b</Hash>
+    <Hash>ec8ac28042298d5b60c77cc1201a8fab</Hash>
 </Codenesium>*/

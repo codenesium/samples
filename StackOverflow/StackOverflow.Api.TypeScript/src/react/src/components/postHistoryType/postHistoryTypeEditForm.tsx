@@ -1,165 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { CreateResponse } from '../../api/apiObjects';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import PostHistoryTypeViewModel from './postHistoryTypeViewModel';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import PostHistoryTypeMapper from './postHistoryTypeMapper';
-
-interface Props {
-  model?: PostHistoryTypeViewModel;
-}
-
-const PostHistoryTypeEditDisplay = (
-  props: FormikProps<PostHistoryTypeViewModel>
-) => {
-  let status = props.status as UpdateResponse<
-    Api.PostHistoryTypeClientRequestModel
-  >;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof PostHistoryTypeViewModel] &&
-      props.errors[name as keyof PostHistoryTypeViewModel]
-    ) {
-      response += props.errors[name as keyof PostHistoryTypeViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('rwType')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Type
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="rwType"
-            className={
-              errorExistForField('rwType')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('rwType') && (
-            <small className="text-danger">{errorsForField('rwType')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const PostHistoryTypeEdit = withFormik<Props, PostHistoryTypeViewModel>({
-  mapPropsToValues: props => {
-    let response = new PostHistoryTypeViewModel();
-    response.setProperties(props.model!.id, props.model!.rwType);
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<PostHistoryTypeViewModel> = {};
-
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-    if (values.rwType == '') {
-      errors.rwType = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new PostHistoryTypeMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.PostHistoryTypes + '/' + values.id,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.PostHistoryTypeClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'PostHistoryTypeEdit',
-})(PostHistoryTypeEditDisplay);
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import PostHistoryTypeViewModel from './postHistoryTypeViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface PostHistoryTypeEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface PostHistoryTypeEditComponentState {
@@ -168,21 +23,23 @@ interface PostHistoryTypeEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class PostHistoryTypeEditComponent extends React.Component<
+class PostHistoryTypeEditComponent extends React.Component<
   PostHistoryTypeEditComponentProps,
   PostHistoryTypeEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new PostHistoryTypeViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -212,6 +69,8 @@ export default class PostHistoryTypeEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -224,21 +83,95 @@ export default class PostHistoryTypeEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as PostHistoryTypeViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:PostHistoryTypeViewModel) =>
+  {  
+    let mapper = new PostHistoryTypeMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.PostHistoryTypes + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.PostHistoryTypeClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <PostHistoryTypeEdit model={this.state.model} />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='rwType'>Type</label>
+              <br />             
+{getFieldDecorator('rwType', {
+              rules:[],
+              })
+              ( <Input placeholder={"Type"} id={"rwType"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedPostHistoryTypeEditComponent = Form.create({ name: 'PostHistoryType Edit' })(PostHistoryTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>d32a95c9b181342e9ffee3133133a4ed</Hash>
+    <Hash>62c6f8136482597ce9890f9a53dadb61</Hash>
 </Codenesium>*/

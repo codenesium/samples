@@ -1,491 +1,61 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
-interface Props {
-  model?: UserViewModel;
+interface UserCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const UserCreateDisplay: React.SFC<FormikProps<UserViewModel>> = (
-  props: FormikProps<UserViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.UserClientRequestModel>;
+interface UserCreateComponentState {
+  model?: UserViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof UserViewModel] &&
-      props.errors[name as keyof UserViewModel]
-    ) {
-      response += props.errors[name as keyof UserViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class UserCreateComponent extends React.Component<
+  UserCreateComponentProps,
+  UserCreateComponentState
+> {
+  state = {
+    model: new UserViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as UserViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('aboutMe')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          AboutMe
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="aboutMe"
-            className={
-              errorExistForField('aboutMe')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('aboutMe') && (
-            <small className="text-danger">{errorsForField('aboutMe')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('accountId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          AccountId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="accountId"
-            className={
-              errorExistForField('accountId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('accountId') && (
-            <small className="text-danger">{errorsForField('accountId')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('age')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Age
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="age"
-            className={
-              errorExistForField('age')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('age') && (
-            <small className="text-danger">{errorsForField('age')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('creationDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CreationDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="creationDate"
-            className={
-              errorExistForField('creationDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('creationDate') && (
-            <small className="text-danger">
-              {errorsForField('creationDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('displayName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          DisplayName
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="displayName"
-            className={
-              errorExistForField('displayName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('displayName') && (
-            <small className="text-danger">
-              {errorsForField('displayName')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('downVote')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          DownVotes
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="downVote"
-            className={
-              errorExistForField('downVote')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('downVote') && (
-            <small className="text-danger">{errorsForField('downVote')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('emailHash')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          EmailHash
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="emailHash"
-            className={
-              errorExistForField('emailHash')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('emailHash') && (
-            <small className="text-danger">{errorsForField('emailHash')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('lastAccessDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LastAccessDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="lastAccessDate"
-            className={
-              errorExistForField('lastAccessDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('lastAccessDate') && (
-            <small className="text-danger">
-              {errorsForField('lastAccessDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('location')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Location
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="location"
-            className={
-              errorExistForField('location')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('location') && (
-            <small className="text-danger">{errorsForField('location')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('reputation')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Reputation
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="reputation"
-            className={
-              errorExistForField('reputation')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('reputation') && (
-            <small className="text-danger">
-              {errorsForField('reputation')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('upVote')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          UpVotes
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="upVote"
-            className={
-              errorExistForField('upVote')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('upVote') && (
-            <small className="text-danger">{errorsForField('upVote')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('view')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Views
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="view"
-            className={
-              errorExistForField('view')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('view') && (
-            <small className="text-danger">{errorsForField('view')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('websiteUrl')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          WebsiteUrl
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="websiteUrl"
-            className={
-              errorExistForField('websiteUrl')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('websiteUrl') && (
-            <small className="text-danger">
-              {errorsForField('websiteUrl')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const UserCreate = withFormik<Props, UserViewModel>({
-  mapPropsToValues: props => {
-    let response = new UserViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.aboutMe,
-        props.model!.accountId,
-        props.model!.age,
-        props.model!.creationDate,
-        props.model!.displayName,
-        props.model!.downVote,
-        props.model!.emailHash,
-        props.model!.id,
-        props.model!.lastAccessDate,
-        props.model!.location,
-        props.model!.reputation,
-        props.model!.upVote,
-        props.model!.view,
-        props.model!.websiteUrl
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<UserViewModel> = {};
-
-    if (values.creationDate == undefined) {
-      errors.creationDate = 'Required';
-    }
-    if (values.displayName == '') {
-      errors.displayName = 'Required';
-    }
-    if (values.downVote == 0) {
-      errors.downVote = 'Required';
-    }
-    if (values.lastAccessDate == undefined) {
-      errors.lastAccessDate = 'Required';
-    }
-    if (values.reputation == 0) {
-      errors.reputation = 'Required';
-    }
-    if (values.upVote == 0) {
-      errors.upVote = 'Required';
-    }
-    if (values.view == 0) {
-      errors.view = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: UserViewModel) => {
     let mapper = new UserMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Users,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -497,54 +67,172 @@ const UserCreate = withFormik<Props, UserViewModel>({
           let response = resp.data as CreateResponse<
             Api.UserClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'UserCreate',
-})(UserCreateDisplay);
-
-interface UserCreateComponentProps {}
-
-interface UserCreateComponentState {
-  model?: UserViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class UserCreateComponent extends React.Component<
-  UserCreateComponentProps,
-  UserCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
-      return <UserCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="aboutMe">AboutMe</label>
+            <br />
+            {getFieldDecorator('aboutMe', {
+              rules: [],
+            })(<Input placeholder={'AboutMe'} id={'aboutMe'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="accountId">AccountId</label>
+            <br />
+            {getFieldDecorator('accountId', {
+              rules: [],
+            })(<Input placeholder={'AccountId'} id={'accountId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="age">Age</label>
+            <br />
+            {getFieldDecorator('age', {
+              rules: [],
+            })(<Input placeholder={'Age'} id={'age'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="creationDate">CreationDate</label>
+            <br />
+            {getFieldDecorator('creationDate', {
+              rules: [],
+            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="displayName">DisplayName</label>
+            <br />
+            {getFieldDecorator('displayName', {
+              rules: [],
+            })(<Input placeholder={'DisplayName'} id={'displayName'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="downVote">DownVotes</label>
+            <br />
+            {getFieldDecorator('downVote', {
+              rules: [],
+            })(<Input placeholder={'DownVotes'} id={'downVote'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="emailHash">EmailHash</label>
+            <br />
+            {getFieldDecorator('emailHash', {
+              rules: [],
+            })(<Input placeholder={'EmailHash'} id={'emailHash'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="lastAccessDate">LastAccessDate</label>
+            <br />
+            {getFieldDecorator('lastAccessDate', {
+              rules: [],
+            })(<Input placeholder={'LastAccessDate'} id={'lastAccessDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="location">Location</label>
+            <br />
+            {getFieldDecorator('location', {
+              rules: [],
+            })(<Input placeholder={'Location'} id={'location'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="reputation">Reputation</label>
+            <br />
+            {getFieldDecorator('reputation', {
+              rules: [],
+            })(<Input placeholder={'Reputation'} id={'reputation'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="upVote">UpVotes</label>
+            <br />
+            {getFieldDecorator('upVote', {
+              rules: [],
+            })(<Input placeholder={'UpVotes'} id={'upVote'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="view">Views</label>
+            <br />
+            {getFieldDecorator('view', {
+              rules: [],
+            })(<Input placeholder={'Views'} id={'view'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="websiteUrl">WebsiteUrl</label>
+            <br />
+            {getFieldDecorator('websiteUrl', {
+              rules: [],
+            })(<Input placeholder={'WebsiteUrl'} id={'websiteUrl'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
+  UserCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>9a36bd97b0c4e4c287108dd031ec193e</Hash>
+    <Hash>24aca5e77632ea5a1cc3d8080bfba94d</Hash>
 </Codenesium>*/

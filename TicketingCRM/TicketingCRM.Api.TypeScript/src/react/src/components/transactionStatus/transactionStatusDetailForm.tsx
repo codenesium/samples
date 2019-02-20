@@ -1,53 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import TransactionStatusMapper from './transactionStatusMapper';
 import TransactionStatusViewModel from './transactionStatusViewModel';
-
-interface Props {
-  history: any;
-  model?: TransactionStatusViewModel;
-}
-
-const TransactionStatusDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.TransactionStatus + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface TransactionStatusDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface TransactionStatusDetailComponentState {
@@ -58,17 +23,23 @@ interface TransactionStatusDetailComponentState {
   errorMessage: string;
 }
 
-export default class TransactionStatusDetailComponent extends React.Component<
+class TransactionStatusDetailComponent extends React.Component<
   TransactionStatusDetailComponentProps,
   TransactionStatusDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new TransactionStatusViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.TransactionStatus + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -89,9 +60,9 @@ export default class TransactionStatusDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.TransactionStatusClientResponseModel;
 
-          let mapper = new TransactionStatusMapper();
-
           console.log(response);
+
+          let mapper = new TransactionStatusMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -113,17 +84,35 @@ export default class TransactionStatusDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <TransactionStatusDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>name</div>
+              <div>{this.state.model!.name}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -131,7 +120,11 @@ export default class TransactionStatusDetailComponent extends React.Component<
   }
 }
 
+export const WrappedTransactionStatusDetailComponent = Form.create({
+  name: 'TransactionStatus Detail',
+})(TransactionStatusDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>8fedf91b5538f26fb2bca06e195ef571</Hash>
+    <Hash>f6871cc95d50b1e5d623ce55e718d3a0</Hash>
 </Codenesium>*/

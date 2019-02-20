@@ -1,100 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import EventViewModel from './eventViewModel';
-
-interface Props {
-  history: any;
-  model?: EventViewModel;
-}
-
-const EventDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Events + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="actualEndDate" className={'col-sm-2 col-form-label'}>
-          Actual End Date
-        </label>
-        <div className="col-sm-12">{String(model.model!.actualEndDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="actualStartDate" className={'col-sm-2 col-form-label'}>
-          Actual Start Date
-        </label>
-        <div className="col-sm-12">{String(model.model!.actualStartDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="billAmount" className={'col-sm-2 col-form-label'}>
-          Bill Amount
-        </label>
-        <div className="col-sm-12">{String(model.model!.billAmount)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="eventStatusId" className={'col-sm-2 col-form-label'}>
-          Status
-        </label>
-        <div className="col-sm-12">
-          {model.model!.eventStatusIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="scheduledEndDate" className={'col-sm-2 col-form-label'}>
-          Scheduled End Date
-        </label>
-        <div className="col-sm-12">{String(model.model!.scheduledEndDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="scheduledStartDate"
-          className={'col-sm-2 col-form-label'}
-        >
-          Scheduled Start Date
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.scheduledStartDate)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="studentNote" className={'col-sm-2 col-form-label'}>
-          Student Notes
-        </label>
-        <div className="col-sm-12">{String(model.model!.studentNote)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="teacherNote" className={'col-sm-2 col-form-label'}>
-          Teacher notes
-        </label>
-        <div className="col-sm-12">{String(model.model!.teacherNote)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface EventDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface EventDetailComponentState {
@@ -105,17 +23,23 @@ interface EventDetailComponentState {
   errorMessage: string;
 }
 
-export default class EventDetailComponent extends React.Component<
+class EventDetailComponent extends React.Component<
   EventDetailComponentProps,
   EventDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new EventViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Events + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -136,9 +60,9 @@ export default class EventDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.EventClientResponseModel;
 
-          let mapper = new EventMapper();
-
           console.log(response);
+
+          let mapper = new EventMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -160,17 +84,65 @@ export default class EventDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <EventDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>actualEndDate</div>
+              <div>{this.state.model!.actualEndDate}</div>
+            </div>
+            <div>
+              <div>actualStartDate</div>
+              <div>{this.state.model!.actualStartDate}</div>
+            </div>
+            <div>
+              <div>billAmount</div>
+              <div>{this.state.model!.billAmount}</div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>eventStatusId</h3>
+              <div>
+                {this.state.model!.eventStatusIdNavigation!.toDisplay()}
+              </div>
+            </div>
+            <div>
+              <div>scheduledEndDate</div>
+              <div>{this.state.model!.scheduledEndDate}</div>
+            </div>
+            <div>
+              <div>scheduledStartDate</div>
+              <div>{this.state.model!.scheduledStartDate}</div>
+            </div>
+            <div>
+              <div>studentNote</div>
+              <div>{this.state.model!.studentNote}</div>
+            </div>
+            <div>
+              <div>teacherNote</div>
+              <div>{this.state.model!.teacherNote}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -178,7 +150,11 @@ export default class EventDetailComponent extends React.Component<
   }
 }
 
+export const WrappedEventDetailComponent = Form.create({
+  name: 'Event Detail',
+})(EventDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>3a49bff6b1b44c9055b8c6f3140d2565</Hash>
+    <Hash>07f6b144774e35d7a24d959b72a1e769</Hash>
 </Codenesium>*/

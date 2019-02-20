@@ -1,115 +1,141 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ClientRoutes, Constants } from '../constants';
+const { Header, Content, Footer, Sider } = Layout;
 
-interface Props {}
+const SubMenu = Menu.SubMenu;
 
-interface State {
-  menuExpanded: boolean;
+interface WrapperHeaderProps {}
+
+interface WrapperHeaderState {
+  collapsed: boolean;
 }
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
+    state = { collapsed: false };
 
-export class Header extends React.Component<Props, State> {
-  state = { menuExpanded: false };
-
-  handleClick(e: React.FormEvent) {
-    this.setState({ menuExpanded: !this.state.menuExpanded });
-  }
-
-  render() {
-    return (
-      <div className="row col-12">
-        <nav
-          className="navbar navbar-expand-lg navbar-light bg-white"
-          id="navbar"
-        >
-          <a className="navbar-brand" href="/">
-            PetStore
-          </a>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            onClick={e => this.handleClick(e)}
+    onCollapse = () => {
+      this.setState({ ...this.state, collapsed: !this.state.collapsed });
+    };
+    render() {
+      return (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            collapsible
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
           >
-            <span className="navbar-toggler-icon" />
-          </button>
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+              <MenuItem
+                key="Dashboard"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Dashboard</span>
+                  </span>
+                }
+              >
+                <Link to={'/'}>Dashboard</Link>
+              </MenuItem>
 
-          <div
-            className={
-              this.state.menuExpanded
-                ? 'collapse.expand navbar-collapse'
-                : 'collapse navbar-collapse'
-            }
-            id="navbarSupportedContent"
-          >
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/breeds"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Breeds
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/paymenttypes"
-                  onClick={e => this.handleClick(e)}
-                >
-                  PaymentTypes
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pens"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Pens
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pets"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Pets
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/sales"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Sales
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/species"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Species
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
+              <MenuItem
+                key="breed"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Breed</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.Breeds}>Breeds</Link>
+              </MenuItem>
+
+              <MenuItem
+                key="paymentType"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>PaymentType</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.PaymentTypes}>PaymentTypes</Link>
+              </MenuItem>
+
+              <MenuItem
+                key="pen"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Pen</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.Pens}>Pens</Link>
+              </MenuItem>
+
+              <MenuItem
+                key="pet"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Pet</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.Pets}>Pets</Link>
+              </MenuItem>
+
+              <MenuItem
+                key="sale"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Sale</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.Sales}>Sales</Link>
+              </MenuItem>
+
+              <MenuItem
+                key="species"
+                title={
+                  <span>
+                    <Icon type="user" />
+                    <span>Species</span>
+                  </span>
+                }
+              >
+                <Link to={ClientRoutes.Species}>Species</Link>
+              </MenuItem>
+            </Menu>
+          </Sider>
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }} />
+            <Content style={{ margin: '0 16px' }}>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <Component {...this.props} />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+          </Layout>
+        </Layout>
+      );
+    }
   }
-}
+  return WrapperHeaderComponent;
+};
 
 
 /*<Codenesium>
-    <Hash>617b9c56d781f04f91a3d73f18a419b7</Hash>
+    <Hash>090b493dc191fb9bd3b8fd940646b1d5</Hash>
 </Codenesium>*/

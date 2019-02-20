@@ -1,311 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
+import { CreateResponse } from '../../api/apiObjects';
 import { LoadingForm } from '../../lib/components/loadingForm';
 import { ErrorForm } from '../../lib/components/errorForm';
-import TeacherViewModel from './teacherViewModel';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import TeacherMapper from './teacherMapper';
-
-interface Props {
-  model?: TeacherViewModel;
-}
-
-const TeacherEditDisplay = (props: FormikProps<TeacherViewModel>) => {
-  let status = props.status as UpdateResponse<Api.TeacherClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof TeacherViewModel] &&
-      props.errors[name as keyof TeacherViewModel]
-    ) {
-      response += props.errors[name as keyof TeacherViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('birthday')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Birthday
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="birthday"
-            className={
-              errorExistForField('birthday')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('birthday') && (
-            <small className="text-danger">{errorsForField('birthday')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('email')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Email
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="email"
-            name="email"
-            className={
-              errorExistForField('email')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('email') && (
-            <small className="text-danger">{errorsForField('email')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('firstName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          First Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="firstName"
-            className={
-              errorExistForField('firstName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('firstName') && (
-            <small className="text-danger">{errorsForField('firstName')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('lastName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Last Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="lastName"
-            className={
-              errorExistForField('lastName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('lastName') && (
-            <small className="text-danger">{errorsForField('lastName')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('phone')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Phone
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="tel"
-            name="phone"
-            className={
-              errorExistForField('phone')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('phone') && (
-            <small className="text-danger">{errorsForField('phone')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('userId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          UserId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="number"
-            name="userId"
-            className={
-              errorExistForField('userId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('userId') && (
-            <small className="text-danger">{errorsForField('userId')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const TeacherEdit = withFormik<Props, TeacherViewModel>({
-  mapPropsToValues: props => {
-    let response = new TeacherViewModel();
-    response.setProperties(
-      props.model!.birthday,
-      props.model!.email,
-      props.model!.firstName,
-      props.model!.id,
-      props.model!.lastName,
-      props.model!.phone,
-      props.model!.userId
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<TeacherViewModel> = {};
-
-    if (values.birthday == undefined) {
-      errors.birthday = 'Required';
-    }
-    if (values.email == '') {
-      errors.email = 'Required';
-    }
-    if (values.firstName == '') {
-      errors.firstName = 'Required';
-    }
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-    if (values.lastName == '') {
-      errors.lastName = 'Required';
-    }
-    if (values.userId == 0) {
-      errors.userId = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new TeacherMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Teachers + '/' + values.id,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.TeacherClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'TeacherEdit',
-})(TeacherEditDisplay);
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import TeacherViewModel from './teacherViewModel';
+import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface TeacherEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface TeacherEditComponentState {
@@ -314,21 +23,23 @@ interface TeacherEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class TeacherEditComponent extends React.Component<
+class TeacherEditComponent extends React.Component<
   TeacherEditComponentProps,
   TeacherEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new TeacherViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -358,6 +69,8 @@ export default class TeacherEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -370,21 +83,140 @@ export default class TeacherEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as TeacherViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:TeacherViewModel) =>
+  {  
+    let mapper = new TeacherMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Teachers + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.TeacherClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <TeacherEdit model={this.state.model} />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='birthday'>birthday</label>
+              <br />             
+{getFieldDecorator('birthday', {
+              rules:[],
+              })
+              ( <DatePicker placeholder={"birthday"} id={"birthday"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='email'>email</label>
+              <br />             
+{getFieldDecorator('email', {
+              rules:[],
+              })
+              ( <Input placeholder={"email"} id={"email"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='firstName'>First Name</label>
+              <br />             
+{getFieldDecorator('firstName', {
+              rules:[],
+              })
+              ( <Input placeholder={"First Name"} id={"firstName"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='lastName'>Last Name</label>
+              <br />             
+{getFieldDecorator('lastName', {
+              rules:[],
+              })
+              ( <Input placeholder={"Last Name"} id={"lastName"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='phone'>phone</label>
+              <br />             
+{getFieldDecorator('phone', {
+              rules:[],
+              })
+              ( <InputNumber placeholder={"phone"} id={"phone"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='userId'>userId</label>
+              <br />             
+{getFieldDecorator('userId', {
+              rules:[],
+              })
+              ( <InputNumber placeholder={"userId"} id={"userId"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedTeacherEditComponent = Form.create({ name: 'Teacher Edit' })(TeacherEditComponent);
 
 /*<Codenesium>
-    <Hash>d4e39cc22f0dcf2931eeda345db74924</Hash>
+    <Hash>327c0c447d0f6d94c30c0600f6bd0af1</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Constants } from '../constants';
-
+import { Alert } from 'antd'
 
 interface DashboardComponentProps{
 }
@@ -25,7 +25,6 @@ export default class Dashboard extends React.Component<DashboardComponentProps, 
     })
     .then(
       resp => {
-
         console.log(resp);
         this.setState({connecting:false, connected:true});
 
@@ -45,25 +44,20 @@ export default class Dashboard extends React.Component<DashboardComponentProps, 
   render() {
       let alert:JSX.Element = <div></div>;
       if(this.state.connecting){
-        alert = <div>
-                 <div className="alert alert-primary">Connecting...</div>
-               </div>;
+        alert = <Alert message='Connecting...' type='info' />;
       }
       else if(this.state.connected){
-        alert = <div>
-                 <div className="alert alert-success">Connected...</div>
-               </div>;
+        alert = <Alert message='Connected...' type='success' />;
       }
       else {
-        alert = <div>
-                  <div className="alert alert-danger">Unable to connect to API...  <button className="btn btn-primary" onClick={(e) => this.testConnection()}>Test Connection</button></div>
-                </div>;
+        alert = <Alert message='Unable to connect to API...' type='warning' />;
       }
 
       return <div>
         {alert}
-        <div>API Health Endpoint : <a target="_blank" href={Constants.ApiHealthEndpoint}>{Constants.ApiHealthEndpoint}</a></div>
-        <div>Swagger Endpoint : <a target="_blank" href={Constants.SwaggerEndpoint}>{Constants.SwaggerEndpoint}</a></div>
+        <br />
+        <div>API Health Endpoint : <a target='_blank' href={Constants.ApiHealthEndpoint}>{Constants.ApiHealthEndpoint}</a></div>
+        <div>Swagger Endpoint : <a target='_blank' href={Constants.SwaggerEndpoint}>{Constants.SwaggerEndpoint}</a></div>
       </div>;
   }
 }

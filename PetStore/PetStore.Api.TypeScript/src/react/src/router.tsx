@@ -1,32 +1,33 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
-import { App } from './app';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
-import BreedCreateComponent from './components/breed/breedCreateForm';
-import BreedDetailComponent from './components/breed/breedDetailForm';
-import BreedEditComponent from './components/breed/breedEditForm';
-import BreedSearchComponent from './components/breed/breedSearchForm';
-import PaymentTypeCreateComponent from './components/paymentType/paymentTypeCreateForm';
-import PaymentTypeDetailComponent from './components/paymentType/paymentTypeDetailForm';
-import PaymentTypeEditComponent from './components/paymentType/paymentTypeEditForm';
-import PaymentTypeSearchComponent from './components/paymentType/paymentTypeSearchForm';
-import PenCreateComponent from './components/pen/penCreateForm';
-import PenDetailComponent from './components/pen/penDetailForm';
-import PenEditComponent from './components/pen/penEditForm';
-import PenSearchComponent from './components/pen/penSearchForm';
-import PetCreateComponent from './components/pet/petCreateForm';
-import PetDetailComponent from './components/pet/petDetailForm';
-import PetEditComponent from './components/pet/petEditForm';
-import PetSearchComponent from './components/pet/petSearchForm';
-import SaleCreateComponent from './components/sale/saleCreateForm';
-import SaleDetailComponent from './components/sale/saleDetailForm';
-import SaleEditComponent from './components/sale/saleEditForm';
-import SaleSearchComponent from './components/sale/saleSearchForm';
-import SpeciesCreateComponent from './components/species/speciesCreateForm';
-import SpeciesDetailComponent from './components/species/speciesDetailForm';
-import SpeciesEditComponent from './components/species/speciesEditForm';
-import SpeciesSearchComponent from './components/species/speciesSearchForm';
+import { wrapperHeader } from './components/header';
+import { ClientRoutes, Constants } from './constants';
+import { WrappedBreedCreateComponent } from './components/breed/breedCreateForm';
+import { WrappedBreedDetailComponent } from './components/breed/breedDetailForm';
+import { WrappedBreedEditComponent } from './components/breed/breedEditForm';
+import { WrappedBreedSearchComponent } from './components/breed/breedSearchForm';
+import { WrappedPaymentTypeCreateComponent } from './components/paymentType/paymentTypeCreateForm';
+import { WrappedPaymentTypeDetailComponent } from './components/paymentType/paymentTypeDetailForm';
+import { WrappedPaymentTypeEditComponent } from './components/paymentType/paymentTypeEditForm';
+import { WrappedPaymentTypeSearchComponent } from './components/paymentType/paymentTypeSearchForm';
+import { WrappedPenCreateComponent } from './components/pen/penCreateForm';
+import { WrappedPenDetailComponent } from './components/pen/penDetailForm';
+import { WrappedPenEditComponent } from './components/pen/penEditForm';
+import { WrappedPenSearchComponent } from './components/pen/penSearchForm';
+import { WrappedPetCreateComponent } from './components/pet/petCreateForm';
+import { WrappedPetDetailComponent } from './components/pet/petDetailForm';
+import { WrappedPetEditComponent } from './components/pet/petEditForm';
+import { WrappedPetSearchComponent } from './components/pet/petSearchForm';
+import { WrappedSaleCreateComponent } from './components/sale/saleCreateForm';
+import { WrappedSaleDetailComponent } from './components/sale/saleDetailForm';
+import { WrappedSaleEditComponent } from './components/sale/saleEditForm';
+import { WrappedSaleSearchComponent } from './components/sale/saleSearchForm';
+import { WrappedSpeciesCreateComponent } from './components/species/speciesCreateForm';
+import { WrappedSpeciesDetailComponent } from './components/species/speciesDetailForm';
+import { WrappedSpeciesEditComponent } from './components/species/speciesEditForm';
+import { WrappedSpeciesSearchComponent } from './components/species/speciesSearchForm';
 
 const config = {
   oidc: {
@@ -47,52 +48,109 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}
       >
-        <div className="container-fluid">
-          <Route component={App} />
-          <SecureRoute
-            path="/protected"
-            component={() => '<div>secure route</div>'}
+        <SecureRoute
+          path="/protected"
+          component={() => '<div>secure route</div>'}
+        />
+        <Switch>
+          <Route exact path="/" component={wrapperHeader(Dashboard)} />
+          <Route
+            path={ClientRoutes.Breeds + '/create'}
+            component={wrapperHeader(WrappedBreedCreateComponent)}
           />
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/breeds/create" component={BreedCreateComponent} />
-            <Route path="/breeds/edit/:id" component={BreedEditComponent} />
-            <Route path="/breeds/:id" component={BreedDetailComponent} />
-            <Route path="/breeds" component={BreedSearchComponent} />
-            <Route
-              path="/paymenttypes/create"
-              component={PaymentTypeCreateComponent}
-            />
-            <Route
-              path="/paymenttypes/edit/:id"
-              component={PaymentTypeEditComponent}
-            />
-            <Route
-              path="/paymenttypes/:id"
-              component={PaymentTypeDetailComponent}
-            />
-            <Route
-              path="/paymenttypes"
-              component={PaymentTypeSearchComponent}
-            />
-            <Route path="/pens/create" component={PenCreateComponent} />
-            <Route path="/pens/edit/:id" component={PenEditComponent} />
-            <Route path="/pens/:id" component={PenDetailComponent} />
-            <Route path="/pens" component={PenSearchComponent} />
-            <Route path="/pets/create" component={PetCreateComponent} />
-            <Route path="/pets/edit/:id" component={PetEditComponent} />
-            <Route path="/pets/:id" component={PetDetailComponent} />
-            <Route path="/pets" component={PetSearchComponent} />
-            <Route path="/sales/create" component={SaleCreateComponent} />
-            <Route path="/sales/edit/:id" component={SaleEditComponent} />
-            <Route path="/sales/:id" component={SaleDetailComponent} />
-            <Route path="/sales" component={SaleSearchComponent} />
-            <Route path="/species/create" component={SpeciesCreateComponent} />
-            <Route path="/species/edit/:id" component={SpeciesEditComponent} />
-            <Route path="/species/:id" component={SpeciesDetailComponent} />
-            <Route path="/species" component={SpeciesSearchComponent} />
-          </Switch>
-        </div>
+          <Route
+            path={ClientRoutes.Breeds + '/edit/:id'}
+            component={wrapperHeader(WrappedBreedEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Breeds + '/:id'}
+            component={wrapperHeader(WrappedBreedDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Breeds}
+            component={wrapperHeader(WrappedBreedSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.PaymentTypes + '/create'}
+            component={wrapperHeader(WrappedPaymentTypeCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.PaymentTypes + '/edit/:id'}
+            component={wrapperHeader(WrappedPaymentTypeEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.PaymentTypes + '/:id'}
+            component={wrapperHeader(WrappedPaymentTypeDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.PaymentTypes}
+            component={wrapperHeader(WrappedPaymentTypeSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pens + '/create'}
+            component={wrapperHeader(WrappedPenCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pens + '/edit/:id'}
+            component={wrapperHeader(WrappedPenEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pens + '/:id'}
+            component={wrapperHeader(WrappedPenDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pens}
+            component={wrapperHeader(WrappedPenSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pets + '/create'}
+            component={wrapperHeader(WrappedPetCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pets + '/edit/:id'}
+            component={wrapperHeader(WrappedPetEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pets + '/:id'}
+            component={wrapperHeader(WrappedPetDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Pets}
+            component={wrapperHeader(WrappedPetSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales + '/create'}
+            component={wrapperHeader(WrappedSaleCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales + '/edit/:id'}
+            component={wrapperHeader(WrappedSaleEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales + '/:id'}
+            component={wrapperHeader(WrappedSaleDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales}
+            component={wrapperHeader(WrappedSaleSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Species + '/create'}
+            component={wrapperHeader(WrappedSpeciesCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Species + '/edit/:id'}
+            component={wrapperHeader(WrappedSpeciesEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Species + '/:id'}
+            component={wrapperHeader(WrappedSpeciesDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Species}
+            component={wrapperHeader(WrappedSpeciesSearchComponent)}
+          />
+        </Switch>
       </Security>
     </BrowserRouter>
   );
@@ -100,5 +158,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>ef13c50c9c35dfaf2cf748b993015759</Hash>
+    <Hash>c8f4c282f19a345658095824cec7d8e6</Hash>
 </Codenesium>*/

@@ -1,53 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import SpaceFeatureMapper from './spaceFeatureMapper';
 import SpaceFeatureViewModel from './spaceFeatureViewModel';
-
-interface Props {
-  history: any;
-  model?: SpaceFeatureViewModel;
-}
-
-const SpaceFeatureDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.SpaceFeatures + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface SpaceFeatureDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface SpaceFeatureDetailComponentState {
@@ -58,18 +23,22 @@ interface SpaceFeatureDetailComponentState {
   errorMessage: string;
 }
 
-export default class SpaceFeatureDetailComponent extends React.Component<
-  SpaceFeatureDetailComponentProps,
-  SpaceFeatureDetailComponentState
+class SpaceFeatureDetailComponent extends React.Component<
+SpaceFeatureDetailComponentProps,
+SpaceFeatureDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new SpaceFeatureViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.SpaceFeatures + '/edit/' + this.state.model!.id);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -89,9 +58,9 @@ export default class SpaceFeatureDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.SpaceFeatureClientResponseModel;
 
-          let mapper = new SpaceFeatureMapper();
-
           console.log(response);
+
+          let mapper = new SpaceFeatureMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -113,17 +82,36 @@ export default class SpaceFeatureDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <SpaceFeatureDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<div>name</div>
+							<div>{this.state.model!.name}</div>
+						 </div>
+					   		  </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -131,7 +119,10 @@ export default class SpaceFeatureDetailComponent extends React.Component<
   }
 }
 
+export const WrappedSpaceFeatureDetailComponent = Form.create({ name: 'SpaceFeature Detail' })(
+  SpaceFeatureDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>0a6632bc4a16703179e2e03b53fbc925</Hash>
+    <Hash>2262ee7ca0b4eba29dd41aed88cec6b1</Hash>
 </Codenesium>*/

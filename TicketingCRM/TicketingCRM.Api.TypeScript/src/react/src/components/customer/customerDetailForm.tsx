@@ -1,71 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
-import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
 import CustomerViewModel from './customerViewModel';
-
-interface Props {
-  history: any;
-  model?: CustomerViewModel;
-}
-
-const CustomerDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Customers + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="email" className={'col-sm-2 col-form-label'}>
-          Email
-        </label>
-        <div className="col-sm-12">{String(model.model!.email)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
-          FirstName
-        </label>
-        <div className="col-sm-12">{String(model.model!.firstName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
-          LastName
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="phone" className={'col-sm-2 col-form-label'}>
-          Phone
-        </label>
-        <div className="col-sm-12">{String(model.model!.phone)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { Alert } from 'antd';
 
 interface CustomerDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface CustomerDetailComponentState {
@@ -76,17 +23,23 @@ interface CustomerDetailComponentState {
   errorMessage: string;
 }
 
-export default class CustomerDetailComponent extends React.Component<
+class CustomerDetailComponent extends React.Component<
   CustomerDetailComponentProps,
   CustomerDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new CustomerViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Customers + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -107,9 +60,9 @@ export default class CustomerDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.CustomerClientResponseModel;
 
-          let mapper = new CustomerMapper();
-
           console.log(response);
+
+          let mapper = new CustomerMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -131,17 +84,47 @@ export default class CustomerDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
       return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
     } else if (this.state.loaded) {
       return (
-        <CustomerDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <div>email</div>
+              <div>{this.state.model!.email}</div>
+            </div>
+            <div>
+              <div>firstName</div>
+              <div>{this.state.model!.firstName}</div>
+            </div>
+            <div>
+              <div>lastName</div>
+              <div>{this.state.model!.lastName}</div>
+            </div>
+            <div>
+              <div>phone</div>
+              <div>{this.state.model!.phone}</div>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -149,7 +132,11 @@ export default class CustomerDetailComponent extends React.Component<
   }
 }
 
+export const WrappedCustomerDetailComponent = Form.create({
+  name: 'Customer Detail',
+})(CustomerDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>07d503a6ed3a636d234c01b83e89c979</Hash>
+    <Hash>9d5c2dc6f5dd63708b33bdb84bf5ea76</Hash>
 </Codenesium>*/

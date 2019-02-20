@@ -1,20 +1,21 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
-import { App } from './app';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
-import BucketCreateComponent from './components/bucket/bucketCreateForm';
-import BucketDetailComponent from './components/bucket/bucketDetailForm';
-import BucketEditComponent from './components/bucket/bucketEditForm';
-import BucketSearchComponent from './components/bucket/bucketSearchForm';
-import FileCreateComponent from './components/file/fileCreateForm';
-import FileDetailComponent from './components/file/fileDetailForm';
-import FileEditComponent from './components/file/fileEditForm';
-import FileSearchComponent from './components/file/fileSearchForm';
-import FileTypeCreateComponent from './components/fileType/fileTypeCreateForm';
-import FileTypeDetailComponent from './components/fileType/fileTypeDetailForm';
-import FileTypeEditComponent from './components/fileType/fileTypeEditForm';
-import FileTypeSearchComponent from './components/fileType/fileTypeSearchForm';
+import { wrapperHeader } from './components/header';
+import { ClientRoutes, Constants } from './constants';
+import { WrappedBucketCreateComponent } from './components/bucket/bucketCreateForm';
+import { WrappedBucketDetailComponent } from './components/bucket/bucketDetailForm';
+import { WrappedBucketEditComponent } from './components/bucket/bucketEditForm';
+import { WrappedBucketSearchComponent } from './components/bucket/bucketSearchForm';
+import { WrappedFileCreateComponent } from './components/file/fileCreateForm';
+import { WrappedFileDetailComponent } from './components/file/fileDetailForm';
+import { WrappedFileEditComponent } from './components/file/fileEditForm';
+import { WrappedFileSearchComponent } from './components/file/fileSearchForm';
+import { WrappedFileTypeCreateComponent } from './components/fileType/fileTypeCreateForm';
+import { WrappedFileTypeDetailComponent } from './components/fileType/fileTypeDetailForm';
+import { WrappedFileTypeEditComponent } from './components/fileType/fileTypeEditForm';
+import { WrappedFileTypeSearchComponent } from './components/fileType/fileTypeSearchForm';
 
 const config = {
   oidc: {
@@ -35,34 +36,61 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}
       >
-        <div className="container-fluid">
-          <Route component={App} />
-          <SecureRoute
-            path="/protected"
-            component={() => '<div>secure route</div>'}
+        <SecureRoute
+          path="/protected"
+          component={() => '<div>secure route</div>'}
+        />
+        <Switch>
+          <Route exact path="/" component={wrapperHeader(Dashboard)} />
+          <Route
+            path={ClientRoutes.Buckets + '/create'}
+            component={wrapperHeader(WrappedBucketCreateComponent)}
           />
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/buckets/create" component={BucketCreateComponent} />
-            <Route path="/buckets/edit/:id" component={BucketEditComponent} />
-            <Route path="/buckets/:id" component={BucketDetailComponent} />
-            <Route path="/buckets" component={BucketSearchComponent} />
-            <Route path="/files/create" component={FileCreateComponent} />
-            <Route path="/files/edit/:id" component={FileEditComponent} />
-            <Route path="/files/:id" component={FileDetailComponent} />
-            <Route path="/files" component={FileSearchComponent} />
-            <Route
-              path="/filetypes/create"
-              component={FileTypeCreateComponent}
-            />
-            <Route
-              path="/filetypes/edit/:id"
-              component={FileTypeEditComponent}
-            />
-            <Route path="/filetypes/:id" component={FileTypeDetailComponent} />
-            <Route path="/filetypes" component={FileTypeSearchComponent} />
-          </Switch>
-        </div>
+          <Route
+            path={ClientRoutes.Buckets + '/edit/:id'}
+            component={wrapperHeader(WrappedBucketEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Buckets + '/:id'}
+            component={wrapperHeader(WrappedBucketDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Buckets}
+            component={wrapperHeader(WrappedBucketSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Files + '/create'}
+            component={wrapperHeader(WrappedFileCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Files + '/edit/:id'}
+            component={wrapperHeader(WrappedFileEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Files + '/:id'}
+            component={wrapperHeader(WrappedFileDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Files}
+            component={wrapperHeader(WrappedFileSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.FileTypes + '/create'}
+            component={wrapperHeader(WrappedFileTypeCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.FileTypes + '/edit/:id'}
+            component={wrapperHeader(WrappedFileTypeEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.FileTypes + '/:id'}
+            component={wrapperHeader(WrappedFileTypeDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.FileTypes}
+            component={wrapperHeader(WrappedFileTypeSearchComponent)}
+          />
+        </Switch>
       </Security>
     </BrowserRouter>
   );
@@ -70,5 +98,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>6a13c1737da4f7e40a674e9af34d3eec</Hash>
+    <Hash>601eaad56d0f6325a469897b26d08cb4</Hash>
 </Codenesium>*/

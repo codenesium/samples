@@ -9,9 +9,13 @@ import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import SpaceViewModel from './spaceViewModel';
 import 'react-table/react-table.css';
+import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SpaceSearchComponentProps {
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface SpaceSearchComponentState {
@@ -154,43 +158,51 @@ export default class SpaceSearchComponent extends React.Component<
       if (this.state.deleteSubmitted) {
         if (this.state.deleteSuccess) {
           errorResponse = (
-            <div className="alert alert-success">
-              {this.state.deleteResponse}
-            </div>
+            <Alert
+              message={this.state.deleteResponse}
+              type="success"
+              style={{ marginBottom: '25px' }}
+            />
           );
         } else {
           errorResponse = (
-            <div className="alert alert-danger">
-              {this.state.deleteResponse}
-            </div>
+            <Alert
+              message={this.state.deleteResponse}
+              type="error"
+              style={{ marginBottom: '25px' }}
+            />
           );
         }
       }
+
       return (
         <div>
           {errorResponse}
-          <form>
-            <div className="form-group row">
-              <div className="col-sm-4" />
-              <div className="col-sm-4">
-                <input
-                  name="search"
-                  className="form-control"
-                  placeholder={'Search'}
-                  value={this.state.searchValue}
-                  onChange={e => this.handleSearchChanged(e)}
-                />
-              </div>
-              <div className="col-sm-4">
-                <button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center search-create-button"
-                  onClick={e => this.handleCreateClick(e)}
-                >
-                  <i className="fas fa-plus" />
-                </button>
-              </div>
-            </div>
-          </form>
+          <Row>
+            <Col span={8} />
+            <Col span={8}>
+              <Input
+                placeholder={'Search'}
+                id={'search'}
+                onChange={(e: any) => {
+                  this.handleSearchChanged(e);
+                }}
+              />
+            </Col>
+            <Col span={8}>
+              <Button
+                style={{ float: 'right' }}
+                type="primary"
+                onClick={(e: any) => {
+                  this.handleCreateClick(e);
+                }}
+              >
+                +
+              </Button>
+            </Col>
+          </Row>
+          <br />
+          <br />
           <ReactTable
             data={this.state.filteredRecords}
             columns={[
@@ -215,9 +227,9 @@ export default class SpaceSearchComponent extends React.Component<
                     Header: 'Actions',
                     Cell: row => (
                       <div>
-                        <button
-                          className="btn btn-sm"
-                          onClick={e => {
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as Api.SpaceClientResponseModel
@@ -225,11 +237,11 @@ export default class SpaceSearchComponent extends React.Component<
                           }}
                         >
                           <i className="fas fa-search" />
-                        </button>
+                        </Button>
                         &nbsp;
-                        <button
-                          className="btn btn-primary btn-sm"
-                          onClick={e => {
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as Api.SpaceClientResponseModel
@@ -237,11 +249,11 @@ export default class SpaceSearchComponent extends React.Component<
                           }}
                         >
                           <i className="fas fa-edit" />
-                        </button>
+                        </Button>
                         &nbsp;
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={e => {
+                        <Button
+                          type="danger"
+                          onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
                               row.original as Api.SpaceClientResponseModel
@@ -249,7 +261,7 @@ export default class SpaceSearchComponent extends React.Component<
                           }}
                         >
                           <i className="far fa-trash-alt" />
-                        </button>
+                        </Button>
                       </div>
                     ),
                   },
@@ -265,7 +277,11 @@ export default class SpaceSearchComponent extends React.Component<
   }
 }
 
+export const WrappedSpaceSearchComponent = Form.create({
+  name: 'Space Search',
+})(SpaceSearchComponent);
+
 
 /*<Codenesium>
-    <Hash>846cf2a837b3c7a6f836400e234188ee</Hash>
+    <Hash>ab9bce0505ff87447eff51e166dc87b6</Hash>
 </Codenesium>*/

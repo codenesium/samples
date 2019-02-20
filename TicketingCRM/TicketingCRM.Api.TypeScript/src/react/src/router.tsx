@@ -1,60 +1,61 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
-import { App } from './app';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
-import AdminCreateComponent from './components/admin/adminCreateForm';
-import AdminDetailComponent from './components/admin/adminDetailForm';
-import AdminEditComponent from './components/admin/adminEditForm';
-import AdminSearchComponent from './components/admin/adminSearchForm';
-import CityCreateComponent from './components/city/cityCreateForm';
-import CityDetailComponent from './components/city/cityDetailForm';
-import CityEditComponent from './components/city/cityEditForm';
-import CitySearchComponent from './components/city/citySearchForm';
-import CountryCreateComponent from './components/country/countryCreateForm';
-import CountryDetailComponent from './components/country/countryDetailForm';
-import CountryEditComponent from './components/country/countryEditForm';
-import CountrySearchComponent from './components/country/countrySearchForm';
-import CustomerCreateComponent from './components/customer/customerCreateForm';
-import CustomerDetailComponent from './components/customer/customerDetailForm';
-import CustomerEditComponent from './components/customer/customerEditForm';
-import CustomerSearchComponent from './components/customer/customerSearchForm';
-import EventCreateComponent from './components/event/eventCreateForm';
-import EventDetailComponent from './components/event/eventDetailForm';
-import EventEditComponent from './components/event/eventEditForm';
-import EventSearchComponent from './components/event/eventSearchForm';
-import ProvinceCreateComponent from './components/province/provinceCreateForm';
-import ProvinceDetailComponent from './components/province/provinceDetailForm';
-import ProvinceEditComponent from './components/province/provinceEditForm';
-import ProvinceSearchComponent from './components/province/provinceSearchForm';
-import SaleCreateComponent from './components/sale/saleCreateForm';
-import SaleDetailComponent from './components/sale/saleDetailForm';
-import SaleEditComponent from './components/sale/saleEditForm';
-import SaleSearchComponent from './components/sale/saleSearchForm';
-import SaleTicketCreateComponent from './components/saleTicket/saleTicketCreateForm';
-import SaleTicketDetailComponent from './components/saleTicket/saleTicketDetailForm';
-import SaleTicketEditComponent from './components/saleTicket/saleTicketEditForm';
-import SaleTicketSearchComponent from './components/saleTicket/saleTicketSearchForm';
-import TicketCreateComponent from './components/ticket/ticketCreateForm';
-import TicketDetailComponent from './components/ticket/ticketDetailForm';
-import TicketEditComponent from './components/ticket/ticketEditForm';
-import TicketSearchComponent from './components/ticket/ticketSearchForm';
-import TicketStatusCreateComponent from './components/ticketStatus/ticketStatusCreateForm';
-import TicketStatusDetailComponent from './components/ticketStatus/ticketStatusDetailForm';
-import TicketStatusEditComponent from './components/ticketStatus/ticketStatusEditForm';
-import TicketStatusSearchComponent from './components/ticketStatus/ticketStatusSearchForm';
-import TransactionCreateComponent from './components/transaction/transactionCreateForm';
-import TransactionDetailComponent from './components/transaction/transactionDetailForm';
-import TransactionEditComponent from './components/transaction/transactionEditForm';
-import TransactionSearchComponent from './components/transaction/transactionSearchForm';
-import TransactionStatusCreateComponent from './components/transactionStatus/transactionStatusCreateForm';
-import TransactionStatusDetailComponent from './components/transactionStatus/transactionStatusDetailForm';
-import TransactionStatusEditComponent from './components/transactionStatus/transactionStatusEditForm';
-import TransactionStatusSearchComponent from './components/transactionStatus/transactionStatusSearchForm';
-import VenueCreateComponent from './components/venue/venueCreateForm';
-import VenueDetailComponent from './components/venue/venueDetailForm';
-import VenueEditComponent from './components/venue/venueEditForm';
-import VenueSearchComponent from './components/venue/venueSearchForm';
+import { wrapperHeader } from './components/header';
+import { ClientRoutes, Constants } from './constants';
+import { WrappedAdminCreateComponent } from './components/admin/adminCreateForm';
+import { WrappedAdminDetailComponent } from './components/admin/adminDetailForm';
+import { WrappedAdminEditComponent } from './components/admin/adminEditForm';
+import { WrappedAdminSearchComponent } from './components/admin/adminSearchForm';
+import { WrappedCityCreateComponent } from './components/city/cityCreateForm';
+import { WrappedCityDetailComponent } from './components/city/cityDetailForm';
+import { WrappedCityEditComponent } from './components/city/cityEditForm';
+import { WrappedCitySearchComponent } from './components/city/citySearchForm';
+import { WrappedCountryCreateComponent } from './components/country/countryCreateForm';
+import { WrappedCountryDetailComponent } from './components/country/countryDetailForm';
+import { WrappedCountryEditComponent } from './components/country/countryEditForm';
+import { WrappedCountrySearchComponent } from './components/country/countrySearchForm';
+import { WrappedCustomerCreateComponent } from './components/customer/customerCreateForm';
+import { WrappedCustomerDetailComponent } from './components/customer/customerDetailForm';
+import { WrappedCustomerEditComponent } from './components/customer/customerEditForm';
+import { WrappedCustomerSearchComponent } from './components/customer/customerSearchForm';
+import { WrappedEventCreateComponent } from './components/event/eventCreateForm';
+import { WrappedEventDetailComponent } from './components/event/eventDetailForm';
+import { WrappedEventEditComponent } from './components/event/eventEditForm';
+import { WrappedEventSearchComponent } from './components/event/eventSearchForm';
+import { WrappedProvinceCreateComponent } from './components/province/provinceCreateForm';
+import { WrappedProvinceDetailComponent } from './components/province/provinceDetailForm';
+import { WrappedProvinceEditComponent } from './components/province/provinceEditForm';
+import { WrappedProvinceSearchComponent } from './components/province/provinceSearchForm';
+import { WrappedSaleCreateComponent } from './components/sale/saleCreateForm';
+import { WrappedSaleDetailComponent } from './components/sale/saleDetailForm';
+import { WrappedSaleEditComponent } from './components/sale/saleEditForm';
+import { WrappedSaleSearchComponent } from './components/sale/saleSearchForm';
+import { WrappedSaleTicketCreateComponent } from './components/saleTicket/saleTicketCreateForm';
+import { WrappedSaleTicketDetailComponent } from './components/saleTicket/saleTicketDetailForm';
+import { WrappedSaleTicketEditComponent } from './components/saleTicket/saleTicketEditForm';
+import { WrappedSaleTicketSearchComponent } from './components/saleTicket/saleTicketSearchForm';
+import { WrappedTicketCreateComponent } from './components/ticket/ticketCreateForm';
+import { WrappedTicketDetailComponent } from './components/ticket/ticketDetailForm';
+import { WrappedTicketEditComponent } from './components/ticket/ticketEditForm';
+import { WrappedTicketSearchComponent } from './components/ticket/ticketSearchForm';
+import { WrappedTicketStatusCreateComponent } from './components/ticketStatus/ticketStatusCreateForm';
+import { WrappedTicketStatusDetailComponent } from './components/ticketStatus/ticketStatusDetailForm';
+import { WrappedTicketStatusEditComponent } from './components/ticketStatus/ticketStatusEditForm';
+import { WrappedTicketStatusSearchComponent } from './components/ticketStatus/ticketStatusSearchForm';
+import { WrappedTransactionCreateComponent } from './components/transaction/transactionCreateForm';
+import { WrappedTransactionDetailComponent } from './components/transaction/transactionDetailForm';
+import { WrappedTransactionEditComponent } from './components/transaction/transactionEditForm';
+import { WrappedTransactionSearchComponent } from './components/transaction/transactionSearchForm';
+import { WrappedTransactionStatusCreateComponent } from './components/transactionStatus/transactionStatusCreateForm';
+import { WrappedTransactionStatusDetailComponent } from './components/transactionStatus/transactionStatusDetailForm';
+import { WrappedTransactionStatusEditComponent } from './components/transactionStatus/transactionStatusEditForm';
+import { WrappedTransactionStatusSearchComponent } from './components/transactionStatus/transactionStatusSearchForm';
+import { WrappedVenueCreateComponent } from './components/venue/venueCreateForm';
+import { WrappedVenueDetailComponent } from './components/venue/venueDetailForm';
+import { WrappedVenueEditComponent } from './components/venue/venueEditForm';
+import { WrappedVenueSearchComponent } from './components/venue/venueSearchForm';
 
 const config = {
   oidc: {
@@ -75,131 +76,221 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}
       >
-        <div className="container-fluid">
-          <Route component={App} />
-          <SecureRoute
-            path="/protected"
-            component={() => '<div>secure route</div>'}
+        <SecureRoute
+          path="/protected"
+          component={() => '<div>secure route</div>'}
+        />
+        <Switch>
+          <Route exact path="/" component={wrapperHeader(Dashboard)} />
+          <Route
+            path={ClientRoutes.Admins + '/create'}
+            component={wrapperHeader(WrappedAdminCreateComponent)}
           />
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/admins/create" component={AdminCreateComponent} />
-            <Route path="/admins/edit/:id" component={AdminEditComponent} />
-            <Route path="/admins/:id" component={AdminDetailComponent} />
-            <Route path="/admins" component={AdminSearchComponent} />
-            <Route path="/cities/create" component={CityCreateComponent} />
-            <Route path="/cities/edit/:id" component={CityEditComponent} />
-            <Route path="/cities/:id" component={CityDetailComponent} />
-            <Route path="/cities" component={CitySearchComponent} />
-            <Route
-              path="/countries/create"
-              component={CountryCreateComponent}
-            />
-            <Route
-              path="/countries/edit/:id"
-              component={CountryEditComponent}
-            />
-            <Route path="/countries/:id" component={CountryDetailComponent} />
-            <Route path="/countries" component={CountrySearchComponent} />
-            <Route
-              path="/customers/create"
-              component={CustomerCreateComponent}
-            />
-            <Route
-              path="/customers/edit/:id"
-              component={CustomerEditComponent}
-            />
-            <Route path="/customers/:id" component={CustomerDetailComponent} />
-            <Route path="/customers" component={CustomerSearchComponent} />
-            <Route path="/events/create" component={EventCreateComponent} />
-            <Route path="/events/edit/:id" component={EventEditComponent} />
-            <Route path="/events/:id" component={EventDetailComponent} />
-            <Route path="/events" component={EventSearchComponent} />
-            <Route
-              path="/provinces/create"
-              component={ProvinceCreateComponent}
-            />
-            <Route
-              path="/provinces/edit/:id"
-              component={ProvinceEditComponent}
-            />
-            <Route path="/provinces/:id" component={ProvinceDetailComponent} />
-            <Route path="/provinces" component={ProvinceSearchComponent} />
-            <Route path="/sales/create" component={SaleCreateComponent} />
-            <Route path="/sales/edit/:id" component={SaleEditComponent} />
-            <Route path="/sales/:id" component={SaleDetailComponent} />
-            <Route path="/sales" component={SaleSearchComponent} />
-            <Route
-              path="/saletickets/create"
-              component={SaleTicketCreateComponent}
-            />
-            <Route
-              path="/saletickets/edit/:id"
-              component={SaleTicketEditComponent}
-            />
-            <Route
-              path="/saletickets/:id"
-              component={SaleTicketDetailComponent}
-            />
-            <Route path="/saletickets" component={SaleTicketSearchComponent} />
-            <Route path="/tickets/create" component={TicketCreateComponent} />
-            <Route path="/tickets/edit/:id" component={TicketEditComponent} />
-            <Route path="/tickets/:id" component={TicketDetailComponent} />
-            <Route path="/tickets" component={TicketSearchComponent} />
-            <Route
-              path="/ticketstatus/create"
-              component={TicketStatusCreateComponent}
-            />
-            <Route
-              path="/ticketstatus/edit/:id"
-              component={TicketStatusEditComponent}
-            />
-            <Route
-              path="/ticketstatus/:id"
-              component={TicketStatusDetailComponent}
-            />
-            <Route
-              path="/ticketstatus"
-              component={TicketStatusSearchComponent}
-            />
-            <Route
-              path="/transactions/create"
-              component={TransactionCreateComponent}
-            />
-            <Route
-              path="/transactions/edit/:id"
-              component={TransactionEditComponent}
-            />
-            <Route
-              path="/transactions/:id"
-              component={TransactionDetailComponent}
-            />
-            <Route
-              path="/transactions"
-              component={TransactionSearchComponent}
-            />
-            <Route
-              path="/transactionstatus/create"
-              component={TransactionStatusCreateComponent}
-            />
-            <Route
-              path="/transactionstatus/edit/:id"
-              component={TransactionStatusEditComponent}
-            />
-            <Route
-              path="/transactionstatus/:id"
-              component={TransactionStatusDetailComponent}
-            />
-            <Route
-              path="/transactionstatus"
-              component={TransactionStatusSearchComponent}
-            />
-            <Route path="/venues/create" component={VenueCreateComponent} />
-            <Route path="/venues/edit/:id" component={VenueEditComponent} />
-            <Route path="/venues/:id" component={VenueDetailComponent} />
-            <Route path="/venues" component={VenueSearchComponent} />
-          </Switch>
-        </div>
+          <Route
+            path={ClientRoutes.Admins + '/edit/:id'}
+            component={wrapperHeader(WrappedAdminEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Admins + '/:id'}
+            component={wrapperHeader(WrappedAdminDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Admins}
+            component={wrapperHeader(WrappedAdminSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Cities + '/create'}
+            component={wrapperHeader(WrappedCityCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Cities + '/edit/:id'}
+            component={wrapperHeader(WrappedCityEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Cities + '/:id'}
+            component={wrapperHeader(WrappedCityDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Cities}
+            component={wrapperHeader(WrappedCitySearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Countries + '/create'}
+            component={wrapperHeader(WrappedCountryCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Countries + '/edit/:id'}
+            component={wrapperHeader(WrappedCountryEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Countries + '/:id'}
+            component={wrapperHeader(WrappedCountryDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Countries}
+            component={wrapperHeader(WrappedCountrySearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Customers + '/create'}
+            component={wrapperHeader(WrappedCustomerCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Customers + '/edit/:id'}
+            component={wrapperHeader(WrappedCustomerEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Customers + '/:id'}
+            component={wrapperHeader(WrappedCustomerDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Customers}
+            component={wrapperHeader(WrappedCustomerSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events + '/create'}
+            component={wrapperHeader(WrappedEventCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events + '/edit/:id'}
+            component={wrapperHeader(WrappedEventEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events + '/:id'}
+            component={wrapperHeader(WrappedEventDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Events}
+            component={wrapperHeader(WrappedEventSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Provinces + '/create'}
+            component={wrapperHeader(WrappedProvinceCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Provinces + '/edit/:id'}
+            component={wrapperHeader(WrappedProvinceEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Provinces + '/:id'}
+            component={wrapperHeader(WrappedProvinceDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Provinces}
+            component={wrapperHeader(WrappedProvinceSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales + '/create'}
+            component={wrapperHeader(WrappedSaleCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales + '/edit/:id'}
+            component={wrapperHeader(WrappedSaleEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales + '/:id'}
+            component={wrapperHeader(WrappedSaleDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Sales}
+            component={wrapperHeader(WrappedSaleSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.SaleTickets + '/create'}
+            component={wrapperHeader(WrappedSaleTicketCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.SaleTickets + '/edit/:id'}
+            component={wrapperHeader(WrappedSaleTicketEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.SaleTickets + '/:id'}
+            component={wrapperHeader(WrappedSaleTicketDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.SaleTickets}
+            component={wrapperHeader(WrappedSaleTicketSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Tickets + '/create'}
+            component={wrapperHeader(WrappedTicketCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Tickets + '/edit/:id'}
+            component={wrapperHeader(WrappedTicketEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Tickets + '/:id'}
+            component={wrapperHeader(WrappedTicketDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Tickets}
+            component={wrapperHeader(WrappedTicketSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.TicketStatus + '/create'}
+            component={wrapperHeader(WrappedTicketStatusCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.TicketStatus + '/edit/:id'}
+            component={wrapperHeader(WrappedTicketStatusEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.TicketStatus + '/:id'}
+            component={wrapperHeader(WrappedTicketStatusDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.TicketStatus}
+            component={wrapperHeader(WrappedTicketStatusSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Transactions + '/create'}
+            component={wrapperHeader(WrappedTransactionCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Transactions + '/edit/:id'}
+            component={wrapperHeader(WrappedTransactionEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Transactions + '/:id'}
+            component={wrapperHeader(WrappedTransactionDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Transactions}
+            component={wrapperHeader(WrappedTransactionSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.TransactionStatus + '/create'}
+            component={wrapperHeader(WrappedTransactionStatusCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.TransactionStatus + '/edit/:id'}
+            component={wrapperHeader(WrappedTransactionStatusEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.TransactionStatus + '/:id'}
+            component={wrapperHeader(WrappedTransactionStatusDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.TransactionStatus}
+            component={wrapperHeader(WrappedTransactionStatusSearchComponent)}
+          />
+          <Route
+            path={ClientRoutes.Venues + '/create'}
+            component={wrapperHeader(WrappedVenueCreateComponent)}
+          />
+          <Route
+            path={ClientRoutes.Venues + '/edit/:id'}
+            component={wrapperHeader(WrappedVenueEditComponent)}
+          />
+          <Route
+            path={ClientRoutes.Venues + '/:id'}
+            component={wrapperHeader(WrappedVenueDetailComponent)}
+          />
+          <Route
+            path={ClientRoutes.Venues}
+            component={wrapperHeader(WrappedVenueSearchComponent)}
+          />
+        </Switch>
       </Security>
     </BrowserRouter>
   );
@@ -207,5 +298,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>d125252fa8bcf56af825ce36c011e6bc</Hash>
+    <Hash>f66320f5f7e57531437d2380fc9391e2</Hash>
 </Codenesium>*/

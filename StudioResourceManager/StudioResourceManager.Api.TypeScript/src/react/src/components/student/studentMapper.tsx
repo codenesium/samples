@@ -1,71 +1,43 @@
 import * as Api from '../../api/models';
-import StudentViewModel from './studentViewModel';
-import FamilyViewModel from '../family/familyViewModel';
-import UserViewModel from '../user/userViewModel';
-export default class StudentMapper {
-  mapApiResponseToViewModel(
-    dto: Api.StudentClientResponseModel
-  ): StudentViewModel {
-    let response = new StudentViewModel();
-    response.setProperties(
-      dto.birthday,
-      dto.email,
-      dto.emailRemindersEnabled,
-      dto.familyId,
-      dto.firstName,
-      dto.id,
-      dto.isAdult,
-      dto.lastName,
-      dto.phone,
-      dto.smsRemindersEnabled,
-      dto.userId
-    );
+import StudentViewModel from  './studentViewModel';
+	import FamilyViewModel from '../family/familyViewModel'
+		import UserViewModel from '../user/userViewModel'
+	export default class StudentMapper {
+    
+	mapApiResponseToViewModel(dto: Api.StudentClientResponseModel) : StudentViewModel 
+	{
+		let response = new StudentViewModel();
+		response.setProperties(dto.birthday,dto.email,dto.emailRemindersEnabled,dto.familyId,dto.firstName,dto.id,dto.isAdult,dto.lastName,dto.phone,dto.smsRemindersEnabled,dto.userId);
+		
+						if(dto.familyIdNavigation != null)
+				{
+				  response.familyIdNavigation = new FamilyViewModel();
+				  response.familyIdNavigation.setProperties(
+				  dto.familyIdNavigation.id,dto.familyIdNavigation.note,dto.familyIdNavigation.primaryContactEmail,dto.familyIdNavigation.primaryContactFirstName,dto.familyIdNavigation.primaryContactLastName,dto.familyIdNavigation.primaryContactPhone
+				  );
+				}
+							if(dto.userIdNavigation != null)
+				{
+				  response.userIdNavigation = new UserViewModel();
+				  response.userIdNavigation.setProperties(
+				  dto.userIdNavigation.id,dto.userIdNavigation.password,dto.userIdNavigation.username
+				  );
+				}
+					
 
-    if (dto.familyIdNavigation != null) {
-      response.familyIdNavigation = new FamilyViewModel();
-      response.familyIdNavigation.setProperties(
-        dto.familyIdNavigation.id,
-        dto.familyIdNavigation.note,
-        dto.familyIdNavigation.primaryContactEmail,
-        dto.familyIdNavigation.primaryContactFirstName,
-        dto.familyIdNavigation.primaryContactLastName,
-        dto.familyIdNavigation.primaryContactPhone
-      );
-    }
-    if (dto.userIdNavigation != null) {
-      response.userIdNavigation = new UserViewModel();
-      response.userIdNavigation.setProperties(
-        dto.userIdNavigation.id,
-        dto.userIdNavigation.password,
-        dto.userIdNavigation.username
-      );
-    }
+		
+		
+		return response;
+	}
 
-    return response;
-  }
-
-  mapViewModelToApiRequest(
-    model: StudentViewModel
-  ): Api.StudentClientRequestModel {
-    let response = new Api.StudentClientRequestModel();
-    response.setProperties(
-      model.birthday,
-      model.email,
-      model.emailRemindersEnabled,
-      model.familyId,
-      model.firstName,
-      model.id,
-      model.isAdult,
-      model.lastName,
-      model.phone,
-      model.smsRemindersEnabled,
-      model.userId
-    );
-    return response;
-  }
-}
-
+	mapViewModelToApiRequest(model: StudentViewModel) : Api.StudentClientRequestModel
+	{
+		let response = new Api.StudentClientRequestModel();
+		response.setProperties(model.birthday,model.email,model.emailRemindersEnabled,model.familyId,model.firstName,model.id,model.isAdult,model.lastName,model.phone,model.smsRemindersEnabled,model.userId);
+		return response;
+	}
+};
 
 /*<Codenesium>
-    <Hash>e85c036ed6f9473b6d97a0a9c691e4de</Hash>
+    <Hash>d516c0f12466f39880b210e9a980014e</Hash>
 </Codenesium>*/
