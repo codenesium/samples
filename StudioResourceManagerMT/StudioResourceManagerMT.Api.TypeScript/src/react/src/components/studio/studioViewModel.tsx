@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class StudioViewModel {
   address1: string;
   address2: string;
@@ -29,14 +31,14 @@ export default class StudioViewModel {
     website: string,
     zip: string
   ): void {
-    this.address1 = address1;
-    this.address2 = address2;
-    this.city = city;
-    this.id = id;
-    this.name = name;
-    this.province = province;
-    this.website = website;
-    this.zip = zip;
+    this.address1 = moment(address1, 'YYYY-MM-DD');
+    this.address2 = moment(address2, 'YYYY-MM-DD');
+    this.city = moment(city, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.province = moment(province, 'YYYY-MM-DD');
+    this.website = moment(website, 'YYYY-MM-DD');
+    this.zip = moment(zip, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -46,5 +48,5 @@ export default class StudioViewModel {
 
 
 /*<Codenesium>
-    <Hash>5fdd66d5c1b6b9df07a210a5d6c050b7</Hash>
+    <Hash>ec717fd3448323211c8df9bf937ba44b</Hash>
 </Codenesium>*/

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostHistoryTypeMapper from './postHistoryTypeMapper';
 import PostHistoryTypeViewModel from './postHistoryTypeViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostHistoryTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface PostHistoryTypeDetailComponentState {
 }
 
 class PostHistoryTypeDetailComponent extends React.Component<
-  PostHistoryTypeDetailComponentProps,
-  PostHistoryTypeDetailComponentState
+PostHistoryTypeDetailComponentProps,
+PostHistoryTypeDetailComponentState
 > {
   state = {
     model: new PostHistoryTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.PostHistoryTypes + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.PostHistoryTypes + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,31 +82,32 @@ class PostHistoryTypeDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <div>rwType</div>
-              <div>{this.state.model!.rwType}</div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Type</h3>
+							<p>{String(this.state.model!.rwType)}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -120,11 +117,10 @@ class PostHistoryTypeDetailComponent extends React.Component<
   }
 }
 
-export const WrappedPostHistoryTypeDetailComponent = Form.create({
-  name: 'PostHistoryType Detail',
-})(PostHistoryTypeDetailComponent);
-
+export const WrappedPostHistoryTypeDetailComponent = Form.create({ name: 'PostHistoryType Detail' })(
+  PostHistoryTypeDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>d128acc11ef281c6f6ede22a7bfd459d</Hash>
+    <Hash>2a4927169d9fb1819bc9862b334b05fa</Hash>
 </Codenesium>*/

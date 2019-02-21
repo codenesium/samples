@@ -1,15 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VoteMapper from './voteMapper';
 import VoteViewModel from './voteViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface VoteEditComponentProps {
   form:WrappedFormUtils;
@@ -141,7 +138,7 @@ class VoteEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } 
     else if (this.state.loaded) {
 
@@ -150,8 +147,9 @@ class VoteEditComponent extends React.Component<
             			<Form.Item>
               <label htmlFor='bountyAmount'>BountyAmount</label>
               <br />             
-{getFieldDecorator('bountyAmount', {
+              {getFieldDecorator('bountyAmount', {
               rules:[],
+              
               })
               ( <Input placeholder={"BountyAmount"} id={"bountyAmount"} /> )}
               </Form.Item>
@@ -159,8 +157,9 @@ class VoteEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='creationDate'>CreationDate</label>
               <br />             
-{getFieldDecorator('creationDate', {
+              {getFieldDecorator('creationDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"CreationDate"} id={"creationDate"} /> )}
               </Form.Item>
@@ -168,8 +167,9 @@ class VoteEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='postId'>PostId</label>
               <br />             
-{getFieldDecorator('postId', {
+              {getFieldDecorator('postId', {
               rules:[],
+              
               })
               ( <Input placeholder={"PostId"} id={"postId"} /> )}
               </Form.Item>
@@ -177,8 +177,9 @@ class VoteEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='userId'>UserId</label>
               <br />             
-{getFieldDecorator('userId', {
+              {getFieldDecorator('userId', {
               rules:[],
+              
               })
               ( <Input placeholder={"UserId"} id={"userId"} /> )}
               </Form.Item>
@@ -186,8 +187,9 @@ class VoteEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='voteTypeId'>VoteTypeId</label>
               <br />             
-{getFieldDecorator('voteTypeId', {
+              {getFieldDecorator('voteTypeId', {
               rules:[],
+              
               })
               ( <Input placeholder={"VoteTypeId"} id={"voteTypeId"} /> )}
               </Form.Item>
@@ -209,5 +211,5 @@ class VoteEditComponent extends React.Component<
 export const WrappedVoteEditComponent = Form.create({ name: 'Vote Edit' })(VoteEditComponent);
 
 /*<Codenesium>
-    <Hash>b25f46ea28865218977690477db110c3</Hash>
+    <Hash>6ad2d5e10e32073af368b42604532d60</Hash>
 </Codenesium>*/

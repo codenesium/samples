@@ -1,50 +1,47 @@
+import moment from 'moment'
+
+
 export default class StateProvinceViewModel {
-  countryRegionCode: string;
-  isOnlyStateProvinceFlag: boolean;
-  modifiedDate: any;
-  name: string;
-  rowguid: any;
-  stateProvinceCode: string;
-  stateProvinceID: number;
-  territoryID: number;
+    countryRegionCode:string;
+isOnlyStateProvinceFlag:boolean;
+modifiedDate:any;
+name:string;
+rowguid:any;
+stateProvinceCode:string;
+stateProvinceID:number;
+territoryID:number;
 
-  constructor() {
-    this.countryRegionCode = '';
-    this.isOnlyStateProvinceFlag = false;
-    this.modifiedDate = undefined;
-    this.name = '';
-    this.rowguid = undefined;
-    this.stateProvinceCode = '';
-    this.stateProvinceID = 0;
-    this.territoryID = 0;
-  }
+    constructor() {
+		this.countryRegionCode = '';
+this.isOnlyStateProvinceFlag = false;
+this.modifiedDate = undefined;
+this.name = '';
+this.rowguid = undefined;
+this.stateProvinceCode = '';
+this.stateProvinceID = 0;
+this.territoryID = 0;
 
-  setProperties(
-    countryRegionCode: string,
-    isOnlyStateProvinceFlag: boolean,
-    modifiedDate: any,
-    name: string,
-    rowguid: any,
-    stateProvinceCode: string,
-    stateProvinceID: number,
-    territoryID: number
-  ): void {
-    this.countryRegionCode = countryRegionCode;
-    this.isOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.rowguid = rowguid;
-    this.stateProvinceCode = stateProvinceCode;
-    this.stateProvinceID = stateProvinceID;
-    this.territoryID = territoryID;
-  }
+    }
 
-  toDisplay(): string {
-    return String();
-  }
-}
+	setProperties(countryRegionCode : string,isOnlyStateProvinceFlag : boolean,modifiedDate : any,name : string,rowguid : any,stateProvinceCode : string,stateProvinceID : number,territoryID : number) : void
+	{
+		this.countryRegionCode = moment(countryRegionCode,'YYYY-MM-DD');
+this.isOnlyStateProvinceFlag = moment(isOnlyStateProvinceFlag,'YYYY-MM-DD');
+this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.name = moment(name,'YYYY-MM-DD');
+this.rowguid = moment(rowguid,'YYYY-MM-DD');
+this.stateProvinceCode = moment(stateProvinceCode,'YYYY-MM-DD');
+this.stateProvinceID = moment(stateProvinceID,'YYYY-MM-DD');
+this.territoryID = moment(territoryID,'YYYY-MM-DD');
 
+	}
+
+	toDisplay() : string
+	{
+		return String();
+	}
+};
 
 /*<Codenesium>
-    <Hash>89637a5ff5a77b5d10b4cc16ffdd3ca9</Hash>
+    <Hash>97d3582371d0a5d7b2a2e367f455a541</Hash>
 </Codenesium>*/

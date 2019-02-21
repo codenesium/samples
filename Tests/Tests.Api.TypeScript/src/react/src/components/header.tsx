@@ -1,151 +1,123 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ClientRoutes, Constants } from '../constants';
+const { Header, Content, Footer, Sider } = Layout;
 
-interface Props {}
+const SubMenu = Menu.SubMenu;
 
-interface State {
-  menuExpanded: boolean;
+interface WrapperHeaderProps {}
+
+interface WrapperHeaderState {
+  collapsed: boolean;
 }
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
+    state = { collapsed: false };
 
-export class Header extends React.Component<Props, State> {
-  state = { menuExpanded: false };
-
-  handleClick(e: React.FormEvent) {
-    this.setState({ menuExpanded: !this.state.menuExpanded });
-  }
-
-  render() {
-    return (
-      <div className="row col-12">
-        <nav
-          className="navbar navbar-expand-lg navbar-light bg-white"
-          id="navbar"
-        >
-          <a className="navbar-brand" href="/">
-            Tests
-          </a>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            onClick={e => this.handleClick(e)}
+    onCollapse = () => {
+      this.setState({ ...this.state, collapsed: !this.state.collapsed });
+    };
+    render() {
+      return (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            collapsible
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
           >
-            <span className="navbar-toggler-icon" />
-          </button>
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+              <MenuItem key="Home">
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
+              </MenuItem>
 
-          <div
-            className={
-              this.state.menuExpanded
-                ? 'collapse.expand navbar-collapse'
-                : 'collapse navbar-collapse'
-            }
-            id="navbarSupportedContent"
-          >
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/columnsameasfktables"
-                  onClick={e => this.handleClick(e)}
-                >
-                  ColumnSameAsFKTables
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/includedcolumntests"
-                  onClick={e => this.handleClick(e)}
-                >
-                  IncludedColumnTests
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/people"
-                  onClick={e => this.handleClick(e)}
-                >
-                  People
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/rowversionchecks"
-                  onClick={e => this.handleClick(e)}
-                >
-                  RowVersionChecks
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/selfreferences"
-                  onClick={e => this.handleClick(e)}
-                >
-                  SelfReferences
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/tables"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Tables
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/testallfieldtypes"
-                  onClick={e => this.handleClick(e)}
-                >
-                  TestAllFieldTypes
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/testallfieldtypesnullables"
-                  onClick={e => this.handleClick(e)}
-                >
-                  TestAllFieldTypesNullables
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/timestampchecks"
-                  onClick={e => this.handleClick(e)}
-                >
-                  TimestampChecks
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/vpersons"
-                  onClick={e => this.handleClick(e)}
-                >
-                  VPersons
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
+              <MenuItem key="columnSameAsFKTable">
+                <Icon type="pie-chart" />
+                <span>ColumnSameAsFKTables</span>
+                <Link to={ClientRoutes.ColumnSameAsFKTables} />
+              </MenuItem>
+
+              <MenuItem key="includedColumnTest">
+                <Icon type="rise" />
+                <span>IncludedColumnTests</span>
+                <Link to={ClientRoutes.IncludedColumnTests} />
+              </MenuItem>
+
+              <MenuItem key="person">
+                <Icon type="bars" />
+                <span>People</span>
+                <Link to={ClientRoutes.People} />
+              </MenuItem>
+
+              <MenuItem key="rowVersionCheck">
+                <Icon type="cloud" />
+                <span>RowVersionChecks</span>
+                <Link to={ClientRoutes.RowVersionChecks} />
+              </MenuItem>
+
+              <MenuItem key="selfReference">
+                <Icon type="code" />
+                <span>SelfReferences</span>
+                <Link to={ClientRoutes.SelfReferences} />
+              </MenuItem>
+
+              <MenuItem key="table">
+                <Icon type="smile" />
+                <span>Tables</span>
+                <Link to={ClientRoutes.Tables} />
+              </MenuItem>
+
+              <MenuItem key="testAllFieldType">
+                <Icon type="laptop" />
+                <span>TestAllFieldTypes</span>
+                <Link to={ClientRoutes.TestAllFieldTypes} />
+              </MenuItem>
+
+              <MenuItem key="testAllFieldTypesNullable">
+                <Icon type="mobile" />
+                <span>TestAllFieldTypesNullables</span>
+                <Link to={ClientRoutes.TestAllFieldTypesNullables} />
+              </MenuItem>
+
+              <MenuItem key="timestampCheck">
+                <Icon type="paper-clip" />
+                <span>TimestampChecks</span>
+                <Link to={ClientRoutes.TimestampChecks} />
+              </MenuItem>
+
+              <MenuItem key="vPerson">
+                <Icon type="setting" />
+                <span>VPersons</span>
+                <Link to={ClientRoutes.VPersons} />
+              </MenuItem>
+            </Menu>
+          </Sider>
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }} />
+            <Content style={{ margin: '0 16px' }}>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <Component {...this.props} />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+          </Layout>
+        </Layout>
+      );
+    }
   }
-}
+  return WrapperHeaderComponent;
+};
 
 
 /*<Codenesium>
-    <Hash>f737b4dd700ac2a52af3d2ac16883877</Hash>
+    <Hash>d038c2d833857a5e34807b65fc451d1a</Hash>
 </Codenesium>*/

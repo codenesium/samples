@@ -1,15 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostHistoryMapper from './postHistoryMapper';
 import PostHistoryViewModel from './postHistoryViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostHistoryEditComponentProps {
   form:WrappedFormUtils;
@@ -141,7 +138,7 @@ class PostHistoryEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } 
     else if (this.state.loaded) {
 
@@ -150,8 +147,9 @@ class PostHistoryEditComponent extends React.Component<
             			<Form.Item>
               <label htmlFor='comment'>Comment</label>
               <br />             
-{getFieldDecorator('comment', {
+              {getFieldDecorator('comment', {
               rules:[],
+              
               })
               ( <Input placeholder={"Comment"} id={"comment"} /> )}
               </Form.Item>
@@ -159,8 +157,9 @@ class PostHistoryEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='creationDate'>CreationDate</label>
               <br />             
-{getFieldDecorator('creationDate', {
+              {getFieldDecorator('creationDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"CreationDate"} id={"creationDate"} /> )}
               </Form.Item>
@@ -168,8 +167,9 @@ class PostHistoryEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='postHistoryTypeId'>PostHistoryTypeId</label>
               <br />             
-{getFieldDecorator('postHistoryTypeId', {
+              {getFieldDecorator('postHistoryTypeId', {
               rules:[],
+              
               })
               ( <Input placeholder={"PostHistoryTypeId"} id={"postHistoryTypeId"} /> )}
               </Form.Item>
@@ -177,8 +177,9 @@ class PostHistoryEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='postId'>PostId</label>
               <br />             
-{getFieldDecorator('postId', {
+              {getFieldDecorator('postId', {
               rules:[],
+              
               })
               ( <Input placeholder={"PostId"} id={"postId"} /> )}
               </Form.Item>
@@ -186,8 +187,9 @@ class PostHistoryEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='revisionGUID'>RevisionGUID</label>
               <br />             
-{getFieldDecorator('revisionGUID', {
+              {getFieldDecorator('revisionGUID', {
               rules:[],
+              
               })
               ( <Input placeholder={"RevisionGUID"} id={"revisionGUID"} /> )}
               </Form.Item>
@@ -195,8 +197,9 @@ class PostHistoryEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='text'>Text</label>
               <br />             
-{getFieldDecorator('text', {
+              {getFieldDecorator('text', {
               rules:[],
+              
               })
               ( <Input placeholder={"Text"} id={"text"} /> )}
               </Form.Item>
@@ -204,8 +207,9 @@ class PostHistoryEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='userDisplayName'>UserDisplayName</label>
               <br />             
-{getFieldDecorator('userDisplayName', {
+              {getFieldDecorator('userDisplayName', {
               rules:[],
+              
               })
               ( <Input placeholder={"UserDisplayName"} id={"userDisplayName"} /> )}
               </Form.Item>
@@ -213,8 +217,9 @@ class PostHistoryEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='userId'>UserId</label>
               <br />             
-{getFieldDecorator('userId', {
+              {getFieldDecorator('userId', {
               rules:[],
+              
               })
               ( <Input placeholder={"UserId"} id={"userId"} /> )}
               </Form.Item>
@@ -236,5 +241,5 @@ class PostHistoryEditComponent extends React.Component<
 export const WrappedPostHistoryEditComponent = Form.create({ name: 'PostHistory Edit' })(PostHistoryEditComponent);
 
 /*<Codenesium>
-    <Hash>750d557cc402689c40f1b69eeb72b3aa</Hash>
+    <Hash>22f957a761b42e5170e69e9bea283998</Hash>
 </Codenesium>*/

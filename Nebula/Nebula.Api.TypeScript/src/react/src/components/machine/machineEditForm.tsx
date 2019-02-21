@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects'
+import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm'
@@ -228,5 +228,5 @@ const MachineEdit = withFormik<Props, MachineViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>e6b61ff1f807e201cab609da4ccae1aa</Hash>
+    <Hash>1e283a9e281ebbd8da4aa41d92da390f</Hash>
 </Codenesium>*/

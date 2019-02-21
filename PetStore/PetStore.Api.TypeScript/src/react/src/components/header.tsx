@@ -34,88 +34,46 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
-                key="Dashboard"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Dashboard</span>
-                  </span>
-                }
-              >
-                <Link to={'/'}>Dashboard</Link>
+              <MenuItem key="Home">
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
               </MenuItem>
 
-              <MenuItem
-                key="breed"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Breed</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Breeds}>Breeds</Link>
+              <MenuItem key="breed">
+                <Icon type="pie-chart" />
+                <span>Breeds</span>
+                <Link to={ClientRoutes.Breeds} />
               </MenuItem>
 
-              <MenuItem
-                key="paymentType"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>PaymentType</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.PaymentTypes}>PaymentTypes</Link>
+              <MenuItem key="paymentType">
+                <Icon type="rise" />
+                <span>PaymentTypes</span>
+                <Link to={ClientRoutes.PaymentTypes} />
               </MenuItem>
 
-              <MenuItem
-                key="pen"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Pen</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Pens}>Pens</Link>
+              <MenuItem key="pen">
+                <Icon type="bars" />
+                <span>Pens</span>
+                <Link to={ClientRoutes.Pens} />
               </MenuItem>
 
-              <MenuItem
-                key="pet"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Pet</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Pets}>Pets</Link>
+              <MenuItem key="pet">
+                <Icon type="cloud" />
+                <span>Pets</span>
+                <Link to={ClientRoutes.Pets} />
               </MenuItem>
 
-              <MenuItem
-                key="sale"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Sale</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Sales}>Sales</Link>
+              <MenuItem key="sale">
+                <Icon type="code" />
+                <span>Sales</span>
+                <Link to={ClientRoutes.Sales} />
               </MenuItem>
 
-              <MenuItem
-                key="species"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Species</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Species}>Species</Link>
+              <MenuItem key="species">
+                <Icon type="smile" />
+                <span>Species</span>
+                <Link to={ClientRoutes.Species} />
               </MenuItem>
             </Menu>
           </Sider>
@@ -137,5 +95,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>090b493dc191fb9bd3b8fd940646b1d5</Hash>
+    <Hash>e47b902ec48f887ed2c649c7e46eeca0</Hash>
 </Codenesium>*/

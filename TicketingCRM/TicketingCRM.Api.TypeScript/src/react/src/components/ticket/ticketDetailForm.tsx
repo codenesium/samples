@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TicketMapper from './ticketMapper';
 import TicketViewModel from './ticketViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TicketDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class TicketDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,14 +105,16 @@ class TicketDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>publicId</div>
-              <div>{this.state.model!.publicId}</div>
+              <h3>publicId</h3>
+              <p>{String(this.state.model!.publicId)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>ticketStatusId</h3>
-              <div>
-                {this.state.model!.ticketStatusIdNavigation!.toDisplay()}
-              </div>
+              <p>
+                {String(
+                  this.state.model!.ticketStatusIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
           </div>
           {message}
@@ -132,5 +132,5 @@ export const WrappedTicketDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2393669b0cc4bcf9871c6fde02e47969</Hash>
+    <Hash>c504bbe475e7be8e26d04426995534bc</Hash>
 </Codenesium>*/

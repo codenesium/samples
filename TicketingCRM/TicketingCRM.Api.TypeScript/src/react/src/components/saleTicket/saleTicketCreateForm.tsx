@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleTicketMapper from './saleTicketMapper';
 import SaleTicketViewModel from './saleTicketViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface SaleTicketCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class SaleTicketCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -146,5 +152,5 @@ export const WrappedSaleTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>106e795d8857b2259e3600bb2b61408b</Hash>
+    <Hash>f811b42ab787beecf19610512bb9a3a5</Hash>
 </Codenesium>*/

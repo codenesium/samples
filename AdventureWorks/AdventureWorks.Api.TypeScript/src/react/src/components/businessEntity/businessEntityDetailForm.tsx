@@ -1,121 +1,138 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import BusinessEntityMapper from './businessEntityMapper';
 import BusinessEntityViewModel from './businessEntityViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:BusinessEntityViewModel
+interface BusinessEntityDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const BusinessEntityDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.BusinessEntities + '/edit/' + model.model!.businessEntityID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="businessEntityID" className={"col-sm-2 col-form-label"}>BusinessEntityID</label>
-							<div className="col-sm-12">
-								{String(model.model!.businessEntityID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="modifiedDate" className={"col-sm-2 col-form-label"}>ModifiedDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.modifiedDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="rowguid" className={"col-sm-2 col-form-label"}>Rowguid</label>
-							<div className="col-sm-12">
-								{String(model.model!.rowguid)}
-							</div>
-						</div>
-					             </form>
-  );
+interface BusinessEntityDetailComponentState {
+  model?: BusinessEntityViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     businessEntityID:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class BusinessEntityDetailComponent extends React.Component<
+  BusinessEntityDetailComponentProps,
+  BusinessEntityDetailComponentState
+> {
+  state = {
+    model: new BusinessEntityViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface BusinessEntityDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface BusinessEntityDetailComponentState
-  {
-      model?:BusinessEntityViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.BusinessEntities +
+        '/edit/' +
+        this.state.model!.businessEntityID
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class BusinessEntityDetailComponent extends React.Component<BusinessEntityDetailComponentProps, BusinessEntityDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.BusinessEntities + '/' + this.props.match.params.businessEntityID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.BusinessEntities +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.BusinessEntityClientResponseModel;
-            
-			let mapper = new BusinessEntityMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<BusinessEntityDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.BusinessEntityClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new BusinessEntityMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>BusinessEntityID</h3>
+              <p>{String(this.state.model!.businessEntityID)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedBusinessEntityDetailComponent = Form.create({
+  name: 'BusinessEntity Detail',
+})(BusinessEntityDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>92b85e62faf89bbf823e22651b0f9a56</Hash>
+    <Hash>a7e33a7f1f78a6f588709e0544e57f18</Hash>
 </Codenesium>*/

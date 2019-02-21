@@ -1,126 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import VPersonMapper from './vPersonMapper';
 import VPersonViewModel from './vPersonViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: VPersonViewModel;
+interface VPersonCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const VPersonCreateDisplay: React.SFC<FormikProps<VPersonViewModel>> = (
-  props: FormikProps<VPersonViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.VPersonClientRequestModel>;
+interface VPersonCreateComponentState {
+  model?: VPersonViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof VPersonViewModel] &&
-      props.errors[name as keyof VPersonViewModel]
-    ) {
-      response += props.errors[name as keyof VPersonViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class VPersonCreateComponent extends React.Component<
+  VPersonCreateComponentProps,
+  VPersonCreateComponentState
+> {
+  state = {
+    model: new VPersonViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as VPersonViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('personName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PersonName
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="personName"
-            className={
-              errorExistForField('personName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('personName') && (
-            <small className="text-danger">
-              {errorsForField('personName')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const VPersonCreate = withFormik<Props, VPersonViewModel>({
-  mapPropsToValues: props => {
-    let response = new VPersonViewModel();
-    if (props.model != undefined) {
-      response.setProperties(props.model!.personId, props.model!.personName);
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<VPersonViewModel> = {};
-
-    if (values.personName == '') {
-      errors.personName = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: VPersonViewModel) => {
     let mapper = new VPersonMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.VPersons,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -132,54 +73,76 @@ const VPersonCreate = withFormik<Props, VPersonViewModel>({
           let response = resp.data as CreateResponse<
             Api.VPersonClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'VPersonCreate',
-})(VPersonCreateDisplay);
-
-interface VPersonCreateComponentProps {}
-
-interface VPersonCreateComponentState {
-  model?: VPersonViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class VPersonCreateComponent extends React.Component<
-  VPersonCreateComponentProps,
-  VPersonCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <VPersonCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="personName">PersonName</label>
+            <br />
+            {getFieldDecorator('personName', {
+              rules: [],
+            })(<Input placeholder={'PersonName'} id={'personName'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedVPersonCreateComponent = Form.create({
+  name: 'VPerson Create',
+})(VPersonCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>0f493e32e53d47cba851f44d04ce09d3</Hash>
+    <Hash>1046fb35e76d151a590faab8627aa484</Hash>
 </Codenesium>*/

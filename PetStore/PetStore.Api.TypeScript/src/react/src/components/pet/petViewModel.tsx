@@ -1,3 +1,4 @@
+import moment from 'moment';
 import BreedViewModel from '../breed/breedViewModel';
 import PenViewModel from '../pen/penViewModel';
 
@@ -17,12 +18,12 @@ export default class PetViewModel {
     this.acquiredDate = undefined;
     this.breedId = 0;
     this.breedIdEntity = '';
-    this.breedIdNavigation = undefined;
+    this.breedIdNavigation = new BreedViewModel();
     this.description = '';
     this.id = 0;
     this.penId = 0;
     this.penIdEntity = '';
-    this.penIdNavigation = undefined;
+    this.penIdNavigation = new PenViewModel();
     this.price = 0;
   }
 
@@ -49,5 +50,5 @@ export default class PetViewModel {
 
 
 /*<Codenesium>
-    <Hash>47f27689a2cd4d05eef2fcc6f34cb47d</Hash>
+    <Hash>8772523688d56af141939fa290f79c33</Hash>
 </Codenesium>*/

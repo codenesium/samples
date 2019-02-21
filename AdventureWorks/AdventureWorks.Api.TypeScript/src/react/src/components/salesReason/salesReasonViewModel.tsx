@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class SalesReasonViewModel {
   modifiedDate: any;
   name: string;
@@ -17,10 +19,10 @@ export default class SalesReasonViewModel {
     reasonType: string,
     salesReasonID: number
   ): void {
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.reasonType = reasonType;
-    this.salesReasonID = salesReasonID;
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.reasonType = moment(reasonType, 'YYYY-MM-DD');
+    this.salesReasonID = moment(salesReasonID, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -30,5 +32,5 @@ export default class SalesReasonViewModel {
 
 
 /*<Codenesium>
-    <Hash>a1a03d7be759af319cf95f582f4f6851</Hash>
+    <Hash>6974701cc5f8bc1e73246bd8ca23b651</Hash>
 </Codenesium>*/

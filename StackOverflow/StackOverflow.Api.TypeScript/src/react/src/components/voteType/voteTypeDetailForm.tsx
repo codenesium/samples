@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VoteTypeMapper from './voteTypeMapper';
 import VoteTypeViewModel from './voteTypeViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface VoteTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class VoteTypeDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,8 +105,8 @@ class VoteTypeDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
           {message}
@@ -126,5 +124,5 @@ export const WrappedVoteTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d1e86d343cd336235bcc0db5872a6450</Hash>
+    <Hash>bd42fccd4a26dbb3eccab31f5b3edc56</Hash>
 </Codenesium>*/

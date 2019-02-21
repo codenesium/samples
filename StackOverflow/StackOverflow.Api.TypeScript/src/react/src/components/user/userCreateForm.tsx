@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface UserCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class UserCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -234,5 +240,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>24aca5e77632ea5a1cc3d8080bfba94d</Hash>
+    <Hash>f53114717eff1e0b0cbf66a449914a32</Hash>
 </Codenesium>*/

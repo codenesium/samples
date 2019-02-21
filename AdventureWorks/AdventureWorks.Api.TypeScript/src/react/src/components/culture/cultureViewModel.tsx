@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class CultureViewModel {
   cultureID: string;
   modifiedDate: any;
@@ -10,9 +12,9 @@ export default class CultureViewModel {
   }
 
   setProperties(cultureID: string, modifiedDate: any, name: string): void {
-    this.cultureID = cultureID;
-    this.modifiedDate = modifiedDate;
-    this.name = name;
+    this.cultureID = moment(cultureID, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -22,5 +24,5 @@ export default class CultureViewModel {
 
 
 /*<Codenesium>
-    <Hash>9f29af8c8b57beaa084414db03fb0cad</Hash>
+    <Hash>36523b8b27b064f1b6146102b4f579bc</Hash>
 </Codenesium>*/

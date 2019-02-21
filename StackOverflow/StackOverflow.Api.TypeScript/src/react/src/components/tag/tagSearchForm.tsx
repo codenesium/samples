@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import TagMapper from './tagMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import TagViewModel from './tagViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TagSearchComponentProps
@@ -112,10 +110,10 @@ export default class TagSearchComponent extends React.Component<TagSearchCompone
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -244,5 +242,5 @@ export default class TagSearchComponent extends React.Component<TagSearchCompone
 export const WrappedTagSearchComponent = Form.create({ name: 'Tag Search' })(TagSearchComponent);
 
 /*<Codenesium>
-    <Hash>20cbfd42bd151b0c3c6f26c3a2e59f30</Hash>
+    <Hash>e22d352b15db9905f3e5129a1a3e741a</Hash>
 </Codenesium>*/

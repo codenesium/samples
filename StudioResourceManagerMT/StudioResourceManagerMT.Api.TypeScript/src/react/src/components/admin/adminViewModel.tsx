@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class AdminViewModel {
   birthday: any;
   email: string;
@@ -26,13 +28,13 @@ export default class AdminViewModel {
     phone: string,
     userId: number
   ): void {
-    this.birthday = birthday;
-    this.email = email;
-    this.firstName = firstName;
-    this.id = id;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.userId = userId;
+    this.birthday = moment(birthday, 'YYYY-MM-DD');
+    this.email = moment(email, 'YYYY-MM-DD');
+    this.firstName = moment(firstName, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.lastName = moment(lastName, 'YYYY-MM-DD');
+    this.phone = moment(phone, 'YYYY-MM-DD');
+    this.userId = moment(userId, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -42,5 +44,5 @@ export default class AdminViewModel {
 
 
 /*<Codenesium>
-    <Hash>23ad54ef6863ae009c47bb035c3e8746</Hash>
+    <Hash>ccf9bffc8e78ac38715c57e7b21a42ed</Hash>
 </Codenesium>*/

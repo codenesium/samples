@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class ProductDescriptionViewModel {
   description: string;
   modifiedDate: any;
@@ -17,10 +19,10 @@ export default class ProductDescriptionViewModel {
     productDescriptionID: number,
     rowguid: any
   ): void {
-    this.description = description;
-    this.modifiedDate = modifiedDate;
-    this.productDescriptionID = productDescriptionID;
-    this.rowguid = rowguid;
+    this.description = moment(description, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.productDescriptionID = moment(productDescriptionID, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -30,5 +32,5 @@ export default class ProductDescriptionViewModel {
 
 
 /*<Codenesium>
-    <Hash>b36034a641a822d0a283661a9d45c38b</Hash>
+    <Hash>7ff934e1aa9d9d7036ee54a6ac191991</Hash>
 </Codenesium>*/

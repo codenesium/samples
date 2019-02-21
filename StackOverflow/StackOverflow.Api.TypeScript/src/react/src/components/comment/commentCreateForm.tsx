@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CommentMapper from './commentMapper';
 import CommentViewModel from './commentViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface CommentCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class CommentCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -170,5 +176,5 @@ export const WrappedCommentCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>81026a1e1067e0ae4373e8594e6a98e6</Hash>
+    <Hash>1ba7d2f83b5296aeaded96859d7f5b6d</Hash>
 </Codenesium>*/

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class EmployeeViewModel {
   birthDate: any;
   businessEntityID: number;
@@ -50,21 +52,21 @@ export default class EmployeeViewModel {
     sickLeaveHour: number,
     vacationHour: number
   ): void {
-    this.birthDate = birthDate;
-    this.businessEntityID = businessEntityID;
-    this.currentFlag = currentFlag;
-    this.gender = gender;
-    this.hireDate = hireDate;
-    this.jobTitle = jobTitle;
-    this.loginID = loginID;
-    this.maritalStatu = maritalStatu;
-    this.modifiedDate = modifiedDate;
-    this.nationalIDNumber = nationalIDNumber;
-    this.organizationLevel = organizationLevel;
-    this.rowguid = rowguid;
-    this.salariedFlag = salariedFlag;
-    this.sickLeaveHour = sickLeaveHour;
-    this.vacationHour = vacationHour;
+    this.birthDate = moment(birthDate, 'YYYY-MM-DD');
+    this.businessEntityID = moment(businessEntityID, 'YYYY-MM-DD');
+    this.currentFlag = moment(currentFlag, 'YYYY-MM-DD');
+    this.gender = moment(gender, 'YYYY-MM-DD');
+    this.hireDate = moment(hireDate, 'YYYY-MM-DD');
+    this.jobTitle = moment(jobTitle, 'YYYY-MM-DD');
+    this.loginID = moment(loginID, 'YYYY-MM-DD');
+    this.maritalStatu = moment(maritalStatu, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.nationalIDNumber = moment(nationalIDNumber, 'YYYY-MM-DD');
+    this.organizationLevel = moment(organizationLevel, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
+    this.salariedFlag = moment(salariedFlag, 'YYYY-MM-DD');
+    this.sickLeaveHour = moment(sickLeaveHour, 'YYYY-MM-DD');
+    this.vacationHour = moment(vacationHour, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -74,5 +76,5 @@ export default class EmployeeViewModel {
 
 
 /*<Codenesium>
-    <Hash>80ec79571e3b995a408e3d3b4cb6cbe9</Hash>
+    <Hash>7537bfbdb8231654d08ab390c6eec5a6</Hash>
 </Codenesium>*/

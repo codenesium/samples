@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CityMapper from './cityMapper';
 import CityViewModel from './cityViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface CityEditComponentProps {
   form: WrappedFormUtils;
@@ -154,7 +160,7 @@ class CityEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -194,5 +200,5 @@ export const WrappedCityEditComponent = Form.create({ name: 'City Edit' })(
 
 
 /*<Codenesium>
-    <Hash>8681564a446184d7850f2ddca70c4dd1</Hash>
+    <Hash>5bb08e36142f9eafe77ac63ba7d3327b</Hash>
 </Codenesium>*/

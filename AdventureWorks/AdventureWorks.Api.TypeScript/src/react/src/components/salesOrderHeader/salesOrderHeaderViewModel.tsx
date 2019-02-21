@@ -1,3 +1,4 @@
+import moment from 'moment';
 import CreditCardViewModel from '../creditCard/creditCardViewModel';
 import CurrencyRateViewModel from '../currencyRate/currencyRateViewModel';
 import CustomerViewModel from '../customer/customerViewModel';
@@ -49,13 +50,13 @@ export default class SalesOrderHeaderViewModel {
     this.creditCardApprovalCode = '';
     this.creditCardID = undefined;
     this.creditCardIDEntity = '';
-    this.creditCardIDNavigation = undefined;
+    this.creditCardIDNavigation = new CreditCardViewModel();
     this.currencyRateID = undefined;
     this.currencyRateIDEntity = '';
-    this.currencyRateIDNavigation = undefined;
+    this.currencyRateIDNavigation = new CurrencyRateViewModel();
     this.customerID = 0;
     this.customerIDEntity = '';
-    this.customerIDNavigation = undefined;
+    this.customerIDNavigation = new CustomerViewModel();
     this.dueDate = undefined;
     this.freight = 0;
     this.modifiedDate = undefined;
@@ -68,7 +69,7 @@ export default class SalesOrderHeaderViewModel {
     this.salesOrderNumber = '';
     this.salesPersonID = undefined;
     this.salesPersonIDEntity = '';
-    this.salesPersonIDNavigation = undefined;
+    this.salesPersonIDNavigation = new SalesPersonViewModel();
     this.shipDate = undefined;
     this.shipMethodID = 0;
     this.shipToAddressID = 0;
@@ -77,7 +78,7 @@ export default class SalesOrderHeaderViewModel {
     this.taxAmt = 0;
     this.territoryID = undefined;
     this.territoryIDEntity = '';
-    this.territoryIDNavigation = undefined;
+    this.territoryIDNavigation = new SalesTerritoryViewModel();
     this.totalDue = 0;
   }
 
@@ -109,32 +110,32 @@ export default class SalesOrderHeaderViewModel {
     territoryID: any,
     totalDue: number
   ): void {
-    this.accountNumber = accountNumber;
-    this.billToAddressID = billToAddressID;
-    this.comment = comment;
-    this.creditCardApprovalCode = creditCardApprovalCode;
-    this.creditCardID = creditCardID;
-    this.currencyRateID = currencyRateID;
-    this.customerID = customerID;
-    this.dueDate = dueDate;
-    this.freight = freight;
-    this.modifiedDate = modifiedDate;
-    this.onlineOrderFlag = onlineOrderFlag;
-    this.orderDate = orderDate;
-    this.purchaseOrderNumber = purchaseOrderNumber;
-    this.revisionNumber = revisionNumber;
-    this.rowguid = rowguid;
-    this.salesOrderID = salesOrderID;
-    this.salesOrderNumber = salesOrderNumber;
-    this.salesPersonID = salesPersonID;
-    this.shipDate = shipDate;
-    this.shipMethodID = shipMethodID;
-    this.shipToAddressID = shipToAddressID;
-    this.status = status;
-    this.subTotal = subTotal;
-    this.taxAmt = taxAmt;
-    this.territoryID = territoryID;
-    this.totalDue = totalDue;
+    this.accountNumber = moment(accountNumber, 'YYYY-MM-DD');
+    this.billToAddressID = moment(billToAddressID, 'YYYY-MM-DD');
+    this.comment = moment(comment, 'YYYY-MM-DD');
+    this.creditCardApprovalCode = moment(creditCardApprovalCode, 'YYYY-MM-DD');
+    this.creditCardID = moment(creditCardID, 'YYYY-MM-DD');
+    this.currencyRateID = moment(currencyRateID, 'YYYY-MM-DD');
+    this.customerID = moment(customerID, 'YYYY-MM-DD');
+    this.dueDate = moment(dueDate, 'YYYY-MM-DD');
+    this.freight = moment(freight, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.onlineOrderFlag = moment(onlineOrderFlag, 'YYYY-MM-DD');
+    this.orderDate = moment(orderDate, 'YYYY-MM-DD');
+    this.purchaseOrderNumber = moment(purchaseOrderNumber, 'YYYY-MM-DD');
+    this.revisionNumber = moment(revisionNumber, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
+    this.salesOrderID = moment(salesOrderID, 'YYYY-MM-DD');
+    this.salesOrderNumber = moment(salesOrderNumber, 'YYYY-MM-DD');
+    this.salesPersonID = moment(salesPersonID, 'YYYY-MM-DD');
+    this.shipDate = moment(shipDate, 'YYYY-MM-DD');
+    this.shipMethodID = moment(shipMethodID, 'YYYY-MM-DD');
+    this.shipToAddressID = moment(shipToAddressID, 'YYYY-MM-DD');
+    this.status = moment(status, 'YYYY-MM-DD');
+    this.subTotal = moment(subTotal, 'YYYY-MM-DD');
+    this.taxAmt = moment(taxAmt, 'YYYY-MM-DD');
+    this.territoryID = moment(territoryID, 'YYYY-MM-DD');
+    this.totalDue = moment(totalDue, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -144,5 +145,5 @@ export default class SalesOrderHeaderViewModel {
 
 
 /*<Codenesium>
-    <Hash>2990605968246a86504429f6b9324c34</Hash>
+    <Hash>f2fc754b52d3726e9ea409fbbf9b4c4a</Hash>
 </Codenesium>*/

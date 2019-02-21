@@ -1,139 +1,148 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import ProductModelMapper from './productModelMapper';
 import ProductModelViewModel from './productModelViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:ProductModelViewModel
+interface ProductModelDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const ProductModelDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.ProductModels + '/edit/' + model.model!.productModelID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="catalogDescription" className={"col-sm-2 col-form-label"}>CatalogDescription</label>
-							<div className="col-sm-12">
-								{String(model.model!.catalogDescription)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="instruction" className={"col-sm-2 col-form-label"}>Instructions</label>
-							<div className="col-sm-12">
-								{String(model.model!.instruction)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="modifiedDate" className={"col-sm-2 col-form-label"}>ModifiedDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.modifiedDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="productModelID" className={"col-sm-2 col-form-label"}>ProductModelID</label>
-							<div className="col-sm-12">
-								{String(model.model!.productModelID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="rowguid" className={"col-sm-2 col-form-label"}>Rowguid</label>
-							<div className="col-sm-12">
-								{String(model.model!.rowguid)}
-							</div>
-						</div>
-					             </form>
-  );
+interface ProductModelDetailComponentState {
+  model?: ProductModelViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     productModelID:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class ProductModelDetailComponent extends React.Component<
+  ProductModelDetailComponentProps,
+  ProductModelDetailComponentState
+> {
+  state = {
+    model: new ProductModelViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface ProductModelDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface ProductModelDetailComponentState
-  {
-      model?:ProductModelViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ProductModels + '/edit/' + this.state.model!.productModelID
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class ProductModelDetailComponent extends React.Component<ProductModelDetailComponentProps, ProductModelDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.ProductModels + '/' + this.props.match.params.productModelID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductModels +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.ProductModelClientResponseModel;
-            
-			let mapper = new ProductModelMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<ProductModelDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.ProductModelClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new ProductModelMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>CatalogDescription</h3>
+              <p>{String(this.state.model!.catalogDescription)}</p>
+            </div>
+            <div>
+              <h3>Instructions</h3>
+              <p>{String(this.state.model!.instruction)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>ProductModelID</h3>
+              <p>{String(this.state.model!.productModelID)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedProductModelDetailComponent = Form.create({
+  name: 'ProductModel Detail',
+})(ProductModelDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>9f7876c094999e0098f0d2486be848fc</Hash>
+    <Hash>389ae5291711c8765913d7b4b80dda76</Hash>
 </Codenesium>*/

@@ -1,3 +1,6 @@
+import moment from 'moment'
+
+
 export default class PurchaseOrderHeaderViewModel {
     employeeID:number;
 freight:number;
@@ -32,19 +35,19 @@ this.vendorID = 0;
 
 	setProperties(employeeID : number,freight : number,modifiedDate : any,orderDate : any,purchaseOrderID : number,revisionNumber : number,shipDate : any,shipMethodID : number,status : number,subTotal : number,taxAmt : number,totalDue : number,vendorID : number) : void
 	{
-		this.employeeID = employeeID;
-this.freight = freight;
-this.modifiedDate = modifiedDate;
-this.orderDate = orderDate;
-this.purchaseOrderID = purchaseOrderID;
-this.revisionNumber = revisionNumber;
-this.shipDate = shipDate;
-this.shipMethodID = shipMethodID;
-this.status = status;
-this.subTotal = subTotal;
-this.taxAmt = taxAmt;
-this.totalDue = totalDue;
-this.vendorID = vendorID;
+		this.employeeID = moment(employeeID,'YYYY-MM-DD');
+this.freight = moment(freight,'YYYY-MM-DD');
+this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.orderDate = moment(orderDate,'YYYY-MM-DD');
+this.purchaseOrderID = moment(purchaseOrderID,'YYYY-MM-DD');
+this.revisionNumber = moment(revisionNumber,'YYYY-MM-DD');
+this.shipDate = moment(shipDate,'YYYY-MM-DD');
+this.shipMethodID = moment(shipMethodID,'YYYY-MM-DD');
+this.status = moment(status,'YYYY-MM-DD');
+this.subTotal = moment(subTotal,'YYYY-MM-DD');
+this.taxAmt = moment(taxAmt,'YYYY-MM-DD');
+this.totalDue = moment(totalDue,'YYYY-MM-DD');
+this.vendorID = moment(vendorID,'YYYY-MM-DD');
 
 	}
 
@@ -55,5 +58,5 @@ this.vendorID = vendorID;
 };
 
 /*<Codenesium>
-    <Hash>4f67e4cd81783072c34252e07c4d513d</Hash>
+    <Hash>66932e70831d4d2a7d130a411ffecf6a</Hash>
 </Codenesium>*/

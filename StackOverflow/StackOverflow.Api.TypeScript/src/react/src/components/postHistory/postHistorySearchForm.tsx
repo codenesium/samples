@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import PostHistoryMapper from './postHistoryMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import PostHistoryViewModel from './postHistoryViewModel';
 import 'react-table/react-table.css';
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PostHistorySearchComponentProps {
@@ -149,9 +147,9 @@ export default class PostHistorySearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -329,5 +327,5 @@ export const WrappedPostHistorySearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a2ba989fb26ad1fc36b54545a5bed9c8</Hash>
+    <Hash>c9f6fc0abaf9e0ac0844de05dd8b3bdf</Hash>
 </Codenesium>*/

@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ProvinceMapper from './provinceMapper';
 import ProvinceViewModel from './provinceViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface ProvinceCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class ProvinceCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -146,5 +152,5 @@ export const WrappedProvinceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cd42f9fe71c70833ca747e967d53df0b</Hash>
+    <Hash>5b037b34570240a48545b9dc436a5fa4</Hash>
 </Codenesium>*/

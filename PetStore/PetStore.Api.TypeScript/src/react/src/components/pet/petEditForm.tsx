@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PetEditComponentProps {
   form: WrappedFormUtils;
@@ -152,7 +158,7 @@ class PetEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -216,5 +222,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>e3bf2e4a32daafd5d2f223bf3588d0bb</Hash>
+    <Hash>938a1f3a52c3f544f462c578b0dd8036</Hash>
 </Codenesium>*/

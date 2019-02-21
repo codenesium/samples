@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class PersonViewModel {
   personId: number;
   personName: string;
@@ -19,5 +21,5 @@ export default class PersonViewModel {
 
 
 /*<Codenesium>
-    <Hash>ed6606b1e2bc568746d0916940ef3465</Hash>
+    <Hash>7325c5df07be3c1a21fcb7f2f45df6a5</Hash>
 </Codenesium>*/

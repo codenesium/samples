@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class DocumentViewModel {
   changeNumber: number;
   document1: any;
@@ -44,19 +46,19 @@ export default class DocumentViewModel {
     status: number,
     title: string
   ): void {
-    this.changeNumber = changeNumber;
-    this.document1 = document1;
-    this.documentLevel = documentLevel;
-    this.documentSummary = documentSummary;
-    this.fileExtension = fileExtension;
-    this.fileName = fileName;
-    this.folderFlag = folderFlag;
-    this.modifiedDate = modifiedDate;
-    this.owner = owner;
-    this.revision = revision;
-    this.rowguid = rowguid;
-    this.status = status;
-    this.title = title;
+    this.changeNumber = moment(changeNumber, 'YYYY-MM-DD');
+    this.document1 = moment(document1, 'YYYY-MM-DD');
+    this.documentLevel = moment(documentLevel, 'YYYY-MM-DD');
+    this.documentSummary = moment(documentSummary, 'YYYY-MM-DD');
+    this.fileExtension = moment(fileExtension, 'YYYY-MM-DD');
+    this.fileName = moment(fileName, 'YYYY-MM-DD');
+    this.folderFlag = moment(folderFlag, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.owner = moment(owner, 'YYYY-MM-DD');
+    this.revision = moment(revision, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
+    this.status = moment(status, 'YYYY-MM-DD');
+    this.title = moment(title, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -66,5 +68,5 @@ export default class DocumentViewModel {
 
 
 /*<Codenesium>
-    <Hash>0061da5028d875788c2ac27bc59d3efd</Hash>
+    <Hash>f0a4e018754a047a7c3da263a6033ec2</Hash>
 </Codenesium>*/

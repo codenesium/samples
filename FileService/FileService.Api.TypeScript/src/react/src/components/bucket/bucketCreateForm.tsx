@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BucketMapper from './bucketMapper';
 import BucketViewModel from './bucketViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface BucketCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class BucketCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -146,5 +152,5 @@ export const WrappedBucketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>39d3fa2ef3e020af9736710e4c915887</Hash>
+    <Hash>4b5b82d888c07833eb70b7360cfb90ec</Hash>
 </Codenesium>*/

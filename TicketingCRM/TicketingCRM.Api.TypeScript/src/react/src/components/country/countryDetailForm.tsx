@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CountryMapper from './countryMapper';
 import CountryViewModel from './countryViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface CountryDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class CountryDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,8 +105,8 @@ class CountryDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
           {message}
@@ -126,5 +124,5 @@ export const WrappedCountryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a7bdb175cfd123b424ee48dd7de1086e</Hash>
+    <Hash>9ea9596ad0934211a6ca1e656cf8f27b</Hash>
 </Codenesium>*/

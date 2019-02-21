@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import CustomerViewModel from './customerViewModel';
 import 'react-table/react-table.css';
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CustomerSearchComponentProps {
@@ -149,9 +147,9 @@ export default class CustomerSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -297,5 +295,5 @@ export const WrappedCustomerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c6365780f164faf4db16c4e5b0c55968</Hash>
+    <Hash>2bb7d8c92294627ff3fe2d993c6e3d78</Hash>
 </Codenesium>*/

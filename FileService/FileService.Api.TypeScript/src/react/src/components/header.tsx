@@ -12,13 +12,8 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>
-) => {
-  class WrapperHeaderComponent extends React.Component<
-    WrapperHeaderProps & RouteComponentProps,
-    WrapperHeaderState
-  > {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
     state = { collapsed: false };
 
     onCollapse = () => {
@@ -34,53 +29,39 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
-                key="Dashboard"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Dashboard</span>
-                  </span>
-                }
+               <MenuItem
+                key="Home"
               >
-                <Link to={'/'}>Dashboard</Link>
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
               </MenuItem>
 
-              <MenuItem
+			   			   <MenuItem
                 key="bucket"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Bucket</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Buckets}>Buckets</Link>
+			  <Icon type="pie-chart" />
+              <span>Buckets</span>
+              <Link to={ClientRoutes.Buckets}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="file"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>File</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Files}>Files</Link>
+			  <Icon type="rise" />
+              <span>Files</span>
+              <Link to={ClientRoutes.Files}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="fileType"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>FileType</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.FileTypes}>FileTypes</Link>
+			  <Icon type="bars" />
+              <span>FileTypes</span>
+              <Link to={ClientRoutes.FileTypes}></Link>
               </MenuItem>
+
+				
             </Menu>
           </Sider>
           <Layout>
@@ -99,7 +80,6 @@ export const wrapperHeader = (
   return WrapperHeaderComponent;
 };
 
-
 /*<Codenesium>
-    <Hash>e5d1f4779870ac95ba8ae67b4ada389b</Hash>
+    <Hash>b019b79cab1fa11471c059e8f9b5cb6c</Hash>
 </Codenesium>*/

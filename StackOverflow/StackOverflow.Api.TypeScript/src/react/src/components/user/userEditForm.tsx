@@ -1,15 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface UserEditComponentProps {
   form:WrappedFormUtils;
@@ -141,7 +138,7 @@ class UserEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } 
     else if (this.state.loaded) {
 
@@ -150,8 +147,9 @@ class UserEditComponent extends React.Component<
             			<Form.Item>
               <label htmlFor='aboutMe'>AboutMe</label>
               <br />             
-{getFieldDecorator('aboutMe', {
+              {getFieldDecorator('aboutMe', {
               rules:[],
+              
               })
               ( <Input placeholder={"AboutMe"} id={"aboutMe"} /> )}
               </Form.Item>
@@ -159,8 +157,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='accountId'>AccountId</label>
               <br />             
-{getFieldDecorator('accountId', {
+              {getFieldDecorator('accountId', {
               rules:[],
+              
               })
               ( <Input placeholder={"AccountId"} id={"accountId"} /> )}
               </Form.Item>
@@ -168,8 +167,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='age'>Age</label>
               <br />             
-{getFieldDecorator('age', {
+              {getFieldDecorator('age', {
               rules:[],
+              
               })
               ( <Input placeholder={"Age"} id={"age"} /> )}
               </Form.Item>
@@ -177,8 +177,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='creationDate'>CreationDate</label>
               <br />             
-{getFieldDecorator('creationDate', {
+              {getFieldDecorator('creationDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"CreationDate"} id={"creationDate"} /> )}
               </Form.Item>
@@ -186,8 +187,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='displayName'>DisplayName</label>
               <br />             
-{getFieldDecorator('displayName', {
+              {getFieldDecorator('displayName', {
               rules:[],
+              
               })
               ( <Input placeholder={"DisplayName"} id={"displayName"} /> )}
               </Form.Item>
@@ -195,8 +197,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='downVote'>DownVotes</label>
               <br />             
-{getFieldDecorator('downVote', {
+              {getFieldDecorator('downVote', {
               rules:[],
+              
               })
               ( <Input placeholder={"DownVotes"} id={"downVote"} /> )}
               </Form.Item>
@@ -204,8 +207,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='emailHash'>EmailHash</label>
               <br />             
-{getFieldDecorator('emailHash', {
+              {getFieldDecorator('emailHash', {
               rules:[],
+              
               })
               ( <Input placeholder={"EmailHash"} id={"emailHash"} /> )}
               </Form.Item>
@@ -213,8 +217,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='lastAccessDate'>LastAccessDate</label>
               <br />             
-{getFieldDecorator('lastAccessDate', {
+              {getFieldDecorator('lastAccessDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"LastAccessDate"} id={"lastAccessDate"} /> )}
               </Form.Item>
@@ -222,8 +227,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='location'>Location</label>
               <br />             
-{getFieldDecorator('location', {
+              {getFieldDecorator('location', {
               rules:[],
+              
               })
               ( <Input placeholder={"Location"} id={"location"} /> )}
               </Form.Item>
@@ -231,8 +237,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='reputation'>Reputation</label>
               <br />             
-{getFieldDecorator('reputation', {
+              {getFieldDecorator('reputation', {
               rules:[],
+              
               })
               ( <Input placeholder={"Reputation"} id={"reputation"} /> )}
               </Form.Item>
@@ -240,8 +247,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='upVote'>UpVotes</label>
               <br />             
-{getFieldDecorator('upVote', {
+              {getFieldDecorator('upVote', {
               rules:[],
+              
               })
               ( <Input placeholder={"UpVotes"} id={"upVote"} /> )}
               </Form.Item>
@@ -249,8 +257,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='view'>Views</label>
               <br />             
-{getFieldDecorator('view', {
+              {getFieldDecorator('view', {
               rules:[],
+              
               })
               ( <Input placeholder={"Views"} id={"view"} /> )}
               </Form.Item>
@@ -258,8 +267,9 @@ class UserEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='websiteUrl'>WebsiteUrl</label>
               <br />             
-{getFieldDecorator('websiteUrl', {
+              {getFieldDecorator('websiteUrl', {
               rules:[],
+              
               })
               ( <Input placeholder={"WebsiteUrl"} id={"websiteUrl"} /> )}
               </Form.Item>
@@ -281,5 +291,5 @@ class UserEditComponent extends React.Component<
 export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(UserEditComponent);
 
 /*<Codenesium>
-    <Hash>c07c72208877ca6ca927648788b7c60b</Hash>
+    <Hash>74e8659738dc420a8a65c56771100202</Hash>
 </Codenesium>*/

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BucketMapper from './bucketMapper';
 import BucketViewModel from './bucketViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface BucketDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface BucketDetailComponentState {
 }
 
 class BucketDetailComponent extends React.Component<
-  BucketDetailComponentProps,
-  BucketDetailComponentState
+BucketDetailComponentProps,
+BucketDetailComponentState
 > {
   state = {
     model: new BucketViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Buckets + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Buckets + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,35 +82,36 @@ class BucketDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <div>externalId</div>
-              <div>{this.state.model!.externalId}</div>
-            </div>
-            <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ExternalId</h3>
+							<p>{String(this.state.model!.externalId)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -124,11 +121,10 @@ class BucketDetailComponent extends React.Component<
   }
 }
 
-export const WrappedBucketDetailComponent = Form.create({
-  name: 'Bucket Detail',
-})(BucketDetailComponent);
-
+export const WrappedBucketDetailComponent = Form.create({ name: 'Bucket Detail' })(
+  BucketDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>c9605b1587bfea3833b57e55976ab23d</Hash>
+    <Hash>3dc22cbd71e1bc017257db568d964326</Hash>
 </Codenesium>*/

@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import DeviceActionMapper from './deviceActionMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import DeviceActionViewModel from './deviceActionViewModel';
 import 'react-table/react-table.css';
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface DeviceActionSearchComponentProps {
@@ -151,9 +149,9 @@ export default class DeviceActionSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -308,5 +306,5 @@ export const WrappedDeviceActionSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>73128cc3300170f22062f32e97570efb</Hash>
+    <Hash>4b3752b09ce5ca02af5b4dcc710f1178</Hash>
 </Codenesium>*/

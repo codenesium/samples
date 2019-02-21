@@ -1,65 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import CurrencyMapper from './currencyMapper';
 import CurrencyViewModel from './currencyViewModel';
-
-interface Props {
-  history: any;
-  model?: CurrencyViewModel;
-}
-
-const CurrencyDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Currencies + '/edit/' + model.model!.currencyCode
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="currencyCode" className={'col-sm-2 col-form-label'}>
-          CurrencyCode
-        </label>
-        <div className="col-sm-12">{String(model.model!.currencyCode)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  currencyCode: string;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CurrencyDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface CurrencyDetailComponentState {
@@ -70,17 +21,23 @@ interface CurrencyDetailComponentState {
   errorMessage: string;
 }
 
-export default class CurrencyDetailComponent extends React.Component<
+class CurrencyDetailComponent extends React.Component<
   CurrencyDetailComponentProps,
   CurrencyDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new CurrencyViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Currencies + '/edit/' + this.state.model!.currencyCode
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -90,7 +47,7 @@ export default class CurrencyDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.Currencies +
           '/' +
-          this.props.match.params.currencyCode,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -101,9 +58,9 @@ export default class CurrencyDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.CurrencyClientResponseModel;
 
-          let mapper = new CurrencyMapper();
-
           console.log(response);
+
+          let mapper = new CurrencyMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -125,17 +82,43 @@ export default class CurrencyDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <CurrencyDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>CurrencyCode</h3>
+              <p>{String(this.state.model!.currencyCode)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -143,7 +126,11 @@ export default class CurrencyDetailComponent extends React.Component<
   }
 }
 
+export const WrappedCurrencyDetailComponent = Form.create({
+  name: 'Currency Detail',
+})(CurrencyDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>c9d0f7b2b82e929bd0b0f449331cb325</Hash>
+    <Hash>5f070d574c413a2915019f70e2e11063</Hash>
 </Codenesium>*/

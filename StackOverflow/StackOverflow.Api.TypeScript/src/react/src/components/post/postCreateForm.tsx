@@ -1,20 +1,17 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostMapper from './postMapper';
 import PostViewModel from './postViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostCreateComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface PostCreateComponentState {
@@ -23,7 +20,7 @@ interface PostCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted: boolean;
+  submitted:boolean;
 }
 
 class PostCreateComponent extends React.Component<
@@ -36,12 +33,12 @@ class PostCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    submitted: false,
+	submitted:false
   };
 
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.props.form.validateFields((err: any, values: any) => {
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as PostViewModel;
         console.log('Received values of form: ', model);
@@ -50,9 +47,10 @@ class PostCreateComponent extends React.Component<
     });
   };
 
-  submit = (model: PostViewModel) => {
+  submit = (model:PostViewModel) =>
+  {  
     let mapper = new PostMapper();
-    axios
+     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Posts,
         mapper.mapViewModelToApiRequest(model),
@@ -67,236 +65,245 @@ class PostCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.PostClientRequestModel
           >;
-          this.setState({
-            ...this.state,
-            submitted: true,
-            model: mapper.mapApiResponseToViewModel(response.record!),
-            errorOccurred: false,
-            errorMessage: '',
-          });
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({
-            ...this.state,
-            submitted: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  };
-
+      ); 
+  }
+  
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-    } = this.props.form;
 
-    let message: JSX.Element = <div />;
-    if (this.state.submitted) {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type="error" />;
-      } else {
-        message = <Alert message="Submitted" type="success" />;
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
       }
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.loaded) {
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="acceptedAnswerId">AcceptedAnswerId</label>
-            <br />
-            {getFieldDecorator('acceptedAnswerId', {
-              rules: [],
-            })(
-              <Input placeholder={'AcceptedAnswerId'} id={'acceptedAnswerId'} />
-            )}
-          </Form.Item>
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
 
-          <Form.Item>
-            <label htmlFor="answerCount">AnswerCount</label>
-            <br />
-            {getFieldDecorator('answerCount', {
-              rules: [],
-            })(<Input placeholder={'AnswerCount'} id={'answerCount'} />)}
-          </Form.Item>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='acceptedAnswerId'>AcceptedAnswerId</label>
+              <br />             
+              {getFieldDecorator('acceptedAnswerId', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"AcceptedAnswerId"} id={"acceptedAnswerId"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="body">Body</label>
-            <br />
-            {getFieldDecorator('body', {
-              rules: [],
-            })(<Input placeholder={'Body'} id={'body'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='answerCount'>AnswerCount</label>
+              <br />             
+              {getFieldDecorator('answerCount', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"AnswerCount"} id={"answerCount"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="closedDate">ClosedDate</label>
-            <br />
-            {getFieldDecorator('closedDate', {
-              rules: [],
-            })(<Input placeholder={'ClosedDate'} id={'closedDate'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='body'>Body</label>
+              <br />             
+              {getFieldDecorator('body', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"Body"} id={"body"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="commentCount">CommentCount</label>
-            <br />
-            {getFieldDecorator('commentCount', {
-              rules: [],
-            })(<Input placeholder={'CommentCount'} id={'commentCount'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='closedDate'>ClosedDate</label>
+              <br />             
+              {getFieldDecorator('closedDate', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"ClosedDate"} id={"closedDate"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="communityOwnedDate">CommunityOwnedDate</label>
-            <br />
-            {getFieldDecorator('communityOwnedDate', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'CommunityOwnedDate'}
-                id={'communityOwnedDate'}
-              />
-            )}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='commentCount'>CommentCount</label>
+              <br />             
+              {getFieldDecorator('commentCount', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"CommentCount"} id={"commentCount"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="creationDate">CreationDate</label>
-            <br />
-            {getFieldDecorator('creationDate', {
-              rules: [],
-            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='communityOwnedDate'>CommunityOwnedDate</label>
+              <br />             
+              {getFieldDecorator('communityOwnedDate', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"CommunityOwnedDate"} id={"communityOwnedDate"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="favoriteCount">FavoriteCount</label>
-            <br />
-            {getFieldDecorator('favoriteCount', {
-              rules: [],
-            })(<Input placeholder={'FavoriteCount'} id={'favoriteCount'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='creationDate'>CreationDate</label>
+              <br />             
+              {getFieldDecorator('creationDate', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"CreationDate"} id={"creationDate"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="lastActivityDate">LastActivityDate</label>
-            <br />
-            {getFieldDecorator('lastActivityDate', {
-              rules: [],
-            })(
-              <Input placeholder={'LastActivityDate'} id={'lastActivityDate'} />
-            )}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='favoriteCount'>FavoriteCount</label>
+              <br />             
+              {getFieldDecorator('favoriteCount', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FavoriteCount"} id={"favoriteCount"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="lastEditDate">LastEditDate</label>
-            <br />
-            {getFieldDecorator('lastEditDate', {
-              rules: [],
-            })(<Input placeholder={'LastEditDate'} id={'lastEditDate'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='lastActivityDate'>LastActivityDate</label>
+              <br />             
+              {getFieldDecorator('lastActivityDate', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"LastActivityDate"} id={"lastActivityDate"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="lastEditorDisplayName">LastEditorDisplayName</label>
-            <br />
-            {getFieldDecorator('lastEditorDisplayName', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'LastEditorDisplayName'}
-                id={'lastEditorDisplayName'}
-              />
-            )}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='lastEditDate'>LastEditDate</label>
+              <br />             
+              {getFieldDecorator('lastEditDate', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"LastEditDate"} id={"lastEditDate"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="lastEditorUserId">LastEditorUserId</label>
-            <br />
-            {getFieldDecorator('lastEditorUserId', {
-              rules: [],
-            })(
-              <Input placeholder={'LastEditorUserId'} id={'lastEditorUserId'} />
-            )}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='lastEditorDisplayName'>LastEditorDisplayName</label>
+              <br />             
+              {getFieldDecorator('lastEditorDisplayName', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"LastEditorDisplayName"} id={"lastEditorDisplayName"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="ownerUserId">OwnerUserId</label>
-            <br />
-            {getFieldDecorator('ownerUserId', {
-              rules: [],
-            })(<Input placeholder={'OwnerUserId'} id={'ownerUserId'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='lastEditorUserId'>LastEditorUserId</label>
+              <br />             
+              {getFieldDecorator('lastEditorUserId', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"LastEditorUserId"} id={"lastEditorUserId"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="parentId">ParentId</label>
-            <br />
-            {getFieldDecorator('parentId', {
-              rules: [],
-            })(<Input placeholder={'ParentId'} id={'parentId'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='ownerUserId'>OwnerUserId</label>
+              <br />             
+              {getFieldDecorator('ownerUserId', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"OwnerUserId"} id={"ownerUserId"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="postTypeId">PostTypeId</label>
-            <br />
-            {getFieldDecorator('postTypeId', {
-              rules: [],
-            })(<Input placeholder={'PostTypeId'} id={'postTypeId'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='parentId'>ParentId</label>
+              <br />             
+              {getFieldDecorator('parentId', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"ParentId"} id={"parentId"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="score">Score</label>
-            <br />
-            {getFieldDecorator('score', {
-              rules: [],
-            })(<Input placeholder={'Score'} id={'score'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='postTypeId'>PostTypeId</label>
+              <br />             
+              {getFieldDecorator('postTypeId', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"PostTypeId"} id={"postTypeId"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="tag">Tags</label>
-            <br />
-            {getFieldDecorator('tag', {
-              rules: [],
-            })(<Input placeholder={'Tags'} id={'tag'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='score'>Score</label>
+              <br />             
+              {getFieldDecorator('score', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"Score"} id={"score"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="title">Title</label>
-            <br />
-            {getFieldDecorator('title', {
-              rules: [],
-            })(<Input placeholder={'Title'} id={'title'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='tag'>Tags</label>
+              <br />             
+              {getFieldDecorator('tag', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"Tags"} id={"tag"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="viewCount">ViewCount</label>
-            <br />
-            {getFieldDecorator('viewCount', {
-              rules: [],
-            })(<Input placeholder={'ViewCount'} id={'viewCount'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='title'>Title</label>
+              <br />             
+              {getFieldDecorator('title', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"Title"} id={"title"} /> )}
+              </Form.Item>
 
+						<Form.Item>
+              <label htmlFor='viewCount'>ViewCount</label>
+              <br />             
+              {getFieldDecorator('viewCount', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"ViewCount"} id={"viewCount"} /> )}
+              </Form.Item>
+
+			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          {message}
-        </Form>
-      );
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
-export const WrappedPostCreateComponent = Form.create({ name: 'Post Create' })(
-  PostCreateComponent
-);
-
+export const WrappedPostCreateComponent = Form.create({ name: 'Post Create' })(PostCreateComponent);
 
 /*<Codenesium>
-    <Hash>7f705dc8a20be8f761b9bcda13a8b6cd</Hash>
+    <Hash>20cfcb70fcc00ac690d124ecf548c68f</Hash>
 </Codenesium>*/

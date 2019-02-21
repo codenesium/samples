@@ -1,181 +1,174 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import PurchaseOrderHeaderMapper from './purchaseOrderHeaderMapper';
 import PurchaseOrderHeaderViewModel from './purchaseOrderHeaderViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:PurchaseOrderHeaderViewModel
+interface PurchaseOrderHeaderDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const PurchaseOrderHeaderDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.PurchaseOrderHeaders + '/edit/' + model.model!.purchaseOrderID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="employeeID" className={"col-sm-2 col-form-label"}>EmployeeID</label>
-							<div className="col-sm-12">
-								{String(model.model!.employeeID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="freight" className={"col-sm-2 col-form-label"}>Freight</label>
-							<div className="col-sm-12">
-								{String(model.model!.freight)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="modifiedDate" className={"col-sm-2 col-form-label"}>ModifiedDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.modifiedDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="orderDate" className={"col-sm-2 col-form-label"}>OrderDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.orderDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="purchaseOrderID" className={"col-sm-2 col-form-label"}>PurchaseOrderID</label>
-							<div className="col-sm-12">
-								{String(model.model!.purchaseOrderID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="revisionNumber" className={"col-sm-2 col-form-label"}>RevisionNumber</label>
-							<div className="col-sm-12">
-								{String(model.model!.revisionNumber)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="shipDate" className={"col-sm-2 col-form-label"}>ShipDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.shipDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="shipMethodID" className={"col-sm-2 col-form-label"}>ShipMethodID</label>
-							<div className="col-sm-12">
-								{String(model.model!.shipMethodID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="status" className={"col-sm-2 col-form-label"}>Status</label>
-							<div className="col-sm-12">
-								{String(model.model!.status)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="subTotal" className={"col-sm-2 col-form-label"}>SubTotal</label>
-							<div className="col-sm-12">
-								{String(model.model!.subTotal)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="taxAmt" className={"col-sm-2 col-form-label"}>TaxAmt</label>
-							<div className="col-sm-12">
-								{String(model.model!.taxAmt)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="totalDue" className={"col-sm-2 col-form-label"}>TotalDue</label>
-							<div className="col-sm-12">
-								{String(model.model!.totalDue)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="vendorID" className={"col-sm-2 col-form-label"}>VendorID</label>
-							<div className="col-sm-12">
-								{String(model.model!.vendorID)}
-							</div>
-						</div>
-					             </form>
-  );
+interface PurchaseOrderHeaderDetailComponentState {
+  model?: PurchaseOrderHeaderViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     purchaseOrderID:number;
+class PurchaseOrderHeaderDetailComponent extends React.Component<
+PurchaseOrderHeaderDetailComponentProps,
+PurchaseOrderHeaderDetailComponentState
+> {
+  state = {
+    model: new PurchaseOrderHeaderViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: ''
+  };
+
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.PurchaseOrderHeaders + '/edit/' + this.state.model!.purchaseOrderID);
   }
   
-  interface IMatch
-  {
-     params: IParams;
-  }
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  interface PurchaseOrderHeaderDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface PurchaseOrderHeaderDetailComponentState
-  {
-      model?:PurchaseOrderHeaderViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-
-  export default class PurchaseOrderHeaderDetailComponent extends React.Component<PurchaseOrderHeaderDetailComponentProps, PurchaseOrderHeaderDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.PurchaseOrderHeaders + '/' + this.props.match.params.purchaseOrderID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.PurchaseOrderHeaders +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.PurchaseOrderHeaderClientResponseModel;
-            
-			let mapper = new PurchaseOrderHeaderMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<PurchaseOrderHeaderDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.PurchaseOrderHeaderClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new PurchaseOrderHeaderMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>EmployeeID</h3>
+							<p>{String(this.state.model!.employeeID)}</p>
+						 </div>
+					   						 <div>
+							<h3>Freight</h3>
+							<p>{String(this.state.model!.freight)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>OrderDate</h3>
+							<p>{String(this.state.model!.orderDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>PurchaseOrderID</h3>
+							<p>{String(this.state.model!.purchaseOrderID)}</p>
+						 </div>
+					   						 <div>
+							<h3>RevisionNumber</h3>
+							<p>{String(this.state.model!.revisionNumber)}</p>
+						 </div>
+					   						 <div>
+							<h3>ShipDate</h3>
+							<p>{String(this.state.model!.shipDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>ShipMethodID</h3>
+							<p>{String(this.state.model!.shipMethodID)}</p>
+						 </div>
+					   						 <div>
+							<h3>Status</h3>
+							<p>{String(this.state.model!.status)}</p>
+						 </div>
+					   						 <div>
+							<h3>SubTotal</h3>
+							<p>{String(this.state.model!.subTotal)}</p>
+						 </div>
+					   						 <div>
+							<h3>TaxAmt</h3>
+							<p>{String(this.state.model!.taxAmt)}</p>
+						 </div>
+					   						 <div>
+							<h3>TotalDue</h3>
+							<p>{String(this.state.model!.totalDue)}</p>
+						 </div>
+					   						 <div>
+							<h3>VendorID</h3>
+							<p>{String(this.state.model!.vendorID)}</p>
+						 </div>
+					   		  </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
+export const WrappedPurchaseOrderHeaderDetailComponent = Form.create({ name: 'PurchaseOrderHeader Detail' })(
+  PurchaseOrderHeaderDetailComponent
+);
+
 /*<Codenesium>
-    <Hash>6f89a96e49d9507d9d3ef13ab3d438b9</Hash>
+    <Hash>33f15034ecbd2e84d4feb98534326fad</Hash>
 </Codenesium>*/

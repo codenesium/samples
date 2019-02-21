@@ -1,440 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import SpecialOfferViewModel from './specialOfferViewModel';
+import * as Api from '../../api/models';
 import SpecialOfferMapper from './specialOfferMapper';
-
-interface Props {
-  model?: SpecialOfferViewModel;
-}
-
-const SpecialOfferEditDisplay = (props: FormikProps<SpecialOfferViewModel>) => {
-  let status = props.status as UpdateResponse<
-    Api.SpecialOfferClientRequestModel
-  >;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof SpecialOfferViewModel] &&
-      props.errors[name as keyof SpecialOfferViewModel]
-    ) {
-      response += props.errors[name as keyof SpecialOfferViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('category')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Category
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="category"
-            className={
-              errorExistForField('category')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('category') && (
-            <small className="text-danger">{errorsForField('category')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('description')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Description
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="description"
-            className={
-              errorExistForField('description')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('description') && (
-            <small className="text-danger">
-              {errorsForField('description')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('discountPct')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          DiscountPct
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="discountPct"
-            className={
-              errorExistForField('discountPct')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('discountPct') && (
-            <small className="text-danger">
-              {errorsForField('discountPct')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('endDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          EndDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="endDate"
-            className={
-              errorExistForField('endDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('endDate') && (
-            <small className="text-danger">{errorsForField('endDate')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('maxQty')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          MaxQty
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="maxQty"
-            className={
-              errorExistForField('maxQty')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('maxQty') && (
-            <small className="text-danger">{errorsForField('maxQty')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('minQty')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          MinQty
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="minQty"
-            className={
-              errorExistForField('minQty')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('minQty') && (
-            <small className="text-danger">{errorsForField('minQty')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('rowguid')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Rowguid
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="rowguid"
-            className={
-              errorExistForField('rowguid')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('rowguid') && (
-            <small className="text-danger">{errorsForField('rowguid')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('specialOfferID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          SpecialOfferID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="specialOfferID"
-            className={
-              errorExistForField('specialOfferID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('specialOfferID') && (
-            <small className="text-danger">
-              {errorsForField('specialOfferID')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('startDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          StartDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="startDate"
-            className={
-              errorExistForField('startDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('startDate') && (
-            <small className="text-danger">{errorsForField('startDate')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const SpecialOfferEdit = withFormik<Props, SpecialOfferViewModel>({
-  mapPropsToValues: props => {
-    let response = new SpecialOfferViewModel();
-    response.setProperties(
-      props.model!.category,
-      props.model!.description,
-      props.model!.discountPct,
-      props.model!.endDate,
-      props.model!.maxQty,
-      props.model!.minQty,
-      props.model!.modifiedDate,
-      props.model!.rowguid,
-      props.model!.specialOfferID,
-      props.model!.startDate
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<SpecialOfferViewModel> = {};
-
-    if (values.category == '') {
-      errors.category = 'Required';
-    }
-    if (values.description == '') {
-      errors.description = 'Required';
-    }
-    if (values.discountPct == 0) {
-      errors.discountPct = 'Required';
-    }
-    if (values.endDate == undefined) {
-      errors.endDate = 'Required';
-    }
-    if (values.minQty == 0) {
-      errors.minQty = 'Required';
-    }
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.rowguid == undefined) {
-      errors.rowguid = 'Required';
-    }
-    if (values.specialOfferID == 0) {
-      errors.specialOfferID = 'Required';
-    }
-    if (values.startDate == undefined) {
-      errors.startDate = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new SpecialOfferMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.SpecialOffers +
-          '/' +
-          values.specialOfferID,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.SpecialOfferClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'SpecialOfferEdit',
-})(SpecialOfferEditDisplay);
-
-interface IParams {
-  specialOfferID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import SpecialOfferViewModel from './specialOfferViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SpecialOfferEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface SpecialOfferEditComponentState {
@@ -443,21 +20,23 @@ interface SpecialOfferEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class SpecialOfferEditComponent extends React.Component<
+class SpecialOfferEditComponent extends React.Component<
   SpecialOfferEditComponentProps,
   SpecialOfferEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new SpecialOfferViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -465,7 +44,7 @@ export default class SpecialOfferEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.SpecialOffers +
           '/' +
-          this.props.match.params.specialOfferID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -487,6 +66,8 @@ export default class SpecialOfferEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -499,21 +80,176 @@ export default class SpecialOfferEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as SpecialOfferViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:SpecialOfferViewModel) =>
+  {  
+    let mapper = new SpecialOfferMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.SpecialOffers + '/' + this.state.model!.specialOfferID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.SpecialOfferClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <SpecialOfferEdit model={this.state.model} />;
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='category'>Category</label>
+              <br />             
+              {getFieldDecorator('category', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Category"} id={"category"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='description'>Description</label>
+              <br />             
+              {getFieldDecorator('description', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Description"} id={"description"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='discountPct'>DiscountPct</label>
+              <br />             
+              {getFieldDecorator('discountPct', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DiscountPct"} id={"discountPct"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='endDate'>EndDate</label>
+              <br />             
+              {getFieldDecorator('endDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"EndDate"} id={"endDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='maxQty'>MaxQty</label>
+              <br />             
+              {getFieldDecorator('maxQty', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"MaxQty"} id={"maxQty"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='minQty'>MinQty</label>
+              <br />             
+              {getFieldDecorator('minQty', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"MinQty"} id={"minQty"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='startDate'>StartDate</label>
+              <br />             
+              {getFieldDecorator('startDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StartDate"} id={"startDate"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedSpecialOfferEditComponent = Form.create({ name: 'SpecialOffer Edit' })(SpecialOfferEditComponent);
 
 /*<Codenesium>
-    <Hash>c0305cf918f4d21032ea816b00473eab</Hash>
+    <Hash>80a4e86e58ce45c9f232c6a837df5852</Hash>
 </Codenesium>*/

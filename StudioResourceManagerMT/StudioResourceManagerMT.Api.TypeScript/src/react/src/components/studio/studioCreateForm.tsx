@@ -1,310 +1,59 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import StudioMapper from './studioMapper';
 import StudioViewModel from './studioViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: StudioViewModel;
+interface StudioCreateComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-const StudioCreateDisplay: React.SFC<FormikProps<StudioViewModel>> = (
-  props: FormikProps<StudioViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.StudioClientRequestModel>;
+interface StudioCreateComponentState {
+  model?: StudioViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof StudioViewModel] &&
-      props.errors[name as keyof StudioViewModel]
-    ) {
-      response += props.errors[name as keyof StudioViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class StudioCreateComponent extends React.Component<
+  StudioCreateComponentProps,
+  StudioCreateComponentState
+> {
+  state = {
+    model: new StudioViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as StudioViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('address1')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Address1
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="address1"
-            className={
-              errorExistForField('address1')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('address1') && (
-            <small className="text-danger">{errorsForField('address1')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('address2')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Address2
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="address2"
-            className={
-              errorExistForField('address2')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('address2') && (
-            <small className="text-danger">{errorsForField('address2')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('city')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          City
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="city"
-            className={
-              errorExistForField('city')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('city') && (
-            <small className="text-danger">{errorsForField('city')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('province')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Province
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="province"
-            className={
-              errorExistForField('province')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('province') && (
-            <small className="text-danger">{errorsForField('province')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('website')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Website
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="website"
-            className={
-              errorExistForField('website')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('website') && (
-            <small className="text-danger">{errorsForField('website')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('zip')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Zip
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="zip"
-            className={
-              errorExistForField('zip')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('zip') && (
-            <small className="text-danger">{errorsForField('zip')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const StudioCreate = withFormik<Props, StudioViewModel>({
-  mapPropsToValues: props => {
-    let response = new StudioViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.address1,
-        props.model!.address2,
-        props.model!.city,
-        props.model!.id,
-        props.model!.name,
-        props.model!.province,
-        props.model!.website,
-        props.model!.zip
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<StudioViewModel> = {};
-
-    if (values.address1 == '') {
-      errors.address1 = 'Required';
-    }
-    if (values.address2 == '') {
-      errors.address2 = 'Required';
-    }
-    if (values.city == '') {
-      errors.city = 'Required';
-    }
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-    if (values.province == '') {
-      errors.province = 'Required';
-    }
-    if (values.website == '') {
-      errors.website = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model:StudioViewModel) =>
+  {  
     let mapper = new StudioMapper();
-
-    axios
+     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Studios,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -316,54 +65,125 @@ const StudioCreate = withFormik<Props, StudioViewModel>({
           let response = resp.data as CreateResponse<
             Api.StudioClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  },
-  displayName: 'StudioCreate',
-})(StudioCreateDisplay);
-
-interface StudioCreateComponentProps {}
-
-interface StudioCreateComponentState {
-  model?: StudioViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class StudioCreateComponent extends React.Component<
-  StudioCreateComponentProps,
-  StudioCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
-  };
-
+      ); 
+  }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <StudioCreate model={this.state.model} />;
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='address1'>address1</label>
+              <br />             
+              {getFieldDecorator('address1', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address1"} id={"address1"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='address2'>address2</label>
+              <br />             
+              {getFieldDecorator('address2', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address2"} id={"address2"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='city'>city</label>
+              <br />             
+              {getFieldDecorator('city', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"city"} id={"city"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"name"} id={"name"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='province'>province</label>
+              <br />             
+              {getFieldDecorator('province', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"province"} id={"province"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='website'>website</label>
+              <br />             
+              {getFieldDecorator('website', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"website"} id={"website"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='zip'>zip</label>
+              <br />             
+              {getFieldDecorator('zip', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"zip"} id={"zip"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedStudioCreateComponent = Form.create({ name: 'Studio Create' })(StudioCreateComponent);
 
 /*<Codenesium>
-    <Hash>8e8ee272bada331c99ade26b7c685c88</Hash>
+    <Hash>db5301bebe2189793aa40d034ba3bd42</Hash>
 </Codenesium>*/

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import EventViewModel from './eventViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface EventDetailComponentProps {
   form: WrappedFormUtils;
@@ -91,7 +89,7 @@ EventDetailComponentState
     } 
   
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -106,44 +104,44 @@ EventDetailComponentState
 		  </Button>
 		  <div>
 									 <div>
-							<div>address1</div>
-							<div>{this.state.model!.address1}</div>
+							<h3>address1</h3>
+							<p>{String(this.state.model!.address1)}</p>
 						 </div>
 					   						 <div>
-							<div>address2</div>
-							<div>{this.state.model!.address2}</div>
+							<h3>address2</h3>
+							<p>{String(this.state.model!.address2)}</p>
 						 </div>
 					   						 <div style={{"marginBottom":"10px"}}>
 							<h3>cityId</h3>
-							<div>{this.state.model!.cityIdNavigation!.toDisplay()}</div>
+							<p>{String(this.state.model!.cityIdNavigation!.toDisplay())}</p>
 						 </div>
 					   						 <div>
-							<div>date</div>
-							<div>{this.state.model!.date}</div>
+							<h3>date</h3>
+							<p>{String(this.state.model!.date)}</p>
 						 </div>
 					   						 <div>
-							<div>description</div>
-							<div>{this.state.model!.description}</div>
+							<h3>description</h3>
+							<p>{String(this.state.model!.description)}</p>
 						 </div>
 					   						 <div>
-							<div>endDate</div>
-							<div>{this.state.model!.endDate}</div>
+							<h3>endDate</h3>
+							<p>{String(this.state.model!.endDate)}</p>
 						 </div>
 					   						 <div>
-							<div>facebook</div>
-							<div>{this.state.model!.facebook}</div>
+							<h3>facebook</h3>
+							<p>{String(this.state.model!.facebook)}</p>
 						 </div>
 					   						 <div>
-							<div>name</div>
-							<div>{this.state.model!.name}</div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
 						 </div>
 					   						 <div>
-							<div>startDate</div>
-							<div>{this.state.model!.startDate}</div>
+							<h3>startDate</h3>
+							<p>{String(this.state.model!.startDate)}</p>
 						 </div>
 					   						 <div>
-							<div>website</div>
-							<div>{this.state.model!.website}</div>
+							<h3>website</h3>
+							<p>{String(this.state.model!.website)}</p>
 						 </div>
 					   		  </div>
           {message}
@@ -160,5 +158,5 @@ export const WrappedEventDetailComponent = Form.create({ name: 'Event Detail' })
 );
 
 /*<Codenesium>
-    <Hash>96115d8ef22a47f5ed9e11809d9690ca</Hash>
+    <Hash>ad3ed3c39a659162e7d4e2730b0c232f</Hash>
 </Codenesium>*/

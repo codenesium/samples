@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TableViewModel {
   id: number;
   name: string;
@@ -19,5 +21,5 @@ export default class TableViewModel {
 
 
 /*<Codenesium>
-    <Hash>0765497894786eaab6b256e5b9662922</Hash>
+    <Hash>50bd95d929a1f749f02aaba0137efa3d</Hash>
 </Codenesium>*/

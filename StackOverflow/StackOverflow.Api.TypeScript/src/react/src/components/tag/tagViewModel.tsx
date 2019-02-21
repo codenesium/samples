@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TagViewModel {
   count: number;
   excerptPostId: number;
@@ -34,5 +36,5 @@ export default class TagViewModel {
 
 
 /*<Codenesium>
-    <Hash>96fab4bcd18d3fbe87ea62ebe25dad3b</Hash>
+    <Hash>dcb581268aaf3ed2fe48aff7d47cebf4</Hash>
 </Codenesium>*/

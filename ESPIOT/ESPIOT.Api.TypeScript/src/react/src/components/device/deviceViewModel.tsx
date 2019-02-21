@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class DeviceViewModel {
   dateOfLastPing: any;
   id: number;
@@ -20,7 +22,7 @@ export default class DeviceViewModel {
     name: string,
     publicId: any
   ): void {
-    this.dateOfLastPing = dateOfLastPing;
+    this.dateOfLastPing = moment(dateOfLastPing, 'YYYY-MM-DD');
     this.id = id;
     this.isActive = isActive;
     this.name = name;
@@ -34,5 +36,5 @@ export default class DeviceViewModel {
 
 
 /*<Codenesium>
-    <Hash>3d3c935bf787b8afcb111d475b317be2</Hash>
+    <Hash>934cc57b888fd0278d754615d3f5fee6</Hash>
 </Codenesium>*/

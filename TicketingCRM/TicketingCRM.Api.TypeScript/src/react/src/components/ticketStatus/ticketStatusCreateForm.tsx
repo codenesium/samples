@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TicketStatusMapper from './ticketStatusMapper';
 import TicketStatusViewModel from './ticketStatusViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TicketStatusCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class TicketStatusCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -115,7 +121,13 @@ class TicketStatusCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('name', {
               rules: [],
-            })(<DatePicker placeholder={'name'} id={'name'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'name'}
+                id={'name'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -138,5 +150,5 @@ export const WrappedTicketStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f2406cdf5fea5838d83abfe3e02ccd2b</Hash>
+    <Hash>30d5c2ed65defe0f214c7e46ea10e3a7</Hash>
 </Codenesium>*/

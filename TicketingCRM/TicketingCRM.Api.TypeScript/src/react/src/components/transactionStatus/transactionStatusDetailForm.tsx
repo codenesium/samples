@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TransactionStatusMapper from './transactionStatusMapper';
 import TransactionStatusViewModel from './transactionStatusViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TransactionStatusDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface TransactionStatusDetailComponentState {
 }
 
 class TransactionStatusDetailComponent extends React.Component<
-  TransactionStatusDetailComponentProps,
-  TransactionStatusDetailComponentState
+TransactionStatusDetailComponentProps,
+TransactionStatusDetailComponentState
 > {
   state = {
     model: new TransactionStatusViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.TransactionStatus + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.TransactionStatus + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,31 +82,32 @@ class TransactionStatusDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -120,11 +117,10 @@ class TransactionStatusDetailComponent extends React.Component<
   }
 }
 
-export const WrappedTransactionStatusDetailComponent = Form.create({
-  name: 'TransactionStatus Detail',
-})(TransactionStatusDetailComponent);
-
+export const WrappedTransactionStatusDetailComponent = Form.create({ name: 'TransactionStatus Detail' })(
+  TransactionStatusDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>f6871cc95d50b1e5d623ce55e718d3a0</Hash>
+    <Hash>355c9ec3d447fdb55d73206be531396f</Hash>
 </Codenesium>*/

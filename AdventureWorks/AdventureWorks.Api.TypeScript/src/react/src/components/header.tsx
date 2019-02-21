@@ -1,185 +1,445 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ClientRoutes, Constants } from '../constants';
+const { Header, Content, Footer, Sider } = Layout;
 
-interface Props{
+const SubMenu = Menu.SubMenu;
+
+interface WrapperHeaderProps {}
+
+interface WrapperHeaderState {
+  collapsed: boolean;
 }
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+    state = { collapsed: false };
 
-interface State {
-    menuExpanded:boolean;
-}
+    onCollapse = () => {
+      this.setState({ ...this.state, collapsed: !this.state.collapsed });
+    };
+    render() {
+      return (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            collapsible
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
+          >
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+               <MenuItem
+                key="Home"
+              >
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
+              </MenuItem>
 
- export class Header extends React.Component<Props, State> {
- 
- state=({menuExpanded:false});
- 
- handleClick(e:React.FormEvent)
- {
-    this.setState({menuExpanded:!this.state.menuExpanded})
- }
+			   			   <MenuItem
+                key="aWBuildVersion"
+              >
+			  <Icon type="pie-chart" />
+              <span>AWBuildVersions</span>
+              <Link to={ClientRoutes.AWBuildVersions}></Link>
+              </MenuItem>
 
- render()
- {   
-     return (<div className="row col-12">
-      <nav className="navbar navbar-expand-lg navbar-light bg-white" id="navbar">
-        <a className="navbar-brand" href="/">AdventureWorks</a>
+							   <MenuItem
+                key="databaseLog"
+              >
+			  <Icon type="rise" />
+              <span>DatabaseLogs</span>
+              <Link to={ClientRoutes.DatabaseLogs}></Link>
+              </MenuItem>
 
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" onClick={e => this.handleClick(e)}>
-          <span className="navbar-toggler-icon"></span>
-        </button>
+							   <MenuItem
+                key="errorLog"
+              >
+			  <Icon type="bars" />
+              <span>ErrorLogs</span>
+              <Link to={ClientRoutes.ErrorLogs}></Link>
+              </MenuItem>
 
-        <div className={ this.state.menuExpanded ? "collapse.expand navbar-collapse" : "collapse navbar-collapse" } id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-		  			 <li className="nav-item">
-                <Link className="nav-link" to="/awbuildversions" onClick={e => this.handleClick(e)}>AWBuildVersions</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/databaselogs" onClick={e => this.handleClick(e)}>DatabaseLogs</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/errorlogs" onClick={e => this.handleClick(e)}>ErrorLogs</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/departments" onClick={e => this.handleClick(e)}>Departments</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/employees" onClick={e => this.handleClick(e)}>Employees</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/jobcandidates" onClick={e => this.handleClick(e)}>JobCandidates</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/shifts" onClick={e => this.handleClick(e)}>Shifts</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/addresses" onClick={e => this.handleClick(e)}>Addresses</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/addresstypes" onClick={e => this.handleClick(e)}>AddressTypes</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/businessentities" onClick={e => this.handleClick(e)}>BusinessEntities</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/contacttypes" onClick={e => this.handleClick(e)}>ContactTypes</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/countryregions" onClick={e => this.handleClick(e)}>CountryRegions</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/passwords" onClick={e => this.handleClick(e)}>Passwords</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/people" onClick={e => this.handleClick(e)}>People</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/phonenumbertypes" onClick={e => this.handleClick(e)}>PhoneNumberTypes</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/stateprovinces" onClick={e => this.handleClick(e)}>StateProvinces</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/billofmaterials" onClick={e => this.handleClick(e)}>BillOfMaterials</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/cultures" onClick={e => this.handleClick(e)}>Cultures</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/documents" onClick={e => this.handleClick(e)}>Documents</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/illustrations" onClick={e => this.handleClick(e)}>Illustrations</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/locations" onClick={e => this.handleClick(e)}>Locations</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/products" onClick={e => this.handleClick(e)}>Products</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/productcategories" onClick={e => this.handleClick(e)}>ProductCategories</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/productdescriptions" onClick={e => this.handleClick(e)}>ProductDescriptions</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/productmodels" onClick={e => this.handleClick(e)}>ProductModels</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/productphotoes" onClick={e => this.handleClick(e)}>ProductPhotoes</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/productreviews" onClick={e => this.handleClick(e)}>ProductReviews</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/productsubcategories" onClick={e => this.handleClick(e)}>ProductSubcategories</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/scrapreasons" onClick={e => this.handleClick(e)}>ScrapReasons</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/transactionhistories" onClick={e => this.handleClick(e)}>TransactionHistories</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/transactionhistoryarchives" onClick={e => this.handleClick(e)}>TransactionHistoryArchives</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/unitmeasures" onClick={e => this.handleClick(e)}>UnitMeasures</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/workorders" onClick={e => this.handleClick(e)}>WorkOrders</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/purchaseorderheaders" onClick={e => this.handleClick(e)}>PurchaseOrderHeaders</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/shipmethods" onClick={e => this.handleClick(e)}>ShipMethods</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/vendors" onClick={e => this.handleClick(e)}>Vendors</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/creditcards" onClick={e => this.handleClick(e)}>CreditCards</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/currencies" onClick={e => this.handleClick(e)}>Currencies</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/currencyrates" onClick={e => this.handleClick(e)}>CurrencyRates</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/customers" onClick={e => this.handleClick(e)}>Customers</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/salesorderheaders" onClick={e => this.handleClick(e)}>SalesOrderHeaders</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/salespersons" onClick={e => this.handleClick(e)}>SalesPersons</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/salesreasons" onClick={e => this.handleClick(e)}>SalesReasons</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/salestaxrates" onClick={e => this.handleClick(e)}>SalesTaxRates</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/salesterritories" onClick={e => this.handleClick(e)}>SalesTerritories</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/shoppingcartitems" onClick={e => this.handleClick(e)}>ShoppingCartItems</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/specialoffers" onClick={e => this.handleClick(e)}>SpecialOffers</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/stores" onClick={e => this.handleClick(e)}>Stores</Link>
-              </li>
-			          </ul>
-        </div>
-      </nav>
-    </div>);
+							   <MenuItem
+                key="department"
+              >
+			  <Icon type="pie-chart" />
+              <span>Departments</span>
+              <Link to={ClientRoutes.Departments}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="employee"
+              >
+			  <Icon type="rise" />
+              <span>Employees</span>
+              <Link to={ClientRoutes.Employees}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="jobCandidate"
+              >
+			  <Icon type="bars" />
+              <span>JobCandidates</span>
+              <Link to={ClientRoutes.JobCandidates}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="shift"
+              >
+			  <Icon type="cloud" />
+              <span>Shifts</span>
+              <Link to={ClientRoutes.Shifts}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="address"
+              >
+			  <Icon type="pie-chart" />
+              <span>Addresses</span>
+              <Link to={ClientRoutes.Addresses}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="addressType"
+              >
+			  <Icon type="rise" />
+              <span>AddressTypes</span>
+              <Link to={ClientRoutes.AddressTypes}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="businessEntity"
+              >
+			  <Icon type="bars" />
+              <span>BusinessEntities</span>
+              <Link to={ClientRoutes.BusinessEntities}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="contactType"
+              >
+			  <Icon type="cloud" />
+              <span>ContactTypes</span>
+              <Link to={ClientRoutes.ContactTypes}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="countryRegion"
+              >
+			  <Icon type="code" />
+              <span>CountryRegions</span>
+              <Link to={ClientRoutes.CountryRegions}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="password"
+              >
+			  <Icon type="smile" />
+              <span>Passwords</span>
+              <Link to={ClientRoutes.Passwords}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="person"
+              >
+			  <Icon type="laptop" />
+              <span>People</span>
+              <Link to={ClientRoutes.People}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="phoneNumberType"
+              >
+			  <Icon type="mobile" />
+              <span>PhoneNumberTypes</span>
+              <Link to={ClientRoutes.PhoneNumberTypes}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="stateProvince"
+              >
+			  <Icon type="paper-clip" />
+              <span>StateProvinces</span>
+              <Link to={ClientRoutes.StateProvinces}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="billOfMaterial"
+              >
+			  <Icon type="pie-chart" />
+              <span>BillOfMaterials</span>
+              <Link to={ClientRoutes.BillOfMaterials}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="culture"
+              >
+			  <Icon type="rise" />
+              <span>Cultures</span>
+              <Link to={ClientRoutes.Cultures}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="document"
+              >
+			  <Icon type="bars" />
+              <span>Documents</span>
+              <Link to={ClientRoutes.Documents}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="illustration"
+              >
+			  <Icon type="cloud" />
+              <span>Illustrations</span>
+              <Link to={ClientRoutes.Illustrations}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="location"
+              >
+			  <Icon type="code" />
+              <span>Locations</span>
+              <Link to={ClientRoutes.Locations}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="product"
+              >
+			  <Icon type="smile" />
+              <span>Products</span>
+              <Link to={ClientRoutes.Products}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="productCategory"
+              >
+			  <Icon type="laptop" />
+              <span>ProductCategories</span>
+              <Link to={ClientRoutes.ProductCategories}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="productDescription"
+              >
+			  <Icon type="mobile" />
+              <span>ProductDescriptions</span>
+              <Link to={ClientRoutes.ProductDescriptions}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="productModel"
+              >
+			  <Icon type="paper-clip" />
+              <span>ProductModels</span>
+              <Link to={ClientRoutes.ProductModels}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="productPhoto"
+              >
+			  <Icon type="setting" />
+              <span>ProductPhotoes</span>
+              <Link to={ClientRoutes.ProductPhotoes}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="productReview"
+              >
+			  <Icon type="user" />
+              <span>ProductReviews</span>
+              <Link to={ClientRoutes.ProductReviews}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="productSubcategory"
+              >
+			  <Icon type="home" />
+              <span>ProductSubcategories</span>
+              <Link to={ClientRoutes.ProductSubcategories}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="scrapReason"
+              >
+			  <Icon type="camera" />
+              <span>ScrapReasons</span>
+              <Link to={ClientRoutes.ScrapReasons}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="transactionHistory"
+              >
+			  <Icon type="like" />
+              <span>TransactionHistories</span>
+              <Link to={ClientRoutes.TransactionHistories}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="transactionHistoryArchive"
+              >
+			  <Icon type="bulb" />
+              <span>TransactionHistoryArchives</span>
+              <Link to={ClientRoutes.TransactionHistoryArchives}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="unitMeasure"
+              >
+			  <Icon type="tool" />
+              <span>UnitMeasures</span>
+              <Link to={ClientRoutes.UnitMeasures}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="workOrder"
+              >
+			  <Icon type="coffee" />
+              <span>WorkOrders</span>
+              <Link to={ClientRoutes.WorkOrders}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="purchaseOrderHeader"
+              >
+			  <Icon type="pie-chart" />
+              <span>PurchaseOrderHeaders</span>
+              <Link to={ClientRoutes.PurchaseOrderHeaders}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="shipMethod"
+              >
+			  <Icon type="rise" />
+              <span>ShipMethods</span>
+              <Link to={ClientRoutes.ShipMethods}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="vendor"
+              >
+			  <Icon type="bars" />
+              <span>Vendors</span>
+              <Link to={ClientRoutes.Vendors}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="creditCard"
+              >
+			  <Icon type="pie-chart" />
+              <span>CreditCards</span>
+              <Link to={ClientRoutes.CreditCards}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="currency"
+              >
+			  <Icon type="rise" />
+              <span>Currencies</span>
+              <Link to={ClientRoutes.Currencies}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="currencyRate"
+              >
+			  <Icon type="bars" />
+              <span>CurrencyRates</span>
+              <Link to={ClientRoutes.CurrencyRates}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="customer"
+              >
+			  <Icon type="cloud" />
+              <span>Customers</span>
+              <Link to={ClientRoutes.Customers}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="salesOrderHeader"
+              >
+			  <Icon type="code" />
+              <span>SalesOrderHeaders</span>
+              <Link to={ClientRoutes.SalesOrderHeaders}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="salesPerson"
+              >
+			  <Icon type="smile" />
+              <span>SalesPersons</span>
+              <Link to={ClientRoutes.SalesPersons}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="salesReason"
+              >
+			  <Icon type="laptop" />
+              <span>SalesReasons</span>
+              <Link to={ClientRoutes.SalesReasons}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="salesTaxRate"
+              >
+			  <Icon type="mobile" />
+              <span>SalesTaxRates</span>
+              <Link to={ClientRoutes.SalesTaxRates}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="salesTerritory"
+              >
+			  <Icon type="paper-clip" />
+              <span>SalesTerritories</span>
+              <Link to={ClientRoutes.SalesTerritories}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="shoppingCartItem"
+              >
+			  <Icon type="setting" />
+              <span>ShoppingCartItems</span>
+              <Link to={ClientRoutes.ShoppingCartItems}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="specialOffer"
+              >
+			  <Icon type="user" />
+              <span>SpecialOffers</span>
+              <Link to={ClientRoutes.SpecialOffers}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="store"
+              >
+			  <Icon type="home" />
+              <span>Stores</span>
+              <Link to={ClientRoutes.Stores}></Link>
+              </MenuItem>
+
+				
+            </Menu>
+          </Sider>
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }} />
+            <Content style={{ margin: '0 16px' }}>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <Component {...this.props} />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+          </Layout>
+        </Layout>
+      );
+    }
   }
-}
+  return WrapperHeaderComponent;
+};
 
 /*<Codenesium>
-    <Hash>7102b3be07ddfbc627641b74b5e3edb3</Hash>
+    <Hash>1ed5930f66a7bbab3d291b90ee8cae02</Hash>
 </Codenesium>*/

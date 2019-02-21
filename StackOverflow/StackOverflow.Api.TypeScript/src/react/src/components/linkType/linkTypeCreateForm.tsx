@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkTypeMapper from './linkTypeMapper';
 import LinkTypeViewModel from './linkTypeViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface LinkTypeCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class LinkTypeCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -138,5 +144,5 @@ export const WrappedLinkTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d77dcf21c39c2d8aff351737751e5ee9</Hash>
+    <Hash>f73396df10fe2300c51ad78e7b5fe419</Hash>
 </Codenesium>*/

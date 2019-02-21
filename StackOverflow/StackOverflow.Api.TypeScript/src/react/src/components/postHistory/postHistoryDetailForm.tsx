@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostHistoryMapper from './postHistoryMapper';
 import PostHistoryViewModel from './postHistoryViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostHistoryDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class PostHistoryDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,36 +105,36 @@ class PostHistoryDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>comment</div>
-              <div>{this.state.model!.comment}</div>
+              <h3>Comment</h3>
+              <p>{String(this.state.model!.comment)}</p>
             </div>
             <div>
-              <div>creationDate</div>
-              <div>{this.state.model!.creationDate}</div>
+              <h3>CreationDate</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
             </div>
             <div>
-              <div>postHistoryTypeId</div>
-              <div>{this.state.model!.postHistoryTypeId}</div>
+              <h3>PostHistoryTypeId</h3>
+              <p>{String(this.state.model!.postHistoryTypeId)}</p>
             </div>
             <div>
-              <div>postId</div>
-              <div>{this.state.model!.postId}</div>
+              <h3>PostId</h3>
+              <p>{String(this.state.model!.postId)}</p>
             </div>
             <div>
-              <div>revisionGUID</div>
-              <div>{this.state.model!.revisionGUID}</div>
+              <h3>RevisionGUID</h3>
+              <p>{String(this.state.model!.revisionGUID)}</p>
             </div>
             <div>
-              <div>text</div>
-              <div>{this.state.model!.text}</div>
+              <h3>Text</h3>
+              <p>{String(this.state.model!.text)}</p>
             </div>
             <div>
-              <div>userDisplayName</div>
-              <div>{this.state.model!.userDisplayName}</div>
+              <h3>UserDisplayName</h3>
+              <p>{String(this.state.model!.userDisplayName)}</p>
             </div>
             <div>
-              <div>userId</div>
-              <div>{this.state.model!.userId}</div>
+              <h3>UserId</h3>
+              <p>{String(this.state.model!.userId)}</p>
             </div>
           </div>
           {message}
@@ -154,5 +152,5 @@ export const WrappedPostHistoryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>03548d279954f1f32ce669ee4c855f31</Hash>
+    <Hash>1733075221f058351170c9a97bdc7a8c</Hash>
 </Codenesium>*/

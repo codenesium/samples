@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class PaymentTypeViewModel {
   id: number;
   name: string;
@@ -19,5 +21,5 @@ export default class PaymentTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>81da126cd0ca3e4111dbdd466e47c70a</Hash>
+    <Hash>b76ef22c704648201efd32d69e951de6</Hash>
 </Codenesium>*/

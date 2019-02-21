@@ -1,319 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import CreditCardViewModel from './creditCardViewModel';
+import * as Api from '../../api/models';
 import CreditCardMapper from './creditCardMapper';
-
-interface Props {
-  model?: CreditCardViewModel;
-}
-
-const CreditCardEditDisplay = (props: FormikProps<CreditCardViewModel>) => {
-  let status = props.status as UpdateResponse<Api.CreditCardClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof CreditCardViewModel] &&
-      props.errors[name as keyof CreditCardViewModel]
-    ) {
-      response += props.errors[name as keyof CreditCardViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('cardNumber')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CardNumber
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="cardNumber"
-            className={
-              errorExistForField('cardNumber')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('cardNumber') && (
-            <small className="text-danger">
-              {errorsForField('cardNumber')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('cardType')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CardType
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="cardType"
-            className={
-              errorExistForField('cardType')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('cardType') && (
-            <small className="text-danger">{errorsForField('cardType')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('creditCardID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CreditCardID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="creditCardID"
-            className={
-              errorExistForField('creditCardID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('creditCardID') && (
-            <small className="text-danger">
-              {errorsForField('creditCardID')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('expMonth')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ExpMonth
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="expMonth"
-            className={
-              errorExistForField('expMonth')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('expMonth') && (
-            <small className="text-danger">{errorsForField('expMonth')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('expYear')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ExpYear
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="expYear"
-            className={
-              errorExistForField('expYear')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('expYear') && (
-            <small className="text-danger">{errorsForField('expYear')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const CreditCardEdit = withFormik<Props, CreditCardViewModel>({
-  mapPropsToValues: props => {
-    let response = new CreditCardViewModel();
-    response.setProperties(
-      props.model!.cardNumber,
-      props.model!.cardType,
-      props.model!.creditCardID,
-      props.model!.expMonth,
-      props.model!.expYear,
-      props.model!.modifiedDate
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<CreditCardViewModel> = {};
-
-    if (values.cardNumber == '') {
-      errors.cardNumber = 'Required';
-    }
-    if (values.cardType == '') {
-      errors.cardType = 'Required';
-    }
-    if (values.creditCardID == 0) {
-      errors.creditCardID = 'Required';
-    }
-    if (values.expMonth == 0) {
-      errors.expMonth = 'Required';
-    }
-    if (values.expYear == 0) {
-      errors.expYear = 'Required';
-    }
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new CreditCardMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.CreditCards +
-          '/' +
-          values.creditCardID,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.CreditCardClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'CreditCardEdit',
-})(CreditCardEditDisplay);
-
-interface IParams {
-  creditCardID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import CreditCardViewModel from './creditCardViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CreditCardEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface CreditCardEditComponentState {
@@ -322,21 +20,23 @@ interface CreditCardEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class CreditCardEditComponent extends React.Component<
+class CreditCardEditComponent extends React.Component<
   CreditCardEditComponentProps,
   CreditCardEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new CreditCardViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -344,7 +44,7 @@ export default class CreditCardEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.CreditCards +
           '/' +
-          this.props.match.params.creditCardID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -366,6 +66,8 @@ export default class CreditCardEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -378,21 +80,136 @@ export default class CreditCardEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as CreditCardViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:CreditCardViewModel) =>
+  {  
+    let mapper = new CreditCardMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.CreditCards + '/' + this.state.model!.creditCardID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.CreditCardClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <CreditCardEdit model={this.state.model} />;
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='cardNumber'>CardNumber</label>
+              <br />             
+              {getFieldDecorator('cardNumber', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CardNumber"} id={"cardNumber"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='cardType'>CardType</label>
+              <br />             
+              {getFieldDecorator('cardType', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CardType"} id={"cardType"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='expMonth'>ExpMonth</label>
+              <br />             
+              {getFieldDecorator('expMonth', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ExpMonth"} id={"expMonth"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='expYear'>ExpYear</label>
+              <br />             
+              {getFieldDecorator('expYear', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ExpYear"} id={"expYear"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedCreditCardEditComponent = Form.create({ name: 'CreditCard Edit' })(CreditCardEditComponent);
 
 /*<Codenesium>
-    <Hash>9efa2baa2eba9498463855e667fdf0c0</Hash>
+    <Hash>6db761dec47513134a3c2da1113f2a4f</Hash>
 </Codenesium>*/

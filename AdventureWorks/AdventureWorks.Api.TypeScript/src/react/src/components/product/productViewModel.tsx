@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class ProductViewModel {
   color: string;
   daysToManufacture: number;
@@ -77,30 +79,30 @@ export default class ProductViewModel {
     weight: any,
     weightUnitMeasureCode: string
   ): void {
-    this.color = color;
-    this.daysToManufacture = daysToManufacture;
-    this.discontinuedDate = discontinuedDate;
-    this.finishedGoodsFlag = finishedGoodsFlag;
-    this.listPrice = listPrice;
-    this.makeFlag = makeFlag;
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.productID = productID;
-    this.productLine = productLine;
-    this.productModelID = productModelID;
-    this.productNumber = productNumber;
-    this.productSubcategoryID = productSubcategoryID;
-    this.reorderPoint = reorderPoint;
-    this.rowguid = rowguid;
-    this.safetyStockLevel = safetyStockLevel;
-    this.sellEndDate = sellEndDate;
-    this.sellStartDate = sellStartDate;
-    this.size = size;
-    this.sizeUnitMeasureCode = sizeUnitMeasureCode;
-    this.standardCost = standardCost;
-    this.style = style;
-    this.weight = weight;
-    this.weightUnitMeasureCode = weightUnitMeasureCode;
+    this.color = moment(color, 'YYYY-MM-DD');
+    this.daysToManufacture = moment(daysToManufacture, 'YYYY-MM-DD');
+    this.discontinuedDate = moment(discontinuedDate, 'YYYY-MM-DD');
+    this.finishedGoodsFlag = moment(finishedGoodsFlag, 'YYYY-MM-DD');
+    this.listPrice = moment(listPrice, 'YYYY-MM-DD');
+    this.makeFlag = moment(makeFlag, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.productID = moment(productID, 'YYYY-MM-DD');
+    this.productLine = moment(productLine, 'YYYY-MM-DD');
+    this.productModelID = moment(productModelID, 'YYYY-MM-DD');
+    this.productNumber = moment(productNumber, 'YYYY-MM-DD');
+    this.productSubcategoryID = moment(productSubcategoryID, 'YYYY-MM-DD');
+    this.reorderPoint = moment(reorderPoint, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
+    this.safetyStockLevel = moment(safetyStockLevel, 'YYYY-MM-DD');
+    this.sellEndDate = moment(sellEndDate, 'YYYY-MM-DD');
+    this.sellStartDate = moment(sellStartDate, 'YYYY-MM-DD');
+    this.size = moment(size, 'YYYY-MM-DD');
+    this.sizeUnitMeasureCode = moment(sizeUnitMeasureCode, 'YYYY-MM-DD');
+    this.standardCost = moment(standardCost, 'YYYY-MM-DD');
+    this.style = moment(style, 'YYYY-MM-DD');
+    this.weight = moment(weight, 'YYYY-MM-DD');
+    this.weightUnitMeasureCode = moment(weightUnitMeasureCode, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -110,5 +112,5 @@ export default class ProductViewModel {
 
 
 /*<Codenesium>
-    <Hash>707801320bdadcc46cddd011891ae1c4</Hash>
+    <Hash>67e8bc547124dd19da348a425d028090</Hash>
 </Codenesium>*/

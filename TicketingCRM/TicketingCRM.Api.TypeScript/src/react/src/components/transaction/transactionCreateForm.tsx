@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TransactionMapper from './transactionMapper';
 import TransactionViewModel from './transactionViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TransactionCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class TransactionCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -166,5 +172,5 @@ export const WrappedTransactionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b4b8449331c8e1cc40d1e28a5fae9f12</Hash>
+    <Hash>da67c652b4b6618375bf353fee8d6476</Hash>
 </Codenesium>*/

@@ -1,249 +1,308 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import DocumentMapper from './documentMapper';
 import DocumentViewModel from './documentViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:DocumentViewModel
+interface DocumentCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const DocumentCreateDisplay: React.SFC<FormikProps<DocumentViewModel>> = (props: FormikProps<DocumentViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.DocumentClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof DocumentViewModel]  && props.errors[name as keyof DocumentViewModel]) {
-            response += props.errors[name as keyof DocumentViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("changeNumber") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ChangeNumber</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="changeNumber" className={errorExistForField("changeNumber") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("changeNumber") && <small className="text-danger">{errorsForField("changeNumber")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("document1") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Document</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="document1" className={errorExistForField("document1") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("document1") && <small className="text-danger">{errorsForField("document1")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("documentLevel") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>DocumentLevel</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="documentLevel" className={errorExistForField("documentLevel") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("documentLevel") && <small className="text-danger">{errorsForField("documentLevel")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("documentSummary") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>DocumentSummary</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="documentSummary" className={errorExistForField("documentSummary") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("documentSummary") && <small className="text-danger">{errorsForField("documentSummary")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fileExtension") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FileExtension</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="fileExtension" className={errorExistForField("fileExtension") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fileExtension") && <small className="text-danger">{errorsForField("fileExtension")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fileName") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FileName</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="fileName" className={errorExistForField("fileName") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fileName") && <small className="text-danger">{errorsForField("fileName")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("folderFlag") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FolderFlag</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="folderFlag" className={errorExistForField("folderFlag") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("folderFlag") && <small className="text-danger">{errorsForField("folderFlag")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("owner") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Owner</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="owner" className={errorExistForField("owner") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("owner") && <small className="text-danger">{errorsForField("owner")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("revision") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Revision</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="revision" className={errorExistForField("revision") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("revision") && <small className="text-danger">{errorsForField("revision")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("status") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Status</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="status" className={errorExistForField("status") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("status") && <small className="text-danger">{errorsForField("status")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("title") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Title</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="title" className={errorExistForField("title") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("title") && <small className="text-danger">{errorsForField("title")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface DocumentCreateComponentState {
+  model?: DocumentViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class DocumentCreateComponent extends React.Component<
+  DocumentCreateComponentProps,
+  DocumentCreateComponentState
+> {
+  state = {
+    model: new DocumentViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const DocumentCreate = withFormik<Props, DocumentViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new DocumentViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.changeNumber,props.model!.document1,props.model!.documentLevel,props.model!.documentSummary,props.model!.fileExtension,props.model!.fileName,props.model!.folderFlag,props.model!.modifiedDate,props.model!.owner,props.model!.revision,props.model!.rowguid,props.model!.status,props.model!.title);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<DocumentViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as DocumentViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  if(values.changeNumber == 0) {
-                errors.changeNumber = "Required"
-                    }if(values.fileExtension == '') {
-                errors.fileExtension = "Required"
-                    }if(values.fileName == '') {
-                errors.fileName = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.owner == 0) {
-                errors.owner = "Required"
-                    }if(values.revision == '') {
-                errors.revision = "Required"
-                    }if(values.status == 0) {
-                errors.status = "Required"
-                    }if(values.title == '') {
-                errors.title = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new DocumentMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.Documents,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: DocumentViewModel) => {
+    let mapper = new DocumentMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.Documents,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.DocumentClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'DocumentCreate', 
-  })(DocumentCreateDisplay);
-
-  interface DocumentCreateComponentProps
-  {
-  }
-
-  interface DocumentCreateComponentState
-  {
-      model?:DocumentViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class DocumentCreateComponent extends React.Component<DocumentCreateComponentProps, DocumentCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<DocumentCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.DocumentClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="changeNumber">ChangeNumber</label>
+            <br />
+            {getFieldDecorator('changeNumber', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ChangeNumber'}
+                id={'changeNumber'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="document1">Document</label>
+            <br />
+            {getFieldDecorator('document1', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Document'}
+                id={'document1'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="documentLevel">DocumentLevel</label>
+            <br />
+            {getFieldDecorator('documentLevel', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'DocumentLevel'}
+                id={'documentLevel'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="documentSummary">DocumentSummary</label>
+            <br />
+            {getFieldDecorator('documentSummary', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'DocumentSummary'}
+                id={'documentSummary'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="fileExtension">FileExtension</label>
+            <br />
+            {getFieldDecorator('fileExtension', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'FileExtension'}
+                id={'fileExtension'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="fileName">FileName</label>
+            <br />
+            {getFieldDecorator('fileName', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'FileName'}
+                id={'fileName'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="folderFlag">FolderFlag</label>
+            <br />
+            {getFieldDecorator('folderFlag', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'FolderFlag'}
+                id={'folderFlag'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="owner">Owner</label>
+            <br />
+            {getFieldDecorator('owner', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Owner'}
+                id={'owner'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="revision">Revision</label>
+            <br />
+            {getFieldDecorator('revision', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Revision'}
+                id={'revision'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="status">Status</label>
+            <br />
+            {getFieldDecorator('status', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Status'}
+                id={'status'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="title">Title</label>
+            <br />
+            {getFieldDecorator('title', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Title'}
+                id={'title'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedDocumentCreateComponent = Form.create({
+  name: 'Document Create',
+})(DocumentCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>db1542b2feb1228c5c436665f1b2d6ed</Hash>
+    <Hash>559b2e8ee02d9783089e09d9c9cf456b</Hash>
 </Codenesium>*/

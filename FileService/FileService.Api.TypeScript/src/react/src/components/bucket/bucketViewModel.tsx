@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class BucketViewModel {
   externalId: any;
   id: number;
@@ -22,5 +24,5 @@ export default class BucketViewModel {
 
 
 /*<Codenesium>
-    <Hash>192382de5a3395c9cf5261b7741af072</Hash>
+    <Hash>5f236311002bf9414f21e02d6050424e</Hash>
 </Codenesium>*/

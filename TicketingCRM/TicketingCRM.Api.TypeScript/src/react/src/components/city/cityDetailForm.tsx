@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CityMapper from './cityMapper';
 import CityViewModel from './cityViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface CityDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class CityDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,12 +105,14 @@ class CityDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>provinceId</h3>
-              <div>{this.state.model!.provinceIdNavigation!.toDisplay()}</div>
+              <p>
+                {String(this.state.model!.provinceIdNavigation!.toDisplay())}
+              </p>
             </div>
           </div>
           {message}
@@ -130,5 +130,5 @@ export const WrappedCityDetailComponent = Form.create({ name: 'City Detail' })(
 
 
 /*<Codenesium>
-    <Hash>0ff854fd1480cf29c452cd31eced253e</Hash>
+    <Hash>88a7ea7d75d6b41da29d97989285970a</Hash>
 </Codenesium>*/

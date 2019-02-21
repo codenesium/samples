@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects'
+import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm'
@@ -129,5 +129,5 @@ const ChainDetailDisplay = (model:Props) => {
 }
 
 /*<Codenesium>
-    <Hash>4d9f4fd84fa5ed4c461084dcc34bad74</Hash>
+    <Hash>6eab93d6ae94f408b9212c4b19682655</Hash>
 </Codenesium>*/

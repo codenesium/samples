@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface SaleCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class SaleCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -131,7 +137,13 @@ class SaleCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('saleDate', {
               rules: [],
-            })(<DatePicker placeholder={'saleDate'} id={'saleDate'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'saleDate'}
+                id={'saleDate'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -162,5 +174,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>27a6a2ac92baa75e22396c1e5b9d89e6</Hash>
+    <Hash>19c518de9a665790de184f8bf89b86af</Hash>
 </Codenesium>*/

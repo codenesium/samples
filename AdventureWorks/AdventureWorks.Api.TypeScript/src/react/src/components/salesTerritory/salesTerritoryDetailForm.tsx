@@ -1,106 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import SalesTerritoryMapper from './salesTerritoryMapper';
 import SalesTerritoryViewModel from './salesTerritoryViewModel';
-
-interface Props {
-  history: any;
-  model?: SalesTerritoryViewModel;
-}
-
-const SalesTerritoryDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.SalesTerritories + '/edit/' + model.model!.territoryID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="costLastYear" className={'col-sm-2 col-form-label'}>
-          CostLastYear
-        </label>
-        <div className="col-sm-12">{String(model.model!.costLastYear)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="costYTD" className={'col-sm-2 col-form-label'}>
-          CostYTD
-        </label>
-        <div className="col-sm-12">{String(model.model!.costYTD)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="countryRegionCode"
-          className={'col-sm-2 col-form-label'}
-        >
-          CountryRegionCode
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.countryRegionCode)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
-          Rowguid
-        </label>
-        <div className="col-sm-12">{String(model.model!.rowguid)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="salesLastYear" className={'col-sm-2 col-form-label'}>
-          SalesLastYear
-        </label>
-        <div className="col-sm-12">{String(model.model!.salesLastYear)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="salesYTD" className={'col-sm-2 col-form-label'}>
-          SalesYTD
-        </label>
-        <div className="col-sm-12">{String(model.model!.salesYTD)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="territoryID" className={'col-sm-2 col-form-label'}>
-          TerritoryID
-        </label>
-        <div className="col-sm-12">{String(model.model!.territoryID)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  territoryID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SalesTerritoryDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface SalesTerritoryDetailComponentState {
@@ -111,17 +21,23 @@ interface SalesTerritoryDetailComponentState {
   errorMessage: string;
 }
 
-export default class SalesTerritoryDetailComponent extends React.Component<
+class SalesTerritoryDetailComponent extends React.Component<
   SalesTerritoryDetailComponentProps,
   SalesTerritoryDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new SalesTerritoryViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.SalesTerritories + '/edit/' + this.state.model!.territoryID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -131,7 +47,7 @@ export default class SalesTerritoryDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.SalesTerritories +
           '/' +
-          this.props.match.params.territoryID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -142,9 +58,9 @@ export default class SalesTerritoryDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.SalesTerritoryClientResponseModel;
 
-          let mapper = new SalesTerritoryMapper();
-
           console.log(response);
+
+          let mapper = new SalesTerritoryMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -166,17 +82,67 @@ export default class SalesTerritoryDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <SalesTerritoryDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>CostLastYear</h3>
+              <p>{String(this.state.model!.costLastYear)}</p>
+            </div>
+            <div>
+              <h3>CostYTD</h3>
+              <p>{String(this.state.model!.costYTD)}</p>
+            </div>
+            <div>
+              <h3>CountryRegionCode</h3>
+              <p>{String(this.state.model!.countryRegionCode)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>SalesLastYear</h3>
+              <p>{String(this.state.model!.salesLastYear)}</p>
+            </div>
+            <div>
+              <h3>SalesYTD</h3>
+              <p>{String(this.state.model!.salesYTD)}</p>
+            </div>
+            <div>
+              <h3>TerritoryID</h3>
+              <p>{String(this.state.model!.territoryID)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -184,7 +150,11 @@ export default class SalesTerritoryDetailComponent extends React.Component<
   }
 }
 
+export const WrappedSalesTerritoryDetailComponent = Form.create({
+  name: 'SalesTerritory Detail',
+})(SalesTerritoryDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>76017b132fdc1eeedc5d10a253dc2075</Hash>
+    <Hash>c7a3418683175ed01394fec3b75208e7</Hash>
 </Codenesium>*/

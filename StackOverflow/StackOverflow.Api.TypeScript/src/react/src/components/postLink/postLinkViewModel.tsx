@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class PostLinkViewModel {
   creationDate: any;
   id: number;
@@ -34,5 +36,5 @@ export default class PostLinkViewModel {
 
 
 /*<Codenesium>
-    <Hash>9db471d196c8f8bbaeea44c71b4b47fb</Hash>
+    <Hash>2022a30040f0b49c38ba005b6508545f</Hash>
 </Codenesium>*/

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class ShipMethodViewModel {
   modifiedDate: any;
   name: string;
@@ -23,12 +25,12 @@ export default class ShipMethodViewModel {
     shipMethodID: number,
     shipRate: number
   ): void {
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.rowguid = rowguid;
-    this.shipBase = shipBase;
-    this.shipMethodID = shipMethodID;
-    this.shipRate = shipRate;
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
+    this.shipBase = moment(shipBase, 'YYYY-MM-DD');
+    this.shipMethodID = moment(shipMethodID, 'YYYY-MM-DD');
+    this.shipRate = moment(shipRate, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -38,5 +40,5 @@ export default class ShipMethodViewModel {
 
 
 /*<Codenesium>
-    <Hash>a3c717b4709e36f2f999653c61ea0c99</Hash>
+    <Hash>ae6a41616804a9d96e7ca0c17c39e73b</Hash>
 </Codenesium>*/

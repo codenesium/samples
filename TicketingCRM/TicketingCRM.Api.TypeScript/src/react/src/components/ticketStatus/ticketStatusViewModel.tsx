@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TicketStatusViewModel {
   id: number;
   name: string;
@@ -9,7 +11,7 @@ export default class TicketStatusViewModel {
 
   setProperties(id: number, name: string): void {
     this.id = id;
-    this.name = name;
+    this.name = moment(name, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -19,5 +21,5 @@ export default class TicketStatusViewModel {
 
 
 /*<Codenesium>
-    <Hash>d7f07d9ff8d38fd29b2e5c83f8d3e3cb</Hash>
+    <Hash>bb1cccd9e71aa305a3bb3c5414c92313</Hash>
 </Codenesium>*/

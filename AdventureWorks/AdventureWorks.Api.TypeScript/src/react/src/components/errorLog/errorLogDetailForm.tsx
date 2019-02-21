@@ -1,157 +1,160 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import ErrorLogMapper from './errorLogMapper';
 import ErrorLogViewModel from './errorLogViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:ErrorLogViewModel
+interface ErrorLogDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const ErrorLogDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.ErrorLogs + '/edit/' + model.model!.errorLogID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="errorLine" className={"col-sm-2 col-form-label"}>ErrorLine</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorLine)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="errorLogID" className={"col-sm-2 col-form-label"}>ErrorLogID</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorLogID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="errorMessage" className={"col-sm-2 col-form-label"}>ErrorMessage</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorMessage)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="errorNumber" className={"col-sm-2 col-form-label"}>ErrorNumber</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorNumber)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="errorProcedure" className={"col-sm-2 col-form-label"}>ErrorProcedure</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorProcedure)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="errorSeverity" className={"col-sm-2 col-form-label"}>ErrorSeverity</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorSeverity)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="errorState" className={"col-sm-2 col-form-label"}>ErrorState</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorState)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="errorTime" className={"col-sm-2 col-form-label"}>ErrorTime</label>
-							<div className="col-sm-12">
-								{String(model.model!.errorTime)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="userName" className={"col-sm-2 col-form-label"}>UserName</label>
-							<div className="col-sm-12">
-								{String(model.model!.userName)}
-							</div>
-						</div>
-					             </form>
-  );
+interface ErrorLogDetailComponentState {
+  model?: ErrorLogViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     errorLogID:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class ErrorLogDetailComponent extends React.Component<
+  ErrorLogDetailComponentProps,
+  ErrorLogDetailComponentState
+> {
+  state = {
+    model: new ErrorLogViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface ErrorLogDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface ErrorLogDetailComponentState
-  {
-      model?:ErrorLogViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ErrorLogs + '/edit/' + this.state.model!.errorLogID
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class ErrorLogDetailComponent extends React.Component<ErrorLogDetailComponentProps, ErrorLogDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.ErrorLogs + '/' + this.props.match.params.errorLogID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.ErrorLogs +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.ErrorLogClientResponseModel;
-            
-			let mapper = new ErrorLogMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<ErrorLogDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.ErrorLogClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new ErrorLogMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ErrorLine</h3>
+              <p>{String(this.state.model!.errorLine)}</p>
+            </div>
+            <div>
+              <h3>ErrorLogID</h3>
+              <p>{String(this.state.model!.errorLogID)}</p>
+            </div>
+            <div>
+              <h3>ErrorMessage</h3>
+              <p>{String(this.state.model!.errorMessage)}</p>
+            </div>
+            <div>
+              <h3>ErrorNumber</h3>
+              <p>{String(this.state.model!.errorNumber)}</p>
+            </div>
+            <div>
+              <h3>ErrorProcedure</h3>
+              <p>{String(this.state.model!.errorProcedure)}</p>
+            </div>
+            <div>
+              <h3>ErrorSeverity</h3>
+              <p>{String(this.state.model!.errorSeverity)}</p>
+            </div>
+            <div>
+              <h3>ErrorState</h3>
+              <p>{String(this.state.model!.errorState)}</p>
+            </div>
+            <div>
+              <h3>ErrorTime</h3>
+              <p>{String(this.state.model!.errorTime)}</p>
+            </div>
+            <div>
+              <h3>UserName</h3>
+              <p>{String(this.state.model!.userName)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedErrorLogDetailComponent = Form.create({
+  name: 'ErrorLog Detail',
+})(ErrorLogDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>412394ea4e4682065ad4b942ea9467e5</Hash>
+    <Hash>5e2d4365b78b5ca6746a6e0ba125adca</Hash>
 </Codenesium>*/

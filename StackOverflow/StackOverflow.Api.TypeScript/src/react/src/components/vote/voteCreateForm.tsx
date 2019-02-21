@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VoteMapper from './voteMapper';
 import VoteViewModel from './voteViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface VoteCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class VoteCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -170,5 +176,5 @@ export const WrappedVoteCreateComponent = Form.create({ name: 'Vote Create' })(
 
 
 /*<Codenesium>
-    <Hash>b65c41af6bfa017b7c348841ffb1b403</Hash>
+    <Hash>2e21ff7b0b595038c1a8500ba298a0a5</Hash>
 </Codenesium>*/

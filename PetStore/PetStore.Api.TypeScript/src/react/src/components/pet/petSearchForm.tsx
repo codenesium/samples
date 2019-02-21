@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import PetMapper from './petMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import PetViewModel from './petViewModel';
 import 'react-table/react-table.css';
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PetSearchComponentProps {
@@ -148,9 +146,9 @@ export default class PetSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -327,5 +325,5 @@ export const WrappedPetSearchComponent = Form.create({ name: 'Pet Search' })(
 
 
 /*<Codenesium>
-    <Hash>d2530a5cff34a4f0e51438713dfd4868</Hash>
+    <Hash>7e353ca29d2a8da7538e433e56dcae5d</Hash>
 </Codenesium>*/

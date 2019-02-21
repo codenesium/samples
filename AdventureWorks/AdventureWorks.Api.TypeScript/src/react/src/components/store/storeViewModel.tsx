@@ -1,3 +1,4 @@
+import moment from 'moment'
 import SalesPersonViewModel from '../salesPerson/salesPersonViewModel'
 	
 
@@ -19,18 +20,18 @@ this.name = '';
 this.rowguid = undefined;
 this.salesPersonID = undefined;
 this.salesPersonIDEntity = '';
-this.salesPersonIDNavigation = undefined;
+this.salesPersonIDNavigation = new SalesPersonViewModel();
 
     }
 
 	setProperties(businessEntityID : number,demographic : string,modifiedDate : any,name : string,rowguid : any,salesPersonID : any) : void
 	{
-		this.businessEntityID = businessEntityID;
-this.demographic = demographic;
-this.modifiedDate = modifiedDate;
-this.name = name;
-this.rowguid = rowguid;
-this.salesPersonID = salesPersonID;
+		this.businessEntityID = moment(businessEntityID,'YYYY-MM-DD');
+this.demographic = moment(demographic,'YYYY-MM-DD');
+this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.name = moment(name,'YYYY-MM-DD');
+this.rowguid = moment(rowguid,'YYYY-MM-DD');
+this.salesPersonID = moment(salesPersonID,'YYYY-MM-DD');
 
 	}
 
@@ -41,5 +42,5 @@ this.salesPersonID = salesPersonID;
 };
 
 /*<Codenesium>
-    <Hash>6b023bcd413dab9b0956049a7654a0df</Hash>
+    <Hash>b42f8f6ccdab12ababc63dde16bd69fd</Hash>
 </Codenesium>*/

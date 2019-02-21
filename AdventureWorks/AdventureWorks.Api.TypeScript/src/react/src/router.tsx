@@ -1,200 +1,201 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
-import { App } from './app';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
-import AWBuildVersionCreateComponent from './components/aWBuildVersion/aWBuildVersionCreateForm';
-import AWBuildVersionDetailComponent from './components/aWBuildVersion/aWBuildVersionDetailForm';
-import AWBuildVersionEditComponent from './components/aWBuildVersion/aWBuildVersionEditForm';
-import AWBuildVersionSearchComponent from './components/aWBuildVersion/aWBuildVersionSearchForm';					
-import DatabaseLogCreateComponent from './components/databaseLog/databaseLogCreateForm';
-import DatabaseLogDetailComponent from './components/databaseLog/databaseLogDetailForm';
-import DatabaseLogEditComponent from './components/databaseLog/databaseLogEditForm';
-import DatabaseLogSearchComponent from './components/databaseLog/databaseLogSearchForm';					
-import ErrorLogCreateComponent from './components/errorLog/errorLogCreateForm';
-import ErrorLogDetailComponent from './components/errorLog/errorLogDetailForm';
-import ErrorLogEditComponent from './components/errorLog/errorLogEditForm';
-import ErrorLogSearchComponent from './components/errorLog/errorLogSearchForm';					
-import DepartmentCreateComponent from './components/department/departmentCreateForm';
-import DepartmentDetailComponent from './components/department/departmentDetailForm';
-import DepartmentEditComponent from './components/department/departmentEditForm';
-import DepartmentSearchComponent from './components/department/departmentSearchForm';					
-import EmployeeCreateComponent from './components/employee/employeeCreateForm';
-import EmployeeDetailComponent from './components/employee/employeeDetailForm';
-import EmployeeEditComponent from './components/employee/employeeEditForm';
-import EmployeeSearchComponent from './components/employee/employeeSearchForm';					
-import JobCandidateCreateComponent from './components/jobCandidate/jobCandidateCreateForm';
-import JobCandidateDetailComponent from './components/jobCandidate/jobCandidateDetailForm';
-import JobCandidateEditComponent from './components/jobCandidate/jobCandidateEditForm';
-import JobCandidateSearchComponent from './components/jobCandidate/jobCandidateSearchForm';					
-import ShiftCreateComponent from './components/shift/shiftCreateForm';
-import ShiftDetailComponent from './components/shift/shiftDetailForm';
-import ShiftEditComponent from './components/shift/shiftEditForm';
-import ShiftSearchComponent from './components/shift/shiftSearchForm';					
-import AddressCreateComponent from './components/address/addressCreateForm';
-import AddressDetailComponent from './components/address/addressDetailForm';
-import AddressEditComponent from './components/address/addressEditForm';
-import AddressSearchComponent from './components/address/addressSearchForm';					
-import AddressTypeCreateComponent from './components/addressType/addressTypeCreateForm';
-import AddressTypeDetailComponent from './components/addressType/addressTypeDetailForm';
-import AddressTypeEditComponent from './components/addressType/addressTypeEditForm';
-import AddressTypeSearchComponent from './components/addressType/addressTypeSearchForm';					
-import BusinessEntityCreateComponent from './components/businessEntity/businessEntityCreateForm';
-import BusinessEntityDetailComponent from './components/businessEntity/businessEntityDetailForm';
-import BusinessEntityEditComponent from './components/businessEntity/businessEntityEditForm';
-import BusinessEntitySearchComponent from './components/businessEntity/businessEntitySearchForm';					
-import ContactTypeCreateComponent from './components/contactType/contactTypeCreateForm';
-import ContactTypeDetailComponent from './components/contactType/contactTypeDetailForm';
-import ContactTypeEditComponent from './components/contactType/contactTypeEditForm';
-import ContactTypeSearchComponent from './components/contactType/contactTypeSearchForm';					
-import CountryRegionCreateComponent from './components/countryRegion/countryRegionCreateForm';
-import CountryRegionDetailComponent from './components/countryRegion/countryRegionDetailForm';
-import CountryRegionEditComponent from './components/countryRegion/countryRegionEditForm';
-import CountryRegionSearchComponent from './components/countryRegion/countryRegionSearchForm';					
-import PasswordCreateComponent from './components/password/passwordCreateForm';
-import PasswordDetailComponent from './components/password/passwordDetailForm';
-import PasswordEditComponent from './components/password/passwordEditForm';
-import PasswordSearchComponent from './components/password/passwordSearchForm';					
-import PersonCreateComponent from './components/person/personCreateForm';
-import PersonDetailComponent from './components/person/personDetailForm';
-import PersonEditComponent from './components/person/personEditForm';
-import PersonSearchComponent from './components/person/personSearchForm';					
-import PhoneNumberTypeCreateComponent from './components/phoneNumberType/phoneNumberTypeCreateForm';
-import PhoneNumberTypeDetailComponent from './components/phoneNumberType/phoneNumberTypeDetailForm';
-import PhoneNumberTypeEditComponent from './components/phoneNumberType/phoneNumberTypeEditForm';
-import PhoneNumberTypeSearchComponent from './components/phoneNumberType/phoneNumberTypeSearchForm';					
-import StateProvinceCreateComponent from './components/stateProvince/stateProvinceCreateForm';
-import StateProvinceDetailComponent from './components/stateProvince/stateProvinceDetailForm';
-import StateProvinceEditComponent from './components/stateProvince/stateProvinceEditForm';
-import StateProvinceSearchComponent from './components/stateProvince/stateProvinceSearchForm';					
-import BillOfMaterialCreateComponent from './components/billOfMaterial/billOfMaterialCreateForm';
-import BillOfMaterialDetailComponent from './components/billOfMaterial/billOfMaterialDetailForm';
-import BillOfMaterialEditComponent from './components/billOfMaterial/billOfMaterialEditForm';
-import BillOfMaterialSearchComponent from './components/billOfMaterial/billOfMaterialSearchForm';					
-import CultureCreateComponent from './components/culture/cultureCreateForm';
-import CultureDetailComponent from './components/culture/cultureDetailForm';
-import CultureEditComponent from './components/culture/cultureEditForm';
-import CultureSearchComponent from './components/culture/cultureSearchForm';					
-import DocumentCreateComponent from './components/document/documentCreateForm';
-import DocumentDetailComponent from './components/document/documentDetailForm';
-import DocumentEditComponent from './components/document/documentEditForm';
-import DocumentSearchComponent from './components/document/documentSearchForm';					
-import IllustrationCreateComponent from './components/illustration/illustrationCreateForm';
-import IllustrationDetailComponent from './components/illustration/illustrationDetailForm';
-import IllustrationEditComponent from './components/illustration/illustrationEditForm';
-import IllustrationSearchComponent from './components/illustration/illustrationSearchForm';					
-import LocationCreateComponent from './components/location/locationCreateForm';
-import LocationDetailComponent from './components/location/locationDetailForm';
-import LocationEditComponent from './components/location/locationEditForm';
-import LocationSearchComponent from './components/location/locationSearchForm';					
-import ProductCreateComponent from './components/product/productCreateForm';
-import ProductDetailComponent from './components/product/productDetailForm';
-import ProductEditComponent from './components/product/productEditForm';
-import ProductSearchComponent from './components/product/productSearchForm';					
-import ProductCategoryCreateComponent from './components/productCategory/productCategoryCreateForm';
-import ProductCategoryDetailComponent from './components/productCategory/productCategoryDetailForm';
-import ProductCategoryEditComponent from './components/productCategory/productCategoryEditForm';
-import ProductCategorySearchComponent from './components/productCategory/productCategorySearchForm';					
-import ProductDescriptionCreateComponent from './components/productDescription/productDescriptionCreateForm';
-import ProductDescriptionDetailComponent from './components/productDescription/productDescriptionDetailForm';
-import ProductDescriptionEditComponent from './components/productDescription/productDescriptionEditForm';
-import ProductDescriptionSearchComponent from './components/productDescription/productDescriptionSearchForm';					
-import ProductModelCreateComponent from './components/productModel/productModelCreateForm';
-import ProductModelDetailComponent from './components/productModel/productModelDetailForm';
-import ProductModelEditComponent from './components/productModel/productModelEditForm';
-import ProductModelSearchComponent from './components/productModel/productModelSearchForm';					
-import ProductPhotoCreateComponent from './components/productPhoto/productPhotoCreateForm';
-import ProductPhotoDetailComponent from './components/productPhoto/productPhotoDetailForm';
-import ProductPhotoEditComponent from './components/productPhoto/productPhotoEditForm';
-import ProductPhotoSearchComponent from './components/productPhoto/productPhotoSearchForm';					
-import ProductReviewCreateComponent from './components/productReview/productReviewCreateForm';
-import ProductReviewDetailComponent from './components/productReview/productReviewDetailForm';
-import ProductReviewEditComponent from './components/productReview/productReviewEditForm';
-import ProductReviewSearchComponent from './components/productReview/productReviewSearchForm';					
-import ProductSubcategoryCreateComponent from './components/productSubcategory/productSubcategoryCreateForm';
-import ProductSubcategoryDetailComponent from './components/productSubcategory/productSubcategoryDetailForm';
-import ProductSubcategoryEditComponent from './components/productSubcategory/productSubcategoryEditForm';
-import ProductSubcategorySearchComponent from './components/productSubcategory/productSubcategorySearchForm';					
-import ScrapReasonCreateComponent from './components/scrapReason/scrapReasonCreateForm';
-import ScrapReasonDetailComponent from './components/scrapReason/scrapReasonDetailForm';
-import ScrapReasonEditComponent from './components/scrapReason/scrapReasonEditForm';
-import ScrapReasonSearchComponent from './components/scrapReason/scrapReasonSearchForm';					
-import TransactionHistoryCreateComponent from './components/transactionHistory/transactionHistoryCreateForm';
-import TransactionHistoryDetailComponent from './components/transactionHistory/transactionHistoryDetailForm';
-import TransactionHistoryEditComponent from './components/transactionHistory/transactionHistoryEditForm';
-import TransactionHistorySearchComponent from './components/transactionHistory/transactionHistorySearchForm';					
-import TransactionHistoryArchiveCreateComponent from './components/transactionHistoryArchive/transactionHistoryArchiveCreateForm';
-import TransactionHistoryArchiveDetailComponent from './components/transactionHistoryArchive/transactionHistoryArchiveDetailForm';
-import TransactionHistoryArchiveEditComponent from './components/transactionHistoryArchive/transactionHistoryArchiveEditForm';
-import TransactionHistoryArchiveSearchComponent from './components/transactionHistoryArchive/transactionHistoryArchiveSearchForm';					
-import UnitMeasureCreateComponent from './components/unitMeasure/unitMeasureCreateForm';
-import UnitMeasureDetailComponent from './components/unitMeasure/unitMeasureDetailForm';
-import UnitMeasureEditComponent from './components/unitMeasure/unitMeasureEditForm';
-import UnitMeasureSearchComponent from './components/unitMeasure/unitMeasureSearchForm';					
-import WorkOrderCreateComponent from './components/workOrder/workOrderCreateForm';
-import WorkOrderDetailComponent from './components/workOrder/workOrderDetailForm';
-import WorkOrderEditComponent from './components/workOrder/workOrderEditForm';
-import WorkOrderSearchComponent from './components/workOrder/workOrderSearchForm';					
-import PurchaseOrderHeaderCreateComponent from './components/purchaseOrderHeader/purchaseOrderHeaderCreateForm';
-import PurchaseOrderHeaderDetailComponent from './components/purchaseOrderHeader/purchaseOrderHeaderDetailForm';
-import PurchaseOrderHeaderEditComponent from './components/purchaseOrderHeader/purchaseOrderHeaderEditForm';
-import PurchaseOrderHeaderSearchComponent from './components/purchaseOrderHeader/purchaseOrderHeaderSearchForm';					
-import ShipMethodCreateComponent from './components/shipMethod/shipMethodCreateForm';
-import ShipMethodDetailComponent from './components/shipMethod/shipMethodDetailForm';
-import ShipMethodEditComponent from './components/shipMethod/shipMethodEditForm';
-import ShipMethodSearchComponent from './components/shipMethod/shipMethodSearchForm';					
-import VendorCreateComponent from './components/vendor/vendorCreateForm';
-import VendorDetailComponent from './components/vendor/vendorDetailForm';
-import VendorEditComponent from './components/vendor/vendorEditForm';
-import VendorSearchComponent from './components/vendor/vendorSearchForm';					
-import CreditCardCreateComponent from './components/creditCard/creditCardCreateForm';
-import CreditCardDetailComponent from './components/creditCard/creditCardDetailForm';
-import CreditCardEditComponent from './components/creditCard/creditCardEditForm';
-import CreditCardSearchComponent from './components/creditCard/creditCardSearchForm';					
-import CurrencyCreateComponent from './components/currency/currencyCreateForm';
-import CurrencyDetailComponent from './components/currency/currencyDetailForm';
-import CurrencyEditComponent from './components/currency/currencyEditForm';
-import CurrencySearchComponent from './components/currency/currencySearchForm';					
-import CurrencyRateCreateComponent from './components/currencyRate/currencyRateCreateForm';
-import CurrencyRateDetailComponent from './components/currencyRate/currencyRateDetailForm';
-import CurrencyRateEditComponent from './components/currencyRate/currencyRateEditForm';
-import CurrencyRateSearchComponent from './components/currencyRate/currencyRateSearchForm';					
-import CustomerCreateComponent from './components/customer/customerCreateForm';
-import CustomerDetailComponent from './components/customer/customerDetailForm';
-import CustomerEditComponent from './components/customer/customerEditForm';
-import CustomerSearchComponent from './components/customer/customerSearchForm';					
-import SalesOrderHeaderCreateComponent from './components/salesOrderHeader/salesOrderHeaderCreateForm';
-import SalesOrderHeaderDetailComponent from './components/salesOrderHeader/salesOrderHeaderDetailForm';
-import SalesOrderHeaderEditComponent from './components/salesOrderHeader/salesOrderHeaderEditForm';
-import SalesOrderHeaderSearchComponent from './components/salesOrderHeader/salesOrderHeaderSearchForm';					
-import SalesPersonCreateComponent from './components/salesPerson/salesPersonCreateForm';
-import SalesPersonDetailComponent from './components/salesPerson/salesPersonDetailForm';
-import SalesPersonEditComponent from './components/salesPerson/salesPersonEditForm';
-import SalesPersonSearchComponent from './components/salesPerson/salesPersonSearchForm';					
-import SalesReasonCreateComponent from './components/salesReason/salesReasonCreateForm';
-import SalesReasonDetailComponent from './components/salesReason/salesReasonDetailForm';
-import SalesReasonEditComponent from './components/salesReason/salesReasonEditForm';
-import SalesReasonSearchComponent from './components/salesReason/salesReasonSearchForm';					
-import SalesTaxRateCreateComponent from './components/salesTaxRate/salesTaxRateCreateForm';
-import SalesTaxRateDetailComponent from './components/salesTaxRate/salesTaxRateDetailForm';
-import SalesTaxRateEditComponent from './components/salesTaxRate/salesTaxRateEditForm';
-import SalesTaxRateSearchComponent from './components/salesTaxRate/salesTaxRateSearchForm';					
-import SalesTerritoryCreateComponent from './components/salesTerritory/salesTerritoryCreateForm';
-import SalesTerritoryDetailComponent from './components/salesTerritory/salesTerritoryDetailForm';
-import SalesTerritoryEditComponent from './components/salesTerritory/salesTerritoryEditForm';
-import SalesTerritorySearchComponent from './components/salesTerritory/salesTerritorySearchForm';					
-import ShoppingCartItemCreateComponent from './components/shoppingCartItem/shoppingCartItemCreateForm';
-import ShoppingCartItemDetailComponent from './components/shoppingCartItem/shoppingCartItemDetailForm';
-import ShoppingCartItemEditComponent from './components/shoppingCartItem/shoppingCartItemEditForm';
-import ShoppingCartItemSearchComponent from './components/shoppingCartItem/shoppingCartItemSearchForm';					
-import SpecialOfferCreateComponent from './components/specialOffer/specialOfferCreateForm';
-import SpecialOfferDetailComponent from './components/specialOffer/specialOfferDetailForm';
-import SpecialOfferEditComponent from './components/specialOffer/specialOfferEditForm';
-import SpecialOfferSearchComponent from './components/specialOffer/specialOfferSearchForm';					
-import StoreCreateComponent from './components/store/storeCreateForm';
-import StoreDetailComponent from './components/store/storeDetailForm';
-import StoreEditComponent from './components/store/storeEditForm';
-import StoreSearchComponent from './components/store/storeSearchForm';					
+import { wrapperHeader } from './components/header';
+import { ClientRoutes, Constants } from './constants';
+import { WrappedAWBuildVersionCreateComponent } from './components/aWBuildVersion/aWBuildVersionCreateForm';
+import { WrappedAWBuildVersionDetailComponent } from './components/aWBuildVersion/aWBuildVersionDetailForm';
+import { WrappedAWBuildVersionEditComponent } from './components/aWBuildVersion/aWBuildVersionEditForm';
+import { WrappedAWBuildVersionSearchComponent } from './components/aWBuildVersion/aWBuildVersionSearchForm';					
+import { WrappedDatabaseLogCreateComponent } from './components/databaseLog/databaseLogCreateForm';
+import { WrappedDatabaseLogDetailComponent } from './components/databaseLog/databaseLogDetailForm';
+import { WrappedDatabaseLogEditComponent } from './components/databaseLog/databaseLogEditForm';
+import { WrappedDatabaseLogSearchComponent } from './components/databaseLog/databaseLogSearchForm';					
+import { WrappedErrorLogCreateComponent } from './components/errorLog/errorLogCreateForm';
+import { WrappedErrorLogDetailComponent } from './components/errorLog/errorLogDetailForm';
+import { WrappedErrorLogEditComponent } from './components/errorLog/errorLogEditForm';
+import { WrappedErrorLogSearchComponent } from './components/errorLog/errorLogSearchForm';					
+import { WrappedDepartmentCreateComponent } from './components/department/departmentCreateForm';
+import { WrappedDepartmentDetailComponent } from './components/department/departmentDetailForm';
+import { WrappedDepartmentEditComponent } from './components/department/departmentEditForm';
+import { WrappedDepartmentSearchComponent } from './components/department/departmentSearchForm';					
+import { WrappedEmployeeCreateComponent } from './components/employee/employeeCreateForm';
+import { WrappedEmployeeDetailComponent } from './components/employee/employeeDetailForm';
+import { WrappedEmployeeEditComponent } from './components/employee/employeeEditForm';
+import { WrappedEmployeeSearchComponent } from './components/employee/employeeSearchForm';					
+import { WrappedJobCandidateCreateComponent } from './components/jobCandidate/jobCandidateCreateForm';
+import { WrappedJobCandidateDetailComponent } from './components/jobCandidate/jobCandidateDetailForm';
+import { WrappedJobCandidateEditComponent } from './components/jobCandidate/jobCandidateEditForm';
+import { WrappedJobCandidateSearchComponent } from './components/jobCandidate/jobCandidateSearchForm';					
+import { WrappedShiftCreateComponent } from './components/shift/shiftCreateForm';
+import { WrappedShiftDetailComponent } from './components/shift/shiftDetailForm';
+import { WrappedShiftEditComponent } from './components/shift/shiftEditForm';
+import { WrappedShiftSearchComponent } from './components/shift/shiftSearchForm';					
+import { WrappedAddressCreateComponent } from './components/address/addressCreateForm';
+import { WrappedAddressDetailComponent } from './components/address/addressDetailForm';
+import { WrappedAddressEditComponent } from './components/address/addressEditForm';
+import { WrappedAddressSearchComponent } from './components/address/addressSearchForm';					
+import { WrappedAddressTypeCreateComponent } from './components/addressType/addressTypeCreateForm';
+import { WrappedAddressTypeDetailComponent } from './components/addressType/addressTypeDetailForm';
+import { WrappedAddressTypeEditComponent } from './components/addressType/addressTypeEditForm';
+import { WrappedAddressTypeSearchComponent } from './components/addressType/addressTypeSearchForm';					
+import { WrappedBusinessEntityCreateComponent } from './components/businessEntity/businessEntityCreateForm';
+import { WrappedBusinessEntityDetailComponent } from './components/businessEntity/businessEntityDetailForm';
+import { WrappedBusinessEntityEditComponent } from './components/businessEntity/businessEntityEditForm';
+import { WrappedBusinessEntitySearchComponent } from './components/businessEntity/businessEntitySearchForm';					
+import { WrappedContactTypeCreateComponent } from './components/contactType/contactTypeCreateForm';
+import { WrappedContactTypeDetailComponent } from './components/contactType/contactTypeDetailForm';
+import { WrappedContactTypeEditComponent } from './components/contactType/contactTypeEditForm';
+import { WrappedContactTypeSearchComponent } from './components/contactType/contactTypeSearchForm';					
+import { WrappedCountryRegionCreateComponent } from './components/countryRegion/countryRegionCreateForm';
+import { WrappedCountryRegionDetailComponent } from './components/countryRegion/countryRegionDetailForm';
+import { WrappedCountryRegionEditComponent } from './components/countryRegion/countryRegionEditForm';
+import { WrappedCountryRegionSearchComponent } from './components/countryRegion/countryRegionSearchForm';					
+import { WrappedPasswordCreateComponent } from './components/password/passwordCreateForm';
+import { WrappedPasswordDetailComponent } from './components/password/passwordDetailForm';
+import { WrappedPasswordEditComponent } from './components/password/passwordEditForm';
+import { WrappedPasswordSearchComponent } from './components/password/passwordSearchForm';					
+import { WrappedPersonCreateComponent } from './components/person/personCreateForm';
+import { WrappedPersonDetailComponent } from './components/person/personDetailForm';
+import { WrappedPersonEditComponent } from './components/person/personEditForm';
+import { WrappedPersonSearchComponent } from './components/person/personSearchForm';					
+import { WrappedPhoneNumberTypeCreateComponent } from './components/phoneNumberType/phoneNumberTypeCreateForm';
+import { WrappedPhoneNumberTypeDetailComponent } from './components/phoneNumberType/phoneNumberTypeDetailForm';
+import { WrappedPhoneNumberTypeEditComponent } from './components/phoneNumberType/phoneNumberTypeEditForm';
+import { WrappedPhoneNumberTypeSearchComponent } from './components/phoneNumberType/phoneNumberTypeSearchForm';					
+import { WrappedStateProvinceCreateComponent } from './components/stateProvince/stateProvinceCreateForm';
+import { WrappedStateProvinceDetailComponent } from './components/stateProvince/stateProvinceDetailForm';
+import { WrappedStateProvinceEditComponent } from './components/stateProvince/stateProvinceEditForm';
+import { WrappedStateProvinceSearchComponent } from './components/stateProvince/stateProvinceSearchForm';					
+import { WrappedBillOfMaterialCreateComponent } from './components/billOfMaterial/billOfMaterialCreateForm';
+import { WrappedBillOfMaterialDetailComponent } from './components/billOfMaterial/billOfMaterialDetailForm';
+import { WrappedBillOfMaterialEditComponent } from './components/billOfMaterial/billOfMaterialEditForm';
+import { WrappedBillOfMaterialSearchComponent } from './components/billOfMaterial/billOfMaterialSearchForm';					
+import { WrappedCultureCreateComponent } from './components/culture/cultureCreateForm';
+import { WrappedCultureDetailComponent } from './components/culture/cultureDetailForm';
+import { WrappedCultureEditComponent } from './components/culture/cultureEditForm';
+import { WrappedCultureSearchComponent } from './components/culture/cultureSearchForm';					
+import { WrappedDocumentCreateComponent } from './components/document/documentCreateForm';
+import { WrappedDocumentDetailComponent } from './components/document/documentDetailForm';
+import { WrappedDocumentEditComponent } from './components/document/documentEditForm';
+import { WrappedDocumentSearchComponent } from './components/document/documentSearchForm';					
+import { WrappedIllustrationCreateComponent } from './components/illustration/illustrationCreateForm';
+import { WrappedIllustrationDetailComponent } from './components/illustration/illustrationDetailForm';
+import { WrappedIllustrationEditComponent } from './components/illustration/illustrationEditForm';
+import { WrappedIllustrationSearchComponent } from './components/illustration/illustrationSearchForm';					
+import { WrappedLocationCreateComponent } from './components/location/locationCreateForm';
+import { WrappedLocationDetailComponent } from './components/location/locationDetailForm';
+import { WrappedLocationEditComponent } from './components/location/locationEditForm';
+import { WrappedLocationSearchComponent } from './components/location/locationSearchForm';					
+import { WrappedProductCreateComponent } from './components/product/productCreateForm';
+import { WrappedProductDetailComponent } from './components/product/productDetailForm';
+import { WrappedProductEditComponent } from './components/product/productEditForm';
+import { WrappedProductSearchComponent } from './components/product/productSearchForm';					
+import { WrappedProductCategoryCreateComponent } from './components/productCategory/productCategoryCreateForm';
+import { WrappedProductCategoryDetailComponent } from './components/productCategory/productCategoryDetailForm';
+import { WrappedProductCategoryEditComponent } from './components/productCategory/productCategoryEditForm';
+import { WrappedProductCategorySearchComponent } from './components/productCategory/productCategorySearchForm';					
+import { WrappedProductDescriptionCreateComponent } from './components/productDescription/productDescriptionCreateForm';
+import { WrappedProductDescriptionDetailComponent } from './components/productDescription/productDescriptionDetailForm';
+import { WrappedProductDescriptionEditComponent } from './components/productDescription/productDescriptionEditForm';
+import { WrappedProductDescriptionSearchComponent } from './components/productDescription/productDescriptionSearchForm';					
+import { WrappedProductModelCreateComponent } from './components/productModel/productModelCreateForm';
+import { WrappedProductModelDetailComponent } from './components/productModel/productModelDetailForm';
+import { WrappedProductModelEditComponent } from './components/productModel/productModelEditForm';
+import { WrappedProductModelSearchComponent } from './components/productModel/productModelSearchForm';					
+import { WrappedProductPhotoCreateComponent } from './components/productPhoto/productPhotoCreateForm';
+import { WrappedProductPhotoDetailComponent } from './components/productPhoto/productPhotoDetailForm';
+import { WrappedProductPhotoEditComponent } from './components/productPhoto/productPhotoEditForm';
+import { WrappedProductPhotoSearchComponent } from './components/productPhoto/productPhotoSearchForm';					
+import { WrappedProductReviewCreateComponent } from './components/productReview/productReviewCreateForm';
+import { WrappedProductReviewDetailComponent } from './components/productReview/productReviewDetailForm';
+import { WrappedProductReviewEditComponent } from './components/productReview/productReviewEditForm';
+import { WrappedProductReviewSearchComponent } from './components/productReview/productReviewSearchForm';					
+import { WrappedProductSubcategoryCreateComponent } from './components/productSubcategory/productSubcategoryCreateForm';
+import { WrappedProductSubcategoryDetailComponent } from './components/productSubcategory/productSubcategoryDetailForm';
+import { WrappedProductSubcategoryEditComponent } from './components/productSubcategory/productSubcategoryEditForm';
+import { WrappedProductSubcategorySearchComponent } from './components/productSubcategory/productSubcategorySearchForm';					
+import { WrappedScrapReasonCreateComponent } from './components/scrapReason/scrapReasonCreateForm';
+import { WrappedScrapReasonDetailComponent } from './components/scrapReason/scrapReasonDetailForm';
+import { WrappedScrapReasonEditComponent } from './components/scrapReason/scrapReasonEditForm';
+import { WrappedScrapReasonSearchComponent } from './components/scrapReason/scrapReasonSearchForm';					
+import { WrappedTransactionHistoryCreateComponent } from './components/transactionHistory/transactionHistoryCreateForm';
+import { WrappedTransactionHistoryDetailComponent } from './components/transactionHistory/transactionHistoryDetailForm';
+import { WrappedTransactionHistoryEditComponent } from './components/transactionHistory/transactionHistoryEditForm';
+import { WrappedTransactionHistorySearchComponent } from './components/transactionHistory/transactionHistorySearchForm';					
+import { WrappedTransactionHistoryArchiveCreateComponent } from './components/transactionHistoryArchive/transactionHistoryArchiveCreateForm';
+import { WrappedTransactionHistoryArchiveDetailComponent } from './components/transactionHistoryArchive/transactionHistoryArchiveDetailForm';
+import { WrappedTransactionHistoryArchiveEditComponent } from './components/transactionHistoryArchive/transactionHistoryArchiveEditForm';
+import { WrappedTransactionHistoryArchiveSearchComponent } from './components/transactionHistoryArchive/transactionHistoryArchiveSearchForm';					
+import { WrappedUnitMeasureCreateComponent } from './components/unitMeasure/unitMeasureCreateForm';
+import { WrappedUnitMeasureDetailComponent } from './components/unitMeasure/unitMeasureDetailForm';
+import { WrappedUnitMeasureEditComponent } from './components/unitMeasure/unitMeasureEditForm';
+import { WrappedUnitMeasureSearchComponent } from './components/unitMeasure/unitMeasureSearchForm';					
+import { WrappedWorkOrderCreateComponent } from './components/workOrder/workOrderCreateForm';
+import { WrappedWorkOrderDetailComponent } from './components/workOrder/workOrderDetailForm';
+import { WrappedWorkOrderEditComponent } from './components/workOrder/workOrderEditForm';
+import { WrappedWorkOrderSearchComponent } from './components/workOrder/workOrderSearchForm';					
+import { WrappedPurchaseOrderHeaderCreateComponent } from './components/purchaseOrderHeader/purchaseOrderHeaderCreateForm';
+import { WrappedPurchaseOrderHeaderDetailComponent } from './components/purchaseOrderHeader/purchaseOrderHeaderDetailForm';
+import { WrappedPurchaseOrderHeaderEditComponent } from './components/purchaseOrderHeader/purchaseOrderHeaderEditForm';
+import { WrappedPurchaseOrderHeaderSearchComponent } from './components/purchaseOrderHeader/purchaseOrderHeaderSearchForm';					
+import { WrappedShipMethodCreateComponent } from './components/shipMethod/shipMethodCreateForm';
+import { WrappedShipMethodDetailComponent } from './components/shipMethod/shipMethodDetailForm';
+import { WrappedShipMethodEditComponent } from './components/shipMethod/shipMethodEditForm';
+import { WrappedShipMethodSearchComponent } from './components/shipMethod/shipMethodSearchForm';					
+import { WrappedVendorCreateComponent } from './components/vendor/vendorCreateForm';
+import { WrappedVendorDetailComponent } from './components/vendor/vendorDetailForm';
+import { WrappedVendorEditComponent } from './components/vendor/vendorEditForm';
+import { WrappedVendorSearchComponent } from './components/vendor/vendorSearchForm';					
+import { WrappedCreditCardCreateComponent } from './components/creditCard/creditCardCreateForm';
+import { WrappedCreditCardDetailComponent } from './components/creditCard/creditCardDetailForm';
+import { WrappedCreditCardEditComponent } from './components/creditCard/creditCardEditForm';
+import { WrappedCreditCardSearchComponent } from './components/creditCard/creditCardSearchForm';					
+import { WrappedCurrencyCreateComponent } from './components/currency/currencyCreateForm';
+import { WrappedCurrencyDetailComponent } from './components/currency/currencyDetailForm';
+import { WrappedCurrencyEditComponent } from './components/currency/currencyEditForm';
+import { WrappedCurrencySearchComponent } from './components/currency/currencySearchForm';					
+import { WrappedCurrencyRateCreateComponent } from './components/currencyRate/currencyRateCreateForm';
+import { WrappedCurrencyRateDetailComponent } from './components/currencyRate/currencyRateDetailForm';
+import { WrappedCurrencyRateEditComponent } from './components/currencyRate/currencyRateEditForm';
+import { WrappedCurrencyRateSearchComponent } from './components/currencyRate/currencyRateSearchForm';					
+import { WrappedCustomerCreateComponent } from './components/customer/customerCreateForm';
+import { WrappedCustomerDetailComponent } from './components/customer/customerDetailForm';
+import { WrappedCustomerEditComponent } from './components/customer/customerEditForm';
+import { WrappedCustomerSearchComponent } from './components/customer/customerSearchForm';					
+import { WrappedSalesOrderHeaderCreateComponent } from './components/salesOrderHeader/salesOrderHeaderCreateForm';
+import { WrappedSalesOrderHeaderDetailComponent } from './components/salesOrderHeader/salesOrderHeaderDetailForm';
+import { WrappedSalesOrderHeaderEditComponent } from './components/salesOrderHeader/salesOrderHeaderEditForm';
+import { WrappedSalesOrderHeaderSearchComponent } from './components/salesOrderHeader/salesOrderHeaderSearchForm';					
+import { WrappedSalesPersonCreateComponent } from './components/salesPerson/salesPersonCreateForm';
+import { WrappedSalesPersonDetailComponent } from './components/salesPerson/salesPersonDetailForm';
+import { WrappedSalesPersonEditComponent } from './components/salesPerson/salesPersonEditForm';
+import { WrappedSalesPersonSearchComponent } from './components/salesPerson/salesPersonSearchForm';					
+import { WrappedSalesReasonCreateComponent } from './components/salesReason/salesReasonCreateForm';
+import { WrappedSalesReasonDetailComponent } from './components/salesReason/salesReasonDetailForm';
+import { WrappedSalesReasonEditComponent } from './components/salesReason/salesReasonEditForm';
+import { WrappedSalesReasonSearchComponent } from './components/salesReason/salesReasonSearchForm';					
+import { WrappedSalesTaxRateCreateComponent } from './components/salesTaxRate/salesTaxRateCreateForm';
+import { WrappedSalesTaxRateDetailComponent } from './components/salesTaxRate/salesTaxRateDetailForm';
+import { WrappedSalesTaxRateEditComponent } from './components/salesTaxRate/salesTaxRateEditForm';
+import { WrappedSalesTaxRateSearchComponent } from './components/salesTaxRate/salesTaxRateSearchForm';					
+import { WrappedSalesTerritoryCreateComponent } from './components/salesTerritory/salesTerritoryCreateForm';
+import { WrappedSalesTerritoryDetailComponent } from './components/salesTerritory/salesTerritoryDetailForm';
+import { WrappedSalesTerritoryEditComponent } from './components/salesTerritory/salesTerritoryEditForm';
+import { WrappedSalesTerritorySearchComponent } from './components/salesTerritory/salesTerritorySearchForm';					
+import { WrappedShoppingCartItemCreateComponent } from './components/shoppingCartItem/shoppingCartItemCreateForm';
+import { WrappedShoppingCartItemDetailComponent } from './components/shoppingCartItem/shoppingCartItemDetailForm';
+import { WrappedShoppingCartItemEditComponent } from './components/shoppingCartItem/shoppingCartItemEditForm';
+import { WrappedShoppingCartItemSearchComponent } from './components/shoppingCartItem/shoppingCartItemSearchForm';					
+import { WrappedSpecialOfferCreateComponent } from './components/specialOffer/specialOfferCreateForm';
+import { WrappedSpecialOfferDetailComponent } from './components/specialOffer/specialOfferDetailForm';
+import { WrappedSpecialOfferEditComponent } from './components/specialOffer/specialOfferEditForm';
+import { WrappedSpecialOfferSearchComponent } from './components/specialOffer/specialOfferSearchForm';					
+import { WrappedStoreCreateComponent } from './components/store/storeCreateForm';
+import { WrappedStoreDetailComponent } from './components/store/storeDetailForm';
+import { WrappedStoreEditComponent } from './components/store/storeEditForm';
+import { WrappedStoreSearchComponent } from './components/store/storeSearchForm';					
 
 const config = {
   oidc: {
@@ -213,211 +214,207 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 	<Security issuer={config.oidc.issuer}
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}>
-
-      <div className="container-fluid">
-        <Route component={App} />
 	    <SecureRoute path="/protected" component={() => '<div>secure route</div>'} />
         <Switch>
-          <Route exact path="/" component={Dashboard} />
-		  					  <Route path="/awbuildversions/create" component={AWBuildVersionCreateComponent} />
-					  <Route path="/awbuildversions/edit/:id" component={AWBuildVersionEditComponent} />
-					  <Route path="/awbuildversions/:id" component={AWBuildVersionDetailComponent} />
-					  <Route path="/awbuildversions" component={AWBuildVersionSearchComponent} />
-										  <Route path="/databaselogs/create" component={DatabaseLogCreateComponent} />
-					  <Route path="/databaselogs/edit/:id" component={DatabaseLogEditComponent} />
-					  <Route path="/databaselogs/:id" component={DatabaseLogDetailComponent} />
-					  <Route path="/databaselogs" component={DatabaseLogSearchComponent} />
-										  <Route path="/errorlogs/create" component={ErrorLogCreateComponent} />
-					  <Route path="/errorlogs/edit/:id" component={ErrorLogEditComponent} />
-					  <Route path="/errorlogs/:id" component={ErrorLogDetailComponent} />
-					  <Route path="/errorlogs" component={ErrorLogSearchComponent} />
-										  <Route path="/departments/create" component={DepartmentCreateComponent} />
-					  <Route path="/departments/edit/:id" component={DepartmentEditComponent} />
-					  <Route path="/departments/:id" component={DepartmentDetailComponent} />
-					  <Route path="/departments" component={DepartmentSearchComponent} />
-										  <Route path="/employees/create" component={EmployeeCreateComponent} />
-					  <Route path="/employees/edit/:id" component={EmployeeEditComponent} />
-					  <Route path="/employees/:id" component={EmployeeDetailComponent} />
-					  <Route path="/employees" component={EmployeeSearchComponent} />
-										  <Route path="/jobcandidates/create" component={JobCandidateCreateComponent} />
-					  <Route path="/jobcandidates/edit/:id" component={JobCandidateEditComponent} />
-					  <Route path="/jobcandidates/:id" component={JobCandidateDetailComponent} />
-					  <Route path="/jobcandidates" component={JobCandidateSearchComponent} />
-										  <Route path="/shifts/create" component={ShiftCreateComponent} />
-					  <Route path="/shifts/edit/:id" component={ShiftEditComponent} />
-					  <Route path="/shifts/:id" component={ShiftDetailComponent} />
-					  <Route path="/shifts" component={ShiftSearchComponent} />
-										  <Route path="/addresses/create" component={AddressCreateComponent} />
-					  <Route path="/addresses/edit/:id" component={AddressEditComponent} />
-					  <Route path="/addresses/:id" component={AddressDetailComponent} />
-					  <Route path="/addresses" component={AddressSearchComponent} />
-										  <Route path="/addresstypes/create" component={AddressTypeCreateComponent} />
-					  <Route path="/addresstypes/edit/:id" component={AddressTypeEditComponent} />
-					  <Route path="/addresstypes/:id" component={AddressTypeDetailComponent} />
-					  <Route path="/addresstypes" component={AddressTypeSearchComponent} />
-										  <Route path="/businessentities/create" component={BusinessEntityCreateComponent} />
-					  <Route path="/businessentities/edit/:id" component={BusinessEntityEditComponent} />
-					  <Route path="/businessentities/:id" component={BusinessEntityDetailComponent} />
-					  <Route path="/businessentities" component={BusinessEntitySearchComponent} />
-										  <Route path="/contacttypes/create" component={ContactTypeCreateComponent} />
-					  <Route path="/contacttypes/edit/:id" component={ContactTypeEditComponent} />
-					  <Route path="/contacttypes/:id" component={ContactTypeDetailComponent} />
-					  <Route path="/contacttypes" component={ContactTypeSearchComponent} />
-										  <Route path="/countryregions/create" component={CountryRegionCreateComponent} />
-					  <Route path="/countryregions/edit/:id" component={CountryRegionEditComponent} />
-					  <Route path="/countryregions/:id" component={CountryRegionDetailComponent} />
-					  <Route path="/countryregions" component={CountryRegionSearchComponent} />
-										  <Route path="/passwords/create" component={PasswordCreateComponent} />
-					  <Route path="/passwords/edit/:id" component={PasswordEditComponent} />
-					  <Route path="/passwords/:id" component={PasswordDetailComponent} />
-					  <Route path="/passwords" component={PasswordSearchComponent} />
-										  <Route path="/people/create" component={PersonCreateComponent} />
-					  <Route path="/people/edit/:id" component={PersonEditComponent} />
-					  <Route path="/people/:id" component={PersonDetailComponent} />
-					  <Route path="/people" component={PersonSearchComponent} />
-										  <Route path="/phonenumbertypes/create" component={PhoneNumberTypeCreateComponent} />
-					  <Route path="/phonenumbertypes/edit/:id" component={PhoneNumberTypeEditComponent} />
-					  <Route path="/phonenumbertypes/:id" component={PhoneNumberTypeDetailComponent} />
-					  <Route path="/phonenumbertypes" component={PhoneNumberTypeSearchComponent} />
-										  <Route path="/stateprovinces/create" component={StateProvinceCreateComponent} />
-					  <Route path="/stateprovinces/edit/:id" component={StateProvinceEditComponent} />
-					  <Route path="/stateprovinces/:id" component={StateProvinceDetailComponent} />
-					  <Route path="/stateprovinces" component={StateProvinceSearchComponent} />
-										  <Route path="/billofmaterials/create" component={BillOfMaterialCreateComponent} />
-					  <Route path="/billofmaterials/edit/:id" component={BillOfMaterialEditComponent} />
-					  <Route path="/billofmaterials/:id" component={BillOfMaterialDetailComponent} />
-					  <Route path="/billofmaterials" component={BillOfMaterialSearchComponent} />
-										  <Route path="/cultures/create" component={CultureCreateComponent} />
-					  <Route path="/cultures/edit/:id" component={CultureEditComponent} />
-					  <Route path="/cultures/:id" component={CultureDetailComponent} />
-					  <Route path="/cultures" component={CultureSearchComponent} />
-										  <Route path="/documents/create" component={DocumentCreateComponent} />
-					  <Route path="/documents/edit/:id" component={DocumentEditComponent} />
-					  <Route path="/documents/:id" component={DocumentDetailComponent} />
-					  <Route path="/documents" component={DocumentSearchComponent} />
-										  <Route path="/illustrations/create" component={IllustrationCreateComponent} />
-					  <Route path="/illustrations/edit/:id" component={IllustrationEditComponent} />
-					  <Route path="/illustrations/:id" component={IllustrationDetailComponent} />
-					  <Route path="/illustrations" component={IllustrationSearchComponent} />
-										  <Route path="/locations/create" component={LocationCreateComponent} />
-					  <Route path="/locations/edit/:id" component={LocationEditComponent} />
-					  <Route path="/locations/:id" component={LocationDetailComponent} />
-					  <Route path="/locations" component={LocationSearchComponent} />
-										  <Route path="/products/create" component={ProductCreateComponent} />
-					  <Route path="/products/edit/:id" component={ProductEditComponent} />
-					  <Route path="/products/:id" component={ProductDetailComponent} />
-					  <Route path="/products" component={ProductSearchComponent} />
-										  <Route path="/productcategories/create" component={ProductCategoryCreateComponent} />
-					  <Route path="/productcategories/edit/:id" component={ProductCategoryEditComponent} />
-					  <Route path="/productcategories/:id" component={ProductCategoryDetailComponent} />
-					  <Route path="/productcategories" component={ProductCategorySearchComponent} />
-										  <Route path="/productdescriptions/create" component={ProductDescriptionCreateComponent} />
-					  <Route path="/productdescriptions/edit/:id" component={ProductDescriptionEditComponent} />
-					  <Route path="/productdescriptions/:id" component={ProductDescriptionDetailComponent} />
-					  <Route path="/productdescriptions" component={ProductDescriptionSearchComponent} />
-										  <Route path="/productmodels/create" component={ProductModelCreateComponent} />
-					  <Route path="/productmodels/edit/:id" component={ProductModelEditComponent} />
-					  <Route path="/productmodels/:id" component={ProductModelDetailComponent} />
-					  <Route path="/productmodels" component={ProductModelSearchComponent} />
-										  <Route path="/productphotoes/create" component={ProductPhotoCreateComponent} />
-					  <Route path="/productphotoes/edit/:id" component={ProductPhotoEditComponent} />
-					  <Route path="/productphotoes/:id" component={ProductPhotoDetailComponent} />
-					  <Route path="/productphotoes" component={ProductPhotoSearchComponent} />
-										  <Route path="/productreviews/create" component={ProductReviewCreateComponent} />
-					  <Route path="/productreviews/edit/:id" component={ProductReviewEditComponent} />
-					  <Route path="/productreviews/:id" component={ProductReviewDetailComponent} />
-					  <Route path="/productreviews" component={ProductReviewSearchComponent} />
-										  <Route path="/productsubcategories/create" component={ProductSubcategoryCreateComponent} />
-					  <Route path="/productsubcategories/edit/:id" component={ProductSubcategoryEditComponent} />
-					  <Route path="/productsubcategories/:id" component={ProductSubcategoryDetailComponent} />
-					  <Route path="/productsubcategories" component={ProductSubcategorySearchComponent} />
-										  <Route path="/scrapreasons/create" component={ScrapReasonCreateComponent} />
-					  <Route path="/scrapreasons/edit/:id" component={ScrapReasonEditComponent} />
-					  <Route path="/scrapreasons/:id" component={ScrapReasonDetailComponent} />
-					  <Route path="/scrapreasons" component={ScrapReasonSearchComponent} />
-										  <Route path="/transactionhistories/create" component={TransactionHistoryCreateComponent} />
-					  <Route path="/transactionhistories/edit/:id" component={TransactionHistoryEditComponent} />
-					  <Route path="/transactionhistories/:id" component={TransactionHistoryDetailComponent} />
-					  <Route path="/transactionhistories" component={TransactionHistorySearchComponent} />
-										  <Route path="/transactionhistoryarchives/create" component={TransactionHistoryArchiveCreateComponent} />
-					  <Route path="/transactionhistoryarchives/edit/:id" component={TransactionHistoryArchiveEditComponent} />
-					  <Route path="/transactionhistoryarchives/:id" component={TransactionHistoryArchiveDetailComponent} />
-					  <Route path="/transactionhistoryarchives" component={TransactionHistoryArchiveSearchComponent} />
-										  <Route path="/unitmeasures/create" component={UnitMeasureCreateComponent} />
-					  <Route path="/unitmeasures/edit/:id" component={UnitMeasureEditComponent} />
-					  <Route path="/unitmeasures/:id" component={UnitMeasureDetailComponent} />
-					  <Route path="/unitmeasures" component={UnitMeasureSearchComponent} />
-										  <Route path="/workorders/create" component={WorkOrderCreateComponent} />
-					  <Route path="/workorders/edit/:id" component={WorkOrderEditComponent} />
-					  <Route path="/workorders/:id" component={WorkOrderDetailComponent} />
-					  <Route path="/workorders" component={WorkOrderSearchComponent} />
-										  <Route path="/purchaseorderheaders/create" component={PurchaseOrderHeaderCreateComponent} />
-					  <Route path="/purchaseorderheaders/edit/:id" component={PurchaseOrderHeaderEditComponent} />
-					  <Route path="/purchaseorderheaders/:id" component={PurchaseOrderHeaderDetailComponent} />
-					  <Route path="/purchaseorderheaders" component={PurchaseOrderHeaderSearchComponent} />
-										  <Route path="/shipmethods/create" component={ShipMethodCreateComponent} />
-					  <Route path="/shipmethods/edit/:id" component={ShipMethodEditComponent} />
-					  <Route path="/shipmethods/:id" component={ShipMethodDetailComponent} />
-					  <Route path="/shipmethods" component={ShipMethodSearchComponent} />
-										  <Route path="/vendors/create" component={VendorCreateComponent} />
-					  <Route path="/vendors/edit/:id" component={VendorEditComponent} />
-					  <Route path="/vendors/:id" component={VendorDetailComponent} />
-					  <Route path="/vendors" component={VendorSearchComponent} />
-										  <Route path="/creditcards/create" component={CreditCardCreateComponent} />
-					  <Route path="/creditcards/edit/:id" component={CreditCardEditComponent} />
-					  <Route path="/creditcards/:id" component={CreditCardDetailComponent} />
-					  <Route path="/creditcards" component={CreditCardSearchComponent} />
-										  <Route path="/currencies/create" component={CurrencyCreateComponent} />
-					  <Route path="/currencies/edit/:id" component={CurrencyEditComponent} />
-					  <Route path="/currencies/:id" component={CurrencyDetailComponent} />
-					  <Route path="/currencies" component={CurrencySearchComponent} />
-										  <Route path="/currencyrates/create" component={CurrencyRateCreateComponent} />
-					  <Route path="/currencyrates/edit/:id" component={CurrencyRateEditComponent} />
-					  <Route path="/currencyrates/:id" component={CurrencyRateDetailComponent} />
-					  <Route path="/currencyrates" component={CurrencyRateSearchComponent} />
-										  <Route path="/customers/create" component={CustomerCreateComponent} />
-					  <Route path="/customers/edit/:id" component={CustomerEditComponent} />
-					  <Route path="/customers/:id" component={CustomerDetailComponent} />
-					  <Route path="/customers" component={CustomerSearchComponent} />
-										  <Route path="/salesorderheaders/create" component={SalesOrderHeaderCreateComponent} />
-					  <Route path="/salesorderheaders/edit/:id" component={SalesOrderHeaderEditComponent} />
-					  <Route path="/salesorderheaders/:id" component={SalesOrderHeaderDetailComponent} />
-					  <Route path="/salesorderheaders" component={SalesOrderHeaderSearchComponent} />
-										  <Route path="/salespersons/create" component={SalesPersonCreateComponent} />
-					  <Route path="/salespersons/edit/:id" component={SalesPersonEditComponent} />
-					  <Route path="/salespersons/:id" component={SalesPersonDetailComponent} />
-					  <Route path="/salespersons" component={SalesPersonSearchComponent} />
-										  <Route path="/salesreasons/create" component={SalesReasonCreateComponent} />
-					  <Route path="/salesreasons/edit/:id" component={SalesReasonEditComponent} />
-					  <Route path="/salesreasons/:id" component={SalesReasonDetailComponent} />
-					  <Route path="/salesreasons" component={SalesReasonSearchComponent} />
-										  <Route path="/salestaxrates/create" component={SalesTaxRateCreateComponent} />
-					  <Route path="/salestaxrates/edit/:id" component={SalesTaxRateEditComponent} />
-					  <Route path="/salestaxrates/:id" component={SalesTaxRateDetailComponent} />
-					  <Route path="/salestaxrates" component={SalesTaxRateSearchComponent} />
-										  <Route path="/salesterritories/create" component={SalesTerritoryCreateComponent} />
-					  <Route path="/salesterritories/edit/:id" component={SalesTerritoryEditComponent} />
-					  <Route path="/salesterritories/:id" component={SalesTerritoryDetailComponent} />
-					  <Route path="/salesterritories" component={SalesTerritorySearchComponent} />
-										  <Route path="/shoppingcartitems/create" component={ShoppingCartItemCreateComponent} />
-					  <Route path="/shoppingcartitems/edit/:id" component={ShoppingCartItemEditComponent} />
-					  <Route path="/shoppingcartitems/:id" component={ShoppingCartItemDetailComponent} />
-					  <Route path="/shoppingcartitems" component={ShoppingCartItemSearchComponent} />
-										  <Route path="/specialoffers/create" component={SpecialOfferCreateComponent} />
-					  <Route path="/specialoffers/edit/:id" component={SpecialOfferEditComponent} />
-					  <Route path="/specialoffers/:id" component={SpecialOfferDetailComponent} />
-					  <Route path="/specialoffers" component={SpecialOfferSearchComponent} />
-										  <Route path="/stores/create" component={StoreCreateComponent} />
-					  <Route path="/stores/edit/:id" component={StoreEditComponent} />
-					  <Route path="/stores/:id" component={StoreDetailComponent} />
-					  <Route path="/stores" component={StoreSearchComponent} />
+          <Route exact path="/" component={wrapperHeader(Dashboard)} />
+		  <Route path={ClientRoutes.AWBuildVersions + "/create"} component={wrapperHeader(WrappedAWBuildVersionCreateComponent)} />
+                      <Route path={ClientRoutes.AWBuildVersions + "/edit/:id"} component={wrapperHeader(WrappedAWBuildVersionEditComponent)} />
+                      <Route path={ClientRoutes.AWBuildVersions + "/:id"} component={wrapperHeader(WrappedAWBuildVersionDetailComponent)} />
+                      <Route path={ClientRoutes.AWBuildVersions} component={wrapperHeader(WrappedAWBuildVersionSearchComponent)} />
+					<Route path={ClientRoutes.DatabaseLogs + "/create"} component={wrapperHeader(WrappedDatabaseLogCreateComponent)} />
+                      <Route path={ClientRoutes.DatabaseLogs + "/edit/:id"} component={wrapperHeader(WrappedDatabaseLogEditComponent)} />
+                      <Route path={ClientRoutes.DatabaseLogs + "/:id"} component={wrapperHeader(WrappedDatabaseLogDetailComponent)} />
+                      <Route path={ClientRoutes.DatabaseLogs} component={wrapperHeader(WrappedDatabaseLogSearchComponent)} />
+					<Route path={ClientRoutes.ErrorLogs + "/create"} component={wrapperHeader(WrappedErrorLogCreateComponent)} />
+                      <Route path={ClientRoutes.ErrorLogs + "/edit/:id"} component={wrapperHeader(WrappedErrorLogEditComponent)} />
+                      <Route path={ClientRoutes.ErrorLogs + "/:id"} component={wrapperHeader(WrappedErrorLogDetailComponent)} />
+                      <Route path={ClientRoutes.ErrorLogs} component={wrapperHeader(WrappedErrorLogSearchComponent)} />
+					<Route path={ClientRoutes.Departments + "/create"} component={wrapperHeader(WrappedDepartmentCreateComponent)} />
+                      <Route path={ClientRoutes.Departments + "/edit/:id"} component={wrapperHeader(WrappedDepartmentEditComponent)} />
+                      <Route path={ClientRoutes.Departments + "/:id"} component={wrapperHeader(WrappedDepartmentDetailComponent)} />
+                      <Route path={ClientRoutes.Departments} component={wrapperHeader(WrappedDepartmentSearchComponent)} />
+					<Route path={ClientRoutes.Employees + "/create"} component={wrapperHeader(WrappedEmployeeCreateComponent)} />
+                      <Route path={ClientRoutes.Employees + "/edit/:id"} component={wrapperHeader(WrappedEmployeeEditComponent)} />
+                      <Route path={ClientRoutes.Employees + "/:id"} component={wrapperHeader(WrappedEmployeeDetailComponent)} />
+                      <Route path={ClientRoutes.Employees} component={wrapperHeader(WrappedEmployeeSearchComponent)} />
+					<Route path={ClientRoutes.JobCandidates + "/create"} component={wrapperHeader(WrappedJobCandidateCreateComponent)} />
+                      <Route path={ClientRoutes.JobCandidates + "/edit/:id"} component={wrapperHeader(WrappedJobCandidateEditComponent)} />
+                      <Route path={ClientRoutes.JobCandidates + "/:id"} component={wrapperHeader(WrappedJobCandidateDetailComponent)} />
+                      <Route path={ClientRoutes.JobCandidates} component={wrapperHeader(WrappedJobCandidateSearchComponent)} />
+					<Route path={ClientRoutes.Shifts + "/create"} component={wrapperHeader(WrappedShiftCreateComponent)} />
+                      <Route path={ClientRoutes.Shifts + "/edit/:id"} component={wrapperHeader(WrappedShiftEditComponent)} />
+                      <Route path={ClientRoutes.Shifts + "/:id"} component={wrapperHeader(WrappedShiftDetailComponent)} />
+                      <Route path={ClientRoutes.Shifts} component={wrapperHeader(WrappedShiftSearchComponent)} />
+					<Route path={ClientRoutes.Addresses + "/create"} component={wrapperHeader(WrappedAddressCreateComponent)} />
+                      <Route path={ClientRoutes.Addresses + "/edit/:id"} component={wrapperHeader(WrappedAddressEditComponent)} />
+                      <Route path={ClientRoutes.Addresses + "/:id"} component={wrapperHeader(WrappedAddressDetailComponent)} />
+                      <Route path={ClientRoutes.Addresses} component={wrapperHeader(WrappedAddressSearchComponent)} />
+					<Route path={ClientRoutes.AddressTypes + "/create"} component={wrapperHeader(WrappedAddressTypeCreateComponent)} />
+                      <Route path={ClientRoutes.AddressTypes + "/edit/:id"} component={wrapperHeader(WrappedAddressTypeEditComponent)} />
+                      <Route path={ClientRoutes.AddressTypes + "/:id"} component={wrapperHeader(WrappedAddressTypeDetailComponent)} />
+                      <Route path={ClientRoutes.AddressTypes} component={wrapperHeader(WrappedAddressTypeSearchComponent)} />
+					<Route path={ClientRoutes.BusinessEntities + "/create"} component={wrapperHeader(WrappedBusinessEntityCreateComponent)} />
+                      <Route path={ClientRoutes.BusinessEntities + "/edit/:id"} component={wrapperHeader(WrappedBusinessEntityEditComponent)} />
+                      <Route path={ClientRoutes.BusinessEntities + "/:id"} component={wrapperHeader(WrappedBusinessEntityDetailComponent)} />
+                      <Route path={ClientRoutes.BusinessEntities} component={wrapperHeader(WrappedBusinessEntitySearchComponent)} />
+					<Route path={ClientRoutes.ContactTypes + "/create"} component={wrapperHeader(WrappedContactTypeCreateComponent)} />
+                      <Route path={ClientRoutes.ContactTypes + "/edit/:id"} component={wrapperHeader(WrappedContactTypeEditComponent)} />
+                      <Route path={ClientRoutes.ContactTypes + "/:id"} component={wrapperHeader(WrappedContactTypeDetailComponent)} />
+                      <Route path={ClientRoutes.ContactTypes} component={wrapperHeader(WrappedContactTypeSearchComponent)} />
+					<Route path={ClientRoutes.CountryRegions + "/create"} component={wrapperHeader(WrappedCountryRegionCreateComponent)} />
+                      <Route path={ClientRoutes.CountryRegions + "/edit/:id"} component={wrapperHeader(WrappedCountryRegionEditComponent)} />
+                      <Route path={ClientRoutes.CountryRegions + "/:id"} component={wrapperHeader(WrappedCountryRegionDetailComponent)} />
+                      <Route path={ClientRoutes.CountryRegions} component={wrapperHeader(WrappedCountryRegionSearchComponent)} />
+					<Route path={ClientRoutes.Passwords + "/create"} component={wrapperHeader(WrappedPasswordCreateComponent)} />
+                      <Route path={ClientRoutes.Passwords + "/edit/:id"} component={wrapperHeader(WrappedPasswordEditComponent)} />
+                      <Route path={ClientRoutes.Passwords + "/:id"} component={wrapperHeader(WrappedPasswordDetailComponent)} />
+                      <Route path={ClientRoutes.Passwords} component={wrapperHeader(WrappedPasswordSearchComponent)} />
+					<Route path={ClientRoutes.People + "/create"} component={wrapperHeader(WrappedPersonCreateComponent)} />
+                      <Route path={ClientRoutes.People + "/edit/:id"} component={wrapperHeader(WrappedPersonEditComponent)} />
+                      <Route path={ClientRoutes.People + "/:id"} component={wrapperHeader(WrappedPersonDetailComponent)} />
+                      <Route path={ClientRoutes.People} component={wrapperHeader(WrappedPersonSearchComponent)} />
+					<Route path={ClientRoutes.PhoneNumberTypes + "/create"} component={wrapperHeader(WrappedPhoneNumberTypeCreateComponent)} />
+                      <Route path={ClientRoutes.PhoneNumberTypes + "/edit/:id"} component={wrapperHeader(WrappedPhoneNumberTypeEditComponent)} />
+                      <Route path={ClientRoutes.PhoneNumberTypes + "/:id"} component={wrapperHeader(WrappedPhoneNumberTypeDetailComponent)} />
+                      <Route path={ClientRoutes.PhoneNumberTypes} component={wrapperHeader(WrappedPhoneNumberTypeSearchComponent)} />
+					<Route path={ClientRoutes.StateProvinces + "/create"} component={wrapperHeader(WrappedStateProvinceCreateComponent)} />
+                      <Route path={ClientRoutes.StateProvinces + "/edit/:id"} component={wrapperHeader(WrappedStateProvinceEditComponent)} />
+                      <Route path={ClientRoutes.StateProvinces + "/:id"} component={wrapperHeader(WrappedStateProvinceDetailComponent)} />
+                      <Route path={ClientRoutes.StateProvinces} component={wrapperHeader(WrappedStateProvinceSearchComponent)} />
+					<Route path={ClientRoutes.BillOfMaterials + "/create"} component={wrapperHeader(WrappedBillOfMaterialCreateComponent)} />
+                      <Route path={ClientRoutes.BillOfMaterials + "/edit/:id"} component={wrapperHeader(WrappedBillOfMaterialEditComponent)} />
+                      <Route path={ClientRoutes.BillOfMaterials + "/:id"} component={wrapperHeader(WrappedBillOfMaterialDetailComponent)} />
+                      <Route path={ClientRoutes.BillOfMaterials} component={wrapperHeader(WrappedBillOfMaterialSearchComponent)} />
+					<Route path={ClientRoutes.Cultures + "/create"} component={wrapperHeader(WrappedCultureCreateComponent)} />
+                      <Route path={ClientRoutes.Cultures + "/edit/:id"} component={wrapperHeader(WrappedCultureEditComponent)} />
+                      <Route path={ClientRoutes.Cultures + "/:id"} component={wrapperHeader(WrappedCultureDetailComponent)} />
+                      <Route path={ClientRoutes.Cultures} component={wrapperHeader(WrappedCultureSearchComponent)} />
+					<Route path={ClientRoutes.Documents + "/create"} component={wrapperHeader(WrappedDocumentCreateComponent)} />
+                      <Route path={ClientRoutes.Documents + "/edit/:id"} component={wrapperHeader(WrappedDocumentEditComponent)} />
+                      <Route path={ClientRoutes.Documents + "/:id"} component={wrapperHeader(WrappedDocumentDetailComponent)} />
+                      <Route path={ClientRoutes.Documents} component={wrapperHeader(WrappedDocumentSearchComponent)} />
+					<Route path={ClientRoutes.Illustrations + "/create"} component={wrapperHeader(WrappedIllustrationCreateComponent)} />
+                      <Route path={ClientRoutes.Illustrations + "/edit/:id"} component={wrapperHeader(WrappedIllustrationEditComponent)} />
+                      <Route path={ClientRoutes.Illustrations + "/:id"} component={wrapperHeader(WrappedIllustrationDetailComponent)} />
+                      <Route path={ClientRoutes.Illustrations} component={wrapperHeader(WrappedIllustrationSearchComponent)} />
+					<Route path={ClientRoutes.Locations + "/create"} component={wrapperHeader(WrappedLocationCreateComponent)} />
+                      <Route path={ClientRoutes.Locations + "/edit/:id"} component={wrapperHeader(WrappedLocationEditComponent)} />
+                      <Route path={ClientRoutes.Locations + "/:id"} component={wrapperHeader(WrappedLocationDetailComponent)} />
+                      <Route path={ClientRoutes.Locations} component={wrapperHeader(WrappedLocationSearchComponent)} />
+					<Route path={ClientRoutes.Products + "/create"} component={wrapperHeader(WrappedProductCreateComponent)} />
+                      <Route path={ClientRoutes.Products + "/edit/:id"} component={wrapperHeader(WrappedProductEditComponent)} />
+                      <Route path={ClientRoutes.Products + "/:id"} component={wrapperHeader(WrappedProductDetailComponent)} />
+                      <Route path={ClientRoutes.Products} component={wrapperHeader(WrappedProductSearchComponent)} />
+					<Route path={ClientRoutes.ProductCategories + "/create"} component={wrapperHeader(WrappedProductCategoryCreateComponent)} />
+                      <Route path={ClientRoutes.ProductCategories + "/edit/:id"} component={wrapperHeader(WrappedProductCategoryEditComponent)} />
+                      <Route path={ClientRoutes.ProductCategories + "/:id"} component={wrapperHeader(WrappedProductCategoryDetailComponent)} />
+                      <Route path={ClientRoutes.ProductCategories} component={wrapperHeader(WrappedProductCategorySearchComponent)} />
+					<Route path={ClientRoutes.ProductDescriptions + "/create"} component={wrapperHeader(WrappedProductDescriptionCreateComponent)} />
+                      <Route path={ClientRoutes.ProductDescriptions + "/edit/:id"} component={wrapperHeader(WrappedProductDescriptionEditComponent)} />
+                      <Route path={ClientRoutes.ProductDescriptions + "/:id"} component={wrapperHeader(WrappedProductDescriptionDetailComponent)} />
+                      <Route path={ClientRoutes.ProductDescriptions} component={wrapperHeader(WrappedProductDescriptionSearchComponent)} />
+					<Route path={ClientRoutes.ProductModels + "/create"} component={wrapperHeader(WrappedProductModelCreateComponent)} />
+                      <Route path={ClientRoutes.ProductModels + "/edit/:id"} component={wrapperHeader(WrappedProductModelEditComponent)} />
+                      <Route path={ClientRoutes.ProductModels + "/:id"} component={wrapperHeader(WrappedProductModelDetailComponent)} />
+                      <Route path={ClientRoutes.ProductModels} component={wrapperHeader(WrappedProductModelSearchComponent)} />
+					<Route path={ClientRoutes.ProductPhotoes + "/create"} component={wrapperHeader(WrappedProductPhotoCreateComponent)} />
+                      <Route path={ClientRoutes.ProductPhotoes + "/edit/:id"} component={wrapperHeader(WrappedProductPhotoEditComponent)} />
+                      <Route path={ClientRoutes.ProductPhotoes + "/:id"} component={wrapperHeader(WrappedProductPhotoDetailComponent)} />
+                      <Route path={ClientRoutes.ProductPhotoes} component={wrapperHeader(WrappedProductPhotoSearchComponent)} />
+					<Route path={ClientRoutes.ProductReviews + "/create"} component={wrapperHeader(WrappedProductReviewCreateComponent)} />
+                      <Route path={ClientRoutes.ProductReviews + "/edit/:id"} component={wrapperHeader(WrappedProductReviewEditComponent)} />
+                      <Route path={ClientRoutes.ProductReviews + "/:id"} component={wrapperHeader(WrappedProductReviewDetailComponent)} />
+                      <Route path={ClientRoutes.ProductReviews} component={wrapperHeader(WrappedProductReviewSearchComponent)} />
+					<Route path={ClientRoutes.ProductSubcategories + "/create"} component={wrapperHeader(WrappedProductSubcategoryCreateComponent)} />
+                      <Route path={ClientRoutes.ProductSubcategories + "/edit/:id"} component={wrapperHeader(WrappedProductSubcategoryEditComponent)} />
+                      <Route path={ClientRoutes.ProductSubcategories + "/:id"} component={wrapperHeader(WrappedProductSubcategoryDetailComponent)} />
+                      <Route path={ClientRoutes.ProductSubcategories} component={wrapperHeader(WrappedProductSubcategorySearchComponent)} />
+					<Route path={ClientRoutes.ScrapReasons + "/create"} component={wrapperHeader(WrappedScrapReasonCreateComponent)} />
+                      <Route path={ClientRoutes.ScrapReasons + "/edit/:id"} component={wrapperHeader(WrappedScrapReasonEditComponent)} />
+                      <Route path={ClientRoutes.ScrapReasons + "/:id"} component={wrapperHeader(WrappedScrapReasonDetailComponent)} />
+                      <Route path={ClientRoutes.ScrapReasons} component={wrapperHeader(WrappedScrapReasonSearchComponent)} />
+					<Route path={ClientRoutes.TransactionHistories + "/create"} component={wrapperHeader(WrappedTransactionHistoryCreateComponent)} />
+                      <Route path={ClientRoutes.TransactionHistories + "/edit/:id"} component={wrapperHeader(WrappedTransactionHistoryEditComponent)} />
+                      <Route path={ClientRoutes.TransactionHistories + "/:id"} component={wrapperHeader(WrappedTransactionHistoryDetailComponent)} />
+                      <Route path={ClientRoutes.TransactionHistories} component={wrapperHeader(WrappedTransactionHistorySearchComponent)} />
+					<Route path={ClientRoutes.TransactionHistoryArchives + "/create"} component={wrapperHeader(WrappedTransactionHistoryArchiveCreateComponent)} />
+                      <Route path={ClientRoutes.TransactionHistoryArchives + "/edit/:id"} component={wrapperHeader(WrappedTransactionHistoryArchiveEditComponent)} />
+                      <Route path={ClientRoutes.TransactionHistoryArchives + "/:id"} component={wrapperHeader(WrappedTransactionHistoryArchiveDetailComponent)} />
+                      <Route path={ClientRoutes.TransactionHistoryArchives} component={wrapperHeader(WrappedTransactionHistoryArchiveSearchComponent)} />
+					<Route path={ClientRoutes.UnitMeasures + "/create"} component={wrapperHeader(WrappedUnitMeasureCreateComponent)} />
+                      <Route path={ClientRoutes.UnitMeasures + "/edit/:id"} component={wrapperHeader(WrappedUnitMeasureEditComponent)} />
+                      <Route path={ClientRoutes.UnitMeasures + "/:id"} component={wrapperHeader(WrappedUnitMeasureDetailComponent)} />
+                      <Route path={ClientRoutes.UnitMeasures} component={wrapperHeader(WrappedUnitMeasureSearchComponent)} />
+					<Route path={ClientRoutes.WorkOrders + "/create"} component={wrapperHeader(WrappedWorkOrderCreateComponent)} />
+                      <Route path={ClientRoutes.WorkOrders + "/edit/:id"} component={wrapperHeader(WrappedWorkOrderEditComponent)} />
+                      <Route path={ClientRoutes.WorkOrders + "/:id"} component={wrapperHeader(WrappedWorkOrderDetailComponent)} />
+                      <Route path={ClientRoutes.WorkOrders} component={wrapperHeader(WrappedWorkOrderSearchComponent)} />
+					<Route path={ClientRoutes.PurchaseOrderHeaders + "/create"} component={wrapperHeader(WrappedPurchaseOrderHeaderCreateComponent)} />
+                      <Route path={ClientRoutes.PurchaseOrderHeaders + "/edit/:id"} component={wrapperHeader(WrappedPurchaseOrderHeaderEditComponent)} />
+                      <Route path={ClientRoutes.PurchaseOrderHeaders + "/:id"} component={wrapperHeader(WrappedPurchaseOrderHeaderDetailComponent)} />
+                      <Route path={ClientRoutes.PurchaseOrderHeaders} component={wrapperHeader(WrappedPurchaseOrderHeaderSearchComponent)} />
+					<Route path={ClientRoutes.ShipMethods + "/create"} component={wrapperHeader(WrappedShipMethodCreateComponent)} />
+                      <Route path={ClientRoutes.ShipMethods + "/edit/:id"} component={wrapperHeader(WrappedShipMethodEditComponent)} />
+                      <Route path={ClientRoutes.ShipMethods + "/:id"} component={wrapperHeader(WrappedShipMethodDetailComponent)} />
+                      <Route path={ClientRoutes.ShipMethods} component={wrapperHeader(WrappedShipMethodSearchComponent)} />
+					<Route path={ClientRoutes.Vendors + "/create"} component={wrapperHeader(WrappedVendorCreateComponent)} />
+                      <Route path={ClientRoutes.Vendors + "/edit/:id"} component={wrapperHeader(WrappedVendorEditComponent)} />
+                      <Route path={ClientRoutes.Vendors + "/:id"} component={wrapperHeader(WrappedVendorDetailComponent)} />
+                      <Route path={ClientRoutes.Vendors} component={wrapperHeader(WrappedVendorSearchComponent)} />
+					<Route path={ClientRoutes.CreditCards + "/create"} component={wrapperHeader(WrappedCreditCardCreateComponent)} />
+                      <Route path={ClientRoutes.CreditCards + "/edit/:id"} component={wrapperHeader(WrappedCreditCardEditComponent)} />
+                      <Route path={ClientRoutes.CreditCards + "/:id"} component={wrapperHeader(WrappedCreditCardDetailComponent)} />
+                      <Route path={ClientRoutes.CreditCards} component={wrapperHeader(WrappedCreditCardSearchComponent)} />
+					<Route path={ClientRoutes.Currencies + "/create"} component={wrapperHeader(WrappedCurrencyCreateComponent)} />
+                      <Route path={ClientRoutes.Currencies + "/edit/:id"} component={wrapperHeader(WrappedCurrencyEditComponent)} />
+                      <Route path={ClientRoutes.Currencies + "/:id"} component={wrapperHeader(WrappedCurrencyDetailComponent)} />
+                      <Route path={ClientRoutes.Currencies} component={wrapperHeader(WrappedCurrencySearchComponent)} />
+					<Route path={ClientRoutes.CurrencyRates + "/create"} component={wrapperHeader(WrappedCurrencyRateCreateComponent)} />
+                      <Route path={ClientRoutes.CurrencyRates + "/edit/:id"} component={wrapperHeader(WrappedCurrencyRateEditComponent)} />
+                      <Route path={ClientRoutes.CurrencyRates + "/:id"} component={wrapperHeader(WrappedCurrencyRateDetailComponent)} />
+                      <Route path={ClientRoutes.CurrencyRates} component={wrapperHeader(WrappedCurrencyRateSearchComponent)} />
+					<Route path={ClientRoutes.Customers + "/create"} component={wrapperHeader(WrappedCustomerCreateComponent)} />
+                      <Route path={ClientRoutes.Customers + "/edit/:id"} component={wrapperHeader(WrappedCustomerEditComponent)} />
+                      <Route path={ClientRoutes.Customers + "/:id"} component={wrapperHeader(WrappedCustomerDetailComponent)} />
+                      <Route path={ClientRoutes.Customers} component={wrapperHeader(WrappedCustomerSearchComponent)} />
+					<Route path={ClientRoutes.SalesOrderHeaders + "/create"} component={wrapperHeader(WrappedSalesOrderHeaderCreateComponent)} />
+                      <Route path={ClientRoutes.SalesOrderHeaders + "/edit/:id"} component={wrapperHeader(WrappedSalesOrderHeaderEditComponent)} />
+                      <Route path={ClientRoutes.SalesOrderHeaders + "/:id"} component={wrapperHeader(WrappedSalesOrderHeaderDetailComponent)} />
+                      <Route path={ClientRoutes.SalesOrderHeaders} component={wrapperHeader(WrappedSalesOrderHeaderSearchComponent)} />
+					<Route path={ClientRoutes.SalesPersons + "/create"} component={wrapperHeader(WrappedSalesPersonCreateComponent)} />
+                      <Route path={ClientRoutes.SalesPersons + "/edit/:id"} component={wrapperHeader(WrappedSalesPersonEditComponent)} />
+                      <Route path={ClientRoutes.SalesPersons + "/:id"} component={wrapperHeader(WrappedSalesPersonDetailComponent)} />
+                      <Route path={ClientRoutes.SalesPersons} component={wrapperHeader(WrappedSalesPersonSearchComponent)} />
+					<Route path={ClientRoutes.SalesReasons + "/create"} component={wrapperHeader(WrappedSalesReasonCreateComponent)} />
+                      <Route path={ClientRoutes.SalesReasons + "/edit/:id"} component={wrapperHeader(WrappedSalesReasonEditComponent)} />
+                      <Route path={ClientRoutes.SalesReasons + "/:id"} component={wrapperHeader(WrappedSalesReasonDetailComponent)} />
+                      <Route path={ClientRoutes.SalesReasons} component={wrapperHeader(WrappedSalesReasonSearchComponent)} />
+					<Route path={ClientRoutes.SalesTaxRates + "/create"} component={wrapperHeader(WrappedSalesTaxRateCreateComponent)} />
+                      <Route path={ClientRoutes.SalesTaxRates + "/edit/:id"} component={wrapperHeader(WrappedSalesTaxRateEditComponent)} />
+                      <Route path={ClientRoutes.SalesTaxRates + "/:id"} component={wrapperHeader(WrappedSalesTaxRateDetailComponent)} />
+                      <Route path={ClientRoutes.SalesTaxRates} component={wrapperHeader(WrappedSalesTaxRateSearchComponent)} />
+					<Route path={ClientRoutes.SalesTerritories + "/create"} component={wrapperHeader(WrappedSalesTerritoryCreateComponent)} />
+                      <Route path={ClientRoutes.SalesTerritories + "/edit/:id"} component={wrapperHeader(WrappedSalesTerritoryEditComponent)} />
+                      <Route path={ClientRoutes.SalesTerritories + "/:id"} component={wrapperHeader(WrappedSalesTerritoryDetailComponent)} />
+                      <Route path={ClientRoutes.SalesTerritories} component={wrapperHeader(WrappedSalesTerritorySearchComponent)} />
+					<Route path={ClientRoutes.ShoppingCartItems + "/create"} component={wrapperHeader(WrappedShoppingCartItemCreateComponent)} />
+                      <Route path={ClientRoutes.ShoppingCartItems + "/edit/:id"} component={wrapperHeader(WrappedShoppingCartItemEditComponent)} />
+                      <Route path={ClientRoutes.ShoppingCartItems + "/:id"} component={wrapperHeader(WrappedShoppingCartItemDetailComponent)} />
+                      <Route path={ClientRoutes.ShoppingCartItems} component={wrapperHeader(WrappedShoppingCartItemSearchComponent)} />
+					<Route path={ClientRoutes.SpecialOffers + "/create"} component={wrapperHeader(WrappedSpecialOfferCreateComponent)} />
+                      <Route path={ClientRoutes.SpecialOffers + "/edit/:id"} component={wrapperHeader(WrappedSpecialOfferEditComponent)} />
+                      <Route path={ClientRoutes.SpecialOffers + "/:id"} component={wrapperHeader(WrappedSpecialOfferDetailComponent)} />
+                      <Route path={ClientRoutes.SpecialOffers} component={wrapperHeader(WrappedSpecialOfferSearchComponent)} />
+					<Route path={ClientRoutes.Stores + "/create"} component={wrapperHeader(WrappedStoreCreateComponent)} />
+                      <Route path={ClientRoutes.Stores + "/edit/:id"} component={wrapperHeader(WrappedStoreEditComponent)} />
+                      <Route path={ClientRoutes.Stores + "/:id"} component={wrapperHeader(WrappedStoreDetailComponent)} />
+                      <Route path={ClientRoutes.Stores} component={wrapperHeader(WrappedStoreSearchComponent)} />
 					        </Switch>
-      </div>
 	  </Security>
     </BrowserRouter>
   );
 }
 
 /*<Codenesium>
-    <Hash>a6b43b70dc10c4a709ebcbe41518d92d</Hash>
+    <Hash>1accda370d57f6cd8baa51f815383e18</Hash>
 </Codenesium>*/

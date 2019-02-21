@@ -1,3 +1,4 @@
+import moment from 'moment';
 import ProvinceViewModel from '../province/provinceViewModel';
 
 export default class CityViewModel {
@@ -12,11 +13,11 @@ export default class CityViewModel {
     this.name = '';
     this.provinceId = 0;
     this.provinceIdEntity = '';
-    this.provinceIdNavigation = undefined;
+    this.provinceIdNavigation = new ProvinceViewModel();
   }
 
   setProperties(id: number, name: string, provinceId: number): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.name = name;
     this.provinceId = provinceId;
   }
@@ -28,5 +29,5 @@ export default class CityViewModel {
 
 
 /*<Codenesium>
-    <Hash>92519b4ec30b97b6dfce02f99347dbbf</Hash>
+    <Hash>9b29b4e0a9d27dfab62e8b7fe6a8b44d</Hash>
 </Codenesium>*/

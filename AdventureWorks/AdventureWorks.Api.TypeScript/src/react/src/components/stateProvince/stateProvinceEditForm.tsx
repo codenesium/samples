@@ -1,248 +1,235 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import StateProvinceViewModel from './stateProvinceViewModel';
+import * as Api from '../../api/models';
 import StateProvinceMapper from './stateProvinceMapper';
+import StateProvinceViewModel from './stateProvinceViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:StateProvinceViewModel
+interface StateProvinceEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-  const StateProvinceEditDisplay = (props: FormikProps<StateProvinceViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.StateProvinceClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof StateProvinceViewModel]  && props.errors[name as keyof StateProvinceViewModel]) {
-            response += props.errors[name as keyof StateProvinceViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("countryRegionCode") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CountryRegionCode</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="countryRegionCode" className={errorExistForField("countryRegionCode") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("countryRegionCode") && <small className="text-danger">{errorsForField("countryRegionCode")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("isOnlyStateProvinceFlag") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>IsOnlyStateProvinceFlag</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="isOnlyStateProvinceFlag" className={errorExistForField("isOnlyStateProvinceFlag") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("isOnlyStateProvinceFlag") && <small className="text-danger">{errorsForField("isOnlyStateProvinceFlag")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("rowguid") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Rowguid</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="rowguid" className={errorExistForField("rowguid") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("rowguid") && <small className="text-danger">{errorsForField("rowguid")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("stateProvinceCode") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>StateProvinceCode</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="stateProvinceCode" className={errorExistForField("stateProvinceCode") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("stateProvinceCode") && <small className="text-danger">{errorsForField("stateProvinceCode")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("stateProvinceID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>StateProvinceID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="stateProvinceID" className={errorExistForField("stateProvinceID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("stateProvinceID") && <small className="text-danger">{errorsForField("stateProvinceID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("territoryID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TerritoryID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="territoryID" className={errorExistForField("territoryID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("territoryID") && <small className="text-danger">{errorsForField("territoryID")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface StateProvinceEditComponentState {
+  model?: StateProvinceViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
 }
 
+class StateProvinceEditComponent extends React.Component<
+  StateProvinceEditComponentProps,
+  StateProvinceEditComponentState
+> {
+  state = {
+    model: new StateProvinceViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
 
-const StateProvinceEdit = withFormik<Props, StateProvinceViewModel>({
-    mapPropsToValues: props => {
-        let response = new StateProvinceViewModel();
-		response.setProperties(props.model!.countryRegionCode,props.model!.isOnlyStateProvinceFlag,props.model!.modifiedDate,props.model!.name,props.model!.rowguid,props.model!.stateProvinceCode,props.model!.stateProvinceID,props.model!.territoryID);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<StateProvinceViewModel> = { };
+    componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.countryRegionCode == '') {
-                errors.countryRegionCode = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.rowguid == undefined) {
-                errors.rowguid = "Required"
-                    }if(values.stateProvinceCode == '') {
-                errors.stateProvinceCode = "Required"
-                    }if(values.stateProvinceID == 0) {
-                errors.stateProvinceID = "Required"
-                    }if(values.territoryID == 0) {
-                errors.territoryID = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new StateProvinceMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.StateProvinces +'/' + values.stateProvinceID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.StateProvinces +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.StateProvinceClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'StateProvinceEdit', 
-  })(StateProvinceEditDisplay);
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.StateProvinceClientResponseModel;
 
+          console.log(response);
+
+          let mapper = new StateProvinceMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+ }
  
-  interface IParams 
-  {
-     stateProvinceID:number;
-  }
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as StateProvinceViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-  interface IMatch
-  {
-     params: IParams;
+  submit = (model:StateProvinceViewModel) =>
+  {  
+    let mapper = new StateProvinceMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.StateProvinces + '/' + this.state.model!.stateProvinceID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.StateProvinceClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
   
-  interface StateProvinceEditComponentProps
-  {
-     match:IMatch;
-  }
+  render() {
 
-  interface StateProvinceEditComponentState
-  {
-      model?:StateProvinceViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class StateProvinceEditComponent extends React.Component<StateProvinceEditComponentProps, StateProvinceEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.StateProvinces + '/' + this.props.match.params.stateProvinceID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.StateProvinceClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new StateProvinceMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
     }
-    render () {
 
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<StateProvinceEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='countryRegionCode'>CountryRegionCode</label>
+              <br />             
+              {getFieldDecorator('countryRegionCode', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CountryRegionCode"} id={"countryRegionCode"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='isOnlyStateProvinceFlag'>IsOnlyStateProvinceFlag</label>
+              <br />             
+              {getFieldDecorator('isOnlyStateProvinceFlag', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"IsOnlyStateProvinceFlag"} id={"isOnlyStateProvinceFlag"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='stateProvinceCode'>StateProvinceCode</label>
+              <br />             
+              {getFieldDecorator('stateProvinceCode', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceCode"} id={"stateProvinceCode"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='territoryID'>TerritoryID</label>
+              <br />             
+              {getFieldDecorator('territoryID', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} id={"territoryID"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedStateProvinceEditComponent = Form.create({ name: 'StateProvince Edit' })(StateProvinceEditComponent);
 
 /*<Codenesium>
-    <Hash>e9be01d8d232019da4c625ec4a0ca9d7</Hash>
+    <Hash>d54c4b60ecf1b928cececda5a0f1040b</Hash>
 </Codenesium>*/

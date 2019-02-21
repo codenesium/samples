@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import FileTypeMapper from './fileTypeMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import FileTypeViewModel from './fileTypeViewModel';
 import 'react-table/react-table.css';
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FileTypeSearchComponentProps {
@@ -149,9 +147,9 @@ export default class FileTypeSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -276,5 +274,5 @@ export const WrappedFileTypeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>01c12ba91bd18cf18c1b2eacb0d3805b</Hash>
+    <Hash>2d7c4c7035072456350c5241b8542e62</Hash>
 </Codenesium>*/

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SpeciesMapper from './speciesMapper';
 import SpeciesViewModel from './speciesViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface SpeciesDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,21 +22,23 @@ interface SpeciesDetailComponentState {
 }
 
 class SpeciesDetailComponent extends React.Component<
-SpeciesDetailComponentProps,
-SpeciesDetailComponentState
+  SpeciesDetailComponentProps,
+  SpeciesDetailComponentState
 > {
   state = {
     model: new SpeciesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Species + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Species + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,32 +84,31 @@ SpeciesDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<div>name</div>
-							<div>{this.state.model!.name}</div>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
         </div>
       );
@@ -119,10 +118,11 @@ SpeciesDetailComponentState
   }
 }
 
-export const WrappedSpeciesDetailComponent = Form.create({ name: 'Species Detail' })(
-  SpeciesDetailComponent
-);
+export const WrappedSpeciesDetailComponent = Form.create({
+  name: 'Species Detail',
+})(SpeciesDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>ab4987722f3645550c6b12c5eaa1c5cd</Hash>
+    <Hash>e21f9d56e3acb95cbb64db19e59757fc</Hash>
 </Codenesium>*/

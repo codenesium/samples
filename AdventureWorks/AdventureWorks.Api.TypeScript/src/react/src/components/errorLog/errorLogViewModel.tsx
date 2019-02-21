@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class ErrorLogViewModel {
   errorLine: any;
   errorLogID: number;
@@ -32,15 +34,15 @@ export default class ErrorLogViewModel {
     errorTime: any,
     userName: string
   ): void {
-    this.errorLine = errorLine;
-    this.errorLogID = errorLogID;
-    this.errorMessage = errorMessage;
-    this.errorNumber = errorNumber;
-    this.errorProcedure = errorProcedure;
-    this.errorSeverity = errorSeverity;
-    this.errorState = errorState;
-    this.errorTime = errorTime;
-    this.userName = userName;
+    this.errorLine = moment(errorLine, 'YYYY-MM-DD');
+    this.errorLogID = moment(errorLogID, 'YYYY-MM-DD');
+    this.errorMessage = moment(errorMessage, 'YYYY-MM-DD');
+    this.errorNumber = moment(errorNumber, 'YYYY-MM-DD');
+    this.errorProcedure = moment(errorProcedure, 'YYYY-MM-DD');
+    this.errorSeverity = moment(errorSeverity, 'YYYY-MM-DD');
+    this.errorState = moment(errorState, 'YYYY-MM-DD');
+    this.errorTime = moment(errorTime, 'YYYY-MM-DD');
+    this.userName = moment(userName, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -50,5 +52,5 @@ export default class ErrorLogViewModel {
 
 
 /*<Codenesium>
-    <Hash>36a466edc31c44c16f797f3f5cc6322f</Hash>
+    <Hash>b0c4b2cc33c534c064ef69df843bb04f</Hash>
 </Codenesium>*/

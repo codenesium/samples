@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class IncludedColumnTestViewModel {
   id: number;
   name: string;
@@ -22,5 +24,5 @@ export default class IncludedColumnTestViewModel {
 
 
 /*<Codenesium>
-    <Hash>4b9b18fcdbb51084fbd5a92dfe90bb07</Hash>
+    <Hash>e6152f6558810b259caf2bcad00919f1</Hash>
 </Codenesium>*/

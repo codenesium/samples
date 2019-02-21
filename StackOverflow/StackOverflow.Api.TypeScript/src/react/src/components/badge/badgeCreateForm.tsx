@@ -1,15 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BadgeMapper from './badgeMapper';
 import BadgeViewModel from './badgeViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface BadgeCreateComponentProps {
   form:WrappedFormUtils;
@@ -95,7 +92,7 @@ class BadgeCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } 
     else if (this.state.loaded) {
 
@@ -104,8 +101,9 @@ class BadgeCreateComponent extends React.Component<
             			<Form.Item>
               <label htmlFor='date'>Date</label>
               <br />             
-{getFieldDecorator('date', {
+              {getFieldDecorator('date', {
               rules:[],
+              
               })
               ( <Input placeholder={"Date"} id={"date"} /> )}
               </Form.Item>
@@ -113,8 +111,9 @@ class BadgeCreateComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
-{getFieldDecorator('name', {
+              {getFieldDecorator('name', {
               rules:[],
+              
               })
               ( <Input placeholder={"Name"} id={"name"} /> )}
               </Form.Item>
@@ -122,8 +121,9 @@ class BadgeCreateComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='userId'>UserId</label>
               <br />             
-{getFieldDecorator('userId', {
+              {getFieldDecorator('userId', {
               rules:[],
+              
               })
               ( <Input placeholder={"UserId"} id={"userId"} /> )}
               </Form.Item>
@@ -145,5 +145,5 @@ class BadgeCreateComponent extends React.Component<
 export const WrappedBadgeCreateComponent = Form.create({ name: 'Badge Create' })(BadgeCreateComponent);
 
 /*<Codenesium>
-    <Hash>1e63a166eb2876b690127483688d56ed</Hash>
+    <Hash>f7132253a4f01fc6f673deae16bb397c</Hash>
 </Codenesium>*/

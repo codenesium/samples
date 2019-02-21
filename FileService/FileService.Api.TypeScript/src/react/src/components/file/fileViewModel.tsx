@@ -1,3 +1,4 @@
+import moment from 'moment';
 import BucketViewModel from '../bucket/bucketViewModel';
 import FileTypeViewModel from '../fileType/fileTypeViewModel';
 
@@ -22,7 +23,7 @@ export default class FileViewModel {
   constructor() {
     this.bucketId = undefined;
     this.bucketIdEntity = '';
-    this.bucketIdNavigation = undefined;
+    this.bucketIdNavigation = new BucketViewModel();
     this.dateCreated = undefined;
     this.description = '';
     this.expiration = undefined;
@@ -31,7 +32,7 @@ export default class FileViewModel {
     this.fileSizeInByte = 0;
     this.fileTypeId = 0;
     this.fileTypeIdEntity = '';
-    this.fileTypeIdNavigation = undefined;
+    this.fileTypeIdNavigation = new FileTypeViewModel();
     this.id = 0;
     this.location = '';
     this.privateKey = '';
@@ -53,7 +54,7 @@ export default class FileViewModel {
     publicKey: string
   ): void {
     this.bucketId = bucketId;
-    this.dateCreated = dateCreated;
+    this.dateCreated = moment(dateCreated, 'YYYY-MM-DD');
     this.description = description;
     this.expiration = expiration;
     this.extension = extension;
@@ -73,5 +74,5 @@ export default class FileViewModel {
 
 
 /*<Codenesium>
-    <Hash>3b3ae98dccc0dda5572d958cfe682d53</Hash>
+    <Hash>c2268dbe64a3960556dec70d3fca6b4a</Hash>
 </Codenesium>*/

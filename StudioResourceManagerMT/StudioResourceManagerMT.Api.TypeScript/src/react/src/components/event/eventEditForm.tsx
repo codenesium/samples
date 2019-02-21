@@ -1,395 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import EventViewModel from './eventViewModel';
+import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
-
-interface Props {
-  model?: EventViewModel;
-}
-
-const EventEditDisplay = (props: FormikProps<EventViewModel>) => {
-  let status = props.status as UpdateResponse<Api.EventClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof EventViewModel] &&
-      props.errors[name as keyof EventViewModel]
-    ) {
-      response += props.errors[name as keyof EventViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('actualEndDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ActualEndDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="actualEndDate"
-            className={
-              errorExistForField('actualEndDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('actualEndDate') && (
-            <small className="text-danger">
-              {errorsForField('actualEndDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('actualStartDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ActualStartDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="actualStartDate"
-            className={
-              errorExistForField('actualStartDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('actualStartDate') && (
-            <small className="text-danger">
-              {errorsForField('actualStartDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('billAmount')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          BillAmount
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="billAmount"
-            className={
-              errorExistForField('billAmount')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('billAmount') && (
-            <small className="text-danger">
-              {errorsForField('billAmount')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('eventStatusId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          EventStatusId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="eventStatusId"
-            className={
-              errorExistForField('eventStatusId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('eventStatusId') && (
-            <small className="text-danger">
-              {errorsForField('eventStatusId')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('scheduledEndDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ScheduledEndDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="scheduledEndDate"
-            className={
-              errorExistForField('scheduledEndDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('scheduledEndDate') && (
-            <small className="text-danger">
-              {errorsForField('scheduledEndDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('scheduledStartDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ScheduledStartDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="scheduledStartDate"
-            className={
-              errorExistForField('scheduledStartDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('scheduledStartDate') && (
-            <small className="text-danger">
-              {errorsForField('scheduledStartDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('studentNote')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          StudentNotes
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="studentNote"
-            className={
-              errorExistForField('studentNote')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('studentNote') && (
-            <small className="text-danger">
-              {errorsForField('studentNote')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('teacherNote')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          TeacherNotes
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="teacherNote"
-            className={
-              errorExistForField('teacherNote')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('teacherNote') && (
-            <small className="text-danger">
-              {errorsForField('teacherNote')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const EventEdit = withFormik<Props, EventViewModel>({
-  mapPropsToValues: props => {
-    let response = new EventViewModel();
-    response.setProperties(
-      props.model!.actualEndDate,
-      props.model!.actualStartDate,
-      props.model!.billAmount,
-      props.model!.eventStatusId,
-      props.model!.id,
-      props.model!.scheduledEndDate,
-      props.model!.scheduledStartDate,
-      props.model!.studentNote,
-      props.model!.teacherNote
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<EventViewModel> = {};
-
-    if (values.eventStatusId == 0) {
-      errors.eventStatusId = 'Required';
-    }
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new EventMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Events + '/' + values.id,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.EventClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'EventEdit',
-})(EventEditDisplay);
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import EventViewModel from './eventViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface EventEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface EventEditComponentState {
@@ -398,21 +20,23 @@ interface EventEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class EventEditComponent extends React.Component<
+class EventEditComponent extends React.Component<
   EventEditComponentProps,
   EventEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new EventViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -442,6 +66,8 @@ export default class EventEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -454,21 +80,166 @@ export default class EventEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as EventViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:EventViewModel) =>
+  {  
+    let mapper = new EventMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Events + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.EventClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <EventEdit model={this.state.model} />;
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='actualEndDate'>actualEndDate</label>
+              <br />             
+              {getFieldDecorator('actualEndDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"actualEndDate"} id={"actualEndDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='actualStartDate'>actualStartDate</label>
+              <br />             
+              {getFieldDecorator('actualStartDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"actualStartDate"} id={"actualStartDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='billAmount'>billAmount</label>
+              <br />             
+              {getFieldDecorator('billAmount', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"billAmount"} id={"billAmount"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='eventStatusId'>eventStatusId</label>
+              <br />             
+              {getFieldDecorator('eventStatusId', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"eventStatusId"} id={"eventStatusId"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='scheduledEndDate'>scheduledEndDate</label>
+              <br />             
+              {getFieldDecorator('scheduledEndDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"scheduledEndDate"} id={"scheduledEndDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='scheduledStartDate'>scheduledStartDate</label>
+              <br />             
+              {getFieldDecorator('scheduledStartDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"scheduledStartDate"} id={"scheduledStartDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='studentNote'>studentNotes</label>
+              <br />             
+              {getFieldDecorator('studentNote', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"studentNotes"} id={"studentNote"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='teacherNote'>teacherNotes</label>
+              <br />             
+              {getFieldDecorator('teacherNote', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"teacherNotes"} id={"teacherNote"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(EventEditComponent);
 
 /*<Codenesium>
-    <Hash>1285131632e937e03ac730bddb555424</Hash>
+    <Hash>ba2aadbdc8bd3992026ece28383df7cb</Hash>
 </Codenesium>*/

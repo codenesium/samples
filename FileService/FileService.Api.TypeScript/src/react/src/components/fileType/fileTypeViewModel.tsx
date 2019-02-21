@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class FileTypeViewModel {
   id: number;
   name: string;
@@ -19,5 +21,5 @@ export default class FileTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>262fe0a89042905e2f35c0cee7f2ac09</Hash>
+    <Hash>2fd5caa08dd7bf84b0da0f75455c28e6</Hash>
 </Codenesium>*/

@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VenueMapper from './venueMapper';
 import VenueViewModel from './venueViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface VenueCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class VenueCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -115,7 +121,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('address1', {
               rules: [],
-            })(<DatePicker placeholder={'address1'} id={'address1'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'address1'}
+                id={'address1'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -123,7 +135,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('address2', {
               rules: [],
-            })(<DatePicker placeholder={'address2'} id={'address2'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'address2'}
+                id={'address2'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -131,7 +149,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('adminId', {
               rules: [],
-            })(<DatePicker placeholder={'adminId'} id={'adminId'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'adminId'}
+                id={'adminId'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -139,7 +163,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('email', {
               rules: [],
-            })(<DatePicker placeholder={'email'} id={'email'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'email'}
+                id={'email'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -147,7 +177,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('facebook', {
               rules: [],
-            })(<DatePicker placeholder={'facebook'} id={'facebook'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'facebook'}
+                id={'facebook'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -155,7 +191,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('name', {
               rules: [],
-            })(<DatePicker placeholder={'name'} id={'name'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'name'}
+                id={'name'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -163,7 +205,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('phone', {
               rules: [],
-            })(<DatePicker placeholder={'phone'} id={'phone'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'phone'}
+                id={'phone'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -171,7 +219,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('provinceId', {
               rules: [],
-            })(<DatePicker placeholder={'provinceId'} id={'provinceId'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'provinceId'}
+                id={'provinceId'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -179,7 +233,13 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('website', {
               rules: [],
-            })(<DatePicker placeholder={'website'} id={'website'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'website'}
+                id={'website'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -202,5 +262,5 @@ export const WrappedVenueCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d5be5af9015d3d71b54882a5c67fd57c</Hash>
+    <Hash>6048123ed4f4e7cf2fa8188420499112</Hash>
 </Codenesium>*/

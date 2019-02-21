@@ -1,322 +1,59 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import StateProvinceMapper from './stateProvinceMapper';
 import StateProvinceViewModel from './stateProvinceViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: StateProvinceViewModel;
+interface StateProvinceCreateComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-const StateProvinceCreateDisplay: React.SFC<
-  FormikProps<StateProvinceViewModel>
-> = (props: FormikProps<StateProvinceViewModel>) => {
-  let status = props.status as CreateResponse<
-    Api.StateProvinceClientRequestModel
-  >;
+interface StateProvinceCreateComponentState {
+  model?: StateProvinceViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof StateProvinceViewModel] &&
-      props.errors[name as keyof StateProvinceViewModel]
-    ) {
-      response += props.errors[name as keyof StateProvinceViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class StateProvinceCreateComponent extends React.Component<
+  StateProvinceCreateComponentProps,
+  StateProvinceCreateComponentState
+> {
+  state = {
+    model: new StateProvinceViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as StateProvinceViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('countryRegionCode')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CountryRegionCode
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="countryRegionCode"
-            className={
-              errorExistForField('countryRegionCode')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('countryRegionCode') && (
-            <small className="text-danger">
-              {errorsForField('countryRegionCode')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('isOnlyStateProvinceFlag')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          IsOnlyStateProvinceFlag
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="isOnlyStateProvinceFlag"
-            className={
-              errorExistForField('isOnlyStateProvinceFlag')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('isOnlyStateProvinceFlag') && (
-            <small className="text-danger">
-              {errorsForField('isOnlyStateProvinceFlag')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('rowguid')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Rowguid
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="rowguid"
-            className={
-              errorExistForField('rowguid')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('rowguid') && (
-            <small className="text-danger">{errorsForField('rowguid')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('stateProvinceCode')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          StateProvinceCode
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="stateProvinceCode"
-            className={
-              errorExistForField('stateProvinceCode')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('stateProvinceCode') && (
-            <small className="text-danger">
-              {errorsForField('stateProvinceCode')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('territoryID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          TerritoryID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="territoryID"
-            className={
-              errorExistForField('territoryID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('territoryID') && (
-            <small className="text-danger">
-              {errorsForField('territoryID')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const StateProvinceCreate = withFormik<Props, StateProvinceViewModel>({
-  mapPropsToValues: props => {
-    let response = new StateProvinceViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.countryRegionCode,
-        props.model!.isOnlyStateProvinceFlag,
-        props.model!.modifiedDate,
-        props.model!.name,
-        props.model!.rowguid,
-        props.model!.stateProvinceCode,
-        props.model!.stateProvinceID,
-        props.model!.territoryID
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<StateProvinceViewModel> = {};
-
-    if (values.countryRegionCode == '') {
-      errors.countryRegionCode = 'Required';
-    }
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-    if (values.rowguid == undefined) {
-      errors.rowguid = 'Required';
-    }
-    if (values.stateProvinceCode == '') {
-      errors.stateProvinceCode = 'Required';
-    }
-    if (values.territoryID == 0) {
-      errors.territoryID = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model:StateProvinceViewModel) =>
+  {  
     let mapper = new StateProvinceMapper();
-
-    axios
+     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.StateProvinces,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -328,54 +65,125 @@ const StateProvinceCreate = withFormik<Props, StateProvinceViewModel>({
           let response = resp.data as CreateResponse<
             Api.StateProvinceClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  },
-  displayName: 'StateProvinceCreate',
-})(StateProvinceCreateDisplay);
-
-interface StateProvinceCreateComponentProps {}
-
-interface StateProvinceCreateComponentState {
-  model?: StateProvinceViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class StateProvinceCreateComponent extends React.Component<
-  StateProvinceCreateComponentProps,
-  StateProvinceCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
-  };
-
+      ); 
+  }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <StateProvinceCreate model={this.state.model} />;
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='countryRegionCode'>CountryRegionCode</label>
+              <br />             
+              {getFieldDecorator('countryRegionCode', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CountryRegionCode"} id={"countryRegionCode"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='isOnlyStateProvinceFlag'>IsOnlyStateProvinceFlag</label>
+              <br />             
+              {getFieldDecorator('isOnlyStateProvinceFlag', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"IsOnlyStateProvinceFlag"} id={"isOnlyStateProvinceFlag"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='stateProvinceCode'>StateProvinceCode</label>
+              <br />             
+              {getFieldDecorator('stateProvinceCode', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceCode"} id={"stateProvinceCode"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='territoryID'>TerritoryID</label>
+              <br />             
+              {getFieldDecorator('territoryID', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} id={"territoryID"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedStateProvinceCreateComponent = Form.create({ name: 'StateProvince Create' })(StateProvinceCreateComponent);
 
 /*<Codenesium>
-    <Hash>b392c4f458b70d75f1c81b7e2b7046b6</Hash>
+    <Hash>8860f2544957044aeaf7706d27193fdc</Hash>
 </Codenesium>*/

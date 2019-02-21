@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class SpeciesViewModel {
   id: number;
   name: string;
@@ -19,5 +21,5 @@ export default class SpeciesViewModel {
 
 
 /*<Codenesium>
-    <Hash>567370769a456f39bd584ae1e3998ac4</Hash>
+    <Hash>f7518e0bb3b7d6c85ba2b93b6babfcf6</Hash>
 </Codenesium>*/

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TransactionStatusViewModel {
   id: number;
   name: string;
@@ -8,7 +10,7 @@ export default class TransactionStatusViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.name = name;
   }
 
@@ -19,5 +21,5 @@ export default class TransactionStatusViewModel {
 
 
 /*<Codenesium>
-    <Hash>7e98aaed26c2ad6b26edb266eaec1fb1</Hash>
+    <Hash>f8abf84e4450101afe16f713c84f641e</Hash>
 </Codenesium>*/

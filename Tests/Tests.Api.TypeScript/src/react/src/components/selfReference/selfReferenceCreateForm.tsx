@@ -1,157 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import SelfReferenceMapper from './selfReferenceMapper';
 import SelfReferenceViewModel from './selfReferenceViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: SelfReferenceViewModel;
+interface SelfReferenceCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const SelfReferenceCreateDisplay: React.SFC<
-  FormikProps<SelfReferenceViewModel>
-> = (props: FormikProps<SelfReferenceViewModel>) => {
-  let status = props.status as CreateResponse<
-    Api.SelfReferenceClientRequestModel
-  >;
+interface SelfReferenceCreateComponentState {
+  model?: SelfReferenceViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof SelfReferenceViewModel] &&
-      props.errors[name as keyof SelfReferenceViewModel]
-    ) {
-      response += props.errors[name as keyof SelfReferenceViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class SelfReferenceCreateComponent extends React.Component<
+  SelfReferenceCreateComponentProps,
+  SelfReferenceCreateComponentState
+> {
+  state = {
+    model: new SelfReferenceViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as SelfReferenceViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('selfReferenceId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          SelfReferenceId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="selfReferenceId"
-            className={
-              errorExistForField('selfReferenceId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('selfReferenceId') && (
-            <small className="text-danger">
-              {errorsForField('selfReferenceId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('selfReferenceId2')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          SelfReferenceId2
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="selfReferenceId2"
-            className={
-              errorExistForField('selfReferenceId2')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('selfReferenceId2') && (
-            <small className="text-danger">
-              {errorsForField('selfReferenceId2')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const SelfReferenceCreate = withFormik<Props, SelfReferenceViewModel>({
-  mapPropsToValues: props => {
-    let response = new SelfReferenceViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.id,
-        props.model!.selfReferenceId,
-        props.model!.selfReferenceId2
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<SelfReferenceViewModel> = {};
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: SelfReferenceViewModel) => {
     let mapper = new SelfReferenceMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.SelfReferences,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -163,54 +73,88 @@ const SelfReferenceCreate = withFormik<Props, SelfReferenceViewModel>({
           let response = resp.data as CreateResponse<
             Api.SelfReferenceClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'SelfReferenceCreate',
-})(SelfReferenceCreateDisplay);
-
-interface SelfReferenceCreateComponentProps {}
-
-interface SelfReferenceCreateComponentState {
-  model?: SelfReferenceViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class SelfReferenceCreateComponent extends React.Component<
-  SelfReferenceCreateComponentProps,
-  SelfReferenceCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <SelfReferenceCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="selfReferenceId">SelfReferenceId</label>
+            <br />
+            {getFieldDecorator('selfReferenceId', {
+              rules: [],
+            })(
+              <Input placeholder={'SelfReferenceId'} id={'selfReferenceId'} />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="selfReferenceId2">SelfReferenceId2</label>
+            <br />
+            {getFieldDecorator('selfReferenceId2', {
+              rules: [],
+            })(
+              <Input placeholder={'SelfReferenceId2'} id={'selfReferenceId2'} />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedSelfReferenceCreateComponent = Form.create({
+  name: 'SelfReference Create',
+})(SelfReferenceCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>4960971d64f456cfc15072d1120cff91</Hash>
+    <Hash>51666f0504295f19bf81b5e54b83cea7</Hash>
 </Codenesium>*/

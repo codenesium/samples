@@ -1,286 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import LocationViewModel from './locationViewModel';
+import * as Api from '../../api/models';
 import LocationMapper from './locationMapper';
-
-interface Props {
-  model?: LocationViewModel;
-}
-
-const LocationEditDisplay = (props: FormikProps<LocationViewModel>) => {
-  let status = props.status as UpdateResponse<Api.LocationClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof LocationViewModel] &&
-      props.errors[name as keyof LocationViewModel]
-    ) {
-      response += props.errors[name as keyof LocationViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('availability')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Availability
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="availability"
-            className={
-              errorExistForField('availability')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('availability') && (
-            <small className="text-danger">
-              {errorsForField('availability')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('costRate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CostRate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="costRate"
-            className={
-              errorExistForField('costRate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('costRate') && (
-            <small className="text-danger">{errorsForField('costRate')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('locationID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LocationID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="locationID"
-            className={
-              errorExistForField('locationID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('locationID') && (
-            <small className="text-danger">
-              {errorsForField('locationID')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const LocationEdit = withFormik<Props, LocationViewModel>({
-  mapPropsToValues: props => {
-    let response = new LocationViewModel();
-    response.setProperties(
-      props.model!.availability,
-      props.model!.costRate,
-      props.model!.locationID,
-      props.model!.modifiedDate,
-      props.model!.name
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<LocationViewModel> = {};
-
-    if (values.availability == 0) {
-      errors.availability = 'Required';
-    }
-    if (values.costRate == 0) {
-      errors.costRate = 'Required';
-    }
-    if (values.locationID == 0) {
-      errors.locationID = 'Required';
-    }
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new LocationMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Locations + '/' + values.locationID,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.LocationClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'LocationEdit',
-})(LocationEditDisplay);
-
-interface IParams {
-  locationID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import LocationViewModel from './locationViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface LocationEditComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface LocationEditComponentState {
@@ -289,18 +29,20 @@ interface LocationEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
-export default class LocationEditComponent extends React.Component<
+class LocationEditComponent extends React.Component<
   LocationEditComponentProps,
   LocationEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new LocationViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+    submitted: false,
   };
 
   componentDidMount() {
@@ -311,7 +53,7 @@ export default class LocationEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.Locations +
           '/' +
-          this.props.match.params.locationID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -333,6 +75,10 @@ export default class LocationEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -346,20 +92,156 @@ export default class LocationEditComponent extends React.Component<
         }
       );
   }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as LocationViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: LocationViewModel) => {
+    let mapper = new LocationMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.Locations +
+          '/' +
+          this.state.model!.locationID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.LocationClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <LocationEdit model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="availability">Availability</label>
+            <br />
+            {getFieldDecorator('availability', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Availability'}
+                id={'availability'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="costRate">CostRate</label>
+            <br />
+            {getFieldDecorator('costRate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'CostRate'}
+                id={'costRate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Name'}
+                id={'name'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedLocationEditComponent = Form.create({
+  name: 'Location Edit',
+})(LocationEditComponent);
+
 
 /*<Codenesium>
-    <Hash>ac5ba5fb97920dc186e98e43cfa3b168</Hash>
+    <Hash>dce3a2150f7321bc542a0c98dd6a7fa7</Hash>
 </Codenesium>*/

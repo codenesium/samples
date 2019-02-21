@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class ProductReviewViewModel {
   comment: string;
   emailAddress: string;
@@ -29,14 +31,14 @@ export default class ProductReviewViewModel {
     reviewDate: any,
     reviewerName: string
   ): void {
-    this.comment = comment;
-    this.emailAddress = emailAddress;
-    this.modifiedDate = modifiedDate;
-    this.productID = productID;
-    this.productReviewID = productReviewID;
-    this.rating = rating;
-    this.reviewDate = reviewDate;
-    this.reviewerName = reviewerName;
+    this.comment = moment(comment, 'YYYY-MM-DD');
+    this.emailAddress = moment(emailAddress, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.productID = moment(productID, 'YYYY-MM-DD');
+    this.productReviewID = moment(productReviewID, 'YYYY-MM-DD');
+    this.rating = moment(rating, 'YYYY-MM-DD');
+    this.reviewDate = moment(reviewDate, 'YYYY-MM-DD');
+    this.reviewerName = moment(reviewerName, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -46,5 +48,5 @@ export default class ProductReviewViewModel {
 
 
 /*<Codenesium>
-    <Hash>b7a0628e8fd47d90799cc275a85a86a3</Hash>
+    <Hash>643c7f7baf6ddf73390e2578d07a632e</Hash>
 </Codenesium>*/

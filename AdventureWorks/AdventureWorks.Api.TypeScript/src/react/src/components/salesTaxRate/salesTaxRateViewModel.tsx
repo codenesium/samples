@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class SalesTaxRateViewModel {
   modifiedDate: any;
   name: string;
@@ -26,13 +28,13 @@ export default class SalesTaxRateViewModel {
     taxRate: number,
     taxType: number
   ): void {
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.rowguid = rowguid;
-    this.salesTaxRateID = salesTaxRateID;
-    this.stateProvinceID = stateProvinceID;
-    this.taxRate = taxRate;
-    this.taxType = taxType;
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
+    this.salesTaxRateID = moment(salesTaxRateID, 'YYYY-MM-DD');
+    this.stateProvinceID = moment(stateProvinceID, 'YYYY-MM-DD');
+    this.taxRate = moment(taxRate, 'YYYY-MM-DD');
+    this.taxType = moment(taxType, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -42,5 +44,5 @@ export default class SalesTaxRateViewModel {
 
 
 /*<Codenesium>
-    <Hash>811c0f9334c682fe607856578e225f0d</Hash>
+    <Hash>f7c588649c648c628fcfdbaa4e4c73d5</Hash>
 </Codenesium>*/

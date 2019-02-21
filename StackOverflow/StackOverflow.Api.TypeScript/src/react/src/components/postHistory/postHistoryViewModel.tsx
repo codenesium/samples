@@ -1,3 +1,6 @@
+import moment from 'moment'
+
+
 export default class PostHistoryViewModel {
     comment:string;
 creationDate:any;
@@ -43,5 +46,5 @@ this.userId = userId;
 };
 
 /*<Codenesium>
-    <Hash>ba7cbe29592a8c107a65ca2af6c366d1</Hash>
+    <Hash>c4be0efa73dceef84036a6d1d54e7b33</Hash>
 </Codenesium>*/

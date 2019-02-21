@@ -1,210 +1,233 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import JobCandidateViewModel from './jobCandidateViewModel';
+import * as Api from '../../api/models';
 import JobCandidateMapper from './jobCandidateMapper';
+import JobCandidateViewModel from './jobCandidateViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:JobCandidateViewModel
+interface JobCandidateEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-  const JobCandidateEditDisplay = (props: FormikProps<JobCandidateViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.JobCandidateClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof JobCandidateViewModel]  && props.errors[name as keyof JobCandidateViewModel]) {
-            response += props.errors[name as keyof JobCandidateViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("businessEntityID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>BusinessEntityID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="businessEntityID" className={errorExistForField("businessEntityID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("businessEntityID") && <small className="text-danger">{errorsForField("businessEntityID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("jobCandidateID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>JobCandidateID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="jobCandidateID" className={errorExistForField("jobCandidateID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("jobCandidateID") && <small className="text-danger">{errorsForField("jobCandidateID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("resume") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Resume</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="resume" className={errorExistForField("resume") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("resume") && <small className="text-danger">{errorsForField("resume")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface JobCandidateEditComponentState {
+  model?: JobCandidateViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class JobCandidateEditComponent extends React.Component<
+  JobCandidateEditComponentProps,
+  JobCandidateEditComponentState
+> {
+  state = {
+    model: new JobCandidateViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const JobCandidateEdit = withFormik<Props, JobCandidateViewModel>({
-    mapPropsToValues: props => {
-        let response = new JobCandidateViewModel();
-		response.setProperties(props.model!.businessEntityID,props.model!.jobCandidateID,props.model!.modifiedDate,props.model!.resume);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<JobCandidateViewModel> = { };
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.jobCandidateID == 0) {
-                errors.jobCandidateID = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new JobCandidateMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.JobCandidates +'/' + values.jobCandidateID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.JobCandidates +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.JobCandidateClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'JobCandidateEdit', 
-  })(JobCandidateEditDisplay);
-
- 
-  interface IParams 
-  {
-     jobCandidateID:number;
-  }
-
-  interface IMatch
-  {
-     params: IParams;
-  }
-  
-  interface JobCandidateEditComponentProps
-  {
-     match:IMatch;
-  }
-
-  interface JobCandidateEditComponentState
-  {
-      model?:JobCandidateViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class JobCandidateEditComponent extends React.Component<JobCandidateEditComponentProps, JobCandidateEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.JobCandidates + '/' + this.props.match.params.jobCandidateID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.JobCandidateClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new JobCandidateMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<JobCandidateEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.JobCandidateClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new JobCandidateMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as JobCandidateViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: JobCandidateViewModel) => {
+    let mapper = new JobCandidateMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.JobCandidates +
+          '/' +
+          this.state.model!.jobCandidateID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.JobCandidateClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="businessEntityID">BusinessEntityID</label>
+            <br />
+            {getFieldDecorator('businessEntityID', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'BusinessEntityID'}
+                id={'businessEntityID'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="resume">Resume</label>
+            <br />
+            {getFieldDecorator('resume', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Resume'}
+                id={'resume'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedJobCandidateEditComponent = Form.create({
+  name: 'JobCandidate Edit',
+})(JobCandidateEditComponent);
+
 
 /*<Codenesium>
-    <Hash>aad54e75bb3a32e50fa8fb695bb82bbb</Hash>
+    <Hash>1a9062663a370b51f0eb5ee043066251</Hash>
 </Codenesium>*/

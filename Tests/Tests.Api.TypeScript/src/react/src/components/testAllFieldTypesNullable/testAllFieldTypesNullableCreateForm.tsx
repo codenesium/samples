@@ -1,361 +1,399 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import TestAllFieldTypesNullableMapper from './testAllFieldTypesNullableMapper';
 import TestAllFieldTypesNullableViewModel from './testAllFieldTypesNullableViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:TestAllFieldTypesNullableViewModel
+interface TestAllFieldTypesNullableCreateComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-   const TestAllFieldTypesNullableCreateDisplay: React.SFC<FormikProps<TestAllFieldTypesNullableViewModel>> = (props: FormikProps<TestAllFieldTypesNullableViewModel>) => {
+interface TestAllFieldTypesNullableCreateComponentState {
+  model?: TestAllFieldTypesNullableViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
+}
 
-   let status = props.status as CreateResponse<Api.TestAllFieldTypesNullableClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof TestAllFieldTypesNullableViewModel]  && props.errors[name as keyof TestAllFieldTypesNullableViewModel]) {
-            response += props.errors[name as keyof TestAllFieldTypesNullableViewModel];
+class TestAllFieldTypesNullableCreateComponent extends React.Component<
+  TestAllFieldTypesNullableCreateComponentProps,
+  TestAllFieldTypesNullableCreateComponentState
+> {
+  state = {
+    model: new TestAllFieldTypesNullableViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
+
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as TestAllFieldTypesNullableViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:TestAllFieldTypesNullableViewModel) =>
+  {  
+    let mapper = new TestAllFieldTypesNullableMapper();
+     axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.TestAllFieldTypesNullables,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.TestAllFieldTypesNullableClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
+      ); 
+  }
+  
+  render() {
 
-        return response;
-   }
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
 
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
 
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldBigInt") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldBigInt</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldBigInt" className={errorExistForField("fieldBigInt") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldBigInt") && <small className="text-danger">{errorsForField("fieldBigInt")}</small>}
-                        </div>
-                    </div>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='fieldBigInt'>FieldBigInt</label>
+              <br />             
+              {getFieldDecorator('fieldBigInt', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldBigInt"} id={"fieldBigInt"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldBinary") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldBinary</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldBinary" className={errorExistForField("fieldBinary") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldBinary") && <small className="text-danger">{errorsForField("fieldBinary")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldBinary'>FieldBinary</label>
+              <br />             
+              {getFieldDecorator('fieldBinary', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldBinary"} id={"fieldBinary"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldBit") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldBit</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldBit" className={errorExistForField("fieldBit") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldBit") && <small className="text-danger">{errorsForField("fieldBit")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldBit'>FieldBit</label>
+              <br />             
+              {getFieldDecorator('fieldBit', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldBit"} id={"fieldBit"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldChar") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldChar</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldChar" className={errorExistForField("fieldChar") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldChar") && <small className="text-danger">{errorsForField("fieldChar")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldChar'>FieldChar</label>
+              <br />             
+              {getFieldDecorator('fieldChar', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldChar"} id={"fieldChar"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldDate</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldDate" className={errorExistForField("fieldDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldDate") && <small className="text-danger">{errorsForField("fieldDate")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldDate'>FieldDate</label>
+              <br />             
+              {getFieldDecorator('fieldDate', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldDate"} id={"fieldDate"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldDateTime") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldDateTime</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldDateTime" className={errorExistForField("fieldDateTime") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldDateTime") && <small className="text-danger">{errorsForField("fieldDateTime")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldDateTime'>FieldDateTime</label>
+              <br />             
+              {getFieldDecorator('fieldDateTime', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldDateTime"} id={"fieldDateTime"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldDateTime2") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldDateTime2</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldDateTime2" className={errorExistForField("fieldDateTime2") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldDateTime2") && <small className="text-danger">{errorsForField("fieldDateTime2")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldDateTime2'>FieldDateTime2</label>
+              <br />             
+              {getFieldDecorator('fieldDateTime2', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldDateTime2"} id={"fieldDateTime2"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldDateTimeOffset") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldDateTimeOffset</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldDateTimeOffset" className={errorExistForField("fieldDateTimeOffset") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldDateTimeOffset") && <small className="text-danger">{errorsForField("fieldDateTimeOffset")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldDateTimeOffset'>FieldDateTimeOffset</label>
+              <br />             
+              {getFieldDecorator('fieldDateTimeOffset', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldDateTimeOffset"} id={"fieldDateTimeOffset"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldDecimal") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldDecimal</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldDecimal" className={errorExistForField("fieldDecimal") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldDecimal") && <small className="text-danger">{errorsForField("fieldDecimal")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldDecimal'>FieldDecimal</label>
+              <br />             
+              {getFieldDecorator('fieldDecimal', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldDecimal"} id={"fieldDecimal"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldFloat") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldFloat</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldFloat" className={errorExistForField("fieldFloat") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldFloat") && <small className="text-danger">{errorsForField("fieldFloat")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldFloat'>FieldFloat</label>
+              <br />             
+              {getFieldDecorator('fieldFloat', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldFloat"} id={"fieldFloat"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldImage") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldImage</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldImage" className={errorExistForField("fieldImage") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldImage") && <small className="text-danger">{errorsForField("fieldImage")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldImage'>FieldImage</label>
+              <br />             
+              {getFieldDecorator('fieldImage', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldImage"} id={"fieldImage"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldMoney") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldMoney</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldMoney" className={errorExistForField("fieldMoney") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldMoney") && <small className="text-danger">{errorsForField("fieldMoney")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldMoney'>FieldMoney</label>
+              <br />             
+              {getFieldDecorator('fieldMoney', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldMoney"} id={"fieldMoney"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldNChar") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldNChar</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldNChar" className={errorExistForField("fieldNChar") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldNChar") && <small className="text-danger">{errorsForField("fieldNChar")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldNChar'>FieldNChar</label>
+              <br />             
+              {getFieldDecorator('fieldNChar', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldNChar"} id={"fieldNChar"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldNText") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldNText</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldNText" className={errorExistForField("fieldNText") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldNText") && <small className="text-danger">{errorsForField("fieldNText")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldNText'>FieldNText</label>
+              <br />             
+              {getFieldDecorator('fieldNText', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldNText"} id={"fieldNText"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldNumeric") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldNumeric</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldNumeric" className={errorExistForField("fieldNumeric") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldNumeric") && <small className="text-danger">{errorsForField("fieldNumeric")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldNumeric'>FieldNumeric</label>
+              <br />             
+              {getFieldDecorator('fieldNumeric', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldNumeric"} id={"fieldNumeric"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldNVarchar") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldNVarchar</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldNVarchar" className={errorExistForField("fieldNVarchar") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldNVarchar") && <small className="text-danger">{errorsForField("fieldNVarchar")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldNVarchar'>FieldNVarchar</label>
+              <br />             
+              {getFieldDecorator('fieldNVarchar', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldNVarchar"} id={"fieldNVarchar"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldReal") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldReal</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldReal" className={errorExistForField("fieldReal") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldReal") && <small className="text-danger">{errorsForField("fieldReal")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldReal'>FieldReal</label>
+              <br />             
+              {getFieldDecorator('fieldReal', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldReal"} id={"fieldReal"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldSmallDateTime") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldSmallDateTime</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldSmallDateTime" className={errorExistForField("fieldSmallDateTime") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldSmallDateTime") && <small className="text-danger">{errorsForField("fieldSmallDateTime")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldSmallDateTime'>FieldSmallDateTime</label>
+              <br />             
+              {getFieldDecorator('fieldSmallDateTime', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldSmallDateTime"} id={"fieldSmallDateTime"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldSmallInt") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldSmallInt</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldSmallInt" className={errorExistForField("fieldSmallInt") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldSmallInt") && <small className="text-danger">{errorsForField("fieldSmallInt")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldSmallInt'>FieldSmallInt</label>
+              <br />             
+              {getFieldDecorator('fieldSmallInt', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldSmallInt"} id={"fieldSmallInt"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldSmallMoney") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldSmallMoney</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldSmallMoney" className={errorExistForField("fieldSmallMoney") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldSmallMoney") && <small className="text-danger">{errorsForField("fieldSmallMoney")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldSmallMoney'>FieldSmallMoney</label>
+              <br />             
+              {getFieldDecorator('fieldSmallMoney', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldSmallMoney"} id={"fieldSmallMoney"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldText") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldText</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldText" className={errorExistForField("fieldText") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldText") && <small className="text-danger">{errorsForField("fieldText")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldText'>FieldText</label>
+              <br />             
+              {getFieldDecorator('fieldText', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldText"} id={"fieldText"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldTime") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldTime</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldTime" className={errorExistForField("fieldTime") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldTime") && <small className="text-danger">{errorsForField("fieldTime")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldTime'>FieldTime</label>
+              <br />             
+              {getFieldDecorator('fieldTime', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldTime"} id={"fieldTime"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldTimestamp") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldTimestamp</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldTimestamp" className={errorExistForField("fieldTimestamp") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldTimestamp") && <small className="text-danger">{errorsForField("fieldTimestamp")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldTimestamp'>FieldTimestamp</label>
+              <br />             
+              {getFieldDecorator('fieldTimestamp', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldTimestamp"} id={"fieldTimestamp"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldTinyInt") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldTinyInt</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldTinyInt" className={errorExistForField("fieldTinyInt") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldTinyInt") && <small className="text-danger">{errorsForField("fieldTinyInt")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldTinyInt'>FieldTinyInt</label>
+              <br />             
+              {getFieldDecorator('fieldTinyInt', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldTinyInt"} id={"fieldTinyInt"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldUniqueIdentifier") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldUniqueIdentifier</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldUniqueIdentifier" className={errorExistForField("fieldUniqueIdentifier") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldUniqueIdentifier") && <small className="text-danger">{errorsForField("fieldUniqueIdentifier")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldUniqueIdentifier'>FieldUniqueIdentifier</label>
+              <br />             
+              {getFieldDecorator('fieldUniqueIdentifier', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldUniqueIdentifier"} id={"fieldUniqueIdentifier"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldVarBinary") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldVarBinary</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldVarBinary" className={errorExistForField("fieldVarBinary") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldVarBinary") && <small className="text-danger">{errorsForField("fieldVarBinary")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldVarBinary'>FieldVarBinary</label>
+              <br />             
+              {getFieldDecorator('fieldVarBinary', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldVarBinary"} id={"fieldVarBinary"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldVarchar") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldVarchar</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldVarchar" className={errorExistForField("fieldVarchar") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldVarchar") && <small className="text-danger">{errorsForField("fieldVarchar")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldVarchar'>FieldVarchar</label>
+              <br />             
+              {getFieldDecorator('fieldVarchar', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldVarchar"} id={"fieldVarchar"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("fieldXML") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>FieldXML</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="fieldXML" className={errorExistForField("fieldXML") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("fieldXML") && <small className="text-danger">{errorsForField("fieldXML")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='fieldXML'>FieldXML</label>
+              <br />             
+              {getFieldDecorator('fieldXML', {
+              rules:[],
+              
+              })
+              ( <Input placeholder={"FieldXML"} id={"fieldXML"} /> )}
+              </Form.Item>
 
 			
-            <button type="submit" className="btn btn-primary" disabled={false}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
                 Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
-}
-
-
-const TestAllFieldTypesNullableCreate = withFormik<Props, TestAllFieldTypesNullableViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new TestAllFieldTypesNullableViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.fieldBigInt,props.model!.fieldBinary,props.model!.fieldBit,props.model!.fieldChar,props.model!.fieldDate,props.model!.fieldDateTime,props.model!.fieldDateTime2,props.model!.fieldDateTimeOffset,props.model!.fieldDecimal,props.model!.fieldFloat,props.model!.fieldImage,props.model!.fieldMoney,props.model!.fieldNChar,props.model!.fieldNText,props.model!.fieldNumeric,props.model!.fieldNVarchar,props.model!.fieldReal,props.model!.fieldSmallDateTime,props.model!.fieldSmallInt,props.model!.fieldSmallMoney,props.model!.fieldText,props.model!.fieldTime,props.model!.fieldTimestamp,props.model!.fieldTinyInt,props.model!.fieldUniqueIdentifier,props.model!.fieldVarBinary,props.model!.fieldVarchar,props.model!.fieldXML,props.model!.id);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<TestAllFieldTypesNullableViewModel> = { };
-
-	  
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new TestAllFieldTypesNullableMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.TestAllFieldTypesNullables,
-        mapper.mapViewModelToApiRequest(values),
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.TestAllFieldTypesNullableClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'TestAllFieldTypesNullableCreate', 
-  })(TestAllFieldTypesNullableCreateDisplay);
-
-  interface TestAllFieldTypesNullableCreateComponentProps
-  {
-  }
-
-  interface TestAllFieldTypesNullableCreateComponentState
-  {
-      model?:TestAllFieldTypesNullableViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class TestAllFieldTypesNullableCreateComponent extends React.Component<TestAllFieldTypesNullableCreateComponentProps, TestAllFieldTypesNullableCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<TestAllFieldTypesNullableCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedTestAllFieldTypesNullableCreateComponent = Form.create({ name: 'TestAllFieldTypesNullable Create' })(TestAllFieldTypesNullableCreateComponent);
 
 /*<Codenesium>
-    <Hash>752a669952243edeea02e696ddf28b87</Hash>
+    <Hash>18001d7ea59a208f602f20bcde9ae95e</Hash>
 </Codenesium>*/

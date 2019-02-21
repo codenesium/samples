@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PersonViewModel from '../person/personViewModel';
 import PersonViewModel from '../person/personViewModel';
 
@@ -14,10 +15,10 @@ export default class ColumnSameAsFKTableViewModel {
     this.id = 0;
     this.person = 0;
     this.personEntity = '';
-    this.personNavigation = undefined;
+    this.personNavigation = new PersonViewModel();
     this.personId = 0;
     this.personIdEntity = '';
-    this.personIdNavigation = undefined;
+    this.personIdNavigation = new PersonViewModel();
   }
 
   setProperties(id: number, person: number, personId: number): void {
@@ -33,5 +34,5 @@ export default class ColumnSameAsFKTableViewModel {
 
 
 /*<Codenesium>
-    <Hash>4ce925d144175d1c234767e8a2a8770c</Hash>
+    <Hash>47c479b2586c3253889046495667ba5b</Hash>
 </Codenesium>*/

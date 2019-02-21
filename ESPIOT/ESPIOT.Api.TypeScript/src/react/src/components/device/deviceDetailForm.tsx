@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceMapper from './deviceMapper';
 import DeviceViewModel from './deviceViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface DeviceDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class DeviceDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,20 +105,20 @@ class DeviceDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>dateOfLastPing</div>
-              <div>{this.state.model!.dateOfLastPing}</div>
+              <h3>Date of Last Ping</h3>
+              <p>{String(this.state.model!.dateOfLastPing)}</p>
             </div>
             <div>
-              <div>isActive</div>
-              <div>{this.state.model!.isActive}</div>
+              <h3>Active</h3>
+              <p>{String(this.state.model!.isActive)}</p>
             </div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
             <div>
-              <div>publicId</div>
-              <div>{this.state.model!.publicId}</div>
+              <h3>Public Id</h3>
+              <p>{String(this.state.model!.publicId)}</p>
             </div>
           </div>
           {message}
@@ -138,5 +136,5 @@ export const WrappedDeviceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c5cf3cfe3b191d6b8fb6a7efcf8089ff</Hash>
+    <Hash>246418f9563029326a8dece73c514701</Hash>
 </Codenesium>*/

@@ -1,162 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import UnitMeasureMapper from './unitMeasureMapper';
 import UnitMeasureViewModel from './unitMeasureViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: UnitMeasureViewModel;
+interface UnitMeasureCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const UnitMeasureCreateDisplay: React.SFC<FormikProps<UnitMeasureViewModel>> = (
-  props: FormikProps<UnitMeasureViewModel>
-) => {
-  let status = props.status as CreateResponse<
-    Api.UnitMeasureClientRequestModel
-  >;
+interface UnitMeasureCreateComponentState {
+  model?: UnitMeasureViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof UnitMeasureViewModel] &&
-      props.errors[name as keyof UnitMeasureViewModel]
-    ) {
-      response += props.errors[name as keyof UnitMeasureViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class UnitMeasureCreateComponent extends React.Component<
+  UnitMeasureCreateComponentProps,
+  UnitMeasureCreateComponentState
+> {
+  state = {
+    model: new UnitMeasureViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as UnitMeasureViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const UnitMeasureCreate = withFormik<Props, UnitMeasureViewModel>({
-  mapPropsToValues: props => {
-    let response = new UnitMeasureViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.modifiedDate,
-        props.model!.name,
-        props.model!.unitMeasureCode
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<UnitMeasureViewModel> = {};
-
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: UnitMeasureViewModel) => {
     let mapper = new UnitMeasureMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.UnitMeasures,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -168,54 +73,96 @@ const UnitMeasureCreate = withFormik<Props, UnitMeasureViewModel>({
           let response = resp.data as CreateResponse<
             Api.UnitMeasureClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'UnitMeasureCreate',
-})(UnitMeasureCreateDisplay);
-
-interface UnitMeasureCreateComponentProps {}
-
-interface UnitMeasureCreateComponentState {
-  model?: UnitMeasureViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class UnitMeasureCreateComponent extends React.Component<
-  UnitMeasureCreateComponentProps,
-  UnitMeasureCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <UnitMeasureCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Name'}
+                id={'name'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedUnitMeasureCreateComponent = Form.create({
+  name: 'UnitMeasure Create',
+})(UnitMeasureCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>6352fdfd47522ee17cffd32f32562319</Hash>
+    <Hash>8a259bb265c0b1d0acbeb909396d6470</Hash>
 </Codenesium>*/

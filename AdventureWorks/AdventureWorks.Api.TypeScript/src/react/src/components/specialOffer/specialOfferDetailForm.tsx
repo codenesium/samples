@@ -1,107 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import SpecialOfferMapper from './specialOfferMapper';
 import SpecialOfferViewModel from './specialOfferViewModel';
-
-interface Props {
-  history: any;
-  model?: SpecialOfferViewModel;
-}
-
-const SpecialOfferDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.SpecialOffers + '/edit/' + model.model!.specialOfferID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="category" className={'col-sm-2 col-form-label'}>
-          Category
-        </label>
-        <div className="col-sm-12">{String(model.model!.category)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="description" className={'col-sm-2 col-form-label'}>
-          Description
-        </label>
-        <div className="col-sm-12">{String(model.model!.description)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="discountPct" className={'col-sm-2 col-form-label'}>
-          DiscountPct
-        </label>
-        <div className="col-sm-12">{String(model.model!.discountPct)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="endDate" className={'col-sm-2 col-form-label'}>
-          EndDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.endDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="maxQty" className={'col-sm-2 col-form-label'}>
-          MaxQty
-        </label>
-        <div className="col-sm-12">{String(model.model!.maxQty)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="minQty" className={'col-sm-2 col-form-label'}>
-          MinQty
-        </label>
-        <div className="col-sm-12">{String(model.model!.minQty)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
-          Rowguid
-        </label>
-        <div className="col-sm-12">{String(model.model!.rowguid)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="specialOfferID" className={'col-sm-2 col-form-label'}>
-          SpecialOfferID
-        </label>
-        <div className="col-sm-12">{String(model.model!.specialOfferID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="startDate" className={'col-sm-2 col-form-label'}>
-          StartDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.startDate)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  specialOfferID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SpecialOfferDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface SpecialOfferDetailComponentState {
@@ -112,17 +21,23 @@ interface SpecialOfferDetailComponentState {
   errorMessage: string;
 }
 
-export default class SpecialOfferDetailComponent extends React.Component<
+class SpecialOfferDetailComponent extends React.Component<
   SpecialOfferDetailComponentProps,
   SpecialOfferDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new SpecialOfferViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.SpecialOffers + '/edit/' + this.state.model!.specialOfferID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -132,7 +47,7 @@ export default class SpecialOfferDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.SpecialOffers +
           '/' +
-          this.props.match.params.specialOfferID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -143,9 +58,9 @@ export default class SpecialOfferDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.SpecialOfferClientResponseModel;
 
-          let mapper = new SpecialOfferMapper();
-
           console.log(response);
+
+          let mapper = new SpecialOfferMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -167,17 +82,71 @@ export default class SpecialOfferDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <SpecialOfferDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Category</h3>
+              <p>{String(this.state.model!.category)}</p>
+            </div>
+            <div>
+              <h3>Description</h3>
+              <p>{String(this.state.model!.description)}</p>
+            </div>
+            <div>
+              <h3>DiscountPct</h3>
+              <p>{String(this.state.model!.discountPct)}</p>
+            </div>
+            <div>
+              <h3>EndDate</h3>
+              <p>{String(this.state.model!.endDate)}</p>
+            </div>
+            <div>
+              <h3>MaxQty</h3>
+              <p>{String(this.state.model!.maxQty)}</p>
+            </div>
+            <div>
+              <h3>MinQty</h3>
+              <p>{String(this.state.model!.minQty)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>SpecialOfferID</h3>
+              <p>{String(this.state.model!.specialOfferID)}</p>
+            </div>
+            <div>
+              <h3>StartDate</h3>
+              <p>{String(this.state.model!.startDate)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -185,7 +154,11 @@ export default class SpecialOfferDetailComponent extends React.Component<
   }
 }
 
+export const WrappedSpecialOfferDetailComponent = Form.create({
+  name: 'SpecialOffer Detail',
+})(SpecialOfferDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>878b30cb05621e3ab066bf5c9597bfeb</Hash>
+    <Hash>c0e9358d361db0f5620a28a67c742e3e</Hash>
 </Codenesium>*/

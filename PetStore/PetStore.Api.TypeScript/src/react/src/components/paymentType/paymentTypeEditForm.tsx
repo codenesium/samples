@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PaymentTypeMapper from './paymentTypeMapper';
 import PaymentTypeViewModel from './paymentTypeViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PaymentTypeEditComponentProps {
   form: WrappedFormUtils;
@@ -157,7 +163,7 @@ class PaymentTypeEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -189,5 +195,5 @@ export const WrappedPaymentTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5b896c66a693444d71366d5e10d270db</Hash>
+    <Hash>74cef060f4eb6730dc994faf5faa0f2a</Hash>
 </Codenesium>*/

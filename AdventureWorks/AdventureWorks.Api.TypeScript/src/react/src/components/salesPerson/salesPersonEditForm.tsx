@@ -1,411 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import SalesPersonViewModel from './salesPersonViewModel';
+import * as Api from '../../api/models';
 import SalesPersonMapper from './salesPersonMapper';
-
-interface Props {
-  model?: SalesPersonViewModel;
-}
-
-const SalesPersonEditDisplay = (props: FormikProps<SalesPersonViewModel>) => {
-  let status = props.status as UpdateResponse<
-    Api.SalesPersonClientRequestModel
-  >;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof SalesPersonViewModel] &&
-      props.errors[name as keyof SalesPersonViewModel]
-    ) {
-      response += props.errors[name as keyof SalesPersonViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('bonus')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Bonus
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="bonus"
-            className={
-              errorExistForField('bonus')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('bonus') && (
-            <small className="text-danger">{errorsForField('bonus')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('businessEntityID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          BusinessEntityID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="businessEntityID"
-            className={
-              errorExistForField('businessEntityID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('businessEntityID') && (
-            <small className="text-danger">
-              {errorsForField('businessEntityID')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('commissionPct')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CommissionPct
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="commissionPct"
-            className={
-              errorExistForField('commissionPct')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('commissionPct') && (
-            <small className="text-danger">
-              {errorsForField('commissionPct')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('rowguid')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Rowguid
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="rowguid"
-            className={
-              errorExistForField('rowguid')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('rowguid') && (
-            <small className="text-danger">{errorsForField('rowguid')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('salesLastYear')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          SalesLastYear
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="salesLastYear"
-            className={
-              errorExistForField('salesLastYear')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('salesLastYear') && (
-            <small className="text-danger">
-              {errorsForField('salesLastYear')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('salesQuota')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          SalesQuota
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="salesQuota"
-            className={
-              errorExistForField('salesQuota')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('salesQuota') && (
-            <small className="text-danger">
-              {errorsForField('salesQuota')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('salesYTD')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          SalesYTD
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="salesYTD"
-            className={
-              errorExistForField('salesYTD')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('salesYTD') && (
-            <small className="text-danger">{errorsForField('salesYTD')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('territoryID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          TerritoryID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="territoryID"
-            className={
-              errorExistForField('territoryID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('territoryID') && (
-            <small className="text-danger">
-              {errorsForField('territoryID')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const SalesPersonEdit = withFormik<Props, SalesPersonViewModel>({
-  mapPropsToValues: props => {
-    let response = new SalesPersonViewModel();
-    response.setProperties(
-      props.model!.bonus,
-      props.model!.businessEntityID,
-      props.model!.commissionPct,
-      props.model!.modifiedDate,
-      props.model!.rowguid,
-      props.model!.salesLastYear,
-      props.model!.salesQuota,
-      props.model!.salesYTD,
-      props.model!.territoryID
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<SalesPersonViewModel> = {};
-
-    if (values.bonus == 0) {
-      errors.bonus = 'Required';
-    }
-    if (values.businessEntityID == 0) {
-      errors.businessEntityID = 'Required';
-    }
-    if (values.commissionPct == 0) {
-      errors.commissionPct = 'Required';
-    }
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.rowguid == undefined) {
-      errors.rowguid = 'Required';
-    }
-    if (values.salesLastYear == 0) {
-      errors.salesLastYear = 'Required';
-    }
-    if (values.salesYTD == 0) {
-      errors.salesYTD = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new SalesPersonMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.SalesPersons +
-          '/' +
-          values.businessEntityID,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.SalesPersonClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'SalesPersonEdit',
-})(SalesPersonEditDisplay);
-
-interface IParams {
-  businessEntityID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import SalesPersonViewModel from './salesPersonViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SalesPersonEditComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface SalesPersonEditComponentState {
@@ -414,18 +29,20 @@ interface SalesPersonEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
-export default class SalesPersonEditComponent extends React.Component<
+class SalesPersonEditComponent extends React.Component<
   SalesPersonEditComponentProps,
   SalesPersonEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new SalesPersonViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+    submitted: false,
   };
 
   componentDidMount() {
@@ -436,7 +53,7 @@ export default class SalesPersonEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.SalesPersons +
           '/' +
-          this.props.match.params.businessEntityID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -458,6 +75,10 @@ export default class SalesPersonEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -471,20 +92,212 @@ export default class SalesPersonEditComponent extends React.Component<
         }
       );
   }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as SalesPersonViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: SalesPersonViewModel) => {
+    let mapper = new SalesPersonMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesPersons +
+          '/' +
+          this.state.model!.businessEntityID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.SalesPersonClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <SalesPersonEdit model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="bonus">Bonus</label>
+            <br />
+            {getFieldDecorator('bonus', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Bonus'}
+                id={'bonus'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="commissionPct">CommissionPct</label>
+            <br />
+            {getFieldDecorator('commissionPct', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'CommissionPct'}
+                id={'commissionPct'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="rowguid">rowguid</label>
+            <br />
+            {getFieldDecorator('rowguid', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'rowguid'}
+                id={'rowguid'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="salesLastYear">SalesLastYear</label>
+            <br />
+            {getFieldDecorator('salesLastYear', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'SalesLastYear'}
+                id={'salesLastYear'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="salesQuota">SalesQuota</label>
+            <br />
+            {getFieldDecorator('salesQuota', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'SalesQuota'}
+                id={'salesQuota'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="salesYTD">SalesYTD</label>
+            <br />
+            {getFieldDecorator('salesYTD', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'SalesYTD'}
+                id={'salesYTD'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="territoryID">TerritoryID</label>
+            <br />
+            {getFieldDecorator('territoryID', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'TerritoryID'}
+                id={'territoryID'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedSalesPersonEditComponent = Form.create({
+  name: 'SalesPerson Edit',
+})(SalesPersonEditComponent);
+
 
 /*<Codenesium>
-    <Hash>e179bf27c2c93d7167742820ad485c92</Hash>
+    <Hash>50f4aa00bfb77e9cd80e8b86619f4750</Hash>
 </Codenesium>*/

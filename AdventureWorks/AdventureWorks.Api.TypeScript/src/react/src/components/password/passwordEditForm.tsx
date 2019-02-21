@@ -1,291 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import PasswordViewModel from './passwordViewModel';
+import * as Api from '../../api/models';
 import PasswordMapper from './passwordMapper';
-
-interface Props {
-  model?: PasswordViewModel;
-}
-
-const PasswordEditDisplay = (props: FormikProps<PasswordViewModel>) => {
-  let status = props.status as UpdateResponse<Api.PasswordClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof PasswordViewModel] &&
-      props.errors[name as keyof PasswordViewModel]
-    ) {
-      response += props.errors[name as keyof PasswordViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('businessEntityID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          BusinessEntityID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="businessEntityID"
-            className={
-              errorExistForField('businessEntityID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('businessEntityID') && (
-            <small className="text-danger">
-              {errorsForField('businessEntityID')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('passwordHash')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PasswordHash
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="passwordHash"
-            className={
-              errorExistForField('passwordHash')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('passwordHash') && (
-            <small className="text-danger">
-              {errorsForField('passwordHash')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('passwordSalt')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PasswordSalt
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="passwordSalt"
-            className={
-              errorExistForField('passwordSalt')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('passwordSalt') && (
-            <small className="text-danger">
-              {errorsForField('passwordSalt')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('rowguid')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Rowguid
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="rowguid"
-            className={
-              errorExistForField('rowguid')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('rowguid') && (
-            <small className="text-danger">{errorsForField('rowguid')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const PasswordEdit = withFormik<Props, PasswordViewModel>({
-  mapPropsToValues: props => {
-    let response = new PasswordViewModel();
-    response.setProperties(
-      props.model!.businessEntityID,
-      props.model!.modifiedDate,
-      props.model!.passwordHash,
-      props.model!.passwordSalt,
-      props.model!.rowguid
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<PasswordViewModel> = {};
-
-    if (values.businessEntityID == 0) {
-      errors.businessEntityID = 'Required';
-    }
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.passwordHash == '') {
-      errors.passwordHash = 'Required';
-    }
-    if (values.passwordSalt == '') {
-      errors.passwordSalt = 'Required';
-    }
-    if (values.rowguid == undefined) {
-      errors.rowguid = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new PasswordMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.Passwords +
-          '/' +
-          values.businessEntityID,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.PasswordClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'PasswordEdit',
-})(PasswordEditDisplay);
-
-interface IParams {
-  businessEntityID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import PasswordViewModel from './passwordViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PasswordEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface PasswordEditComponentState {
@@ -294,21 +20,23 @@ interface PasswordEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class PasswordEditComponent extends React.Component<
+class PasswordEditComponent extends React.Component<
   PasswordEditComponentProps,
   PasswordEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new PasswordViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -316,7 +44,7 @@ export default class PasswordEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.Passwords +
           '/' +
-          this.props.match.params.businessEntityID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -338,6 +66,8 @@ export default class PasswordEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -350,21 +80,126 @@ export default class PasswordEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as PasswordViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:PasswordViewModel) =>
+  {  
+    let mapper = new PasswordMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Passwords + '/' + this.state.model!.businessEntityID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.PasswordClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <PasswordEdit model={this.state.model} />;
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='passwordHash'>PasswordHash</label>
+              <br />             
+              {getFieldDecorator('passwordHash', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PasswordHash"} id={"passwordHash"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='passwordSalt'>PasswordSalt</label>
+              <br />             
+              {getFieldDecorator('passwordSalt', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PasswordSalt"} id={"passwordSalt"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedPasswordEditComponent = Form.create({ name: 'Password Edit' })(PasswordEditComponent);
 
 /*<Codenesium>
-    <Hash>ed7ed2aa5cf1843d657a654732ca570a</Hash>
+    <Hash>cc8d9ab7a99ecd1555e1f0a1fa8c3fdf</Hash>
 </Codenesium>*/

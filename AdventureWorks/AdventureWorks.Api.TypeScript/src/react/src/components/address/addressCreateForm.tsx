@@ -1,205 +1,189 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import AddressMapper from './addressMapper';
 import AddressViewModel from './addressViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:AddressViewModel
+interface AddressCreateComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-   const AddressCreateDisplay: React.SFC<FormikProps<AddressViewModel>> = (props: FormikProps<AddressViewModel>) => {
+interface AddressCreateComponentState {
+  model?: AddressViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
+}
 
-   let status = props.status as CreateResponse<Api.AddressClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof AddressViewModel]  && props.errors[name as keyof AddressViewModel]) {
-            response += props.errors[name as keyof AddressViewModel];
+class AddressCreateComponent extends React.Component<
+  AddressCreateComponentProps,
+  AddressCreateComponentState
+> {
+  state = {
+    model: new AddressViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
+
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as AddressViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:AddressViewModel) =>
+  {  
+    let mapper = new AddressMapper();
+     axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.Addresses,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.AddressClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
+      ); 
+  }
+  
+  render() {
 
-        return response;
-   }
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
 
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
 
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("addressLine1") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>AddressLine1</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="addressLine1" className={errorExistForField("addressLine1") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("addressLine1") && <small className="text-danger">{errorsForField("addressLine1")}</small>}
-                        </div>
-                    </div>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='addressLine1'>AddressLine1</label>
+              <br />             
+              {getFieldDecorator('addressLine1', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AddressLine1"} id={"addressLine1"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("addressLine2") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>AddressLine2</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="addressLine2" className={errorExistForField("addressLine2") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("addressLine2") && <small className="text-danger">{errorsForField("addressLine2")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='addressLine2'>AddressLine2</label>
+              <br />             
+              {getFieldDecorator('addressLine2', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AddressLine2"} id={"addressLine2"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("city") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>City</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="city" className={errorExistForField("city") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("city") && <small className="text-danger">{errorsForField("city")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='city'>City</label>
+              <br />             
+              {getFieldDecorator('city', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"City"} id={"city"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("postalCode") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>PostalCode</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="postalCode" className={errorExistForField("postalCode") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("postalCode") && <small className="text-danger">{errorsForField("postalCode")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='postalCode'>PostalCode</label>
+              <br />             
+              {getFieldDecorator('postalCode', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PostalCode"} id={"postalCode"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("rowguid") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Rowguid</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="rowguid" className={errorExistForField("rowguid") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("rowguid") && <small className="text-danger">{errorsForField("rowguid")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("stateProvinceID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>StateProvinceID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="stateProvinceID" className={errorExistForField("stateProvinceID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("stateProvinceID") && <small className="text-danger">{errorsForField("stateProvinceID")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='stateProvinceID'>StateProvinceID</label>
+              <br />             
+              {getFieldDecorator('stateProvinceID', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceID"} id={"stateProvinceID"} /> )}
+              </Form.Item>
 
 			
-            <button type="submit" className="btn btn-primary" disabled={false}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
                 Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
-}
-
-
-const AddressCreate = withFormik<Props, AddressViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new AddressViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.addressID,props.model!.addressLine1,props.model!.addressLine2,props.model!.city,props.model!.modifiedDate,props.model!.postalCode,props.model!.rowguid,props.model!.stateProvinceID);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<AddressViewModel> = { };
-
-	  if(values.addressLine1 == '') {
-                errors.addressLine1 = "Required"
-                    }if(values.city == '') {
-                errors.city = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.postalCode == '') {
-                errors.postalCode = "Required"
-                    }if(values.rowguid == undefined) {
-                errors.rowguid = "Required"
-                    }if(values.stateProvinceID == 0) {
-                errors.stateProvinceID = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new AddressMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.Addresses,
-        mapper.mapViewModelToApiRequest(values),
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.AddressClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'AddressCreate', 
-  })(AddressCreateDisplay);
-
-  interface AddressCreateComponentProps
-  {
-  }
-
-  interface AddressCreateComponentState
-  {
-      model?:AddressViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class AddressCreateComponent extends React.Component<AddressCreateComponentProps, AddressCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<AddressCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedAddressCreateComponent = Form.create({ name: 'Address Create' })(AddressCreateComponent);
 
 /*<Codenesium>
-    <Hash>437d45378a1f2a907352e865b0e76ee2</Hash>
+    <Hash>cd59f9983d4c119f71a2feb695b3d34e</Hash>
 </Codenesium>*/

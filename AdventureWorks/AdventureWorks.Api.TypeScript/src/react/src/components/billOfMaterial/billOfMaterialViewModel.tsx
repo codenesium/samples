@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class BillOfMaterialViewModel {
   billOfMaterialsID: number;
   bOMLevel: number;
@@ -32,15 +34,15 @@ export default class BillOfMaterialViewModel {
     startDate: any,
     unitMeasureCode: string
   ): void {
-    this.billOfMaterialsID = billOfMaterialsID;
-    this.bOMLevel = bOMLevel;
-    this.componentID = componentID;
-    this.endDate = endDate;
-    this.modifiedDate = modifiedDate;
-    this.perAssemblyQty = perAssemblyQty;
-    this.productAssemblyID = productAssemblyID;
-    this.startDate = startDate;
-    this.unitMeasureCode = unitMeasureCode;
+    this.billOfMaterialsID = moment(billOfMaterialsID, 'YYYY-MM-DD');
+    this.bOMLevel = moment(bOMLevel, 'YYYY-MM-DD');
+    this.componentID = moment(componentID, 'YYYY-MM-DD');
+    this.endDate = moment(endDate, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.perAssemblyQty = moment(perAssemblyQty, 'YYYY-MM-DD');
+    this.productAssemblyID = moment(productAssemblyID, 'YYYY-MM-DD');
+    this.startDate = moment(startDate, 'YYYY-MM-DD');
+    this.unitMeasureCode = moment(unitMeasureCode, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -50,5 +52,5 @@ export default class BillOfMaterialViewModel {
 
 
 /*<Codenesium>
-    <Hash>7f176158d79c121ed4cffb5f5fc25e46</Hash>
+    <Hash>a7d31da23df3f4af706f98ee26c37a88</Hash>
 </Codenesium>*/

@@ -1,20 +1,26 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PetCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface PetCreateComponentState {
@@ -23,7 +29,7 @@ interface PetCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class PetCreateComponent extends React.Component<
@@ -36,12 +42,12 @@ class PetCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as PetViewModel;
         console.log('Received values of form: ', model);
@@ -50,10 +56,9 @@ class PetCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:PetViewModel) =>
-  {  
+  submit = (model: PetViewModel) => {
     let mapper = new PetMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Pets,
         mapper.mapViewModelToApiRequest(model),
@@ -65,103 +70,109 @@ class PetCreateComponent extends React.Component<
       )
       .then(
         resp => {
-          let response = resp.data as CreateResponse<
-            Api.PetClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          let response = resp.data as CreateResponse<Api.PetClientRequestModel>;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
-    } 
-    else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="acquiredDate">acquiredDate</label>
+            <br />
+            {getFieldDecorator('acquiredDate', {
+              rules: [],
+            })(<Input placeholder={'acquiredDate'} id={'acquiredDate'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='acquiredDate'>acquiredDate</label>
-              <br />             
-{getFieldDecorator('acquiredDate', {
-              rules:[],
-              })
-              ( <Input placeholder={"acquiredDate"} id={"acquiredDate"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="breedId">breedId</label>
+            <br />
+            {getFieldDecorator('breedId', {
+              rules: [],
+            })(<Input placeholder={'breedId'} id={'breedId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='breedId'>breedId</label>
-              <br />             
-{getFieldDecorator('breedId', {
-              rules:[],
-              })
-              ( <Input placeholder={"breedId"} id={"breedId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="description">description</label>
+            <br />
+            {getFieldDecorator('description', {
+              rules: [],
+            })(<Input placeholder={'description'} id={'description'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='description'>description</label>
-              <br />             
-{getFieldDecorator('description', {
-              rules:[],
-              })
-              ( <Input placeholder={"description"} id={"description"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="penId">penId</label>
+            <br />
+            {getFieldDecorator('penId', {
+              rules: [],
+            })(<Input placeholder={'penId'} id={'penId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='penId'>penId</label>
-              <br />             
-{getFieldDecorator('penId', {
-              rules:[],
-              })
-              ( <Input placeholder={"penId"} id={"penId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="price">price</label>
+            <br />
+            {getFieldDecorator('price', {
+              rules: [],
+            })(<Input placeholder={'price'} id={'price'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='price'>price</label>
-              <br />             
-{getFieldDecorator('price', {
-              rules:[],
-              })
-              ( <Input placeholder={"price"} id={"price"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedPetCreateComponent = Form.create({ name: 'Pet Create' })(PetCreateComponent);
+export const WrappedPetCreateComponent = Form.create({ name: 'Pet Create' })(
+  PetCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>1e3847adc6ca6f2841bf586dd890b99a</Hash>
+    <Hash>78835ba81da2d6b70d49edc37335b20c</Hash>
 </Codenesium>*/

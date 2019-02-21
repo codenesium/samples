@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class SpaceFeatureViewModel {
   id: number;
   name: string;
@@ -8,8 +10,8 @@ export default class SpaceFeatureViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -19,5 +21,5 @@ export default class SpaceFeatureViewModel {
 
 
 /*<Codenesium>
-    <Hash>c25bd82791010929fc5b584e91b6a90b</Hash>
+    <Hash>af0d76b378d328db3a78ac769e81f50f</Hash>
 </Codenesium>*/

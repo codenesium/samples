@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class CommentViewModel {
   creationDate: any;
   id: number;
@@ -38,5 +40,5 @@ export default class CommentViewModel {
 
 
 /*<Codenesium>
-    <Hash>8e60d0f9e74e0cc58ef3b3d47c08edc7</Hash>
+    <Hash>d1eb1e5c0d467a26c4acd2a1eaf6ec91</Hash>
 </Codenesium>*/

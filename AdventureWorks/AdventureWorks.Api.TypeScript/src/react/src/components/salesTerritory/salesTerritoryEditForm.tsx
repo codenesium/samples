@@ -1,259 +1,303 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import SalesTerritoryViewModel from './salesTerritoryViewModel';
+import * as Api from '../../api/models';
 import SalesTerritoryMapper from './salesTerritoryMapper';
+import SalesTerritoryViewModel from './salesTerritoryViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:SalesTerritoryViewModel
+interface SalesTerritoryEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-  const SalesTerritoryEditDisplay = (props: FormikProps<SalesTerritoryViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.SalesTerritoryClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof SalesTerritoryViewModel]  && props.errors[name as keyof SalesTerritoryViewModel]) {
-            response += props.errors[name as keyof SalesTerritoryViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("costLastYear") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CostLastYear</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="costLastYear" className={errorExistForField("costLastYear") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("costLastYear") && <small className="text-danger">{errorsForField("costLastYear")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("costYTD") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CostYTD</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="costYTD" className={errorExistForField("costYTD") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("costYTD") && <small className="text-danger">{errorsForField("costYTD")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("countryRegionCode") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CountryRegionCode</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="countryRegionCode" className={errorExistForField("countryRegionCode") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("countryRegionCode") && <small className="text-danger">{errorsForField("countryRegionCode")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("rowguid") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Rowguid</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="rowguid" className={errorExistForField("rowguid") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("rowguid") && <small className="text-danger">{errorsForField("rowguid")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("salesLastYear") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SalesLastYear</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="salesLastYear" className={errorExistForField("salesLastYear") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("salesLastYear") && <small className="text-danger">{errorsForField("salesLastYear")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("salesYTD") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SalesYTD</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="salesYTD" className={errorExistForField("salesYTD") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("salesYTD") && <small className="text-danger">{errorsForField("salesYTD")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("territoryID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TerritoryID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="territoryID" className={errorExistForField("territoryID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("territoryID") && <small className="text-danger">{errorsForField("territoryID")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface SalesTerritoryEditComponentState {
+  model?: SalesTerritoryViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class SalesTerritoryEditComponent extends React.Component<
+  SalesTerritoryEditComponentProps,
+  SalesTerritoryEditComponentState
+> {
+  state = {
+    model: new SalesTerritoryViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const SalesTerritoryEdit = withFormik<Props, SalesTerritoryViewModel>({
-    mapPropsToValues: props => {
-        let response = new SalesTerritoryViewModel();
-		response.setProperties(props.model!.costLastYear,props.model!.costYTD,props.model!.countryRegionCode,props.model!.modifiedDate,props.model!.name,props.model!.rowguid,props.model!.salesLastYear,props.model!.salesYTD,props.model!.territoryID);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<SalesTerritoryViewModel> = { };
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.costLastYear == 0) {
-                errors.costLastYear = "Required"
-                    }if(values.costYTD == 0) {
-                errors.costYTD = "Required"
-                    }if(values.countryRegionCode == '') {
-                errors.countryRegionCode = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.rowguid == undefined) {
-                errors.rowguid = "Required"
-                    }if(values.salesLastYear == 0) {
-                errors.salesLastYear = "Required"
-                    }if(values.salesYTD == 0) {
-                errors.salesYTD = "Required"
-                    }if(values.territoryID == 0) {
-                errors.territoryID = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new SalesTerritoryMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.SalesTerritories +'/' + values.territoryID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesTerritories +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.SalesTerritoryClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'SalesTerritoryEdit', 
-  })(SalesTerritoryEditDisplay);
-
- 
-  interface IParams 
-  {
-     territoryID:number;
-  }
-
-  interface IMatch
-  {
-     params: IParams;
-  }
-  
-  interface SalesTerritoryEditComponentProps
-  {
-     match:IMatch;
-  }
-
-  interface SalesTerritoryEditComponentState
-  {
-      model?:SalesTerritoryViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class SalesTerritoryEditComponent extends React.Component<SalesTerritoryEditComponentProps, SalesTerritoryEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.SalesTerritories + '/' + this.props.match.params.territoryID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.SalesTerritoryClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new SalesTerritoryMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<SalesTerritoryEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.SalesTerritoryClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new SalesTerritoryMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as SalesTerritoryViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: SalesTerritoryViewModel) => {
+    let mapper = new SalesTerritoryMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesTerritories +
+          '/' +
+          this.state.model!.territoryID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.SalesTerritoryClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="costLastYear">CostLastYear</label>
+            <br />
+            {getFieldDecorator('costLastYear', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'CostLastYear'}
+                id={'costLastYear'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="costYTD">CostYTD</label>
+            <br />
+            {getFieldDecorator('costYTD', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'CostYTD'}
+                id={'costYTD'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="countryRegionCode">CountryRegionCode</label>
+            <br />
+            {getFieldDecorator('countryRegionCode', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'CountryRegionCode'}
+                id={'countryRegionCode'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Name'}
+                id={'name'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="rowguid">rowguid</label>
+            <br />
+            {getFieldDecorator('rowguid', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'rowguid'}
+                id={'rowguid'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="salesLastYear">SalesLastYear</label>
+            <br />
+            {getFieldDecorator('salesLastYear', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'SalesLastYear'}
+                id={'salesLastYear'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="salesYTD">SalesYTD</label>
+            <br />
+            {getFieldDecorator('salesYTD', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'SalesYTD'}
+                id={'salesYTD'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedSalesTerritoryEditComponent = Form.create({
+  name: 'SalesTerritory Edit',
+})(SalesTerritoryEditComponent);
+
 
 /*<Codenesium>
-    <Hash>b41a537a4c5be8cb27fdf54414771565</Hash>
+    <Hash>6d3314f2f34126474765b0e0abf889ae</Hash>
 </Codenesium>*/

@@ -1,35 +1,40 @@
+import moment from 'moment';
+
 export default class ShiftViewModel {
-    endTime:any;
-modifiedDate:any;
-name:string;
-shiftID:number;
-startTime:any;
+  endTime: any;
+  modifiedDate: any;
+  name: string;
+  shiftID: number;
+  startTime: any;
 
-    constructor() {
-		this.endTime = undefined;
-this.modifiedDate = undefined;
-this.name = '';
-this.shiftID = 0;
-this.startTime = undefined;
+  constructor() {
+    this.endTime = undefined;
+    this.modifiedDate = undefined;
+    this.name = '';
+    this.shiftID = 0;
+    this.startTime = undefined;
+  }
 
-    }
+  setProperties(
+    endTime: any,
+    modifiedDate: any,
+    name: string,
+    shiftID: number,
+    startTime: any
+  ): void {
+    this.endTime = moment(endTime, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.shiftID = moment(shiftID, 'YYYY-MM-DD');
+    this.startTime = moment(startTime, 'YYYY-MM-DD');
+  }
 
-	setProperties(endTime : any,modifiedDate : any,name : string,shiftID : number,startTime : any) : void
-	{
-		this.endTime = endTime;
-this.modifiedDate = modifiedDate;
-this.name = name;
-this.shiftID = shiftID;
-this.startTime = startTime;
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>f8dfba458887dff0fc88bd531edf00e9</Hash>
+    <Hash>888ec05a4641df629f64b41fd60301d4</Hash>
 </Codenesium>*/

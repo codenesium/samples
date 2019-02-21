@@ -1,89 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import SalesTaxRateMapper from './salesTaxRateMapper';
 import SalesTaxRateViewModel from './salesTaxRateViewModel';
-
-interface Props {
-  history: any;
-  model?: SalesTaxRateViewModel;
-}
-
-const SalesTaxRateDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.SalesTaxRates + '/edit/' + model.model!.salesTaxRateID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
-          Rowguid
-        </label>
-        <div className="col-sm-12">{String(model.model!.rowguid)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="salesTaxRateID" className={'col-sm-2 col-form-label'}>
-          SalesTaxRateID
-        </label>
-        <div className="col-sm-12">{String(model.model!.salesTaxRateID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="stateProvinceID" className={'col-sm-2 col-form-label'}>
-          StateProvinceID
-        </label>
-        <div className="col-sm-12">{String(model.model!.stateProvinceID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="taxRate" className={'col-sm-2 col-form-label'}>
-          TaxRate
-        </label>
-        <div className="col-sm-12">{String(model.model!.taxRate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="taxType" className={'col-sm-2 col-form-label'}>
-          TaxType
-        </label>
-        <div className="col-sm-12">{String(model.model!.taxType)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  salesTaxRateID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SalesTaxRateDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface SalesTaxRateDetailComponentState {
@@ -94,17 +21,23 @@ interface SalesTaxRateDetailComponentState {
   errorMessage: string;
 }
 
-export default class SalesTaxRateDetailComponent extends React.Component<
+class SalesTaxRateDetailComponent extends React.Component<
   SalesTaxRateDetailComponentProps,
   SalesTaxRateDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new SalesTaxRateViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.SalesTaxRates + '/edit/' + this.state.model!.salesTaxRateID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -114,7 +47,7 @@ export default class SalesTaxRateDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.SalesTaxRates +
           '/' +
-          this.props.match.params.salesTaxRateID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -125,9 +58,9 @@ export default class SalesTaxRateDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.SalesTaxRateClientResponseModel;
 
-          let mapper = new SalesTaxRateMapper();
-
           console.log(response);
+
+          let mapper = new SalesTaxRateMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -149,17 +82,59 @@ export default class SalesTaxRateDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <SalesTaxRateDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>SalesTaxRateID</h3>
+              <p>{String(this.state.model!.salesTaxRateID)}</p>
+            </div>
+            <div>
+              <h3>StateProvinceID</h3>
+              <p>{String(this.state.model!.stateProvinceID)}</p>
+            </div>
+            <div>
+              <h3>TaxRate</h3>
+              <p>{String(this.state.model!.taxRate)}</p>
+            </div>
+            <div>
+              <h3>TaxType</h3>
+              <p>{String(this.state.model!.taxType)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -167,7 +142,11 @@ export default class SalesTaxRateDetailComponent extends React.Component<
   }
 }
 
+export const WrappedSalesTaxRateDetailComponent = Form.create({
+  name: 'SalesTaxRate Detail',
+})(SalesTaxRateDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>d0e871e290439eb05c4ed35fdb74f524</Hash>
+    <Hash>601f8783a0102c5cbde622c1ba0a4f7f</Hash>
 </Codenesium>*/

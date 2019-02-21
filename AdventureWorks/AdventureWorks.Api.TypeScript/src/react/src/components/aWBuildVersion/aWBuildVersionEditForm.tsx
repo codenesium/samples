@@ -1,214 +1,233 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import AWBuildVersionViewModel from './aWBuildVersionViewModel';
+import * as Api from '../../api/models';
 import AWBuildVersionMapper from './aWBuildVersionMapper';
+import AWBuildVersionViewModel from './aWBuildVersionViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:AWBuildVersionViewModel
+interface AWBuildVersionEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-  const AWBuildVersionEditDisplay = (props: FormikProps<AWBuildVersionViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.AWBuildVersionClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof AWBuildVersionViewModel]  && props.errors[name as keyof AWBuildVersionViewModel]) {
-            response += props.errors[name as keyof AWBuildVersionViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("database_Version") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Database Version</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="database_Version" className={errorExistForField("database_Version") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("database_Version") && <small className="text-danger">{errorsForField("database_Version")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("systemInformationID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SystemInformationID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="systemInformationID" className={errorExistForField("systemInformationID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("systemInformationID") && <small className="text-danger">{errorsForField("systemInformationID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("versionDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>VersionDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="versionDate" className={errorExistForField("versionDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("versionDate") && <small className="text-danger">{errorsForField("versionDate")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface AWBuildVersionEditComponentState {
+  model?: AWBuildVersionViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class AWBuildVersionEditComponent extends React.Component<
+  AWBuildVersionEditComponentProps,
+  AWBuildVersionEditComponentState
+> {
+  state = {
+    model: new AWBuildVersionViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const AWBuildVersionEdit = withFormik<Props, AWBuildVersionViewModel>({
-    mapPropsToValues: props => {
-        let response = new AWBuildVersionViewModel();
-		response.setProperties(props.model!.database_Version,props.model!.modifiedDate,props.model!.systemInformationID,props.model!.versionDate);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<AWBuildVersionViewModel> = { };
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.database_Version == '') {
-                errors.database_Version = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.systemInformationID == 0) {
-                errors.systemInformationID = "Required"
-                    }if(values.versionDate == undefined) {
-                errors.versionDate = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new AWBuildVersionMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.AWBuildVersions +'/' + values.systemInformationID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.AWBuildVersions +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.AWBuildVersionClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'AWBuildVersionEdit', 
-  })(AWBuildVersionEditDisplay);
-
- 
-  interface IParams 
-  {
-     systemInformationID:number;
-  }
-
-  interface IMatch
-  {
-     params: IParams;
-  }
-  
-  interface AWBuildVersionEditComponentProps
-  {
-     match:IMatch;
-  }
-
-  interface AWBuildVersionEditComponentState
-  {
-      model?:AWBuildVersionViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class AWBuildVersionEditComponent extends React.Component<AWBuildVersionEditComponentProps, AWBuildVersionEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.AWBuildVersions + '/' + this.props.match.params.systemInformationID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.AWBuildVersionClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new AWBuildVersionMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<AWBuildVersionEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.AWBuildVersionClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new AWBuildVersionMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as AWBuildVersionViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: AWBuildVersionViewModel) => {
+    let mapper = new AWBuildVersionMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.AWBuildVersions +
+          '/' +
+          this.state.model!.systemInformationID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.AWBuildVersionClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="database_Version">Database Version</label>
+            <br />
+            {getFieldDecorator('database_Version', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Database Version'}
+                id={'database_Version'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="versionDate">VersionDate</label>
+            <br />
+            {getFieldDecorator('versionDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'VersionDate'}
+                id={'versionDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedAWBuildVersionEditComponent = Form.create({
+  name: 'AWBuildVersion Edit',
+})(AWBuildVersionEditComponent);
+
 
 /*<Codenesium>
-    <Hash>0d959f9674062c09d1ea5c5260b0c3b5</Hash>
+    <Hash>41b1559a4b292d669b9329392527bb35</Hash>
 </Codenesium>*/

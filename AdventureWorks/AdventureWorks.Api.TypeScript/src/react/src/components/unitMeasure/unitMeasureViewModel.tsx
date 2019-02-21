@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class UnitMeasureViewModel {
   modifiedDate: any;
   name: string;
@@ -14,9 +16,9 @@ export default class UnitMeasureViewModel {
     name: string,
     unitMeasureCode: string
   ): void {
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.unitMeasureCode = unitMeasureCode;
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.unitMeasureCode = moment(unitMeasureCode, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -26,5 +28,5 @@ export default class UnitMeasureViewModel {
 
 
 /*<Codenesium>
-    <Hash>bc308d05114ee62b43afbf551d04137c</Hash>
+    <Hash>754d2d8f912b420f87bfc6af7bf02d0c</Hash>
 </Codenesium>*/

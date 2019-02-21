@@ -1,158 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: UserViewModel;
+interface UserCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const UserCreateDisplay: React.SFC<FormikProps<UserViewModel>> = (
-  props: FormikProps<UserViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.UserClientRequestModel>;
+interface UserCreateComponentState {
+  model?: UserViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof UserViewModel] &&
-      props.errors[name as keyof UserViewModel]
-    ) {
-      response += props.errors[name as keyof UserViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class UserCreateComponent extends React.Component<
+  UserCreateComponentProps,
+  UserCreateComponentState
+> {
+  state = {
+    model: new UserViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as UserViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('password')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Password
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="password"
-            className={
-              errorExistForField('password')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('password') && (
-            <small className="text-danger">{errorsForField('password')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('username')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Username
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="username"
-            className={
-              errorExistForField('username')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('username') && (
-            <small className="text-danger">{errorsForField('username')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const UserCreate = withFormik<Props, UserViewModel>({
-  mapPropsToValues: props => {
-    let response = new UserViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.id,
-        props.model!.password,
-        props.model!.username
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<UserViewModel> = {};
-
-    if (values.password == '') {
-      errors.password = 'Required';
-    }
-    if (values.username == '') {
-      errors.username = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: UserViewModel) => {
     let mapper = new UserMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Users,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -164,54 +73,96 @@ const UserCreate = withFormik<Props, UserViewModel>({
           let response = resp.data as CreateResponse<
             Api.UserClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'UserCreate',
-})(UserCreateDisplay);
-
-interface UserCreateComponentProps {}
-
-interface UserCreateComponentState {
-  model?: UserViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class UserCreateComponent extends React.Component<
-  UserCreateComponentProps,
-  UserCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <UserCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="password">password</label>
+            <br />
+            {getFieldDecorator('password', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'password'}
+                id={'password'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="username">username</label>
+            <br />
+            {getFieldDecorator('username', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'username'}
+                id={'username'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
+  UserCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>c665b327fdcf466c79eb0e2b96e4440f</Hash>
+    <Hash>9b2be7cf62f2d916412a73d94c28ba0d</Hash>
 </Codenesium>*/

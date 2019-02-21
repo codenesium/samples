@@ -1,139 +1,148 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import DatabaseLogMapper from './databaseLogMapper';
 import DatabaseLogViewModel from './databaseLogViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:DatabaseLogViewModel
+interface DatabaseLogDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const DatabaseLogDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.DatabaseLogs + '/edit/' + model.model!.databaseLogID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="databaseLogID" className={"col-sm-2 col-form-label"}>DatabaseLogID</label>
-							<div className="col-sm-12">
-								{String(model.model!.databaseLogID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="databaseUser" className={"col-sm-2 col-form-label"}>DatabaseUser</label>
-							<div className="col-sm-12">
-								{String(model.model!.databaseUser)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="postTime" className={"col-sm-2 col-form-label"}>PostTime</label>
-							<div className="col-sm-12">
-								{String(model.model!.postTime)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="schema" className={"col-sm-2 col-form-label"}>Schema</label>
-							<div className="col-sm-12">
-								{String(model.model!.schema)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="tsql" className={"col-sm-2 col-form-label"}>TSQL</label>
-							<div className="col-sm-12">
-								{String(model.model!.tsql)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="xmlEvent" className={"col-sm-2 col-form-label"}>XmlEvent</label>
-							<div className="col-sm-12">
-								{String(model.model!.xmlEvent)}
-							</div>
-						</div>
-					             </form>
-  );
+interface DatabaseLogDetailComponentState {
+  model?: DatabaseLogViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     databaseLogID:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class DatabaseLogDetailComponent extends React.Component<
+  DatabaseLogDetailComponentProps,
+  DatabaseLogDetailComponentState
+> {
+  state = {
+    model: new DatabaseLogViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface DatabaseLogDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface DatabaseLogDetailComponentState
-  {
-      model?:DatabaseLogViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.DatabaseLogs + '/edit/' + this.state.model!.databaseLogID
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class DatabaseLogDetailComponent extends React.Component<DatabaseLogDetailComponentProps, DatabaseLogDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.DatabaseLogs + '/' + this.props.match.params.databaseLogID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.DatabaseLogs +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.DatabaseLogClientResponseModel;
-            
-			let mapper = new DatabaseLogMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<DatabaseLogDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.DatabaseLogClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new DatabaseLogMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>DatabaseLogID</h3>
+              <p>{String(this.state.model!.databaseLogID)}</p>
+            </div>
+            <div>
+              <h3>DatabaseUser</h3>
+              <p>{String(this.state.model!.databaseUser)}</p>
+            </div>
+            <div>
+              <h3>PostTime</h3>
+              <p>{String(this.state.model!.postTime)}</p>
+            </div>
+            <div>
+              <h3>Schema</h3>
+              <p>{String(this.state.model!.schema)}</p>
+            </div>
+            <div>
+              <h3>TSQL</h3>
+              <p>{String(this.state.model!.tsql)}</p>
+            </div>
+            <div>
+              <h3>XmlEvent</h3>
+              <p>{String(this.state.model!.xmlEvent)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedDatabaseLogDetailComponent = Form.create({
+  name: 'DatabaseLog Detail',
+})(DatabaseLogDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>fdf646096e3f61b3c4b69989693fe746</Hash>
+    <Hash>592014609a991d25c2813310f2c7e95d</Hash>
 </Codenesium>*/

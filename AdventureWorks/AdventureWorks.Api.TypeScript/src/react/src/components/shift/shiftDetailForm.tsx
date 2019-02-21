@@ -1,77 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import ShiftMapper from './shiftMapper';
 import ShiftViewModel from './shiftViewModel';
-
-interface Props {
-  history: any;
-  model?: ShiftViewModel;
-}
-
-const ShiftDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Shifts + '/edit/' + model.model!.shiftID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="endTime" className={'col-sm-2 col-form-label'}>
-          EndTime
-        </label>
-        <div className="col-sm-12">{String(model.model!.endTime)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="shiftID" className={'col-sm-2 col-form-label'}>
-          ShiftID
-        </label>
-        <div className="col-sm-12">{String(model.model!.shiftID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="startTime" className={'col-sm-2 col-form-label'}>
-          StartTime
-        </label>
-        <div className="col-sm-12">{String(model.model!.startTime)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  shiftID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ShiftDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface ShiftDetailComponentState {
@@ -82,17 +21,23 @@ interface ShiftDetailComponentState {
   errorMessage: string;
 }
 
-export default class ShiftDetailComponent extends React.Component<
+class ShiftDetailComponent extends React.Component<
   ShiftDetailComponentProps,
   ShiftDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new ShiftViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Shifts + '/edit/' + this.state.model!.shiftID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -102,7 +47,7 @@ export default class ShiftDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.Shifts +
           '/' +
-          this.props.match.params.shiftID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -113,9 +58,9 @@ export default class ShiftDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.ShiftClientResponseModel;
 
-          let mapper = new ShiftMapper();
-
           console.log(response);
+
+          let mapper = new ShiftMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -137,17 +82,51 @@ export default class ShiftDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <ShiftDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>EndTime</h3>
+              <p>{String(this.state.model!.endTime)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>ShiftID</h3>
+              <p>{String(this.state.model!.shiftID)}</p>
+            </div>
+            <div>
+              <h3>StartTime</h3>
+              <p>{String(this.state.model!.startTime)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -155,7 +134,11 @@ export default class ShiftDetailComponent extends React.Component<
   }
 }
 
+export const WrappedShiftDetailComponent = Form.create({
+  name: 'Shift Detail',
+})(ShiftDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>91b8333ece1422c50fc848ea4a86ca6a</Hash>
+    <Hash>7a0834ff69ac41e187f1c92499484fa5</Hash>
 </Codenesium>*/

@@ -1,121 +1,136 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import IllustrationMapper from './illustrationMapper';
 import IllustrationViewModel from './illustrationViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:IllustrationViewModel
+interface IllustrationDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const IllustrationDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Illustrations + '/edit/' + model.model!.illustrationID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="diagram" className={"col-sm-2 col-form-label"}>Diagram</label>
-							<div className="col-sm-12">
-								{String(model.model!.diagram)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="illustrationID" className={"col-sm-2 col-form-label"}>IllustrationID</label>
-							<div className="col-sm-12">
-								{String(model.model!.illustrationID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="modifiedDate" className={"col-sm-2 col-form-label"}>ModifiedDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.modifiedDate)}
-							</div>
-						</div>
-					             </form>
-  );
+interface IllustrationDetailComponentState {
+  model?: IllustrationViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     illustrationID:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class IllustrationDetailComponent extends React.Component<
+  IllustrationDetailComponentProps,
+  IllustrationDetailComponentState
+> {
+  state = {
+    model: new IllustrationViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface IllustrationDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface IllustrationDetailComponentState
-  {
-      model?:IllustrationViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Illustrations + '/edit/' + this.state.model!.illustrationID
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class IllustrationDetailComponent extends React.Component<IllustrationDetailComponentProps, IllustrationDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Illustrations + '/' + this.props.match.params.illustrationID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Illustrations +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.IllustrationClientResponseModel;
-            
-			let mapper = new IllustrationMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<IllustrationDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.IllustrationClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new IllustrationMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Diagram</h3>
+              <p>{String(this.state.model!.diagram)}</p>
+            </div>
+            <div>
+              <h3>IllustrationID</h3>
+              <p>{String(this.state.model!.illustrationID)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedIllustrationDetailComponent = Form.create({
+  name: 'Illustration Detail',
+})(IllustrationDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>724561eeb8c96c7d9fcc248b6b16efdc</Hash>
+    <Hash>b9ec524016a92493e78cf448908f4c5d</Hash>
 </Codenesium>*/

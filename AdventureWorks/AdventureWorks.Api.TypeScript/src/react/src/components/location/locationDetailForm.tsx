@@ -1,133 +1,144 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import LocationMapper from './locationMapper';
 import LocationViewModel from './locationViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:LocationViewModel
+interface LocationDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const LocationDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Locations + '/edit/' + model.model!.locationID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="availability" className={"col-sm-2 col-form-label"}>Availability</label>
-							<div className="col-sm-12">
-								{String(model.model!.availability)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="costRate" className={"col-sm-2 col-form-label"}>CostRate</label>
-							<div className="col-sm-12">
-								{String(model.model!.costRate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="locationID" className={"col-sm-2 col-form-label"}>LocationID</label>
-							<div className="col-sm-12">
-								{String(model.model!.locationID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="modifiedDate" className={"col-sm-2 col-form-label"}>ModifiedDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.modifiedDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					             </form>
-  );
+interface LocationDetailComponentState {
+  model?: LocationViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     locationID:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class LocationDetailComponent extends React.Component<
+  LocationDetailComponentProps,
+  LocationDetailComponentState
+> {
+  state = {
+    model: new LocationViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface LocationDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface LocationDetailComponentState
-  {
-      model?:LocationViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Locations + '/edit/' + this.state.model!.locationID
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class LocationDetailComponent extends React.Component<LocationDetailComponentProps, LocationDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Locations + '/' + this.props.match.params.locationID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Locations +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.LocationClientResponseModel;
-            
-			let mapper = new LocationMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<LocationDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.LocationClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new LocationMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Availability</h3>
+              <p>{String(this.state.model!.availability)}</p>
+            </div>
+            <div>
+              <h3>CostRate</h3>
+              <p>{String(this.state.model!.costRate)}</p>
+            </div>
+            <div>
+              <h3>LocationID</h3>
+              <p>{String(this.state.model!.locationID)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedLocationDetailComponent = Form.create({
+  name: 'Location Detail',
+})(LocationDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>af5f0cff0671097f6384b6b8933b3903</Hash>
+    <Hash>2089b53b352b5a45d939b3ffb2bc3aaa</Hash>
 </Codenesium>*/

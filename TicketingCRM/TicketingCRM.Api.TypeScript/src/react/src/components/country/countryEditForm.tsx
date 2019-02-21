@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CountryMapper from './countryMapper';
 import CountryViewModel from './countryViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface CountryEditComponentProps {
   form: WrappedFormUtils;
@@ -157,7 +163,7 @@ class CountryEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -189,5 +195,5 @@ export const WrappedCountryEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ee5b2db18bcfa9cacf2c0a1956cfe5c1</Hash>
+    <Hash>c9b71cbf8acd1fe6235dbd5d99fb64e2</Hash>
 </Codenesium>*/

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class VoteViewModel {
   bountyAmount: any;
   creationDate: any;
@@ -38,5 +40,5 @@ export default class VoteViewModel {
 
 
 /*<Codenesium>
-    <Hash>36cec906ef3c75ad86130499816bc5a2</Hash>
+    <Hash>e6c248010091c6df3d5f1acefb035dd9</Hash>
 </Codenesium>*/

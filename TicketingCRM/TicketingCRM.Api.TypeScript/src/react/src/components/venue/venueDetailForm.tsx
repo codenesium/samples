@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VenueMapper from './venueMapper';
 import VenueViewModel from './venueViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface VenueDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface VenueDetailComponentState {
 }
 
 class VenueDetailComponent extends React.Component<
-  VenueDetailComponentProps,
-  VenueDetailComponentState
+VenueDetailComponentProps,
+VenueDetailComponentState
 > {
   state = {
     model: new VenueViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Venues + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Venues + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,63 +82,64 @@ class VenueDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <div>address1</div>
-              <div>{this.state.model!.address1}</div>
-            </div>
-            <div>
-              <div>address2</div>
-              <div>{this.state.model!.address2}</div>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>adminId</h3>
-              <div>{this.state.model!.adminIdNavigation!.toDisplay()}</div>
-            </div>
-            <div>
-              <div>email</div>
-              <div>{this.state.model!.email}</div>
-            </div>
-            <div>
-              <div>facebook</div>
-              <div>{this.state.model!.facebook}</div>
-            </div>
-            <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
-            </div>
-            <div>
-              <div>phone</div>
-              <div>{this.state.model!.phone}</div>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>provinceId</h3>
-              <div>{this.state.model!.provinceIdNavigation!.toDisplay()}</div>
-            </div>
-            <div>
-              <div>website</div>
-              <div>{this.state.model!.website}</div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>address1</h3>
+							<p>{String(this.state.model!.address1)}</p>
+						 </div>
+					   						 <div>
+							<h3>address2</h3>
+							<p>{String(this.state.model!.address2)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>adminId</h3>
+							<p>{String(this.state.model!.adminIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>email</h3>
+							<p>{String(this.state.model!.email)}</p>
+						 </div>
+					   						 <div>
+							<h3>facebook</h3>
+							<p>{String(this.state.model!.facebook)}</p>
+						 </div>
+					   						 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>phone</h3>
+							<p>{String(this.state.model!.phone)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>provinceId</h3>
+							<p>{String(this.state.model!.provinceIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>website</h3>
+							<p>{String(this.state.model!.website)}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -152,11 +149,10 @@ class VenueDetailComponent extends React.Component<
   }
 }
 
-export const WrappedVenueDetailComponent = Form.create({
-  name: 'Venue Detail',
-})(VenueDetailComponent);
-
+export const WrappedVenueDetailComponent = Form.create({ name: 'Venue Detail' })(
+  VenueDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>f55229c6bd3d17ca13bdf22ffd8d53ea</Hash>
+    <Hash>ff2ec570d6b68c7e65258c1990105cfc</Hash>
 </Codenesium>*/

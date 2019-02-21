@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import SaleTicketMapper from './saleTicketMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import SaleTicketViewModel from './saleTicketViewModel';
 import 'react-table/react-table.css';
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SaleTicketSearchComponentProps {
@@ -149,9 +147,9 @@ export default class SaleTicketSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -311,5 +309,5 @@ export const WrappedSaleTicketSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9e757255cc137550db38716531f0d473</Hash>
+    <Hash>4a7e45b50b772359ee80cca0f8d02fdc</Hash>
 </Codenesium>*/

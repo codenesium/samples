@@ -1,32 +1,36 @@
+import moment from 'moment';
+
 export default class DepartmentViewModel {
-    departmentID:number;
-groupName:string;
-modifiedDate:any;
-name:string;
+  departmentID: number;
+  groupName: string;
+  modifiedDate: any;
+  name: string;
 
-    constructor() {
-		this.departmentID = 0;
-this.groupName = '';
-this.modifiedDate = undefined;
-this.name = '';
+  constructor() {
+    this.departmentID = 0;
+    this.groupName = '';
+    this.modifiedDate = undefined;
+    this.name = '';
+  }
 
-    }
+  setProperties(
+    departmentID: number,
+    groupName: string,
+    modifiedDate: any,
+    name: string
+  ): void {
+    this.departmentID = moment(departmentID, 'YYYY-MM-DD');
+    this.groupName = moment(groupName, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+  }
 
-	setProperties(departmentID : number,groupName : string,modifiedDate : any,name : string) : void
-	{
-		this.departmentID = departmentID;
-this.groupName = groupName;
-this.modifiedDate = modifiedDate;
-this.name = name;
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>bef1f9a235d8e6c6c2135f2288da0e22</Hash>
+    <Hash>1139cc4348c3b26e6c531df2bd86aed9</Hash>
 </Codenesium>*/

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TicketStatusMapper from './ticketStatusMapper';
 import TicketStatusViewModel from './ticketStatusViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TicketStatusDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface TicketStatusDetailComponentState {
 }
 
 class TicketStatusDetailComponent extends React.Component<
-  TicketStatusDetailComponentProps,
-  TicketStatusDetailComponentState
+TicketStatusDetailComponentProps,
+TicketStatusDetailComponentState
 > {
   state = {
     model: new TicketStatusViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.TicketStatus + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.TicketStatus + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,31 +82,32 @@ class TicketStatusDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -120,11 +117,10 @@ class TicketStatusDetailComponent extends React.Component<
   }
 }
 
-export const WrappedTicketStatusDetailComponent = Form.create({
-  name: 'TicketStatus Detail',
-})(TicketStatusDetailComponent);
-
+export const WrappedTicketStatusDetailComponent = Form.create({ name: 'TicketStatus Detail' })(
+  TicketStatusDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>2c18987854879581f8962f25727bef6f</Hash>
+    <Hash>ff6f13f04d8b4e264dc631d4659b6daa</Hash>
 </Codenesium>*/

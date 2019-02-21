@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TransactionMapper from './transactionMapper';
 import TransactionViewModel from './transactionViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TransactionDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,21 +22,23 @@ interface TransactionDetailComponentState {
 }
 
 class TransactionDetailComponent extends React.Component<
-TransactionDetailComponentProps,
-TransactionDetailComponentState
+  TransactionDetailComponentProps,
+  TransactionDetailComponentState
 > {
   state = {
     model: new TransactionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Transactions + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Transactions + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,40 +84,43 @@ TransactionDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<div>amount</div>
-							<div>{this.state.model!.amount}</div>
-						 </div>
-					   						 <div>
-							<div>gatewayConfirmationNumber</div>
-							<div>{this.state.model!.gatewayConfirmationNumber}</div>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>transactionStatusId</h3>
-							<div>{this.state.model!.transactionStatusIdNavigation!.toDisplay()}</div>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>amount</h3>
+              <p>{String(this.state.model!.amount)}</p>
+            </div>
+            <div>
+              <h3>gatewayConfirmationNumber</h3>
+              <p>{String(this.state.model!.gatewayConfirmationNumber)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>transactionStatusId</h3>
+              <p>
+                {String(
+                  this.state.model!.transactionStatusIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
         </div>
       );
@@ -127,10 +130,11 @@ TransactionDetailComponentState
   }
 }
 
-export const WrappedTransactionDetailComponent = Form.create({ name: 'Transaction Detail' })(
-  TransactionDetailComponent
-);
+export const WrappedTransactionDetailComponent = Form.create({
+  name: 'Transaction Detail',
+})(TransactionDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>1343de822e84dcacae4835e83369ec3c</Hash>
+    <Hash>e5bc1c15f3f24bdd8397ff027ed2f989</Hash>
 </Codenesium>*/

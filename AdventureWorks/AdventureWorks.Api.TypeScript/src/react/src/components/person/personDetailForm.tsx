@@ -1,130 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import PersonMapper from './personMapper';
 import PersonViewModel from './personViewModel';
-
-interface Props {
-  history: any;
-  model?: PersonViewModel;
-}
-
-const PersonDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.People + '/edit/' + model.model!.businessEntityID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label
-          htmlFor="additionalContactInfo"
-          className={'col-sm-2 col-form-label'}
-        >
-          AdditionalContactInfo
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.additionalContactInfo)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="businessEntityID" className={'col-sm-2 col-form-label'}>
-          BusinessEntityID
-        </label>
-        <div className="col-sm-12">{String(model.model!.businessEntityID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="demographic" className={'col-sm-2 col-form-label'}>
-          Demographics
-        </label>
-        <div className="col-sm-12">{String(model.model!.demographic)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="emailPromotion" className={'col-sm-2 col-form-label'}>
-          EmailPromotion
-        </label>
-        <div className="col-sm-12">{String(model.model!.emailPromotion)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
-          FirstName
-        </label>
-        <div className="col-sm-12">{String(model.model!.firstName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
-          LastName
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="middleName" className={'col-sm-2 col-form-label'}>
-          MiddleName
-        </label>
-        <div className="col-sm-12">{String(model.model!.middleName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="nameStyle" className={'col-sm-2 col-form-label'}>
-          NameStyle
-        </label>
-        <div className="col-sm-12">{String(model.model!.nameStyle)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="personType" className={'col-sm-2 col-form-label'}>
-          PersonType
-        </label>
-        <div className="col-sm-12">{String(model.model!.personType)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
-          Rowguid
-        </label>
-        <div className="col-sm-12">{String(model.model!.rowguid)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="suffix" className={'col-sm-2 col-form-label'}>
-          Suffix
-        </label>
-        <div className="col-sm-12">{String(model.model!.suffix)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="title" className={'col-sm-2 col-form-label'}>
-          Title
-        </label>
-        <div className="col-sm-12">{String(model.model!.title)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  businessEntityID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PersonDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface PersonDetailComponentState {
@@ -135,17 +21,23 @@ interface PersonDetailComponentState {
   errorMessage: string;
 }
 
-export default class PersonDetailComponent extends React.Component<
+class PersonDetailComponent extends React.Component<
   PersonDetailComponentProps,
   PersonDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new PersonViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.People + '/edit/' + this.state.model!.businessEntityID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -155,7 +47,7 @@ export default class PersonDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.People +
           '/' +
-          this.props.match.params.businessEntityID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -166,9 +58,9 @@ export default class PersonDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.PersonClientResponseModel;
 
-          let mapper = new PersonMapper();
-
           console.log(response);
+
+          let mapper = new PersonMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -190,17 +82,83 @@ export default class PersonDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <PersonDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>AdditionalContactInfo</h3>
+              <p>{String(this.state.model!.additionalContactInfo)}</p>
+            </div>
+            <div>
+              <h3>BusinessEntityID</h3>
+              <p>{String(this.state.model!.businessEntityID)}</p>
+            </div>
+            <div>
+              <h3>Demographics</h3>
+              <p>{String(this.state.model!.demographic)}</p>
+            </div>
+            <div>
+              <h3>EmailPromotion</h3>
+              <p>{String(this.state.model!.emailPromotion)}</p>
+            </div>
+            <div>
+              <h3>FirstName</h3>
+              <p>{String(this.state.model!.firstName)}</p>
+            </div>
+            <div>
+              <h3>LastName</h3>
+              <p>{String(this.state.model!.lastName)}</p>
+            </div>
+            <div>
+              <h3>MiddleName</h3>
+              <p>{String(this.state.model!.middleName)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>NameStyle</h3>
+              <p>{String(this.state.model!.nameStyle)}</p>
+            </div>
+            <div>
+              <h3>PersonType</h3>
+              <p>{String(this.state.model!.personType)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>Suffix</h3>
+              <p>{String(this.state.model!.suffix)}</p>
+            </div>
+            <div>
+              <h3>Title</h3>
+              <p>{String(this.state.model!.title)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -208,7 +166,11 @@ export default class PersonDetailComponent extends React.Component<
   }
 }
 
+export const WrappedPersonDetailComponent = Form.create({
+  name: 'Person Detail',
+})(PersonDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>4e879d97c49f4597983e5c834e4fe75c</Hash>
+    <Hash>d641d4909a9eb28f04e6ac96c5757476</Hash>
 </Codenesium>*/

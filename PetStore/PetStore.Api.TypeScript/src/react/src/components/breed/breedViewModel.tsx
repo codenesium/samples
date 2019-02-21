@@ -1,3 +1,4 @@
+import moment from 'moment';
 import SpeciesViewModel from '../species/speciesViewModel';
 
 export default class BreedViewModel {
@@ -12,7 +13,7 @@ export default class BreedViewModel {
     this.name = '';
     this.speciesId = 0;
     this.speciesIdEntity = '';
-    this.speciesIdNavigation = undefined;
+    this.speciesIdNavigation = new SpeciesViewModel();
   }
 
   setProperties(id: number, name: string, speciesId: number): void {
@@ -28,5 +29,5 @@ export default class BreedViewModel {
 
 
 /*<Codenesium>
-    <Hash>a42f4ded50d6c5a5f1e2f418ab60747f</Hash>
+    <Hash>1a6f9c897cd848af1472407cc462d1a6</Hash>
 </Codenesium>*/

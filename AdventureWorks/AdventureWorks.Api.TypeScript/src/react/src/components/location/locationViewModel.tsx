@@ -1,38 +1,38 @@
+import moment from 'moment'
+
+
 export default class LocationViewModel {
-  availability: number;
-  costRate: number;
-  locationID: number;
-  modifiedDate: any;
-  name: string;
+    availability:number;
+costRate:number;
+locationID:number;
+modifiedDate:any;
+name:string;
 
-  constructor() {
-    this.availability = 0;
-    this.costRate = 0;
-    this.locationID = 0;
-    this.modifiedDate = undefined;
-    this.name = '';
-  }
+    constructor() {
+		this.availability = 0;
+this.costRate = 0;
+this.locationID = 0;
+this.modifiedDate = undefined;
+this.name = '';
 
-  setProperties(
-    availability: number,
-    costRate: number,
-    locationID: number,
-    modifiedDate: any,
-    name: string
-  ): void {
-    this.availability = availability;
-    this.costRate = costRate;
-    this.locationID = locationID;
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-  }
+    }
 
-  toDisplay(): string {
-    return String();
-  }
-}
+	setProperties(availability : number,costRate : number,locationID : number,modifiedDate : any,name : string) : void
+	{
+		this.availability = moment(availability,'YYYY-MM-DD');
+this.costRate = moment(costRate,'YYYY-MM-DD');
+this.locationID = moment(locationID,'YYYY-MM-DD');
+this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.name = moment(name,'YYYY-MM-DD');
 
+	}
+
+	toDisplay() : string
+	{
+		return String();
+	}
+};
 
 /*<Codenesium>
-    <Hash>77338a350f01ebd2ade4968e179e6a46</Hash>
+    <Hash>e94554446beb4a410020a96c3c67a32a</Hash>
 </Codenesium>*/

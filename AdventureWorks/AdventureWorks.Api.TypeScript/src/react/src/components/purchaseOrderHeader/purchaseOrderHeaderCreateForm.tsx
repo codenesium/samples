@@ -1,255 +1,308 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import PurchaseOrderHeaderMapper from './purchaseOrderHeaderMapper';
 import PurchaseOrderHeaderViewModel from './purchaseOrderHeaderViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:PurchaseOrderHeaderViewModel
+interface PurchaseOrderHeaderCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const PurchaseOrderHeaderCreateDisplay: React.SFC<FormikProps<PurchaseOrderHeaderViewModel>> = (props: FormikProps<PurchaseOrderHeaderViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.PurchaseOrderHeaderClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof PurchaseOrderHeaderViewModel]  && props.errors[name as keyof PurchaseOrderHeaderViewModel]) {
-            response += props.errors[name as keyof PurchaseOrderHeaderViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("employeeID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>EmployeeID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="employeeID" className={errorExistForField("employeeID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("employeeID") && <small className="text-danger">{errorsForField("employeeID")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("freight") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Freight</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="freight" className={errorExistForField("freight") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("freight") && <small className="text-danger">{errorsForField("freight")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("orderDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>OrderDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="orderDate" className={errorExistForField("orderDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("orderDate") && <small className="text-danger">{errorsForField("orderDate")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("revisionNumber") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>RevisionNumber</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="revisionNumber" className={errorExistForField("revisionNumber") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("revisionNumber") && <small className="text-danger">{errorsForField("revisionNumber")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("shipDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ShipDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="shipDate" className={errorExistForField("shipDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("shipDate") && <small className="text-danger">{errorsForField("shipDate")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("shipMethodID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ShipMethodID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="shipMethodID" className={errorExistForField("shipMethodID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("shipMethodID") && <small className="text-danger">{errorsForField("shipMethodID")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("status") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Status</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="status" className={errorExistForField("status") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("status") && <small className="text-danger">{errorsForField("status")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("subTotal") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SubTotal</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="subTotal" className={errorExistForField("subTotal") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("subTotal") && <small className="text-danger">{errorsForField("subTotal")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("taxAmt") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TaxAmt</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="taxAmt" className={errorExistForField("taxAmt") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("taxAmt") && <small className="text-danger">{errorsForField("taxAmt")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("totalDue") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TotalDue</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="totalDue" className={errorExistForField("totalDue") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("totalDue") && <small className="text-danger">{errorsForField("totalDue")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("vendorID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>VendorID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="vendorID" className={errorExistForField("vendorID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("vendorID") && <small className="text-danger">{errorsForField("vendorID")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface PurchaseOrderHeaderCreateComponentState {
+  model?: PurchaseOrderHeaderViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class PurchaseOrderHeaderCreateComponent extends React.Component<
+  PurchaseOrderHeaderCreateComponentProps,
+  PurchaseOrderHeaderCreateComponentState
+> {
+  state = {
+    model: new PurchaseOrderHeaderViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const PurchaseOrderHeaderCreate = withFormik<Props, PurchaseOrderHeaderViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new PurchaseOrderHeaderViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.employeeID,props.model!.freight,props.model!.modifiedDate,props.model!.orderDate,props.model!.purchaseOrderID,props.model!.revisionNumber,props.model!.shipDate,props.model!.shipMethodID,props.model!.status,props.model!.subTotal,props.model!.taxAmt,props.model!.totalDue,props.model!.vendorID);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<PurchaseOrderHeaderViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as PurchaseOrderHeaderViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  if(values.employeeID == 0) {
-                errors.employeeID = "Required"
-                    }if(values.freight == 0) {
-                errors.freight = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.orderDate == undefined) {
-                errors.orderDate = "Required"
-                    }if(values.revisionNumber == 0) {
-                errors.revisionNumber = "Required"
-                    }if(values.shipMethodID == 0) {
-                errors.shipMethodID = "Required"
-                    }if(values.status == 0) {
-                errors.status = "Required"
-                    }if(values.subTotal == 0) {
-                errors.subTotal = "Required"
-                    }if(values.taxAmt == 0) {
-                errors.taxAmt = "Required"
-                    }if(values.totalDue == 0) {
-                errors.totalDue = "Required"
-                    }if(values.vendorID == 0) {
-                errors.vendorID = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new PurchaseOrderHeaderMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.PurchaseOrderHeaders,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: PurchaseOrderHeaderViewModel) => {
+    let mapper = new PurchaseOrderHeaderMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.PurchaseOrderHeaders,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.PurchaseOrderHeaderClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'PurchaseOrderHeaderCreate', 
-  })(PurchaseOrderHeaderCreateDisplay);
-
-  interface PurchaseOrderHeaderCreateComponentProps
-  {
-  }
-
-  interface PurchaseOrderHeaderCreateComponentState
-  {
-      model?:PurchaseOrderHeaderViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class PurchaseOrderHeaderCreateComponent extends React.Component<PurchaseOrderHeaderCreateComponentProps, PurchaseOrderHeaderCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<PurchaseOrderHeaderCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.PurchaseOrderHeaderClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="employeeID">EmployeeID</label>
+            <br />
+            {getFieldDecorator('employeeID', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'EmployeeID'}
+                id={'employeeID'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="freight">Freight</label>
+            <br />
+            {getFieldDecorator('freight', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Freight'}
+                id={'freight'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="orderDate">OrderDate</label>
+            <br />
+            {getFieldDecorator('orderDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'OrderDate'}
+                id={'orderDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="revisionNumber">RevisionNumber</label>
+            <br />
+            {getFieldDecorator('revisionNumber', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'RevisionNumber'}
+                id={'revisionNumber'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="shipDate">ShipDate</label>
+            <br />
+            {getFieldDecorator('shipDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ShipDate'}
+                id={'shipDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="shipMethodID">ShipMethodID</label>
+            <br />
+            {getFieldDecorator('shipMethodID', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ShipMethodID'}
+                id={'shipMethodID'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="status">Status</label>
+            <br />
+            {getFieldDecorator('status', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Status'}
+                id={'status'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="subTotal">SubTotal</label>
+            <br />
+            {getFieldDecorator('subTotal', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'SubTotal'}
+                id={'subTotal'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="taxAmt">TaxAmt</label>
+            <br />
+            {getFieldDecorator('taxAmt', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'TaxAmt'}
+                id={'taxAmt'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="totalDue">TotalDue</label>
+            <br />
+            {getFieldDecorator('totalDue', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'TotalDue'}
+                id={'totalDue'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="vendorID">VendorID</label>
+            <br />
+            {getFieldDecorator('vendorID', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'VendorID'}
+                id={'vendorID'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedPurchaseOrderHeaderCreateComponent = Form.create({
+  name: 'PurchaseOrderHeader Create',
+})(PurchaseOrderHeaderCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>9fd6244aa1d46ba4202276bb0f702a5f</Hash>
+    <Hash>77da982ea78b7a8e708bb54a73073428</Hash>
 </Codenesium>*/

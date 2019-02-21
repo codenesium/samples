@@ -1,222 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import CultureViewModel from './cultureViewModel';
+import * as Api from '../../api/models';
 import CultureMapper from './cultureMapper';
-
-interface Props {
-  model?: CultureViewModel;
-}
-
-const CultureEditDisplay = (props: FormikProps<CultureViewModel>) => {
-  let status = props.status as UpdateResponse<Api.CultureClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof CultureViewModel] &&
-      props.errors[name as keyof CultureViewModel]
-    ) {
-      response += props.errors[name as keyof CultureViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('cultureID')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CultureID
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="cultureID"
-            className={
-              errorExistForField('cultureID')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('cultureID') && (
-            <small className="text-danger">{errorsForField('cultureID')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const CultureEdit = withFormik<Props, CultureViewModel>({
-  mapPropsToValues: props => {
-    let response = new CultureViewModel();
-    response.setProperties(
-      props.model!.cultureID,
-      props.model!.modifiedDate,
-      props.model!.name
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<CultureViewModel> = {};
-
-    if (values.cultureID == '') {
-      errors.cultureID = 'Required';
-    }
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new CultureMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Cultures + '/' + values.cultureID,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.CultureClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'CultureEdit',
-})(CultureEditDisplay);
-
-interface IParams {
-  cultureID: string;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import CultureViewModel from './cultureViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CultureEditComponentProps {
-  match: IMatch;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface CultureEditComponentState {
@@ -225,21 +20,23 @@ interface CultureEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted:boolean;
 }
 
-export default class CultureEditComponent extends React.Component<
+class CultureEditComponent extends React.Component<
   CultureEditComponentProps,
   CultureEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new CultureViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -247,7 +44,7 @@ export default class CultureEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.Cultures +
           '/' +
-          this.props.match.params.cultureID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -269,6 +66,8 @@ export default class CultureEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -281,21 +80,106 @@ export default class CultureEditComponent extends React.Component<
           });
         }
       );
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as CultureViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:CultureViewModel) =>
+  {  
+    let mapper = new CultureMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Cultures + '/' + this.state.model!.cultureID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.CultureClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
+  
   render() {
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
-    } else if (this.state.loaded) {
-      return <CultureEdit model={this.state.model} />;
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
+export const WrappedCultureEditComponent = Form.create({ name: 'Culture Edit' })(CultureEditComponent);
 
 /*<Codenesium>
-    <Hash>195b26c9cba3fe117b7017b2432eb3bd</Hash>
+    <Hash>d3ee26761d17569ff4ce6866831532f9</Hash>
 </Codenesium>*/

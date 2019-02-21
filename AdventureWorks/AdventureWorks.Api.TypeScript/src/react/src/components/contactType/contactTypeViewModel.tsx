@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class ContactTypeViewModel {
   contactTypeID: number;
   modifiedDate: any;
@@ -10,9 +12,9 @@ export default class ContactTypeViewModel {
   }
 
   setProperties(contactTypeID: number, modifiedDate: any, name: string): void {
-    this.contactTypeID = contactTypeID;
-    this.modifiedDate = modifiedDate;
-    this.name = name;
+    this.contactTypeID = moment(contactTypeID, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -22,5 +24,5 @@ export default class ContactTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>71a368589c9c3148351728d26677f888</Hash>
+    <Hash>bce9558c66ba771a9ff264393442f0fb</Hash>
 </Codenesium>*/

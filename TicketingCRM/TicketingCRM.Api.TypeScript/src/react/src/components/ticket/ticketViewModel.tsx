@@ -1,3 +1,4 @@
+import moment from 'moment';
 import TicketStatusViewModel from '../ticketStatus/ticketStatusViewModel';
 
 export default class TicketViewModel {
@@ -12,11 +13,11 @@ export default class TicketViewModel {
     this.publicId = '';
     this.ticketStatusId = 0;
     this.ticketStatusIdEntity = '';
-    this.ticketStatusIdNavigation = undefined;
+    this.ticketStatusIdNavigation = new TicketStatusViewModel();
   }
 
   setProperties(id: number, publicId: string, ticketStatusId: number): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.publicId = publicId;
     this.ticketStatusId = ticketStatusId;
   }
@@ -28,5 +29,5 @@ export default class TicketViewModel {
 
 
 /*<Codenesium>
-    <Hash>28b8c9757ba7b061d49423b56a1e2ced</Hash>
+    <Hash>0cb2aa3edce68cce20e7188f1a475852</Hash>
 </Codenesium>*/

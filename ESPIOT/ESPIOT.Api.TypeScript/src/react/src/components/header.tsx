@@ -34,40 +34,22 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
-                key="Dashboard"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Dashboard</span>
-                  </span>
-                }
-              >
-                <Link to={'/'}>Dashboard</Link>
+              <MenuItem key="Home">
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
               </MenuItem>
 
-              <MenuItem
-                key="device"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Device</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Devices}>Devices</Link>
+              <MenuItem key="device">
+                <Icon type="pie-chart" />
+                <span>Devices</span>
+                <Link to={ClientRoutes.Devices} />
               </MenuItem>
 
-              <MenuItem
-                key="deviceAction"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>DeviceAction</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.DeviceActions}>DeviceActions</Link>
+              <MenuItem key="deviceAction">
+                <Icon type="rise" />
+                <span>DeviceActions</span>
+                <Link to={ClientRoutes.DeviceActions} />
               </MenuItem>
             </Menu>
           </Sider>
@@ -89,5 +71,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>1b052273a4dbea491431d07f8565a9bf</Hash>
+    <Hash>97319452ed1ee31a8b3ae288291ac2c7</Hash>
 </Codenesium>*/

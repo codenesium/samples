@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import VoteMapper from './voteMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import VoteViewModel from './voteViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface VoteSearchComponentProps
@@ -112,10 +110,10 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -250,5 +248,5 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
 export const WrappedVoteSearchComponent = Form.create({ name: 'Vote Search' })(VoteSearchComponent);
 
 /*<Codenesium>
-    <Hash>6c660257ec55db10ab360a732039b311</Hash>
+    <Hash>7980b46185d4077b577f0ec019fe16bf</Hash>
 </Codenesium>*/

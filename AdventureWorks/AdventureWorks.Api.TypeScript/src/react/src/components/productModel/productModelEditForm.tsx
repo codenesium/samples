@@ -1,228 +1,215 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import ProductModelViewModel from './productModelViewModel';
+import * as Api from '../../api/models';
 import ProductModelMapper from './productModelMapper';
+import ProductModelViewModel from './productModelViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:ProductModelViewModel
+interface ProductModelEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-  const ProductModelEditDisplay = (props: FormikProps<ProductModelViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.ProductModelClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof ProductModelViewModel]  && props.errors[name as keyof ProductModelViewModel]) {
-            response += props.errors[name as keyof ProductModelViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("catalogDescription") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CatalogDescription</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="catalogDescription" className={errorExistForField("catalogDescription") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("catalogDescription") && <small className="text-danger">{errorsForField("catalogDescription")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("instruction") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Instructions</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="instruction" className={errorExistForField("instruction") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("instruction") && <small className="text-danger">{errorsForField("instruction")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("productModelID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ProductModelID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="productModelID" className={errorExistForField("productModelID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("productModelID") && <small className="text-danger">{errorsForField("productModelID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("rowguid") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Rowguid</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="rowguid" className={errorExistForField("rowguid") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("rowguid") && <small className="text-danger">{errorsForField("rowguid")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface ProductModelEditComponentState {
+  model?: ProductModelViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
 }
 
+class ProductModelEditComponent extends React.Component<
+  ProductModelEditComponentProps,
+  ProductModelEditComponentState
+> {
+  state = {
+    model: new ProductModelViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
 
-const ProductModelEdit = withFormik<Props, ProductModelViewModel>({
-    mapPropsToValues: props => {
-        let response = new ProductModelViewModel();
-		response.setProperties(props.model!.catalogDescription,props.model!.instruction,props.model!.modifiedDate,props.model!.name,props.model!.productModelID,props.model!.rowguid);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<ProductModelViewModel> = { };
+    componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.productModelID == 0) {
-                errors.productModelID = "Required"
-                    }if(values.rowguid == undefined) {
-                errors.rowguid = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new ProductModelMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.ProductModels +'/' + values.productModelID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.ProductModels +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.ProductModelClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'ProductModelEdit', 
-  })(ProductModelEditDisplay);
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.ProductModelClientResponseModel;
 
+          console.log(response);
+
+          let mapper = new ProductModelMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+ }
  
-  interface IParams 
-  {
-     productModelID:number;
-  }
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as ProductModelViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-  interface IMatch
-  {
-     params: IParams;
+  submit = (model:ProductModelViewModel) =>
+  {  
+    let mapper = new ProductModelMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.ProductModels + '/' + this.state.model!.productModelID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.ProductModelClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
   
-  interface ProductModelEditComponentProps
-  {
-     match:IMatch;
-  }
+  render() {
 
-  interface ProductModelEditComponentState
-  {
-      model?:ProductModelViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class ProductModelEditComponent extends React.Component<ProductModelEditComponentProps, ProductModelEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.ProductModels + '/' + this.props.match.params.productModelID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.ProductModelClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new ProductModelMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
     }
-    render () {
 
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<ProductModelEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='catalogDescription'>CatalogDescription</label>
+              <br />             
+              {getFieldDecorator('catalogDescription', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CatalogDescription"} id={"catalogDescription"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='instruction'>Instructions</label>
+              <br />             
+              {getFieldDecorator('instruction', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Instructions"} id={"instruction"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedProductModelEditComponent = Form.create({ name: 'ProductModel Edit' })(ProductModelEditComponent);
 
 /*<Codenesium>
-    <Hash>0590ae4e85cd1782d7daff9728ddf6e5</Hash>
+    <Hash>4e3d888b37e4f5cb9602c92bcb2a7136</Hash>
 </Codenesium>*/

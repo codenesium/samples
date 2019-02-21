@@ -1,87 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
-
-interface Props {
-  history: any;
-  model?: AdminViewModel;
-}
-
-const AdminDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Admins + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="birthday" className={'col-sm-2 col-form-label'}>
-          Birthday
-        </label>
-        <div className="col-sm-12">{String(model.model!.birthday)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="email" className={'col-sm-2 col-form-label'}>
-          Email
-        </label>
-        <div className="col-sm-12">{String(model.model!.email)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
-          FirstName
-        </label>
-        <div className="col-sm-12">{String(model.model!.firstName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
-          LastName
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="phone" className={'col-sm-2 col-form-label'}>
-          Phone
-        </label>
-        <div className="col-sm-12">{String(model.model!.phone)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="userId" className={'col-sm-2 col-form-label'}>
-          UserId
-        </label>
-        <div className="col-sm-12">{String(model.model!.userId)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface AdminDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface AdminDetailComponentState {
@@ -92,18 +21,22 @@ interface AdminDetailComponentState {
   errorMessage: string;
 }
 
-export default class AdminDetailComponent extends React.Component<
-  AdminDetailComponentProps,
-  AdminDetailComponentState
+class AdminDetailComponent extends React.Component<
+AdminDetailComponentProps,
+AdminDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new AdminViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Admins + '/edit/' + this.state.model!.id);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -123,9 +56,9 @@ export default class AdminDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.AdminClientResponseModel;
 
-          let mapper = new AdminMapper();
-
           console.log(response);
+
+          let mapper = new AdminMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -147,17 +80,60 @@ export default class AdminDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <AdminDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>birthday</h3>
+							<p>{String(this.state.model!.birthday)}</p>
+						 </div>
+					   						 <div>
+							<h3>email</h3>
+							<p>{String(this.state.model!.email)}</p>
+						 </div>
+					   						 <div>
+							<h3>firstName</h3>
+							<p>{String(this.state.model!.firstName)}</p>
+						 </div>
+					   						 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>lastName</h3>
+							<p>{String(this.state.model!.lastName)}</p>
+						 </div>
+					   						 <div>
+							<h3>phone</h3>
+							<p>{String(this.state.model!.phone)}</p>
+						 </div>
+					   						 <div>
+							<h3>userId</h3>
+							<p>{String(this.state.model!.userId)}</p>
+						 </div>
+					   		  </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -165,7 +141,10 @@ export default class AdminDetailComponent extends React.Component<
   }
 }
 
+export const WrappedAdminDetailComponent = Form.create({ name: 'Admin Detail' })(
+  AdminDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>78999ed278112a3603f0367664f90152</Hash>
+    <Hash>dabae831a17b8651c012ce439cdef7dd</Hash>
 </Codenesium>*/

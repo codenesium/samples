@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects'
+import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm'
@@ -192,5 +192,5 @@ const OrganizationEdit = withFormik<Props, OrganizationViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>bb05cb3348f981458e9f3775ca629be6</Hash>
+    <Hash>509c2dd0a7308fcb8e1d556d46f88391</Hash>
 </Codenesium>*/

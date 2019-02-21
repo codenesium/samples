@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PenMapper from './penMapper';
 import PenViewModel from './penViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PenEditComponentProps {
   form: WrappedFormUtils;
@@ -152,7 +158,7 @@ class PenEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -184,5 +190,5 @@ export const WrappedPenEditComponent = Form.create({ name: 'Pen Edit' })(
 
 
 /*<Codenesium>
-    <Hash>81b01ef3492009a132e2a08af08d4160</Hash>
+    <Hash>c40366360c1187d293f02a97dc1f241c</Hash>
 </Codenesium>*/

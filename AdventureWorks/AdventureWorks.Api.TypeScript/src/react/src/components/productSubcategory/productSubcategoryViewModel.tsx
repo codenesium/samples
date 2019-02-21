@@ -1,38 +1,38 @@
+import moment from 'moment'
+
+
 export default class ProductSubcategoryViewModel {
-  modifiedDate: any;
-  name: string;
-  productCategoryID: number;
-  productSubcategoryID: number;
-  rowguid: any;
+    modifiedDate:any;
+name:string;
+productCategoryID:number;
+productSubcategoryID:number;
+rowguid:any;
 
-  constructor() {
-    this.modifiedDate = undefined;
-    this.name = '';
-    this.productCategoryID = 0;
-    this.productSubcategoryID = 0;
-    this.rowguid = undefined;
-  }
+    constructor() {
+		this.modifiedDate = undefined;
+this.name = '';
+this.productCategoryID = 0;
+this.productSubcategoryID = 0;
+this.rowguid = undefined;
 
-  setProperties(
-    modifiedDate: any,
-    name: string,
-    productCategoryID: number,
-    productSubcategoryID: number,
-    rowguid: any
-  ): void {
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.productCategoryID = productCategoryID;
-    this.productSubcategoryID = productSubcategoryID;
-    this.rowguid = rowguid;
-  }
+    }
 
-  toDisplay(): string {
-    return String();
-  }
-}
+	setProperties(modifiedDate : any,name : string,productCategoryID : number,productSubcategoryID : number,rowguid : any) : void
+	{
+		this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.name = moment(name,'YYYY-MM-DD');
+this.productCategoryID = moment(productCategoryID,'YYYY-MM-DD');
+this.productSubcategoryID = moment(productSubcategoryID,'YYYY-MM-DD');
+this.rowguid = moment(rowguid,'YYYY-MM-DD');
 
+	}
+
+	toDisplay() : string
+	{
+		return String();
+	}
+};
 
 /*<Codenesium>
-    <Hash>edb8861454edcc1e64abde4e045ffc9d</Hash>
+    <Hash>f575be4ec6b442f8564593a40409e0b2</Hash>
 </Codenesium>*/

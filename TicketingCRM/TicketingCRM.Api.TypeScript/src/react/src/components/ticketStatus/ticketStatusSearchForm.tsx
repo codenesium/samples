@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import TicketStatusMapper from './ticketStatusMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import TicketStatusViewModel from './ticketStatusViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TicketStatusSearchComponentProps
@@ -112,10 +110,10 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -226,5 +224,5 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
 export const WrappedTicketStatusSearchComponent = Form.create({ name: 'TicketStatus Search' })(TicketStatusSearchComponent);
 
 /*<Codenesium>
-    <Hash>a56ecd27227aa9938e0fe1ddd2ff4354</Hash>
+    <Hash>117b8c12d1a6d47137b4ee49a085bfe9</Hash>
 </Codenesium>*/

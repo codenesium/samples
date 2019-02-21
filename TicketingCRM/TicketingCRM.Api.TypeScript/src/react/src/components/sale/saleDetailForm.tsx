@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface SaleDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface SaleDetailComponentState {
 }
 
 class SaleDetailComponent extends React.Component<
-  SaleDetailComponentProps,
-  SaleDetailComponentState
+SaleDetailComponentProps,
+SaleDetailComponentState
 > {
   state = {
     model: new SaleViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Sales + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Sales + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,45 +82,44 @@ class SaleDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <div>ipAddress</div>
-              <div>{this.state.model!.ipAddress}</div>
-            </div>
-            <div>
-              <div>note</div>
-              <div>{this.state.model!.note}</div>
-            </div>
-            <div>
-              <div>saleDate</div>
-              <div>{this.state.model!.saleDate}</div>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>transactionId</h3>
-              <div>
-                {this.state.model!.transactionIdNavigation!.toDisplay()}
-              </div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ipAddress</h3>
+							<p>{String(this.state.model!.ipAddress)}</p>
+						 </div>
+					   						 <div>
+							<h3>notes</h3>
+							<p>{String(this.state.model!.note)}</p>
+						 </div>
+					   						 <div>
+							<h3>saleDate</h3>
+							<p>{String(this.state.model!.saleDate)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>transactionId</h3>
+							<p>{String(this.state.model!.transactionIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -138,7 +133,6 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
   SaleDetailComponent
 );
 
-
 /*<Codenesium>
-    <Hash>9eeeabc1e719eecd6a9cb12fb1aa49c2</Hash>
+    <Hash>f2c6d5d408e3cf65c1902d6d6479f6f0</Hash>
 </Codenesium>*/

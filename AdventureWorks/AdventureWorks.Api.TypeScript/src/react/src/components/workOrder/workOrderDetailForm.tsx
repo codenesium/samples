@@ -1,107 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import WorkOrderMapper from './workOrderMapper';
 import WorkOrderViewModel from './workOrderViewModel';
-
-interface Props {
-  history: any;
-  model?: WorkOrderViewModel;
-}
-
-const WorkOrderDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.WorkOrders + '/edit/' + model.model!.workOrderID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="dueDate" className={'col-sm-2 col-form-label'}>
-          DueDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.dueDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="endDate" className={'col-sm-2 col-form-label'}>
-          EndDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.endDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="orderQty" className={'col-sm-2 col-form-label'}>
-          OrderQty
-        </label>
-        <div className="col-sm-12">{String(model.model!.orderQty)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="productID" className={'col-sm-2 col-form-label'}>
-          ProductID
-        </label>
-        <div className="col-sm-12">{String(model.model!.productID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="scrappedQty" className={'col-sm-2 col-form-label'}>
-          ScrappedQty
-        </label>
-        <div className="col-sm-12">{String(model.model!.scrappedQty)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="scrapReasonID" className={'col-sm-2 col-form-label'}>
-          ScrapReasonID
-        </label>
-        <div className="col-sm-12">{String(model.model!.scrapReasonID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="startDate" className={'col-sm-2 col-form-label'}>
-          StartDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.startDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="stockedQty" className={'col-sm-2 col-form-label'}>
-          StockedQty
-        </label>
-        <div className="col-sm-12">{String(model.model!.stockedQty)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="workOrderID" className={'col-sm-2 col-form-label'}>
-          WorkOrderID
-        </label>
-        <div className="col-sm-12">{String(model.model!.workOrderID)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  workOrderID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface WorkOrderDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface WorkOrderDetailComponentState {
@@ -112,18 +21,22 @@ interface WorkOrderDetailComponentState {
   errorMessage: string;
 }
 
-export default class WorkOrderDetailComponent extends React.Component<
-  WorkOrderDetailComponentProps,
-  WorkOrderDetailComponentState
+class WorkOrderDetailComponent extends React.Component<
+WorkOrderDetailComponentProps,
+WorkOrderDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new WorkOrderViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.WorkOrders + '/edit/' + this.state.model!.workOrderID);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -132,7 +45,7 @@ export default class WorkOrderDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.WorkOrders +
           '/' +
-          this.props.match.params.workOrderID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -143,9 +56,9 @@ export default class WorkOrderDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.WorkOrderClientResponseModel;
 
-          let mapper = new WorkOrderMapper();
-
           console.log(response);
+
+          let mapper = new WorkOrderMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -167,17 +80,72 @@ export default class WorkOrderDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <WorkOrderDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>DueDate</h3>
+							<p>{String(this.state.model!.dueDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>EndDate</h3>
+							<p>{String(this.state.model!.endDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>OrderQty</h3>
+							<p>{String(this.state.model!.orderQty)}</p>
+						 </div>
+					   						 <div>
+							<h3>ProductID</h3>
+							<p>{String(this.state.model!.productID)}</p>
+						 </div>
+					   						 <div>
+							<h3>ScrappedQty</h3>
+							<p>{String(this.state.model!.scrappedQty)}</p>
+						 </div>
+					   						 <div>
+							<h3>ScrapReasonID</h3>
+							<p>{String(this.state.model!.scrapReasonID)}</p>
+						 </div>
+					   						 <div>
+							<h3>StartDate</h3>
+							<p>{String(this.state.model!.startDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>StockedQty</h3>
+							<p>{String(this.state.model!.stockedQty)}</p>
+						 </div>
+					   						 <div>
+							<h3>WorkOrderID</h3>
+							<p>{String(this.state.model!.workOrderID)}</p>
+						 </div>
+					   		  </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -185,7 +153,10 @@ export default class WorkOrderDetailComponent extends React.Component<
   }
 }
 
+export const WrappedWorkOrderDetailComponent = Form.create({ name: 'WorkOrder Detail' })(
+  WorkOrderDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>cd8861b896ac96945a1f7200f6302354</Hash>
+    <Hash>7fd1cb5f0e2e648c2d15e5ddd6559540</Hash>
 </Codenesium>*/

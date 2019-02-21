@@ -1,3 +1,4 @@
+import moment from 'moment';
 import SaleViewModel from '../sale/saleViewModel';
 import TicketViewModel from '../ticket/ticketViewModel';
 
@@ -14,14 +15,14 @@ export default class SaleTicketViewModel {
     this.id = 0;
     this.saleId = 0;
     this.saleIdEntity = '';
-    this.saleIdNavigation = undefined;
+    this.saleIdNavigation = new SaleViewModel();
     this.ticketId = 0;
     this.ticketIdEntity = '';
-    this.ticketIdNavigation = undefined;
+    this.ticketIdNavigation = new TicketViewModel();
   }
 
   setProperties(id: number, saleId: number, ticketId: number): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.saleId = saleId;
     this.ticketId = ticketId;
   }
@@ -33,5 +34,5 @@ export default class SaleTicketViewModel {
 
 
 /*<Codenesium>
-    <Hash>26cb547a1201a5e93c4f62d7489e419e</Hash>
+    <Hash>65273db8995ad046f614be81c42105d4</Hash>
 </Codenesium>*/

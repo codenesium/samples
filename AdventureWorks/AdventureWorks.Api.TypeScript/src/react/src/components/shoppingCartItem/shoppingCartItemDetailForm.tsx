@@ -1,90 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import ShoppingCartItemMapper from './shoppingCartItemMapper';
 import ShoppingCartItemViewModel from './shoppingCartItemViewModel';
-
-interface Props {
-  history: any;
-  model?: ShoppingCartItemViewModel;
-}
-
-const ShoppingCartItemDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.ShoppingCartItems +
-              '/edit/' +
-              model.model!.shoppingCartItemID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="dateCreated" className={'col-sm-2 col-form-label'}>
-          DateCreated
-        </label>
-        <div className="col-sm-12">{String(model.model!.dateCreated)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="productID" className={'col-sm-2 col-form-label'}>
-          ProductID
-        </label>
-        <div className="col-sm-12">{String(model.model!.productID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="quantity" className={'col-sm-2 col-form-label'}>
-          Quantity
-        </label>
-        <div className="col-sm-12">{String(model.model!.quantity)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="shoppingCartID" className={'col-sm-2 col-form-label'}>
-          ShoppingCartID
-        </label>
-        <div className="col-sm-12">{String(model.model!.shoppingCartID)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="shoppingCartItemID"
-          className={'col-sm-2 col-form-label'}
-        >
-          ShoppingCartItemID
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.shoppingCartItemID)}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  shoppingCartItemID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ShoppingCartItemDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface ShoppingCartItemDetailComponentState {
@@ -95,17 +21,25 @@ interface ShoppingCartItemDetailComponentState {
   errorMessage: string;
 }
 
-export default class ShoppingCartItemDetailComponent extends React.Component<
+class ShoppingCartItemDetailComponent extends React.Component<
   ShoppingCartItemDetailComponentProps,
   ShoppingCartItemDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new ShoppingCartItemViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ShoppingCartItems +
+        '/edit/' +
+        this.state.model!.shoppingCartItemID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -115,7 +49,7 @@ export default class ShoppingCartItemDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.ShoppingCartItems +
           '/' +
-          this.props.match.params.shoppingCartItemID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -126,9 +60,9 @@ export default class ShoppingCartItemDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.ShoppingCartItemClientResponseModel;
 
-          let mapper = new ShoppingCartItemMapper();
-
           console.log(response);
+
+          let mapper = new ShoppingCartItemMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -150,17 +84,55 @@ export default class ShoppingCartItemDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <ShoppingCartItemDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>DateCreated</h3>
+              <p>{String(this.state.model!.dateCreated)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>ProductID</h3>
+              <p>{String(this.state.model!.productID)}</p>
+            </div>
+            <div>
+              <h3>Quantity</h3>
+              <p>{String(this.state.model!.quantity)}</p>
+            </div>
+            <div>
+              <h3>ShoppingCartID</h3>
+              <p>{String(this.state.model!.shoppingCartID)}</p>
+            </div>
+            <div>
+              <h3>ShoppingCartItemID</h3>
+              <p>{String(this.state.model!.shoppingCartItemID)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -168,7 +140,11 @@ export default class ShoppingCartItemDetailComponent extends React.Component<
   }
 }
 
+export const WrappedShoppingCartItemDetailComponent = Form.create({
+  name: 'ShoppingCartItem Detail',
+})(ShoppingCartItemDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>a0431c45450c2db65725aeba38a02259</Hash>
+    <Hash>38d5b48c38848535f28eaec9c859f7f0</Hash>
 </Codenesium>*/

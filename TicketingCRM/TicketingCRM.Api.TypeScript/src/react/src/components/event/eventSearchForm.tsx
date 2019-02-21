@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import EventViewModel from './eventViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface EventSearchComponentProps
@@ -112,10 +110,10 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -284,5 +282,5 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
 export const WrappedEventSearchComponent = Form.create({ name: 'Event Search' })(EventSearchComponent);
 
 /*<Codenesium>
-    <Hash>cf902ec0f847acb0851bec6836b4f2f2</Hash>
+    <Hash>8c9cc9ca8239bcf910c2523de6c1521a</Hash>
 </Codenesium>*/

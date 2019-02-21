@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PetDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class PetDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,24 +105,24 @@ class PetDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>acquiredDate</div>
-              <div>{this.state.model!.acquiredDate}</div>
+              <h3>acquiredDate</h3>
+              <p>{String(this.state.model!.acquiredDate)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>breedId</h3>
-              <div>{this.state.model!.breedIdNavigation!.toDisplay()}</div>
+              <p>{String(this.state.model!.breedIdNavigation!.toDisplay())}</p>
             </div>
             <div>
-              <div>description</div>
-              <div>{this.state.model!.description}</div>
+              <h3>description</h3>
+              <p>{String(this.state.model!.description)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>penId</h3>
-              <div>{this.state.model!.penIdNavigation!.toDisplay()}</div>
+              <p>{String(this.state.model!.penIdNavigation!.toDisplay())}</p>
             </div>
             <div>
-              <div>price</div>
-              <div>{this.state.model!.price}</div>
+              <h3>price</h3>
+              <p>{String(this.state.model!.price)}</p>
             </div>
           </div>
           {message}
@@ -142,5 +140,5 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
 
 
 /*<Codenesium>
-    <Hash>79b7772ffb0543cb3e6fe7b33bb41a3a</Hash>
+    <Hash>1613a8e506d85ea70508a005bc7d2af7</Hash>
 </Codenesium>*/

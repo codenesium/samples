@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects'
+import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm'
@@ -201,5 +201,5 @@ const TeamEdit = withFormik<Props, TeamViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>4e5d48206281dfbdcf144a16337e7818</Hash>
+    <Hash>6d534ff4c45373b38beb5e7cbf80e8d3</Hash>
 </Codenesium>*/

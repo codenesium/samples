@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TestAllFieldTypeViewModel {
   fieldBigInt: number;
   fieldBinary: any;
@@ -130,5 +132,5 @@ export default class TestAllFieldTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>315db567abf9aa2c6eead426b03d63c3</Hash>
+    <Hash>f422f3576e4ac3f912444de6ac732457</Hash>
 </Codenesium>*/

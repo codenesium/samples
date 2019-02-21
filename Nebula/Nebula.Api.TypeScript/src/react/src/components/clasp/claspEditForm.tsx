@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects'
+import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm'
@@ -201,5 +201,5 @@ const ClaspEdit = withFormik<Props, ClaspViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>d166425948b7cc2ff60f4e89a76b87f7</Hash>
+    <Hash>83212b77082c8807e9556f4a572afe3a</Hash>
 </Codenesium>*/

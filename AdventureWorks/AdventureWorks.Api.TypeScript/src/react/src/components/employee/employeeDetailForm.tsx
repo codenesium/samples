@@ -1,193 +1,182 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import EmployeeMapper from './employeeMapper';
 import EmployeeViewModel from './employeeViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:EmployeeViewModel
+interface EmployeeDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const EmployeeDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Employees + '/edit/' + model.model!.businessEntityID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="birthDate" className={"col-sm-2 col-form-label"}>BirthDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.birthDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="businessEntityID" className={"col-sm-2 col-form-label"}>BusinessEntityID</label>
-							<div className="col-sm-12">
-								{String(model.model!.businessEntityID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="currentFlag" className={"col-sm-2 col-form-label"}>CurrentFlag</label>
-							<div className="col-sm-12">
-								{String(model.model!.currentFlag)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="gender" className={"col-sm-2 col-form-label"}>Gender</label>
-							<div className="col-sm-12">
-								{String(model.model!.gender)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="hireDate" className={"col-sm-2 col-form-label"}>HireDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.hireDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="jobTitle" className={"col-sm-2 col-form-label"}>JobTitle</label>
-							<div className="col-sm-12">
-								{String(model.model!.jobTitle)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="loginID" className={"col-sm-2 col-form-label"}>LoginID</label>
-							<div className="col-sm-12">
-								{String(model.model!.loginID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="maritalStatu" className={"col-sm-2 col-form-label"}>MaritalStatus</label>
-							<div className="col-sm-12">
-								{String(model.model!.maritalStatu)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="modifiedDate" className={"col-sm-2 col-form-label"}>ModifiedDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.modifiedDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="nationalIDNumber" className={"col-sm-2 col-form-label"}>NationalIDNumber</label>
-							<div className="col-sm-12">
-								{String(model.model!.nationalIDNumber)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="organizationLevel" className={"col-sm-2 col-form-label"}>OrganizationLevel</label>
-							<div className="col-sm-12">
-								{String(model.model!.organizationLevel)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="rowguid" className={"col-sm-2 col-form-label"}>Rowguid</label>
-							<div className="col-sm-12">
-								{String(model.model!.rowguid)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="salariedFlag" className={"col-sm-2 col-form-label"}>SalariedFlag</label>
-							<div className="col-sm-12">
-								{String(model.model!.salariedFlag)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="sickLeaveHour" className={"col-sm-2 col-form-label"}>SickLeaveHours</label>
-							<div className="col-sm-12">
-								{String(model.model!.sickLeaveHour)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="vacationHour" className={"col-sm-2 col-form-label"}>VacationHours</label>
-							<div className="col-sm-12">
-								{String(model.model!.vacationHour)}
-							</div>
-						</div>
-					             </form>
-  );
+interface EmployeeDetailComponentState {
+  model?: EmployeeViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     businessEntityID:number;
+class EmployeeDetailComponent extends React.Component<
+EmployeeDetailComponentProps,
+EmployeeDetailComponentState
+> {
+  state = {
+    model: new EmployeeViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: ''
+  };
+
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Employees + '/edit/' + this.state.model!.businessEntityID);
   }
   
-  interface IMatch
-  {
-     params: IParams;
-  }
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  interface EmployeeDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface EmployeeDetailComponentState
-  {
-      model?:EmployeeViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-
-  export default class EmployeeDetailComponent extends React.Component<EmployeeDetailComponentProps, EmployeeDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.props.match.params.businessEntityID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Employees +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.EmployeeClientResponseModel;
-            
-			let mapper = new EmployeeMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<EmployeeDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.EmployeeClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new EmployeeMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>BirthDate</h3>
+							<p>{String(this.state.model!.birthDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>BusinessEntityID</h3>
+							<p>{String(this.state.model!.businessEntityID)}</p>
+						 </div>
+					   						 <div>
+							<h3>CurrentFlag</h3>
+							<p>{String(this.state.model!.currentFlag)}</p>
+						 </div>
+					   						 <div>
+							<h3>Gender</h3>
+							<p>{String(this.state.model!.gender)}</p>
+						 </div>
+					   						 <div>
+							<h3>HireDate</h3>
+							<p>{String(this.state.model!.hireDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>JobTitle</h3>
+							<p>{String(this.state.model!.jobTitle)}</p>
+						 </div>
+					   						 <div>
+							<h3>LoginID</h3>
+							<p>{String(this.state.model!.loginID)}</p>
+						 </div>
+					   						 <div>
+							<h3>MaritalStatus</h3>
+							<p>{String(this.state.model!.maritalStatu)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>NationalIDNumber</h3>
+							<p>{String(this.state.model!.nationalIDNumber)}</p>
+						 </div>
+					   						 <div>
+							<h3>OrganizationLevel</h3>
+							<p>{String(this.state.model!.organizationLevel)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   						 <div>
+							<h3>SalariedFlag</h3>
+							<p>{String(this.state.model!.salariedFlag)}</p>
+						 </div>
+					   						 <div>
+							<h3>SickLeaveHours</h3>
+							<p>{String(this.state.model!.sickLeaveHour)}</p>
+						 </div>
+					   						 <div>
+							<h3>VacationHours</h3>
+							<p>{String(this.state.model!.vacationHour)}</p>
+						 </div>
+					   		  </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
+export const WrappedEmployeeDetailComponent = Form.create({ name: 'Employee Detail' })(
+  EmployeeDetailComponent
+);
+
 /*<Codenesium>
-    <Hash>d058c259f05bec101afbf5ae26a7376f</Hash>
+    <Hash>c7770ced4af250560a01ba70ad65b541</Hash>
 </Codenesium>*/

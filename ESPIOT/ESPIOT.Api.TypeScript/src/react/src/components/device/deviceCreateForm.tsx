@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceMapper from './deviceMapper';
 import DeviceViewModel from './deviceViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface DeviceCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,16 +112,18 @@ class DeviceCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
             <label htmlFor="dateOfLastPing">Date of Last Ping</label>
+            <br />
             {getFieldDecorator('dateOfLastPing', {
               rules: [],
             })(
               <DatePicker
+                format={'YYYY-MM-DD'}
                 placeholder={'Date of Last Ping'}
                 id={'dateOfLastPing'}
               />
@@ -127,7 +135,8 @@ class DeviceCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('isActive', {
               rules: [],
-            })(<Checkbox />)}
+              valuePropName: 'checked',
+            })(<Switch />)}
           </Form.Item>
 
           <Form.Item>
@@ -140,6 +149,7 @@ class DeviceCreateComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="publicId">Public Id</label>
+            <br />
             {getFieldDecorator('publicId', {
               rules: [],
             })(<Input placeholder={'Public Id'} id={'publicId'} />)}
@@ -165,5 +175,5 @@ export const WrappedDeviceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8a3aaf31c07d2e5dc1fafcd61d4edd8a</Hash>
+    <Hash>3b86422db7fa30d104bbcc9469d6697a</Hash>
 </Codenesium>*/

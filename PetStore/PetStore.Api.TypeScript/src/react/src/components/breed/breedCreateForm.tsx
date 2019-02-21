@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BreedMapper from './breedMapper';
 import BreedViewModel from './breedViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface BreedCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class BreedCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -146,5 +152,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>850e201da380c8906a82a3841926b3a7</Hash>
+    <Hash>4359bcd428daca89429f16390644725e</Hash>
 </Codenesium>*/

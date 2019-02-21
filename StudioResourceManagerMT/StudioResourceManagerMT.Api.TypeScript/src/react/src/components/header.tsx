@@ -1,169 +1,157 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ClientRoutes, Constants } from '../constants';
+const { Header, Content, Footer, Sider } = Layout;
 
-interface Props {}
+const SubMenu = Menu.SubMenu;
 
-interface State {
-  menuExpanded: boolean;
+interface WrapperHeaderProps {}
+
+interface WrapperHeaderState {
+  collapsed: boolean;
 }
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+    state = { collapsed: false };
 
-export class Header extends React.Component<Props, State> {
-  state = { menuExpanded: false };
-
-  handleClick(e: React.FormEvent) {
-    this.setState({ menuExpanded: !this.state.menuExpanded });
-  }
-
-  render() {
-    return (
-      <div className="row col-12">
-        <nav
-          className="navbar navbar-expand-lg navbar-light bg-white"
-          id="navbar"
-        >
-          <a className="navbar-brand" href="/">
-            StudioResourceManagerMT
-          </a>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            onClick={e => this.handleClick(e)}
+    onCollapse = () => {
+      this.setState({ ...this.state, collapsed: !this.state.collapsed });
+    };
+    render() {
+      return (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            collapsible
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
           >
-            <span className="navbar-toggler-icon" />
-          </button>
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+               <MenuItem
+                key="Home"
+              >
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
+              </MenuItem>
 
-          <div
-            className={
-              this.state.menuExpanded
-                ? 'collapse.expand navbar-collapse'
-                : 'collapse navbar-collapse'
-            }
-            id="navbarSupportedContent"
-          >
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/admins"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Admins
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/events"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Events
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/eventstatus"
-                  onClick={e => this.handleClick(e)}
-                >
-                  EventStatus
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/families"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Families
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/rates"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Rates
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/spaces"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Spaces
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/spacefeatures"
-                  onClick={e => this.handleClick(e)}
-                >
-                  SpaceFeatures
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/students"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Students
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/studios"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Studios
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/teachers"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Teachers
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/teacherskills"
-                  onClick={e => this.handleClick(e)}
-                >
-                  TeacherSkills
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/users"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Users
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
+			   			   <MenuItem
+                key="admin"
+              >
+			  <Icon type="pie-chart" />
+              <span>Admins</span>
+              <Link to={ClientRoutes.Admins}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="event"
+              >
+			  <Icon type="rise" />
+              <span>Events</span>
+              <Link to={ClientRoutes.Events}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="eventStatu"
+              >
+			  <Icon type="bars" />
+              <span>EventStatus</span>
+              <Link to={ClientRoutes.EventStatus}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="family"
+              >
+			  <Icon type="cloud" />
+              <span>Families</span>
+              <Link to={ClientRoutes.Families}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="rate"
+              >
+			  <Icon type="code" />
+              <span>Rates</span>
+              <Link to={ClientRoutes.Rates}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="space"
+              >
+			  <Icon type="smile" />
+              <span>Spaces</span>
+              <Link to={ClientRoutes.Spaces}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="spaceFeature"
+              >
+			  <Icon type="laptop" />
+              <span>SpaceFeatures</span>
+              <Link to={ClientRoutes.SpaceFeatures}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="student"
+              >
+			  <Icon type="mobile" />
+              <span>Students</span>
+              <Link to={ClientRoutes.Students}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="studio"
+              >
+			  <Icon type="paper-clip" />
+              <span>Studios</span>
+              <Link to={ClientRoutes.Studios}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="teacher"
+              >
+			  <Icon type="setting" />
+              <span>Teachers</span>
+              <Link to={ClientRoutes.Teachers}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="teacherSkill"
+              >
+			  <Icon type="user" />
+              <span>TeacherSkills</span>
+              <Link to={ClientRoutes.TeacherSkills}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="user"
+              >
+			  <Icon type="home" />
+              <span>Users</span>
+              <Link to={ClientRoutes.Users}></Link>
+              </MenuItem>
+
+				
+            </Menu>
+          </Sider>
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }} />
+            <Content style={{ margin: '0 16px' }}>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <Component {...this.props} />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+          </Layout>
+        </Layout>
+      );
+    }
   }
-}
-
+  return WrapperHeaderComponent;
+};
 
 /*<Codenesium>
-    <Hash>01228fa3a21c1fa30500a0c800cb11c5</Hash>
+    <Hash>c3f1a53256e09dd7b405d59993a044da</Hash>
 </Codenesium>*/

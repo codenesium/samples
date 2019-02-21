@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class RowVersionCheckViewModel {
   id: number;
   name: string;
@@ -22,5 +24,5 @@ export default class RowVersionCheckViewModel {
 
 
 /*<Codenesium>
-    <Hash>1324bc83de18ad7aba703ed9af977b61</Hash>
+    <Hash>fe40cd1602ec76c650bfe2dc9fb17f10</Hash>
 </Codenesium>*/

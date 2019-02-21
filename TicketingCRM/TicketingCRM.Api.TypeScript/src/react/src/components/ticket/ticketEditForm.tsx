@@ -1,20 +1,26 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TicketMapper from './ticketMapper';
 import TicketViewModel from './ticketViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TicketEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface TicketEditComponentState {
@@ -23,7 +29,7 @@ interface TicketEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class TicketEditComponent extends React.Component<
@@ -36,10 +42,10 @@ class TicketEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -70,7 +76,9 @@ class TicketEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -83,11 +91,11 @@ class TicketEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as TicketViewModel;
         console.log('Received values of form: ', model);
@@ -96,10 +104,9 @@ class TicketEditComponent extends React.Component<
     });
   };
 
-  submit = (model:TicketViewModel) =>
-  {  
+  submit = (model: TicketViewModel) => {
     let mapper = new TicketMapper();
-     axios
+    axios
       .put(
         Constants.ApiEndpoint + ApiRoutes.Tickets + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -114,73 +121,84 @@ class TicketEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.TicketClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
-    } 
-    else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="publicId">publicId</label>
+            <br />
+            {getFieldDecorator('publicId', {
+              rules: [],
+            })(<Input placeholder={'publicId'} id={'publicId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='publicId'>publicId</label>
-              <br />             
-{getFieldDecorator('publicId', {
-              rules:[],
-              })
-              ( <Input placeholder={"publicId"} id={"publicId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="ticketStatusId">ticketStatusId</label>
+            <br />
+            {getFieldDecorator('ticketStatusId', {
+              rules: [],
+            })(<Input placeholder={'ticketStatusId'} id={'ticketStatusId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='ticketStatusId'>ticketStatusId</label>
-              <br />             
-{getFieldDecorator('ticketStatusId', {
-              rules:[],
-              })
-              ( <Input placeholder={"ticketStatusId"} id={"ticketStatusId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedTicketEditComponent = Form.create({ name: 'Ticket Edit' })(TicketEditComponent);
+export const WrappedTicketEditComponent = Form.create({ name: 'Ticket Edit' })(
+  TicketEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>50983a6a96a9d6691cfc6dc27e92a2ec</Hash>
+    <Hash>1f386588340851746e599a3634a35657</Hash>
 </Codenesium>*/

@@ -12,8 +12,13 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: false };
 
     onCollapse = () => {
@@ -29,175 +34,89 @@ export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<a
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
-                key="Dashboard"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Dashboard</span>
-                  </span>
-                }
-              >
-              <Link to={"/"}>Dashboard</Link>
+              <MenuItem key="Home">
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
               </MenuItem>
 
-			   			   <MenuItem
-                key="admin"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Admin</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Admins}>Admins</Link>
+              <MenuItem key="admin">
+                <Icon type="pie-chart" />
+                <span>Admins</span>
+                <Link to={ClientRoutes.Admins} />
               </MenuItem>
 
-							   <MenuItem
-                key="city"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>City</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Cities}>Cities</Link>
+              <MenuItem key="city">
+                <Icon type="rise" />
+                <span>Cities</span>
+                <Link to={ClientRoutes.Cities} />
               </MenuItem>
 
-							   <MenuItem
-                key="country"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Country</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Countries}>Countries</Link>
+              <MenuItem key="country">
+                <Icon type="bars" />
+                <span>Countries</span>
+                <Link to={ClientRoutes.Countries} />
               </MenuItem>
 
-							   <MenuItem
-                key="customer"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Customer</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Customers}>Customers</Link>
+              <MenuItem key="customer">
+                <Icon type="cloud" />
+                <span>Customers</span>
+                <Link to={ClientRoutes.Customers} />
               </MenuItem>
 
-							   <MenuItem
-                key="event"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Event</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Events}>Events</Link>
+              <MenuItem key="event">
+                <Icon type="code" />
+                <span>Events</span>
+                <Link to={ClientRoutes.Events} />
               </MenuItem>
 
-							   <MenuItem
-                key="province"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Province</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Provinces}>Provinces</Link>
+              <MenuItem key="province">
+                <Icon type="smile" />
+                <span>Provinces</span>
+                <Link to={ClientRoutes.Provinces} />
               </MenuItem>
 
-							   <MenuItem
-                key="sale"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Sale</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Sales}>Sales</Link>
+              <MenuItem key="sale">
+                <Icon type="laptop" />
+                <span>Sales</span>
+                <Link to={ClientRoutes.Sales} />
               </MenuItem>
 
-							   <MenuItem
-                key="saleTicket"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>SaleTicket</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.SaleTickets}>SaleTickets</Link>
+              <MenuItem key="saleTicket">
+                <Icon type="mobile" />
+                <span>SaleTickets</span>
+                <Link to={ClientRoutes.SaleTickets} />
               </MenuItem>
 
-							   <MenuItem
-                key="ticket"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Ticket</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Tickets}>Tickets</Link>
+              <MenuItem key="ticket">
+                <Icon type="paper-clip" />
+                <span>Tickets</span>
+                <Link to={ClientRoutes.Tickets} />
               </MenuItem>
 
-							   <MenuItem
-                key="ticketStatus"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>TicketStatus</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.TicketStatus}>TicketStatus</Link>
+              <MenuItem key="ticketStatus">
+                <Icon type="setting" />
+                <span>TicketStatus</span>
+                <Link to={ClientRoutes.TicketStatus} />
               </MenuItem>
 
-							   <MenuItem
-                key="transaction"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Transaction</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Transactions}>Transactions</Link>
+              <MenuItem key="transaction">
+                <Icon type="user" />
+                <span>Transactions</span>
+                <Link to={ClientRoutes.Transactions} />
               </MenuItem>
 
-							   <MenuItem
-                key="transactionStatus"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>TransactionStatus</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.TransactionStatus}>TransactionStatus</Link>
+              <MenuItem key="transactionStatus">
+                <Icon type="home" />
+                <span>TransactionStatus</span>
+                <Link to={ClientRoutes.TransactionStatus} />
               </MenuItem>
 
-							   <MenuItem
-                key="venue"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Venue</span>
-                  </span>
-                }
-              >
-              <Link to={ClientRoutes.Venues}>Venues</Link>
+              <MenuItem key="venue">
+                <Icon type="camera" />
+                <span>Venues</span>
+                <Link to={ClientRoutes.Venues} />
               </MenuItem>
-
-				
             </Menu>
           </Sider>
           <Layout>
@@ -216,6 +135,7 @@ export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<a
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>4a85490a75804d7bee75368c33c0350d</Hash>
+    <Hash>5dfd5b7bcc36c5e0ed6f000d6662e392</Hash>
 </Codenesium>*/

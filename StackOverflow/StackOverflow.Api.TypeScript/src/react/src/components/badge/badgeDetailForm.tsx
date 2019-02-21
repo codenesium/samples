@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BadgeMapper from './badgeMapper';
 import BadgeViewModel from './badgeViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface BadgeDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface BadgeDetailComponentState {
 }
 
 class BadgeDetailComponent extends React.Component<
-  BadgeDetailComponentProps,
-  BadgeDetailComponentState
+BadgeDetailComponentProps,
+BadgeDetailComponentState
 > {
   state = {
     model: new BadgeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Badges + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Badges + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,39 +82,40 @@ class BadgeDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <div>date</div>
-              <div>{this.state.model!.date}</div>
-            </div>
-            <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
-            </div>
-            <div>
-              <div>userId</div>
-              <div>{this.state.model!.userId}</div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Date</h3>
+							<p>{String(this.state.model!.date)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>UserId</h3>
+							<p>{String(this.state.model!.userId)}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -128,11 +125,10 @@ class BadgeDetailComponent extends React.Component<
   }
 }
 
-export const WrappedBadgeDetailComponent = Form.create({
-  name: 'Badge Detail',
-})(BadgeDetailComponent);
-
+export const WrappedBadgeDetailComponent = Form.create({ name: 'Badge Detail' })(
+  BadgeDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>79e9dbe002c3bc0039123de1ae0f3b84</Hash>
+    <Hash>15867a33a5136141aa6e87f01447b80e</Hash>
 </Codenesium>*/

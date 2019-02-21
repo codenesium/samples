@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TagMapper from './tagMapper';
 import TagViewModel from './tagViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TagDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class TagDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,20 +105,20 @@ class TagDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>count</div>
-              <div>{this.state.model!.count}</div>
+              <h3>Count</h3>
+              <p>{String(this.state.model!.count)}</p>
             </div>
             <div>
-              <div>excerptPostId</div>
-              <div>{this.state.model!.excerptPostId}</div>
+              <h3>ExcerptPostId</h3>
+              <p>{String(this.state.model!.excerptPostId)}</p>
             </div>
             <div>
-              <div>tagName</div>
-              <div>{this.state.model!.tagName}</div>
+              <h3>TagName</h3>
+              <p>{String(this.state.model!.tagName)}</p>
             </div>
             <div>
-              <div>wikiPostId</div>
-              <div>{this.state.model!.wikiPostId}</div>
+              <h3>WikiPostId</h3>
+              <p>{String(this.state.model!.wikiPostId)}</p>
             </div>
           </div>
           {message}
@@ -138,5 +136,5 @@ export const WrappedTagDetailComponent = Form.create({ name: 'Tag Detail' })(
 
 
 /*<Codenesium>
-    <Hash>e2dee8572d3f94355d7cb746f28b9c36</Hash>
+    <Hash>d29f2f2a02a3bc8e732c736c6a707d70</Hash>
 </Codenesium>*/

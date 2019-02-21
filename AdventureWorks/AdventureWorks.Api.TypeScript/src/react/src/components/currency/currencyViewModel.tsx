@@ -1,3 +1,6 @@
+import moment from 'moment'
+
+
 export default class CurrencyViewModel {
     currencyCode:string;
 modifiedDate:any;
@@ -12,9 +15,9 @@ this.name = '';
 
 	setProperties(currencyCode : string,modifiedDate : any,name : string) : void
 	{
-		this.currencyCode = currencyCode;
-this.modifiedDate = modifiedDate;
-this.name = name;
+		this.currencyCode = moment(currencyCode,'YYYY-MM-DD');
+this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.name = moment(name,'YYYY-MM-DD');
 
 	}
 
@@ -25,5 +28,5 @@ this.name = name;
 };
 
 /*<Codenesium>
-    <Hash>1772a55215eb8a8f62547d195f8f5033</Hash>
+    <Hash>f53304f94028f728fd592e864fa0e8d3</Hash>
 </Codenesium>*/

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleTicketMapper from './saleTicketMapper';
 import SaleTicketViewModel from './saleTicketViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface SaleTicketDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +22,21 @@ interface SaleTicketDetailComponentState {
 }
 
 class SaleTicketDetailComponent extends React.Component<
-  SaleTicketDetailComponentProps,
-  SaleTicketDetailComponentState
+SaleTicketDetailComponentProps,
+SaleTicketDetailComponentState
 > {
   state = {
     model: new SaleTicketViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.SaleTickets + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.SaleTickets + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,35 +82,36 @@ class SaleTicketDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>saleId</h3>
-              <div>{this.state.model!.saleIdNavigation!.toDisplay()}</div>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>ticketId</h3>
-              <div>{this.state.model!.ticketIdNavigation!.toDisplay()}</div>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>saleId</h3>
+							<p>{String(this.state.model!.saleIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>ticketId</h3>
+							<p>{String(this.state.model!.ticketIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
         </div>
       );
@@ -124,11 +121,10 @@ class SaleTicketDetailComponent extends React.Component<
   }
 }
 
-export const WrappedSaleTicketDetailComponent = Form.create({
-  name: 'SaleTicket Detail',
-})(SaleTicketDetailComponent);
-
+export const WrappedSaleTicketDetailComponent = Form.create({ name: 'SaleTicket Detail' })(
+  SaleTicketDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>16b0b96b41b3e8e2bea0310c8d1fbbf9</Hash>
+    <Hash>c365d08f3f94eca4e948d2f43f612f87</Hash>
 </Codenesium>*/

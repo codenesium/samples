@@ -1,223 +1,205 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import ShiftViewModel from './shiftViewModel';
+import * as Api from '../../api/models';
 import ShiftMapper from './shiftMapper';
+import ShiftViewModel from './shiftViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:ShiftViewModel
+interface ShiftEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-  const ShiftEditDisplay = (props: FormikProps<ShiftViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.ShiftClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof ShiftViewModel]  && props.errors[name as keyof ShiftViewModel]) {
-            response += props.errors[name as keyof ShiftViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("endTime") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>EndTime</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="endTime" className={errorExistForField("endTime") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("endTime") && <small className="text-danger">{errorsForField("endTime")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("shiftID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ShiftID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="shiftID" className={errorExistForField("shiftID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("shiftID") && <small className="text-danger">{errorsForField("shiftID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("startTime") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>StartTime</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="startTime" className={errorExistForField("startTime") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("startTime") && <small className="text-danger">{errorsForField("startTime")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface ShiftEditComponentState {
+  model?: ShiftViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
 }
 
+class ShiftEditComponent extends React.Component<
+  ShiftEditComponentProps,
+  ShiftEditComponentState
+> {
+  state = {
+    model: new ShiftViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
 
-const ShiftEdit = withFormik<Props, ShiftViewModel>({
-    mapPropsToValues: props => {
-        let response = new ShiftViewModel();
-		response.setProperties(props.model!.endTime,props.model!.modifiedDate,props.model!.name,props.model!.shiftID,props.model!.startTime);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<ShiftViewModel> = { };
+    componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.endTime == undefined) {
-                errors.endTime = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.shiftID == 0) {
-                errors.shiftID = "Required"
-                    }if(values.startTime == undefined) {
-                errors.startTime = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new ShiftMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.Shifts +'/' + values.shiftID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Shifts +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.ShiftClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'ShiftEdit', 
-  })(ShiftEditDisplay);
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.ShiftClientResponseModel;
 
+          console.log(response);
+
+          let mapper = new ShiftMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+ }
  
-  interface IParams 
-  {
-     shiftID:number;
-  }
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as ShiftViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-  interface IMatch
-  {
-     params: IParams;
+  submit = (model:ShiftViewModel) =>
+  {  
+    let mapper = new ShiftMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Shifts + '/' + this.state.model!.shiftID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.ShiftClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
   
-  interface ShiftEditComponentProps
-  {
-     match:IMatch;
-  }
+  render() {
 
-  interface ShiftEditComponentState
-  {
-      model?:ShiftViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class ShiftEditComponent extends React.Component<ShiftEditComponentProps, ShiftEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Shifts + '/' + this.props.match.params.shiftID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.ShiftClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new ShiftMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
     }
-    render () {
 
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<ShiftEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='endTime'>EndTime</label>
+              <br />             
+              {getFieldDecorator('endTime', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"EndTime"} id={"endTime"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='startTime'>StartTime</label>
+              <br />             
+              {getFieldDecorator('startTime', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StartTime"} id={"startTime"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedShiftEditComponent = Form.create({ name: 'Shift Edit' })(ShiftEditComponent);
 
 /*<Codenesium>
-    <Hash>d09f1b09f2579938ab9db022eda938ff</Hash>
+    <Hash>de30e8807e1f43c48a8e04aa9f747849</Hash>
 </Codenesium>*/

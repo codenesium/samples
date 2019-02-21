@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostTypeMapper from './postTypeMapper';
 import PostTypeViewModel from './postTypeViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostTypeCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class PostTypeCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -138,5 +144,5 @@ export const WrappedPostTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5874654073b86b55afb33d96ddf224a3</Hash>
+    <Hash>c4f7669e6d885d1f648d263d8504cc41</Hash>
 </Codenesium>*/

@@ -1,42 +1,41 @@
+import moment from 'moment'
+
+
 export default class FamilyViewModel {
-  id: number;
-  note: string;
-  primaryContactEmail: string;
-  primaryContactFirstName: string;
-  primaryContactLastName: string;
-  primaryContactPhone: string;
+    id:number;
+note:string;
+primaryContactEmail:string;
+primaryContactFirstName:string;
+primaryContactLastName:string;
+primaryContactPhone:string;
 
-  constructor() {
-    this.id = 0;
-    this.note = '';
-    this.primaryContactEmail = '';
-    this.primaryContactFirstName = '';
-    this.primaryContactLastName = '';
-    this.primaryContactPhone = '';
-  }
+    constructor() {
+		this.id = 0;
+this.note = '';
+this.primaryContactEmail = '';
+this.primaryContactFirstName = '';
+this.primaryContactLastName = '';
+this.primaryContactPhone = '';
 
-  setProperties(
-    id: number,
-    note: string,
-    primaryContactEmail: string,
-    primaryContactFirstName: string,
-    primaryContactLastName: string,
-    primaryContactPhone: string
-  ): void {
-    this.id = id;
-    this.note = note;
-    this.primaryContactEmail = primaryContactEmail;
-    this.primaryContactFirstName = primaryContactFirstName;
-    this.primaryContactLastName = primaryContactLastName;
-    this.primaryContactPhone = primaryContactPhone;
-  }
+    }
 
-  toDisplay(): string {
-    return String();
-  }
-}
+	setProperties(id : number,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string) : void
+	{
+		this.id = moment(id,'YYYY-MM-DD');
+this.note = moment(note,'YYYY-MM-DD');
+this.primaryContactEmail = moment(primaryContactEmail,'YYYY-MM-DD');
+this.primaryContactFirstName = moment(primaryContactFirstName,'YYYY-MM-DD');
+this.primaryContactLastName = moment(primaryContactLastName,'YYYY-MM-DD');
+this.primaryContactPhone = moment(primaryContactPhone,'YYYY-MM-DD');
 
+	}
+
+	toDisplay() : string
+	{
+		return String();
+	}
+};
 
 /*<Codenesium>
-    <Hash>61d29af42324ef304e5a7c6fbb6b5d93</Hash>
+    <Hash>412263213fef160e4ee2b9dabd043d0f</Hash>
 </Codenesium>*/

@@ -1,177 +1,196 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import ProductSubcategoryMapper from './productSubcategoryMapper';
 import ProductSubcategoryViewModel from './productSubcategoryViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:ProductSubcategoryViewModel
+interface ProductSubcategoryCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const ProductSubcategoryCreateDisplay: React.SFC<FormikProps<ProductSubcategoryViewModel>> = (props: FormikProps<ProductSubcategoryViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.ProductSubcategoryClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof ProductSubcategoryViewModel]  && props.errors[name as keyof ProductSubcategoryViewModel]) {
-            response += props.errors[name as keyof ProductSubcategoryViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("productCategoryID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ProductCategoryID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="productCategoryID" className={errorExistForField("productCategoryID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("productCategoryID") && <small className="text-danger">{errorsForField("productCategoryID")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("rowguid") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Rowguid</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="rowguid" className={errorExistForField("rowguid") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("rowguid") && <small className="text-danger">{errorsForField("rowguid")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface ProductSubcategoryCreateComponentState {
+  model?: ProductSubcategoryViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class ProductSubcategoryCreateComponent extends React.Component<
+  ProductSubcategoryCreateComponentProps,
+  ProductSubcategoryCreateComponentState
+> {
+  state = {
+    model: new ProductSubcategoryViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const ProductSubcategoryCreate = withFormik<Props, ProductSubcategoryViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new ProductSubcategoryViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.modifiedDate,props.model!.name,props.model!.productCategoryID,props.model!.productSubcategoryID,props.model!.rowguid);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<ProductSubcategoryViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as ProductSubcategoryViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.productCategoryID == 0) {
-                errors.productCategoryID = "Required"
-                    }if(values.rowguid == undefined) {
-                errors.rowguid = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new ProductSubcategoryMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.ProductSubcategories,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: ProductSubcategoryViewModel) => {
+    let mapper = new ProductSubcategoryMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.ProductSubcategories,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.ProductSubcategoryClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'ProductSubcategoryCreate', 
-  })(ProductSubcategoryCreateDisplay);
-
-  interface ProductSubcategoryCreateComponentProps
-  {
-  }
-
-  interface ProductSubcategoryCreateComponentState
-  {
-      model?:ProductSubcategoryViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class ProductSubcategoryCreateComponent extends React.Component<ProductSubcategoryCreateComponentProps, ProductSubcategoryCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<ProductSubcategoryCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.ProductSubcategoryClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Name'}
+                id={'name'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="productCategoryID">ProductCategoryID</label>
+            <br />
+            {getFieldDecorator('productCategoryID', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ProductCategoryID'}
+                id={'productCategoryID'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="rowguid">rowguid</label>
+            <br />
+            {getFieldDecorator('rowguid', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'rowguid'}
+                id={'rowguid'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedProductSubcategoryCreateComponent = Form.create({
+  name: 'ProductSubcategory Create',
+})(ProductSubcategoryCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>91d202b5f6066f9de1169b134704c995</Hash>
+    <Hash>13a82ddc631b92dffc0cfc4928f7ddad</Hash>
 </Codenesium>*/

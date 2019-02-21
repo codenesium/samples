@@ -1,241 +1,225 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import SalesTaxRateViewModel from './salesTaxRateViewModel';
+import * as Api from '../../api/models';
 import SalesTaxRateMapper from './salesTaxRateMapper';
+import SalesTaxRateViewModel from './salesTaxRateViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:SalesTaxRateViewModel
+interface SalesTaxRateEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-  const SalesTaxRateEditDisplay = (props: FormikProps<SalesTaxRateViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.SalesTaxRateClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof SalesTaxRateViewModel]  && props.errors[name as keyof SalesTaxRateViewModel]) {
-            response += props.errors[name as keyof SalesTaxRateViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("rowguid") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Rowguid</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="rowguid" className={errorExistForField("rowguid") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("rowguid") && <small className="text-danger">{errorsForField("rowguid")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("salesTaxRateID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SalesTaxRateID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="salesTaxRateID" className={errorExistForField("salesTaxRateID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("salesTaxRateID") && <small className="text-danger">{errorsForField("salesTaxRateID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("stateProvinceID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>StateProvinceID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="stateProvinceID" className={errorExistForField("stateProvinceID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("stateProvinceID") && <small className="text-danger">{errorsForField("stateProvinceID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("taxRate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TaxRate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="taxRate" className={errorExistForField("taxRate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("taxRate") && <small className="text-danger">{errorsForField("taxRate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("taxType") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TaxType</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="taxType" className={errorExistForField("taxType") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("taxType") && <small className="text-danger">{errorsForField("taxType")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface SalesTaxRateEditComponentState {
+  model?: SalesTaxRateViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
 }
 
+class SalesTaxRateEditComponent extends React.Component<
+  SalesTaxRateEditComponentProps,
+  SalesTaxRateEditComponentState
+> {
+  state = {
+    model: new SalesTaxRateViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
 
-const SalesTaxRateEdit = withFormik<Props, SalesTaxRateViewModel>({
-    mapPropsToValues: props => {
-        let response = new SalesTaxRateViewModel();
-		response.setProperties(props.model!.modifiedDate,props.model!.name,props.model!.rowguid,props.model!.salesTaxRateID,props.model!.stateProvinceID,props.model!.taxRate,props.model!.taxType);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<SalesTaxRateViewModel> = { };
+    componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.rowguid == undefined) {
-                errors.rowguid = "Required"
-                    }if(values.salesTaxRateID == 0) {
-                errors.salesTaxRateID = "Required"
-                    }if(values.stateProvinceID == 0) {
-                errors.stateProvinceID = "Required"
-                    }if(values.taxRate == 0) {
-                errors.taxRate = "Required"
-                    }if(values.taxType == 0) {
-                errors.taxType = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new SalesTaxRateMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.SalesTaxRates +'/' + values.salesTaxRateID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.SalesTaxRates +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.SalesTaxRateClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'SalesTaxRateEdit', 
-  })(SalesTaxRateEditDisplay);
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.SalesTaxRateClientResponseModel;
 
+          console.log(response);
+
+          let mapper = new SalesTaxRateMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+ }
  
-  interface IParams 
-  {
-     salesTaxRateID:number;
-  }
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as SalesTaxRateViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-  interface IMatch
-  {
-     params: IParams;
+  submit = (model:SalesTaxRateViewModel) =>
+  {  
+    let mapper = new SalesTaxRateMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.SalesTaxRates + '/' + this.state.model!.salesTaxRateID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.SalesTaxRateClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
   
-  interface SalesTaxRateEditComponentProps
-  {
-     match:IMatch;
-  }
+  render() {
 
-  interface SalesTaxRateEditComponentState
-  {
-      model?:SalesTaxRateViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class SalesTaxRateEditComponent extends React.Component<SalesTaxRateEditComponentProps, SalesTaxRateEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.SalesTaxRates + '/' + this.props.match.params.salesTaxRateID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.SalesTaxRateClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new SalesTaxRateMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
     }
-    render () {
 
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<SalesTaxRateEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='stateProvinceID'>StateProvinceID</label>
+              <br />             
+              {getFieldDecorator('stateProvinceID', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceID"} id={"stateProvinceID"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='taxRate'>TaxRate</label>
+              <br />             
+              {getFieldDecorator('taxRate', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxRate"} id={"taxRate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='taxType'>TaxType</label>
+              <br />             
+              {getFieldDecorator('taxType', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxType"} id={"taxType"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedSalesTaxRateEditComponent = Form.create({ name: 'SalesTaxRate Edit' })(SalesTaxRateEditComponent);
 
 /*<Codenesium>
-    <Hash>6b453ece37ff0c0156f369532ceba565</Hash>
+    <Hash>bb6654b8280e41bfbb3eda6f88147428</Hash>
 </Codenesium>*/

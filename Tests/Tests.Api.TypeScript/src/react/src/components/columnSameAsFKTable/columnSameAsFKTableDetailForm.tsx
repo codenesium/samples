@@ -1,69 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import ColumnSameAsFKTableMapper from './columnSameAsFKTableMapper';
 import ColumnSameAsFKTableViewModel from './columnSameAsFKTableViewModel';
-
-interface Props {
-  history: any;
-  model?: ColumnSameAsFKTableViewModel;
-}
-
-const ColumnSameAsFKTableDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.ColumnSameAsFKTables + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="person" className={'col-sm-2 col-form-label'}>
-          Person
-        </label>
-        <div className="col-sm-12">
-          {model.model!.personNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="personId" className={'col-sm-2 col-form-label'}>
-          PersonId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.personIdNavigation!.toDisplay()}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ColumnSameAsFKTableDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface ColumnSameAsFKTableDetailComponentState {
@@ -74,17 +21,23 @@ interface ColumnSameAsFKTableDetailComponentState {
   errorMessage: string;
 }
 
-export default class ColumnSameAsFKTableDetailComponent extends React.Component<
+class ColumnSameAsFKTableDetailComponent extends React.Component<
   ColumnSameAsFKTableDetailComponentProps,
   ColumnSameAsFKTableDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new ColumnSameAsFKTableViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ColumnSameAsFKTables + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -105,9 +58,9 @@ export default class ColumnSameAsFKTableDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.ColumnSameAsFKTableClientResponseModel;
 
-          let mapper = new ColumnSameAsFKTableMapper();
-
           console.log(response);
+
+          let mapper = new ColumnSameAsFKTableMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -129,17 +82,43 @@ export default class ColumnSameAsFKTableDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <ColumnSameAsFKTableDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Person</h3>
+              <p>{String(this.state.model!.personNavigation!.toDisplay())}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>PersonId</h3>
+              <p>{String(this.state.model!.personIdNavigation!.toDisplay())}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -147,7 +126,11 @@ export default class ColumnSameAsFKTableDetailComponent extends React.Component<
   }
 }
 
+export const WrappedColumnSameAsFKTableDetailComponent = Form.create({
+  name: 'ColumnSameAsFKTable Detail',
+})(ColumnSameAsFKTableDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>9d7aec574d3f19167bb1e93a502e114f</Hash>
+    <Hash>aa0b88c430a9c607579278cf08d3de81</Hash>
 </Codenesium>*/

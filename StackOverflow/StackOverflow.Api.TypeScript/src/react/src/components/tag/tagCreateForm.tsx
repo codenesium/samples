@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TagMapper from './tagMapper';
 import TagViewModel from './tagViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TagCreateComponentProps {
   form: WrappedFormUtils;
@@ -104,7 +110,7 @@ class TagCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -160,5 +166,5 @@ export const WrappedTagCreateComponent = Form.create({ name: 'Tag Create' })(
 
 
 /*<Codenesium>
-    <Hash>87c1ac93ffffa3ade3da166bd9809d6d</Hash>
+    <Hash>9907d4aeb94b0295b45e53c4397ad027</Hash>
 </Codenesium>*/

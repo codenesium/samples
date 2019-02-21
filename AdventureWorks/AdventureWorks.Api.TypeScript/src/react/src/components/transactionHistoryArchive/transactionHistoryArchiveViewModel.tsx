@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TransactionHistoryArchiveViewModel {
   actualCost: number;
   modifiedDate: any;
@@ -32,15 +34,15 @@ export default class TransactionHistoryArchiveViewModel {
     transactionID: number,
     transactionType: string
   ): void {
-    this.actualCost = actualCost;
-    this.modifiedDate = modifiedDate;
-    this.productID = productID;
-    this.quantity = quantity;
-    this.referenceOrderID = referenceOrderID;
-    this.referenceOrderLineID = referenceOrderLineID;
-    this.transactionDate = transactionDate;
-    this.transactionID = transactionID;
-    this.transactionType = transactionType;
+    this.actualCost = moment(actualCost, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.productID = moment(productID, 'YYYY-MM-DD');
+    this.quantity = moment(quantity, 'YYYY-MM-DD');
+    this.referenceOrderID = moment(referenceOrderID, 'YYYY-MM-DD');
+    this.referenceOrderLineID = moment(referenceOrderLineID, 'YYYY-MM-DD');
+    this.transactionDate = moment(transactionDate, 'YYYY-MM-DD');
+    this.transactionID = moment(transactionID, 'YYYY-MM-DD');
+    this.transactionType = moment(transactionType, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -50,5 +52,5 @@ export default class TransactionHistoryArchiveViewModel {
 
 
 /*<Codenesium>
-    <Hash>958cabaad3ed542bd17fcd40e044ec4b</Hash>
+    <Hash>0a954403b1eea585796f7a1c0fb9f762</Hash>
 </Codenesium>*/

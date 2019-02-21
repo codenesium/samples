@@ -1,3 +1,4 @@
+import moment from 'moment';
 import SelfReferenceViewModel from '../selfReference/selfReferenceViewModel';
 import SelfReferenceViewModel from '../selfReference/selfReferenceViewModel';
 
@@ -14,10 +15,10 @@ export default class SelfReferenceViewModel {
     this.id = 0;
     this.selfReferenceId = undefined;
     this.selfReferenceIdEntity = '';
-    this.selfReferenceIdNavigation = undefined;
+    this.selfReferenceIdNavigation = new SelfReferenceViewModel();
     this.selfReferenceId2 = undefined;
     this.selfReferenceId2Entity = '';
-    this.selfReferenceId2Navigation = undefined;
+    this.selfReferenceId2Navigation = new SelfReferenceViewModel();
   }
 
   setProperties(id: number, selfReferenceId: any, selfReferenceId2: any): void {
@@ -33,5 +34,5 @@ export default class SelfReferenceViewModel {
 
 
 /*<Codenesium>
-    <Hash>5290b269f739c86361b9ca022d143ffb</Hash>
+    <Hash>7ae47628627d5318164a50a1b0df4509</Hash>
 </Codenesium>*/

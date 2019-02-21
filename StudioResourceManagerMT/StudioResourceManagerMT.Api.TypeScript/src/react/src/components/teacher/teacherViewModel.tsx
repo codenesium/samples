@@ -1,41 +1,48 @@
+import moment from 'moment';
+
 export default class TeacherViewModel {
-    birthday:any;
-email:string;
-firstName:string;
-id:number;
-lastName:string;
-phone:string;
-userId:number;
+  birthday: any;
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  phone: string;
+  userId: number;
 
-    constructor() {
-		this.birthday = undefined;
-this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.phone = '';
-this.userId = 0;
+  constructor() {
+    this.birthday = undefined;
+    this.email = '';
+    this.firstName = '';
+    this.id = 0;
+    this.lastName = '';
+    this.phone = '';
+    this.userId = 0;
+  }
 
-    }
+  setProperties(
+    birthday: any,
+    email: string,
+    firstName: string,
+    id: number,
+    lastName: string,
+    phone: string,
+    userId: number
+  ): void {
+    this.birthday = moment(birthday, 'YYYY-MM-DD');
+    this.email = moment(email, 'YYYY-MM-DD');
+    this.firstName = moment(firstName, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.lastName = moment(lastName, 'YYYY-MM-DD');
+    this.phone = moment(phone, 'YYYY-MM-DD');
+    this.userId = moment(userId, 'YYYY-MM-DD');
+  }
 
-	setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
-	{
-		this.birthday = birthday;
-this.email = email;
-this.firstName = firstName;
-this.id = id;
-this.lastName = lastName;
-this.phone = phone;
-this.userId = userId;
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>5b3cd3f16f31b48310fe211f8ba99937</Hash>
+    <Hash>88f4e5b8202c542fff5634c6177daf41</Hash>
 </Codenesium>*/

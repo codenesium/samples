@@ -1,209 +1,252 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import ErrorLogMapper from './errorLogMapper';
 import ErrorLogViewModel from './errorLogViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:ErrorLogViewModel
+interface ErrorLogCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const ErrorLogCreateDisplay: React.SFC<FormikProps<ErrorLogViewModel>> = (props: FormikProps<ErrorLogViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.ErrorLogClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof ErrorLogViewModel]  && props.errors[name as keyof ErrorLogViewModel]) {
-            response += props.errors[name as keyof ErrorLogViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("errorLine") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ErrorLine</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="errorLine" className={errorExistForField("errorLine") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("errorLine") && <small className="text-danger">{errorsForField("errorLine")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("errorMessage") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ErrorMessage</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="errorMessage" className={errorExistForField("errorMessage") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("errorMessage") && <small className="text-danger">{errorsForField("errorMessage")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("errorNumber") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ErrorNumber</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="errorNumber" className={errorExistForField("errorNumber") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("errorNumber") && <small className="text-danger">{errorsForField("errorNumber")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("errorProcedure") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ErrorProcedure</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="errorProcedure" className={errorExistForField("errorProcedure") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("errorProcedure") && <small className="text-danger">{errorsForField("errorProcedure")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("errorSeverity") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ErrorSeverity</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="errorSeverity" className={errorExistForField("errorSeverity") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("errorSeverity") && <small className="text-danger">{errorsForField("errorSeverity")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("errorState") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ErrorState</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="errorState" className={errorExistForField("errorState") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("errorState") && <small className="text-danger">{errorsForField("errorState")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("errorTime") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ErrorTime</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="errorTime" className={errorExistForField("errorTime") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("errorTime") && <small className="text-danger">{errorsForField("errorTime")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("userName") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>UserName</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="userName" className={errorExistForField("userName") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("userName") && <small className="text-danger">{errorsForField("userName")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface ErrorLogCreateComponentState {
+  model?: ErrorLogViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class ErrorLogCreateComponent extends React.Component<
+  ErrorLogCreateComponentProps,
+  ErrorLogCreateComponentState
+> {
+  state = {
+    model: new ErrorLogViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const ErrorLogCreate = withFormik<Props, ErrorLogViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new ErrorLogViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.errorLine,props.model!.errorLogID,props.model!.errorMessage,props.model!.errorNumber,props.model!.errorProcedure,props.model!.errorSeverity,props.model!.errorState,props.model!.errorTime,props.model!.userName);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<ErrorLogViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as ErrorLogViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  if(values.errorMessage == '') {
-                errors.errorMessage = "Required"
-                    }if(values.errorNumber == 0) {
-                errors.errorNumber = "Required"
-                    }if(values.errorTime == undefined) {
-                errors.errorTime = "Required"
-                    }if(values.userName == '') {
-                errors.userName = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new ErrorLogMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.ErrorLogs,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: ErrorLogViewModel) => {
+    let mapper = new ErrorLogMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.ErrorLogs,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.ErrorLogClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'ErrorLogCreate', 
-  })(ErrorLogCreateDisplay);
-
-  interface ErrorLogCreateComponentProps
-  {
-  }
-
-  interface ErrorLogCreateComponentState
-  {
-      model?:ErrorLogViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class ErrorLogCreateComponent extends React.Component<ErrorLogCreateComponentProps, ErrorLogCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<ErrorLogCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.ErrorLogClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="errorLine">ErrorLine</label>
+            <br />
+            {getFieldDecorator('errorLine', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ErrorLine'}
+                id={'errorLine'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="errorMessage">ErrorMessage</label>
+            <br />
+            {getFieldDecorator('errorMessage', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ErrorMessage'}
+                id={'errorMessage'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="errorNumber">ErrorNumber</label>
+            <br />
+            {getFieldDecorator('errorNumber', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ErrorNumber'}
+                id={'errorNumber'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="errorProcedure">ErrorProcedure</label>
+            <br />
+            {getFieldDecorator('errorProcedure', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ErrorProcedure'}
+                id={'errorProcedure'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="errorSeverity">ErrorSeverity</label>
+            <br />
+            {getFieldDecorator('errorSeverity', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ErrorSeverity'}
+                id={'errorSeverity'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="errorState">ErrorState</label>
+            <br />
+            {getFieldDecorator('errorState', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ErrorState'}
+                id={'errorState'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="errorTime">ErrorTime</label>
+            <br />
+            {getFieldDecorator('errorTime', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ErrorTime'}
+                id={'errorTime'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="userName">UserName</label>
+            <br />
+            {getFieldDecorator('userName', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'UserName'}
+                id={'userName'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedErrorLogCreateComponent = Form.create({
+  name: 'ErrorLog Create',
+})(ErrorLogCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>1366585ff830a3e752011c2997472eb0</Hash>
+    <Hash>bc7bd253de45326e9b96edb3332a8955</Hash>
 </Codenesium>*/

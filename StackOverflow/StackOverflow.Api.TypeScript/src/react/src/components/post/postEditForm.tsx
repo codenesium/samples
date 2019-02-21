@@ -1,15 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostMapper from './postMapper';
 import PostViewModel from './postViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostEditComponentProps {
   form:WrappedFormUtils;
@@ -141,7 +138,7 @@ class PostEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } 
     else if (this.state.loaded) {
 
@@ -150,8 +147,9 @@ class PostEditComponent extends React.Component<
             			<Form.Item>
               <label htmlFor='acceptedAnswerId'>AcceptedAnswerId</label>
               <br />             
-{getFieldDecorator('acceptedAnswerId', {
+              {getFieldDecorator('acceptedAnswerId', {
               rules:[],
+              
               })
               ( <Input placeholder={"AcceptedAnswerId"} id={"acceptedAnswerId"} /> )}
               </Form.Item>
@@ -159,8 +157,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='answerCount'>AnswerCount</label>
               <br />             
-{getFieldDecorator('answerCount', {
+              {getFieldDecorator('answerCount', {
               rules:[],
+              
               })
               ( <Input placeholder={"AnswerCount"} id={"answerCount"} /> )}
               </Form.Item>
@@ -168,8 +167,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='body'>Body</label>
               <br />             
-{getFieldDecorator('body', {
+              {getFieldDecorator('body', {
               rules:[],
+              
               })
               ( <Input placeholder={"Body"} id={"body"} /> )}
               </Form.Item>
@@ -177,8 +177,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='closedDate'>ClosedDate</label>
               <br />             
-{getFieldDecorator('closedDate', {
+              {getFieldDecorator('closedDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"ClosedDate"} id={"closedDate"} /> )}
               </Form.Item>
@@ -186,8 +187,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='commentCount'>CommentCount</label>
               <br />             
-{getFieldDecorator('commentCount', {
+              {getFieldDecorator('commentCount', {
               rules:[],
+              
               })
               ( <Input placeholder={"CommentCount"} id={"commentCount"} /> )}
               </Form.Item>
@@ -195,8 +197,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='communityOwnedDate'>CommunityOwnedDate</label>
               <br />             
-{getFieldDecorator('communityOwnedDate', {
+              {getFieldDecorator('communityOwnedDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"CommunityOwnedDate"} id={"communityOwnedDate"} /> )}
               </Form.Item>
@@ -204,8 +207,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='creationDate'>CreationDate</label>
               <br />             
-{getFieldDecorator('creationDate', {
+              {getFieldDecorator('creationDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"CreationDate"} id={"creationDate"} /> )}
               </Form.Item>
@@ -213,8 +217,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='favoriteCount'>FavoriteCount</label>
               <br />             
-{getFieldDecorator('favoriteCount', {
+              {getFieldDecorator('favoriteCount', {
               rules:[],
+              
               })
               ( <Input placeholder={"FavoriteCount"} id={"favoriteCount"} /> )}
               </Form.Item>
@@ -222,8 +227,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='lastActivityDate'>LastActivityDate</label>
               <br />             
-{getFieldDecorator('lastActivityDate', {
+              {getFieldDecorator('lastActivityDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"LastActivityDate"} id={"lastActivityDate"} /> )}
               </Form.Item>
@@ -231,8 +237,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='lastEditDate'>LastEditDate</label>
               <br />             
-{getFieldDecorator('lastEditDate', {
+              {getFieldDecorator('lastEditDate', {
               rules:[],
+              
               })
               ( <Input placeholder={"LastEditDate"} id={"lastEditDate"} /> )}
               </Form.Item>
@@ -240,8 +247,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='lastEditorDisplayName'>LastEditorDisplayName</label>
               <br />             
-{getFieldDecorator('lastEditorDisplayName', {
+              {getFieldDecorator('lastEditorDisplayName', {
               rules:[],
+              
               })
               ( <Input placeholder={"LastEditorDisplayName"} id={"lastEditorDisplayName"} /> )}
               </Form.Item>
@@ -249,8 +257,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='lastEditorUserId'>LastEditorUserId</label>
               <br />             
-{getFieldDecorator('lastEditorUserId', {
+              {getFieldDecorator('lastEditorUserId', {
               rules:[],
+              
               })
               ( <Input placeholder={"LastEditorUserId"} id={"lastEditorUserId"} /> )}
               </Form.Item>
@@ -258,8 +267,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='ownerUserId'>OwnerUserId</label>
               <br />             
-{getFieldDecorator('ownerUserId', {
+              {getFieldDecorator('ownerUserId', {
               rules:[],
+              
               })
               ( <Input placeholder={"OwnerUserId"} id={"ownerUserId"} /> )}
               </Form.Item>
@@ -267,8 +277,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='parentId'>ParentId</label>
               <br />             
-{getFieldDecorator('parentId', {
+              {getFieldDecorator('parentId', {
               rules:[],
+              
               })
               ( <Input placeholder={"ParentId"} id={"parentId"} /> )}
               </Form.Item>
@@ -276,8 +287,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='postTypeId'>PostTypeId</label>
               <br />             
-{getFieldDecorator('postTypeId', {
+              {getFieldDecorator('postTypeId', {
               rules:[],
+              
               })
               ( <Input placeholder={"PostTypeId"} id={"postTypeId"} /> )}
               </Form.Item>
@@ -285,8 +297,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='score'>Score</label>
               <br />             
-{getFieldDecorator('score', {
+              {getFieldDecorator('score', {
               rules:[],
+              
               })
               ( <Input placeholder={"Score"} id={"score"} /> )}
               </Form.Item>
@@ -294,8 +307,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='tag'>Tags</label>
               <br />             
-{getFieldDecorator('tag', {
+              {getFieldDecorator('tag', {
               rules:[],
+              
               })
               ( <Input placeholder={"Tags"} id={"tag"} /> )}
               </Form.Item>
@@ -303,8 +317,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='title'>Title</label>
               <br />             
-{getFieldDecorator('title', {
+              {getFieldDecorator('title', {
               rules:[],
+              
               })
               ( <Input placeholder={"Title"} id={"title"} /> )}
               </Form.Item>
@@ -312,8 +327,9 @@ class PostEditComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='viewCount'>ViewCount</label>
               <br />             
-{getFieldDecorator('viewCount', {
+              {getFieldDecorator('viewCount', {
               rules:[],
+              
               })
               ( <Input placeholder={"ViewCount"} id={"viewCount"} /> )}
               </Form.Item>
@@ -335,5 +351,5 @@ class PostEditComponent extends React.Component<
 export const WrappedPostEditComponent = Form.create({ name: 'Post Edit' })(PostEditComponent);
 
 /*<Codenesium>
-    <Hash>1446eac5775de9ad51c129ac9f50ce11</Hash>
+    <Hash>a0bbd4eb31484194cd71635bf7f5d81e</Hash>
 </Codenesium>*/

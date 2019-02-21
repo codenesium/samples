@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class PostHistoryTypeViewModel {
   id: number;
   rwType: string;
@@ -19,5 +21,5 @@ export default class PostHistoryTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>fbc85bb4eb9e36d689e70e46968de67e</Hash>
+    <Hash>a31090d360f5c7016ccdcc87255b75d5</Hash>
 </Codenesium>*/

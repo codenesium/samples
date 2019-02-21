@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CommentMapper from './commentMapper';
 import CommentViewModel from './commentViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface CommentDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class CommentDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,24 +105,24 @@ class CommentDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>creationDate</div>
-              <div>{this.state.model!.creationDate}</div>
+              <h3>CreationDate</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
             </div>
             <div>
-              <div>postId</div>
-              <div>{this.state.model!.postId}</div>
+              <h3>PostId</h3>
+              <p>{String(this.state.model!.postId)}</p>
             </div>
             <div>
-              <div>score</div>
-              <div>{this.state.model!.score}</div>
+              <h3>Score</h3>
+              <p>{String(this.state.model!.score)}</p>
             </div>
             <div>
-              <div>text</div>
-              <div>{this.state.model!.text}</div>
+              <h3>Text</h3>
+              <p>{String(this.state.model!.text)}</p>
             </div>
             <div>
-              <div>userId</div>
-              <div>{this.state.model!.userId}</div>
+              <h3>UserId</h3>
+              <p>{String(this.state.model!.userId)}</p>
             </div>
           </div>
           {message}
@@ -142,5 +140,5 @@ export const WrappedCommentDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f80ac4594b42c4b47087c451497675b5</Hash>
+    <Hash>df05f02b43f5fcf472b1de2bde0fff7d</Hash>
 </Codenesium>*/

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostLinkMapper from './postLinkMapper';
 import PostLinkViewModel from './postLinkViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostLinkDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class PostLinkDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,20 +105,20 @@ class PostLinkDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>creationDate</div>
-              <div>{this.state.model!.creationDate}</div>
+              <h3>CreationDate</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
             </div>
             <div>
-              <div>linkTypeId</div>
-              <div>{this.state.model!.linkTypeId}</div>
+              <h3>LinkTypeId</h3>
+              <p>{String(this.state.model!.linkTypeId)}</p>
             </div>
             <div>
-              <div>postId</div>
-              <div>{this.state.model!.postId}</div>
+              <h3>PostId</h3>
+              <p>{String(this.state.model!.postId)}</p>
             </div>
             <div>
-              <div>relatedPostId</div>
-              <div>{this.state.model!.relatedPostId}</div>
+              <h3>RelatedPostId</h3>
+              <p>{String(this.state.model!.relatedPostId)}</p>
             </div>
           </div>
           {message}
@@ -138,5 +136,5 @@ export const WrappedPostLinkDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>333c5e3e3b0f4768d5f4d7ea6081b191</Hash>
+    <Hash>85e05d7d99b97c5a910488bd7fea72ec</Hash>
 </Codenesium>*/

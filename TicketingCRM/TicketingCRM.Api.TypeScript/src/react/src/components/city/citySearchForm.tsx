@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CityMapper from './cityMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import CityViewModel from './cityViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CitySearchComponentProps
@@ -112,10 +110,10 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -236,5 +234,5 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
 export const WrappedCitySearchComponent = Form.create({ name: 'City Search' })(CitySearchComponent);
 
 /*<Codenesium>
-    <Hash>025f40503b40d77b0b4dc4f70842fcea</Hash>
+    <Hash>7f3d8189fe398b2d22c3f78a0c09403b</Hash>
 </Codenesium>*/

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class ScrapReasonViewModel {
   modifiedDate: any;
   name: string;
@@ -10,9 +12,9 @@ export default class ScrapReasonViewModel {
   }
 
   setProperties(modifiedDate: any, name: string, scrapReasonID: number): void {
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.scrapReasonID = scrapReasonID;
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.scrapReasonID = moment(scrapReasonID, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -22,5 +24,5 @@ export default class ScrapReasonViewModel {
 
 
 /*<Codenesium>
-    <Hash>a78e7b923bbc4cc610b04096f6bfeb1c</Hash>
+    <Hash>8c77aed56c215c536ff6b8a29c279991</Hash>
 </Codenesium>*/

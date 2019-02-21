@@ -1,3 +1,4 @@
+import moment from 'moment'
 import CurrencyViewModel from '../currency/currencyViewModel'
 	import CurrencyViewModel from '../currency/currencyViewModel'
 	
@@ -22,23 +23,23 @@ this.currencyRateID = 0;
 this.endOfDayRate = 0;
 this.fromCurrencyCode = '';
 this.fromCurrencyCodeEntity = '';
-this.fromCurrencyCodeNavigation = undefined;
+this.fromCurrencyCodeNavigation = new CurrencyViewModel();
 this.modifiedDate = undefined;
 this.toCurrencyCode = '';
 this.toCurrencyCodeEntity = '';
-this.toCurrencyCodeNavigation = undefined;
+this.toCurrencyCodeNavigation = new CurrencyViewModel();
 
     }
 
 	setProperties(averageRate : number,currencyRateDate : any,currencyRateID : number,endOfDayRate : number,fromCurrencyCode : string,modifiedDate : any,toCurrencyCode : string) : void
 	{
-		this.averageRate = averageRate;
-this.currencyRateDate = currencyRateDate;
-this.currencyRateID = currencyRateID;
-this.endOfDayRate = endOfDayRate;
-this.fromCurrencyCode = fromCurrencyCode;
-this.modifiedDate = modifiedDate;
-this.toCurrencyCode = toCurrencyCode;
+		this.averageRate = moment(averageRate,'YYYY-MM-DD');
+this.currencyRateDate = moment(currencyRateDate,'YYYY-MM-DD');
+this.currencyRateID = moment(currencyRateID,'YYYY-MM-DD');
+this.endOfDayRate = moment(endOfDayRate,'YYYY-MM-DD');
+this.fromCurrencyCode = moment(fromCurrencyCode,'YYYY-MM-DD');
+this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.toCurrencyCode = moment(toCurrencyCode,'YYYY-MM-DD');
 
 	}
 
@@ -49,5 +50,5 @@ this.toCurrencyCode = toCurrencyCode;
 };
 
 /*<Codenesium>
-    <Hash>5afe857e7870a6b0884c18528f2a5180</Hash>
+    <Hash>b33435d619e66af8926d445278aff22c</Hash>
 </Codenesium>*/

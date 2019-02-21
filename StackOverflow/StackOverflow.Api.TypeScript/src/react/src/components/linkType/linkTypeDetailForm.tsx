@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkTypeMapper from './linkTypeMapper';
 import LinkTypeViewModel from './linkTypeViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface LinkTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class LinkTypeDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,8 +105,8 @@ class LinkTypeDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>rwType</div>
-              <div>{this.state.model!.rwType}</div>
+              <h3>Type</h3>
+              <p>{String(this.state.model!.rwType)}</p>
             </div>
           </div>
           {message}
@@ -126,5 +124,5 @@ export const WrappedLinkTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7a09d73b95c07c56c99b893d2d99e892</Hash>
+    <Hash>319d449b234202b8b0ab61db70435997</Hash>
 </Codenesium>*/

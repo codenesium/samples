@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface FileDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class FileDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,48 +105,50 @@ class FileDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>bucketId</h3>
-              <div>{this.state.model!.bucketIdNavigation!.toDisplay()}</div>
+              <h3>BucketId</h3>
+              <p>{String(this.state.model!.bucketIdNavigation!.toDisplay())}</p>
             </div>
             <div>
-              <div>dateCreated</div>
-              <div>{this.state.model!.dateCreated}</div>
+              <h3>DateCreated</h3>
+              <p>{String(this.state.model!.dateCreated)}</p>
             </div>
             <div>
-              <div>description</div>
-              <div>{this.state.model!.description}</div>
+              <h3>Description</h3>
+              <p>{String(this.state.model!.description)}</p>
             </div>
             <div>
-              <div>expiration</div>
-              <div>{this.state.model!.expiration}</div>
+              <h3>Expiration</h3>
+              <p>{String(this.state.model!.expiration)}</p>
             </div>
             <div>
-              <div>extension</div>
-              <div>{this.state.model!.extension}</div>
+              <h3>Extension</h3>
+              <p>{String(this.state.model!.extension)}</p>
             </div>
             <div>
-              <div>externalId</div>
-              <div>{this.state.model!.externalId}</div>
+              <h3>ExternalId</h3>
+              <p>{String(this.state.model!.externalId)}</p>
             </div>
             <div>
-              <div>fileSizeInByte</div>
-              <div>{this.state.model!.fileSizeInByte}</div>
+              <h3>FileSizeInByte</h3>
+              <p>{String(this.state.model!.fileSizeInByte)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>fileTypeId</h3>
-              <div>{this.state.model!.fileTypeIdNavigation!.toDisplay()}</div>
+              <h3>FileTypeId</h3>
+              <p>
+                {String(this.state.model!.fileTypeIdNavigation!.toDisplay())}
+              </p>
             </div>
             <div>
-              <div>location</div>
-              <div>{this.state.model!.location}</div>
+              <h3>Location</h3>
+              <p>{String(this.state.model!.location)}</p>
             </div>
             <div>
-              <div>privateKey</div>
-              <div>{this.state.model!.privateKey}</div>
+              <h3>PrivateKey</h3>
+              <p>{String(this.state.model!.privateKey)}</p>
             </div>
             <div>
-              <div>publicKey</div>
-              <div>{this.state.model!.publicKey}</div>
+              <h3>PublicKey</h3>
+              <p>{String(this.state.model!.publicKey)}</p>
             </div>
           </div>
           {message}
@@ -166,5 +166,5 @@ export const WrappedFileDetailComponent = Form.create({ name: 'File Detail' })(
 
 
 /*<Codenesium>
-    <Hash>ec8ac28042298d5b60c77cc1201a8fab</Hash>
+    <Hash>ad1b3bf57c048c6234d692c54f443b8e</Hash>
 </Codenesium>*/

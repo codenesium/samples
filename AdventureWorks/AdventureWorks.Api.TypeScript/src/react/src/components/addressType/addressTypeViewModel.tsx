@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class AddressTypeViewModel {
   addressTypeID: number;
   modifiedDate: any;
@@ -17,10 +19,10 @@ export default class AddressTypeViewModel {
     name: string,
     rowguid: any
   ): void {
-    this.addressTypeID = addressTypeID;
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.rowguid = rowguid;
+    this.addressTypeID = moment(addressTypeID, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.rowguid = moment(rowguid, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -30,5 +32,5 @@ export default class AddressTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>a087b44a4820457923f84e01cd6c85bd</Hash>
+    <Hash>df693ff0c49aae9b14bbdd5f6e31bd1a</Hash>
 </Codenesium>*/

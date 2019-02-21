@@ -1,167 +1,182 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import RateMapper from './rateMapper';
 import RateViewModel from './rateViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:RateViewModel
+interface RateCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const RateCreateDisplay: React.SFC<FormikProps<RateViewModel>> = (props: FormikProps<RateViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.RateClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof RateViewModel]  && props.errors[name as keyof RateViewModel]) {
-            response += props.errors[name as keyof RateViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("amountPerMinute") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>AmountPerMinute</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="amountPerMinute" className={errorExistForField("amountPerMinute") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("amountPerMinute") && <small className="text-danger">{errorsForField("amountPerMinute")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("teacherId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TeacherId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="teacherId" className={errorExistForField("teacherId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("teacherId") && <small className="text-danger">{errorsForField("teacherId")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("teacherSkillId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TeacherSkillId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="teacherSkillId" className={errorExistForField("teacherSkillId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("teacherSkillId") && <small className="text-danger">{errorsForField("teacherSkillId")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface RateCreateComponentState {
+  model?: RateViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class RateCreateComponent extends React.Component<
+  RateCreateComponentProps,
+  RateCreateComponentState
+> {
+  state = {
+    model: new RateViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const RateCreate = withFormik<Props, RateViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new RateViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.amountPerMinute,props.model!.id,props.model!.teacherId,props.model!.teacherSkillId);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<RateViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as RateViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  if(values.amountPerMinute == 0) {
-                errors.amountPerMinute = "Required"
-                    }if(values.teacherId == 0) {
-                errors.teacherId = "Required"
-                    }if(values.teacherSkillId == 0) {
-                errors.teacherSkillId = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new RateMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.Rates,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: RateViewModel) => {
+    let mapper = new RateMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.Rates,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.RateClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'RateCreate', 
-  })(RateCreateDisplay);
-
-  interface RateCreateComponentProps
-  {
-  }
-
-  interface RateCreateComponentState
-  {
-      model?:RateViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class RateCreateComponent extends React.Component<RateCreateComponentProps, RateCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<RateCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.RateClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="amountPerMinute">amountPerMinute</label>
+            <br />
+            {getFieldDecorator('amountPerMinute', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'amountPerMinute'}
+                id={'amountPerMinute'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="teacherId">teacherId</label>
+            <br />
+            {getFieldDecorator('teacherId', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'teacherId'}
+                id={'teacherId'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="teacherSkillId">teacherSkillId</label>
+            <br />
+            {getFieldDecorator('teacherSkillId', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'teacherSkillId'}
+                id={'teacherSkillId'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedRateCreateComponent = Form.create({ name: 'Rate Create' })(
+  RateCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>2f1ec9281714f114a2ca33ba9497cbd9</Hash>
+    <Hash>772258994bccbd2011ba6cc01bda5b7e</Hash>
 </Codenesium>*/

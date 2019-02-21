@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PaymentTypeViewModel from '../paymentType/paymentTypeViewModel';
 import PetViewModel from '../pet/petViewModel';
 
@@ -21,10 +22,10 @@ export default class SaleViewModel {
     this.lastName = '';
     this.paymentTypeId = 0;
     this.paymentTypeIdEntity = '';
-    this.paymentTypeIdNavigation = undefined;
+    this.paymentTypeIdNavigation = new PaymentTypeViewModel();
     this.petId = 0;
     this.petIdEntity = '';
-    this.petIdNavigation = undefined;
+    this.petIdNavigation = new PetViewModel();
     this.phone = '';
   }
 
@@ -53,5 +54,5 @@ export default class SaleViewModel {
 
 
 /*<Codenesium>
-    <Hash>6f20c3fe27fc6edc54cac42997c9bd9b</Hash>
+    <Hash>9b45cc7a861a8d75fddae87a11b3ade9</Hash>
 </Codenesium>*/

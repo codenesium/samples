@@ -1,60 +1,55 @@
-import SalesTerritoryViewModel from '../salesTerritory/salesTerritoryViewModel';
+import moment from 'moment'
+import SalesTerritoryViewModel from '../salesTerritory/salesTerritoryViewModel'
+	
 
 export default class SalesPersonViewModel {
-  bonus: number;
-  businessEntityID: number;
-  commissionPct: number;
-  modifiedDate: any;
-  rowguid: any;
-  salesLastYear: number;
-  salesQuota: any;
-  salesYTD: number;
-  territoryID: any;
-  territoryIDEntity: string;
-  territoryIDNavigation?: SalesTerritoryViewModel;
+    bonus:number;
+businessEntityID:number;
+commissionPct:number;
+modifiedDate:any;
+rowguid:any;
+salesLastYear:number;
+salesQuota:any;
+salesYTD:number;
+territoryID:any;
+territoryIDEntity : string;
+territoryIDNavigation? : SalesTerritoryViewModel;
 
-  constructor() {
-    this.bonus = 0;
-    this.businessEntityID = 0;
-    this.commissionPct = 0;
-    this.modifiedDate = undefined;
-    this.rowguid = undefined;
-    this.salesLastYear = 0;
-    this.salesQuota = undefined;
-    this.salesYTD = 0;
-    this.territoryID = undefined;
-    this.territoryIDEntity = '';
-    this.territoryIDNavigation = undefined;
-  }
+    constructor() {
+		this.bonus = 0;
+this.businessEntityID = 0;
+this.commissionPct = 0;
+this.modifiedDate = undefined;
+this.rowguid = undefined;
+this.salesLastYear = 0;
+this.salesQuota = undefined;
+this.salesYTD = 0;
+this.territoryID = undefined;
+this.territoryIDEntity = '';
+this.territoryIDNavigation = new SalesTerritoryViewModel();
 
-  setProperties(
-    bonus: number,
-    businessEntityID: number,
-    commissionPct: number,
-    modifiedDate: any,
-    rowguid: any,
-    salesLastYear: number,
-    salesQuota: any,
-    salesYTD: number,
-    territoryID: any
-  ): void {
-    this.bonus = bonus;
-    this.businessEntityID = businessEntityID;
-    this.commissionPct = commissionPct;
-    this.modifiedDate = modifiedDate;
-    this.rowguid = rowguid;
-    this.salesLastYear = salesLastYear;
-    this.salesQuota = salesQuota;
-    this.salesYTD = salesYTD;
-    this.territoryID = territoryID;
-  }
+    }
 
-  toDisplay(): string {
-    return String();
-  }
-}
+	setProperties(bonus : number,businessEntityID : number,commissionPct : number,modifiedDate : any,rowguid : any,salesLastYear : number,salesQuota : any,salesYTD : number,territoryID : any) : void
+	{
+		this.bonus = moment(bonus,'YYYY-MM-DD');
+this.businessEntityID = moment(businessEntityID,'YYYY-MM-DD');
+this.commissionPct = moment(commissionPct,'YYYY-MM-DD');
+this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+this.rowguid = moment(rowguid,'YYYY-MM-DD');
+this.salesLastYear = moment(salesLastYear,'YYYY-MM-DD');
+this.salesQuota = moment(salesQuota,'YYYY-MM-DD');
+this.salesYTD = moment(salesYTD,'YYYY-MM-DD');
+this.territoryID = moment(territoryID,'YYYY-MM-DD');
 
+	}
+
+	toDisplay() : string
+	{
+		return String();
+	}
+};
 
 /*<Codenesium>
-    <Hash>40bece27f6bae1ec71a7c35b3d15478b</Hash>
+    <Hash>c08dfb844fb5122f8d7f57316002b178</Hash>
 </Codenesium>*/

@@ -1,15 +1,21 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostHistoryMapper from './postHistoryMapper';
 import PostHistoryViewModel from './postHistoryViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PostHistoryCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +112,7 @@ class PostHistoryCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -201,5 +207,5 @@ export const WrappedPostHistoryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2f3f558f8d7c673b30ecd8afeab675cc</Hash>
+    <Hash>15ce1f436270aafd56c0c5b7c4576f31</Hash>
 </Codenesium>*/

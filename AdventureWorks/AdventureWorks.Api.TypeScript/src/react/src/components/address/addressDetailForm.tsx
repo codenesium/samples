@@ -1,151 +1,156 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import AddressMapper from './addressMapper';
 import AddressViewModel from './addressViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:AddressViewModel
+interface AddressDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const AddressDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Addresses + '/edit/' + model.model!.addressID)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="addressID" className={"col-sm-2 col-form-label"}>AddressID</label>
-							<div className="col-sm-12">
-								{String(model.model!.addressID)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="addressLine1" className={"col-sm-2 col-form-label"}>AddressLine1</label>
-							<div className="col-sm-12">
-								{String(model.model!.addressLine1)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="addressLine2" className={"col-sm-2 col-form-label"}>AddressLine2</label>
-							<div className="col-sm-12">
-								{String(model.model!.addressLine2)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="city" className={"col-sm-2 col-form-label"}>City</label>
-							<div className="col-sm-12">
-								{String(model.model!.city)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="modifiedDate" className={"col-sm-2 col-form-label"}>ModifiedDate</label>
-							<div className="col-sm-12">
-								{String(model.model!.modifiedDate)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="postalCode" className={"col-sm-2 col-form-label"}>PostalCode</label>
-							<div className="col-sm-12">
-								{String(model.model!.postalCode)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="rowguid" className={"col-sm-2 col-form-label"}>Rowguid</label>
-							<div className="col-sm-12">
-								{String(model.model!.rowguid)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="stateProvinceID" className={"col-sm-2 col-form-label"}>StateProvinceID</label>
-							<div className="col-sm-12">
-								{String(model.model!.stateProvinceID)}
-							</div>
-						</div>
-					             </form>
-  );
+interface AddressDetailComponentState {
+  model?: AddressViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     addressID:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class AddressDetailComponent extends React.Component<
+  AddressDetailComponentProps,
+  AddressDetailComponentState
+> {
+  state = {
+    model: new AddressViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface AddressDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface AddressDetailComponentState
-  {
-      model?:AddressViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Addresses + '/edit/' + this.state.model!.addressID
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class AddressDetailComponent extends React.Component<AddressDetailComponentProps, AddressDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Addresses + '/' + this.props.match.params.addressID,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Addresses +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.AddressClientResponseModel;
-            
-			let mapper = new AddressMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<AddressDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.AddressClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new AddressMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>AddressID</h3>
+              <p>{String(this.state.model!.addressID)}</p>
+            </div>
+            <div>
+              <h3>AddressLine1</h3>
+              <p>{String(this.state.model!.addressLine1)}</p>
+            </div>
+            <div>
+              <h3>AddressLine2</h3>
+              <p>{String(this.state.model!.addressLine2)}</p>
+            </div>
+            <div>
+              <h3>City</h3>
+              <p>{String(this.state.model!.city)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>PostalCode</h3>
+              <p>{String(this.state.model!.postalCode)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>StateProvinceID</h3>
+              <p>{String(this.state.model!.stateProvinceID)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedAddressDetailComponent = Form.create({
+  name: 'Address Detail',
+})(AddressDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>a5f72f201d4bbd743a3e1ee7a9f6a9d0</Hash>
+    <Hash>09147c294c8117e4f35c29282cf9c3c2</Hash>
 </Codenesium>*/

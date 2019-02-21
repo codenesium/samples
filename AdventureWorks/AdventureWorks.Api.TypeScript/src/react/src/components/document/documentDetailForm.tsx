@@ -1,125 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import DocumentMapper from './documentMapper';
 import DocumentViewModel from './documentViewModel';
-
-interface Props {
-  history: any;
-  model?: DocumentViewModel;
-}
-
-const DocumentDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Documents + '/edit/' + model.model!.rowguid
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="changeNumber" className={'col-sm-2 col-form-label'}>
-          ChangeNumber
-        </label>
-        <div className="col-sm-12">{String(model.model!.changeNumber)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="document1" className={'col-sm-2 col-form-label'}>
-          Document
-        </label>
-        <div className="col-sm-12">{String(model.model!.document1)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="documentLevel" className={'col-sm-2 col-form-label'}>
-          DocumentLevel
-        </label>
-        <div className="col-sm-12">{String(model.model!.documentLevel)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="documentSummary" className={'col-sm-2 col-form-label'}>
-          DocumentSummary
-        </label>
-        <div className="col-sm-12">{String(model.model!.documentSummary)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="fileExtension" className={'col-sm-2 col-form-label'}>
-          FileExtension
-        </label>
-        <div className="col-sm-12">{String(model.model!.fileExtension)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="fileName" className={'col-sm-2 col-form-label'}>
-          FileName
-        </label>
-        <div className="col-sm-12">{String(model.model!.fileName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="folderFlag" className={'col-sm-2 col-form-label'}>
-          FolderFlag
-        </label>
-        <div className="col-sm-12">{String(model.model!.folderFlag)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="owner" className={'col-sm-2 col-form-label'}>
-          Owner
-        </label>
-        <div className="col-sm-12">{String(model.model!.owner)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="revision" className={'col-sm-2 col-form-label'}>
-          Revision
-        </label>
-        <div className="col-sm-12">{String(model.model!.revision)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
-          Rowguid
-        </label>
-        <div className="col-sm-12">{String(model.model!.rowguid)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="status" className={'col-sm-2 col-form-label'}>
-          Status
-        </label>
-        <div className="col-sm-12">{String(model.model!.status)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="title" className={'col-sm-2 col-form-label'}>
-          Title
-        </label>
-        <div className="col-sm-12">{String(model.model!.title)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  rowguid: any;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface DocumentDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface DocumentDetailComponentState {
@@ -130,17 +21,23 @@ interface DocumentDetailComponentState {
   errorMessage: string;
 }
 
-export default class DocumentDetailComponent extends React.Component<
+class DocumentDetailComponent extends React.Component<
   DocumentDetailComponentProps,
   DocumentDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new DocumentViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Documents + '/edit/' + this.state.model!.rowguid
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -150,7 +47,7 @@ export default class DocumentDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.Documents +
           '/' +
-          this.props.match.params.rowguid,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -161,9 +58,9 @@ export default class DocumentDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.DocumentClientResponseModel;
 
-          let mapper = new DocumentMapper();
-
           console.log(response);
+
+          let mapper = new DocumentMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -185,17 +82,83 @@ export default class DocumentDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <DocumentDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ChangeNumber</h3>
+              <p>{String(this.state.model!.changeNumber)}</p>
+            </div>
+            <div>
+              <h3>Document</h3>
+              <p>{String(this.state.model!.document1)}</p>
+            </div>
+            <div>
+              <h3>DocumentLevel</h3>
+              <p>{String(this.state.model!.documentLevel)}</p>
+            </div>
+            <div>
+              <h3>DocumentSummary</h3>
+              <p>{String(this.state.model!.documentSummary)}</p>
+            </div>
+            <div>
+              <h3>FileExtension</h3>
+              <p>{String(this.state.model!.fileExtension)}</p>
+            </div>
+            <div>
+              <h3>FileName</h3>
+              <p>{String(this.state.model!.fileName)}</p>
+            </div>
+            <div>
+              <h3>FolderFlag</h3>
+              <p>{String(this.state.model!.folderFlag)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Owner</h3>
+              <p>{String(this.state.model!.owner)}</p>
+            </div>
+            <div>
+              <h3>Revision</h3>
+              <p>{String(this.state.model!.revision)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>Status</h3>
+              <p>{String(this.state.model!.status)}</p>
+            </div>
+            <div>
+              <h3>Title</h3>
+              <p>{String(this.state.model!.title)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -203,7 +166,11 @@ export default class DocumentDetailComponent extends React.Component<
   }
 }
 
+export const WrappedDocumentDetailComponent = Form.create({
+  name: 'Document Detail',
+})(DocumentDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>179f0d91cd29ba50a83725960130337a</Hash>
+    <Hash>61f2f040fe260ea7dbfa8fc8d756e7e9</Hash>
 </Codenesium>*/

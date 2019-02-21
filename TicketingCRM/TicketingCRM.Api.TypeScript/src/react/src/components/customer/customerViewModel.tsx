@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class CustomerViewModel {
   email: string;
   firstName: string;
@@ -22,7 +24,7 @@ export default class CustomerViewModel {
   ): void {
     this.email = email;
     this.firstName = firstName;
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.lastName = lastName;
     this.phone = phone;
   }
@@ -34,5 +36,5 @@ export default class CustomerViewModel {
 
 
 /*<Codenesium>
-    <Hash>0fc0e9dffc1f3447d0efb2901ce47fb9</Hash>
+    <Hash>3d46fd6ab4815cd3ff7836f77819e761</Hash>
 </Codenesium>*/

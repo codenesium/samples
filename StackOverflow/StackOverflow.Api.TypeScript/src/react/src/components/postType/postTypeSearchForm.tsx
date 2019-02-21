@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import PostTypeMapper from './postTypeMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import PostTypeViewModel from './postTypeViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PostTypeSearchComponentProps
@@ -112,10 +110,10 @@ export default class PostTypeSearchComponent extends React.Component<PostTypeSea
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -226,5 +224,5 @@ export default class PostTypeSearchComponent extends React.Component<PostTypeSea
 export const WrappedPostTypeSearchComponent = Form.create({ name: 'PostType Search' })(PostTypeSearchComponent);
 
 /*<Codenesium>
-    <Hash>feb6a6052524ee35263f3b845365af3e</Hash>
+    <Hash>7aacb5ef49380c93d696d82b3013c781</Hash>
 </Codenesium>*/

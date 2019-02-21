@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class UserViewModel {
   id: number;
   password: string;
@@ -10,9 +12,9 @@ export default class UserViewModel {
   }
 
   setProperties(id: number, password: string, username: string): void {
-    this.id = id;
-    this.password = password;
-    this.username = username;
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.password = moment(password, 'YYYY-MM-DD');
+    this.username = moment(username, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -22,5 +24,5 @@ export default class UserViewModel {
 
 
 /*<Codenesium>
-    <Hash>94baf2a33301664b40502edd9024d374</Hash>
+    <Hash>063d77832e1026311719289552a9e4ce</Hash>
 </Codenesium>*/

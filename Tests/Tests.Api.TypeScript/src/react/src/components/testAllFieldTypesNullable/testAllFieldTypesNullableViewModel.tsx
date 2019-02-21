@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TestAllFieldTypesNullableViewModel {
   fieldBigInt: any;
   fieldBinary: any;
@@ -130,5 +132,5 @@ export default class TestAllFieldTypesNullableViewModel {
 
 
 /*<Codenesium>
-    <Hash>ed779ffe8d1d1f13cc532efa3a0c072b</Hash>
+    <Hash>03727b9ae10d382a5cafe0fc192a5e2a</Hash>
 </Codenesium>*/

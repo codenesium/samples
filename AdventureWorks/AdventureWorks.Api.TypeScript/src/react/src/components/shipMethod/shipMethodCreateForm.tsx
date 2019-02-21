@@ -1,253 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import ShipMethodMapper from './shipMethodMapper';
 import ShipMethodViewModel from './shipMethodViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: ShipMethodViewModel;
+interface ShipMethodCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const ShipMethodCreateDisplay: React.SFC<FormikProps<ShipMethodViewModel>> = (
-  props: FormikProps<ShipMethodViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.ShipMethodClientRequestModel>;
+interface ShipMethodCreateComponentState {
+  model?: ShipMethodViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof ShipMethodViewModel] &&
-      props.errors[name as keyof ShipMethodViewModel]
-    ) {
-      response += props.errors[name as keyof ShipMethodViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class ShipMethodCreateComponent extends React.Component<
+  ShipMethodCreateComponentProps,
+  ShipMethodCreateComponentState
+> {
+  state = {
+    model: new ShipMethodViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as ShipMethodViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('modifiedDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="modifiedDate"
-            className={
-              errorExistForField('modifiedDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('modifiedDate') && (
-            <small className="text-danger">
-              {errorsForField('modifiedDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('name')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="name"
-            className={
-              errorExistForField('name')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('name') && (
-            <small className="text-danger">{errorsForField('name')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('rowguid')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Rowguid
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="rowguid"
-            className={
-              errorExistForField('rowguid')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('rowguid') && (
-            <small className="text-danger">{errorsForField('rowguid')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('shipBase')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ShipBase
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="shipBase"
-            className={
-              errorExistForField('shipBase')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('shipBase') && (
-            <small className="text-danger">{errorsForField('shipBase')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('shipRate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          ShipRate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="shipRate"
-            className={
-              errorExistForField('shipRate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('shipRate') && (
-            <small className="text-danger">{errorsForField('shipRate')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const ShipMethodCreate = withFormik<Props, ShipMethodViewModel>({
-  mapPropsToValues: props => {
-    let response = new ShipMethodViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.modifiedDate,
-        props.model!.name,
-        props.model!.rowguid,
-        props.model!.shipBase,
-        props.model!.shipMethodID,
-        props.model!.shipRate
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<ShipMethodViewModel> = {};
-
-    if (values.modifiedDate == undefined) {
-      errors.modifiedDate = 'Required';
-    }
-    if (values.name == '') {
-      errors.name = 'Required';
-    }
-    if (values.rowguid == undefined) {
-      errors.rowguid = 'Required';
-    }
-    if (values.shipBase == 0) {
-      errors.shipBase = 'Required';
-    }
-    if (values.shipRate == 0) {
-      errors.shipRate = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: ShipMethodViewModel) => {
     let mapper = new ShipMethodMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.ShipMethods,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -259,54 +73,138 @@ const ShipMethodCreate = withFormik<Props, ShipMethodViewModel>({
           let response = resp.data as CreateResponse<
             Api.ShipMethodClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'ShipMethodCreate',
-})(ShipMethodCreateDisplay);
-
-interface ShipMethodCreateComponentProps {}
-
-interface ShipMethodCreateComponentState {
-  model?: ShipMethodViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class ShipMethodCreateComponent extends React.Component<
-  ShipMethodCreateComponentProps,
-  ShipMethodCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <ShipMethodCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Name'}
+                id={'name'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="rowguid">rowguid</label>
+            <br />
+            {getFieldDecorator('rowguid', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'rowguid'}
+                id={'rowguid'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="shipBase">ShipBase</label>
+            <br />
+            {getFieldDecorator('shipBase', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ShipBase'}
+                id={'shipBase'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="shipRate">ShipRate</label>
+            <br />
+            {getFieldDecorator('shipRate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ShipRate'}
+                id={'shipRate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedShipMethodCreateComponent = Form.create({
+  name: 'ShipMethod Create',
+})(ShipMethodCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>ac58d4f1fad12a65c9b7f01675aee0a1</Hash>
+    <Hash>8239231dd4e433bf74471fd2d62bb4a0</Hash>
 </Codenesium>*/

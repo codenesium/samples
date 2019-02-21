@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/ApiObjects'
+import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
 import { LoadingForm } from '../../lib/components/loadingForm'
@@ -135,5 +135,5 @@ const MachineDetailDisplay = (model:Props) => {
 }
 
 /*<Codenesium>
-    <Hash>a6acc0388fdd31774c085269600b5503</Hash>
+    <Hash>43cd5a13a2b8fe4e3f5c398b577dc424</Hash>
 </Codenesium>*/

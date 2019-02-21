@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PaymentTypeMapper from './paymentTypeMapper';
 import PaymentTypeViewModel from './paymentTypeViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface PaymentTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class PaymentTypeDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,8 +105,8 @@ class PaymentTypeDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
           {message}
@@ -126,5 +124,5 @@ export const WrappedPaymentTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>71bf3ac31c668244b52106fc1cd68a71</Hash>
+    <Hash>39af6b271bd67e1137150f46cf1de034</Hash>
 </Codenesium>*/

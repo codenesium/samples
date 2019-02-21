@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import ProvinceMapper from './provinceMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import ProvinceViewModel from './provinceViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ProvinceSearchComponentProps
@@ -112,10 +110,10 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -236,5 +234,5 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
 export const WrappedProvinceSearchComponent = Form.create({ name: 'Province Search' })(ProvinceSearchComponent);
 
 /*<Codenesium>
-    <Hash>5feb0ec29bd694e764f55b92899897ab</Hash>
+    <Hash>ca02670498a24ed2b95750116733e6c0</Hash>
 </Codenesium>*/

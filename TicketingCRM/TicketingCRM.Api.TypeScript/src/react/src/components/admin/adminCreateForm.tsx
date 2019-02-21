@@ -1,15 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface AdminCreateComponentProps {
   form:WrappedFormUtils;
@@ -95,7 +92,7 @@ class AdminCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } 
     else if (this.state.loaded) {
 
@@ -104,8 +101,9 @@ class AdminCreateComponent extends React.Component<
             			<Form.Item>
               <label htmlFor='email'>email</label>
               <br />             
-{getFieldDecorator('email', {
+              {getFieldDecorator('email', {
               rules:[],
+              
               })
               ( <Input placeholder={"email"} id={"email"} /> )}
               </Form.Item>
@@ -113,8 +111,9 @@ class AdminCreateComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='firstName'>firstName</label>
               <br />             
-{getFieldDecorator('firstName', {
+              {getFieldDecorator('firstName', {
               rules:[],
+              
               })
               ( <Input placeholder={"firstName"} id={"firstName"} /> )}
               </Form.Item>
@@ -122,8 +121,9 @@ class AdminCreateComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='lastName'>lastName</label>
               <br />             
-{getFieldDecorator('lastName', {
+              {getFieldDecorator('lastName', {
               rules:[],
+              
               })
               ( <Input placeholder={"lastName"} id={"lastName"} /> )}
               </Form.Item>
@@ -131,8 +131,9 @@ class AdminCreateComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='password'>password</label>
               <br />             
-{getFieldDecorator('password', {
+              {getFieldDecorator('password', {
               rules:[],
+              
               })
               ( <Input placeholder={"password"} id={"password"} /> )}
               </Form.Item>
@@ -140,8 +141,9 @@ class AdminCreateComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='phone'>phone</label>
               <br />             
-{getFieldDecorator('phone', {
+              {getFieldDecorator('phone', {
               rules:[],
+              
               })
               ( <InputNumber placeholder={"phone"} id={"phone"} /> )}
               </Form.Item>
@@ -149,8 +151,9 @@ class AdminCreateComponent extends React.Component<
 						<Form.Item>
               <label htmlFor='username'>username</label>
               <br />             
-{getFieldDecorator('username', {
+              {getFieldDecorator('username', {
               rules:[],
+              
               })
               ( <Input placeholder={"username"} id={"username"} /> )}
               </Form.Item>
@@ -172,5 +175,5 @@ class AdminCreateComponent extends React.Component<
 export const WrappedAdminCreateComponent = Form.create({ name: 'Admin Create' })(AdminCreateComponent);
 
 /*<Codenesium>
-    <Hash>766226bcd0c5613779e329b3a92371ef</Hash>
+    <Hash>4d15fde72197a77c715e96b8f4ecc518</Hash>
 </Codenesium>*/

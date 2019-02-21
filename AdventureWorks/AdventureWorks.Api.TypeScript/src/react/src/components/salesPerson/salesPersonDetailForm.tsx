@@ -1,103 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import SalesPersonMapper from './salesPersonMapper';
 import SalesPersonViewModel from './salesPersonViewModel';
-
-interface Props {
-  history: any;
-  model?: SalesPersonViewModel;
-}
-
-const SalesPersonDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.SalesPersons + '/edit/' + model.model!.businessEntityID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="bonus" className={'col-sm-2 col-form-label'}>
-          Bonus
-        </label>
-        <div className="col-sm-12">{String(model.model!.bonus)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="businessEntityID" className={'col-sm-2 col-form-label'}>
-          BusinessEntityID
-        </label>
-        <div className="col-sm-12">{String(model.model!.businessEntityID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="commissionPct" className={'col-sm-2 col-form-label'}>
-          CommissionPct
-        </label>
-        <div className="col-sm-12">{String(model.model!.commissionPct)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="rowguid" className={'col-sm-2 col-form-label'}>
-          Rowguid
-        </label>
-        <div className="col-sm-12">{String(model.model!.rowguid)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="salesLastYear" className={'col-sm-2 col-form-label'}>
-          SalesLastYear
-        </label>
-        <div className="col-sm-12">{String(model.model!.salesLastYear)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="salesQuota" className={'col-sm-2 col-form-label'}>
-          SalesQuota
-        </label>
-        <div className="col-sm-12">{String(model.model!.salesQuota)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="salesYTD" className={'col-sm-2 col-form-label'}>
-          SalesYTD
-        </label>
-        <div className="col-sm-12">{String(model.model!.salesYTD)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="territoryID" className={'col-sm-2 col-form-label'}>
-          TerritoryID
-        </label>
-        <div className="col-sm-12">
-          {model.model!.territoryIDNavigation!.toDisplay()}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  businessEntityID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SalesPersonDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface SalesPersonDetailComponentState {
@@ -108,17 +21,23 @@ interface SalesPersonDetailComponentState {
   errorMessage: string;
 }
 
-export default class SalesPersonDetailComponent extends React.Component<
+class SalesPersonDetailComponent extends React.Component<
   SalesPersonDetailComponentProps,
   SalesPersonDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new SalesPersonViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.SalesPersons + '/edit/' + this.state.model!.businessEntityID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -128,7 +47,7 @@ export default class SalesPersonDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.SalesPersons +
           '/' +
-          this.props.match.params.businessEntityID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -139,9 +58,9 @@ export default class SalesPersonDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.SalesPersonClientResponseModel;
 
-          let mapper = new SalesPersonMapper();
-
           console.log(response);
+
+          let mapper = new SalesPersonMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -163,17 +82,69 @@ export default class SalesPersonDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <SalesPersonDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Bonus</h3>
+              <p>{String(this.state.model!.bonus)}</p>
+            </div>
+            <div>
+              <h3>BusinessEntityID</h3>
+              <p>{String(this.state.model!.businessEntityID)}</p>
+            </div>
+            <div>
+              <h3>CommissionPct</h3>
+              <p>{String(this.state.model!.commissionPct)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>SalesLastYear</h3>
+              <p>{String(this.state.model!.salesLastYear)}</p>
+            </div>
+            <div>
+              <h3>SalesQuota</h3>
+              <p>{String(this.state.model!.salesQuota)}</p>
+            </div>
+            <div>
+              <h3>SalesYTD</h3>
+              <p>{String(this.state.model!.salesYTD)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>TerritoryID</h3>
+              <p>
+                {String(this.state.model!.territoryIDNavigation!.toDisplay())}
+              </p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -181,7 +152,11 @@ export default class SalesPersonDetailComponent extends React.Component<
   }
 }
 
+export const WrappedSalesPersonDetailComponent = Form.create({
+  name: 'SalesPerson Detail',
+})(SalesPersonDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>2e121785b305699f31b17f05ee870d9a</Hash>
+    <Hash>f08f161dd204e09019c66312835847f8</Hash>
 </Codenesium>*/

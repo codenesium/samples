@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class LinkTypeViewModel {
   id: number;
   rwType: string;
@@ -19,5 +21,5 @@ export default class LinkTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>a530d5622a3d86a1771a20675e91ed40</Hash>
+    <Hash>f77da046e96d1bb7dcd4e30627a5a6e1</Hash>
 </Codenesium>*/

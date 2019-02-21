@@ -1,108 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import TransactionHistoryArchiveMapper from './transactionHistoryArchiveMapper';
 import TransactionHistoryArchiveViewModel from './transactionHistoryArchiveViewModel';
-
-interface Props {
-  history: any;
-  model?: TransactionHistoryArchiveViewModel;
-}
-
-const TransactionHistoryArchiveDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.TransactionHistoryArchives +
-              '/edit/' +
-              model.model!.transactionID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="actualCost" className={'col-sm-2 col-form-label'}>
-          ActualCost
-        </label>
-        <div className="col-sm-12">{String(model.model!.actualCost)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="productID" className={'col-sm-2 col-form-label'}>
-          ProductID
-        </label>
-        <div className="col-sm-12">{String(model.model!.productID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="quantity" className={'col-sm-2 col-form-label'}>
-          Quantity
-        </label>
-        <div className="col-sm-12">{String(model.model!.quantity)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="referenceOrderID" className={'col-sm-2 col-form-label'}>
-          ReferenceOrderID
-        </label>
-        <div className="col-sm-12">{String(model.model!.referenceOrderID)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="referenceOrderLineID"
-          className={'col-sm-2 col-form-label'}
-        >
-          ReferenceOrderLineID
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.referenceOrderLineID)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="transactionDate" className={'col-sm-2 col-form-label'}>
-          TransactionDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.transactionDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="transactionID" className={'col-sm-2 col-form-label'}>
-          TransactionID
-        </label>
-        <div className="col-sm-12">{String(model.model!.transactionID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="transactionType" className={'col-sm-2 col-form-label'}>
-          TransactionType
-        </label>
-        <div className="col-sm-12">{String(model.model!.transactionType)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  transactionID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TransactionHistoryArchiveDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface TransactionHistoryArchiveDetailComponentState {
@@ -113,17 +21,25 @@ interface TransactionHistoryArchiveDetailComponentState {
   errorMessage: string;
 }
 
-export default class TransactionHistoryArchiveDetailComponent extends React.Component<
+class TransactionHistoryArchiveDetailComponent extends React.Component<
   TransactionHistoryArchiveDetailComponentProps,
   TransactionHistoryArchiveDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new TransactionHistoryArchiveViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.TransactionHistoryArchives +
+        '/edit/' +
+        this.state.model!.transactionID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -133,7 +49,7 @@ export default class TransactionHistoryArchiveDetailComponent extends React.Comp
         Constants.ApiEndpoint +
           ApiRoutes.TransactionHistoryArchives +
           '/' +
-          this.props.match.params.transactionID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -144,9 +60,9 @@ export default class TransactionHistoryArchiveDetailComponent extends React.Comp
         resp => {
           let response = resp.data as Api.TransactionHistoryArchiveClientResponseModel;
 
-          let mapper = new TransactionHistoryArchiveMapper();
-
           console.log(response);
+
+          let mapper = new TransactionHistoryArchiveMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -168,17 +84,67 @@ export default class TransactionHistoryArchiveDetailComponent extends React.Comp
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <TransactionHistoryArchiveDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ActualCost</h3>
+              <p>{String(this.state.model!.actualCost)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>ProductID</h3>
+              <p>{String(this.state.model!.productID)}</p>
+            </div>
+            <div>
+              <h3>Quantity</h3>
+              <p>{String(this.state.model!.quantity)}</p>
+            </div>
+            <div>
+              <h3>ReferenceOrderID</h3>
+              <p>{String(this.state.model!.referenceOrderID)}</p>
+            </div>
+            <div>
+              <h3>ReferenceOrderLineID</h3>
+              <p>{String(this.state.model!.referenceOrderLineID)}</p>
+            </div>
+            <div>
+              <h3>TransactionDate</h3>
+              <p>{String(this.state.model!.transactionDate)}</p>
+            </div>
+            <div>
+              <h3>TransactionID</h3>
+              <p>{String(this.state.model!.transactionID)}</p>
+            </div>
+            <div>
+              <h3>TransactionType</h3>
+              <p>{String(this.state.model!.transactionType)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -186,7 +152,11 @@ export default class TransactionHistoryArchiveDetailComponent extends React.Comp
   }
 }
 
+export const WrappedTransactionHistoryArchiveDetailComponent = Form.create({
+  name: 'TransactionHistoryArchive Detail',
+})(TransactionHistoryArchiveDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>d48f2902f37008a8c6b60b8766a0bc57</Hash>
+    <Hash>fe3291f7ba55abaeee92f50c4a455724</Hash>
 </Codenesium>*/

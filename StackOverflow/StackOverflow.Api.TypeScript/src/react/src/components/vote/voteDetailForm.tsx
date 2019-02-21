@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VoteMapper from './voteMapper';
 import VoteViewModel from './voteViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface VoteDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class VoteDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,24 +105,24 @@ class VoteDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>bountyAmount</div>
-              <div>{this.state.model!.bountyAmount}</div>
+              <h3>BountyAmount</h3>
+              <p>{String(this.state.model!.bountyAmount)}</p>
             </div>
             <div>
-              <div>creationDate</div>
-              <div>{this.state.model!.creationDate}</div>
+              <h3>CreationDate</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
             </div>
             <div>
-              <div>postId</div>
-              <div>{this.state.model!.postId}</div>
+              <h3>PostId</h3>
+              <p>{String(this.state.model!.postId)}</p>
             </div>
             <div>
-              <div>userId</div>
-              <div>{this.state.model!.userId}</div>
+              <h3>UserId</h3>
+              <p>{String(this.state.model!.userId)}</p>
             </div>
             <div>
-              <div>voteTypeId</div>
-              <div>{this.state.model!.voteTypeId}</div>
+              <h3>VoteTypeId</h3>
+              <p>{String(this.state.model!.voteTypeId)}</p>
             </div>
           </div>
           {message}
@@ -142,5 +140,5 @@ export const WrappedVoteDetailComponent = Form.create({ name: 'Vote Detail' })(
 
 
 /*<Codenesium>
-    <Hash>5e8656d6e494348eb30770e8b7b28453</Hash>
+    <Hash>94852e389ae46cb96cd6b85de0e429b2</Hash>
 </Codenesium>*/

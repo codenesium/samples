@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class CountryViewModel {
   id: number;
   name: string;
@@ -8,7 +10,7 @@ export default class CountryViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.name = name;
   }
 
@@ -19,5 +21,5 @@ export default class CountryViewModel {
 
 
 /*<Codenesium>
-    <Hash>9fe29b4fb9c006689f5587f08d4ac777</Hash>
+    <Hash>cc3a918c6d02d8862ad035529483c0de</Hash>
 </Codenesium>*/

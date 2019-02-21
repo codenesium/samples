@@ -1,203 +1,219 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import IllustrationViewModel from './illustrationViewModel';
+import * as Api from '../../api/models';
 import IllustrationMapper from './illustrationMapper';
+import IllustrationViewModel from './illustrationViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:IllustrationViewModel
+interface IllustrationEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-  const IllustrationEditDisplay = (props: FormikProps<IllustrationViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.IllustrationClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof IllustrationViewModel]  && props.errors[name as keyof IllustrationViewModel]) {
-            response += props.errors[name as keyof IllustrationViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("diagram") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Diagram</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="diagram" className={errorExistForField("diagram") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("diagram") && <small className="text-danger">{errorsForField("diagram")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("illustrationID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>IllustrationID</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="illustrationID" className={errorExistForField("illustrationID") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("illustrationID") && <small className="text-danger">{errorsForField("illustrationID")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("modifiedDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ModifiedDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="modifiedDate" className={errorExistForField("modifiedDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("modifiedDate") && <small className="text-danger">{errorsForField("modifiedDate")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface IllustrationEditComponentState {
+  model?: IllustrationViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class IllustrationEditComponent extends React.Component<
+  IllustrationEditComponentProps,
+  IllustrationEditComponentState
+> {
+  state = {
+    model: new IllustrationViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const IllustrationEdit = withFormik<Props, IllustrationViewModel>({
-    mapPropsToValues: props => {
-        let response = new IllustrationViewModel();
-		response.setProperties(props.model!.diagram,props.model!.illustrationID,props.model!.modifiedDate);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<IllustrationViewModel> = { };
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.illustrationID == 0) {
-                errors.illustrationID = "Required"
-                    }if(values.modifiedDate == undefined) {
-                errors.modifiedDate = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new IllustrationMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.Illustrations +'/' + values.illustrationID,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Illustrations +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.IllustrationClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'IllustrationEdit', 
-  })(IllustrationEditDisplay);
-
- 
-  interface IParams 
-  {
-     illustrationID:number;
-  }
-
-  interface IMatch
-  {
-     params: IParams;
-  }
-  
-  interface IllustrationEditComponentProps
-  {
-     match:IMatch;
-  }
-
-  interface IllustrationEditComponentState
-  {
-      model?:IllustrationViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class IllustrationEditComponent extends React.Component<IllustrationEditComponentProps, IllustrationEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Illustrations + '/' + this.props.match.params.illustrationID, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.IllustrationClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new IllustrationMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<IllustrationEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.IllustrationClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new IllustrationMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as IllustrationViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: IllustrationViewModel) => {
+    let mapper = new IllustrationMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.Illustrations +
+          '/' +
+          this.state.model!.illustrationID,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.IllustrationClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="diagram">Diagram</label>
+            <br />
+            {getFieldDecorator('diagram', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Diagram'}
+                id={'diagram'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ModifiedDate'}
+                id={'modifiedDate'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedIllustrationEditComponent = Form.create({
+  name: 'Illustration Edit',
+})(IllustrationEditComponent);
+
 
 /*<Codenesium>
-    <Hash>c6da79c46d7fca661c98d0f66df3d6d3</Hash>
+    <Hash>426c9c6210474097e049c8ad2b7390f9</Hash>
 </Codenesium>*/

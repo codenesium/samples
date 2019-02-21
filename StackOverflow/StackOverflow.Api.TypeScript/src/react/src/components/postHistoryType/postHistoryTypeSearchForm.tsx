@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import PostHistoryTypeMapper from './postHistoryTypeMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import PostHistoryTypeViewModel from './postHistoryTypeViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PostHistoryTypeSearchComponentProps
@@ -112,10 +110,10 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -226,5 +224,5 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
 export const WrappedPostHistoryTypeSearchComponent = Form.create({ name: 'PostHistoryType Search' })(PostHistoryTypeSearchComponent);
 
 /*<Codenesium>
-    <Hash>eee541e705fc9535ee861b7ce895da53</Hash>
+    <Hash>4c9bf6f56b2afbcf18658a7381fbaf88</Hash>
 </Codenesium>*/

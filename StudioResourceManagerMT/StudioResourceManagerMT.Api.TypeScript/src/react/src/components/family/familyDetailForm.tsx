@@ -1,103 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import FamilyMapper from './familyMapper';
 import FamilyViewModel from './familyViewModel';
-
-interface Props {
-  history: any;
-  model?: FamilyViewModel;
-}
-
-const FamilyDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Families + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="note" className={'col-sm-2 col-form-label'}>
-          Notes
-        </label>
-        <div className="col-sm-12">{String(model.model!.note)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="primaryContactEmail"
-          className={'col-sm-2 col-form-label'}
-        >
-          PrimaryContactEmail
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.primaryContactEmail)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="primaryContactFirstName"
-          className={'col-sm-2 col-form-label'}
-        >
-          PrimaryContactFirstName
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.primaryContactFirstName)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="primaryContactLastName"
-          className={'col-sm-2 col-form-label'}
-        >
-          PrimaryContactLastName
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.primaryContactLastName)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="primaryContactPhone"
-          className={'col-sm-2 col-form-label'}
-        >
-          PrimaryContactPhone
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.primaryContactPhone)}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FamilyDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface FamilyDetailComponentState {
@@ -108,17 +21,23 @@ interface FamilyDetailComponentState {
   errorMessage: string;
 }
 
-export default class FamilyDetailComponent extends React.Component<
+class FamilyDetailComponent extends React.Component<
   FamilyDetailComponentProps,
   FamilyDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new FamilyViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Families + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -139,9 +58,9 @@ export default class FamilyDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.FamilyClientResponseModel;
 
-          let mapper = new FamilyMapper();
-
           console.log(response);
+
+          let mapper = new FamilyMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -163,17 +82,55 @@ export default class FamilyDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <FamilyDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>notes</h3>
+              <p>{String(this.state.model!.note)}</p>
+            </div>
+            <div>
+              <h3>primaryContactEmail</h3>
+              <p>{String(this.state.model!.primaryContactEmail)}</p>
+            </div>
+            <div>
+              <h3>primaryContactFirstName</h3>
+              <p>{String(this.state.model!.primaryContactFirstName)}</p>
+            </div>
+            <div>
+              <h3>primaryContactLastName</h3>
+              <p>{String(this.state.model!.primaryContactLastName)}</p>
+            </div>
+            <div>
+              <h3>primaryContactPhone</h3>
+              <p>{String(this.state.model!.primaryContactPhone)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -181,7 +138,11 @@ export default class FamilyDetailComponent extends React.Component<
   }
 }
 
+export const WrappedFamilyDetailComponent = Form.create({
+  name: 'Family Detail',
+})(FamilyDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b24225187026a4773bbdecd455f93d2c</Hash>
+    <Hash>811b721a39ee0616ad0190c39e476a02</Hash>
 </Codenesium>*/

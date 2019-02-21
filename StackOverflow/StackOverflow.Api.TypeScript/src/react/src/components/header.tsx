@@ -12,13 +12,8 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>
-) => {
-  class WrapperHeaderComponent extends React.Component<
-    WrapperHeaderProps & RouteComponentProps,
-    WrapperHeaderState
-  > {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
     state = { collapsed: false };
 
     onCollapse = () => {
@@ -34,161 +29,111 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
-                key="Dashboard"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Dashboard</span>
-                  </span>
-                }
+               <MenuItem
+                key="Home"
               >
-                <Link to={'/'}>Dashboard</Link>
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}>Home</Link>
               </MenuItem>
 
-              <MenuItem
+			   			   <MenuItem
                 key="badge"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Badge</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Badges}>Badges</Link>
+			  <Icon type="pie-chart" />
+              <span>Badges</span>
+              <Link to={ClientRoutes.Badges}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="comment"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Comment</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Comments}>Comments</Link>
+			  <Icon type="rise" />
+              <span>Comments</span>
+              <Link to={ClientRoutes.Comments}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="linkType"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>LinkType</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.LinkTypes}>LinkTypes</Link>
+			  <Icon type="bars" />
+              <span>LinkTypes</span>
+              <Link to={ClientRoutes.LinkTypes}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="postHistory"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>PostHistory</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.PostHistories}>PostHistories</Link>
+			  <Icon type="cloud" />
+              <span>PostHistories</span>
+              <Link to={ClientRoutes.PostHistories}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="postHistoryType"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>PostHistoryType</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.PostHistoryTypes}>PostHistoryTypes</Link>
+			  <Icon type="code" />
+              <span>PostHistoryTypes</span>
+              <Link to={ClientRoutes.PostHistoryTypes}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="postLink"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>PostLink</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.PostLinks}>PostLinks</Link>
+			  <Icon type="smile" />
+              <span>PostLinks</span>
+              <Link to={ClientRoutes.PostLinks}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="post"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Post</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Posts}>Posts</Link>
+			  <Icon type="laptop" />
+              <span>Posts</span>
+              <Link to={ClientRoutes.Posts}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="postType"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>PostType</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.PostTypes}>PostTypes</Link>
+			  <Icon type="mobile" />
+              <span>PostTypes</span>
+              <Link to={ClientRoutes.PostTypes}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="tag"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Tag</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Tags}>Tags</Link>
+			  <Icon type="paper-clip" />
+              <span>Tags</span>
+              <Link to={ClientRoutes.Tags}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="user"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>User</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Users}>Users</Link>
+			  <Icon type="setting" />
+              <span>Users</span>
+              <Link to={ClientRoutes.Users}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="vote"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Vote</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.Votes}>Votes</Link>
+			  <Icon type="user" />
+              <span>Votes</span>
+              <Link to={ClientRoutes.Votes}></Link>
               </MenuItem>
 
-              <MenuItem
+							   <MenuItem
                 key="voteType"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>VoteType</span>
-                  </span>
-                }
               >
-                <Link to={ClientRoutes.VoteTypes}>VoteTypes</Link>
+			  <Icon type="home" />
+              <span>VoteTypes</span>
+              <Link to={ClientRoutes.VoteTypes}></Link>
               </MenuItem>
+
+				
             </Menu>
           </Sider>
           <Layout>
@@ -207,7 +152,6 @@ export const wrapperHeader = (
   return WrapperHeaderComponent;
 };
 
-
 /*<Codenesium>
-    <Hash>3be2141e6e8f66309cbae9854a71a053</Hash>
+    <Hash>af3ea7f8f06f1331637322bb538ffe03</Hash>
 </Codenesium>*/

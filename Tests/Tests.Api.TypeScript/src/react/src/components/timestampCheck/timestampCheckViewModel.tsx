@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TimestampCheckViewModel {
   id: number;
   name: string;
@@ -22,5 +24,5 @@ export default class TimestampCheckViewModel {
 
 
 /*<Codenesium>
-    <Hash>27211c83a745eb1b60b737443cdc37cd</Hash>
+    <Hash>8bf508d5c3a2b46001342d332d180717</Hash>
 </Codenesium>*/

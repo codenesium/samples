@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ProvinceMapper from './provinceMapper';
 import ProvinceViewModel from './provinceViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface ProvinceDetailComponentProps {
   form: WrappedFormUtils;
@@ -92,7 +90,7 @@ class ProvinceDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -108,11 +106,13 @@ class ProvinceDetailComponent extends React.Component<
           <div>
             <div style={{ marginBottom: '10px' }}>
               <h3>countryId</h3>
-              <div>{this.state.model!.countryIdNavigation!.toDisplay()}</div>
+              <p>
+                {String(this.state.model!.countryIdNavigation!.toDisplay())}
+              </p>
             </div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
           {message}
@@ -130,5 +130,5 @@ export const WrappedProvinceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bb662a1e62406cadfba81215ed2c9e7c</Hash>
+    <Hash>ba40f021ed1384a2d9d2896459e81b47</Hash>
 </Codenesium>*/

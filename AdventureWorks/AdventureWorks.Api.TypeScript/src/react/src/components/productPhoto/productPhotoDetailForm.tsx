@@ -1,93 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import ProductPhotoMapper from './productPhotoMapper';
 import ProductPhotoViewModel from './productPhotoViewModel';
-
-interface Props {
-  history: any;
-  model?: ProductPhotoViewModel;
-}
-
-const ProductPhotoDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.ProductPhotoes + '/edit/' + model.model!.productPhotoID
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="largePhoto" className={'col-sm-2 col-form-label'}>
-          LargePhoto
-        </label>
-        <div className="col-sm-12">{String(model.model!.largePhoto)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="largePhotoFileName"
-          className={'col-sm-2 col-form-label'}
-        >
-          LargePhotoFileName
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.largePhotoFileName)}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="modifiedDate" className={'col-sm-2 col-form-label'}>
-          ModifiedDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.modifiedDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="productPhotoID" className={'col-sm-2 col-form-label'}>
-          ProductPhotoID
-        </label>
-        <div className="col-sm-12">{String(model.model!.productPhotoID)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="thumbNailPhoto" className={'col-sm-2 col-form-label'}>
-          ThumbNailPhoto
-        </label>
-        <div className="col-sm-12">{String(model.model!.thumbNailPhoto)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="thumbnailPhotoFileName"
-          className={'col-sm-2 col-form-label'}
-        >
-          ThumbnailPhotoFileName
-        </label>
-        <div className="col-sm-12">
-          {String(model.model!.thumbnailPhotoFileName)}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  productPhotoID: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ProductPhotoDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface ProductPhotoDetailComponentState {
@@ -98,17 +21,23 @@ interface ProductPhotoDetailComponentState {
   errorMessage: string;
 }
 
-export default class ProductPhotoDetailComponent extends React.Component<
+class ProductPhotoDetailComponent extends React.Component<
   ProductPhotoDetailComponentProps,
   ProductPhotoDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new ProductPhotoViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ProductPhotoes + '/edit/' + this.state.model!.productPhotoID
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -118,7 +47,7 @@ export default class ProductPhotoDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.ProductPhotoes +
           '/' +
-          this.props.match.params.productPhotoID,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -129,9 +58,9 @@ export default class ProductPhotoDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.ProductPhotoClientResponseModel;
 
-          let mapper = new ProductPhotoMapper();
-
           console.log(response);
+
+          let mapper = new ProductPhotoMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -153,17 +82,55 @@ export default class ProductPhotoDetailComponent extends React.Component<
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <ProductPhotoDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>LargePhoto</h3>
+              <p>{String(this.state.model!.largePhoto)}</p>
+            </div>
+            <div>
+              <h3>LargePhotoFileName</h3>
+              <p>{String(this.state.model!.largePhotoFileName)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>ProductPhotoID</h3>
+              <p>{String(this.state.model!.productPhotoID)}</p>
+            </div>
+            <div>
+              <h3>ThumbNailPhoto</h3>
+              <p>{String(this.state.model!.thumbNailPhoto)}</p>
+            </div>
+            <div>
+              <h3>ThumbnailPhotoFileName</h3>
+              <p>{String(this.state.model!.thumbnailPhotoFileName)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -171,7 +138,11 @@ export default class ProductPhotoDetailComponent extends React.Component<
   }
 }
 
+export const WrappedProductPhotoDetailComponent = Form.create({
+  name: 'ProductPhoto Detail',
+})(ProductPhotoDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>d8ae811f178254c1c7dc9dc491a3a5b5</Hash>
+    <Hash>2a0c8754de28165292a430c86b32e0e0</Hash>
 </Codenesium>*/

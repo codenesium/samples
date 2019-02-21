@@ -1,3 +1,4 @@
+import moment from 'moment';
 import DeviceViewModel from '../device/deviceViewModel';
 
 export default class DeviceActionViewModel {
@@ -12,7 +13,7 @@ export default class DeviceActionViewModel {
     this.action = '';
     this.deviceId = 0;
     this.deviceIdEntity = '';
-    this.deviceIdNavigation = undefined;
+    this.deviceIdNavigation = new DeviceViewModel();
     this.id = 0;
     this.name = '';
   }
@@ -36,5 +37,5 @@ export default class DeviceActionViewModel {
 
 
 /*<Codenesium>
-    <Hash>387cbc15aeb36fb07a3ca66d85d8f11b</Hash>
+    <Hash>804767f6349b1f375c3c4dd7e9abf4aa</Hash>
 </Codenesium>*/

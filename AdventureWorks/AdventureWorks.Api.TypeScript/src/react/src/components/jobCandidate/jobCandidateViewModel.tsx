@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class JobCandidateViewModel {
   businessEntityID: any;
   jobCandidateID: number;
@@ -17,10 +19,10 @@ export default class JobCandidateViewModel {
     modifiedDate: any,
     resume: string
   ): void {
-    this.businessEntityID = businessEntityID;
-    this.jobCandidateID = jobCandidateID;
-    this.modifiedDate = modifiedDate;
-    this.resume = resume;
+    this.businessEntityID = moment(businessEntityID, 'YYYY-MM-DD');
+    this.jobCandidateID = moment(jobCandidateID, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.resume = moment(resume, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -30,5 +32,5 @@ export default class JobCandidateViewModel {
 
 
 /*<Codenesium>
-    <Hash>31a59e90f0e7bdfbf8148232489624af</Hash>
+    <Hash>40805b183316ad8a4c666c6277de5a65</Hash>
 </Codenesium>*/

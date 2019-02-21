@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class VendorViewModel {
   accountNumber: string;
   activeFlag: boolean;
@@ -29,14 +31,17 @@ export default class VendorViewModel {
     preferredVendorStatu: boolean,
     purchasingWebServiceURL: string
   ): void {
-    this.accountNumber = accountNumber;
-    this.activeFlag = activeFlag;
-    this.businessEntityID = businessEntityID;
-    this.creditRating = creditRating;
-    this.modifiedDate = modifiedDate;
-    this.name = name;
-    this.preferredVendorStatu = preferredVendorStatu;
-    this.purchasingWebServiceURL = purchasingWebServiceURL;
+    this.accountNumber = moment(accountNumber, 'YYYY-MM-DD');
+    this.activeFlag = moment(activeFlag, 'YYYY-MM-DD');
+    this.businessEntityID = moment(businessEntityID, 'YYYY-MM-DD');
+    this.creditRating = moment(creditRating, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.preferredVendorStatu = moment(preferredVendorStatu, 'YYYY-MM-DD');
+    this.purchasingWebServiceURL = moment(
+      purchasingWebServiceURL,
+      'YYYY-MM-DD'
+    );
   }
 
   toDisplay(): string {
@@ -46,5 +51,5 @@ export default class VendorViewModel {
 
 
 /*<Codenesium>
-    <Hash>bfe493103486564e53ba51b08b053621</Hash>
+    <Hash>ed5a16b8d71472b37591b4c51f81d708</Hash>
 </Codenesium>*/

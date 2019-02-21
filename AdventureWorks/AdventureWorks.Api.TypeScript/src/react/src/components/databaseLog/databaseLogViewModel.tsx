@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class DatabaseLogViewModel {
   databaseLogID: number;
   databaseUser: string;
@@ -23,12 +25,12 @@ export default class DatabaseLogViewModel {
     tsql: string,
     xmlEvent: string
   ): void {
-    this.databaseLogID = databaseLogID;
-    this.databaseUser = databaseUser;
-    this.postTime = postTime;
-    this.schema = schema;
-    this.tsql = tsql;
-    this.xmlEvent = xmlEvent;
+    this.databaseLogID = moment(databaseLogID, 'YYYY-MM-DD');
+    this.databaseUser = moment(databaseUser, 'YYYY-MM-DD');
+    this.postTime = moment(postTime, 'YYYY-MM-DD');
+    this.schema = moment(schema, 'YYYY-MM-DD');
+    this.tsql = moment(tsql, 'YYYY-MM-DD');
+    this.xmlEvent = moment(xmlEvent, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -38,5 +40,5 @@ export default class DatabaseLogViewModel {
 
 
 /*<Codenesium>
-    <Hash>671d6f305ad455c8ad309a1d487c78d4</Hash>
+    <Hash>b3c583671f4cb74df797cf0d158ea5fe</Hash>
 </Codenesium>*/

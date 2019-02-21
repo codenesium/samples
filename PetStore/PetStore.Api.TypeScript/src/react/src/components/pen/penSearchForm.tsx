@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import PenMapper from './penMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import ReactTable from 'react-table';
 import PenViewModel from './penViewModel';
 import 'react-table/react-table.css';
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PenSearchComponentProps {
@@ -148,9 +146,9 @@ export default class PenSearchComponent extends React.Component<
 
   render() {
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       let errorResponse: JSX.Element = <span />;
 
@@ -275,5 +273,5 @@ export const WrappedPenSearchComponent = Form.create({ name: 'Pen Search' })(
 
 
 /*<Codenesium>
-    <Hash>0cc95dff1fdfbb7b6e94f27fe6ba49ee</Hash>
+    <Hash>fd11e02d9bc0798c98a831cc06f008c4</Hash>
 </Codenesium>*/
