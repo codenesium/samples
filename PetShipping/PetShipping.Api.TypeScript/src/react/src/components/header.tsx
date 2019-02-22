@@ -12,9 +12,14 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
-displayName:string) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -30,199 +35,155 @@ displayName:string) => {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
+              <MenuItem
                 key="Home"
-				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}></Link>
+                <Link to={'/'} />
               </MenuItem>
 
-			   			   <MenuItem
-                key="airline"
-              >
-			  <Icon type="pie-chart" />
-              <span>Airlines</span>
-              <Link to={ClientRoutes.Airlines}></Link>
+              <MenuItem key="airline">
+                <Icon type="pie-chart" />
+                <span>Airlines</span>
+                <Link to={ClientRoutes.Airlines} />
               </MenuItem>
 
-							   <MenuItem
-                key="airTransport"
-              >
-			  <Icon type="rise" />
-              <span>AirTransports</span>
-              <Link to={ClientRoutes.AirTransports}></Link>
+              <MenuItem key="airTransport">
+                <Icon type="rise" />
+                <span>AirTransports</span>
+                <Link to={ClientRoutes.AirTransports} />
               </MenuItem>
 
-							   <MenuItem
-                key="breed"
-              >
-			  <Icon type="bars" />
-              <span>Breeds</span>
-              <Link to={ClientRoutes.Breeds}></Link>
+              <MenuItem key="breed">
+                <Icon type="bars" />
+                <span>Breeds</span>
+                <Link to={ClientRoutes.Breeds} />
               </MenuItem>
 
-							   <MenuItem
-                key="country"
-              >
-			  <Icon type="cloud" />
-              <span>Countries</span>
-              <Link to={ClientRoutes.Countries}></Link>
+              <MenuItem key="country">
+                <Icon type="cloud" />
+                <span>Countries</span>
+                <Link to={ClientRoutes.Countries} />
               </MenuItem>
 
-							   <MenuItem
-                key="countryRequirement"
-              >
-			  <Icon type="code" />
-              <span>CountryRequirements</span>
-              <Link to={ClientRoutes.CountryRequirements}></Link>
+              <MenuItem key="countryRequirement">
+                <Icon type="code" />
+                <span>CountryRequirements</span>
+                <Link to={ClientRoutes.CountryRequirements} />
               </MenuItem>
 
-							   <MenuItem
-                key="customer"
-              >
-			  <Icon type="smile" />
-              <span>Customers</span>
-              <Link to={ClientRoutes.Customers}></Link>
+              <MenuItem key="customer">
+                <Icon type="smile" />
+                <span>Customers</span>
+                <Link to={ClientRoutes.Customers} />
               </MenuItem>
 
-							   <MenuItem
-                key="customerCommunication"
-              >
-			  <Icon type="laptop" />
-              <span>CustomerCommunications</span>
-              <Link to={ClientRoutes.CustomerCommunications}></Link>
+              <MenuItem key="customerCommunication">
+                <Icon type="laptop" />
+                <span>CustomerCommunications</span>
+                <Link to={ClientRoutes.CustomerCommunications} />
               </MenuItem>
 
-							   <MenuItem
-                key="destination"
-              >
-			  <Icon type="mobile" />
-              <span>Destinations</span>
-              <Link to={ClientRoutes.Destinations}></Link>
+              <MenuItem key="destination">
+                <Icon type="mobile" />
+                <span>Destinations</span>
+                <Link to={ClientRoutes.Destinations} />
               </MenuItem>
 
-							   <MenuItem
-                key="employee"
-              >
-			  <Icon type="paper-clip" />
-              <span>Employees</span>
-              <Link to={ClientRoutes.Employees}></Link>
+              <MenuItem key="employee">
+                <Icon type="paper-clip" />
+                <span>Employees</span>
+                <Link to={ClientRoutes.Employees} />
               </MenuItem>
 
-							   <MenuItem
-                key="handler"
-              >
-			  <Icon type="setting" />
-              <span>Handlers</span>
-              <Link to={ClientRoutes.Handlers}></Link>
+              <MenuItem key="handler">
+                <Icon type="setting" />
+                <span>Handlers</span>
+                <Link to={ClientRoutes.Handlers} />
               </MenuItem>
 
-							   <MenuItem
-                key="handlerPipelineStep"
-              >
-			  <Icon type="user" />
-              <span>HandlerPipelineSteps</span>
-              <Link to={ClientRoutes.HandlerPipelineSteps}></Link>
+              <MenuItem key="handlerPipelineStep">
+                <Icon type="user" />
+                <span>HandlerPipelineSteps</span>
+                <Link to={ClientRoutes.HandlerPipelineSteps} />
               </MenuItem>
 
-							   <MenuItem
-                key="otherTransport"
-              >
-			  <Icon type="home" />
-              <span>OtherTransports</span>
-              <Link to={ClientRoutes.OtherTransports}></Link>
+              <MenuItem key="otherTransport">
+                <Icon type="home" />
+                <span>OtherTransports</span>
+                <Link to={ClientRoutes.OtherTransports} />
               </MenuItem>
 
-							   <MenuItem
-                key="pet"
-              >
-			  <Icon type="camera" />
-              <span>Pets</span>
-              <Link to={ClientRoutes.Pets}></Link>
+              <MenuItem key="pet">
+                <Icon type="camera" />
+                <span>Pets</span>
+                <Link to={ClientRoutes.Pets} />
               </MenuItem>
 
-							   <MenuItem
-                key="pipeline"
-              >
-			  <Icon type="like" />
-              <span>Pipelines</span>
-              <Link to={ClientRoutes.Pipelines}></Link>
+              <MenuItem key="pipeline">
+                <Icon type="like" />
+                <span>Pipelines</span>
+                <Link to={ClientRoutes.Pipelines} />
               </MenuItem>
 
-							   <MenuItem
-                key="pipelineStatu"
-              >
-			  <Icon type="bulb" />
-              <span>PipelineStatus</span>
-              <Link to={ClientRoutes.PipelineStatus}></Link>
+              <MenuItem key="pipelineStatu">
+                <Icon type="bulb" />
+                <span>PipelineStatus</span>
+                <Link to={ClientRoutes.PipelineStatus} />
               </MenuItem>
 
-							   <MenuItem
-                key="pipelineStep"
-              >
-			  <Icon type="tool" />
-              <span>PipelineSteps</span>
-              <Link to={ClientRoutes.PipelineSteps}></Link>
+              <MenuItem key="pipelineStep">
+                <Icon type="tool" />
+                <span>PipelineSteps</span>
+                <Link to={ClientRoutes.PipelineSteps} />
               </MenuItem>
 
-							   <MenuItem
-                key="pipelineStepDestination"
-              >
-			  <Icon type="coffee" />
-              <span>PipelineStepDestinations</span>
-              <Link to={ClientRoutes.PipelineStepDestinations}></Link>
+              <MenuItem key="pipelineStepDestination">
+                <Icon type="coffee" />
+                <span>PipelineStepDestinations</span>
+                <Link to={ClientRoutes.PipelineStepDestinations} />
               </MenuItem>
 
-							   <MenuItem
-                key="pipelineStepNote"
-              >
-			  <Icon type="experiment" />
-              <span>PipelineStepNotes</span>
-              <Link to={ClientRoutes.PipelineStepNotes}></Link>
+              <MenuItem key="pipelineStepNote">
+                <Icon type="experiment" />
+                <span>PipelineStepNotes</span>
+                <Link to={ClientRoutes.PipelineStepNotes} />
               </MenuItem>
 
-							   <MenuItem
-                key="pipelineStepStatu"
-              >
-			  <Icon type="security-scan" />
-              <span>PipelineStepStatus</span>
-              <Link to={ClientRoutes.PipelineStepStatus}></Link>
+              <MenuItem key="pipelineStepStatu">
+                <Icon type="security-scan" />
+                <span>PipelineStepStatus</span>
+                <Link to={ClientRoutes.PipelineStepStatus} />
               </MenuItem>
 
-							   <MenuItem
-                key="pipelineStepStepRequirement"
-              >
-			  <Icon type="thunderbolt" />
-              <span>PipelineStepStepRequirements</span>
-              <Link to={ClientRoutes.PipelineStepStepRequirements}></Link>
+              <MenuItem key="pipelineStepStepRequirement">
+                <Icon type="thunderbolt" />
+                <span>PipelineStepStepRequirements</span>
+                <Link to={ClientRoutes.PipelineStepStepRequirements} />
               </MenuItem>
 
-							   <MenuItem
-                key="sale"
-              >
-			  <Icon type="gateway" />
-              <span>Sales</span>
-              <Link to={ClientRoutes.Sales}></Link>
+              <MenuItem key="sale">
+                <Icon type="gateway" />
+                <span>Sales</span>
+                <Link to={ClientRoutes.Sales} />
               </MenuItem>
 
-							   <MenuItem
-                key="species"
-              >
-			  <Icon type="shopping" />
-              <span>Species</span>
-              <Link to={ClientRoutes.Species}></Link>
+              <MenuItem key="species">
+                <Icon type="shopping" />
+                <span>Species</span>
+                <Link to={ClientRoutes.Species} />
               </MenuItem>
-
-				
             </Menu>
           </Sider>
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-            <h2>{displayName}</h2>
-			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+              <h2>{displayName}</h2>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -235,6 +196,7 @@ displayName:string) => {
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>a595470a7e2e62f87fbc90e55d49c75d</Hash>
+    <Hash>7e2a1545c8cdc5c42e9444326dfd1d95</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import OtherTransportMapper from '../otherTransport/otherTransportMapper';
 import OtherTransportViewModel from '../otherTransport/otherTransportViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface OtherTransportTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,53 +20,52 @@ interface OtherTransportTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<OtherTransportViewModel>;
+  filteredRecords: Array<OtherTransportViewModel>;
 }
 
-export class  OtherTransportTableComponent extends React.Component<
-OtherTransportTableComponentProps,
-OtherTransportTableComponentState
+export class OtherTransportTableComponent extends React.Component<
+  OtherTransportTableComponentProps,
+  OtherTransportTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: OtherTransportViewModel) {
-  this.props.history.push(ClientRoutes.OtherTransports + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: OtherTransportViewModel) {
+    this.props.history.push(ClientRoutes.OtherTransports + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: OtherTransportViewModel) {
-  this.props.history.push(ClientRoutes.OtherTransports + '/' + row.id);
-}
+  handleDetailClick(e: any, row: OtherTransportViewModel) {
+    this.props.history.push(ClientRoutes.OtherTransports + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.OtherTransportClientResponseModel>;
+          let response = resp.data as Array<
+            Api.OtherTransportClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new OtherTransportMapper();
-          
-          let otherTransports:Array<OtherTransportViewModel> = [];
 
-          response.forEach(x =>
-          {
-              otherTransports.push(mapper.mapApiResponseToViewModel(x));
+          let otherTransports: Array<OtherTransportViewModel> = [];
+
+          response.forEach(x => {
+            otherTransports.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,61 +90,86 @@ handleDetailClick(e:any, row: OtherTransportViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'OtherTransports',
-                    columns: [
-					  {
-                      Header: 'HandlerId',
-                      accessor: 'handlerId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Handlers + '/' + props.original.handlerId); }}>
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'OtherTransports',
+                columns: [
+                  {
+                    Header: 'HandlerId',
+                    accessor: 'handlerId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Handlers +
+                                '/' +
+                                props.original.handlerId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.handlerIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
                       return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'PipelineStepId',
-                      accessor: 'pipelineStepId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.PipelineSteps + '/' + props.original.pipelineStepId); }}>
+                    },
+                  },
+                  {
+                    Header: 'PipelineStepId',
+                    accessor: 'pipelineStepId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.PipelineSteps +
+                                '/' +
+                                props.original.pipelineStepId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.pipelineStepIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as OtherTransportViewModel
@@ -156,8 +180,8 @@ handleDetailClick(e:any, row: OtherTransportViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as OtherTransportViewModel
@@ -166,11 +190,14 @@ handleDetailClick(e:any, row: OtherTransportViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -178,6 +205,7 @@ handleDetailClick(e:any, row: OtherTransportViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>9657cafdd1f82f7b97ca6f0f513d9071</Hash>
+    <Hash>edbc8360e3bd4c049352bd7ccce28466</Hash>
 </Codenesium>*/

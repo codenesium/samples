@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FileCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface FileCreateComponentState {
@@ -20,7 +30,7 @@ interface FileCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class FileCreateComponent extends React.Component<
@@ -33,12 +43,12 @@ class FileCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as FileViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +57,9 @@ class FileCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:FileViewModel) =>
-  {  
+  submit = (model: FileViewModel) => {
     let mapper = new FileMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Files,
         mapper.mapViewModelToApiRequest(model),
@@ -65,188 +74,189 @@ class FileCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.FileClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="bucketId">BucketId</label>
+            <br />
+            {getFieldDecorator('bucketId', {
+              rules: [],
+            })(<Input placeholder={'BucketId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='bucketId'>BucketId</label>
-              <br />             
-              {getFieldDecorator('bucketId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"BucketId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="dateCreated">DateCreated</label>
+            <br />
+            {getFieldDecorator('dateCreated', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateCreated'} />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='dateCreated'>DateCreated</label>
-              <br />             
-              {getFieldDecorator('dateCreated', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DateCreated"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="description">Description</label>
+            <br />
+            {getFieldDecorator('description', {
+              rules: [{ max: 255, message: 'Exceeds max length of 255' }],
+            })(<Input placeholder={'Description'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='description'>Description</label>
-              <br />             
-              {getFieldDecorator('description', {
-              rules:[{ max: 255, message: 'Exceeds max length of 255' },
-],
-              
-              })
-              ( <Input placeholder={"Description"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="expiration">Expiration</label>
+            <br />
+            {getFieldDecorator('expiration', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'Expiration'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='expiration'>Expiration</label>
-              <br />             
-              {getFieldDecorator('expiration', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"Expiration"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="extension">Extension</label>
+            <br />
+            {getFieldDecorator('extension', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 32, message: 'Exceeds max length of 32' },
+              ],
+            })(<Input placeholder={'Extension'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='extension'>Extension</label>
-              <br />             
-              {getFieldDecorator('extension', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-{ max: 32, message: 'Exceeds max length of 32' },
-],
-              
-              })
-              ( <Input placeholder={"Extension"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="externalId">ExternalId</label>
+            <br />
+            {getFieldDecorator('externalId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'ExternalId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='externalId'>ExternalId</label>
-              <br />             
-              {getFieldDecorator('externalId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"ExternalId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="fileSizeInByte">FileSizeInByte</label>
+            <br />
+            {getFieldDecorator('fileSizeInByte', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<InputNumber placeholder={'FileSizeInByte'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='fileSizeInByte'>FileSizeInByte</label>
-              <br />             
-              {getFieldDecorator('fileSizeInByte', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <InputNumber placeholder={"FileSizeInByte"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="fileTypeId">FileTypeId</label>
+            <br />
+            {getFieldDecorator('fileTypeId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'FileTypeId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='fileTypeId'>FileTypeId</label>
-              <br />             
-              {getFieldDecorator('fileTypeId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"FileTypeId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="location">Location</label>
+            <br />
+            {getFieldDecorator('location', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 255, message: 'Exceeds max length of 255' },
+              ],
+            })(<Input placeholder={'Location'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='location'>Location</label>
-              <br />             
-              {getFieldDecorator('location', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-{ max: 255, message: 'Exceeds max length of 255' },
-],
-              
-              })
-              ( <Input placeholder={"Location"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="privateKey">PrivateKey</label>
+            <br />
+            {getFieldDecorator('privateKey', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 64, message: 'Exceeds max length of 64' },
+              ],
+            })(<Input placeholder={'PrivateKey'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='privateKey'>PrivateKey</label>
-              <br />             
-              {getFieldDecorator('privateKey', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-{ max: 64, message: 'Exceeds max length of 64' },
-],
-              
-              })
-              ( <Input placeholder={"PrivateKey"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="publicKey">PublicKey</label>
+            <br />
+            {getFieldDecorator('publicKey', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 64, message: 'Exceeds max length of 64' },
+              ],
+            })(<Input placeholder={'PublicKey'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='publicKey'>PublicKey</label>
-              <br />             
-              {getFieldDecorator('publicKey', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-{ max: 64, message: 'Exceeds max length of 64' },
-],
-              
-              })
-              ( <Input placeholder={"PublicKey"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(FileCreateComponent);
+export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(
+  FileCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>81c829e5d1793909889a15676592762e</Hash>
+    <Hash>3735e43032d3c1bd7d96033cbbcd0932</Hash>
 </Codenesium>*/

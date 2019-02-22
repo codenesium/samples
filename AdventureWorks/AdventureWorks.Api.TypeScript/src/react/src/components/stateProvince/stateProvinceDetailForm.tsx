@@ -6,7 +6,10 @@ import StateProvinceMapper from './stateProvinceMapper';
 import StateProvinceViewModel from './stateProvinceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { AddressTableComponent } from '../shared/addressTable';
+import {AddressTableComponent} from '../shared/addressTable'
+	
+
+
 
 interface StateProvinceDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface StateProvinceDetailComponentState {
 }
 
 class StateProvinceDetailComponent extends React.Component<
-  StateProvinceDetailComponentProps,
-  StateProvinceDetailComponentState
+StateProvinceDetailComponentProps,
+StateProvinceDetailComponentState
 > {
   state = {
     model: new StateProvinceViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.StateProvinces + '/edit/' + this.state.model!.stateProvinceID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.StateProvinces + '/edit/' + this.state.model!.stateProvinceID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,76 +86,72 @@ class StateProvinceDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>CountryRegionCode</h3>
-              <p>{String(this.state.model!.countryRegionCode)}</p>
-            </div>
-            <div>
-              <h3>IsOnlyStateProvinceFlag</h3>
-              <p>{String(this.state.model!.isOnlyStateProvinceFlag)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-            <div>
-              <h3>StateProvinceCode</h3>
-              <p>{String(this.state.model!.stateProvinceCode)}</p>
-            </div>
-            <div>
-              <h3>StateProvinceID</h3>
-              <p>{String(this.state.model!.stateProvinceID)}</p>
-            </div>
-            <div>
-              <h3>TerritoryID</h3>
-              <p>{String(this.state.model!.territoryID)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>CountryRegionCode</h3>
+							<p>{String(this.state.model!.countryRegionCode)}</p>
+						 </div>
+					   						 <div>
+							<h3>IsOnlyStateProvinceFlag</h3>
+							<p>{String(this.state.model!.isOnlyStateProvinceFlag)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   						 <div>
+							<h3>StateProvinceCode</h3>
+							<p>{String(this.state.model!.stateProvinceCode)}</p>
+						 </div>
+					   						 <div>
+							<h3>StateProvinceID</h3>
+							<p>{String(this.state.model!.stateProvinceID)}</p>
+						 </div>
+					   						 <div>
+							<h3>TerritoryID</h3>
+							<p>{String(this.state.model!.territoryID)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Addresses</h3>
-            <AddressTableComponent
-              addressID={this.state.model!.addressID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.StateProvinces +
-                '/' +
-                this.state.model!.stateProvinceID +
-                '/' +
-                ApiRoutes.Addresses
-              }
-            />
-          </div>
+            <AddressTableComponent 
+			addressID={this.state.model!.addressID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.StateProvinces + '/' + this.state.model!.stateProvinceID + '/' + ApiRoutes.Addresses}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -163,11 +160,10 @@ class StateProvinceDetailComponent extends React.Component<
   }
 }
 
-export const WrappedStateProvinceDetailComponent = Form.create({
-  name: 'StateProvince Detail',
-})(StateProvinceDetailComponent);
-
+export const WrappedStateProvinceDetailComponent = Form.create({ name: 'StateProvince Detail' })(
+  StateProvinceDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>0e1a2faa68a2aff7864a04a3f5f251dc</Hash>
+    <Hash>004a082a1cfee483c4fcccec2276bf91</Hash>
 </Codenesium>*/

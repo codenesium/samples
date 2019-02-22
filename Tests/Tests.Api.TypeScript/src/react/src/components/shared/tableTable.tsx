@@ -6,11 +6,11 @@ import TableMapper from '../table/tableMapper';
 import TableViewModel from '../table/tableViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface TableTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface TableTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<TableViewModel>;
+  filteredRecords: Array<TableViewModel>;
 }
 
-export class  TableTableComponent extends React.Component<
-TableTableComponentProps,
-TableTableComponentState
+export class TableTableComponent extends React.Component<
+  TableTableComponentProps,
+  TableTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: TableViewModel) {
-  this.props.history.push(ClientRoutes.Tables + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: TableViewModel) {
+    this.props.history.push(ClientRoutes.Tables + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: TableViewModel) {
-  this.props.history.push(ClientRoutes.Tables + '/' + row.id);
-}
+  handleDetailClick(e: any, row: TableViewModel) {
+    this.props.history.push(ClientRoutes.Tables + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.TableClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: TableViewModel) {
           console.log(response);
 
           let mapper = new TableMapper();
-          
-          let tables:Array<TableViewModel> = [];
 
-          response.forEach(x =>
-          {
-              tables.push(mapper.mapApiResponseToViewModel(x));
+          let tables: Array<TableViewModel> = [];
+
+          response.forEach(x => {
+            tables.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,47 +88,47 @@ handleDetailClick(e:any, row: TableViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Tables',
-                    columns: [
-					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Tables',
+                columns: [
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
                       return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TableViewModel
@@ -142,8 +139,8 @@ handleDetailClick(e:any, row: TableViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as TableViewModel
@@ -152,11 +149,14 @@ handleDetailClick(e:any, row: TableViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -164,6 +164,7 @@ handleDetailClick(e:any, row: TableViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>49dff941815e85c5df8c378ae476e55e</Hash>
+    <Hash>5e1683568de3d969840f4fc12cc36d84</Hash>
 </Codenesium>*/

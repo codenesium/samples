@@ -6,11 +6,11 @@ import EmployeeMapper from '../employee/employeeMapper';
 import EmployeeViewModel from '../employee/employeeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface EmployeeTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface EmployeeTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<EmployeeViewModel>;
+  filteredRecords: Array<EmployeeViewModel>;
 }
 
-export class  EmployeeTableComponent extends React.Component<
-EmployeeTableComponentProps,
-EmployeeTableComponentState
+export class EmployeeTableComponent extends React.Component<
+  EmployeeTableComponentProps,
+  EmployeeTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: EmployeeViewModel) {
-  this.props.history.push(ClientRoutes.Employees + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: EmployeeViewModel) {
+    this.props.history.push(ClientRoutes.Employees + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: EmployeeViewModel) {
-  this.props.history.push(ClientRoutes.Employees + '/' + row.id);
-}
+  handleDetailClick(e: any, row: EmployeeViewModel) {
+    this.props.history.push(ClientRoutes.Employees + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.EmployeeClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: EmployeeViewModel) {
           console.log(response);
 
           let mapper = new EmployeeMapper();
-          
-          let employees:Array<EmployeeViewModel> = [];
 
-          response.forEach(x =>
-          {
-              employees.push(mapper.mapApiResponseToViewModel(x));
+          let employees: Array<EmployeeViewModel> = [];
+
+          response.forEach(x => {
+            employees.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,65 +88,70 @@ handleDetailClick(e:any, row: EmployeeViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Employees',
-                    columns: [
-					  {
-                      Header: 'FirstName',
-                      accessor: 'firstName',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Employees',
+                columns: [
+                  {
+                    Header: 'FirstName',
+                    accessor: 'firstName',
+                    Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
-                      }           
-                    },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'IsSalesPerson',
-                      accessor: 'isSalesPerson',
-                      Cell: (props) => {
-                      return <span>{String(props.original.isSalesPerson)}</span>;
-                      }           
-                    },  {
-                      Header: 'IsShipper',
-                      accessor: 'isShipper',
-                      Cell: (props) => {
-                      return <span>{String(props.original.isShipper)}</span>;
-                      }           
-                    },  {
-                      Header: 'LastName',
-                      accessor: 'lastName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.lastName)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
+                      return <span>{String(props.original.id)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'IsSalesPerson',
+                    accessor: 'isSalesPerson',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.isSalesPerson)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'IsShipper',
+                    accessor: 'isShipper',
+                    Cell: props => {
+                      return <span>{String(props.original.isShipper)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'LastName',
+                    accessor: 'lastName',
+                    Cell: props => {
+                      return <span>{String(props.original.lastName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as EmployeeViewModel
@@ -160,8 +162,8 @@ handleDetailClick(e:any, row: EmployeeViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as EmployeeViewModel
@@ -170,11 +172,14 @@ handleDetailClick(e:any, row: EmployeeViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -182,6 +187,7 @@ handleDetailClick(e:any, row: EmployeeViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>30c7159fd13efc68dab8eef24c872023</Hash>
+    <Hash>5dfa0ccd23e5eb4c2e78d6457e03d384</Hash>
 </Codenesium>*/

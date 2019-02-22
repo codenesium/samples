@@ -6,11 +6,11 @@ import LinkTypeMapper from '../linkType/linkTypeMapper';
 import LinkTypeViewModel from '../linkType/linkTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface LinkTypeTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface LinkTypeTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<LinkTypeViewModel>;
+  filteredRecords : Array<LinkTypeViewModel>;
 }
 
-export class LinkTypeTableComponent extends React.Component<
-  LinkTypeTableComponentProps,
-  LinkTypeTableComponentState
+export class  LinkTypeTableComponent extends React.Component<
+LinkTypeTableComponentProps,
+LinkTypeTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: LinkTypeViewModel) {
-    this.props.history.push(ClientRoutes.LinkTypes + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: LinkTypeViewModel) {
+  this.props.history.push(ClientRoutes.LinkTypes + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: LinkTypeViewModel) {
-    this.props.history.push(ClientRoutes.LinkTypes + '/' + row.id);
-  }
+handleDetailClick(e:any, row: LinkTypeViewModel) {
+  this.props.history.push(ClientRoutes.LinkTypes + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.LinkTypeClientResponseModel>;
@@ -59,11 +61,12 @@ export class LinkTypeTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new LinkTypeMapper();
+          
+          let linkTypes:Array<LinkTypeViewModel> = [];
 
-          let linkTypes: Array<LinkTypeViewModel> = [];
-
-          response.forEach(x => {
-            linkTypes.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              linkTypes.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,40 +91,41 @@ export class LinkTypeTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'LinkTypes',
-                columns: [
-                  {
-                    Header: 'Type',
-                    accessor: 'rwType',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'LinkTypes',
+                    columns: [
+					  {
+                      Header: 'Type',
+                      accessor: 'rwType',
+                      Cell: (props) => {
                       return <span>{String(props.original.rwType)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as LinkTypeViewModel
@@ -132,8 +136,8 @@ export class LinkTypeTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as LinkTypeViewModel
@@ -142,14 +146,11 @@ export class LinkTypeTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -157,7 +158,6 @@ export class LinkTypeTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>ed3c4edf5357bc04329473af1635d39c</Hash>
+    <Hash>65f50007c2282e5b81e069b573872ea0</Hash>
 </Codenesium>*/

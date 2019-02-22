@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ClaspMapper from './claspMapper';
 import ClaspViewModel from './claspViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ClaspEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface ClaspEditComponentState {
@@ -20,7 +30,7 @@ interface ClaspEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class ClaspEditComponent extends React.Component<
@@ -33,10 +43,10 @@ class ClaspEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -67,7 +77,9 @@ class ClaspEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -80,11 +92,11 @@ class ClaspEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as ClaspViewModel;
         console.log('Received values of form: ', model);
@@ -93,10 +105,9 @@ class ClaspEditComponent extends React.Component<
     });
   };
 
-  submit = (model:ClaspViewModel) =>
-  {  
+  submit = (model: ClaspViewModel) => {
     let mapper = new ClaspMapper();
-     axios
+    axios
       .put(
         Constants.ApiEndpoint + ApiRoutes.Clasps + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -111,79 +122,90 @@ class ClaspEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.ClaspClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="nextChainId">NextChainId</label>
+            <br />
+            {getFieldDecorator('nextChainId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'NextChainId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='nextChainId'>NextChainId</label>
-              <br />             
-              {getFieldDecorator('nextChainId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"NextChainId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="previousChainId">PreviousChainId</label>
+            <br />
+            {getFieldDecorator('previousChainId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'PreviousChainId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='previousChainId'>PreviousChainId</label>
-              <br />             
-              {getFieldDecorator('previousChainId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"PreviousChainId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedClaspEditComponent = Form.create({ name: 'Clasp Edit' })(ClaspEditComponent);
+export const WrappedClaspEditComponent = Form.create({ name: 'Clasp Edit' })(
+  ClaspEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>11771a4d5dbdc02eb8285c1342de21fb</Hash>
+    <Hash>8eea4647f87fbfc7462057ffe3fa4a93</Hash>
 </Codenesium>*/

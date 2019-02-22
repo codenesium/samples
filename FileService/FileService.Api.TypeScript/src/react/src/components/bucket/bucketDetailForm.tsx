@@ -6,10 +6,7 @@ import BucketMapper from './bucketMapper';
 import BucketViewModel from './bucketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {FileTableComponent} from '../shared/fileTable'
-	
-
-
+import { FileTableComponent } from '../shared/fileTable';
 
 interface BucketDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface BucketDetailComponentState {
 }
 
 class BucketDetailComponent extends React.Component<
-BucketDetailComponentProps,
-BucketDetailComponentState
+  BucketDetailComponentProps,
+  BucketDetailComponentState
 > {
   state = {
     model: new BucketViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Buckets + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Buckets + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,48 +85,52 @@ BucketDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>ExternalId</h3>
-							<p>{String(this.state.model!.externalId)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ExternalId</h3>
+              <p>{String(this.state.model!.externalId)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Files</h3>
-            <FileTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Buckets + '/' + this.state.model!.id + '/' + ApiRoutes.Files}
-			/>
-         </div>
-	
-
+            <FileTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Buckets +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Files
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,10 +139,11 @@ BucketDetailComponentState
   }
 }
 
-export const WrappedBucketDetailComponent = Form.create({ name: 'Bucket Detail' })(
-  BucketDetailComponent
-);
+export const WrappedBucketDetailComponent = Form.create({
+  name: 'Bucket Detail',
+})(BucketDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>f25437aabef78988870767d0d293fee3</Hash>
+    <Hash>47b989812fe91dfd15323b5966aef292</Hash>
 </Codenesium>*/

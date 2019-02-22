@@ -7,9 +7,6 @@ import PipelineStepStepRequirementViewModel from './pipelineStepStepRequirementV
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface PipelineStepStepRequirementDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,25 @@ interface PipelineStepStepRequirementDetailComponentState {
 }
 
 class PipelineStepStepRequirementDetailComponent extends React.Component<
-PipelineStepStepRequirementDetailComponentProps,
-PipelineStepStepRequirementDetailComponentState
+  PipelineStepStepRequirementDetailComponentProps,
+  PipelineStepStepRequirementDetailComponentState
 > {
   state = {
     model: new PipelineStepStepRequirementViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.PipelineStepStepRequirements + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PipelineStepStepRequirements +
+        '/edit/' +
+        this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,47 +86,48 @@ PipelineStepStepRequirementDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>details</h3>
-							<p>{String(this.state.model!.detail)}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>pipelineStepId</h3>
-							<p>{String(this.state.model!.pipelineStepIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>requirementMet</h3>
-							<p>{String(this.state.model!.requirementMet)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>details</h3>
+              <p>{String(this.state.model!.detail)}</p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>pipelineStepId</h3>
+              <p>
+                {String(
+                  this.state.model!.pipelineStepIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>requirementMet</h3>
+              <p>{String(this.state.model!.requirementMet)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -134,10 +136,11 @@ PipelineStepStepRequirementDetailComponentState
   }
 }
 
-export const WrappedPipelineStepStepRequirementDetailComponent = Form.create({ name: 'PipelineStepStepRequirement Detail' })(
-  PipelineStepStepRequirementDetailComponent
-);
+export const WrappedPipelineStepStepRequirementDetailComponent = Form.create({
+  name: 'PipelineStepStepRequirement Detail',
+})(PipelineStepStepRequirementDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>ed3d6ceda98ae940d6733c673ef8b0dc</Hash>
+    <Hash>127e9050cee49e0a82829f4e86db4f6c</Hash>
 </Codenesium>*/

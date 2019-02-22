@@ -12,9 +12,14 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
-displayName:string) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -30,39 +35,35 @@ displayName:string) => {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
+              <MenuItem
                 key="Home"
-				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}></Link>
+                <Link to={'/'} />
               </MenuItem>
 
-			   			   <MenuItem
-                key="device"
-              >
-			  <Icon type="pie-chart" />
-              <span>Devices</span>
-              <Link to={ClientRoutes.Devices}></Link>
+              <MenuItem key="device">
+                <Icon type="pie-chart" />
+                <span>Devices</span>
+                <Link to={ClientRoutes.Devices} />
               </MenuItem>
 
-							   <MenuItem
-                key="deviceAction"
-              >
-			  <Icon type="rise" />
-              <span>DeviceActions</span>
-              <Link to={ClientRoutes.DeviceActions}></Link>
+              <MenuItem key="deviceAction">
+                <Icon type="rise" />
+                <span>DeviceActions</span>
+                <Link to={ClientRoutes.DeviceActions} />
               </MenuItem>
-
-				
             </Menu>
           </Sider>
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-            <h2>{displayName}</h2>
-			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+              <h2>{displayName}</h2>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -75,6 +76,7 @@ displayName:string) => {
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>5f184f46d6636173ee1d5b68256f34f4</Hash>
+    <Hash>e26cd48ccd9db3a1ebe09a82059acdd1</Hash>
 </Codenesium>*/

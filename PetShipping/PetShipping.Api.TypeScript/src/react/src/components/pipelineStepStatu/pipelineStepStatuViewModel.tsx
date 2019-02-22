@@ -1,29 +1,25 @@
-import moment from 'moment'
-
+import moment from 'moment';
 
 export default class PipelineStepStatuViewModel {
-    id:number;
-name:string;
+  id: number;
+  name: string;
 
-    constructor() {
-		this.id = 0;
-this.name = '';
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
 
-    }
+  setProperties(id: number, name: string): void {
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+  }
 
-	setProperties(id : number,name : string) : void
-	{
-		this.id = moment(id,'YYYY-MM-DD');
-this.name = moment(name,'YYYY-MM-DD');
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>944a51dc19ef8318c6c362bbc6269a21</Hash>
+    <Hash>79ecc3d987f7d34dbd8360fafdba9210</Hash>
 </Codenesium>*/

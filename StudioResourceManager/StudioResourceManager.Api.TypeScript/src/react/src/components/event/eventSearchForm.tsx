@@ -4,224 +4,296 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 import EventViewModel from './eventViewModel';
-import "react-table/react-table.css";
+import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface EventSearchComponentProps
-{
-     form:WrappedFormUtils;
-	 history:any;
-	 match:any;
+interface EventSearchComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-interface EventSearchComponentState
-{
-    records:Array<EventViewModel>;
-    filteredRecords:Array<EventViewModel>;
-    loading:boolean;
-    loaded:boolean;
-    errorOccurred:boolean;
-    errorMessage:string;
-    searchValue:string;
-    deleteSubmitted:boolean;
-    deleteSuccess:boolean;
-    deleteResponse:string;
+interface EventSearchComponentState {
+  records: Array<EventViewModel>;
+  filteredRecords: Array<EventViewModel>;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  searchValue: string;
+  deleteSubmitted: boolean;
+  deleteSuccess: boolean;
+  deleteResponse: string;
 }
 
-export default class EventSearchComponent extends React.Component<EventSearchComponentProps, EventSearchComponentState> {
+export default class EventSearchComponent extends React.Component<
+  EventSearchComponentProps,
+  EventSearchComponentState
+> {
+  state = {
+    deleteSubmitted: false,
+    deleteSuccess: false,
+    deleteResponse: '',
+    records: new Array<EventViewModel>(),
+    filteredRecords: new Array<EventViewModel>(),
+    searchValue: '',
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-    state = ({deleteSubmitted:false, deleteSuccess:false, deleteResponse:'', records:new Array<EventViewModel>(), filteredRecords:new Array<EventViewModel>(), searchValue:'', loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-    
-    componentDidMount () {
-        this.loadRecords();
-    }
+  componentDidMount() {
+    this.loadRecords();
+  }
 
-    handleEditClick(e:any, row:EventViewModel) {
-         this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
-    }
+  handleEditClick(e: any, row: EventViewModel) {
+    this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
+  }
 
-    handleDetailClick(e:any, row:EventViewModel) {
-         this.props.history.push(ClientRoutes.Events + '/' + row.id);
-    }
+  handleDetailClick(e: any, row: EventViewModel) {
+    this.props.history.push(ClientRoutes.Events + '/' + row.id);
+  }
 
-    handleCreateClick(e:any) {
-        this.props.history.push(ClientRoutes.Events + '/create');
-    }
+  handleCreateClick(e: any) {
+    this.props.history.push(ClientRoutes.Events + '/create');
+  }
 
-    handleDeleteClick(e:any, row:Api.EventClientResponseModel) {
-        axios.delete(Constants.ApiEndpoint + ApiRoutes.Events + '/' + row.id,
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            this.setState({...this.state, deleteResponse:'Record deleted', deleteSuccess:true, deleteSubmitted:true});
-            this.loadRecords(this.state.searchValue);
-        }, error => {
-            console.log(error);
-            this.setState({...this.state, deleteResponse:'Error deleting record', deleteSuccess:false, deleteSubmitted:true});
-        })
-    }
-
-   handleSearchChanged(e:React.FormEvent<HTMLInputElement>) {
-		this.loadRecords(e.currentTarget.value);
-   }
-   
-   loadRecords(query:string = '') {
-	   this.setState({...this.state, searchValue:query});
-	   let searchEndpoint = Constants.ApiEndpoint + ApiRoutes.Events + '?limit=100';
-
-	   if(query)
-	   {
-		   searchEndpoint += '&query=' +  query;
-	   }
-
-	   axios.get(searchEndpoint,
-	   {
-		   headers: {
-			   'Content-Type': 'application/json',
-		   }
-	   })
-	   .then(resp => {
-		    let response = resp.data as Array<Api.EventClientResponseModel>;
-		    let viewModels : Array<EventViewModel> = [];
-			let mapper = new EventMapper();
-
-			response.forEach(x =>
-			{
-				viewModels.push(mapper.mapApiResponseToViewModel(x));
-			})
-
-            this.setState({records:viewModels, filteredRecords:viewModels, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-	   }, error => {
-		   console.log(error);
-		   this.setState({records:new Array<EventViewModel>(), filteredRecords:new Array<EventViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
-	   })
-    }
-
-    filterGrid() {
-
-    }
-    
-    render () {
-        if(this.state.loading) {
-            return <Spin size="large" />;
-        } 
-		else if(this.state.errorOccurred) {
-            return <Alert message={this.state.errorMessage} type="error" />
+  handleDeleteClick(e: any, row: Api.EventClientResponseModel) {
+    axios
+      .delete(Constants.ApiEndpoint + ApiRoutes.Events + '/' + row.id, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(
+        resp => {
+          this.setState({
+            ...this.state,
+            deleteResponse: 'Record deleted',
+            deleteSuccess: true,
+            deleteSubmitted: true,
+          });
+          this.loadRecords(this.state.searchValue);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            deleteResponse: 'Error deleting record',
+            deleteSuccess: false,
+            deleteSubmitted: true,
+          });
         }
-        else if(this.state.loaded) {
+      );
+  }
 
-            let errorResponse:JSX.Element = <span></span>;
+  handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
+    this.loadRecords(e.currentTarget.value);
+  }
 
-            if (this.state.deleteSubmitted) {
-				if (this.state.deleteSuccess) {
-				  errorResponse = (
-					<Alert message={this.state.deleteResponse} type="success" style={{marginBottom:"25px"}} />
-				  );
-				} else {
-				  errorResponse = (
-					<Alert message={this.state.deleteResponse} type="error" style={{marginBottom:"25px"}} />
-				  );
-				}
-			}
-            
-			return (
-            <div>
-            {errorResponse}
-            <Row>
-				<Col span={8}></Col>
-				<Col span={8}>   
-				   <Input 
-					placeholder={"Search"} 
-					id={"search"} 
-					onChange={(e:any) => {
-					  this.handleSearchChanged(e)
-				   }}/>
-				</Col>
-				<Col span={8}>  
-				  <Button 
-				  style={{'float':'right'}}
-				  type="primary" 
-				  onClick={(e:any) => {
-                        this.handleCreateClick(e)
-						}}
-				  >
-				  +
-				  </Button>
-				</Col>
-			</Row>
-			<br />
-			<br />
-            <ReactTable 
-                data={this.state.filteredRecords}
-                columns={[{
-                    Header: 'Events',
-                    columns: [
-					  {
-                      Header: 'Actual End Date',
-                      accessor: 'actualEndDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.actualEndDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Actual Start Date',
-                      accessor: 'actualStartDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.actualStartDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Bill Amount',
-                      accessor: 'billAmount',
-                      Cell: (props) => {
+  loadRecords(query: string = '') {
+    this.setState({ ...this.state, searchValue: query });
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.Events + '?limit=100';
+
+    if (query) {
+      searchEndpoint += '&query=' + query;
+    }
+
+    axios
+      .get(searchEndpoint, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(
+        resp => {
+          let response = resp.data as Array<Api.EventClientResponseModel>;
+          let viewModels: Array<EventViewModel> = [];
+          let mapper = new EventMapper();
+
+          response.forEach(x => {
+            viewModels.push(mapper.mapApiResponseToViewModel(x));
+          });
+
+          this.setState({
+            records: viewModels,
+            filteredRecords: viewModels,
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            records: new Array<EventViewModel>(),
+            filteredRecords: new Array<EventViewModel>(),
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  filterGrid() {}
+
+  render() {
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
+      let errorResponse: JSX.Element = <span />;
+
+      if (this.state.deleteSubmitted) {
+        if (this.state.deleteSuccess) {
+          errorResponse = (
+            <Alert
+              message={this.state.deleteResponse}
+              type="success"
+              style={{ marginBottom: '25px' }}
+            />
+          );
+        } else {
+          errorResponse = (
+            <Alert
+              message={this.state.deleteResponse}
+              type="error"
+              style={{ marginBottom: '25px' }}
+            />
+          );
+        }
+      }
+
+      return (
+        <div>
+          {errorResponse}
+          <Row>
+            <Col span={8} />
+            <Col span={8}>
+              <Input
+                placeholder={'Search'}
+                id={'search'}
+                onChange={(e: any) => {
+                  this.handleSearchChanged(e);
+                }}
+              />
+            </Col>
+            <Col span={8}>
+              <Button
+                style={{ float: 'right' }}
+                type="primary"
+                onClick={(e: any) => {
+                  this.handleCreateClick(e);
+                }}
+              >
+                +
+              </Button>
+            </Col>
+          </Row>
+          <br />
+          <br />
+          <ReactTable
+            data={this.state.filteredRecords}
+            columns={[
+              {
+                Header: 'Events',
+                columns: [
+                  {
+                    Header: 'Actual End Date',
+                    accessor: 'actualEndDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.actualEndDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actual Start Date',
+                    accessor: 'actualStartDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.actualStartDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Bill Amount',
+                    accessor: 'billAmount',
+                    Cell: props => {
                       return <span>{String(props.original.billAmount)}</span>;
-                      }           
-                    },  {
-                      Header: 'Status',
-                      accessor: 'eventStatusId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.EventStatus + '/' + props.original.eventStatusId); }}>
+                    },
+                  },
+                  {
+                    Header: 'Status',
+                    accessor: 'eventStatusId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.EventStatus +
+                                '/' +
+                                props.original.eventStatusId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.eventStatusIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'Scheduled End Date',
-                      accessor: 'scheduledEndDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.scheduledEndDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Scheduled Start Date',
-                      accessor: 'scheduledStartDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.scheduledStartDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Student Notes',
-                      accessor: 'studentNote',
-                      Cell: (props) => {
-                      return <span>{String(props.original.studentNote)}</span>;
-                      }           
-                    },  {
-                      Header: 'Teacher notes',
-                      accessor: 'teacherNote',
-                      Cell: (props) => {
-                      return <span>{String(props.original.teacherNote)}</span>;
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Scheduled End Date',
+                    accessor: 'scheduledEndDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.scheduledEndDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Scheduled Start Date',
+                    accessor: 'scheduledStartDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.scheduledStartDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Student Notes',
+                    accessor: 'studentNote',
+                    Cell: props => {
+                      return <span>{String(props.original.studentNote)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Teacher notes',
+                    accessor: 'teacherNote',
+                    Cell: props => {
+                      return <span>{String(props.original.teacherNote)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as EventViewModel
@@ -232,8 +304,8 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as EventViewModel
@@ -244,8 +316,8 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                         </Button>
                         &nbsp;
                         <Button
-                          type="danger" 
-                          onClick={(e:any) => {
+                          type="danger"
+                          onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
                               row.original as EventViewModel
@@ -254,21 +326,26 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                         >
                           <i className="far fa-trash-alt" />
                         </Button>
-
-                        </div>)
-                    }],
-                    
-                  }]} />
-                  </div>);
-        } 
-		else {
-		  return null;
-		}
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
-export const WrappedEventSearchComponent = Form.create({ name: 'Event Search' })(EventSearchComponent);
+export const WrappedEventSearchComponent = Form.create({
+  name: 'Event Search',
+})(EventSearchComponent);
+
 
 /*<Codenesium>
-    <Hash>f92b5eff4bdfd07f8df19b9349ffc3a6</Hash>
+    <Hash>479a40bc02ad4182a2b2fa730f602816</Hash>
 </Codenesium>*/

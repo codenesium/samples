@@ -6,11 +6,11 @@ import RowVersionCheckMapper from '../rowVersionCheck/rowVersionCheckMapper';
 import RowVersionCheckViewModel from '../rowVersionCheck/rowVersionCheckViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface RowVersionCheckTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,53 +20,52 @@ interface RowVersionCheckTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<RowVersionCheckViewModel>;
+  filteredRecords: Array<RowVersionCheckViewModel>;
 }
 
-export class  RowVersionCheckTableComponent extends React.Component<
-RowVersionCheckTableComponentProps,
-RowVersionCheckTableComponentState
+export class RowVersionCheckTableComponent extends React.Component<
+  RowVersionCheckTableComponentProps,
+  RowVersionCheckTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: RowVersionCheckViewModel) {
-  this.props.history.push(ClientRoutes.RowVersionChecks + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: RowVersionCheckViewModel) {
+    this.props.history.push(ClientRoutes.RowVersionChecks + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: RowVersionCheckViewModel) {
-  this.props.history.push(ClientRoutes.RowVersionChecks + '/' + row.id);
-}
+  handleDetailClick(e: any, row: RowVersionCheckViewModel) {
+    this.props.history.push(ClientRoutes.RowVersionChecks + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.RowVersionCheckClientResponseModel>;
+          let response = resp.data as Array<
+            Api.RowVersionCheckClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new RowVersionCheckMapper();
-          
-          let rowVersionChecks:Array<RowVersionCheckViewModel> = [];
 
-          response.forEach(x =>
-          {
-              rowVersionChecks.push(mapper.mapApiResponseToViewModel(x));
+          let rowVersionChecks: Array<RowVersionCheckViewModel> = [];
+
+          response.forEach(x => {
+            rowVersionChecks.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,53 +90,54 @@ handleDetailClick(e:any, row: RowVersionCheckViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'RowVersionChecks',
-                    columns: [
-					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'RowVersionChecks',
+                columns: [
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
                       return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'RowVersion',
-                      accessor: 'rowVersion',
-                      Cell: (props) => {
-                      return <span>{String(props.original.rowVersion)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'RowVersion',
+                    accessor: 'rowVersion',
+                    Cell: props => {
+                      return <span>{String(props.original.rowVersion)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as RowVersionCheckViewModel
@@ -148,8 +148,8 @@ handleDetailClick(e:any, row: RowVersionCheckViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as RowVersionCheckViewModel
@@ -158,11 +158,14 @@ handleDetailClick(e:any, row: RowVersionCheckViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -170,6 +173,7 @@ handleDetailClick(e:any, row: RowVersionCheckViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>538f4b3de89f341e5fccbe6e4bba7b37</Hash>
+    <Hash>98268491495a2813b4e6406cef2688dc</Hash>
 </Codenesium>*/

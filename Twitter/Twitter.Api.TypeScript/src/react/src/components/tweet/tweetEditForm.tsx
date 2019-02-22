@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TweetMapper from './tweetMapper';
 import TweetViewModel from './tweetViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TweetEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface TweetEditComponentState {
@@ -20,7 +30,7 @@ interface TweetEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class TweetEditComponent extends React.Component<
@@ -33,10 +43,10 @@ class TweetEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -67,7 +77,9 @@ class TweetEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -80,11 +92,11 @@ class TweetEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as TweetViewModel;
         console.log('Received values of form: ', model);
@@ -93,12 +105,14 @@ class TweetEditComponent extends React.Component<
     });
   };
 
-  submit = (model:TweetViewModel) =>
-  {  
+  submit = (model: TweetViewModel) => {
     let mapper = new TweetMapper();
-     axios
+    axios
       .put(
-        Constants.ApiEndpoint + ApiRoutes.Tweets + '/' + this.state.model!.tweetId,
+        Constants.ApiEndpoint +
+          ApiRoutes.Tweets +
+          '/' +
+          this.state.model!.tweetId,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -111,116 +125,124 @@ class TweetEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.TweetClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="content">content</label>
+            <br />
+            {getFieldDecorator('content', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 140, message: 'Exceeds max length of 140' },
+              ],
+            })(<Input placeholder={'content'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='content'>content</label>
-              <br />             
-              {getFieldDecorator('content', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-{ max: 140, message: 'Exceeds max length of 140' },
-],
-              
-              })
-              ( <Input placeholder={"content"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="date">date</label>
+            <br />
+            {getFieldDecorator('date', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'date'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='date'>date</label>
-              <br />             
-              {getFieldDecorator('date', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"date"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="locationId">location_id</label>
+            <br />
+            {getFieldDecorator('locationId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'location_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='locationId'>location_id</label>
-              <br />             
-              {getFieldDecorator('locationId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"location_id"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="time">time</label>
+            <br />
+            {getFieldDecorator('time', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'time'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='time'>time</label>
-              <br />             
-              {getFieldDecorator('time', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"time"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="userUserId">user_user_id</label>
+            <br />
+            {getFieldDecorator('userUserId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'user_user_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='userUserId'>user_user_id</label>
-              <br />             
-              {getFieldDecorator('userUserId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"user_user_id"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedTweetEditComponent = Form.create({ name: 'Tweet Edit' })(TweetEditComponent);
+export const WrappedTweetEditComponent = Form.create({ name: 'Tweet Edit' })(
+  TweetEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>fe0847eaaaf23f2cff825e84a44910ba</Hash>
+    <Hash>ba98b47508d79c280e61472a09a26257</Hash>
 </Codenesium>*/

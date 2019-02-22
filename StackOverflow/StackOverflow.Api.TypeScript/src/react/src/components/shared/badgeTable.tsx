@@ -6,11 +6,11 @@ import BadgeMapper from '../badge/badgeMapper';
 import BadgeViewModel from '../badge/badgeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface BadgeTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface BadgeTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<BadgeViewModel>;
+  filteredRecords: Array<BadgeViewModel>;
 }
 
-export class  BadgeTableComponent extends React.Component<
-BadgeTableComponentProps,
-BadgeTableComponentState
+export class BadgeTableComponent extends React.Component<
+  BadgeTableComponentProps,
+  BadgeTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: BadgeViewModel) {
-  this.props.history.push(ClientRoutes.Badges + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: BadgeViewModel) {
+    this.props.history.push(ClientRoutes.Badges + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: BadgeViewModel) {
-  this.props.history.push(ClientRoutes.Badges + '/' + row.id);
-}
+  handleDetailClick(e: any, row: BadgeViewModel) {
+    this.props.history.push(ClientRoutes.Badges + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.BadgeClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: BadgeViewModel) {
           console.log(response);
 
           let mapper = new BadgeMapper();
-          
-          let badges:Array<BadgeViewModel> = [];
 
-          response.forEach(x =>
-          {
-              badges.push(mapper.mapApiResponseToViewModel(x));
+          let badges: Array<BadgeViewModel> = [];
+
+          response.forEach(x => {
+            badges.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,53 +88,54 @@ handleDetailClick(e:any, row: BadgeViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Badges',
-                    columns: [
-					  {
-                      Header: 'Date',
-                      accessor: 'date',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Badges',
+                columns: [
+                  {
+                    Header: 'Date',
+                    accessor: 'date',
+                    Cell: props => {
                       return <span>{String(props.original.date)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'UserId',
-                      accessor: 'userId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.userId)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'UserId',
+                    accessor: 'userId',
+                    Cell: props => {
+                      return <span>{String(props.original.userId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as BadgeViewModel
@@ -148,8 +146,8 @@ handleDetailClick(e:any, row: BadgeViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as BadgeViewModel
@@ -158,11 +156,14 @@ handleDetailClick(e:any, row: BadgeViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -170,6 +171,7 @@ handleDetailClick(e:any, row: BadgeViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>3f8bb58737e48fbf5d8faec4bbae3b89</Hash>
+    <Hash>935318ab840316af2e12b87e8e96c3ed</Hash>
 </Codenesium>*/

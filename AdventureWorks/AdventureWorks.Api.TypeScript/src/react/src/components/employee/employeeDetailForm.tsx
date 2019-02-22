@@ -6,9 +6,12 @@ import EmployeeMapper from './employeeMapper';
 import EmployeeViewModel from './employeeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { EmployeeDepartmentHistoryTableComponent } from '../shared/employeeDepartmentHistoryTable';
-import { EmployeePayHistoryTableComponent } from '../shared/employeePayHistoryTable';
-import { JobCandidateTableComponent } from '../shared/jobCandidateTable';
+import {EmployeeDepartmentHistoryTableComponent} from '../shared/employeeDepartmentHistoryTable'
+	import {EmployeePayHistoryTableComponent} from '../shared/employeePayHistoryTable'
+	import {JobCandidateTableComponent} from '../shared/jobCandidateTable'
+	
+
+
 
 interface EmployeeDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,23 +28,21 @@ interface EmployeeDetailComponentState {
 }
 
 class EmployeeDetailComponent extends React.Component<
-  EmployeeDetailComponentProps,
-  EmployeeDetailComponentState
+EmployeeDetailComponentProps,
+EmployeeDetailComponentState
 > {
   state = {
     model: new EmployeeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Employees + '/edit/' + this.state.model!.businessEntityID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Employees + '/edit/' + this.state.model!.businessEntityID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,136 +88,118 @@ class EmployeeDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>BirthDate</h3>
-              <p>{String(this.state.model!.birthDate)}</p>
-            </div>
-            <div>
-              <h3>BusinessEntityID</h3>
-              <p>{String(this.state.model!.businessEntityID)}</p>
-            </div>
-            <div>
-              <h3>CurrentFlag</h3>
-              <p>{String(this.state.model!.currentFlag)}</p>
-            </div>
-            <div>
-              <h3>Gender</h3>
-              <p>{String(this.state.model!.gender)}</p>
-            </div>
-            <div>
-              <h3>HireDate</h3>
-              <p>{String(this.state.model!.hireDate)}</p>
-            </div>
-            <div>
-              <h3>JobTitle</h3>
-              <p>{String(this.state.model!.jobTitle)}</p>
-            </div>
-            <div>
-              <h3>LoginID</h3>
-              <p>{String(this.state.model!.loginID)}</p>
-            </div>
-            <div>
-              <h3>MaritalStatus</h3>
-              <p>{String(this.state.model!.maritalStatu)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>NationalIDNumber</h3>
-              <p>{String(this.state.model!.nationalIDNumber)}</p>
-            </div>
-            <div>
-              <h3>OrganizationLevel</h3>
-              <p>{String(this.state.model!.organizationLevel)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-            <div>
-              <h3>SalariedFlag</h3>
-              <p>{String(this.state.model!.salariedFlag)}</p>
-            </div>
-            <div>
-              <h3>SickLeaveHours</h3>
-              <p>{String(this.state.model!.sickLeaveHour)}</p>
-            </div>
-            <div>
-              <h3>VacationHours</h3>
-              <p>{String(this.state.model!.vacationHour)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>BirthDate</h3>
+							<p>{String(this.state.model!.birthDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>BusinessEntityID</h3>
+							<p>{String(this.state.model!.businessEntityID)}</p>
+						 </div>
+					   						 <div>
+							<h3>CurrentFlag</h3>
+							<p>{String(this.state.model!.currentFlag)}</p>
+						 </div>
+					   						 <div>
+							<h3>Gender</h3>
+							<p>{String(this.state.model!.gender)}</p>
+						 </div>
+					   						 <div>
+							<h3>HireDate</h3>
+							<p>{String(this.state.model!.hireDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>JobTitle</h3>
+							<p>{String(this.state.model!.jobTitle)}</p>
+						 </div>
+					   						 <div>
+							<h3>LoginID</h3>
+							<p>{String(this.state.model!.loginID)}</p>
+						 </div>
+					   						 <div>
+							<h3>MaritalStatus</h3>
+							<p>{String(this.state.model!.maritalStatu)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>NationalIDNumber</h3>
+							<p>{String(this.state.model!.nationalIDNumber)}</p>
+						 </div>
+					   						 <div>
+							<h3>OrganizationLevel</h3>
+							<p>{String(this.state.model!.organizationLevel)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   						 <div>
+							<h3>SalariedFlag</h3>
+							<p>{String(this.state.model!.salariedFlag)}</p>
+						 </div>
+					   						 <div>
+							<h3>SickLeaveHours</h3>
+							<p>{String(this.state.model!.sickLeaveHour)}</p>
+						 </div>
+					   						 <div>
+							<h3>VacationHours</h3>
+							<p>{String(this.state.model!.vacationHour)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>EmployeeDepartmentHistories</h3>
-            <EmployeeDepartmentHistoryTableComponent
-              businessEntityID={this.state.model!.businessEntityID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Employees +
-                '/' +
-                this.state.model!.businessEntityID +
-                '/' +
-                ApiRoutes.EmployeeDepartmentHistories
-              }
-            />
-          </div>
-          <div>
+            <EmployeeDepartmentHistoryTableComponent 
+			businessEntityID={this.state.model!.businessEntityID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.EmployeeDepartmentHistories}
+			/>
+         </div>
+			 <div>
             <h3>EmployeePayHistories</h3>
-            <EmployeePayHistoryTableComponent
-              businessEntityID={this.state.model!.businessEntityID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Employees +
-                '/' +
-                this.state.model!.businessEntityID +
-                '/' +
-                ApiRoutes.EmployeePayHistories
-              }
-            />
-          </div>
-          <div>
+            <EmployeePayHistoryTableComponent 
+			businessEntityID={this.state.model!.businessEntityID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.EmployeePayHistories}
+			/>
+         </div>
+			 <div>
             <h3>JobCandidates</h3>
-            <JobCandidateTableComponent
-              jobCandidateID={this.state.model!.jobCandidateID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Employees +
-                '/' +
-                this.state.model!.businessEntityID +
-                '/' +
-                ApiRoutes.JobCandidates
-              }
-            />
-          </div>
+            <JobCandidateTableComponent 
+			jobCandidateID={this.state.model!.jobCandidateID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.JobCandidates}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -225,11 +208,10 @@ class EmployeeDetailComponent extends React.Component<
   }
 }
 
-export const WrappedEmployeeDetailComponent = Form.create({
-  name: 'Employee Detail',
-})(EmployeeDetailComponent);
-
+export const WrappedEmployeeDetailComponent = Form.create({ name: 'Employee Detail' })(
+  EmployeeDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>7a7a0cb4c2ac212f83b3d218b003bb05</Hash>
+    <Hash>52a572d7cec98ee788f5a17a30db6f39</Hash>
 </Codenesium>*/

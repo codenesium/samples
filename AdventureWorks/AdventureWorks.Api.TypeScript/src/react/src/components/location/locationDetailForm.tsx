@@ -6,8 +6,11 @@ import LocationMapper from './locationMapper';
 import LocationViewModel from './locationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ProductInventoryTableComponent } from '../shared/productInventoryTable';
-import { WorkOrderRoutingTableComponent } from '../shared/workOrderRoutingTable';
+import {ProductInventoryTableComponent} from '../shared/productInventoryTable'
+	import {WorkOrderRoutingTableComponent} from '../shared/workOrderRoutingTable'
+	
+
+
 
 interface LocationDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +27,21 @@ interface LocationDetailComponentState {
 }
 
 class LocationDetailComponent extends React.Component<
-  LocationDetailComponentProps,
-  LocationDetailComponentState
+LocationDetailComponentProps,
+LocationDetailComponentState
 > {
   state = {
     model: new LocationViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Locations + '/edit/' + this.state.model!.locationID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Locations + '/edit/' + this.state.model!.locationID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,80 +87,69 @@ class LocationDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Availability</h3>
-              <p>{String(this.state.model!.availability)}</p>
-            </div>
-            <div>
-              <h3>CostRate</h3>
-              <p>{String(this.state.model!.costRate)}</p>
-            </div>
-            <div>
-              <h3>LocationID</h3>
-              <p>{String(this.state.model!.locationID)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Availability</h3>
+							<p>{String(this.state.model!.availability)}</p>
+						 </div>
+					   						 <div>
+							<h3>CostRate</h3>
+							<p>{String(this.state.model!.costRate)}</p>
+						 </div>
+					   						 <div>
+							<h3>LocationID</h3>
+							<p>{String(this.state.model!.locationID)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>ProductInventories</h3>
-            <ProductInventoryTableComponent
-              productID={this.state.model!.productID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Locations +
-                '/' +
-                this.state.model!.locationID +
-                '/' +
-                ApiRoutes.ProductInventories
-              }
-            />
-          </div>
-          <div>
+            <ProductInventoryTableComponent 
+			productID={this.state.model!.productID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Locations + '/' + this.state.model!.locationID + '/' + ApiRoutes.ProductInventories}
+			/>
+         </div>
+			 <div>
             <h3>WorkOrderRoutings</h3>
-            <WorkOrderRoutingTableComponent
-              workOrderID={this.state.model!.workOrderID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Locations +
-                '/' +
-                this.state.model!.locationID +
-                '/' +
-                ApiRoutes.WorkOrderRoutings
-              }
-            />
-          </div>
+            <WorkOrderRoutingTableComponent 
+			workOrderID={this.state.model!.workOrderID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Locations + '/' + this.state.model!.locationID + '/' + ApiRoutes.WorkOrderRoutings}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -168,11 +158,10 @@ class LocationDetailComponent extends React.Component<
   }
 }
 
-export const WrappedLocationDetailComponent = Form.create({
-  name: 'Location Detail',
-})(LocationDetailComponent);
-
+export const WrappedLocationDetailComponent = Form.create({ name: 'Location Detail' })(
+  LocationDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>601d91956935c1fad5f7cc5532794fa7</Hash>
+    <Hash>6579f07daa50a9bf16e1e371122b7ff2</Hash>
 </Codenesium>*/

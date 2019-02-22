@@ -6,11 +6,11 @@ import PenMapper from '../pen/penMapper';
 import PenViewModel from '../pen/penViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface PenTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface PenTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PenViewModel>;
+  filteredRecords: Array<PenViewModel>;
 }
 
-export class  PenTableComponent extends React.Component<
-PenTableComponentProps,
-PenTableComponentState
+export class PenTableComponent extends React.Component<
+  PenTableComponentProps,
+  PenTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: PenViewModel) {
-  this.props.history.push(ClientRoutes.Pens + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: PenViewModel) {
+    this.props.history.push(ClientRoutes.Pens + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: PenViewModel) {
-  this.props.history.push(ClientRoutes.Pens + '/' + row.id);
-}
+  handleDetailClick(e: any, row: PenViewModel) {
+    this.props.history.push(ClientRoutes.Pens + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.PenClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: PenViewModel) {
           console.log(response);
 
           let mapper = new PenMapper();
-          
-          let pens:Array<PenViewModel> = [];
 
-          response.forEach(x =>
-          {
-              pens.push(mapper.mapApiResponseToViewModel(x));
+          let pens: Array<PenViewModel> = [];
+
+          response.forEach(x => {
+            pens.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,41 +88,40 @@ handleDetailClick(e:any, row: PenViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Pens',
-                    columns: [
-					  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Pens',
+                columns: [
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PenViewModel
@@ -136,8 +132,8 @@ handleDetailClick(e:any, row: PenViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PenViewModel
@@ -146,11 +142,14 @@ handleDetailClick(e:any, row: PenViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -158,6 +157,7 @@ handleDetailClick(e:any, row: PenViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>aac0d19dd94bb5857fe410c80c2391ac</Hash>
+    <Hash>8455e1a860fc259c537637298385f8f0</Hash>
 </Codenesium>*/

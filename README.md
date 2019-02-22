@@ -29,6 +29,12 @@ Sample database for a pet store.
 https://petstorecodenesium.netlify.com/
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359fePetStore/swagger/
 
+#### CAD
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f0b9cf51-a6d0-4a63-b5d9-70f6ae42ae06/deploy-status)](https://app.netlify.com/sites/xenodochial-lewin-08cea1/deploys)
+Computer aided dispatch system for police, fire, EMS
+https://cadcodenesium.netlify.com/
+http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feCAD/swagger/
+
 #### Pet Shipping
 [![Netlify Status](https://api.netlify.com/api/v1/badges/386d189a-1414-40f5-94a6-3ebf419b1b30/deploy-status)](https://app.netlify.com/sites/petshippingcodenesium/deploys)
 Sample database for a business that ships pets.

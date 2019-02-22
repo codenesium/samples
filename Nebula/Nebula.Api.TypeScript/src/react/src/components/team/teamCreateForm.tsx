@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeamMapper from './teamMapper';
 import TeamViewModel from './teamViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TeamCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface TeamCreateComponentState {
@@ -20,7 +30,7 @@ interface TeamCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class TeamCreateComponent extends React.Component<
@@ -33,12 +43,12 @@ class TeamCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as TeamViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +57,9 @@ class TeamCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:TeamViewModel) =>
-  {  
+  submit = (model: TeamViewModel) => {
     let mapper = new TeamMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Teams,
         mapper.mapViewModelToApiRequest(model),
@@ -65,80 +74,91 @@ class TeamCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.TeamClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'Name'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='name'>Name</label>
-              <br />             
-              {getFieldDecorator('name', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <Input placeholder={"Name"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="organizationId">OrganizationId</label>
+            <br />
+            {getFieldDecorator('organizationId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'OrganizationId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='organizationId'>OrganizationId</label>
-              <br />             
-              {getFieldDecorator('organizationId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"OrganizationId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedTeamCreateComponent = Form.create({ name: 'Team Create' })(TeamCreateComponent);
+export const WrappedTeamCreateComponent = Form.create({ name: 'Team Create' })(
+  TeamCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>e6abd2240a99f1b12501bea5ad4f010e</Hash>
+    <Hash>c14d6c57829175552bd88d9558dbdb1f</Hash>
 </Codenesium>*/
