@@ -44,7 +44,7 @@ http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feNebula/swagge
 #### File Service
 [![Netlify Status](https://api.netlify.com/api/v1/badges/24a26992-f505-456b-9633-e7dc49df7db2/deploy-status)](https://app.netlify.com/sites/fileservicecodenesium/deploys)
 File service similar to how AWS S3 functions. This is a part of the Codenesium platform.
-https://filservicecodenesium.netlify.com/
+https://fileservicecodenesium.netlify.com/
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feFileService/swagger/
 
 #### ESPIOT
