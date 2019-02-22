@@ -28,10 +28,12 @@ Sample database for a pet store.
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359fePetStore/swagger/
 
 #### Pet Shipping
+[![Netlify Status](https://api.netlify.com/api/v1/badges/386d189a-1414-40f5-94a6-3ebf419b1b30/deploy-status)](https://app.netlify.com/sites/petshippingcodenesium/deploys)
 Sample database for a business that ships pets.
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359fePetShipping/swagger/
 
 #### Nebula
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7f444d8b-67bc-4645-a2bf-50a3c2e635c0/deploy-status)](https://app.netlify.com/sites/nebulacodenesium/deploys)
 Deployment orchestration service similar to Octopus Deploy. This runs the Codenesium deployment system.
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feNebula/swagger/
 
@@ -41,6 +43,7 @@ File service similar to how AWS S3 functions. This is a part of the Codenesium p
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feFileService/swagger/
 
 #### ESPIOT
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6a1cf381-6dd2-4779-844f-e3b2de4d21bf/deploy-status)](https://app.netlify.com/sites/adventureworkscodenesium/deploys)
 Simple IOT web service with devices and actions.
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feESPIOT/swagger/
 
