@@ -1,57 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import SpeciesMapper from './speciesMapper';
 import SpeciesViewModel from './speciesViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import {BreedTableComponent} from '../shared/breedTable'
+	
 
-interface Props {
-  history: any;
-  model?: SpeciesViewModel;
-}
 
-const SpeciesDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Species + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
 
 interface SpeciesDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface SpeciesDetailComponentState {
@@ -62,18 +25,22 @@ interface SpeciesDetailComponentState {
   errorMessage: string;
 }
 
-export default class SpeciesDetailComponent extends React.Component<
-  SpeciesDetailComponentProps,
-  SpeciesDetailComponentState
+class SpeciesDetailComponent extends React.Component<
+SpeciesDetailComponentProps,
+SpeciesDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new SpeciesViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Species + '/edit/' + this.state.model!.id);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -93,9 +60,9 @@ export default class SpeciesDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.SpeciesClientResponseModel;
 
-          let mapper = new SpeciesMapper();
-
           console.log(response);
+
+          let mapper = new SpeciesMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -110,24 +77,58 @@ export default class SpeciesDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <SpeciesDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
+          {message}
+		 <div>
+            <h3>Breeds</h3>
+            <BreedTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Species + '/' + this.state.model!.id + '/' + ApiRoutes.Breeds}
+			/>
+         </div>
+	
+
+        </div>
       );
     } else {
       return null;
@@ -135,7 +136,10 @@ export default class SpeciesDetailComponent extends React.Component<
   }
 }
 
+export const WrappedSpeciesDetailComponent = Form.create({ name: 'Species Detail' })(
+  SpeciesDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>37cc9dabb8088c4ec7699ea0cacfb8a3</Hash>
+    <Hash>3e3c7ba01f3623d015581b01ffdf7de6</Hash>
 </Codenesium>*/

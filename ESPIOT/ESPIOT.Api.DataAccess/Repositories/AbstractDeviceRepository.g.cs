@@ -102,6 +102,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public async virtual Task<List<DeviceAction>> DeviceActionsByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<DeviceAction>()
+			       .Include(x => x.DeviceIdNavigation)
 			       .Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
 		}
 
@@ -131,5 +132,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e97673e3df8fc358bd10154cba36a09</Hash>
+    <Hash>91edddd2a42286f8aa0b14b2d36373c4</Hash>
 </Codenesium>*/

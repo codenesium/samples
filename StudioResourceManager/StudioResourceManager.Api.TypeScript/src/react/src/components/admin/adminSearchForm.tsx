@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import AdminViewModel from './adminViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface AdminSearchComponentProps
@@ -41,11 +39,11 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.AdminClientResponseModel) {
+    handleEditClick(e:any, row:AdminViewModel) {
          this.props.history.push(ClientRoutes.Admins + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.AdminClientResponseModel) {
+    handleDetailClick(e:any, row:AdminViewModel) {
          this.props.history.push(ClientRoutes.Admins + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<AdminViewModel>(),filteredRecords:new Array<AdminViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<AdminViewModel>(), filteredRecords:new Array<AdminViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -163,7 +161,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Admin',
+                    Header: 'Admins',
                     columns: [
 					  {
                       Header: 'Birthday',
@@ -220,7 +218,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.AdminClientResponseModel
+                              row.original as AdminViewModel
                             );
                           }}
                         >
@@ -232,7 +230,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.AdminClientResponseModel
+                              row.original as AdminViewModel
                             );
                           }}
                         >
@@ -244,7 +242,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.AdminClientResponseModel
+                              row.original as AdminViewModel
                             );
                           }}
                         >
@@ -266,5 +264,5 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
 export const WrappedAdminSearchComponent = Form.create({ name: 'Admin Search' })(AdminSearchComponent);
 
 /*<Codenesium>
-    <Hash>c8dc7d2fc0c7d49bdcb49aeffb0bf616</Hash>
+    <Hash>3bdfc3b1693dbf15b00699d2f81b914a</Hash>
 </Codenesium>*/

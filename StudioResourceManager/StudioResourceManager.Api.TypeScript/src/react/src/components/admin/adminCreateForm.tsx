@@ -1,15 +1,22 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface AdminCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +113,7 @@ class AdminCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -115,47 +122,62 @@ class AdminCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('birthday', {
               rules: [],
-            })(<DatePicker placeholder={'birthday'} id={'birthday'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'birthday'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="email">email</label>
             <br />
             {getFieldDecorator('email', {
-              rules: [],
-            })(<Input placeholder={'email'} id={'email'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'email'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="firstName">First Name</label>
             <br />
             {getFieldDecorator('firstName', {
-              rules: [],
-            })(<Input placeholder={'First Name'} id={'firstName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'First Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="lastName">Last Name</label>
             <br />
             {getFieldDecorator('lastName', {
-              rules: [],
-            })(<Input placeholder={'Last Name'} id={'lastName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="phone">phone</label>
             <br />
             {getFieldDecorator('phone', {
-              rules: [],
-            })(<InputNumber placeholder={'phone'} id={'phone'} />)}
+              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
+            })(<InputNumber placeholder={'phone'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="userId">userId</label>
             <br />
             {getFieldDecorator('userId', {
-              rules: [],
-            })(<InputNumber placeholder={'userId'} id={'userId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<InputNumber placeholder={'userId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -178,5 +200,5 @@ export const WrappedAdminCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>67f4289d3463a4818d733f62c5eb93c2</Hash>
+    <Hash>7d997eb75d3c03ac06202f5b75ab49b3</Hash>
 </Codenesium>*/

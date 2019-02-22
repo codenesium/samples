@@ -1,77 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import {SaleTableComponent} from '../shared/saleTable'
+	
 
-interface Props {
-  history: any;
-  model?: PetViewModel;
-}
 
-const PetDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Pets + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="breedId" className={'col-sm-2 col-form-label'}>
-          BreedId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.breedIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="clientId" className={'col-sm-2 col-form-label'}>
-          ClientId
-        </label>
-        <div className="col-sm-12">{String(model.model!.clientId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="weight" className={'col-sm-2 col-form-label'}>
-          Weight
-        </label>
-        <div className="col-sm-12">{String(model.model!.weight)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
 
 interface PetDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface PetDetailComponentState {
@@ -82,18 +25,22 @@ interface PetDetailComponentState {
   errorMessage: string;
 }
 
-export default class PetDetailComponent extends React.Component<
-  PetDetailComponentProps,
-  PetDetailComponentState
+class PetDetailComponent extends React.Component<
+PetDetailComponentProps,
+PetDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new PetViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Pets + '/edit/' + this.state.model!.id);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -113,9 +60,9 @@ export default class PetDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.PetClientResponseModel;
 
-          let mapper = new PetMapper();
-
           console.log(response);
+
+          let mapper = new PetMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -130,24 +77,70 @@ export default class PetDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <PetDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>breedId</h3>
+							<p>{String(this.state.model!.breedIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>clientId</h3>
+							<p>{String(this.state.model!.clientId)}</p>
+						 </div>
+					   						 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>weight</h3>
+							<p>{String(this.state.model!.weight)}</p>
+						 </div>
+					   		  </div>
+          {message}
+		 <div>
+            <h3>Sales</h3>
+            <SaleTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Pets + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
+			/>
+         </div>
+	
+
+        </div>
       );
     } else {
       return null;
@@ -155,7 +148,10 @@ export default class PetDetailComponent extends React.Component<
   }
 }
 
+export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
+  PetDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>0d25ec3b6be313a317e2aa3ede3b8dd0</Hash>
+    <Hash>97695418008ca98da043701c9c16da92</Hash>
 </Codenesium>*/

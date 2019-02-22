@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SaleEditComponentProps {
@@ -148,40 +148,49 @@ class SaleEditComponent extends React.Component<
               <label htmlFor='ipAddress'>ipAddress</label>
               <br />             
               {getFieldDecorator('ipAddress', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"ipAddress"} id={"ipAddress"} /> )}
+              ( <Input placeholder={"ipAddress"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='note'>notes</label>
               <br />             
               {getFieldDecorator('note', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"notes"} id={"note"} /> )}
+              ( <Input placeholder={"notes"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='saleDate'>saleDate</label>
               <br />             
               {getFieldDecorator('saleDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"saleDate"} id={"saleDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"saleDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='transactionId'>transactionId</label>
               <br />             
               {getFieldDecorator('transactionId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"transactionId"} id={"transactionId"} /> )}
+              ( <Input placeholder={"transactionId"} /> )}
               </Form.Item>
 
 			
@@ -201,5 +210,5 @@ class SaleEditComponent extends React.Component<
 export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(SaleEditComponent);
 
 /*<Codenesium>
-    <Hash>71d2245d49fac3e8a99325fc51302c6e</Hash>
+    <Hash>81646cbd308c8659d59dab63e52a4220</Hash>
 </Codenesium>*/

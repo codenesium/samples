@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,12 @@ class PasswordCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -134,13 +134,13 @@ class PasswordCreateComponent extends React.Component<
             <label htmlFor="passwordHash">PasswordHash</label>
             <br />
             {getFieldDecorator('passwordHash', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'PasswordHash'}
-                id={'passwordHash'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'PasswordHash'} />
             )}
           </Form.Item>
 
@@ -148,13 +148,13 @@ class PasswordCreateComponent extends React.Component<
             <label htmlFor="passwordSalt">PasswordSalt</label>
             <br />
             {getFieldDecorator('passwordSalt', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 10, message: 'Exceeds max length of 10' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'PasswordSalt'}
-                id={'passwordSalt'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'PasswordSalt'} />
             )}
           </Form.Item>
 
@@ -162,14 +162,11 @@ class PasswordCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'rowguid'}
-                id={'rowguid'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -192,5 +189,5 @@ export const WrappedPasswordCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3ff109994b7d965061a4fcad2c14e885</Hash>
+    <Hash>91012e451b6af75d9d52a6eae3538a92</Hash>
 </Codenesium>*/

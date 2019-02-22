@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VendorMapper from './vendorMapper';
 import VendorViewModel from './vendorViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface VendorCreateComponentProps {
@@ -102,70 +102,85 @@ class VendorCreateComponent extends React.Component<
               <label htmlFor='accountNumber'>AccountNumber</label>
               <br />             
               {getFieldDecorator('accountNumber', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 15, message: 'Exceeds max length of 15' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AccountNumber"} id={"accountNumber"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AccountNumber"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='activeFlag'>ActiveFlag</label>
               <br />             
               {getFieldDecorator('activeFlag', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ActiveFlag"} id={"activeFlag"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ActiveFlag"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='creditRating'>CreditRating</label>
               <br />             
               {getFieldDecorator('creditRating', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CreditRating"} id={"creditRating"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CreditRating"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='modifiedDate'>ModifiedDate</label>
               <br />             
               {getFieldDecorator('modifiedDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 50, message: 'Exceeds max length of 50' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='preferredVendorStatu'>PreferredVendorStatus</label>
               <br />             
               {getFieldDecorator('preferredVendorStatu', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PreferredVendorStatus"} id={"preferredVendorStatu"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PreferredVendorStatus"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='purchasingWebServiceURL'>PurchasingWebServiceURL</label>
               <br />             
               {getFieldDecorator('purchasingWebServiceURL', {
-              rules:[],
+              rules:[{ max: 1024, message: 'Exceeds max length of 1024' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PurchasingWebServiceURL"} id={"purchasingWebServiceURL"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PurchasingWebServiceURL"} /> )}
               </Form.Item>
 
 			
@@ -185,5 +200,5 @@ class VendorCreateComponent extends React.Component<
 export const WrappedVendorCreateComponent = Form.create({ name: 'Vendor Create' })(VendorCreateComponent);
 
 /*<Codenesium>
-    <Hash>b2e1d78c120069cb8631ab52dc883251</Hash>
+    <Hash>7b53e1753a5bea8749c860a058a0ab3e</Hash>
 </Codenesium>*/

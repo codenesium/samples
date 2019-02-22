@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class PipelineStatuViewModel {
   id: number;
   name: string;
@@ -8,8 +10,8 @@ export default class PipelineStatuViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -19,5 +21,5 @@ export default class PipelineStatuViewModel {
 
 
 /*<Codenesium>
-    <Hash>29d38f31f08fa13dd09767a1ba9a5224</Hash>
+    <Hash>edf15caa78b735a02e3f07edc8ad5819</Hash>
 </Codenesium>*/

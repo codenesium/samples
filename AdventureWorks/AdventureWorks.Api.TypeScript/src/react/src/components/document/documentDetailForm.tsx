@@ -75,7 +75,7 @@ class DocumentDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -172,5 +172,5 @@ export const WrappedDocumentDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>61f2f040fe260ea7dbfa8fc8d756e7e9</Hash>
+    <Hash>9f8668a341f4618e6804e50e8707512a</Hash>
 </Codenesium>*/

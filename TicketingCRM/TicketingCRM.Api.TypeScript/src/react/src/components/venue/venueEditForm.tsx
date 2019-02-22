@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VenueMapper from './venueMapper';
 import VenueViewModel from './venueViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface VenueEditComponentProps {
@@ -148,90 +148,115 @@ class VenueEditComponent extends React.Component<
               <label htmlFor='address1'>address1</label>
               <br />             
               {getFieldDecorator('address1', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address1"} id={"address1"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address1"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='address2'>address2</label>
               <br />             
               {getFieldDecorator('address2', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address2"} id={"address2"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address2"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='adminId'>adminId</label>
               <br />             
               {getFieldDecorator('adminId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"adminId"} id={"adminId"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"adminId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='email'>email</label>
               <br />             
               {getFieldDecorator('email', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"email"} id={"email"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"email"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='facebook'>facebook</label>
               <br />             
               {getFieldDecorator('facebook', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"facebook"} id={"facebook"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"facebook"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"name"} id={"name"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"name"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='phone'>phone</label>
               <br />             
               {getFieldDecorator('phone', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"phone"} id={"phone"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"phone"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='provinceId'>provinceId</label>
               <br />             
               {getFieldDecorator('provinceId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"provinceId"} id={"provinceId"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"provinceId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='website'>website</label>
               <br />             
               {getFieldDecorator('website', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"website"} id={"website"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"website"} /> )}
               </Form.Item>
 
 			
@@ -251,5 +276,5 @@ class VenueEditComponent extends React.Component<
 export const WrappedVenueEditComponent = Form.create({ name: 'Venue Edit' })(VenueEditComponent);
 
 /*<Codenesium>
-    <Hash>5e9cb20275042d2f7e3f55cd2f988538</Hash>
+    <Hash>a88ce7380c26be5fd59b3a24d3bbc3d0</Hash>
 </Codenesium>*/

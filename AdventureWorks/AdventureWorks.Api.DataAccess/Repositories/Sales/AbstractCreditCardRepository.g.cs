@@ -103,6 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>()
+			       .Include(x => x.CreditCardIDNavigation)
 			       .Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1c09e02aae4887e72edee3467511729f</Hash>
+    <Hash>b66d490cc8425f415f5a40d3f5b6ffa2</Hash>
 </Codenesium>*/

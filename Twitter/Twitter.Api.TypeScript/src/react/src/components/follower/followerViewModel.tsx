@@ -1,4 +1,4 @@
-import UserViewModel from '../user/userViewModel';
+import moment from 'moment';
 import UserViewModel from '../user/userViewModel';
 
 export default class FollowerViewModel {
@@ -20,10 +20,10 @@ export default class FollowerViewModel {
     this.followRequestStatu = '';
     this.followedUserId = 0;
     this.followedUserIdEntity = '';
-    this.followedUserIdNavigation = undefined;
+    this.followedUserIdNavigation = new UserViewModel();
     this.followingUserId = 0;
     this.followingUserIdEntity = '';
-    this.followingUserIdNavigation = undefined;
+    this.followingUserIdNavigation = new UserViewModel();
     this.id = 0;
     this.muted = '';
   }
@@ -53,5 +53,5 @@ export default class FollowerViewModel {
 
 
 /*<Codenesium>
-    <Hash>8d73a2954efc98455b94e5ee2e65ba98</Hash>
+    <Hash>df0ce8c4cf760a9b8bb51e9ae2fa219c</Hash>
 </Codenesium>*/

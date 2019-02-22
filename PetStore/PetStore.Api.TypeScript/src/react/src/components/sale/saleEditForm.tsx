@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -168,48 +169,69 @@ class SaleEditComponent extends React.Component<
             <label htmlFor="amount">amount</label>
             <br />
             {getFieldDecorator('amount', {
-              rules: [],
-            })(<Input placeholder={'amount'} id={'amount'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'amount'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="firstName">firstName</label>
             <br />
             {getFieldDecorator('firstName', {
-              rules: [],
-            })(<Input placeholder={'firstName'} id={'firstName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 90, message: 'Exceeds max length of 90' },
+              ],
+            })(<Input placeholder={'firstName'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="lastName">lastName</label>
             <br />
             {getFieldDecorator('lastName', {
-              rules: [],
-            })(<Input placeholder={'lastName'} id={'lastName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 90, message: 'Exceeds max length of 90' },
+              ],
+            })(<Input placeholder={'lastName'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="paymentTypeId">paymentTypeId</label>
             <br />
             {getFieldDecorator('paymentTypeId', {
-              rules: [],
-            })(<Input placeholder={'paymentTypeId'} id={'paymentTypeId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'paymentTypeId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="petId">petId</label>
             <br />
             {getFieldDecorator('petId', {
-              rules: [],
-            })(<Input placeholder={'petId'} id={'petId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'petId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="phone">phone</label>
             <br />
             {getFieldDecorator('phone', {
-              rules: [],
-            })(<Input placeholder={'phone'} id={'phone'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 10, message: 'Exceeds max length of 10' },
+              ],
+            })(<Input placeholder={'phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -232,5 +254,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>8bcbd2118cdd718457c9227e312e250a</Hash>
+    <Hash>836af4069d5737366de40c597e994fd2</Hash>
 </Codenesium>*/

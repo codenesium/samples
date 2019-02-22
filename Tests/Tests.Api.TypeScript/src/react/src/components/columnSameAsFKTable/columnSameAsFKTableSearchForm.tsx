@@ -50,13 +50,13 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.ColumnSameAsFKTableClientResponseModel) {
+  handleEditClick(e: any, row: ColumnSameAsFKTableViewModel) {
     this.props.history.push(
       ClientRoutes.ColumnSameAsFKTables + '/edit/' + row.id
     );
   }
 
-  handleDetailClick(e: any, row: Api.ColumnSameAsFKTableClientResponseModel) {
+  handleDetailClick(e: any, row: ColumnSameAsFKTableViewModel) {
     this.props.history.push(ClientRoutes.ColumnSameAsFKTables + '/' + row.id);
   }
 
@@ -142,7 +142,7 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
             records: new Array<ColumnSameAsFKTableViewModel>(),
             filteredRecords: new Array<ColumnSameAsFKTableViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -212,7 +212,7 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'ColumnSameAsFKTable',
+                Header: 'ColumnSameAsFKTables',
                 columns: [
                   {
                     Header: 'Id',
@@ -272,7 +272,7 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.ColumnSameAsFKTableClientResponseModel
+                              row.original as ColumnSameAsFKTableViewModel
                             );
                           }}
                         >
@@ -284,7 +284,7 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.ColumnSameAsFKTableClientResponseModel
+                              row.original as ColumnSameAsFKTableViewModel
                             );
                           }}
                         >
@@ -296,7 +296,7 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.ColumnSameAsFKTableClientResponseModel
+                              row.original as ColumnSameAsFKTableViewModel
                             );
                           }}
                         >
@@ -323,5 +323,5 @@ export const WrappedColumnSameAsFKTableSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cdae2d4bcc54a6802c09f07599919497</Hash>
+    <Hash>e686f2c7efb86d38fdfc1b58974ca3a9</Hash>
 </Codenesium>*/

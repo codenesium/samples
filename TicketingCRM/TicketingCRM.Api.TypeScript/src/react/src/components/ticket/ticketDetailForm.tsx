@@ -6,6 +6,7 @@ import TicketMapper from './ticketMapper';
 import TicketViewModel from './ticketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { SaleTicketTableComponent } from '../shared/saleTicketTable';
 
 interface TicketDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class TicketDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -118,6 +119,22 @@ class TicketDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>SaleTickets</h3>
+            <SaleTicketTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Tickets +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.SaleTickets
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,5 +149,5 @@ export const WrappedTicketDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c504bbe475e7be8e26d04426995534bc</Hash>
+    <Hash>8daed24f73d44d036e1e6f419dbf56a1</Hash>
 </Codenesium>*/

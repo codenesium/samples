@@ -50,11 +50,11 @@ export default class PersonSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.PersonClientResponseModel) {
+  handleEditClick(e: any, row: PersonViewModel) {
     this.props.history.push(ClientRoutes.People + '/edit/' + row.personId);
   }
 
-  handleDetailClick(e: any, row: Api.PersonClientResponseModel) {
+  handleDetailClick(e: any, row: PersonViewModel) {
     this.props.history.push(ClientRoutes.People + '/' + row.personId);
   }
 
@@ -135,7 +135,7 @@ export default class PersonSearchComponent extends React.Component<
             records: new Array<PersonViewModel>(),
             filteredRecords: new Array<PersonViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -205,7 +205,7 @@ export default class PersonSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Person',
+                Header: 'People',
                 columns: [
                   {
                     Header: 'PersonId',
@@ -230,7 +230,7 @@ export default class PersonSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.PersonClientResponseModel
+                              row.original as PersonViewModel
                             );
                           }}
                         >
@@ -242,7 +242,7 @@ export default class PersonSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.PersonClientResponseModel
+                              row.original as PersonViewModel
                             );
                           }}
                         >
@@ -254,7 +254,7 @@ export default class PersonSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.PersonClientResponseModel
+                              row.original as PersonViewModel
                             );
                           }}
                         >
@@ -281,5 +281,5 @@ export const WrappedPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8dbf31fdb3b1f304358aaaed169127df</Hash>
+    <Hash>940cba6b1ddc403364ae184bb69a58c8</Hash>
 </Codenesium>*/

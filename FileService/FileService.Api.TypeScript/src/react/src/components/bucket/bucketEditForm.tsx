@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BucketMapper from './bucketMapper';
 import BucketViewModel from './bucketViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface BucketEditComponentProps {
@@ -148,20 +148,25 @@ class BucketEditComponent extends React.Component<
               <label htmlFor='externalId'>ExternalId</label>
               <br />             
               {getFieldDecorator('externalId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"ExternalId"} id={"externalId"} /> )}
+              ( <Input placeholder={"ExternalId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 255, message: 'Exceeds max length of 255' },
+],
               
               })
-              ( <Input placeholder={"Name"} id={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 			
@@ -181,5 +186,5 @@ class BucketEditComponent extends React.Component<
 export const WrappedBucketEditComponent = Form.create({ name: 'Bucket Edit' })(BucketEditComponent);
 
 /*<Codenesium>
-    <Hash>f9894db606435f65e23a190de799af98</Hash>
+    <Hash>963f95c1208bd4efb5c2b28a3fd4feb2</Hash>
 </Codenesium>*/

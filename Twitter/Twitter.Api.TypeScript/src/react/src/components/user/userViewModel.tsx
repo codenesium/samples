@@ -1,3 +1,4 @@
+import moment from 'moment';
 import LocationViewModel from '../location/locationViewModel';
 
 export default class UserViewModel {
@@ -28,7 +29,7 @@ export default class UserViewModel {
     this.interest = '';
     this.locationLocationId = 0;
     this.locationLocationIdEntity = '';
-    this.locationLocationIdNavigation = undefined;
+    this.locationLocationIdNavigation = new LocationViewModel();
     this.password = '';
     this.phoneNumber = '';
     this.privacy = '';
@@ -76,5 +77,5 @@ export default class UserViewModel {
 
 
 /*<Codenesium>
-    <Hash>209824a33f4ed316b5092739d2e80d80</Hash>
+    <Hash>9a745d3d86ca1a430b27232679e33a93</Hash>
 </Codenesium>*/

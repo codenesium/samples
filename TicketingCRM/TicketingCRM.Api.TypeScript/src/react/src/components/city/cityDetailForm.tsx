@@ -6,6 +6,7 @@ import CityMapper from './cityMapper';
 import CityViewModel from './cityViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { EventTableComponent } from '../shared/eventTable';
 
 interface CityDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class CityDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -116,6 +117,22 @@ class CityDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Events</h3>
+            <EventTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Cities +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Events
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -130,5 +147,5 @@ export const WrappedCityDetailComponent = Form.create({ name: 'City Detail' })(
 
 
 /*<Codenesium>
-    <Hash>88a7ea7d75d6b41da29d97989285970a</Hash>
+    <Hash>ec9f71939e97edec08d9f0655517c408</Hash>
 </Codenesium>*/

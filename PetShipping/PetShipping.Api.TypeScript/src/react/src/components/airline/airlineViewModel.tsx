@@ -1,26 +1,25 @@
+import moment from 'moment';
+
 export default class AirlineViewModel {
-    id:number;
-name:string;
+  id: number;
+  name: string;
 
-    constructor() {
-		this.id = 0;
-this.name = '';
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
 
-    }
+  setProperties(id: number, name: string): void {
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+  }
 
-	setProperties(id : number,name : string) : void
-	{
-		this.id = id;
-this.name = name;
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>53a2ed2b167e6dcc2e2d5791cba7d42c</Hash>
+    <Hash>12375925056ecdb74514d9564cecea43</Hash>
 </Codenesium>*/

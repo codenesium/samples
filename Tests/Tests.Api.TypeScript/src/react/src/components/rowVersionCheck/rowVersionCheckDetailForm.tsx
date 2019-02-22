@@ -75,7 +75,7 @@ class RowVersionCheckDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -132,5 +132,5 @@ export const WrappedRowVersionCheckDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c115f26ac486c31609d9c8efe6b20eae</Hash>
+    <Hash>74d22b9d0273fc536b57a95b6531a90f</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ import TransactionMapper from './transactionMapper';
 import TransactionViewModel from './transactionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { SaleTableComponent } from '../shared/saleTable';
 
 interface TransactionDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class TransactionDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -122,6 +123,22 @@ class TransactionDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Sales</h3>
+            <SaleTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Transactions +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Sales
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,5 +153,5 @@ export const WrappedTransactionDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e5bc1c15f3f24bdd8397ff027ed2f989</Hash>
+    <Hash>640c84e3d4658c258668323698d5257e</Hash>
 </Codenesium>*/

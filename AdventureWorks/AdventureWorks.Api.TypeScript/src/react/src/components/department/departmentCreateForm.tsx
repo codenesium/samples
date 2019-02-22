@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DepartmentMapper from './departmentMapper';
 import DepartmentViewModel from './departmentViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface DepartmentCreateComponentProps {
@@ -102,30 +102,38 @@ class DepartmentCreateComponent extends React.Component<
               <label htmlFor='groupName'>GroupName</label>
               <br />             
               {getFieldDecorator('groupName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 50, message: 'Exceeds max length of 50' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"GroupName"} id={"groupName"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"GroupName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='modifiedDate'>ModifiedDate</label>
               <br />             
               {getFieldDecorator('modifiedDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 50, message: 'Exceeds max length of 50' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} /> )}
               </Form.Item>
 
 			
@@ -145,5 +153,5 @@ class DepartmentCreateComponent extends React.Component<
 export const WrappedDepartmentCreateComponent = Form.create({ name: 'Department Create' })(DepartmentCreateComponent);
 
 /*<Codenesium>
-    <Hash>71322be24de6a0d4b6b2596989f61cd3</Hash>
+    <Hash>5bc8da85edf4b76c55f7b9d7fca8fa48</Hash>
 </Codenesium>*/

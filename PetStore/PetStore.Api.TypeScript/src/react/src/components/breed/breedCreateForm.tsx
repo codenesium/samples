@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,16 +121,23 @@ class BreedCreateComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="speciesId">speciesId</label>
             <br />
             {getFieldDecorator('speciesId', {
-              rules: [],
-            })(<Input placeholder={'speciesId'} id={'speciesId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'speciesId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -152,5 +160,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4359bcd428daca89429f16390644725e</Hash>
+    <Hash>7c93a423aee6704b32058e511843c6c2</Hash>
 </Codenesium>*/

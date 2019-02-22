@@ -50,11 +50,11 @@ export default class TableSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.TableClientResponseModel) {
+  handleEditClick(e: any, row: TableViewModel) {
     this.props.history.push(ClientRoutes.Tables + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.TableClientResponseModel) {
+  handleDetailClick(e: any, row: TableViewModel) {
     this.props.history.push(ClientRoutes.Tables + '/' + row.id);
   }
 
@@ -135,7 +135,7 @@ export default class TableSearchComponent extends React.Component<
             records: new Array<TableViewModel>(),
             filteredRecords: new Array<TableViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -205,7 +205,7 @@ export default class TableSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Table',
+                Header: 'Tables',
                 columns: [
                   {
                     Header: 'Id',
@@ -230,7 +230,7 @@ export default class TableSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.TableClientResponseModel
+                              row.original as TableViewModel
                             );
                           }}
                         >
@@ -242,7 +242,7 @@ export default class TableSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.TableClientResponseModel
+                              row.original as TableViewModel
                             );
                           }}
                         >
@@ -254,7 +254,7 @@ export default class TableSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.TableClientResponseModel
+                              row.original as TableViewModel
                             );
                           }}
                         >
@@ -281,5 +281,5 @@ export const WrappedTableSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>08a94f36def09af28fc570ade936da02</Hash>
+    <Hash>6c42be932be128997b792488bc36c8fe</Hash>
 </Codenesium>*/

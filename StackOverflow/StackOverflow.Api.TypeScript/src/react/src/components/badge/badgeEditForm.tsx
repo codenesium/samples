@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BadgeMapper from './badgeMapper';
 import BadgeViewModel from './badgeViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface BadgeEditComponentProps {
@@ -148,30 +148,37 @@ class BadgeEditComponent extends React.Component<
               <label htmlFor='date'>Date</label>
               <br />             
               {getFieldDecorator('date', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"Date"} id={"date"} /> )}
+              ( <Input placeholder={"Date"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 40, message: 'Exceeds max length of 40' },
+],
               
               })
-              ( <Input placeholder={"Name"} id={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='userId'>UserId</label>
               <br />             
               {getFieldDecorator('userId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"UserId"} id={"userId"} /> )}
+              ( <Input placeholder={"UserId"} /> )}
               </Form.Item>
 
 			
@@ -191,5 +198,5 @@ class BadgeEditComponent extends React.Component<
 export const WrappedBadgeEditComponent = Form.create({ name: 'Badge Edit' })(BadgeEditComponent);
 
 /*<Codenesium>
-    <Hash>342c3f61f65f513fdd2bfaaac060ccdd</Hash>
+    <Hash>d92c36103c1fc51e74de985537f05850</Hash>
 </Codenesium>*/

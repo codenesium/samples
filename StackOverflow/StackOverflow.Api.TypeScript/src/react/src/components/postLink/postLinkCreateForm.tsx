@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,32 +121,44 @@ class PostLinkCreateComponent extends React.Component<
             <label htmlFor="creationDate">CreationDate</label>
             <br />
             {getFieldDecorator('creationDate', {
-              rules: [],
-            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'CreationDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="linkTypeId">LinkTypeId</label>
             <br />
             {getFieldDecorator('linkTypeId', {
-              rules: [],
-            })(<Input placeholder={'LinkTypeId'} id={'linkTypeId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'LinkTypeId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="postId">PostId</label>
             <br />
             {getFieldDecorator('postId', {
-              rules: [],
-            })(<Input placeholder={'PostId'} id={'postId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'PostId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="relatedPostId">RelatedPostId</label>
             <br />
             {getFieldDecorator('relatedPostId', {
-              rules: [],
-            })(<Input placeholder={'RelatedPostId'} id={'relatedPostId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'RelatedPostId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -168,5 +181,5 @@ export const WrappedPostLinkCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>066766b6e6a8d768b4318180e029acf1</Hash>
+    <Hash>8f392a9fa402d79c4fdf217aa3b6e333</Hash>
 </Codenesium>*/

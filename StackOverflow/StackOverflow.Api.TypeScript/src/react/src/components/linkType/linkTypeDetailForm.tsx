@@ -75,7 +75,7 @@ class LinkTypeDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -124,5 +124,5 @@ export const WrappedLinkTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>319d449b234202b8b0ab61db70435997</Hash>
+    <Hash>bf84f563e0cb5c0f8c9b730141af94b0</Hash>
 </Codenesium>*/

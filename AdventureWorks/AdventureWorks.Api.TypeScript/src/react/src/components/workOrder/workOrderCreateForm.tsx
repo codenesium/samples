@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,14 +121,11 @@ class WorkOrderCreateComponent extends React.Component<
             <label htmlFor="dueDate">DueDate</label>
             <br />
             {getFieldDecorator('dueDate', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'DueDate'}
-                id={'dueDate'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'DueDate'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -135,26 +133,19 @@ class WorkOrderCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('endDate', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'EndDate'}
-                id={'endDate'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'EndDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -162,41 +153,34 @@ class WorkOrderCreateComponent extends React.Component<
             <label htmlFor="orderQty">OrderQty</label>
             <br />
             {getFieldDecorator('orderQty', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'OrderQty'}
-                id={'orderQty'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'OrderQty'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="productID">ProductID</label>
             <br />
             {getFieldDecorator('productID', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ProductID'}
-                id={'productID'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ProductID'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="scrappedQty">ScrappedQty</label>
             <br />
             {getFieldDecorator('scrappedQty', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ScrappedQty'}
-                id={'scrappedQty'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ScrappedQty'} />
             )}
           </Form.Item>
 
@@ -206,11 +190,7 @@ class WorkOrderCreateComponent extends React.Component<
             {getFieldDecorator('scrapReasonID', {
               rules: [],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ScrapReasonID'}
-                id={'scrapReasonID'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ScrapReasonID'} />
             )}
           </Form.Item>
 
@@ -218,28 +198,22 @@ class WorkOrderCreateComponent extends React.Component<
             <label htmlFor="startDate">StartDate</label>
             <br />
             {getFieldDecorator('startDate', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'StartDate'}
-                id={'startDate'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'StartDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="stockedQty">StockedQty</label>
             <br />
             {getFieldDecorator('stockedQty', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'StockedQty'}
-                id={'stockedQty'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'StockedQty'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -262,5 +236,5 @@ export const WrappedWorkOrderCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>620889a5ab18ba2e941334ba3c7fcef8</Hash>
+    <Hash>0e1f9dc5645fbb711a8940ce094b62b1</Hash>
 </Codenesium>*/

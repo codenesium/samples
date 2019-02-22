@@ -1,186 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import CountryRequirementMapper from './countryRequirementMapper';
 import CountryRequirementViewModel from './countryRequirementViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: CountryRequirementViewModel;
+interface CountryRequirementCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
-
-const CountryRequirementCreateDisplay: React.SFC<
-  FormikProps<CountryRequirementViewModel>
-> = (props: FormikProps<CountryRequirementViewModel>) => {
-  let status = props.status as CreateResponse<
-    Api.CountryRequirementClientRequestModel
-  >;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof CountryRequirementViewModel] &&
-      props.errors[name as keyof CountryRequirementViewModel]
-    ) {
-      response += props.errors[name as keyof CountryRequirementViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('countryId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          CountryId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="countryId"
-            className={
-              errorExistForField('countryId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('countryId') && (
-            <small className="text-danger">{errorsForField('countryId')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('detail')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Details
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="detail"
-            className={
-              errorExistForField('detail')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('detail') && (
-            <small className="text-danger">{errorsForField('detail')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const CountryRequirementCreate = withFormik<Props, CountryRequirementViewModel>(
-  {
-    mapPropsToValues: props => {
-      let response = new CountryRequirementViewModel();
-      if (props.model != undefined) {
-        response.setProperties(
-          props.model!.countryId,
-          props.model!.detail,
-          props.model!.id
-        );
-      }
-      return response;
-    },
-
-    validate: values => {
-      let errors: FormikErrors<CountryRequirementViewModel> = {};
-
-      if (values.countryId == 0) {
-        errors.countryId = 'Required';
-      }
-      if (values.detail == '') {
-        errors.detail = 'Required';
-      }
-
-      return errors;
-    },
-
-    handleSubmit: (values, actions) => {
-      actions.setStatus(undefined);
-      let mapper = new CountryRequirementMapper();
-
-      axios
-        .post(
-          Constants.ApiEndpoint + ApiRoutes.CountryRequirements,
-          mapper.mapViewModelToApiRequest(values),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        .then(
-          resp => {
-            let response = resp.data as CreateResponse<
-              Api.CountryRequirementClientRequestModel
-            >;
-            actions.setStatus(response);
-            console.log(response);
-          },
-          error => {
-            console.log(error);
-            actions.setStatus('Error from API');
-          }
-        );
-    },
-    displayName: 'CountryRequirementCreate',
-  }
-)(CountryRequirementCreateDisplay);
-
-interface CountryRequirementCreateComponentProps {}
 
 interface CountryRequirementCreateComponentState {
   model?: CountryRequirementViewModel;
@@ -188,34 +30,134 @@ interface CountryRequirementCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
-export default class CountryRequirementCreateComponent extends React.Component<
+class CountryRequirementCreateComponent extends React.Component<
   CountryRequirementCreateComponentProps,
   CountryRequirementCreateComponentState
 > {
   state = {
-    model: undefined,
+    model: new CountryRequirementViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
+    submitted: false,
+  };
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as CountryRequirementViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: CountryRequirementViewModel) => {
+    let mapper = new CountryRequirementMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.CountryRequirements,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.CountryRequirementClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <CountryRequirementCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="countryId">countryId</label>
+            <br />
+            {getFieldDecorator('countryId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'countryId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="detail">details</label>
+            <br />
+            {getFieldDecorator('detail', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'details'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedCountryRequirementCreateComponent = Form.create({
+  name: 'CountryRequirement Create',
+})(CountryRequirementCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>d97bf89b269de4abc7c4530907ea2c6d</Hash>
+    <Hash>5f41a212f843cbaf0c3a4bc4228071b8</Hash>
 </Codenesium>*/

@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import EventStatusMapper from './eventStatusMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import EventStatusViewModel from './eventStatusViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface EventStatusSearchComponentProps
@@ -41,11 +39,11 @@ export default class EventStatusSearchComponent extends React.Component<EventSta
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.EventStatusClientResponseModel) {
+    handleEditClick(e:any, row:EventStatusViewModel) {
          this.props.history.push(ClientRoutes.EventStatus + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.EventStatusClientResponseModel) {
+    handleDetailClick(e:any, row:EventStatusViewModel) {
          this.props.history.push(ClientRoutes.EventStatus + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class EventStatusSearchComponent extends React.Component<EventSta
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<EventStatusViewModel>(),filteredRecords:new Array<EventStatusViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<EventStatusViewModel>(), filteredRecords:new Array<EventStatusViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class EventStatusSearchComponent extends React.Component<EventSta
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -180,7 +178,7 @@ export default class EventStatusSearchComponent extends React.Component<EventSta
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.EventStatusClientResponseModel
+                              row.original as EventStatusViewModel
                             );
                           }}
                         >
@@ -192,7 +190,7 @@ export default class EventStatusSearchComponent extends React.Component<EventSta
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.EventStatusClientResponseModel
+                              row.original as EventStatusViewModel
                             );
                           }}
                         >
@@ -204,7 +202,7 @@ export default class EventStatusSearchComponent extends React.Component<EventSta
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.EventStatusClientResponseModel
+                              row.original as EventStatusViewModel
                             );
                           }}
                         >
@@ -226,5 +224,5 @@ export default class EventStatusSearchComponent extends React.Component<EventSta
 export const WrappedEventStatusSearchComponent = Form.create({ name: 'EventStatus Search' })(EventStatusSearchComponent);
 
 /*<Codenesium>
-    <Hash>a6200f05e6541f65dd234cdd6b305856</Hash>
+    <Hash>bb4fba77ee7d8375fb3319bd267dbbdc</Hash>
 </Codenesium>*/

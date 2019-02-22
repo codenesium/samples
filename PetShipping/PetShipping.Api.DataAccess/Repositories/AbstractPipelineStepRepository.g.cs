@@ -93,6 +93,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineStepsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<HandlerPipelineStep>()
+			       .Include(x => x.PipelineStepIdNavigation)
 			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
 		}
 
@@ -100,6 +101,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<OtherTransport>> OtherTransportsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<OtherTransport>()
+			       .Include(x => x.PipelineStepIdNavigation)
 			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
 		}
 
@@ -107,6 +109,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinationsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStepDestination>()
+			       .Include(x => x.PipelineStepIdNavigation)
 			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
 		}
 
@@ -114,6 +117,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<PipelineStepNote>> PipelineStepNotesByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStepNote>()
+			       .Include(x => x.PipelineStepIdNavigation)
 			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
 		}
 
@@ -121,6 +125,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<PipelineStepStepRequirement>> PipelineStepStepRequirementsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStepStepRequirement>()
+			       .Include(x => x.PipelineStepIdNavigation)
 			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
 		}
 
@@ -166,5 +171,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6cd95dea19e40556ceff3357d3f7ef7</Hash>
+    <Hash>6f24cafd99edb67dfc3b00fa43f71a31</Hash>
 </Codenesium>*/

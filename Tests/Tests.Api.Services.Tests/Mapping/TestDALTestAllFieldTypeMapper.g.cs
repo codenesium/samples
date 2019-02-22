@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services
 		{
 			var mapper = new DALTestAllFieldTypeMapper();
 			ApiTestAllFieldTypeServerRequestModel model = new ApiTestAllFieldTypeServerRequestModel();
-			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", "A");
 			TestAllFieldType response = mapper.MapModelToEntity(1, model);
 
 			response.FieldBigInt.Should().Be(1);
@@ -30,6 +30,9 @@ namespace TestsNS.Api.Services
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
+			response.FieldGeography.Should().Be(1);
+			response.FieldGeometry.Should().Be(1);
+			response.FieldHierarchyId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
 			response.FieldNChar.Should().Be("A");
@@ -47,6 +50,7 @@ namespace TestsNS.Api.Services
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldVarchar.Should().Be("A");
+			response.FieldVariant.Should().Be("A");
 			response.FieldXML.Should().Be("A");
 		}
 
@@ -55,7 +59,7 @@ namespace TestsNS.Api.Services
 		{
 			var mapper = new DALTestAllFieldTypeMapper();
 			TestAllFieldType item = new TestAllFieldType();
-			item.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			item.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", "A");
 			ApiTestAllFieldTypeServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.FieldBigInt.Should().Be(1);
@@ -68,6 +72,9 @@ namespace TestsNS.Api.Services
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
+			response.FieldGeography.Should().Be(1);
+			response.FieldGeometry.Should().Be(1);
+			response.FieldHierarchyId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
 			response.FieldNChar.Should().Be("A");
@@ -85,6 +92,7 @@ namespace TestsNS.Api.Services
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldVarchar.Should().Be("A");
+			response.FieldVariant.Should().Be("A");
 			response.FieldXML.Should().Be("A");
 			response.Id.Should().Be(1);
 		}
@@ -94,7 +102,7 @@ namespace TestsNS.Api.Services
 		{
 			var mapper = new DALTestAllFieldTypeMapper();
 			TestAllFieldType item = new TestAllFieldType();
-			item.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			item.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", "A");
 			List<ApiTestAllFieldTypeServerResponseModel> response = mapper.MapEntityToModel(new List<TestAllFieldType>() { { item} });
 
 			response.Count.Should().Be(1);
@@ -103,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7fdbda22c441e25f9dc6462008dd4ff9</Hash>
+    <Hash>21a90935ab723cb65a879837bb675705</Hash>
 </Codenesium>*/

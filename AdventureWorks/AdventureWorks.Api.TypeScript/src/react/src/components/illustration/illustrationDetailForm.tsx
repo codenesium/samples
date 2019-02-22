@@ -6,6 +6,7 @@ import IllustrationMapper from './illustrationMapper';
 import IllustrationViewModel from './illustrationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ProductModelIllustrationTableComponent } from '../shared/productModelIllustrationTable';
 
 interface IllustrationDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class IllustrationDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -118,6 +119,22 @@ class IllustrationDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>ProductModelIllustrations</h3>
+            <ProductModelIllustrationTableComponent
+              productModelID={this.state.model!.productModelID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Illustrations +
+                '/' +
+                this.state.model!.illustrationID +
+                '/' +
+                ApiRoutes.ProductModelIllustrations
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,5 +149,5 @@ export const WrappedIllustrationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b9ec524016a92493e78cf448908f4c5d</Hash>
+    <Hash>74177a54ddabe0d74c2f796fcc277cd7</Hash>
 </Codenesium>*/

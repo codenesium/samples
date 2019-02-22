@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -125,7 +126,6 @@ class ProductModelCreateComponent extends React.Component<
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'CatalogDescription'}
-                id={'catalogDescription'}
               />
             )}
           </Form.Item>
@@ -136,11 +136,7 @@ class ProductModelCreateComponent extends React.Component<
             {getFieldDecorator('instruction', {
               rules: [],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Instructions'}
-                id={'instruction'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Instructions'} />
             )}
           </Form.Item>
 
@@ -148,13 +144,12 @@ class ProductModelCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -162,28 +157,23 @@ class ProductModelCreateComponent extends React.Component<
             <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Name'}
-                id={'name'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'rowguid'}
-                id={'rowguid'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -206,5 +196,5 @@ export const WrappedProductModelCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e9065a0ad07543f666f0526784934248</Hash>
+    <Hash>6d9911fbfa6bf0d2129da0250d17497e</Hash>
 </Codenesium>*/

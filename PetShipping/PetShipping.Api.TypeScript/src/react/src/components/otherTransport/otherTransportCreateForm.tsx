@@ -1,162 +1,68 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import OtherTransportMapper from './otherTransportMapper';
 import OtherTransportViewModel from './otherTransportViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: OtherTransportViewModel;
+interface OtherTransportCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const OtherTransportCreateDisplay: React.SFC<
-  FormikProps<OtherTransportViewModel>
-> = (props: FormikProps<OtherTransportViewModel>) => {
-  let status = props.status as CreateResponse<
-    Api.OtherTransportClientRequestModel
-  >;
+interface OtherTransportCreateComponentState {
+  model?: OtherTransportViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof OtherTransportViewModel] &&
-      props.errors[name as keyof OtherTransportViewModel]
-    ) {
-      response += props.errors[name as keyof OtherTransportViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class OtherTransportCreateComponent extends React.Component<
+  OtherTransportCreateComponentProps,
+  OtherTransportCreateComponentState
+> {
+  state = {
+    model: new OtherTransportViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as OtherTransportViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('handlerId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          HandlerId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="handlerId"
-            className={
-              errorExistForField('handlerId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('handlerId') && (
-            <small className="text-danger">{errorsForField('handlerId')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('pipelineStepId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PipelineStepId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="pipelineStepId"
-            className={
-              errorExistForField('pipelineStepId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('pipelineStepId') && (
-            <small className="text-danger">
-              {errorsForField('pipelineStepId')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const OtherTransportCreate = withFormik<Props, OtherTransportViewModel>({
-  mapPropsToValues: props => {
-    let response = new OtherTransportViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.handlerId,
-        props.model!.id,
-        props.model!.pipelineStepId
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<OtherTransportViewModel> = {};
-
-    if (values.handlerId == 0) {
-      errors.handlerId = 'Required';
-    }
-    if (values.pipelineStepId == 0) {
-      errors.pipelineStepId = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: OtherTransportViewModel) => {
     let mapper = new OtherTransportMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.OtherTransports,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -168,54 +74,95 @@ const OtherTransportCreate = withFormik<Props, OtherTransportViewModel>({
           let response = resp.data as CreateResponse<
             Api.OtherTransportClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'OtherTransportCreate',
-})(OtherTransportCreateDisplay);
-
-interface OtherTransportCreateComponentProps {}
-
-interface OtherTransportCreateComponentState {
-  model?: OtherTransportViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class OtherTransportCreateComponent extends React.Component<
-  OtherTransportCreateComponentProps,
-  OtherTransportCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <OtherTransportCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="handlerId">handlerId</label>
+            <br />
+            {getFieldDecorator('handlerId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'handlerId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="pipelineStepId">pipelineStepId</label>
+            <br />
+            {getFieldDecorator('pipelineStepId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'pipelineStepId'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedOtherTransportCreateComponent = Form.create({
+  name: 'OtherTransport Create',
+})(OtherTransportCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>bfdd65da38368f73db8bd540c44dcc12</Hash>
+    <Hash>42bbbadc33e5c5ce05d6560183615654</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import EventStatusViewModel from '../eventStatus/eventStatusViewModel';
 
 export default class EventViewModel {
@@ -19,7 +20,7 @@ export default class EventViewModel {
     this.billAmount = undefined;
     this.eventStatusId = 0;
     this.eventStatusIdEntity = '';
-    this.eventStatusIdNavigation = undefined;
+    this.eventStatusIdNavigation = new EventStatusViewModel();
     this.id = 0;
     this.scheduledEndDate = undefined;
     this.scheduledStartDate = undefined;
@@ -38,13 +39,13 @@ export default class EventViewModel {
     studentNote: string,
     teacherNote: string
   ): void {
-    this.actualEndDate = actualEndDate;
-    this.actualStartDate = actualStartDate;
+    this.actualEndDate = moment(actualEndDate, 'YYYY-MM-DD');
+    this.actualStartDate = moment(actualStartDate, 'YYYY-MM-DD');
     this.billAmount = billAmount;
     this.eventStatusId = eventStatusId;
     this.id = id;
-    this.scheduledEndDate = scheduledEndDate;
-    this.scheduledStartDate = scheduledStartDate;
+    this.scheduledEndDate = moment(scheduledEndDate, 'YYYY-MM-DD');
+    this.scheduledStartDate = moment(scheduledStartDate, 'YYYY-MM-DD');
     this.studentNote = studentNote;
     this.teacherNote = teacherNote;
   }
@@ -56,5 +57,5 @@ export default class EventViewModel {
 
 
 /*<Codenesium>
-    <Hash>5888abe4156649b67ba0b9a675adc915</Hash>
+    <Hash>2e4ea18277ad1cea0cbb9a65982ea54b</Hash>
 </Codenesium>*/

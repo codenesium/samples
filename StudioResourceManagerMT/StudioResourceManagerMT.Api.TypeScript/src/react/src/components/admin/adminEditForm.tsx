@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface AdminEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface AdminEditComponentState {
@@ -20,7 +30,7 @@ interface AdminEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class AdminEditComponent extends React.Component<
@@ -33,10 +43,10 @@ class AdminEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -67,7 +77,9 @@ class AdminEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -80,11 +92,11 @@ class AdminEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as AdminViewModel;
         console.log('Received values of form: ', model);
@@ -93,10 +105,9 @@ class AdminEditComponent extends React.Component<
     });
   };
 
-  submit = (model:AdminViewModel) =>
-  {  
+  submit = (model: AdminViewModel) => {
     let mapper = new AdminMapper();
-     axios
+    axios
       .put(
         Constants.ApiEndpoint + ApiRoutes.Admins + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -111,115 +122,131 @@ class AdminEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.AdminClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="birthday">birthday</label>
+            <br />
+            {getFieldDecorator('birthday', {
+              rules: [],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'birthday'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='birthday'>birthday</label>
-              <br />             
-              {getFieldDecorator('birthday', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"birthday"} id={"birthday"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="email">email</label>
+            <br />
+            {getFieldDecorator('email', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='email'>email</label>
-              <br />             
-              {getFieldDecorator('email', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"email"} id={"email"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="firstName">firstName</label>
+            <br />
+            {getFieldDecorator('firstName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='firstName'>firstName</label>
-              <br />             
-              {getFieldDecorator('firstName', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"firstName"} id={"firstName"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="lastName">lastName</label>
+            <br />
+            {getFieldDecorator('lastName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='lastName'>lastName</label>
-              <br />             
-              {getFieldDecorator('lastName', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"lastName"} id={"lastName"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="phone">phone</label>
+            <br />
+            {getFieldDecorator('phone', {
+              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'phone'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='phone'>phone</label>
-              <br />             
-              {getFieldDecorator('phone', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"phone"} id={"phone"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="userId">userId</label>
+            <br />
+            {getFieldDecorator('userId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'userId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='userId'>userId</label>
-              <br />             
-              {getFieldDecorator('userId', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"userId"} id={"userId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(AdminEditComponent);
+export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(
+  AdminEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>ee3c88d926cd97a0af1195fffd9baf6e</Hash>
+    <Hash>b06bc6b6133b86b242e3db0b903d0e36</Hash>
 </Codenesium>*/

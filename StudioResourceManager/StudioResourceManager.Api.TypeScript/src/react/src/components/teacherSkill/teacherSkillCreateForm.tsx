@@ -1,15 +1,22 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherSkillMapper from './teacherSkillMapper';
 import TeacherSkillViewModel from './teacherSkillViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface TeacherSkillCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +113,7 @@ class TeacherSkillCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -114,8 +121,12 @@ class TeacherSkillCreateComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -138,5 +149,5 @@ export const WrappedTeacherSkillCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a27ff2ff10f27676021fd5fd98ad164e</Hash>
+    <Hash>d8811b84e52c759dd2b89eab53e06a6f</Hash>
 </Codenesium>*/

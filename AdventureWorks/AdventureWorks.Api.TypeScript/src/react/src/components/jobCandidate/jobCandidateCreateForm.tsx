@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -125,7 +126,6 @@ class JobCandidateCreateComponent extends React.Component<
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'BusinessEntityID'}
-                id={'businessEntityID'}
               />
             )}
           </Form.Item>
@@ -134,13 +134,12 @@ class JobCandidateCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -149,13 +148,7 @@ class JobCandidateCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('resume', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Resume'}
-                id={'resume'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Resume'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -178,5 +171,5 @@ export const WrappedJobCandidateCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4e8e5d91c3b9e6bdf1580fb6b7ff79e3</Hash>
+    <Hash>c09374d35f7a4e415b887556161d4b61</Hash>
 </Codenesium>*/

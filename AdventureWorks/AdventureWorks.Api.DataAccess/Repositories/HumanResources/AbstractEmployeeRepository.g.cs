@@ -128,6 +128,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<JobCandidate>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<JobCandidate>()
+			       .Include(x => x.BusinessEntityIDNavigation)
 			       .Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<JobCandidate>();
 		}
 
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65e1501df6b7ec0898e2d55b3186c32f</Hash>
+    <Hash>0d5128371ef2d7085076ca72ff3d0720</Hash>
 </Codenesium>*/

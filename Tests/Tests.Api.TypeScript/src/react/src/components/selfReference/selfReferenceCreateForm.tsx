@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -121,9 +122,7 @@ class SelfReferenceCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('selfReferenceId', {
               rules: [],
-            })(
-              <Input placeholder={'SelfReferenceId'} id={'selfReferenceId'} />
-            )}
+            })(<Input placeholder={'SelfReferenceId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -131,9 +130,7 @@ class SelfReferenceCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('selfReferenceId2', {
               rules: [],
-            })(
-              <Input placeholder={'SelfReferenceId2'} id={'selfReferenceId2'} />
-            )}
+            })(<Input placeholder={'SelfReferenceId2'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -156,5 +153,5 @@ export const WrappedSelfReferenceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>51666f0504295f19bf81b5e54b83cea7</Hash>
+    <Hash>fd8ca5bbe62e39105ad48d865afd3a3a</Hash>
 </Codenesium>*/

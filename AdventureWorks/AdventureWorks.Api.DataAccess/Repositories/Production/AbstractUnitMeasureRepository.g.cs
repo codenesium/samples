@@ -100,6 +100,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>()
+			       .Include(x => x.UnitMeasureCodeNavigation)
 			       .Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
@@ -107,6 +108,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<Product>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Product>()
+			       .Include(x => x.SizeUnitMeasureCodeNavigation)
 			       .Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
@@ -114,6 +116,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<Product>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Product>()
+			       .Include(x => x.WeightUnitMeasureCodeNavigation)
 			       .Where(x => x.WeightUnitMeasureCode == weightUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
@@ -143,5 +146,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>501c20c95c391ac52adad2bcae623e1d</Hash>
+    <Hash>c52a5b25f4d68d149f666dae6fe3d0b3</Hash>
 </Codenesium>*/

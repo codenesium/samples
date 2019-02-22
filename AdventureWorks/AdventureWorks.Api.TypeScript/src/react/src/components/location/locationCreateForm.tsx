@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,12 @@ class LocationCreateComponent extends React.Component<
             <label htmlFor="availability">Availability</label>
             <br />
             {getFieldDecorator('availability', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Availability'}
-                id={'availability'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Availability'} />
             )}
           </Form.Item>
 
@@ -134,27 +134,23 @@ class LocationCreateComponent extends React.Component<
             <label htmlFor="costRate">CostRate</label>
             <br />
             {getFieldDecorator('costRate', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'CostRate'}
-                id={'costRate'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'CostRate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -162,14 +158,12 @@ class LocationCreateComponent extends React.Component<
             <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Name'}
-                id={'name'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -192,5 +186,5 @@ export const WrappedLocationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2cb0ad658519788de066290f9a7a0ee7</Hash>
+    <Hash>387c1c12c67d2a71423b16ad1d25d2eb</Hash>
 </Codenesium>*/

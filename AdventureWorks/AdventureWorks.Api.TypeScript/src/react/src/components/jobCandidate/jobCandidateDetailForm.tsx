@@ -75,7 +75,7 @@ class JobCandidateDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -136,5 +136,5 @@ export const WrappedJobCandidateDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>71edf1bb92fc2f3016b66190b9f5ea36</Hash>
+    <Hash>493bae60d1d759acb4004ece4d282303</Hash>
 </Codenesium>*/

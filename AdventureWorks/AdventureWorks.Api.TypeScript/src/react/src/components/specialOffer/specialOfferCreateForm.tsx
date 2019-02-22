@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,27 +121,25 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="category">Category</label>
             <br />
             {getFieldDecorator('category', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Category'}
-                id={'category'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Category'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="description">Description</label>
             <br />
             {getFieldDecorator('description', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 255, message: 'Exceeds max length of 255' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Description'}
-                id={'description'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Description'} />
             )}
           </Form.Item>
 
@@ -148,13 +147,12 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="discountPct">DiscountPct</label>
             <br />
             {getFieldDecorator('discountPct', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'DiscountPct'}
-                id={'discountPct'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'DiscountPct'} />
             )}
           </Form.Item>
 
@@ -162,14 +160,11 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="endDate">EndDate</label>
             <br />
             {getFieldDecorator('endDate', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'EndDate'}
-                id={'endDate'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'EndDate'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -177,40 +172,30 @@ class SpecialOfferCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('maxQty', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'MaxQty'}
-                id={'maxQty'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'MaxQty'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="minQty">MinQty</label>
             <br />
             {getFieldDecorator('minQty', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'MinQty'}
-                id={'minQty'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'MinQty'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -218,28 +203,22 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'rowguid'}
-                id={'rowguid'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="startDate">StartDate</label>
             <br />
             {getFieldDecorator('startDate', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'StartDate'}
-                id={'startDate'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'StartDate'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -262,5 +241,5 @@ export const WrappedSpecialOfferCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>27973df47589456ce871678dbc3ee752</Hash>
+    <Hash>234cccd31c327bf7d910649ebeacf82b</Hash>
 </Codenesium>*/

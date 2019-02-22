@@ -75,7 +75,7 @@ class SaleDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -146,5 +146,5 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 
 
 /*<Codenesium>
-    <Hash>82fe84ea34265549678f4a2f2d0a6108</Hash>
+    <Hash>55bfc136fa0d5692eade8b7125d290cf</Hash>
 </Codenesium>*/

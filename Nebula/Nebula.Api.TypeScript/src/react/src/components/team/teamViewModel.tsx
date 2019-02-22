@@ -1,3 +1,4 @@
+import moment from 'moment';
 import OrganizationViewModel from '../organization/organizationViewModel';
 
 export default class TeamViewModel {
@@ -12,7 +13,7 @@ export default class TeamViewModel {
     this.name = '';
     this.organizationId = 0;
     this.organizationIdEntity = '';
-    this.organizationIdNavigation = undefined;
+    this.organizationIdNavigation = new OrganizationViewModel();
   }
 
   setProperties(id: number, name: string, organizationId: number): void {
@@ -28,5 +29,5 @@ export default class TeamViewModel {
 
 
 /*<Codenesium>
-    <Hash>190723d4fc3b8ef6cfd6ea1e3340f6c3</Hash>
+    <Hash>c8ec0abe39e36c9da5a74387c44efe4c</Hash>
 </Codenesium>*/

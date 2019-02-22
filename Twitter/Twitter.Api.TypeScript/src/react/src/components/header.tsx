@@ -1,74 +1,152 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ClientRoutes, Constants } from '../constants';
+const { Header, Content, Footer, Sider } = Layout;
 
-interface Props{
+const SubMenu = Menu.SubMenu;
+
+interface WrapperHeaderProps {}
+
+interface WrapperHeaderState {
+  collapsed: boolean;
 }
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+    state = { collapsed: true };
 
-interface State {
-    menuExpanded:boolean;
-}
+    onCollapse = () => {
+      this.setState({ ...this.state, collapsed: !this.state.collapsed });
+    };
+    render() {
+      return (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            collapsible
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
+          >
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+               <MenuItem
+                key="Home"
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+              >
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}></Link>
+              </MenuItem>
 
- export class Header extends React.Component<Props, State> {
- 
- state=({menuExpanded:false});
- 
- handleClick(e:React.FormEvent)
- {
-    this.setState({menuExpanded:!this.state.menuExpanded})
- }
+			   			   <MenuItem
+                key="directTweet"
+              >
+			  <Icon type="pie-chart" />
+              <span>DirectTweets</span>
+              <Link to={ClientRoutes.DirectTweets}></Link>
+              </MenuItem>
 
- render()
- {   
-     return (<div className="row col-12">
-      <nav className="navbar navbar-expand-lg navbar-light bg-white" id="navbar">
-        <a className="navbar-brand" href="/">Twitter</a>
+							   <MenuItem
+                key="follower"
+              >
+			  <Icon type="rise" />
+              <span>Followers</span>
+              <Link to={ClientRoutes.Followers}></Link>
+              </MenuItem>
 
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" onClick={e => this.handleClick(e)}>
-          <span className="navbar-toggler-icon"></span>
-        </button>
+							   <MenuItem
+                key="following"
+              >
+			  <Icon type="bars" />
+              <span>Followings</span>
+              <Link to={ClientRoutes.Followings}></Link>
+              </MenuItem>
 
-        <div className={ this.state.menuExpanded ? "collapse.expand navbar-collapse" : "collapse navbar-collapse" } id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-		  			 <li className="nav-item">
-                <Link className="nav-link" to="/directtweets" onClick={e => this.handleClick(e)}>DirectTweets</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/followers" onClick={e => this.handleClick(e)}>Followers</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/followings" onClick={e => this.handleClick(e)}>Followings</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/locations" onClick={e => this.handleClick(e)}>Locations</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/messages" onClick={e => this.handleClick(e)}>Messages</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/messengers" onClick={e => this.handleClick(e)}>Messengers</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/quotetweets" onClick={e => this.handleClick(e)}>QuoteTweets</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/replies" onClick={e => this.handleClick(e)}>Replies</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/retweets" onClick={e => this.handleClick(e)}>Retweets</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/tweets" onClick={e => this.handleClick(e)}>Tweets</Link>
-              </li>
-						 <li className="nav-item">
-                <Link className="nav-link" to="/users" onClick={e => this.handleClick(e)}>Users</Link>
-              </li>
-			          </ul>
-        </div>
-      </nav>
-    </div>);
+							   <MenuItem
+                key="location"
+              >
+			  <Icon type="cloud" />
+              <span>Locations</span>
+              <Link to={ClientRoutes.Locations}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="message"
+              >
+			  <Icon type="code" />
+              <span>Messages</span>
+              <Link to={ClientRoutes.Messages}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="messenger"
+              >
+			  <Icon type="smile" />
+              <span>Messengers</span>
+              <Link to={ClientRoutes.Messengers}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="quoteTweet"
+              >
+			  <Icon type="laptop" />
+              <span>QuoteTweets</span>
+              <Link to={ClientRoutes.QuoteTweets}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="reply"
+              >
+			  <Icon type="mobile" />
+              <span>Replies</span>
+              <Link to={ClientRoutes.Replies}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="retweet"
+              >
+			  <Icon type="paper-clip" />
+              <span>Retweets</span>
+              <Link to={ClientRoutes.Retweets}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="tweet"
+              >
+			  <Icon type="setting" />
+              <span>Tweets</span>
+              <Link to={ClientRoutes.Tweets}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="user"
+              >
+			  <Icon type="user" />
+              <span>Users</span>
+              <Link to={ClientRoutes.Users}></Link>
+              </MenuItem>
+
+				
+            </Menu>
+          </Sider>
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }} />
+            <Content style={{ margin: '0 16px' }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <Component {...this.props} />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+          </Layout>
+        </Layout>
+      );
+    }
   }
-}
+  return WrapperHeaderComponent;
+};
 
 /*<Codenesium>
-    <Hash>c2a48eea55310e82b9513900f8f0033b</Hash>
+    <Hash>c81ce847159790f8cae05c8723fc0de1</Hash>
 </Codenesium>*/

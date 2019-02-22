@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,13 @@ class SpaceCreateComponent extends React.Component<
             <label htmlFor="description">description</label>
             <br />
             {getFieldDecorator('description', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'description'}
-                id={'description'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'description'} />
             )}
           </Form.Item>
 
@@ -134,14 +135,12 @@ class SpaceCreateComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'name'}
-                id={'name'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -164,5 +163,5 @@ export const WrappedSpaceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>422a5495b5c4130964a8fa8693b0ea27</Hash>
+    <Hash>53c51041950570b1a6ce4968c0339b4d</Hash>
 </Codenesium>*/

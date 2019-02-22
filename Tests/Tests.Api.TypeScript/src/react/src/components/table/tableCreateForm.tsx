@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,8 +121,12 @@ class TableCreateComponent extends React.Component<
             <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'Name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -144,5 +149,5 @@ export const WrappedTableCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0c4a1a2f2b1340cd0846d98507eb66f6</Hash>
+    <Hash>1d783a4d07ce6eb4ba84301e860d5027</Hash>
 </Codenesium>*/

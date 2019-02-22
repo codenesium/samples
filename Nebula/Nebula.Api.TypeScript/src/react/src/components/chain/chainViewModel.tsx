@@ -1,3 +1,4 @@
+import moment from 'moment';
 import ChainStatusViewModel from '../chainStatus/chainStatusViewModel';
 import TeamViewModel from '../team/teamViewModel';
 
@@ -15,13 +16,13 @@ export default class ChainViewModel {
   constructor() {
     this.chainStatusId = 0;
     this.chainStatusIdEntity = '';
-    this.chainStatusIdNavigation = undefined;
+    this.chainStatusIdNavigation = new ChainStatusViewModel();
     this.externalId = undefined;
     this.id = 0;
     this.name = '';
     this.teamId = 0;
     this.teamIdEntity = '';
-    this.teamIdNavigation = undefined;
+    this.teamIdNavigation = new TeamViewModel();
   }
 
   setProperties(
@@ -45,5 +46,5 @@ export default class ChainViewModel {
 
 
 /*<Codenesium>
-    <Hash>d5e527172ca091cfd4fa7c0550cf10ab</Hash>
+    <Hash>2ec438bd7d650c68d278e29bda282805</Hash>
 </Codenesium>*/

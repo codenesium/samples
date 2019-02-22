@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class EventStatusViewModel {
   id: number;
   name: string;
@@ -8,7 +10,7 @@ export default class EventStatusViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.name = name;
   }
 
@@ -19,5 +21,5 @@ export default class EventStatusViewModel {
 
 
 /*<Codenesium>
-    <Hash>5c1fa5b3691e0d7d85e5b7f51e942ca9</Hash>
+    <Hash>fb4948aab9eaf20e1fae2cd07b95eeae</Hash>
 </Codenesium>*/

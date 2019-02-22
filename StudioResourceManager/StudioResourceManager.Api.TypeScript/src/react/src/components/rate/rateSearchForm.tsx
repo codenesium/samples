@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import RateMapper from './rateMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import RateViewModel from './rateViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface RateSearchComponentProps
@@ -41,11 +39,11 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.RateClientResponseModel) {
+    handleEditClick(e:any, row:RateViewModel) {
          this.props.history.push(ClientRoutes.Rates + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.RateClientResponseModel) {
+    handleDetailClick(e:any, row:RateViewModel) {
          this.props.history.push(ClientRoutes.Rates + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<RateViewModel>(),filteredRecords:new Array<RateViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<RateViewModel>(), filteredRecords:new Array<RateViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -163,7 +161,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Rate',
+                    Header: 'Rates',
                     columns: [
 					  {
                       Header: 'Amount Per Minute',
@@ -200,7 +198,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.RateClientResponseModel
+                              row.original as RateViewModel
                             );
                           }}
                         >
@@ -212,7 +210,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.RateClientResponseModel
+                              row.original as RateViewModel
                             );
                           }}
                         >
@@ -224,7 +222,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.RateClientResponseModel
+                              row.original as RateViewModel
                             );
                           }}
                         >
@@ -246,5 +244,5 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
 export const WrappedRateSearchComponent = Form.create({ name: 'Rate Search' })(RateSearchComponent);
 
 /*<Codenesium>
-    <Hash>b1d6dd851b2803201a285106a3488a75</Hash>
+    <Hash>58dc7e6c03b2e56fbde718d2a113f4bd</Hash>
 </Codenesium>*/

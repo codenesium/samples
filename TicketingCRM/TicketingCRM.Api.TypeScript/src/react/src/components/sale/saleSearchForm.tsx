@@ -39,11 +39,11 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.SaleClientResponseModel) {
+    handleEditClick(e:any, row:SaleViewModel) {
          this.props.history.push(ClientRoutes.Sales + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.SaleClientResponseModel) {
+    handleDetailClick(e:any, row:SaleViewModel) {
          this.props.history.push(ClientRoutes.Sales + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<SaleViewModel>(),filteredRecords:new Array<SaleViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<SaleViewModel>(), filteredRecords:new Array<SaleViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Sale',
+                    Header: 'Sales',
                     columns: [
 					  {
                       Header: 'IpAddress',
@@ -200,7 +200,7 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.SaleClientResponseModel
+                              row.original as SaleViewModel
                             );
                           }}
                         >
@@ -212,7 +212,7 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.SaleClientResponseModel
+                              row.original as SaleViewModel
                             );
                           }}
                         >
@@ -224,7 +224,7 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.SaleClientResponseModel
+                              row.original as SaleViewModel
                             );
                           }}
                         >
@@ -246,5 +246,5 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
 export const WrappedSaleSearchComponent = Form.create({ name: 'Sale Search' })(SaleSearchComponent);
 
 /*<Codenesium>
-    <Hash>fb6bcd7c0cc0c606668697a3d96e49d8</Hash>
+    <Hash>84fab20294ce0290574a08cff9e9ad27</Hash>
 </Codenesium>*/

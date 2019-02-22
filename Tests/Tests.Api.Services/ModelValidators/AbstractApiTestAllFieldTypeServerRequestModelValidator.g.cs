@@ -69,6 +69,18 @@ namespace TestsNS.Api.Services
 		{
 		}
 
+		public virtual void FieldGeographyRules()
+		{
+		}
+
+		public virtual void FieldGeometryRules()
+		{
+		}
+
+		public virtual void FieldHierarchyIdRules()
+		{
+		}
+
 		public virtual void FieldImageRules()
 		{
 		}
@@ -148,6 +160,10 @@ namespace TestsNS.Api.Services
 			this.RuleFor(x => x.FieldVarchar).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
+		public virtual void FieldVariantRules()
+		{
+		}
+
 		public virtual void FieldXMLRules()
 		{
 			this.RuleFor(x => x.FieldXML).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
@@ -156,5 +172,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ca3430acbb1b9c6d82ffd127bf31a1b</Hash>
+    <Hash>865bdbaa89e8367025fa2fd931a16081</Hash>
 </Codenesium>*/

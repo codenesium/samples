@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudentMapper from './studentMapper';
 import StudentViewModel from './studentViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface StudentEditComponentProps {
@@ -148,100 +148,124 @@ class StudentEditComponent extends React.Component<
               <label htmlFor='birthday'>birthday</label>
               <br />             
               {getFieldDecorator('birthday', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"birthday"} id={"birthday"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"birthday"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='email'>email</label>
               <br />             
               {getFieldDecorator('email', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"email"} id={"email"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"email"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='emailRemindersEnabled'>emailRemindersEnabled</label>
               <br />             
               {getFieldDecorator('emailRemindersEnabled', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"emailRemindersEnabled"} id={"emailRemindersEnabled"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"emailRemindersEnabled"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='familyId'>familyId</label>
               <br />             
               {getFieldDecorator('familyId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"familyId"} id={"familyId"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"familyId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='firstName'>firstName</label>
               <br />             
               {getFieldDecorator('firstName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"firstName"} id={"firstName"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"firstName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='isAdult'>isAdult</label>
               <br />             
               {getFieldDecorator('isAdult', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"isAdult"} id={"isAdult"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"isAdult"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='lastName'>lastName</label>
               <br />             
               {getFieldDecorator('lastName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"lastName"} id={"lastName"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"lastName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='phone'>phone</label>
               <br />             
               {getFieldDecorator('phone', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"phone"} id={"phone"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"phone"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='smsRemindersEnabled'>smsRemindersEnabled</label>
               <br />             
               {getFieldDecorator('smsRemindersEnabled', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"smsRemindersEnabled"} id={"smsRemindersEnabled"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"smsRemindersEnabled"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='userId'>userId</label>
               <br />             
               {getFieldDecorator('userId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"userId"} id={"userId"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"userId"} /> )}
               </Form.Item>
 
 			
@@ -261,5 +285,5 @@ class StudentEditComponent extends React.Component<
 export const WrappedStudentEditComponent = Form.create({ name: 'Student Edit' })(StudentEditComponent);
 
 /*<Codenesium>
-    <Hash>90be0f7fcf7ecabcd7d7a54b935ae64c</Hash>
+    <Hash>41b51225d104cf7ad386385a556fd9e3</Hash>
 </Codenesium>*/

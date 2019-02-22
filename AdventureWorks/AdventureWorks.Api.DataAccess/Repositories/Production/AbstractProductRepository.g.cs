@@ -137,6 +137,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>()
+			       .Include(x => x.ProductAssemblyIDNavigation)
 			       .Where(x => x.ProductAssemblyID == productAssemblyID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
@@ -144,6 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>()
+			       .Include(x => x.ComponentIDNavigation)
 			       .Where(x => x.ComponentID == componentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
@@ -151,6 +153,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<ProductReview>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductReview>()
+			       .Include(x => x.ProductIDNavigation)
 			       .Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductReview>();
 		}
 
@@ -158,6 +161,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<TransactionHistory>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<TransactionHistory>()
+			       .Include(x => x.ProductIDNavigation)
 			       .Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<TransactionHistory>();
 		}
 
@@ -165,6 +169,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<WorkOrder>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<WorkOrder>()
+			       .Include(x => x.ProductIDNavigation)
 			       .Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
 
@@ -194,5 +199,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>30be849da7a99d0bb2b275f0ae1e24cb</Hash>
+    <Hash>82eccd521fcb0dda8092557c35a0bdb1</Hash>
 </Codenesium>*/

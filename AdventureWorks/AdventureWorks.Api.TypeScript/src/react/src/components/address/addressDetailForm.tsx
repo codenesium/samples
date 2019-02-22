@@ -6,6 +6,7 @@ import AddressMapper from './addressMapper';
 import AddressViewModel from './addressViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { BusinessEntityAddressTableComponent } from '../shared/businessEntityAddressTable';
 
 interface AddressDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class AddressDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -138,6 +139,22 @@ class AddressDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>BusinessEntityAddresses</h3>
+            <BusinessEntityAddressTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Addresses +
+                '/' +
+                this.state.model!.addressID +
+                '/' +
+                ApiRoutes.BusinessEntityAddresses
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -152,5 +169,5 @@ export const WrappedAddressDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>09147c294c8117e4f35c29282cf9c3c2</Hash>
+    <Hash>a20e09c3f4cb22832cb50306e2c7c91a</Hash>
 </Codenesium>*/

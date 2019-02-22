@@ -6,6 +6,7 @@ import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { SaleTableComponent } from '../shared/saleTable';
 
 interface PetDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class PetDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -126,6 +127,22 @@ class PetDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Sales</h3>
+            <SaleTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Pets +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Sales
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -140,5 +157,5 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
 
 
 /*<Codenesium>
-    <Hash>1613a8e506d85ea70508a005bc7d2af7</Hash>
+    <Hash>56581f918c46bfbecc0188fe73c79ae2</Hash>
 </Codenesium>*/

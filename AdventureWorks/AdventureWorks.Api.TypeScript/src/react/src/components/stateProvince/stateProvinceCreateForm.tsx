@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StateProvinceMapper from './stateProvinceMapper';
 import StateProvinceViewModel from './stateProvinceViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface StateProvinceCreateComponentProps {
@@ -102,70 +102,87 @@ class StateProvinceCreateComponent extends React.Component<
               <label htmlFor='countryRegionCode'>CountryRegionCode</label>
               <br />             
               {getFieldDecorator('countryRegionCode', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 3, message: 'Exceeds max length of 3' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CountryRegionCode"} id={"countryRegionCode"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CountryRegionCode"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='isOnlyStateProvinceFlag'>IsOnlyStateProvinceFlag</label>
               <br />             
               {getFieldDecorator('isOnlyStateProvinceFlag', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"IsOnlyStateProvinceFlag"} id={"isOnlyStateProvinceFlag"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"IsOnlyStateProvinceFlag"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='modifiedDate'>ModifiedDate</label>
               <br />             
               {getFieldDecorator('modifiedDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 50, message: 'Exceeds max length of 50' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='rowguid'>rowguid</label>
               <br />             
               {getFieldDecorator('rowguid', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='stateProvinceCode'>StateProvinceCode</label>
               <br />             
               {getFieldDecorator('stateProvinceCode', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 3, message: 'Exceeds max length of 3' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceCode"} id={"stateProvinceCode"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceCode"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='territoryID'>TerritoryID</label>
               <br />             
               {getFieldDecorator('territoryID', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} id={"territoryID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} /> )}
               </Form.Item>
 
 			
@@ -185,5 +202,5 @@ class StateProvinceCreateComponent extends React.Component<
 export const WrappedStateProvinceCreateComponent = Form.create({ name: 'StateProvince Create' })(StateProvinceCreateComponent);
 
 /*<Codenesium>
-    <Hash>8860f2544957044aeaf7706d27193fdc</Hash>
+    <Hash>bc8ae5525ee292b3eb08a825aa1f22f5</Hash>
 </Codenesium>*/

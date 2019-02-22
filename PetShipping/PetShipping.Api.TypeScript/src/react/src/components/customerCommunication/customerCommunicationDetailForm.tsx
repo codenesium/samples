@@ -1,81 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import CustomerCommunicationMapper from './customerCommunicationMapper';
 import CustomerCommunicationViewModel from './customerCommunicationViewModel';
-
-interface Props {
-  history: any;
-  model?: CustomerCommunicationViewModel;
-}
-
-const CustomerCommunicationDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.CustomerCommunications + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="customerId" className={'col-sm-2 col-form-label'}>
-          CustomerId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.customerIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="dateCreated" className={'col-sm-2 col-form-label'}>
-          DateCreated
-        </label>
-        <div className="col-sm-12">{String(model.model!.dateCreated)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="employeeId" className={'col-sm-2 col-form-label'}>
-          EmployeeId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.employeeIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="note" className={'col-sm-2 col-form-label'}>
-          Notes
-        </label>
-        <div className="col-sm-12">{String(model.model!.note)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CustomerCommunicationDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface CustomerCommunicationDetailComponentState {
@@ -86,17 +21,23 @@ interface CustomerCommunicationDetailComponentState {
   errorMessage: string;
 }
 
-export default class CustomerCommunicationDetailComponent extends React.Component<
+class CustomerCommunicationDetailComponent extends React.Component<
   CustomerCommunicationDetailComponentProps,
   CustomerCommunicationDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new CustomerCommunicationViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.CustomerCommunications + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -117,9 +58,9 @@ export default class CustomerCommunicationDetailComponent extends React.Componen
         resp => {
           let response = resp.data as Api.CustomerCommunicationClientResponseModel;
 
-          let mapper = new CustomerCommunicationMapper();
-
           console.log(response);
+
+          let mapper = new CustomerCommunicationMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -134,24 +75,62 @@ export default class CustomerCommunicationDetailComponent extends React.Componen
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <CustomerCommunicationDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>customerId</h3>
+              <p>
+                {String(this.state.model!.customerIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>dateCreated</h3>
+              <p>{String(this.state.model!.dateCreated)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>employeeId</h3>
+              <p>
+                {String(this.state.model!.employeeIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>notes</h3>
+              <p>{String(this.state.model!.note)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -159,7 +138,11 @@ export default class CustomerCommunicationDetailComponent extends React.Componen
   }
 }
 
+export const WrappedCustomerCommunicationDetailComponent = Form.create({
+  name: 'CustomerCommunication Detail',
+})(CustomerCommunicationDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>3d63d8243637861d3f9e29b58dbc1bb3</Hash>
+    <Hash>49ba332699b87ca230277376326a1c5c</Hash>
 </Codenesium>*/

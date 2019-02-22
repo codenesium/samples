@@ -75,7 +75,7 @@ class EventStatuDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -128,5 +128,5 @@ export const WrappedEventStatuDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9e417b25405243b5fb493b7339ea2962</Hash>
+    <Hash>27b262c18c1e82b083dd2ca7cfe7fe0d</Hash>
 </Codenesium>*/

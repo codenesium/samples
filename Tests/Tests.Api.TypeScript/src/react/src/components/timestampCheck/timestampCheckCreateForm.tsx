@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,16 +121,19 @@ class TimestampCheckCreateComponent extends React.Component<
             <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'Name'} id={'name'} />)}
+              rules: [{ max: 50, message: 'Exceeds max length of 50' }],
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="timestamp">Timestamp</label>
             <br />
             {getFieldDecorator('timestamp', {
-              rules: [],
-            })(<Input placeholder={'Timestamp'} id={'timestamp'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'Timestamp'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -152,5 +156,5 @@ export const WrappedTimestampCheckCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e415ffbc29d6c34c1f7e928ee132ad39</Hash>
+    <Hash>7f7ddd7f095e9c541b9bd476ffedf610</Hash>
 </Codenesium>*/

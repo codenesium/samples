@@ -1,13 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventStatusMapper from './eventStatusMapper';
 import EventStatusViewModel from './eventStatusViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
+import { EventTableComponent } from '../shared/eventTable';
 
 interface EventStatusDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +76,7 @@ class EventStatusDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +91,7 @@ class EventStatusDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,11 +106,27 @@ class EventStatusDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
           {message}
+          <div>
+            <h3>Events</h3>
+            <EventTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.EventStatus +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Events
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -126,5 +141,5 @@ export const WrappedEventStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a3ef2a63fa1fc7516c46502555b83475</Hash>
+    <Hash>390623b62204827c3e26b771776b8363</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import UserViewModel from '../user/userViewModel';
 
 export default class DirectTweetViewModel {
@@ -14,7 +15,7 @@ export default class DirectTweetViewModel {
     this.date = undefined;
     this.taggedUserId = 0;
     this.taggedUserIdEntity = '';
-    this.taggedUserIdNavigation = undefined;
+    this.taggedUserIdNavigation = new UserViewModel();
     this.time = undefined;
     this.tweetId = 0;
   }
@@ -40,5 +41,5 @@ export default class DirectTweetViewModel {
 
 
 /*<Codenesium>
-    <Hash>cfc1229534000bbfaa6c06b9b7ad5735</Hash>
+    <Hash>bbcb51d594dcb564fbf270c214a9c1e4</Hash>
 </Codenesium>*/

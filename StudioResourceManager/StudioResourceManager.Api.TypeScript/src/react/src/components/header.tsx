@@ -13,13 +13,14 @@ interface WrapperHeaderState {
   collapsed: boolean;
 }
 export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
 ) => {
   class WrapperHeaderComponent extends React.Component<
     WrapperHeaderProps & RouteComponentProps,
     WrapperHeaderState
   > {
-    state = { collapsed: false };
+    state = { collapsed: true };
 
     onCollapse = () => {
       this.setState({ ...this.state, collapsed: !this.state.collapsed });
@@ -35,165 +36,93 @@ export const wrapperHeader = (
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <MenuItem
-                key="Dashboard"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Dashboard</span>
-                  </span>
-                }
+                key="Home"
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
-                <Link to={'/'}>Dashboard</Link>
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'} />
               </MenuItem>
 
-              <MenuItem
-                key="admin"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Admin</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Admins}>Admins</Link>
+              <MenuItem key="admin">
+                <Icon type="pie-chart" />
+                <span>Admins</span>
+                <Link to={ClientRoutes.Admins} />
               </MenuItem>
 
-              <MenuItem
-                key="event"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Event</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Events}>Events</Link>
+              <MenuItem key="event">
+                <Icon type="rise" />
+                <span>Events</span>
+                <Link to={ClientRoutes.Events} />
               </MenuItem>
 
-              <MenuItem
-                key="eventStatus"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>EventStatus</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.EventStatus}>EventStatus</Link>
+              <MenuItem key="eventStatus">
+                <Icon type="bars" />
+                <span>EventStatus</span>
+                <Link to={ClientRoutes.EventStatus} />
               </MenuItem>
 
-              <MenuItem
-                key="family"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Family</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Families}>Families</Link>
+              <MenuItem key="family">
+                <Icon type="cloud" />
+                <span>Families</span>
+                <Link to={ClientRoutes.Families} />
               </MenuItem>
 
-              <MenuItem
-                key="rate"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Rate</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Rates}>Rates</Link>
+              <MenuItem key="rate">
+                <Icon type="code" />
+                <span>Rates</span>
+                <Link to={ClientRoutes.Rates} />
               </MenuItem>
 
-              <MenuItem
-                key="space"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Space</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Spaces}>Spaces</Link>
+              <MenuItem key="space">
+                <Icon type="smile" />
+                <span>Spaces</span>
+                <Link to={ClientRoutes.Spaces} />
               </MenuItem>
 
-              <MenuItem
-                key="spaceFeature"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>SpaceFeature</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.SpaceFeatures}>SpaceFeatures</Link>
+              <MenuItem key="spaceFeature">
+                <Icon type="laptop" />
+                <span>SpaceFeatures</span>
+                <Link to={ClientRoutes.SpaceFeatures} />
               </MenuItem>
 
-              <MenuItem
-                key="student"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Student</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Students}>Students</Link>
+              <MenuItem key="student">
+                <Icon type="mobile" />
+                <span>Students</span>
+                <Link to={ClientRoutes.Students} />
               </MenuItem>
 
-              <MenuItem
-                key="studio"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Studio</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Studios}>Studios</Link>
+              <MenuItem key="studio">
+                <Icon type="paper-clip" />
+                <span>Studios</span>
+                <Link to={ClientRoutes.Studios} />
               </MenuItem>
 
-              <MenuItem
-                key="teacher"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>Teacher</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Teachers}>Teachers</Link>
+              <MenuItem key="teacher">
+                <Icon type="setting" />
+                <span>Teachers</span>
+                <Link to={ClientRoutes.Teachers} />
               </MenuItem>
 
-              <MenuItem
-                key="teacherSkill"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>TeacherSkill</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.TeacherSkills}>TeacherSkills</Link>
+              <MenuItem key="teacherSkill">
+                <Icon type="user" />
+                <span>TeacherSkills</span>
+                <Link to={ClientRoutes.TeacherSkills} />
               </MenuItem>
 
-              <MenuItem
-                key="user"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    <span>User</span>
-                  </span>
-                }
-              >
-                <Link to={ClientRoutes.Users}>Users</Link>
+              <MenuItem key="user">
+                <Icon type="home" />
+                <span>Users</span>
+                <Link to={ClientRoutes.Users} />
               </MenuItem>
             </Menu>
           </Sider>
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
+              <h2>{displayName}</h2>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
@@ -209,5 +138,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>2f09ef3b3336b95e95fb43f8a469c89f</Hash>
+    <Hash>9e827362fcdc030043c59e5aee51c570</Hash>
 </Codenesium>*/

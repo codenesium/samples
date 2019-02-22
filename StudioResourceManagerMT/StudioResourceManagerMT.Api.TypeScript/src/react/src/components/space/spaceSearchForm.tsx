@@ -39,11 +39,11 @@ export default class SpaceSearchComponent extends React.Component<SpaceSearchCom
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.SpaceClientResponseModel) {
+    handleEditClick(e:any, row:SpaceViewModel) {
          this.props.history.push(ClientRoutes.Spaces + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.SpaceClientResponseModel) {
+    handleDetailClick(e:any, row:SpaceViewModel) {
          this.props.history.push(ClientRoutes.Spaces + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class SpaceSearchComponent extends React.Component<SpaceSearchCom
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<SpaceViewModel>(),filteredRecords:new Array<SpaceViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<SpaceViewModel>(), filteredRecords:new Array<SpaceViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class SpaceSearchComponent extends React.Component<SpaceSearchCom
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Space',
+                    Header: 'Spaces',
                     columns: [
 					  {
                       Header: 'Description',
@@ -190,7 +190,7 @@ export default class SpaceSearchComponent extends React.Component<SpaceSearchCom
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.SpaceClientResponseModel
+                              row.original as SpaceViewModel
                             );
                           }}
                         >
@@ -202,7 +202,7 @@ export default class SpaceSearchComponent extends React.Component<SpaceSearchCom
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.SpaceClientResponseModel
+                              row.original as SpaceViewModel
                             );
                           }}
                         >
@@ -214,7 +214,7 @@ export default class SpaceSearchComponent extends React.Component<SpaceSearchCom
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.SpaceClientResponseModel
+                              row.original as SpaceViewModel
                             );
                           }}
                         >
@@ -236,5 +236,5 @@ export default class SpaceSearchComponent extends React.Component<SpaceSearchCom
 export const WrappedSpaceSearchComponent = Form.create({ name: 'Space Search' })(SpaceSearchComponent);
 
 /*<Codenesium>
-    <Hash>8422df5a4a16ab375569954d5ebd46a4</Hash>
+    <Hash>a882d204908c2e76ccdb446b8906ace8</Hash>
 </Codenesium>*/

@@ -75,7 +75,7 @@ class DatabaseLogDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -144,5 +144,5 @@ export const WrappedDatabaseLogDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>592014609a991d25c2813310f2c7e95d</Hash>
+    <Hash>15d4d4d8d19d2823d770228073e8fcdd</Hash>
 </Codenesium>*/

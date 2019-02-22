@@ -119,6 +119,7 @@ namespace NebulaNS.Api.DataAccess
 		public async virtual Task<List<LinkLog>> LinkLogsByLinkId(int linkId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<LinkLog>()
+			       .Include(x => x.LinkIdNavigation)
 			       .Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
 		}
 
@@ -172,5 +173,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1fe6edc6f5102fa57c959edd3012a6d9</Hash>
+    <Hash>b9c45fae91169271ad4984c17a1a6436</Hash>
 </Codenesium>*/

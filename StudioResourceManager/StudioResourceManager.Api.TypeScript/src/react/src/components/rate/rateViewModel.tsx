@@ -1,3 +1,4 @@
+import moment from 'moment';
 import TeacherViewModel from '../teacher/teacherViewModel';
 import TeacherSkillViewModel from '../teacherSkill/teacherSkillViewModel';
 
@@ -16,10 +17,10 @@ export default class RateViewModel {
     this.id = 0;
     this.teacherId = 0;
     this.teacherIdEntity = '';
-    this.teacherIdNavigation = undefined;
+    this.teacherIdNavigation = new TeacherViewModel();
     this.teacherSkillId = 0;
     this.teacherSkillIdEntity = '';
-    this.teacherSkillIdNavigation = undefined;
+    this.teacherSkillIdNavigation = new TeacherSkillViewModel();
   }
 
   setProperties(
@@ -29,7 +30,7 @@ export default class RateViewModel {
     teacherSkillId: number
   ): void {
     this.amountPerMinute = amountPerMinute;
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.teacherId = teacherId;
     this.teacherSkillId = teacherSkillId;
   }
@@ -41,5 +42,5 @@ export default class RateViewModel {
 
 
 /*<Codenesium>
-    <Hash>5850ffc01eac605f0e518389eb61a643</Hash>
+    <Hash>0585802e4a735e244077ddfb8b364e72</Hash>
 </Codenesium>*/

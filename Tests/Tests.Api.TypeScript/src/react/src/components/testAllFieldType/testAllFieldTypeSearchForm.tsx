@@ -39,11 +39,11 @@ export default class TestAllFieldTypeSearchComponent extends React.Component<Tes
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.TestAllFieldTypeClientResponseModel) {
+    handleEditClick(e:any, row:TestAllFieldTypeViewModel) {
          this.props.history.push(ClientRoutes.TestAllFieldTypes + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.TestAllFieldTypeClientResponseModel) {
+    handleDetailClick(e:any, row:TestAllFieldTypeViewModel) {
          this.props.history.push(ClientRoutes.TestAllFieldTypes + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class TestAllFieldTypeSearchComponent extends React.Component<Tes
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<TestAllFieldTypeViewModel>(),filteredRecords:new Array<TestAllFieldTypeViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<TestAllFieldTypeViewModel>(), filteredRecords:new Array<TestAllFieldTypeViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,172 +161,196 @@ export default class TestAllFieldTypeSearchComponent extends React.Component<Tes
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'TestAllFieldType',
+                    Header: 'TestAllFieldTypes',
                     columns: [
 					  {
-                      Header: 'FieldBigInt',
+                      Header: 'Bigint',
                       accessor: 'fieldBigInt',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldBigInt)}</span>;
                       }           
                     },  {
-                      Header: 'FieldBinary',
+                      Header: 'Binary',
                       accessor: 'fieldBinary',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldBinary)}</span>;
                       }           
                     },  {
-                      Header: 'FieldBit',
+                      Header: 'Bit',
                       accessor: 'fieldBit',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldBit)}</span>;
                       }           
                     },  {
-                      Header: 'FieldChar',
+                      Header: 'Char',
                       accessor: 'fieldChar',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldChar)}</span>;
                       }           
                     },  {
-                      Header: 'FieldDate',
+                      Header: 'Date',
                       accessor: 'fieldDate',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldDate)}</span>;
                       }           
                     },  {
-                      Header: 'FieldDateTime',
+                      Header: 'DateTime',
                       accessor: 'fieldDateTime',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldDateTime)}</span>;
                       }           
                     },  {
-                      Header: 'FieldDateTime2',
+                      Header: 'DateTime2',
                       accessor: 'fieldDateTime2',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldDateTime2)}</span>;
                       }           
                     },  {
-                      Header: 'FieldDateTimeOffset',
+                      Header: 'DateTimeOffset',
                       accessor: 'fieldDateTimeOffset',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldDateTimeOffset)}</span>;
                       }           
                     },  {
-                      Header: 'FieldDecimal',
+                      Header: 'Decimal',
                       accessor: 'fieldDecimal',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldDecimal)}</span>;
                       }           
                     },  {
-                      Header: 'FieldFloat',
+                      Header: 'Float',
                       accessor: 'fieldFloat',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldFloat)}</span>;
                       }           
                     },  {
-                      Header: 'FieldImage',
+                      Header: 'Geography',
+                      accessor: 'fieldGeography',
+                      Cell: (props) => {
+                      return <span>{String(props.original.fieldGeography)}</span>;
+                      }           
+                    },  {
+                      Header: 'Geometry',
+                      accessor: 'fieldGeometry',
+                      Cell: (props) => {
+                      return <span>{String(props.original.fieldGeometry)}</span>;
+                      }           
+                    },  {
+                      Header: 'HierarchyId',
+                      accessor: 'fieldHierarchyId',
+                      Cell: (props) => {
+                      return <span>{String(props.original.fieldHierarchyId)}</span>;
+                      }           
+                    },  {
+                      Header: 'Image',
                       accessor: 'fieldImage',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldImage)}</span>;
                       }           
                     },  {
-                      Header: 'FieldMoney',
+                      Header: 'Money',
                       accessor: 'fieldMoney',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldMoney)}</span>;
                       }           
                     },  {
-                      Header: 'FieldNChar',
+                      Header: 'NChar',
                       accessor: 'fieldNChar',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldNChar)}</span>;
                       }           
                     },  {
-                      Header: 'FieldNText',
+                      Header: 'NText',
                       accessor: 'fieldNText',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldNText)}</span>;
                       }           
                     },  {
-                      Header: 'FieldNumeric',
+                      Header: 'Numeric',
                       accessor: 'fieldNumeric',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldNumeric)}</span>;
                       }           
                     },  {
-                      Header: 'FieldNVarchar',
+                      Header: 'NVarchar',
                       accessor: 'fieldNVarchar',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldNVarchar)}</span>;
                       }           
                     },  {
-                      Header: 'FieldReal',
+                      Header: 'Real',
                       accessor: 'fieldReal',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldReal)}</span>;
                       }           
                     },  {
-                      Header: 'FieldSmallDateTime',
+                      Header: 'SmallDateTime',
                       accessor: 'fieldSmallDateTime',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldSmallDateTime)}</span>;
                       }           
                     },  {
-                      Header: 'FieldSmallInt',
+                      Header: 'SmallInt',
                       accessor: 'fieldSmallInt',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldSmallInt)}</span>;
                       }           
                     },  {
-                      Header: 'FieldSmallMoney',
+                      Header: 'SmallMoney',
                       accessor: 'fieldSmallMoney',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldSmallMoney)}</span>;
                       }           
                     },  {
-                      Header: 'FieldText',
+                      Header: 'Text',
                       accessor: 'fieldText',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldText)}</span>;
                       }           
                     },  {
-                      Header: 'FieldTime',
+                      Header: 'Time',
                       accessor: 'fieldTime',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldTime)}</span>;
                       }           
                     },  {
-                      Header: 'FieldTimestamp',
+                      Header: 'Timestamp',
                       accessor: 'fieldTimestamp',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldTimestamp)}</span>;
                       }           
                     },  {
-                      Header: 'FieldTinyInt',
+                      Header: 'TinyInt',
                       accessor: 'fieldTinyInt',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldTinyInt)}</span>;
                       }           
                     },  {
-                      Header: 'FieldUniqueIdentifier',
+                      Header: 'UniqueIdentifier',
                       accessor: 'fieldUniqueIdentifier',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldUniqueIdentifier)}</span>;
                       }           
                     },  {
-                      Header: 'FieldVarBinary',
+                      Header: 'VarBinary',
                       accessor: 'fieldVarBinary',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldVarBinary)}</span>;
                       }           
                     },  {
-                      Header: 'FieldVarchar',
+                      Header: 'Varchar',
                       accessor: 'fieldVarchar',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldVarchar)}</span>;
                       }           
                     },  {
-                      Header: 'FieldXML',
+                      Header: 'Variant',
+                      accessor: 'fieldVariant',
+                      Cell: (props) => {
+                      return <span>{String(props.original.fieldVariant)}</span>;
+                      }           
+                    },  {
+                      Header: 'XML',
                       accessor: 'fieldXML',
                       Cell: (props) => {
                       return <span>{String(props.original.fieldXML)}</span>;
@@ -346,7 +370,7 @@ export default class TestAllFieldTypeSearchComponent extends React.Component<Tes
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.TestAllFieldTypeClientResponseModel
+                              row.original as TestAllFieldTypeViewModel
                             );
                           }}
                         >
@@ -358,7 +382,7 @@ export default class TestAllFieldTypeSearchComponent extends React.Component<Tes
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.TestAllFieldTypeClientResponseModel
+                              row.original as TestAllFieldTypeViewModel
                             );
                           }}
                         >
@@ -370,7 +394,7 @@ export default class TestAllFieldTypeSearchComponent extends React.Component<Tes
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.TestAllFieldTypeClientResponseModel
+                              row.original as TestAllFieldTypeViewModel
                             );
                           }}
                         >
@@ -392,5 +416,5 @@ export default class TestAllFieldTypeSearchComponent extends React.Component<Tes
 export const WrappedTestAllFieldTypeSearchComponent = Form.create({ name: 'TestAllFieldType Search' })(TestAllFieldTypeSearchComponent);
 
 /*<Codenesium>
-    <Hash>1bb303cca9ac2b6c33b6c0379d736d71</Hash>
+    <Hash>08ccd82ddf55b54a325e9225de556fb9</Hash>
 </Codenesium>*/

@@ -128,6 +128,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<Password>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Password>()
+			       .Include(x => x.BusinessEntityIDNavigation)
 			       .Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Password>();
 		}
 
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b07686f638c8c6b4c06927a328140c18</Hash>
+    <Hash>f1c4689e462614ac75d715cc7b33ae2a</Hash>
 </Codenesium>*/

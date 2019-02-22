@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,63 +121,79 @@ class PostHistoryCreateComponent extends React.Component<
             <label htmlFor="comment">Comment</label>
             <br />
             {getFieldDecorator('comment', {
-              rules: [],
-            })(<Input placeholder={'Comment'} id={'comment'} />)}
+              rules: [
+                {
+                  max: 1073741823,
+                  message: 'Exceeds max length of 1073741823',
+                },
+              ],
+            })(<Input placeholder={'Comment'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="creationDate">CreationDate</label>
             <br />
             {getFieldDecorator('creationDate', {
-              rules: [],
-            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'CreationDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="postHistoryTypeId">PostHistoryTypeId</label>
             <br />
             {getFieldDecorator('postHistoryTypeId', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'PostHistoryTypeId'}
-                id={'postHistoryTypeId'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'PostHistoryTypeId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="postId">PostId</label>
             <br />
             {getFieldDecorator('postId', {
-              rules: [],
-            })(<Input placeholder={'PostId'} id={'postId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'PostId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="revisionGUID">RevisionGUID</label>
             <br />
             {getFieldDecorator('revisionGUID', {
-              rules: [],
-            })(<Input placeholder={'RevisionGUID'} id={'revisionGUID'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 36, message: 'Exceeds max length of 36' },
+              ],
+            })(<Input placeholder={'RevisionGUID'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="text">Text</label>
             <br />
             {getFieldDecorator('text', {
-              rules: [],
-            })(<Input placeholder={'Text'} id={'text'} />)}
+              rules: [
+                {
+                  max: 1073741823,
+                  message: 'Exceeds max length of 1073741823',
+                },
+              ],
+            })(<Input placeholder={'Text'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="userDisplayName">UserDisplayName</label>
             <br />
             {getFieldDecorator('userDisplayName', {
-              rules: [],
-            })(
-              <Input placeholder={'UserDisplayName'} id={'userDisplayName'} />
-            )}
+              rules: [{ max: 40, message: 'Exceeds max length of 40' }],
+            })(<Input placeholder={'UserDisplayName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -184,7 +201,7 @@ class PostHistoryCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('userId', {
               rules: [],
-            })(<Input placeholder={'UserId'} id={'userId'} />)}
+            })(<Input placeholder={'UserId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -207,5 +224,5 @@ export const WrappedPostHistoryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>15ce1f436270aafd56c0c5b7c4576f31</Hash>
+    <Hash>db1be32681b76ac4fa1412ee8eda20a1</Hash>
 </Codenesium>*/

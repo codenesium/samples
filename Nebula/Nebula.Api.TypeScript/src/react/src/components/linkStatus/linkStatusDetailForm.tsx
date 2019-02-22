@@ -1,59 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import LinkStatusMapper from './linkStatusMapper';
 import LinkStatusViewModel from './linkStatusViewModel';
-
-interface Props {
-  history: any;
-  model?: LinkStatusViewModel;
-}
-
-const LinkStatusDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.LinkStatuses + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { LinkTableComponent } from '../shared/linkTable';
 
 interface LinkStatusDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface LinkStatusDetailComponentState {
@@ -64,17 +22,23 @@ interface LinkStatusDetailComponentState {
   errorMessage: string;
 }
 
-export default class LinkStatusDetailComponent extends React.Component<
+class LinkStatusDetailComponent extends React.Component<
   LinkStatusDetailComponentProps,
   LinkStatusDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new LinkStatusViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.LinkStatuses + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -95,9 +59,9 @@ export default class LinkStatusDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.LinkStatusClientResponseModel;
 
-          let mapper = new LinkStatusMapper();
-
           console.log(response);
+
+          let mapper = new LinkStatusMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -112,24 +76,62 @@ export default class LinkStatusDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <LinkStatusDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
+          {message}
+          <div>
+            <h3>Links</h3>
+            <LinkTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.LinkStatuses +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Links
+              }
+            />
+          </div>
+        </div>
       );
     } else {
       return null;
@@ -137,7 +139,11 @@ export default class LinkStatusDetailComponent extends React.Component<
   }
 }
 
+export const WrappedLinkStatusDetailComponent = Form.create({
+  name: 'LinkStatus Detail',
+})(LinkStatusDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>26708004a8db5f8200102216e5ac6220</Hash>
+    <Hash>aa62fceae8fd95848855213a177d14b8</Hash>
 </Codenesium>*/

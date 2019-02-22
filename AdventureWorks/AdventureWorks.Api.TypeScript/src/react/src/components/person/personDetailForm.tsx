@@ -6,6 +6,10 @@ import PersonMapper from './personMapper';
 import PersonViewModel from './personViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { BusinessEntityContactTableComponent } from '../shared/businessEntityContactTable';
+import { EmailAddressTableComponent } from '../shared/emailAddressTable';
+import { PasswordTableComponent } from '../shared/passwordTable';
+import { PersonPhoneTableComponent } from '../shared/personPhoneTable';
 
 interface PersonDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +79,7 @@ class PersonDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -158,6 +162,70 @@ class PersonDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>BusinessEntityContacts</h3>
+            <BusinessEntityContactTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.BusinessEntityContacts
+              }
+            />
+          </div>
+          <div>
+            <h3>EmailAddresses</h3>
+            <EmailAddressTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.EmailAddresses
+              }
+            />
+          </div>
+          <div>
+            <h3>Passwords</h3>
+            <PasswordTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.Passwords
+              }
+            />
+          </div>
+          <div>
+            <h3>PersonPhones</h3>
+            <PersonPhoneTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.PersonPhones
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -172,5 +240,5 @@ export const WrappedPersonDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d641d4909a9eb28f04e6ac96c5757476</Hash>
+    <Hash>cc40d02f1c9dc5cbc1d66c8110dcf875</Hash>
 </Codenesium>*/

@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,8 +121,12 @@ class TransactionStatusCreateComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -144,5 +149,5 @@ export const WrappedTransactionStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c9646de6ebd813f8d200d4c853fba6bc</Hash>
+    <Hash>41725ef27e7d43f6e6217807dc787315</Hash>
 </Codenesium>*/

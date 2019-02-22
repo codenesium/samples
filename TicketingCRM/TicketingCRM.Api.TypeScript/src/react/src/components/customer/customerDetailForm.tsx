@@ -75,7 +75,7 @@ class CustomerDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -136,5 +136,5 @@ export const WrappedCustomerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1daac44b2645e0b015a14b0f3db668b5</Hash>
+    <Hash>1eda30a79658e8ef654a7a62f185a655</Hash>
 </Codenesium>*/

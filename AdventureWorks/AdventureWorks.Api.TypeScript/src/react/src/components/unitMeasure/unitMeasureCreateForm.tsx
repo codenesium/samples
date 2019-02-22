@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,12 @@ class UnitMeasureCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -134,14 +134,12 @@ class UnitMeasureCreateComponent extends React.Component<
             <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Name'}
-                id={'name'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -164,5 +162,5 @@ export const WrappedUnitMeasureCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8a259bb265c0b1d0acbeb909396d6470</Hash>
+    <Hash>fc4a75eccae6c39981dc5752a71d5455</Hash>
 </Codenesium>*/

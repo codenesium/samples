@@ -50,11 +50,11 @@ export default class SelfReferenceSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.SelfReferenceClientResponseModel) {
+  handleEditClick(e: any, row: SelfReferenceViewModel) {
     this.props.history.push(ClientRoutes.SelfReferences + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.SelfReferenceClientResponseModel) {
+  handleDetailClick(e: any, row: SelfReferenceViewModel) {
     this.props.history.push(ClientRoutes.SelfReferences + '/' + row.id);
   }
 
@@ -137,7 +137,7 @@ export default class SelfReferenceSearchComponent extends React.Component<
             records: new Array<SelfReferenceViewModel>(),
             filteredRecords: new Array<SelfReferenceViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -207,7 +207,7 @@ export default class SelfReferenceSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'SelfReference',
+                Header: 'SelfReferences',
                 columns: [
                   {
                     Header: 'Id',
@@ -271,7 +271,7 @@ export default class SelfReferenceSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.SelfReferenceClientResponseModel
+                              row.original as SelfReferenceViewModel
                             );
                           }}
                         >
@@ -283,7 +283,7 @@ export default class SelfReferenceSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.SelfReferenceClientResponseModel
+                              row.original as SelfReferenceViewModel
                             );
                           }}
                         >
@@ -295,7 +295,7 @@ export default class SelfReferenceSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.SelfReferenceClientResponseModel
+                              row.original as SelfReferenceViewModel
                             );
                           }}
                         >
@@ -322,5 +322,5 @@ export const WrappedSelfReferenceSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>67ed8217ef93668d7704ac848e08f0ab</Hash>
+    <Hash>8b8ae46adaef50f1f9f8166e4d84d9d3</Hash>
 </Codenesium>*/

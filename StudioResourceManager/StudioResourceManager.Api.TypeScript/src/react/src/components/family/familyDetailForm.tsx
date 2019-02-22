@@ -1,13 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FamilyMapper from './familyMapper';
 import FamilyViewModel from './familyViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
+import { StudentTableComponent } from '../shared/studentTable';
 
 interface FamilyDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +76,7 @@ class FamilyDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +91,7 @@ class FamilyDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,27 +106,43 @@ class FamilyDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>note</div>
-              <div>{this.state.model!.note}</div>
+              <h3>notes</h3>
+              <p>{String(this.state.model!.note)}</p>
             </div>
             <div>
-              <div>primaryContactEmail</div>
-              <div>{this.state.model!.primaryContactEmail}</div>
+              <h3>Primary Contact Email</h3>
+              <p>{String(this.state.model!.primaryContactEmail)}</p>
             </div>
             <div>
-              <div>primaryContactFirstName</div>
-              <div>{this.state.model!.primaryContactFirstName}</div>
+              <h3>Primary Contact First Name</h3>
+              <p>{String(this.state.model!.primaryContactFirstName)}</p>
             </div>
             <div>
-              <div>primaryContactLastName</div>
-              <div>{this.state.model!.primaryContactLastName}</div>
+              <h3>Primary Contact Last Name</h3>
+              <p>{String(this.state.model!.primaryContactLastName)}</p>
             </div>
             <div>
-              <div>primaryContactPhone</div>
-              <div>{this.state.model!.primaryContactPhone}</div>
+              <h3>Primary Contact Phone</h3>
+              <p>{String(this.state.model!.primaryContactPhone)}</p>
             </div>
           </div>
           {message}
+          <div>
+            <h3>Students</h3>
+            <StudentTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Families +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Students
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -142,5 +157,5 @@ export const WrappedFamilyDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3ce3a393800ec6e6347c5deebc6f370f</Hash>
+    <Hash>dc73550588e6e3c91dd487d962f5f08e</Hash>
 </Codenesium>*/

@@ -39,11 +39,11 @@ export default class CountrySearchComponent extends React.Component<CountrySearc
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.CountryClientResponseModel) {
+    handleEditClick(e:any, row:CountryViewModel) {
          this.props.history.push(ClientRoutes.Countries + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.CountryClientResponseModel) {
+    handleDetailClick(e:any, row:CountryViewModel) {
          this.props.history.push(ClientRoutes.Countries + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class CountrySearchComponent extends React.Component<CountrySearc
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<CountryViewModel>(),filteredRecords:new Array<CountryViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<CountryViewModel>(), filteredRecords:new Array<CountryViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class CountrySearchComponent extends React.Component<CountrySearc
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Country',
+                    Header: 'Countries',
                     columns: [
 					  {
                       Header: 'Name',
@@ -178,7 +178,7 @@ export default class CountrySearchComponent extends React.Component<CountrySearc
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.CountryClientResponseModel
+                              row.original as CountryViewModel
                             );
                           }}
                         >
@@ -190,7 +190,7 @@ export default class CountrySearchComponent extends React.Component<CountrySearc
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.CountryClientResponseModel
+                              row.original as CountryViewModel
                             );
                           }}
                         >
@@ -202,7 +202,7 @@ export default class CountrySearchComponent extends React.Component<CountrySearc
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.CountryClientResponseModel
+                              row.original as CountryViewModel
                             );
                           }}
                         >
@@ -224,5 +224,5 @@ export default class CountrySearchComponent extends React.Component<CountrySearc
 export const WrappedCountrySearchComponent = Form.create({ name: 'Country Search' })(CountrySearchComponent);
 
 /*<Codenesium>
-    <Hash>28c2fbc3c8d511073878ed48fc0fec09</Hash>
+    <Hash>611af82b4f841cc709e3ef888f03622c</Hash>
 </Codenesium>*/

@@ -1,13 +1,14 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
+import { AdminTableComponent } from '../shared/adminTable';
+import { StudentTableComponent } from '../shared/studentTable';
+import { TeacherTableComponent } from '../shared/teacherTable';
 
 interface UserDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +78,7 @@ class UserDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +93,7 @@ class UserDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,15 +108,63 @@ class UserDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>password</div>
-              <div>{this.state.model!.password}</div>
+              <h3>password</h3>
+              <p>{String(this.state.model!.password)}</p>
             </div>
             <div>
-              <div>username</div>
-              <div>{this.state.model!.username}</div>
+              <h3>username</h3>
+              <p>{String(this.state.model!.username)}</p>
             </div>
           </div>
           {message}
+          <div>
+            <h3>Admins</h3>
+            <AdminTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Admins
+              }
+            />
+          </div>
+          <div>
+            <h3>Students</h3>
+            <StudentTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Students
+              }
+            />
+          </div>
+          <div>
+            <h3>Teachers</h3>
+            <TeacherTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Teachers
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -130,5 +179,5 @@ export const WrappedUserDetailComponent = Form.create({ name: 'User Detail' })(
 
 
 /*<Codenesium>
-    <Hash>8eafe6d78d6e31f46ecfde4a298ac283</Hash>
+    <Hash>3936cab00244165bd4206d1b910f90d6</Hash>
 </Codenesium>*/

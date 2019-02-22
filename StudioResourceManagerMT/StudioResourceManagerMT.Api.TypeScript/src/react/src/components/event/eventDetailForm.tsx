@@ -22,21 +22,23 @@ interface EventDetailComponentState {
 }
 
 class EventDetailComponent extends React.Component<
-EventDetailComponentProps,
-EventDetailComponentState
+  EventDetailComponentProps,
+  EventDetailComponentState
 > {
   state = {
     model: new EventViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Events + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Events + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -73,7 +75,7 @@ EventDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -82,64 +84,63 @@ EventDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>actualEndDate</h3>
-							<p>{String(this.state.model!.actualEndDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>actualStartDate</h3>
-							<p>{String(this.state.model!.actualStartDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>billAmount</h3>
-							<p>{String(this.state.model!.billAmount)}</p>
-						 </div>
-					   						 <div>
-							<h3>eventStatusId</h3>
-							<p>{String(this.state.model!.eventStatusId)}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>scheduledEndDate</h3>
-							<p>{String(this.state.model!.scheduledEndDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>scheduledStartDate</h3>
-							<p>{String(this.state.model!.scheduledStartDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>studentNotes</h3>
-							<p>{String(this.state.model!.studentNote)}</p>
-						 </div>
-					   						 <div>
-							<h3>teacherNotes</h3>
-							<p>{String(this.state.model!.teacherNote)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>actualEndDate</h3>
+              <p>{String(this.state.model!.actualEndDate)}</p>
+            </div>
+            <div>
+              <h3>actualStartDate</h3>
+              <p>{String(this.state.model!.actualStartDate)}</p>
+            </div>
+            <div>
+              <h3>billAmount</h3>
+              <p>{String(this.state.model!.billAmount)}</p>
+            </div>
+            <div>
+              <h3>eventStatusId</h3>
+              <p>{String(this.state.model!.eventStatusId)}</p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>scheduledEndDate</h3>
+              <p>{String(this.state.model!.scheduledEndDate)}</p>
+            </div>
+            <div>
+              <h3>scheduledStartDate</h3>
+              <p>{String(this.state.model!.scheduledStartDate)}</p>
+            </div>
+            <div>
+              <h3>studentNotes</h3>
+              <p>{String(this.state.model!.studentNote)}</p>
+            </div>
+            <div>
+              <h3>teacherNotes</h3>
+              <p>{String(this.state.model!.teacherNote)}</p>
+            </div>
+          </div>
           {message}
         </div>
       );
@@ -149,10 +150,11 @@ EventDetailComponentState
   }
 }
 
-export const WrappedEventDetailComponent = Form.create({ name: 'Event Detail' })(
-  EventDetailComponent
-);
+export const WrappedEventDetailComponent = Form.create({
+  name: 'Event Detail',
+})(EventDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>382d809e6904ce79f207632d9ea60d9f</Hash>
+    <Hash>aae074628ab12b866edcac76a232e3e0</Hash>
 </Codenesium>*/

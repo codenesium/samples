@@ -1,181 +1,189 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import LinkMapper from './linkMapper';
 import LinkViewModel from './linkViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import {LinkLogTableComponent} from '../shared/linkLogTable'
+	
 
-interface Props {
-	history:any;
-    model?:LinkViewModel
+
+
+interface LinkDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const LinkDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Links + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="assignedMachineId" className={"col-sm-2 col-form-label"}>AssignedMachineId</label>
-							<div className="col-sm-12">
-								{model.model!.assignedMachineIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="chainId" className={"col-sm-2 col-form-label"}>ChainId</label>
-							<div className="col-sm-12">
-								{model.model!.chainIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="dateCompleted" className={"col-sm-2 col-form-label"}>DateCompleted</label>
-							<div className="col-sm-12">
-								{String(model.model!.dateCompleted)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="dateStarted" className={"col-sm-2 col-form-label"}>DateStarted</label>
-							<div className="col-sm-12">
-								{String(model.model!.dateStarted)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="dynamicParameter" className={"col-sm-2 col-form-label"}>DynamicParameter</label>
-							<div className="col-sm-12">
-								{String(model.model!.dynamicParameter)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="externalId" className={"col-sm-2 col-form-label"}>ExternalId</label>
-							<div className="col-sm-12">
-								{String(model.model!.externalId)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="id" className={"col-sm-2 col-form-label"}>Id</label>
-							<div className="col-sm-12">
-								{String(model.model!.id)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="linkStatusId" className={"col-sm-2 col-form-label"}>LinkStatusId</label>
-							<div className="col-sm-12">
-								{model.model!.linkStatusIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="order" className={"col-sm-2 col-form-label"}>Order</label>
-							<div className="col-sm-12">
-								{String(model.model!.order)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="response" className={"col-sm-2 col-form-label"}>Response</label>
-							<div className="col-sm-12">
-								{String(model.model!.response)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="staticParameter" className={"col-sm-2 col-form-label"}>StaticParameter</label>
-							<div className="col-sm-12">
-								{String(model.model!.staticParameter)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="timeoutInSecond" className={"col-sm-2 col-form-label"}>TimeoutInSecond</label>
-							<div className="col-sm-12">
-								{String(model.model!.timeoutInSecond)}
-							</div>
-						</div>
-					             </form>
-  );
+interface LinkDetailComponentState {
+  model?: LinkViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
+class LinkDetailComponent extends React.Component<
+LinkDetailComponentProps,
+LinkDetailComponentState
+> {
+  state = {
+    model: new LinkViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: ''
+  };
+
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Links + '/edit/' + this.state.model!.id);
   }
   
-  interface IMatch
-  {
-     params: IParams;
-  }
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  interface LinkDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface LinkDetailComponentState
-  {
-      model?:LinkViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-
-  export default class LinkDetailComponent extends React.Component<LinkDetailComponentProps, LinkDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Links + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Links +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.LinkClientResponseModel;
-            
-			let mapper = new LinkMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<LinkDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.LinkClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new LinkMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>AssignedMachineId</h3>
+							<p>{String(this.state.model!.assignedMachineIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>ChainId</h3>
+							<p>{String(this.state.model!.chainIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>DateCompleted</h3>
+							<p>{String(this.state.model!.dateCompleted)}</p>
+						 </div>
+					   						 <div>
+							<h3>DateStarted</h3>
+							<p>{String(this.state.model!.dateStarted)}</p>
+						 </div>
+					   						 <div>
+							<h3>DynamicParameter</h3>
+							<p>{String(this.state.model!.dynamicParameter)}</p>
+						 </div>
+					   						 <div>
+							<h3>ExternalId</h3>
+							<p>{String(this.state.model!.externalId)}</p>
+						 </div>
+					   						 <div>
+							<h3>Id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>LinkStatusId</h3>
+							<p>{String(this.state.model!.linkStatusIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>Order</h3>
+							<p>{String(this.state.model!.order)}</p>
+						 </div>
+					   						 <div>
+							<h3>Response</h3>
+							<p>{String(this.state.model!.response)}</p>
+						 </div>
+					   						 <div>
+							<h3>StaticParameter</h3>
+							<p>{String(this.state.model!.staticParameter)}</p>
+						 </div>
+					   						 <div>
+							<h3>TimeoutInSecond</h3>
+							<p>{String(this.state.model!.timeoutInSecond)}</p>
+						 </div>
+					   		  </div>
+          {message}
+		 <div>
+            <h3>LinkLogs</h3>
+            <LinkLogTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Links + '/' + this.state.model!.id + '/' + ApiRoutes.LinkLogs}
+			/>
+         </div>
+	
+
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
+export const WrappedLinkDetailComponent = Form.create({ name: 'Link Detail' })(
+  LinkDetailComponent
+);
+
 /*<Codenesium>
-    <Hash>3fb9dde4b4ed19c6c5f5354ccf107050</Hash>
+    <Hash>53d345d0e83c0d6b1cc7073515732d80</Hash>
 </Codenesium>*/

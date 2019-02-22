@@ -1,91 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import AirTransportMapper from './airTransportMapper';
 import AirTransportViewModel from './airTransportViewModel';
-
-interface Props {
-  history: any;
-  model?: AirTransportViewModel;
-}
-
-const AirTransportDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.AirTransports + '/edit/' + model.model!.airlineId
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="airlineId" className={'col-sm-2 col-form-label'}>
-          AirlineId
-        </label>
-        <div className="col-sm-12">{String(model.model!.airlineId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="flightNumber" className={'col-sm-2 col-form-label'}>
-          FlightNumber
-        </label>
-        <div className="col-sm-12">{String(model.model!.flightNumber)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="handlerId" className={'col-sm-2 col-form-label'}>
-          HandlerId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.handlerIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="landDate" className={'col-sm-2 col-form-label'}>
-          LandDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.landDate)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="pipelineStepId" className={'col-sm-2 col-form-label'}>
-          PipelineStepId
-        </label>
-        <div className="col-sm-12">{String(model.model!.pipelineStepId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="takeoffDate" className={'col-sm-2 col-form-label'}>
-          TakeoffDate
-        </label>
-        <div className="col-sm-12">{String(model.model!.takeoffDate)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  airlineId: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface AirTransportDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface AirTransportDetailComponentState {
@@ -96,17 +21,23 @@ interface AirTransportDetailComponentState {
   errorMessage: string;
 }
 
-export default class AirTransportDetailComponent extends React.Component<
+class AirTransportDetailComponent extends React.Component<
   AirTransportDetailComponentProps,
   AirTransportDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new AirTransportViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.AirTransports + '/edit/' + this.state.model!.airlineId
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -116,7 +47,7 @@ export default class AirTransportDetailComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.AirTransports +
           '/' +
-          this.props.match.params.airlineId,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -127,9 +58,9 @@ export default class AirTransportDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.AirTransportClientResponseModel;
 
-          let mapper = new AirTransportMapper();
-
           console.log(response);
+
+          let mapper = new AirTransportMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -144,24 +75,68 @@ export default class AirTransportDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <AirTransportDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>airlineId</h3>
+              <p>{String(this.state.model!.airlineId)}</p>
+            </div>
+            <div>
+              <h3>flightNumber</h3>
+              <p>{String(this.state.model!.flightNumber)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>handlerId</h3>
+              <p>
+                {String(this.state.model!.handlerIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>landDate</h3>
+              <p>{String(this.state.model!.landDate)}</p>
+            </div>
+            <div>
+              <h3>pipelineStepId</h3>
+              <p>{String(this.state.model!.pipelineStepId)}</p>
+            </div>
+            <div>
+              <h3>takeoffDate</h3>
+              <p>{String(this.state.model!.takeoffDate)}</p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -169,7 +144,11 @@ export default class AirTransportDetailComponent extends React.Component<
   }
 }
 
+export const WrappedAirTransportDetailComponent = Form.create({
+  name: 'AirTransport Detail',
+})(AirTransportDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>8c139f519757a452ce1dbdc21869d105</Hash>
+    <Hash>2d364eaeff19685464939c0f7f98a2c5</Hash>
 </Codenesium>*/

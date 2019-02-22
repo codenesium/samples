@@ -1,15 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RateMapper from './rateMapper';
 import RateViewModel from './rateViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface RateEditComponentProps {
   form:WrappedFormUtils;
@@ -141,7 +138,7 @@ class RateEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } 
     else if (this.state.loaded) {
 
@@ -150,28 +147,37 @@ class RateEditComponent extends React.Component<
             			<Form.Item>
               <label htmlFor='amountPerMinute'>Amount Per Minute</label>
               <br />             
-{getFieldDecorator('amountPerMinute', {
-              rules:[],
+              {getFieldDecorator('amountPerMinute', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
               })
-              ( <InputNumber placeholder={"Amount Per Minute"} id={"amountPerMinute"} /> )}
+              ( <InputNumber placeholder={"Amount Per Minute"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='teacherId'>teacherId</label>
               <br />             
-{getFieldDecorator('teacherId', {
-              rules:[],
+              {getFieldDecorator('teacherId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
               })
-              ( <InputNumber placeholder={"teacherId"} id={"teacherId"} /> )}
+              ( <InputNumber placeholder={"teacherId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='teacherSkillId'>teacherSkillId</label>
               <br />             
-{getFieldDecorator('teacherSkillId', {
-              rules:[],
+              {getFieldDecorator('teacherSkillId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
               })
-              ( <InputNumber placeholder={"teacherSkillId"} id={"teacherSkillId"} /> )}
+              ( <InputNumber placeholder={"teacherSkillId"} /> )}
               </Form.Item>
 
 			
@@ -191,5 +197,5 @@ class RateEditComponent extends React.Component<
 export const WrappedRateEditComponent = Form.create({ name: 'Rate Edit' })(RateEditComponent);
 
 /*<Codenesium>
-    <Hash>adf18f01483c4147ff3efbe9785651b5</Hash>
+    <Hash>7d48dc0a1d14bd7ad9922ec842543fb4</Hash>
 </Codenesium>*/

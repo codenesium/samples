@@ -1,13 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherMapper from './teacherMapper';
 import TeacherViewModel from './teacherViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
+import { RateTableComponent } from '../shared/rateTable';
 
 interface TeacherDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +76,7 @@ class TeacherDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +91,7 @@ class TeacherDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,31 +106,47 @@ class TeacherDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>birthday</div>
-              <div>{this.state.model!.birthday}</div>
+              <h3>birthday</h3>
+              <p>{String(this.state.model!.birthday)}</p>
             </div>
             <div>
-              <div>email</div>
-              <div>{this.state.model!.email}</div>
+              <h3>email</h3>
+              <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <div>firstName</div>
-              <div>{this.state.model!.firstName}</div>
+              <h3>First Name</h3>
+              <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <div>lastName</div>
-              <div>{this.state.model!.lastName}</div>
+              <h3>Last Name</h3>
+              <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <div>phone</div>
-              <div>{this.state.model!.phone}</div>
+              <h3>phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>userId</h3>
-              <div>{this.state.model!.userIdNavigation!.toDisplay()}</div>
+              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
             </div>
           </div>
           {message}
+          <div>
+            <h3>Rates</h3>
+            <RateTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Teachers +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Rates
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -146,5 +161,5 @@ export const WrappedTeacherDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e5ea5cc16ce645d78e8b1ac9cbd42118</Hash>
+    <Hash>081eaef41965f499801484a1b00f795f</Hash>
 </Codenesium>*/

@@ -75,7 +75,7 @@ class VoteDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -140,5 +140,5 @@ export const WrappedVoteDetailComponent = Form.create({ name: 'Vote Detail' })(
 
 
 /*<Codenesium>
-    <Hash>94852e389ae46cb96cd6b85de0e429b2</Hash>
+    <Hash>abeb905780a9bdeffd344fbb12da6b12</Hash>
 </Codenesium>*/

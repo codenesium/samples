@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,8 +121,12 @@ class PaymentTypeCreateComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -144,5 +149,5 @@ export const WrappedPaymentTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>da52fc833dde1e890bd52fced1d4d011</Hash>
+    <Hash>27403192aa0593bcf47c4895ca89a443</Hash>
 </Codenesium>*/

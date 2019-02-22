@@ -6,6 +6,7 @@ import SpeciesMapper from './speciesMapper';
 import SpeciesViewModel from './speciesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { BreedTableComponent } from '../shared/breedTable';
 
 interface SpeciesDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class SpeciesDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -110,6 +111,22 @@ class SpeciesDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Breeds</h3>
+            <BreedTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Species +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Breeds
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -124,5 +141,5 @@ export const WrappedSpeciesDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e21f9d56e3acb95cbb64db19e59757fc</Hash>
+    <Hash>aa9c5afb19f799a13a9c80dceaa40395</Hash>
 </Codenesium>*/

@@ -91,6 +91,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		public async virtual Task<List<Province>> ProvincesByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Province>()
+			       .Include(x => x.CountryIdNavigation)
 			       .Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Province>();
 		}
 
@@ -120,5 +121,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b4e256e29c86c92574e8cefc1787b2fb</Hash>
+    <Hash>a67db8e2c5978f40406ee00efcc63548</Hash>
 </Codenesium>*/

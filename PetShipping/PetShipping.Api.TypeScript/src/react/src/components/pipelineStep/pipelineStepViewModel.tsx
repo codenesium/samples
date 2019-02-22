@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PipelineStepStatuViewModel from '../pipelineStepStatu/pipelineStepStatuViewModel';
 import EmployeeViewModel from '../employee/employeeViewModel';
 
@@ -16,10 +17,10 @@ export default class PipelineStepViewModel {
     this.name = '';
     this.pipelineStepStatusId = 0;
     this.pipelineStepStatusIdEntity = '';
-    this.pipelineStepStatusIdNavigation = undefined;
+    this.pipelineStepStatusIdNavigation = new PipelineStepStatuViewModel();
     this.shipperId = 0;
     this.shipperIdEntity = '';
-    this.shipperIdNavigation = undefined;
+    this.shipperIdNavigation = new EmployeeViewModel();
   }
 
   setProperties(
@@ -28,10 +29,10 @@ export default class PipelineStepViewModel {
     pipelineStepStatusId: number,
     shipperId: number
   ): void {
-    this.id = id;
-    this.name = name;
-    this.pipelineStepStatusId = pipelineStepStatusId;
-    this.shipperId = shipperId;
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.pipelineStepStatusId = moment(pipelineStepStatusId, 'YYYY-MM-DD');
+    this.shipperId = moment(shipperId, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -41,5 +42,5 @@ export default class PipelineStepViewModel {
 
 
 /*<Codenesium>
-    <Hash>7e9f1727b50d8c12f3e21384b922b8d0</Hash>
+    <Hash>211051219be221ff7dca1f7775e65f5e</Hash>
 </Codenesium>*/

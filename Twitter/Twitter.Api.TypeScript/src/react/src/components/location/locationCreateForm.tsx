@@ -1,191 +1,68 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import * as Api from '../../api/models';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import LocationMapper from './locationMapper';
 import LocationViewModel from './locationViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-  model?: LocationViewModel;
+interface LocationCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const LocationCreateDisplay: React.SFC<FormikProps<LocationViewModel>> = (
-  props: FormikProps<LocationViewModel>
-) => {
-  let status = props.status as CreateResponse<Api.LocationClientRequestModel>;
+interface LocationCreateComponentState {
+  model?: LocationViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
+}
 
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof LocationViewModel] &&
-      props.errors[name as keyof LocationViewModel]
-    ) {
-      response += props.errors[name as keyof LocationViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
+class LocationCreateComponent extends React.Component<
+  LocationCreateComponentProps,
+  LocationCreateComponentState
+> {
+  state = {
+    model: new LocationViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
   };
 
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as LocationViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
   };
 
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('gpsLat')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Gps_lat
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="gpsLat"
-            className={
-              errorExistForField('gpsLat')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('gpsLat') && (
-            <small className="text-danger">{errorsForField('gpsLat')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('gpsLong')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Gps_long
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="gpsLong"
-            className={
-              errorExistForField('gpsLong')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('gpsLong') && (
-            <small className="text-danger">{errorsForField('gpsLong')}</small>
-          )}
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('locationName')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Location_name
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="locationName"
-            className={
-              errorExistForField('locationName')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('locationName') && (
-            <small className="text-danger">
-              {errorsForField('locationName')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const LocationCreate = withFormik<Props, LocationViewModel>({
-  mapPropsToValues: props => {
-    let response = new LocationViewModel();
-    if (props.model != undefined) {
-      response.setProperties(
-        props.model!.gpsLat,
-        props.model!.gpsLong,
-        props.model!.locationId,
-        props.model!.locationName
-      );
-    }
-    return response;
-  },
-
-  validate: values => {
-    let errors: FormikErrors<LocationViewModel> = {};
-
-    if (values.gpsLat == 0) {
-      errors.gpsLat = 'Required';
-    }
-    if (values.gpsLong == 0) {
-      errors.gpsLong = 'Required';
-    }
-    if (values.locationName == '') {
-      errors.locationName = 'Required';
-    }
-
-    return errors;
-  },
-
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
+  submit = (model: LocationViewModel) => {
     let mapper = new LocationMapper();
-
     axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Locations,
-        mapper.mapViewModelToApiRequest(values),
+        mapper.mapViewModelToApiRequest(model),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -197,54 +74,102 @@ const LocationCreate = withFormik<Props, LocationViewModel>({
           let response = resp.data as CreateResponse<
             Api.LocationClientRequestModel
           >;
-          actions.setStatus(response);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          actions.setStatus('Error from API');
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
       );
-  },
-  displayName: 'LocationCreate',
-})(LocationCreateDisplay);
-
-interface LocationCreateComponentProps {}
-
-interface LocationCreateComponentState {
-  model?: LocationViewModel;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-}
-
-export default class LocationCreateComponent extends React.Component<
-  LocationCreateComponentProps,
-  LocationCreateComponentState
-> {
-  state = {
-    model: undefined,
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
   };
 
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <LocationCreate model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="gpsLat">gps_lat</label>
+            <br />
+            {getFieldDecorator('gpsLat', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'gps_lat'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="gpsLong">gps_long</label>
+            <br />
+            {getFieldDecorator('gpsLong', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'gps_long'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="locationName">location_name</label>
+            <br />
+            {getFieldDecorator('locationName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 64, message: 'Exceeds max length of 64' },
+              ],
+            })(<Input placeholder={'location_name'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedLocationCreateComponent = Form.create({
+  name: 'Location Create',
+})(LocationCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>d2e5337eea17ad63f740766aa743c019</Hash>
+    <Hash>cebad3c5e0bb267ce5e5a12df4b77b04</Hash>
 </Codenesium>*/

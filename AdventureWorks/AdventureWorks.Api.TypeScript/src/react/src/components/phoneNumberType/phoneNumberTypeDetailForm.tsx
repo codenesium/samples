@@ -6,6 +6,7 @@ import PhoneNumberTypeMapper from './phoneNumberTypeMapper';
 import PhoneNumberTypeViewModel from './phoneNumberTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { PersonPhoneTableComponent } from '../shared/personPhoneTable';
 
 interface PhoneNumberTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +78,7 @@ class PhoneNumberTypeDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -120,6 +121,22 @@ class PhoneNumberTypeDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>PersonPhones</h3>
+            <PersonPhoneTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.PhoneNumberTypes +
+                '/' +
+                this.state.model!.phoneNumberTypeID +
+                '/' +
+                ApiRoutes.PersonPhones
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -134,5 +151,5 @@ export const WrappedPhoneNumberTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>32b1fc23196a787469c6fc33c64191be</Hash>
+    <Hash>dadc5105f255def9d6d77cf85f51f136</Hash>
 </Codenesium>*/

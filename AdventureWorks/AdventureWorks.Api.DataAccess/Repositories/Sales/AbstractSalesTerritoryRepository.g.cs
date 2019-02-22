@@ -114,6 +114,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<Customer>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Customer>()
+			       .Include(x => x.TerritoryIDNavigation)
 			       .Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
@@ -121,6 +122,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>()
+			       .Include(x => x.TerritoryIDNavigation)
 			       .Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
@@ -128,6 +130,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<SalesPerson>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesPerson>()
+			       .Include(x => x.TerritoryIDNavigation)
 			       .Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
 		}
 
@@ -157,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7569145c0f8d1ebbb0f83e09bf77261a</Hash>
+    <Hash>effb945701b8967e18d50efb6fa6ff6c</Hash>
 </Codenesium>*/

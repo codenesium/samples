@@ -50,11 +50,11 @@ export default class RowVersionCheckSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.RowVersionCheckClientResponseModel) {
+  handleEditClick(e: any, row: RowVersionCheckViewModel) {
     this.props.history.push(ClientRoutes.RowVersionChecks + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.RowVersionCheckClientResponseModel) {
+  handleDetailClick(e: any, row: RowVersionCheckViewModel) {
     this.props.history.push(ClientRoutes.RowVersionChecks + '/' + row.id);
   }
 
@@ -140,7 +140,7 @@ export default class RowVersionCheckSearchComponent extends React.Component<
             records: new Array<RowVersionCheckViewModel>(),
             filteredRecords: new Array<RowVersionCheckViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -210,7 +210,7 @@ export default class RowVersionCheckSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'RowVersionCheck',
+                Header: 'RowVersionChecks',
                 columns: [
                   {
                     Header: 'Id',
@@ -242,7 +242,7 @@ export default class RowVersionCheckSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.RowVersionCheckClientResponseModel
+                              row.original as RowVersionCheckViewModel
                             );
                           }}
                         >
@@ -254,7 +254,7 @@ export default class RowVersionCheckSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.RowVersionCheckClientResponseModel
+                              row.original as RowVersionCheckViewModel
                             );
                           }}
                         >
@@ -266,7 +266,7 @@ export default class RowVersionCheckSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.RowVersionCheckClientResponseModel
+                              row.original as RowVersionCheckViewModel
                             );
                           }}
                         >
@@ -293,5 +293,5 @@ export const WrappedRowVersionCheckSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>143a0dd7d6c22f375187f803301ecd8e</Hash>
+    <Hash>ce497cc36fb0705f69b18e7c0e9db366</Hash>
 </Codenesium>*/

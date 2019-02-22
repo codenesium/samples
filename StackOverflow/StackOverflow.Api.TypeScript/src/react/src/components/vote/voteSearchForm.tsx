@@ -39,11 +39,11 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.VoteClientResponseModel) {
+    handleEditClick(e:any, row:VoteViewModel) {
          this.props.history.push(ClientRoutes.Votes + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.VoteClientResponseModel) {
+    handleDetailClick(e:any, row:VoteViewModel) {
          this.props.history.push(ClientRoutes.Votes + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<VoteViewModel>(),filteredRecords:new Array<VoteViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<VoteViewModel>(), filteredRecords:new Array<VoteViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Vote',
+                    Header: 'Votes',
                     columns: [
 					  {
                       Header: 'BountyAmount',
@@ -202,7 +202,7 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.VoteClientResponseModel
+                              row.original as VoteViewModel
                             );
                           }}
                         >
@@ -214,7 +214,7 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.VoteClientResponseModel
+                              row.original as VoteViewModel
                             );
                           }}
                         >
@@ -226,7 +226,7 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.VoteClientResponseModel
+                              row.original as VoteViewModel
                             );
                           }}
                         >
@@ -248,5 +248,5 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
 export const WrappedVoteSearchComponent = Form.create({ name: 'Vote Search' })(VoteSearchComponent);
 
 /*<Codenesium>
-    <Hash>7980b46185d4077b577f0ec019fe16bf</Hash>
+    <Hash>3cdd7891c6bd6e0eaec17412ca1708ce</Hash>
 </Codenesium>*/

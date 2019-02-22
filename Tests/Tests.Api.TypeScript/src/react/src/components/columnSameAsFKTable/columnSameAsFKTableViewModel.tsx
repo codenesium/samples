@@ -1,6 +1,5 @@
 import moment from 'moment';
 import PersonViewModel from '../person/personViewModel';
-import PersonViewModel from '../person/personViewModel';
 
 export default class ColumnSameAsFKTableViewModel {
   id: number;
@@ -34,5 +33,5 @@ export default class ColumnSameAsFKTableViewModel {
 
 
 /*<Codenesium>
-    <Hash>47c479b2586c3253889046495667ba5b</Hash>
+    <Hash>6ba2849f58b07d0b05ff6b28c89f131e</Hash>
 </Codenesium>*/

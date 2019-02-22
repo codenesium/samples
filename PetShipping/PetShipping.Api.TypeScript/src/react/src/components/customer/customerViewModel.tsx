@@ -1,3 +1,6 @@
+import moment from 'moment'
+
+
 export default class CustomerViewModel {
     email:string;
 firstName:string;
@@ -18,12 +21,12 @@ this.phone = '';
 
 	setProperties(email : string,firstName : string,id : number,lastName : string,note : string,phone : string) : void
 	{
-		this.email = email;
-this.firstName = firstName;
-this.id = id;
-this.lastName = lastName;
-this.note = note;
-this.phone = phone;
+		this.email = moment(email,'YYYY-MM-DD');
+this.firstName = moment(firstName,'YYYY-MM-DD');
+this.id = moment(id,'YYYY-MM-DD');
+this.lastName = moment(lastName,'YYYY-MM-DD');
+this.note = moment(note,'YYYY-MM-DD');
+this.phone = moment(phone,'YYYY-MM-DD');
 
 	}
 
@@ -34,5 +37,5 @@ this.phone = phone;
 };
 
 /*<Codenesium>
-    <Hash>e0435d12fe2f1f7807d87a993503a211</Hash>
+    <Hash>ac5126eea06d46899a3074c88bccaa99</Hash>
 </Codenesium>*/

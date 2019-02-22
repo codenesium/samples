@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SpaceFeatureMapper from './spaceFeatureMapper';
 import SpaceFeatureViewModel from './spaceFeatureViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface SpaceFeatureDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,21 +22,23 @@ interface SpaceFeatureDetailComponentState {
 }
 
 class SpaceFeatureDetailComponent extends React.Component<
-SpaceFeatureDetailComponentProps,
-SpaceFeatureDetailComponentState
+  SpaceFeatureDetailComponentProps,
+  SpaceFeatureDetailComponentState
 > {
   state = {
     model: new SpaceFeatureViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.SpaceFeatures + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.SpaceFeatures + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -75,7 +75,7 @@ SpaceFeatureDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -84,32 +84,31 @@ SpaceFeatureDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<div>name</div>
-							<div>{this.state.model!.name}</div>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
         </div>
       );
@@ -119,10 +118,11 @@ SpaceFeatureDetailComponentState
   }
 }
 
-export const WrappedSpaceFeatureDetailComponent = Form.create({ name: 'SpaceFeature Detail' })(
-  SpaceFeatureDetailComponent
-);
+export const WrappedSpaceFeatureDetailComponent = Form.create({
+  name: 'SpaceFeature Detail',
+})(SpaceFeatureDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>2262ee7ca0b4eba29dd41aed88cec6b1</Hash>
+    <Hash>e834ea415d5ca83a77b15aab3a2e9483</Hash>
 </Codenesium>*/

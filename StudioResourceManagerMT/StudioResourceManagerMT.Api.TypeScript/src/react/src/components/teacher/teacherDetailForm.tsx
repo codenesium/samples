@@ -75,7 +75,7 @@ class TeacherDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -148,5 +148,5 @@ export const WrappedTeacherDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ef148077229ed01e773763e08dc05f45</Hash>
+    <Hash>d339f01d1a97b6324271dff192222050</Hash>
 </Codenesium>*/

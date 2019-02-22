@@ -1,65 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import TeamMapper from './teamMapper';
 import TeamViewModel from './teamViewModel';
-
-interface Props {
-  history: any;
-  model?: TeamViewModel;
-}
-
-const TeamDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(ClientRoutes.Teams + '/edit/' + model.model!.id);
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="organizationId" className={'col-sm-2 col-form-label'}>
-          OrganizationId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.organizationIdNavigation!.toDisplay()}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ChainTableComponent } from '../shared/chainTable';
 
 interface TeamDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface TeamDetailComponentState {
@@ -70,17 +22,23 @@ interface TeamDetailComponentState {
   errorMessage: string;
 }
 
-export default class TeamDetailComponent extends React.Component<
+class TeamDetailComponent extends React.Component<
   TeamDetailComponentProps,
   TeamDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new TeamViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Teams + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -101,9 +59,9 @@ export default class TeamDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.TeamClientResponseModel;
 
-          let mapper = new TeamMapper();
-
           console.log(response);
+
+          let mapper = new TeamMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -118,24 +76,70 @@ export default class TeamDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <TeamDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>OrganizationId</h3>
+              <p>
+                {String(
+                  this.state.model!.organizationIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
+          {message}
+          <div>
+            <h3>Chains</h3>
+            <ChainTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Teams +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Chains
+              }
+            />
+          </div>
+        </div>
       );
     } else {
       return null;
@@ -143,7 +147,11 @@ export default class TeamDetailComponent extends React.Component<
   }
 }
 
+export const WrappedTeamDetailComponent = Form.create({ name: 'Team Detail' })(
+  TeamDetailComponent
+);
+
 
 /*<Codenesium>
-    <Hash>be9baee9364b95a24846b6911c5114b7</Hash>
+    <Hash>cc54296b2c339ca09e55621df783cdad</Hash>
 </Codenesium>*/

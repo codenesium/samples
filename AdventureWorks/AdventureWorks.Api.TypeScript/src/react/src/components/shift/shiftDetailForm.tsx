@@ -6,6 +6,7 @@ import ShiftMapper from './shiftMapper';
 import ShiftViewModel from './shiftViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { EmployeeDepartmentHistoryTableComponent } from '../shared/employeeDepartmentHistoryTable';
 
 interface ShiftDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class ShiftDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -126,6 +127,22 @@ class ShiftDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>EmployeeDepartmentHistories</h3>
+            <EmployeeDepartmentHistoryTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Shifts +
+                '/' +
+                this.state.model!.shiftID +
+                '/' +
+                ApiRoutes.EmployeeDepartmentHistories
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -140,5 +157,5 @@ export const WrappedShiftDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7a0834ff69ac41e187f1c92499484fa5</Hash>
+    <Hash>e0ba301f71817a7d922a3b622d153b28</Hash>
 </Codenesium>*/

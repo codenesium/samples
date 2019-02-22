@@ -287,6 +287,9 @@ fieldDateTime2:any;
 fieldDateTimeOffset:any;
 fieldDecimal:number;
 fieldFloat:number;
+fieldGeography:number;
+fieldGeometry:number;
+fieldHierarchyId:any;
 fieldImage:any;
 fieldMoney:number;
 fieldNChar:string;
@@ -304,6 +307,7 @@ fieldTinyInt:number;
 fieldUniqueIdentifier:any;
 fieldVarBinary:any;
 fieldVarchar:string;
+fieldVariant:string;
 fieldXML:string;
 id:number;
 
@@ -319,6 +323,9 @@ this.fieldDateTime2 = undefined;
 this.fieldDateTimeOffset = undefined;
 this.fieldDecimal = 0;
 this.fieldFloat = 0;
+this.fieldGeography = 0;
+this.fieldGeometry = 0;
+this.fieldHierarchyId = undefined;
 this.fieldImage = undefined;
 this.fieldMoney = 0;
 this.fieldNChar = '';
@@ -336,12 +343,13 @@ this.fieldTinyInt = 0;
 this.fieldUniqueIdentifier = undefined;
 this.fieldVarBinary = undefined;
 this.fieldVarchar = '';
+this.fieldVariant = '';
 this.fieldXML = '';
 this.id = 0;
 
 				}
 
-				setProperties(fieldBigInt : number,fieldBinary : any,fieldBit : boolean,fieldChar : string,fieldDate : any,fieldDateTime : any,fieldDateTime2 : any,fieldDateTimeOffset : any,fieldDecimal : number,fieldFloat : number,fieldImage : any,fieldMoney : number,fieldNChar : string,fieldNText : string,fieldNumeric : number,fieldNVarchar : string,fieldReal : number,fieldSmallDateTime : any,fieldSmallInt : number,fieldSmallMoney : number,fieldText : string,fieldTime : any,fieldTimestamp : any,fieldTinyInt : number,fieldUniqueIdentifier : any,fieldVarBinary : any,fieldVarchar : string,fieldXML : string,id : number) : void
+				setProperties(fieldBigInt : number,fieldBinary : any,fieldBit : boolean,fieldChar : string,fieldDate : any,fieldDateTime : any,fieldDateTime2 : any,fieldDateTimeOffset : any,fieldDecimal : number,fieldFloat : number,fieldGeography : number,fieldGeometry : number,fieldHierarchyId : any,fieldImage : any,fieldMoney : number,fieldNChar : string,fieldNText : string,fieldNumeric : number,fieldNVarchar : string,fieldReal : number,fieldSmallDateTime : any,fieldSmallInt : number,fieldSmallMoney : number,fieldText : string,fieldTime : any,fieldTimestamp : any,fieldTinyInt : number,fieldUniqueIdentifier : any,fieldVarBinary : any,fieldVarchar : string,fieldVariant : string,fieldXML : string,id : number) : void
 				{
 					this.fieldBigInt = fieldBigInt;
 this.fieldBinary = fieldBinary;
@@ -353,6 +361,9 @@ this.fieldDateTime2 = fieldDateTime2;
 this.fieldDateTimeOffset = fieldDateTimeOffset;
 this.fieldDecimal = fieldDecimal;
 this.fieldFloat = fieldFloat;
+this.fieldGeography = fieldGeography;
+this.fieldGeometry = fieldGeometry;
+this.fieldHierarchyId = fieldHierarchyId;
 this.fieldImage = fieldImage;
 this.fieldMoney = fieldMoney;
 this.fieldNChar = fieldNChar;
@@ -370,6 +381,7 @@ this.fieldTinyInt = fieldTinyInt;
 this.fieldUniqueIdentifier = fieldUniqueIdentifier;
 this.fieldVarBinary = fieldVarBinary;
 this.fieldVarchar = fieldVarchar;
+this.fieldVariant = fieldVariant;
 this.fieldXML = fieldXML;
 this.id = id;
 
@@ -387,6 +399,9 @@ fieldDateTime2:any;
 fieldDateTimeOffset:any;
 fieldDecimal:number;
 fieldFloat:number;
+fieldGeography:number;
+fieldGeometry:number;
+fieldHierarchyId:any;
 fieldImage:any;
 fieldMoney:number;
 fieldNChar:string;
@@ -404,6 +419,7 @@ fieldTinyInt:number;
 fieldUniqueIdentifier:any;
 fieldVarBinary:any;
 fieldVarchar:string;
+fieldVariant:string;
 fieldXML:string;
 id:number;
 
@@ -419,6 +435,9 @@ this.fieldDateTime2 = undefined;
 this.fieldDateTimeOffset = undefined;
 this.fieldDecimal = 0;
 this.fieldFloat = 0;
+this.fieldGeography = 0;
+this.fieldGeometry = 0;
+this.fieldHierarchyId = undefined;
 this.fieldImage = undefined;
 this.fieldMoney = 0;
 this.fieldNChar = '';
@@ -436,12 +455,13 @@ this.fieldTinyInt = 0;
 this.fieldUniqueIdentifier = undefined;
 this.fieldVarBinary = undefined;
 this.fieldVarchar = '';
+this.fieldVariant = '';
 this.fieldXML = '';
 this.id = 0;
 
 				}
 
-				setProperties(fieldBigInt : number,fieldBinary : any,fieldBit : boolean,fieldChar : string,fieldDate : any,fieldDateTime : any,fieldDateTime2 : any,fieldDateTimeOffset : any,fieldDecimal : number,fieldFloat : number,fieldImage : any,fieldMoney : number,fieldNChar : string,fieldNText : string,fieldNumeric : number,fieldNVarchar : string,fieldReal : number,fieldSmallDateTime : any,fieldSmallInt : number,fieldSmallMoney : number,fieldText : string,fieldTime : any,fieldTimestamp : any,fieldTinyInt : number,fieldUniqueIdentifier : any,fieldVarBinary : any,fieldVarchar : string,fieldXML : string,id : number) : void
+				setProperties(fieldBigInt : number,fieldBinary : any,fieldBit : boolean,fieldChar : string,fieldDate : any,fieldDateTime : any,fieldDateTime2 : any,fieldDateTimeOffset : any,fieldDecimal : number,fieldFloat : number,fieldGeography : number,fieldGeometry : number,fieldHierarchyId : any,fieldImage : any,fieldMoney : number,fieldNChar : string,fieldNText : string,fieldNumeric : number,fieldNVarchar : string,fieldReal : number,fieldSmallDateTime : any,fieldSmallInt : number,fieldSmallMoney : number,fieldText : string,fieldTime : any,fieldTimestamp : any,fieldTinyInt : number,fieldUniqueIdentifier : any,fieldVarBinary : any,fieldVarchar : string,fieldVariant : string,fieldXML : string,id : number) : void
 				{
 					this.fieldBigInt = fieldBigInt;
 this.fieldBinary = fieldBinary;
@@ -453,6 +473,9 @@ this.fieldDateTime2 = fieldDateTime2;
 this.fieldDateTimeOffset = fieldDateTimeOffset;
 this.fieldDecimal = fieldDecimal;
 this.fieldFloat = fieldFloat;
+this.fieldGeography = fieldGeography;
+this.fieldGeometry = fieldGeometry;
+this.fieldHierarchyId = fieldHierarchyId;
 this.fieldImage = fieldImage;
 this.fieldMoney = fieldMoney;
 this.fieldNChar = fieldNChar;
@@ -470,6 +493,7 @@ this.fieldTinyInt = fieldTinyInt;
 this.fieldUniqueIdentifier = fieldUniqueIdentifier;
 this.fieldVarBinary = fieldVarBinary;
 this.fieldVarchar = fieldVarchar;
+this.fieldVariant = fieldVariant;
 this.fieldXML = fieldXML;
 this.id = id;
 
@@ -756,5 +780,5 @@ this.personName = personName;
 			}
 
 /*<Codenesium>
-    <Hash>569453faf3395a58ba541271025fa994</Hash>
+    <Hash>96d13cf8938c50fbf9415f57871e2054</Hash>
 </Codenesium>*/

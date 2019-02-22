@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class FollowingViewModel {
   dateFollowed: any;
   muted: string;
@@ -22,5 +24,5 @@ export default class FollowingViewModel {
 
 
 /*<Codenesium>
-    <Hash>f62265379dc8e84cc7c41daddc5f69a4</Hash>
+    <Hash>177d292df5aec36b756b44efd705d951</Hash>
 </Codenesium>*/

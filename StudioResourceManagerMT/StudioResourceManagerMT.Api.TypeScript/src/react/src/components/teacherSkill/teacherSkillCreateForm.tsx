@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,14 +121,12 @@ class TeacherSkillCreateComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'name'}
-                id={'name'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -150,5 +149,5 @@ export const WrappedTeacherSkillCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cbd4e0540ebf4ae86a61b21d57d58c40</Hash>
+    <Hash>6f3076c9d4fe9e0cba1c98b314fa1795</Hash>
 </Codenesium>*/

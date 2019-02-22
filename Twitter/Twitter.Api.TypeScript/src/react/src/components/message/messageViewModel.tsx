@@ -1,3 +1,4 @@
+import moment from 'moment';
 import UserViewModel from '../user/userViewModel';
 
 export default class MessageViewModel {
@@ -12,7 +13,7 @@ export default class MessageViewModel {
     this.messageId = 0;
     this.senderUserId = undefined;
     this.senderUserIdEntity = '';
-    this.senderUserIdNavigation = undefined;
+    this.senderUserIdNavigation = new UserViewModel();
   }
 
   setProperties(content: string, messageId: number, senderUserId: any): void {
@@ -28,5 +29,5 @@ export default class MessageViewModel {
 
 
 /*<Codenesium>
-    <Hash>766fa299d81ae598d83090d6c4551e24</Hash>
+    <Hash>62adca5d9d0617144a2a179414569540</Hash>
 </Codenesium>*/

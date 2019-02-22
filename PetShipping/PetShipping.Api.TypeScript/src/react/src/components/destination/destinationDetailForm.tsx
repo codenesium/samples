@@ -1,73 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import DestinationMapper from './destinationMapper';
 import DestinationViewModel from './destinationViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import {PipelineStepDestinationTableComponent} from '../shared/pipelineStepDestinationTable'
+	
 
-interface Props {
-  history: any;
-  model?: DestinationViewModel;
-}
 
-const DestinationDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Destinations + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="countryId" className={'col-sm-2 col-form-label'}>
-          CountryId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.countryIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="order" className={'col-sm-2 col-form-label'}>
-          Order
-        </label>
-        <div className="col-sm-12">{String(model.model!.order)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
 
 interface DestinationDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface DestinationDetailComponentState {
@@ -78,18 +25,22 @@ interface DestinationDetailComponentState {
   errorMessage: string;
 }
 
-export default class DestinationDetailComponent extends React.Component<
-  DestinationDetailComponentProps,
-  DestinationDetailComponentState
+class DestinationDetailComponent extends React.Component<
+DestinationDetailComponentProps,
+DestinationDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new DestinationViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Destinations + '/edit/' + this.state.model!.id);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -109,9 +60,9 @@ export default class DestinationDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.DestinationClientResponseModel;
 
-          let mapper = new DestinationMapper();
-
           console.log(response);
+
+          let mapper = new DestinationMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -126,24 +77,66 @@ export default class DestinationDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <DestinationDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>countryId</h3>
+							<p>{String(this.state.model!.countryIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>order</h3>
+							<p>{String(this.state.model!.order)}</p>
+						 </div>
+					   		  </div>
+          {message}
+		 <div>
+            <h3>PipelineStepDestinations</h3>
+            <PipelineStepDestinationTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Destinations + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepDestinations}
+			/>
+         </div>
+	
+
+        </div>
       );
     } else {
       return null;
@@ -151,7 +144,10 @@ export default class DestinationDetailComponent extends React.Component<
   }
 }
 
+export const WrappedDestinationDetailComponent = Form.create({ name: 'Destination Detail' })(
+  DestinationDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>0ac5c027b4d7de23701d77187cb7085c</Hash>
+    <Hash>953205b41cc1a5d8ca7fecaef15006ab</Hash>
 </Codenesium>*/

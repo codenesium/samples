@@ -1,44 +1,45 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
-import { App } from './app';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
-import ChainCreateComponent from './components/chain/chainCreateForm';
-import ChainDetailComponent from './components/chain/chainDetailForm';
-import ChainEditComponent from './components/chain/chainEditForm';
-import ChainSearchComponent from './components/chain/chainSearchForm';					
-import ChainStatusCreateComponent from './components/chainStatus/chainStatusCreateForm';
-import ChainStatusDetailComponent from './components/chainStatus/chainStatusDetailForm';
-import ChainStatusEditComponent from './components/chainStatus/chainStatusEditForm';
-import ChainStatusSearchComponent from './components/chainStatus/chainStatusSearchForm';					
-import ClaspCreateComponent from './components/clasp/claspCreateForm';
-import ClaspDetailComponent from './components/clasp/claspDetailForm';
-import ClaspEditComponent from './components/clasp/claspEditForm';
-import ClaspSearchComponent from './components/clasp/claspSearchForm';					
-import LinkCreateComponent from './components/link/linkCreateForm';
-import LinkDetailComponent from './components/link/linkDetailForm';
-import LinkEditComponent from './components/link/linkEditForm';
-import LinkSearchComponent from './components/link/linkSearchForm';					
-import LinkLogCreateComponent from './components/linkLog/linkLogCreateForm';
-import LinkLogDetailComponent from './components/linkLog/linkLogDetailForm';
-import LinkLogEditComponent from './components/linkLog/linkLogEditForm';
-import LinkLogSearchComponent from './components/linkLog/linkLogSearchForm';					
-import LinkStatusCreateComponent from './components/linkStatus/linkStatusCreateForm';
-import LinkStatusDetailComponent from './components/linkStatus/linkStatusDetailForm';
-import LinkStatusEditComponent from './components/linkStatus/linkStatusEditForm';
-import LinkStatusSearchComponent from './components/linkStatus/linkStatusSearchForm';					
-import MachineCreateComponent from './components/machine/machineCreateForm';
-import MachineDetailComponent from './components/machine/machineDetailForm';
-import MachineEditComponent from './components/machine/machineEditForm';
-import MachineSearchComponent from './components/machine/machineSearchForm';					
-import OrganizationCreateComponent from './components/organization/organizationCreateForm';
-import OrganizationDetailComponent from './components/organization/organizationDetailForm';
-import OrganizationEditComponent from './components/organization/organizationEditForm';
-import OrganizationSearchComponent from './components/organization/organizationSearchForm';					
-import TeamCreateComponent from './components/team/teamCreateForm';
-import TeamDetailComponent from './components/team/teamDetailForm';
-import TeamEditComponent from './components/team/teamEditForm';
-import TeamSearchComponent from './components/team/teamSearchForm';					
+import { wrapperHeader } from './components/header';
+import { ClientRoutes, Constants } from './constants';
+import { WrappedChainCreateComponent } from './components/chain/chainCreateForm';
+import { WrappedChainDetailComponent } from './components/chain/chainDetailForm';
+import { WrappedChainEditComponent } from './components/chain/chainEditForm';
+import { WrappedChainSearchComponent } from './components/chain/chainSearchForm';
+import { WrappedChainStatusCreateComponent } from './components/chainStatus/chainStatusCreateForm';
+import { WrappedChainStatusDetailComponent } from './components/chainStatus/chainStatusDetailForm';
+import { WrappedChainStatusEditComponent } from './components/chainStatus/chainStatusEditForm';
+import { WrappedChainStatusSearchComponent } from './components/chainStatus/chainStatusSearchForm';
+import { WrappedClaspCreateComponent } from './components/clasp/claspCreateForm';
+import { WrappedClaspDetailComponent } from './components/clasp/claspDetailForm';
+import { WrappedClaspEditComponent } from './components/clasp/claspEditForm';
+import { WrappedClaspSearchComponent } from './components/clasp/claspSearchForm';
+import { WrappedLinkCreateComponent } from './components/link/linkCreateForm';
+import { WrappedLinkDetailComponent } from './components/link/linkDetailForm';
+import { WrappedLinkEditComponent } from './components/link/linkEditForm';
+import { WrappedLinkSearchComponent } from './components/link/linkSearchForm';
+import { WrappedLinkLogCreateComponent } from './components/linkLog/linkLogCreateForm';
+import { WrappedLinkLogDetailComponent } from './components/linkLog/linkLogDetailForm';
+import { WrappedLinkLogEditComponent } from './components/linkLog/linkLogEditForm';
+import { WrappedLinkLogSearchComponent } from './components/linkLog/linkLogSearchForm';
+import { WrappedLinkStatusCreateComponent } from './components/linkStatus/linkStatusCreateForm';
+import { WrappedLinkStatusDetailComponent } from './components/linkStatus/linkStatusDetailForm';
+import { WrappedLinkStatusEditComponent } from './components/linkStatus/linkStatusEditForm';
+import { WrappedLinkStatusSearchComponent } from './components/linkStatus/linkStatusSearchForm';
+import { WrappedMachineCreateComponent } from './components/machine/machineCreateForm';
+import { WrappedMachineDetailComponent } from './components/machine/machineDetailForm';
+import { WrappedMachineEditComponent } from './components/machine/machineEditForm';
+import { WrappedMachineSearchComponent } from './components/machine/machineSearchForm';
+import { WrappedOrganizationCreateComponent } from './components/organization/organizationCreateForm';
+import { WrappedOrganizationDetailComponent } from './components/organization/organizationDetailForm';
+import { WrappedOrganizationEditComponent } from './components/organization/organizationEditForm';
+import { WrappedOrganizationSearchComponent } from './components/organization/organizationSearchForm';
+import { WrappedTeamCreateComponent } from './components/team/teamCreateForm';
+import { WrappedTeamDetailComponent } from './components/team/teamDetailForm';
+import { WrappedTeamEditComponent } from './components/team/teamEditForm';
+import { WrappedTeamSearchComponent } from './components/team/teamSearchForm';
 
 const config = {
   oidc: {
@@ -46,66 +47,258 @@ const config = {
     issuer: 'https://<okta_application_url>/oauth2/default',
     redirectUri: 'https://<your_public_webserver>/implicit/callback',
     scope: 'openid profile email',
-  }
-}
+  },
+};
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
-  const query = new URLSearchParams(location.search)
+  const query = new URLSearchParams(location.search);
 
   return (
-    <BrowserRouter>   
-	<Security issuer={config.oidc.issuer}
+    <BrowserRouter>
+      <Security
+        issuer={config.oidc.issuer}
         client_id={config.oidc.clientId}
-        redirect_uri={config.oidc.redirectUri}>
-
-      <div className="container-fluid">
-        <Route component={App} />
-	    <SecureRoute path="/protected" component={() => '<div>secure route</div>'} />
+        redirect_uri={config.oidc.redirectUri}
+      >
+        <SecureRoute
+          path="/protected"
+          component={() => '<div>secure route</div>'}
+        />
         <Switch>
-          <Route exact path="/" component={Dashboard} />
-		  					  <Route path="/chains/create" component={ChainCreateComponent} />
-					  <Route path="/chains/edit/:id" component={ChainEditComponent} />
-					  <Route path="/chains/:id" component={ChainDetailComponent} />
-					  <Route path="/chains" component={ChainSearchComponent} />
-										  <Route path="/chainstatuses/create" component={ChainStatusCreateComponent} />
-					  <Route path="/chainstatuses/edit/:id" component={ChainStatusEditComponent} />
-					  <Route path="/chainstatuses/:id" component={ChainStatusDetailComponent} />
-					  <Route path="/chainstatuses" component={ChainStatusSearchComponent} />
-										  <Route path="/clasps/create" component={ClaspCreateComponent} />
-					  <Route path="/clasps/edit/:id" component={ClaspEditComponent} />
-					  <Route path="/clasps/:id" component={ClaspDetailComponent} />
-					  <Route path="/clasps" component={ClaspSearchComponent} />
-										  <Route path="/links/create" component={LinkCreateComponent} />
-					  <Route path="/links/edit/:id" component={LinkEditComponent} />
-					  <Route path="/links/:id" component={LinkDetailComponent} />
-					  <Route path="/links" component={LinkSearchComponent} />
-										  <Route path="/linklogs/create" component={LinkLogCreateComponent} />
-					  <Route path="/linklogs/edit/:id" component={LinkLogEditComponent} />
-					  <Route path="/linklogs/:id" component={LinkLogDetailComponent} />
-					  <Route path="/linklogs" component={LinkLogSearchComponent} />
-										  <Route path="/linkstatuses/create" component={LinkStatusCreateComponent} />
-					  <Route path="/linkstatuses/edit/:id" component={LinkStatusEditComponent} />
-					  <Route path="/linkstatuses/:id" component={LinkStatusDetailComponent} />
-					  <Route path="/linkstatuses" component={LinkStatusSearchComponent} />
-										  <Route path="/machines/create" component={MachineCreateComponent} />
-					  <Route path="/machines/edit/:id" component={MachineEditComponent} />
-					  <Route path="/machines/:id" component={MachineDetailComponent} />
-					  <Route path="/machines" component={MachineSearchComponent} />
-										  <Route path="/organizations/create" component={OrganizationCreateComponent} />
-					  <Route path="/organizations/edit/:id" component={OrganizationEditComponent} />
-					  <Route path="/organizations/:id" component={OrganizationDetailComponent} />
-					  <Route path="/organizations" component={OrganizationSearchComponent} />
-										  <Route path="/teams/create" component={TeamCreateComponent} />
-					  <Route path="/teams/edit/:id" component={TeamEditComponent} />
-					  <Route path="/teams/:id" component={TeamDetailComponent} />
-					  <Route path="/teams" component={TeamSearchComponent} />
-					        </Switch>
-      </div>
-	  </Security>
+          <Route
+            exact
+            path="/"
+            component={wrapperHeader(Dashboard, 'Dashboard')}
+          />
+          <Route
+            path={ClientRoutes.Chains + '/create'}
+            component={wrapperHeader(
+              WrappedChainCreateComponent,
+              'Chain Create'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Chains + '/edit/:id'}
+            component={wrapperHeader(WrappedChainEditComponent, 'Chain Edit')}
+          />
+          <Route
+            path={ClientRoutes.Chains + '/:id'}
+            component={wrapperHeader(
+              WrappedChainDetailComponent,
+              'Chain Detail'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Chains}
+            component={wrapperHeader(
+              WrappedChainSearchComponent,
+              'Chain Search'
+            )}
+          />
+          <Route
+            path={ClientRoutes.ChainStatuses + '/create'}
+            component={wrapperHeader(
+              WrappedChainStatusCreateComponent,
+              'ChainStatus Create'
+            )}
+          />
+          <Route
+            path={ClientRoutes.ChainStatuses + '/edit/:id'}
+            component={wrapperHeader(
+              WrappedChainStatusEditComponent,
+              'ChainStatus Edit'
+            )}
+          />
+          <Route
+            path={ClientRoutes.ChainStatuses + '/:id'}
+            component={wrapperHeader(
+              WrappedChainStatusDetailComponent,
+              'ChainStatus Detail'
+            )}
+          />
+          <Route
+            path={ClientRoutes.ChainStatuses}
+            component={wrapperHeader(
+              WrappedChainStatusSearchComponent,
+              'ChainStatus Search'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Clasps + '/create'}
+            component={wrapperHeader(
+              WrappedClaspCreateComponent,
+              'Clasp Create'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Clasps + '/edit/:id'}
+            component={wrapperHeader(WrappedClaspEditComponent, 'Clasp Edit')}
+          />
+          <Route
+            path={ClientRoutes.Clasps + '/:id'}
+            component={wrapperHeader(
+              WrappedClaspDetailComponent,
+              'Clasp Detail'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Clasps}
+            component={wrapperHeader(
+              WrappedClaspSearchComponent,
+              'Clasp Search'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Links + '/create'}
+            component={wrapperHeader(WrappedLinkCreateComponent, 'Link Create')}
+          />
+          <Route
+            path={ClientRoutes.Links + '/edit/:id'}
+            component={wrapperHeader(WrappedLinkEditComponent, 'Link Edit')}
+          />
+          <Route
+            path={ClientRoutes.Links + '/:id'}
+            component={wrapperHeader(WrappedLinkDetailComponent, 'Link Detail')}
+          />
+          <Route
+            path={ClientRoutes.Links}
+            component={wrapperHeader(WrappedLinkSearchComponent, 'Link Search')}
+          />
+          <Route
+            path={ClientRoutes.LinkLogs + '/create'}
+            component={wrapperHeader(
+              WrappedLinkLogCreateComponent,
+              'LinkLog Create'
+            )}
+          />
+          <Route
+            path={ClientRoutes.LinkLogs + '/edit/:id'}
+            component={wrapperHeader(
+              WrappedLinkLogEditComponent,
+              'LinkLog Edit'
+            )}
+          />
+          <Route
+            path={ClientRoutes.LinkLogs + '/:id'}
+            component={wrapperHeader(
+              WrappedLinkLogDetailComponent,
+              'LinkLog Detail'
+            )}
+          />
+          <Route
+            path={ClientRoutes.LinkLogs}
+            component={wrapperHeader(
+              WrappedLinkLogSearchComponent,
+              'LinkLog Search'
+            )}
+          />
+          <Route
+            path={ClientRoutes.LinkStatuses + '/create'}
+            component={wrapperHeader(
+              WrappedLinkStatusCreateComponent,
+              'LinkStatus Create'
+            )}
+          />
+          <Route
+            path={ClientRoutes.LinkStatuses + '/edit/:id'}
+            component={wrapperHeader(
+              WrappedLinkStatusEditComponent,
+              'LinkStatus Edit'
+            )}
+          />
+          <Route
+            path={ClientRoutes.LinkStatuses + '/:id'}
+            component={wrapperHeader(
+              WrappedLinkStatusDetailComponent,
+              'LinkStatus Detail'
+            )}
+          />
+          <Route
+            path={ClientRoutes.LinkStatuses}
+            component={wrapperHeader(
+              WrappedLinkStatusSearchComponent,
+              'LinkStatus Search'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Machines + '/create'}
+            component={wrapperHeader(
+              WrappedMachineCreateComponent,
+              'Machine Create'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Machines + '/edit/:id'}
+            component={wrapperHeader(
+              WrappedMachineEditComponent,
+              'Machine Edit'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Machines + '/:id'}
+            component={wrapperHeader(
+              WrappedMachineDetailComponent,
+              'Machine Detail'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Machines}
+            component={wrapperHeader(
+              WrappedMachineSearchComponent,
+              'Machine Search'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Organizations + '/create'}
+            component={wrapperHeader(
+              WrappedOrganizationCreateComponent,
+              'Organization Create'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Organizations + '/edit/:id'}
+            component={wrapperHeader(
+              WrappedOrganizationEditComponent,
+              'Organization Edit'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Organizations + '/:id'}
+            component={wrapperHeader(
+              WrappedOrganizationDetailComponent,
+              'Organization Detail'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Organizations}
+            component={wrapperHeader(
+              WrappedOrganizationSearchComponent,
+              'Organization Search'
+            )}
+          />
+          <Route
+            path={ClientRoutes.Teams + '/create'}
+            component={wrapperHeader(WrappedTeamCreateComponent, 'Team Create')}
+          />
+          <Route
+            path={ClientRoutes.Teams + '/edit/:id'}
+            component={wrapperHeader(WrappedTeamEditComponent, 'Team Edit')}
+          />
+          <Route
+            path={ClientRoutes.Teams + '/:id'}
+            component={wrapperHeader(WrappedTeamDetailComponent, 'Team Detail')}
+          />
+          <Route
+            path={ClientRoutes.Teams}
+            component={wrapperHeader(WrappedTeamSearchComponent, 'Team Search')}
+          />
+        </Switch>
+      </Security>
     </BrowserRouter>
   );
-}
+};
+
 
 /*<Codenesium>
-    <Hash>4e172cab164d740a476d30b0aefd827d</Hash>
+    <Hash>a05143146c53166f540874008ac839ab</Hash>
 </Codenesium>*/

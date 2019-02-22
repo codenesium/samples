@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,16 +121,23 @@ class TicketCreateComponent extends React.Component<
             <label htmlFor="publicId">publicId</label>
             <br />
             {getFieldDecorator('publicId', {
-              rules: [],
-            })(<Input placeholder={'publicId'} id={'publicId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 8, message: 'Exceeds max length of 8' },
+              ],
+            })(<Input placeholder={'publicId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="ticketStatusId">ticketStatusId</label>
             <br />
             {getFieldDecorator('ticketStatusId', {
-              rules: [],
-            })(<Input placeholder={'ticketStatusId'} id={'ticketStatusId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'ticketStatusId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -152,5 +160,5 @@ export const WrappedTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>12249f026de9d01f48758d23c78c7aec</Hash>
+    <Hash>8d0c2703cf38bd5eee12dd9e1337357e</Hash>
 </Codenesium>*/

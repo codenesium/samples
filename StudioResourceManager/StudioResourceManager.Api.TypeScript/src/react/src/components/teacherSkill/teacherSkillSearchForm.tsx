@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import TeacherSkillMapper from './teacherSkillMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import TeacherSkillViewModel from './teacherSkillViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TeacherSkillSearchComponentProps
@@ -41,11 +39,11 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.TeacherSkillClientResponseModel) {
+    handleEditClick(e:any, row:TeacherSkillViewModel) {
          this.props.history.push(ClientRoutes.TeacherSkills + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.TeacherSkillClientResponseModel) {
+    handleDetailClick(e:any, row:TeacherSkillViewModel) {
          this.props.history.push(ClientRoutes.TeacherSkills + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<TeacherSkillViewModel>(),filteredRecords:new Array<TeacherSkillViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<TeacherSkillViewModel>(), filteredRecords:new Array<TeacherSkillViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -163,7 +161,7 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'TeacherSkill',
+                    Header: 'TeacherSkills',
                     columns: [
 					  {
                       Header: 'Name',
@@ -180,7 +178,7 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.TeacherSkillClientResponseModel
+                              row.original as TeacherSkillViewModel
                             );
                           }}
                         >
@@ -192,7 +190,7 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.TeacherSkillClientResponseModel
+                              row.original as TeacherSkillViewModel
                             );
                           }}
                         >
@@ -204,7 +202,7 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.TeacherSkillClientResponseModel
+                              row.original as TeacherSkillViewModel
                             );
                           }}
                         >
@@ -226,5 +224,5 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
 export const WrappedTeacherSkillSearchComponent = Form.create({ name: 'TeacherSkill Search' })(TeacherSkillSearchComponent);
 
 /*<Codenesium>
-    <Hash>ae642247c77569ad57be6cc86fc91f0f</Hash>
+    <Hash>f97fd85ddabd224c54e62546e3cbaef4</Hash>
 </Codenesium>*/

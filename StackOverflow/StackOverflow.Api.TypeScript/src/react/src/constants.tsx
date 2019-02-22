@@ -1,5 +1,5 @@
 export class Constants {
-  static readonly BaseEndpoint = 'https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feStackOverflow/';
+  static readonly BaseEndpoint = process.env.REACT_APP_API_URL;
   static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
   static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
   static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
@@ -37,5 +37,5 @@ export class ApiRoutes {
 
 
 /*<Codenesium>
-    <Hash>a9b2e91665d893dbd4fefe45d9d34c1e</Hash>
+    <Hash>d49614077a95fe29fedb7ef125967756</Hash>
 </Codenesium>*/

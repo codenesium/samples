@@ -75,7 +75,7 @@ class TeacherSkillDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -128,5 +128,5 @@ export const WrappedTeacherSkillDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c03838986a8430fde75d943e17acbab5</Hash>
+    <Hash>24bf61ff7371c3ee84a7ad703cebd7bc</Hash>
 </Codenesium>*/

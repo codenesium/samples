@@ -16,6 +16,9 @@ export default class TestAllFieldTypeMapper {
       dto.fieldDateTimeOffset,
       dto.fieldDecimal,
       dto.fieldFloat,
+      dto.fieldGeography,
+      dto.fieldGeometry,
+      dto.fieldHierarchyId,
       dto.fieldImage,
       dto.fieldMoney,
       dto.fieldNChar,
@@ -33,6 +36,7 @@ export default class TestAllFieldTypeMapper {
       dto.fieldUniqueIdentifier,
       dto.fieldVarBinary,
       dto.fieldVarchar,
+      dto.fieldVariant,
       dto.fieldXML,
       dto.id
     );
@@ -55,6 +59,9 @@ export default class TestAllFieldTypeMapper {
       model.fieldDateTimeOffset,
       model.fieldDecimal,
       model.fieldFloat,
+      model.fieldGeography,
+      model.fieldGeometry,
+      model.fieldHierarchyId,
       model.fieldImage,
       model.fieldMoney,
       model.fieldNChar,
@@ -72,6 +79,7 @@ export default class TestAllFieldTypeMapper {
       model.fieldUniqueIdentifier,
       model.fieldVarBinary,
       model.fieldVarchar,
+      model.fieldVariant,
       model.fieldXML,
       model.id
     );
@@ -81,5 +89,5 @@ export default class TestAllFieldTypeMapper {
 
 
 /*<Codenesium>
-    <Hash>3c6ea17c566becebdba6873e09e081f3</Hash>
+    <Hash>16e9d26aa9ba3b9d00bf9fff010a88d0</Hash>
 </Codenesium>*/

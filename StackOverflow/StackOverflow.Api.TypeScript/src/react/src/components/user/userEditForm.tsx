@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface UserEditComponentProps {
@@ -151,7 +151,7 @@ class UserEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"AboutMe"} id={"aboutMe"} /> )}
+              ( <Input placeholder={"AboutMe"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -161,7 +161,7 @@ class UserEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"AccountId"} id={"accountId"} /> )}
+              ( <Input placeholder={"AccountId"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -171,107 +171,125 @@ class UserEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"Age"} id={"age"} /> )}
+              ( <Input placeholder={"Age"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='creationDate'>CreationDate</label>
               <br />             
               {getFieldDecorator('creationDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"CreationDate"} id={"creationDate"} /> )}
+              ( <Input placeholder={"CreationDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='displayName'>DisplayName</label>
               <br />             
               {getFieldDecorator('displayName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 40, message: 'Exceeds max length of 40' },
+],
               
               })
-              ( <Input placeholder={"DisplayName"} id={"displayName"} /> )}
+              ( <Input placeholder={"DisplayName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='downVote'>DownVotes</label>
               <br />             
               {getFieldDecorator('downVote', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"DownVotes"} id={"downVote"} /> )}
+              ( <Input placeholder={"DownVotes"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='emailHash'>EmailHash</label>
               <br />             
               {getFieldDecorator('emailHash', {
-              rules:[],
+              rules:[{ max: 40, message: 'Exceeds max length of 40' },
+],
               
               })
-              ( <Input placeholder={"EmailHash"} id={"emailHash"} /> )}
+              ( <Input placeholder={"EmailHash"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='lastAccessDate'>LastAccessDate</label>
               <br />             
               {getFieldDecorator('lastAccessDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"LastAccessDate"} id={"lastAccessDate"} /> )}
+              ( <Input placeholder={"LastAccessDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='location'>Location</label>
               <br />             
               {getFieldDecorator('location', {
-              rules:[],
+              rules:[{ max: 100, message: 'Exceeds max length of 100' },
+],
               
               })
-              ( <Input placeholder={"Location"} id={"location"} /> )}
+              ( <Input placeholder={"Location"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='reputation'>Reputation</label>
               <br />             
               {getFieldDecorator('reputation', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"Reputation"} id={"reputation"} /> )}
+              ( <Input placeholder={"Reputation"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='upVote'>UpVotes</label>
               <br />             
               {getFieldDecorator('upVote', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"UpVotes"} id={"upVote"} /> )}
+              ( <Input placeholder={"UpVotes"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='view'>Views</label>
               <br />             
               {getFieldDecorator('view', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"Views"} id={"view"} /> )}
+              ( <Input placeholder={"Views"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='websiteUrl'>WebsiteUrl</label>
               <br />             
               {getFieldDecorator('websiteUrl', {
-              rules:[],
+              rules:[{ max: 200, message: 'Exceeds max length of 200' },
+],
               
               })
-              ( <Input placeholder={"WebsiteUrl"} id={"websiteUrl"} /> )}
+              ( <Input placeholder={"WebsiteUrl"} /> )}
               </Form.Item>
 
 			
@@ -291,5 +309,5 @@ class UserEditComponent extends React.Component<
 export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(UserEditComponent);
 
 /*<Codenesium>
-    <Hash>74e8659738dc420a8a65c56771100202</Hash>
+    <Hash>970886091ac951d4533e2573533c69c9</Hash>
 </Codenesium>*/

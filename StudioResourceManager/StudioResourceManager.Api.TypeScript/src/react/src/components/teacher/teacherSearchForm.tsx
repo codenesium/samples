@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import TeacherMapper from './teacherMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import TeacherViewModel from './teacherViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TeacherSearchComponentProps
@@ -41,11 +39,11 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.TeacherClientResponseModel) {
+    handleEditClick(e:any, row:TeacherViewModel) {
          this.props.history.push(ClientRoutes.Teachers + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.TeacherClientResponseModel) {
+    handleDetailClick(e:any, row:TeacherViewModel) {
          this.props.history.push(ClientRoutes.Teachers + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<TeacherViewModel>(),filteredRecords:new Array<TeacherViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<TeacherViewModel>(), filteredRecords:new Array<TeacherViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -163,7 +161,7 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Teacher',
+                    Header: 'Teachers',
                     columns: [
 					  {
                       Header: 'Birthday',
@@ -214,7 +212,7 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.TeacherClientResponseModel
+                              row.original as TeacherViewModel
                             );
                           }}
                         >
@@ -226,7 +224,7 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.TeacherClientResponseModel
+                              row.original as TeacherViewModel
                             );
                           }}
                         >
@@ -238,7 +236,7 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.TeacherClientResponseModel
+                              row.original as TeacherViewModel
                             );
                           }}
                         >
@@ -260,5 +258,5 @@ export default class TeacherSearchComponent extends React.Component<TeacherSearc
 export const WrappedTeacherSearchComponent = Form.create({ name: 'Teacher Search' })(TeacherSearchComponent);
 
 /*<Codenesium>
-    <Hash>1758fe112e9aec3b124a291080053e6c</Hash>
+    <Hash>b97d5cd527cd95878f2848428ab1d5e5</Hash>
 </Codenesium>*/

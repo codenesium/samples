@@ -25,6 +25,9 @@ namespace TestsNS.Api.Client
 			DateTimeOffset fieldDateTimeOffset,
 			decimal fieldDecimal,
 			double fieldFloat,
+			double fieldGeography,
+			double fieldGeometry,
+			Guid fieldHierarchyId,
 			byte[] fieldImage,
 			decimal fieldMoney,
 			string fieldNChar,
@@ -42,6 +45,7 @@ namespace TestsNS.Api.Client
 			Guid fieldUniqueIdentifier,
 			byte[] fieldVarBinary,
 			string fieldVarchar,
+			string fieldVariant,
 			string fieldXML)
 		{
 			this.FieldBigInt = fieldBigInt;
@@ -54,6 +58,9 @@ namespace TestsNS.Api.Client
 			this.FieldDateTimeOffset = fieldDateTimeOffset;
 			this.FieldDecimal = fieldDecimal;
 			this.FieldFloat = fieldFloat;
+			this.FieldGeography = fieldGeography;
+			this.FieldGeometry = fieldGeometry;
+			this.FieldHierarchyId = fieldHierarchyId;
 			this.FieldImage = fieldImage;
 			this.FieldMoney = fieldMoney;
 			this.FieldNChar = fieldNChar;
@@ -71,6 +78,7 @@ namespace TestsNS.Api.Client
 			this.FieldUniqueIdentifier = fieldUniqueIdentifier;
 			this.FieldVarBinary = fieldVarBinary;
 			this.FieldVarchar = fieldVarchar;
+			this.FieldVariant = fieldVariant;
 			this.FieldXML = fieldXML;
 		}
 
@@ -103,6 +111,15 @@ namespace TestsNS.Api.Client
 
 		[JsonProperty]
 		public double FieldFloat { get; private set; } = default(double);
+
+		[JsonProperty]
+		public double FieldGeography { get; private set; } = default(double);
+
+		[JsonProperty]
+		public double FieldGeometry { get; private set; } = default(double);
+
+		[JsonProperty]
+		public Guid FieldHierarchyId { get; private set; } = default(Guid);
 
 		[JsonProperty]
 		public byte[] FieldImage { get; private set; } = default(byte[]);
@@ -156,10 +173,13 @@ namespace TestsNS.Api.Client
 		public string FieldVarchar { get; private set; } = default(string);
 
 		[JsonProperty]
+		public string FieldVariant { get; private set; } = default(string);
+
+		[JsonProperty]
 		public string FieldXML { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4076960f0b4c46e7063e68617a7385c5</Hash>
+    <Hash>c96e9321015913a2e8926d6cb5099a4e</Hash>
 </Codenesium>*/

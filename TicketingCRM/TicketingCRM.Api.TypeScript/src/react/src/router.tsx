@@ -76,59 +76,59 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         redirect_uri={config.oidc.redirectUri}>
 	    <SecureRoute path="/protected" component={() => '<div>secure route</div>'} />
         <Switch>
-          <Route exact path="/" component={wrapperHeader(Dashboard)} />
-		  <Route path={ClientRoutes.Admins + "/create"} component={wrapperHeader(WrappedAdminCreateComponent)} />
-                      <Route path={ClientRoutes.Admins + "/edit/:id"} component={wrapperHeader(WrappedAdminEditComponent)} />
-                      <Route path={ClientRoutes.Admins + "/:id"} component={wrapperHeader(WrappedAdminDetailComponent)} />
-                      <Route path={ClientRoutes.Admins} component={wrapperHeader(WrappedAdminSearchComponent)} />
-					<Route path={ClientRoutes.Cities + "/create"} component={wrapperHeader(WrappedCityCreateComponent)} />
-                      <Route path={ClientRoutes.Cities + "/edit/:id"} component={wrapperHeader(WrappedCityEditComponent)} />
-                      <Route path={ClientRoutes.Cities + "/:id"} component={wrapperHeader(WrappedCityDetailComponent)} />
-                      <Route path={ClientRoutes.Cities} component={wrapperHeader(WrappedCitySearchComponent)} />
-					<Route path={ClientRoutes.Countries + "/create"} component={wrapperHeader(WrappedCountryCreateComponent)} />
-                      <Route path={ClientRoutes.Countries + "/edit/:id"} component={wrapperHeader(WrappedCountryEditComponent)} />
-                      <Route path={ClientRoutes.Countries + "/:id"} component={wrapperHeader(WrappedCountryDetailComponent)} />
-                      <Route path={ClientRoutes.Countries} component={wrapperHeader(WrappedCountrySearchComponent)} />
-					<Route path={ClientRoutes.Customers + "/create"} component={wrapperHeader(WrappedCustomerCreateComponent)} />
-                      <Route path={ClientRoutes.Customers + "/edit/:id"} component={wrapperHeader(WrappedCustomerEditComponent)} />
-                      <Route path={ClientRoutes.Customers + "/:id"} component={wrapperHeader(WrappedCustomerDetailComponent)} />
-                      <Route path={ClientRoutes.Customers} component={wrapperHeader(WrappedCustomerSearchComponent)} />
-					<Route path={ClientRoutes.Events + "/create"} component={wrapperHeader(WrappedEventCreateComponent)} />
-                      <Route path={ClientRoutes.Events + "/edit/:id"} component={wrapperHeader(WrappedEventEditComponent)} />
-                      <Route path={ClientRoutes.Events + "/:id"} component={wrapperHeader(WrappedEventDetailComponent)} />
-                      <Route path={ClientRoutes.Events} component={wrapperHeader(WrappedEventSearchComponent)} />
-					<Route path={ClientRoutes.Provinces + "/create"} component={wrapperHeader(WrappedProvinceCreateComponent)} />
-                      <Route path={ClientRoutes.Provinces + "/edit/:id"} component={wrapperHeader(WrappedProvinceEditComponent)} />
-                      <Route path={ClientRoutes.Provinces + "/:id"} component={wrapperHeader(WrappedProvinceDetailComponent)} />
-                      <Route path={ClientRoutes.Provinces} component={wrapperHeader(WrappedProvinceSearchComponent)} />
-					<Route path={ClientRoutes.Sales + "/create"} component={wrapperHeader(WrappedSaleCreateComponent)} />
-                      <Route path={ClientRoutes.Sales + "/edit/:id"} component={wrapperHeader(WrappedSaleEditComponent)} />
-                      <Route path={ClientRoutes.Sales + "/:id"} component={wrapperHeader(WrappedSaleDetailComponent)} />
-                      <Route path={ClientRoutes.Sales} component={wrapperHeader(WrappedSaleSearchComponent)} />
-					<Route path={ClientRoutes.SaleTickets + "/create"} component={wrapperHeader(WrappedSaleTicketCreateComponent)} />
-                      <Route path={ClientRoutes.SaleTickets + "/edit/:id"} component={wrapperHeader(WrappedSaleTicketEditComponent)} />
-                      <Route path={ClientRoutes.SaleTickets + "/:id"} component={wrapperHeader(WrappedSaleTicketDetailComponent)} />
-                      <Route path={ClientRoutes.SaleTickets} component={wrapperHeader(WrappedSaleTicketSearchComponent)} />
-					<Route path={ClientRoutes.Tickets + "/create"} component={wrapperHeader(WrappedTicketCreateComponent)} />
-                      <Route path={ClientRoutes.Tickets + "/edit/:id"} component={wrapperHeader(WrappedTicketEditComponent)} />
-                      <Route path={ClientRoutes.Tickets + "/:id"} component={wrapperHeader(WrappedTicketDetailComponent)} />
-                      <Route path={ClientRoutes.Tickets} component={wrapperHeader(WrappedTicketSearchComponent)} />
-					<Route path={ClientRoutes.TicketStatus + "/create"} component={wrapperHeader(WrappedTicketStatusCreateComponent)} />
-                      <Route path={ClientRoutes.TicketStatus + "/edit/:id"} component={wrapperHeader(WrappedTicketStatusEditComponent)} />
-                      <Route path={ClientRoutes.TicketStatus + "/:id"} component={wrapperHeader(WrappedTicketStatusDetailComponent)} />
-                      <Route path={ClientRoutes.TicketStatus} component={wrapperHeader(WrappedTicketStatusSearchComponent)} />
-					<Route path={ClientRoutes.Transactions + "/create"} component={wrapperHeader(WrappedTransactionCreateComponent)} />
-                      <Route path={ClientRoutes.Transactions + "/edit/:id"} component={wrapperHeader(WrappedTransactionEditComponent)} />
-                      <Route path={ClientRoutes.Transactions + "/:id"} component={wrapperHeader(WrappedTransactionDetailComponent)} />
-                      <Route path={ClientRoutes.Transactions} component={wrapperHeader(WrappedTransactionSearchComponent)} />
-					<Route path={ClientRoutes.TransactionStatus + "/create"} component={wrapperHeader(WrappedTransactionStatusCreateComponent)} />
-                      <Route path={ClientRoutes.TransactionStatus + "/edit/:id"} component={wrapperHeader(WrappedTransactionStatusEditComponent)} />
-                      <Route path={ClientRoutes.TransactionStatus + "/:id"} component={wrapperHeader(WrappedTransactionStatusDetailComponent)} />
-                      <Route path={ClientRoutes.TransactionStatus} component={wrapperHeader(WrappedTransactionStatusSearchComponent)} />
-					<Route path={ClientRoutes.Venues + "/create"} component={wrapperHeader(WrappedVenueCreateComponent)} />
-                      <Route path={ClientRoutes.Venues + "/edit/:id"} component={wrapperHeader(WrappedVenueEditComponent)} />
-                      <Route path={ClientRoutes.Venues + "/:id"} component={wrapperHeader(WrappedVenueDetailComponent)} />
-                      <Route path={ClientRoutes.Venues} component={wrapperHeader(WrappedVenueSearchComponent)} />
+          <Route exact path="/" component={wrapperHeader(Dashboard, "Dashboard")} />
+		  <Route path={ClientRoutes.Admins + "/create"} component={wrapperHeader(WrappedAdminCreateComponent, "Admin Create")} />
+                      <Route path={ClientRoutes.Admins + "/edit/:id"} component={wrapperHeader(WrappedAdminEditComponent, "Admin Edit")} />
+                      <Route path={ClientRoutes.Admins + "/:id"} component={wrapperHeader(WrappedAdminDetailComponent , "Admin Detail")} />
+                      <Route path={ClientRoutes.Admins} component={wrapperHeader(WrappedAdminSearchComponent, "Admin Search")} />
+					<Route path={ClientRoutes.Cities + "/create"} component={wrapperHeader(WrappedCityCreateComponent, "City Create")} />
+                      <Route path={ClientRoutes.Cities + "/edit/:id"} component={wrapperHeader(WrappedCityEditComponent, "City Edit")} />
+                      <Route path={ClientRoutes.Cities + "/:id"} component={wrapperHeader(WrappedCityDetailComponent , "City Detail")} />
+                      <Route path={ClientRoutes.Cities} component={wrapperHeader(WrappedCitySearchComponent, "City Search")} />
+					<Route path={ClientRoutes.Countries + "/create"} component={wrapperHeader(WrappedCountryCreateComponent, "Country Create")} />
+                      <Route path={ClientRoutes.Countries + "/edit/:id"} component={wrapperHeader(WrappedCountryEditComponent, "Country Edit")} />
+                      <Route path={ClientRoutes.Countries + "/:id"} component={wrapperHeader(WrappedCountryDetailComponent , "Country Detail")} />
+                      <Route path={ClientRoutes.Countries} component={wrapperHeader(WrappedCountrySearchComponent, "Country Search")} />
+					<Route path={ClientRoutes.Customers + "/create"} component={wrapperHeader(WrappedCustomerCreateComponent, "Customer Create")} />
+                      <Route path={ClientRoutes.Customers + "/edit/:id"} component={wrapperHeader(WrappedCustomerEditComponent, "Customer Edit")} />
+                      <Route path={ClientRoutes.Customers + "/:id"} component={wrapperHeader(WrappedCustomerDetailComponent , "Customer Detail")} />
+                      <Route path={ClientRoutes.Customers} component={wrapperHeader(WrappedCustomerSearchComponent, "Customer Search")} />
+					<Route path={ClientRoutes.Events + "/create"} component={wrapperHeader(WrappedEventCreateComponent, "Event Create")} />
+                      <Route path={ClientRoutes.Events + "/edit/:id"} component={wrapperHeader(WrappedEventEditComponent, "Event Edit")} />
+                      <Route path={ClientRoutes.Events + "/:id"} component={wrapperHeader(WrappedEventDetailComponent , "Event Detail")} />
+                      <Route path={ClientRoutes.Events} component={wrapperHeader(WrappedEventSearchComponent, "Event Search")} />
+					<Route path={ClientRoutes.Provinces + "/create"} component={wrapperHeader(WrappedProvinceCreateComponent, "Province Create")} />
+                      <Route path={ClientRoutes.Provinces + "/edit/:id"} component={wrapperHeader(WrappedProvinceEditComponent, "Province Edit")} />
+                      <Route path={ClientRoutes.Provinces + "/:id"} component={wrapperHeader(WrappedProvinceDetailComponent , "Province Detail")} />
+                      <Route path={ClientRoutes.Provinces} component={wrapperHeader(WrappedProvinceSearchComponent, "Province Search")} />
+					<Route path={ClientRoutes.Sales + "/create"} component={wrapperHeader(WrappedSaleCreateComponent, "Sale Create")} />
+                      <Route path={ClientRoutes.Sales + "/edit/:id"} component={wrapperHeader(WrappedSaleEditComponent, "Sale Edit")} />
+                      <Route path={ClientRoutes.Sales + "/:id"} component={wrapperHeader(WrappedSaleDetailComponent , "Sale Detail")} />
+                      <Route path={ClientRoutes.Sales} component={wrapperHeader(WrappedSaleSearchComponent, "Sale Search")} />
+					<Route path={ClientRoutes.SaleTickets + "/create"} component={wrapperHeader(WrappedSaleTicketCreateComponent, "SaleTicket Create")} />
+                      <Route path={ClientRoutes.SaleTickets + "/edit/:id"} component={wrapperHeader(WrappedSaleTicketEditComponent, "SaleTicket Edit")} />
+                      <Route path={ClientRoutes.SaleTickets + "/:id"} component={wrapperHeader(WrappedSaleTicketDetailComponent , "SaleTicket Detail")} />
+                      <Route path={ClientRoutes.SaleTickets} component={wrapperHeader(WrappedSaleTicketSearchComponent, "SaleTicket Search")} />
+					<Route path={ClientRoutes.Tickets + "/create"} component={wrapperHeader(WrappedTicketCreateComponent, "Ticket Create")} />
+                      <Route path={ClientRoutes.Tickets + "/edit/:id"} component={wrapperHeader(WrappedTicketEditComponent, "Ticket Edit")} />
+                      <Route path={ClientRoutes.Tickets + "/:id"} component={wrapperHeader(WrappedTicketDetailComponent , "Ticket Detail")} />
+                      <Route path={ClientRoutes.Tickets} component={wrapperHeader(WrappedTicketSearchComponent, "Ticket Search")} />
+					<Route path={ClientRoutes.TicketStatus + "/create"} component={wrapperHeader(WrappedTicketStatusCreateComponent, "TicketStatus Create")} />
+                      <Route path={ClientRoutes.TicketStatus + "/edit/:id"} component={wrapperHeader(WrappedTicketStatusEditComponent, "TicketStatus Edit")} />
+                      <Route path={ClientRoutes.TicketStatus + "/:id"} component={wrapperHeader(WrappedTicketStatusDetailComponent , "TicketStatus Detail")} />
+                      <Route path={ClientRoutes.TicketStatus} component={wrapperHeader(WrappedTicketStatusSearchComponent, "TicketStatus Search")} />
+					<Route path={ClientRoutes.Transactions + "/create"} component={wrapperHeader(WrappedTransactionCreateComponent, "Transaction Create")} />
+                      <Route path={ClientRoutes.Transactions + "/edit/:id"} component={wrapperHeader(WrappedTransactionEditComponent, "Transaction Edit")} />
+                      <Route path={ClientRoutes.Transactions + "/:id"} component={wrapperHeader(WrappedTransactionDetailComponent , "Transaction Detail")} />
+                      <Route path={ClientRoutes.Transactions} component={wrapperHeader(WrappedTransactionSearchComponent, "Transaction Search")} />
+					<Route path={ClientRoutes.TransactionStatus + "/create"} component={wrapperHeader(WrappedTransactionStatusCreateComponent, "TransactionStatus Create")} />
+                      <Route path={ClientRoutes.TransactionStatus + "/edit/:id"} component={wrapperHeader(WrappedTransactionStatusEditComponent, "TransactionStatus Edit")} />
+                      <Route path={ClientRoutes.TransactionStatus + "/:id"} component={wrapperHeader(WrappedTransactionStatusDetailComponent , "TransactionStatus Detail")} />
+                      <Route path={ClientRoutes.TransactionStatus} component={wrapperHeader(WrappedTransactionStatusSearchComponent, "TransactionStatus Search")} />
+					<Route path={ClientRoutes.Venues + "/create"} component={wrapperHeader(WrappedVenueCreateComponent, "Venue Create")} />
+                      <Route path={ClientRoutes.Venues + "/edit/:id"} component={wrapperHeader(WrappedVenueEditComponent, "Venue Edit")} />
+                      <Route path={ClientRoutes.Venues + "/:id"} component={wrapperHeader(WrappedVenueDetailComponent , "Venue Detail")} />
+                      <Route path={ClientRoutes.Venues} component={wrapperHeader(WrappedVenueSearchComponent, "Venue Search")} />
 					        </Switch>
 	  </Security>
     </BrowserRouter>
@@ -136,5 +136,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>1724c5da9dc642a41f7fc05dc2455697</Hash>
+    <Hash>7a699bdf5df40dde91ffff43931a380c</Hash>
 </Codenesium>*/

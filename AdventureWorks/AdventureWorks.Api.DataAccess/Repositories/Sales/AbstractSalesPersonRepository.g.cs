@@ -107,6 +107,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>()
+			       .Include(x => x.SalesPersonIDNavigation)
 			       .Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
@@ -114,6 +115,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<Store>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Store>()
+			       .Include(x => x.SalesPersonIDNavigation)
 			       .Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Store>();
 		}
 
@@ -151,5 +153,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9265c402337fa0b4119251347f93f8b9</Hash>
+    <Hash>709a2f4e1287fa96ff403e89199b8d7c</Hash>
 </Codenesium>*/

@@ -39,11 +39,11 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.EventClientResponseModel) {
+    handleEditClick(e:any, row:EventViewModel) {
          this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.EventClientResponseModel) {
+    handleDetailClick(e:any, row:EventViewModel) {
          this.props.history.push(ClientRoutes.Events + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<EventViewModel>(),filteredRecords:new Array<EventViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<EventViewModel>(), filteredRecords:new Array<EventViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Event',
+                    Header: 'Events',
                     columns: [
 					  {
                       Header: 'Address1',
@@ -236,7 +236,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.EventClientResponseModel
+                              row.original as EventViewModel
                             );
                           }}
                         >
@@ -248,7 +248,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.EventClientResponseModel
+                              row.original as EventViewModel
                             );
                           }}
                         >
@@ -260,7 +260,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.EventClientResponseModel
+                              row.original as EventViewModel
                             );
                           }}
                         >
@@ -282,5 +282,5 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
 export const WrappedEventSearchComponent = Form.create({ name: 'Event Search' })(EventSearchComponent);
 
 /*<Codenesium>
-    <Hash>8c9cc9ca8239bcf910c2523de6c1521a</Hash>
+    <Hash>b5626a6e6ceee81dbb9e8a54e67fadf8</Hash>
 </Codenesium>*/

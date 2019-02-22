@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RateMapper from './rateMapper';
 import RateViewModel from './rateViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface RateDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +75,7 @@ class RateDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +90,7 @@ class RateDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,18 +105,22 @@ class RateDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>amountPerMinute</div>
-              <div>{this.state.model!.amountPerMinute}</div>
+              <h3>Amount Per Minute</h3>
+              <p>{String(this.state.model!.amountPerMinute)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>teacherId</h3>
-              <div>{this.state.model!.teacherIdNavigation!.toDisplay()}</div>
+              <p>
+                {String(this.state.model!.teacherIdNavigation!.toDisplay())}
+              </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>teacherSkillId</h3>
-              <div>
-                {this.state.model!.teacherSkillIdNavigation!.toDisplay()}
-              </div>
+              <p>
+                {String(
+                  this.state.model!.teacherSkillIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
           </div>
           {message}
@@ -136,5 +138,5 @@ export const WrappedRateDetailComponent = Form.create({ name: 'Rate Detail' })(
 
 
 /*<Codenesium>
-    <Hash>1bd65f1cbbbb9e54853f0a60ab7eaaf6</Hash>
+    <Hash>e6055952b2fe6d0ac43300211d754687</Hash>
 </Codenesium>*/

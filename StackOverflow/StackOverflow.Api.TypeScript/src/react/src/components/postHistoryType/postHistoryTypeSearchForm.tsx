@@ -39,11 +39,11 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.PostHistoryTypeClientResponseModel) {
+    handleEditClick(e:any, row:PostHistoryTypeViewModel) {
          this.props.history.push(ClientRoutes.PostHistoryTypes + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.PostHistoryTypeClientResponseModel) {
+    handleDetailClick(e:any, row:PostHistoryTypeViewModel) {
          this.props.history.push(ClientRoutes.PostHistoryTypes + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<PostHistoryTypeViewModel>(),filteredRecords:new Array<PostHistoryTypeViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<PostHistoryTypeViewModel>(), filteredRecords:new Array<PostHistoryTypeViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'PostHistoryType',
+                    Header: 'PostHistoryTypes',
                     columns: [
 					  {
                       Header: 'Type',
@@ -178,7 +178,7 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.PostHistoryTypeClientResponseModel
+                              row.original as PostHistoryTypeViewModel
                             );
                           }}
                         >
@@ -190,7 +190,7 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.PostHistoryTypeClientResponseModel
+                              row.original as PostHistoryTypeViewModel
                             );
                           }}
                         >
@@ -202,7 +202,7 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.PostHistoryTypeClientResponseModel
+                              row.original as PostHistoryTypeViewModel
                             );
                           }}
                         >
@@ -224,5 +224,5 @@ export default class PostHistoryTypeSearchComponent extends React.Component<Post
 export const WrappedPostHistoryTypeSearchComponent = Form.create({ name: 'PostHistoryType Search' })(PostHistoryTypeSearchComponent);
 
 /*<Codenesium>
-    <Hash>4c9bf6f56b2afbcf18658a7381fbaf88</Hash>
+    <Hash>2538d920858a77ca7459b7f1853fe330</Hash>
 </Codenesium>*/

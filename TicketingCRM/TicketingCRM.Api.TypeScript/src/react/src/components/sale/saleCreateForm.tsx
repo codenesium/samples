@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,38 +121,45 @@ class SaleCreateComponent extends React.Component<
             <label htmlFor="ipAddress">ipAddress</label>
             <br />
             {getFieldDecorator('ipAddress', {
-              rules: [],
-            })(<Input placeholder={'ipAddress'} id={'ipAddress'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'ipAddress'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="note">notes</label>
             <br />
             {getFieldDecorator('note', {
-              rules: [],
-            })(<Input placeholder={'notes'} id={'note'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'notes'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="saleDate">saleDate</label>
             <br />
             {getFieldDecorator('saleDate', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'saleDate'}
-                id={'saleDate'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'saleDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="transactionId">transactionId</label>
             <br />
             {getFieldDecorator('transactionId', {
-              rules: [],
-            })(<Input placeholder={'transactionId'} id={'transactionId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'transactionId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -174,5 +182,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>19c518de9a665790de184f8bf89b86af</Hash>
+    <Hash>caa3799fe49bcee1d43032463d4f9172</Hash>
 </Codenesium>*/

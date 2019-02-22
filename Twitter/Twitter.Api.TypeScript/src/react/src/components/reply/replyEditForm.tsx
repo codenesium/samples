@@ -1,256 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import ReplyViewModel from './replyViewModel';
+import * as Api from '../../api/models';
 import ReplyMapper from './replyMapper';
-
-interface Props {
-  model?: ReplyViewModel;
-}
-
-const ReplyEditDisplay = (props: FormikProps<ReplyViewModel>) => {
-  let status = props.status as UpdateResponse<Api.ReplyClientRequestModel>;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof ReplyViewModel] &&
-      props.errors[name as keyof ReplyViewModel]
-    ) {
-      response += props.errors[name as keyof ReplyViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('content')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Content
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="content"
-            className={
-              errorExistForField('content')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('content') && (
-            <small className="text-danger">{errorsForField('content')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('date')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Date
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="date"
-            className={
-              errorExistForField('date')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('date') && (
-            <small className="text-danger">{errorsForField('date')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('replierUserId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Replier_user_id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="replierUserId"
-            className={
-              errorExistForField('replierUserId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('replierUserId') && (
-            <small className="text-danger">
-              {errorsForField('replierUserId')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('time')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Time
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="textbox"
-            name="time"
-            className={
-              errorExistForField('time')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('time') && (
-            <small className="text-danger">{errorsForField('time')}</small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const ReplyEdit = withFormik<Props, ReplyViewModel>({
-  mapPropsToValues: props => {
-    let response = new ReplyViewModel();
-    response.setProperties(
-      props.model!.content,
-      props.model!.date,
-      props.model!.replierUserId,
-      props.model!.replyId,
-      props.model!.time
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<ReplyViewModel> = {};
-
-    if (values.content == '') {
-      errors.content = 'Required';
-    }
-    if (values.date == undefined) {
-      errors.date = 'Required';
-    }
-    if (values.replierUserId == 0) {
-      errors.replierUserId = 'Required';
-    }
-    if (values.replyId == 0) {
-      errors.replyId = 'Required';
-    }
-    if (values.time == undefined) {
-      errors.time = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new ReplyMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Replies + '/' + values.replyId,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.ReplyClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'ReplyEdit',
-})(ReplyEditDisplay);
-
-interface IParams {
-  replyId: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import ReplyViewModel from './replyViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ReplyEditComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface ReplyEditComponentState {
@@ -259,18 +30,20 @@ interface ReplyEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
-export default class ReplyEditComponent extends React.Component<
+class ReplyEditComponent extends React.Component<
   ReplyEditComponentProps,
   ReplyEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new ReplyViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+    submitted: false,
   };
 
   componentDidMount() {
@@ -281,7 +54,7 @@ export default class ReplyEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.Replies +
           '/' +
-          this.props.match.params.replyId,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -303,6 +76,10 @@ export default class ReplyEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -316,20 +93,145 @@ export default class ReplyEditComponent extends React.Component<
         }
       );
   }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as ReplyViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: ReplyViewModel) => {
+    let mapper = new ReplyMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.Replies +
+          '/' +
+          this.state.model!.replyId,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.ReplyClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <ReplyEdit model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="content">content</label>
+            <br />
+            {getFieldDecorator('content', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 140, message: 'Exceeds max length of 140' },
+              ],
+            })(<Input placeholder={'content'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="date">date</label>
+            <br />
+            {getFieldDecorator('date', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'date'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="replierUserId">replier_user_id</label>
+            <br />
+            {getFieldDecorator('replierUserId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'replier_user_id'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="time">time</label>
+            <br />
+            {getFieldDecorator('time', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'time'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedReplyEditComponent = Form.create({ name: 'Reply Edit' })(
+  ReplyEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>a2c4d6d6ba50b11ae954cdb3f7b1951c</Hash>
+    <Hash>8cb7cfa45f9599387e4e1b4599b91b41</Hash>
 </Codenesium>*/

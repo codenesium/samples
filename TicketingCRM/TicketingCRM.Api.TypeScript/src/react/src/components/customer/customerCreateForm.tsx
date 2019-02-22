@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,32 +121,48 @@ class CustomerCreateComponent extends React.Component<
             <label htmlFor="email">email</label>
             <br />
             {getFieldDecorator('email', {
-              rules: [],
-            })(<Input placeholder={'email'} id={'email'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'email'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="firstName">firstName</label>
             <br />
             {getFieldDecorator('firstName', {
-              rules: [],
-            })(<Input placeholder={'firstName'} id={'firstName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'firstName'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="lastName">lastName</label>
             <br />
             {getFieldDecorator('lastName', {
-              rules: [],
-            })(<Input placeholder={'lastName'} id={'lastName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'lastName'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="phone">phone</label>
             <br />
             {getFieldDecorator('phone', {
-              rules: [],
-            })(<InputNumber placeholder={'phone'} id={'phone'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<InputNumber placeholder={'phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -168,5 +185,5 @@ export const WrappedCustomerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>02c8fcb7576a5804847c44936a31809f</Hash>
+    <Hash>fd8b0e95cd54b79fa31c8980118b5832</Hash>
 </Codenesium>*/

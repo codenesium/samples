@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -121,26 +122,20 @@ class ErrorLogCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('errorLine', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ErrorLine'}
-                id={'errorLine'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ErrorLine'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="errorMessage">ErrorMessage</label>
             <br />
             {getFieldDecorator('errorMessage', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 4000, message: 'Exceeds max length of 4000' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ErrorMessage'}
-                id={'errorMessage'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ErrorMessage'} />
             )}
           </Form.Item>
 
@@ -148,13 +143,12 @@ class ErrorLogCreateComponent extends React.Component<
             <label htmlFor="errorNumber">ErrorNumber</label>
             <br />
             {getFieldDecorator('errorNumber', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ErrorNumber'}
-                id={'errorNumber'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ErrorNumber'} />
             )}
           </Form.Item>
 
@@ -162,12 +156,11 @@ class ErrorLogCreateComponent extends React.Component<
             <label htmlFor="errorProcedure">ErrorProcedure</label>
             <br />
             {getFieldDecorator('errorProcedure', {
-              rules: [],
+              rules: [{ max: 126, message: 'Exceeds max length of 126' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'ErrorProcedure'}
-                id={'errorProcedure'}
               />
             )}
           </Form.Item>
@@ -178,11 +171,7 @@ class ErrorLogCreateComponent extends React.Component<
             {getFieldDecorator('errorSeverity', {
               rules: [],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ErrorSeverity'}
-                id={'errorSeverity'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ErrorSeverity'} />
             )}
           </Form.Item>
 
@@ -191,41 +180,30 @@ class ErrorLogCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('errorState', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ErrorState'}
-                id={'errorState'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ErrorState'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="errorTime">ErrorTime</label>
             <br />
             {getFieldDecorator('errorTime', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ErrorTime'}
-                id={'errorTime'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ErrorTime'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="userName">UserName</label>
             <br />
             {getFieldDecorator('userName', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'UserName'}
-                id={'userName'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'UserName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -248,5 +226,5 @@ export const WrappedErrorLogCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bc7bd253de45326e9b96edb3332a8955</Hash>
+    <Hash>db927dc222cbbafb1e3d8091065250fd</Hash>
 </Codenesium>*/

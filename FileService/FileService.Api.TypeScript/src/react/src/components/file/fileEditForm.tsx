@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FileEditComponentProps {
@@ -151,107 +151,130 @@ class FileEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"BucketId"} id={"bucketId"} /> )}
+              ( <Input placeholder={"BucketId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='dateCreated'>DateCreated</label>
               <br />             
               {getFieldDecorator('dateCreated', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DateCreated"} id={"dateCreated"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DateCreated"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='description'>Description</label>
               <br />             
               {getFieldDecorator('description', {
-              rules:[],
+              rules:[{ max: 255, message: 'Exceeds max length of 255' },
+],
               
               })
-              ( <Input placeholder={"Description"} id={"description"} /> )}
+              ( <Input placeholder={"Description"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='expiration'>Expiration</label>
               <br />             
               {getFieldDecorator('expiration', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"Expiration"} id={"expiration"} /> )}
+              ( <Input placeholder={"Expiration"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='extension'>Extension</label>
               <br />             
               {getFieldDecorator('extension', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 32, message: 'Exceeds max length of 32' },
+],
               
               })
-              ( <Input placeholder={"Extension"} id={"extension"} /> )}
+              ( <Input placeholder={"Extension"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='externalId'>ExternalId</label>
               <br />             
               {getFieldDecorator('externalId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"ExternalId"} id={"externalId"} /> )}
+              ( <Input placeholder={"ExternalId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='fileSizeInByte'>FileSizeInByte</label>
               <br />             
               {getFieldDecorator('fileSizeInByte', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <InputNumber placeholder={"FileSizeInByte"} id={"fileSizeInByte"} /> )}
+              ( <InputNumber placeholder={"FileSizeInByte"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='fileTypeId'>FileTypeId</label>
               <br />             
               {getFieldDecorator('fileTypeId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"FileTypeId"} id={"fileTypeId"} /> )}
+              ( <Input placeholder={"FileTypeId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='location'>Location</label>
               <br />             
               {getFieldDecorator('location', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 255, message: 'Exceeds max length of 255' },
+],
               
               })
-              ( <Input placeholder={"Location"} id={"location"} /> )}
+              ( <Input placeholder={"Location"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='privateKey'>PrivateKey</label>
               <br />             
               {getFieldDecorator('privateKey', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 64, message: 'Exceeds max length of 64' },
+],
               
               })
-              ( <Input placeholder={"PrivateKey"} id={"privateKey"} /> )}
+              ( <Input placeholder={"PrivateKey"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='publicKey'>PublicKey</label>
               <br />             
               {getFieldDecorator('publicKey', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 64, message: 'Exceeds max length of 64' },
+],
               
               })
-              ( <Input placeholder={"PublicKey"} id={"publicKey"} /> )}
+              ( <Input placeholder={"PublicKey"} /> )}
               </Form.Item>
 
 			
@@ -271,5 +294,5 @@ class FileEditComponent extends React.Component<
 export const WrappedFileEditComponent = Form.create({ name: 'File Edit' })(FileEditComponent);
 
 /*<Codenesium>
-    <Hash>8b0c202b76f127dcd02b1da3774ec709</Hash>
+    <Hash>59410d8b74739e15da461444f0939d04</Hash>
 </Codenesium>*/

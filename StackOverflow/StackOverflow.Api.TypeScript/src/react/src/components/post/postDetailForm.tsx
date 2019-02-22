@@ -7,6 +7,9 @@ import PostViewModel from './postViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface PostDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -73,7 +76,7 @@ PostDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -181,6 +184,8 @@ PostDetailComponentState
 						 </div>
 					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -194,5 +199,5 @@ export const WrappedPostDetailComponent = Form.create({ name: 'Post Detail' })(
 );
 
 /*<Codenesium>
-    <Hash>f232e51f9cb2d77d76d78d65c71dff75</Hash>
+    <Hash>04ae1e76545a4766c394dd526d7319b7</Hash>
 </Codenesium>*/

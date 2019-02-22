@@ -1,3 +1,4 @@
+import moment from 'moment';
 import UserViewModel from '../user/userViewModel';
 import TweetViewModel from '../tweet/tweetViewModel';
 
@@ -17,11 +18,11 @@ export default class RetweetViewModel {
     this.id = 0;
     this.retwitterUserId = undefined;
     this.retwitterUserIdEntity = '';
-    this.retwitterUserIdNavigation = undefined;
+    this.retwitterUserIdNavigation = new UserViewModel();
     this.time = undefined;
     this.tweetTweetId = 0;
     this.tweetTweetIdEntity = '';
-    this.tweetTweetIdNavigation = undefined;
+    this.tweetTweetIdNavigation = new TweetViewModel();
   }
 
   setProperties(
@@ -45,5 +46,5 @@ export default class RetweetViewModel {
 
 
 /*<Codenesium>
-    <Hash>75e8f4bd18e26674dfc38d5a68e73329</Hash>
+    <Hash>788ae40838aec633c535c2d8d8adf13f</Hash>
 </Codenesium>*/

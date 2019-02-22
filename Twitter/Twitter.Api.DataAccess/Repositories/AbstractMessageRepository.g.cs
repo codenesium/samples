@@ -98,6 +98,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Messenger>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Messenger>()
+			       .Include(x => x.MessageIdNavigation)
 			       .Where(x => x.MessageId == messageId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
@@ -135,5 +136,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>710c81f8841586be055db61ec4d6e05b</Hash>
+    <Hash>1905c8e8201f0454417559cf3ee135ab</Hash>
 </Codenesium>*/

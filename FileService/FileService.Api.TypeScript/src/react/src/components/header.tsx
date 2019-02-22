@@ -12,9 +12,10 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>) => {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
   class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
-    state = { collapsed: false };
+    state = { collapsed: true };
 
     onCollapse = () => {
       this.setState({ ...this.state, collapsed: !this.state.collapsed });
@@ -31,10 +32,11 @@ export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<a
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                <MenuItem
                 key="Home"
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}>Home</Link>
+                <Link to={'/'}></Link>
               </MenuItem>
 
 			   			   <MenuItem
@@ -67,7 +69,8 @@ export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<a
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -81,5 +84,5 @@ export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<a
 };
 
 /*<Codenesium>
-    <Hash>b019b79cab1fa11471c059e8f9b5cb6c</Hash>
+    <Hash>1a33ae128d760009939e8fa5f9d0a6a7</Hash>
 </Codenesium>*/

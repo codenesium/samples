@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -122,11 +123,7 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('actualEndDate', {
               rules: [],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'actualEndDate'}
-                id={'actualEndDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'actualEndDate'} />
             )}
           </Form.Item>
 
@@ -139,7 +136,6 @@ class EventCreateComponent extends React.Component<
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'actualStartDate'}
-                id={'actualStartDate'}
               />
             )}
           </Form.Item>
@@ -149,26 +145,19 @@ class EventCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('billAmount', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'billAmount'}
-                id={'billAmount'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'billAmount'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="eventStatusId">eventStatusId</label>
             <br />
             {getFieldDecorator('eventStatusId', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'eventStatusId'}
-                id={'eventStatusId'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'eventStatusId'} />
             )}
           </Form.Item>
 
@@ -181,7 +170,6 @@ class EventCreateComponent extends React.Component<
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'scheduledEndDate'}
-                id={'scheduledEndDate'}
               />
             )}
           </Form.Item>
@@ -195,7 +183,6 @@ class EventCreateComponent extends React.Component<
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'scheduledStartDate'}
-                id={'scheduledStartDate'}
               />
             )}
           </Form.Item>
@@ -206,11 +193,7 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('studentNote', {
               rules: [],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'studentNotes'}
-                id={'studentNote'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'studentNotes'} />
             )}
           </Form.Item>
 
@@ -220,11 +203,7 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('teacherNote', {
               rules: [],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'teacherNotes'}
-                id={'teacherNote'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'teacherNotes'} />
             )}
           </Form.Item>
 
@@ -248,5 +227,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5a8d7233ca445af88a17f02cb8b9a149</Hash>
+    <Hash>ad825b1ea8b12516e836393f9b3731a2</Hash>
 </Codenesium>*/

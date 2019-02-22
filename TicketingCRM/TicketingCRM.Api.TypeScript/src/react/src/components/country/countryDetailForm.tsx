@@ -6,6 +6,7 @@ import CountryMapper from './countryMapper';
 import CountryViewModel from './countryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ProvinceTableComponent } from '../shared/provinceTable';
 
 interface CountryDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class CountryDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -110,6 +111,22 @@ class CountryDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Provinces</h3>
+            <ProvinceTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Countries +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Provinces
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -124,5 +141,5 @@ export const WrappedCountryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9ea9596ad0934211a6ca1e656cf8f27b</Hash>
+    <Hash>a523db8eecbafb516eb517fc252577a2</Hash>
 </Codenesium>*/

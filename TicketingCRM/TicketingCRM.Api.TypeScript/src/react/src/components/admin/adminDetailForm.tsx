@@ -6,6 +6,7 @@ import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { VenueTableComponent } from '../shared/venueTable';
 
 interface AdminDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class AdminDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -130,6 +131,22 @@ class AdminDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Venues</h3>
+            <VenueTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Admins +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Venues
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -144,5 +161,5 @@ export const WrappedAdminDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0c20dfef4ecba79156ff8c5295fcb7cb</Hash>
+    <Hash>18eb49c58e6a4f975524aeab89d27ed6</Hash>
 </Codenesium>*/

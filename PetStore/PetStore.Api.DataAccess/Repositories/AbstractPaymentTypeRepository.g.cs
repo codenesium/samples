@@ -91,6 +91,7 @@ namespace PetStoreNS.Api.DataAccess
 		public async virtual Task<List<Sale>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Sale>()
+			       .Include(x => x.PaymentTypeIdNavigation)
 			       .Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
@@ -120,5 +121,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a35280a5a3669c4128380e252806432f</Hash>
+    <Hash>cc9ea0125b41c11fb8aba7d5fccd7cb9</Hash>
 </Codenesium>*/

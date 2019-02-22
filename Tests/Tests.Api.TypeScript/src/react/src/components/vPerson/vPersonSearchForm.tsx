@@ -50,11 +50,11 @@ export default class VPersonSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.VPersonClientResponseModel) {
+  handleEditClick(e: any, row: VPersonViewModel) {
     this.props.history.push(ClientRoutes.VPersons + '/edit/' + row.personId);
   }
 
-  handleDetailClick(e: any, row: Api.VPersonClientResponseModel) {
+  handleDetailClick(e: any, row: VPersonViewModel) {
     this.props.history.push(ClientRoutes.VPersons + '/' + row.personId);
   }
 
@@ -135,7 +135,7 @@ export default class VPersonSearchComponent extends React.Component<
             records: new Array<VPersonViewModel>(),
             filteredRecords: new Array<VPersonViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -205,7 +205,7 @@ export default class VPersonSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'VPerson',
+                Header: 'VPersons',
                 columns: [
                   {
                     Header: 'PersonId',
@@ -230,7 +230,7 @@ export default class VPersonSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.VPersonClientResponseModel
+                              row.original as VPersonViewModel
                             );
                           }}
                         >
@@ -242,7 +242,7 @@ export default class VPersonSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.VPersonClientResponseModel
+                              row.original as VPersonViewModel
                             );
                           }}
                         >
@@ -254,7 +254,7 @@ export default class VPersonSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.VPersonClientResponseModel
+                              row.original as VPersonViewModel
                             );
                           }}
                         >
@@ -281,5 +281,5 @@ export const WrappedVPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9e690c58a0dd6e50a7b5de74ebd88a61</Hash>
+    <Hash>1acd3dc22726ff102696322fdb2cb8e1</Hash>
 </Codenesium>*/

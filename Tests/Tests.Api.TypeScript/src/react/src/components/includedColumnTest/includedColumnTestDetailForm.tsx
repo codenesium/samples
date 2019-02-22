@@ -75,7 +75,7 @@ class IncludedColumnTestDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -132,5 +132,5 @@ export const WrappedIncludedColumnTestDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2dd8b2daf7c8983fca87af9087ed51e4</Hash>
+    <Hash>8d7f2866bd659ee5e0a68a44ad7bf821</Hash>
 </Codenesium>*/

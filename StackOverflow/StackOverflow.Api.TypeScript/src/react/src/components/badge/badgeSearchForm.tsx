@@ -39,11 +39,11 @@ export default class BadgeSearchComponent extends React.Component<BadgeSearchCom
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.BadgeClientResponseModel) {
+    handleEditClick(e:any, row:BadgeViewModel) {
          this.props.history.push(ClientRoutes.Badges + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.BadgeClientResponseModel) {
+    handleDetailClick(e:any, row:BadgeViewModel) {
          this.props.history.push(ClientRoutes.Badges + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class BadgeSearchComponent extends React.Component<BadgeSearchCom
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<BadgeViewModel>(),filteredRecords:new Array<BadgeViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<BadgeViewModel>(), filteredRecords:new Array<BadgeViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class BadgeSearchComponent extends React.Component<BadgeSearchCom
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Badge',
+                    Header: 'Badges',
                     columns: [
 					  {
                       Header: 'Date',
@@ -190,7 +190,7 @@ export default class BadgeSearchComponent extends React.Component<BadgeSearchCom
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.BadgeClientResponseModel
+                              row.original as BadgeViewModel
                             );
                           }}
                         >
@@ -202,7 +202,7 @@ export default class BadgeSearchComponent extends React.Component<BadgeSearchCom
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.BadgeClientResponseModel
+                              row.original as BadgeViewModel
                             );
                           }}
                         >
@@ -214,7 +214,7 @@ export default class BadgeSearchComponent extends React.Component<BadgeSearchCom
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.BadgeClientResponseModel
+                              row.original as BadgeViewModel
                             );
                           }}
                         >
@@ -236,5 +236,5 @@ export default class BadgeSearchComponent extends React.Component<BadgeSearchCom
 export const WrappedBadgeSearchComponent = Form.create({ name: 'Badge Search' })(BadgeSearchComponent);
 
 /*<Codenesium>
-    <Hash>a2e53009bbb4f644534d8f11d98e7560</Hash>
+    <Hash>f9b2a16aa7aeb33e4217fecbb80e3d6d</Hash>
 </Codenesium>*/

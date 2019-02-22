@@ -50,11 +50,11 @@ export default class DeviceActionSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.DeviceActionClientResponseModel) {
+  handleEditClick(e: any, row: DeviceActionViewModel) {
     this.props.history.push(ClientRoutes.DeviceActions + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.DeviceActionClientResponseModel) {
+  handleDetailClick(e: any, row: DeviceActionViewModel) {
     this.props.history.push(ClientRoutes.DeviceActions + '/' + row.id);
   }
 
@@ -137,7 +137,7 @@ export default class DeviceActionSearchComponent extends React.Component<
             records: new Array<DeviceActionViewModel>(),
             filteredRecords: new Array<DeviceActionViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -207,7 +207,7 @@ export default class DeviceActionSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'DeviceAction',
+                Header: 'DeviceActions',
                 columns: [
                   {
                     Header: 'Action',
@@ -255,7 +255,7 @@ export default class DeviceActionSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.DeviceActionClientResponseModel
+                              row.original as DeviceActionViewModel
                             );
                           }}
                         >
@@ -267,7 +267,7 @@ export default class DeviceActionSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.DeviceActionClientResponseModel
+                              row.original as DeviceActionViewModel
                             );
                           }}
                         >
@@ -279,7 +279,7 @@ export default class DeviceActionSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.DeviceActionClientResponseModel
+                              row.original as DeviceActionViewModel
                             );
                           }}
                         >
@@ -306,5 +306,5 @@ export const WrappedDeviceActionSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4b3752b09ce5ca02af5b4dcc710f1178</Hash>
+    <Hash>ad5fbfe7d058380fcaaadbe096ddc8a6</Hash>
 </Codenesium>*/

@@ -1,167 +1,180 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import PipelineStepMapper from './pipelineStepMapper';
 import PipelineStepViewModel from './pipelineStepViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:PipelineStepViewModel
+interface PipelineStepCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const PipelineStepCreateDisplay: React.SFC<FormikProps<PipelineStepViewModel>> = (props: FormikProps<PipelineStepViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.PipelineStepClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof PipelineStepViewModel]  && props.errors[name as keyof PipelineStepViewModel]) {
-            response += props.errors[name as keyof PipelineStepViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("pipelineStepStatusId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>PipelineStepStatusId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="pipelineStepStatusId" className={errorExistForField("pipelineStepStatusId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("pipelineStepStatusId") && <small className="text-danger">{errorsForField("pipelineStepStatusId")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("shipperId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ShipperId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="shipperId" className={errorExistForField("shipperId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("shipperId") && <small className="text-danger">{errorsForField("shipperId")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface PipelineStepCreateComponentState {
+  model?: PipelineStepViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class PipelineStepCreateComponent extends React.Component<
+  PipelineStepCreateComponentProps,
+  PipelineStepCreateComponentState
+> {
+  state = {
+    model: new PipelineStepViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const PipelineStepCreate = withFormik<Props, PipelineStepViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new PipelineStepViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.id,props.model!.name,props.model!.pipelineStepStatusId,props.model!.shipperId);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<PipelineStepViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as PipelineStepViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.pipelineStepStatusId == 0) {
-                errors.pipelineStepStatusId = "Required"
-                    }if(values.shipperId == 0) {
-                errors.shipperId = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new PipelineStepMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.PipelineSteps,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: PipelineStepViewModel) => {
+    let mapper = new PipelineStepMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.PipelineSteps,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.PipelineStepClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'PipelineStepCreate', 
-  })(PipelineStepCreateDisplay);
-
-  interface PipelineStepCreateComponentProps
-  {
-  }
-
-  interface PipelineStepCreateComponentState
-  {
-      model?:PipelineStepViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class PipelineStepCreateComponent extends React.Component<PipelineStepCreateComponentProps, PipelineStepCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<PipelineStepCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.PipelineStepClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="name">name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="pipelineStepStatusId">pipelineStepStatusId</label>
+            <br />
+            {getFieldDecorator('pipelineStepStatusId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'pipelineStepStatusId'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="shipperId">shipperId</label>
+            <br />
+            {getFieldDecorator('shipperId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'shipperId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedPipelineStepCreateComponent = Form.create({
+  name: 'PipelineStep Create',
+})(PipelineStepCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>cd7a252a1cac80abd13ead3679a2ddfa</Hash>
+    <Hash>54ae864074e0c6d384c65dc7eceed2b0</Hash>
 </Codenesium>*/

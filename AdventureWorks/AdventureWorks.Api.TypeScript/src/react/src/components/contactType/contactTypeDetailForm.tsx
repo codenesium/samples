@@ -6,6 +6,7 @@ import ContactTypeMapper from './contactTypeMapper';
 import ContactTypeViewModel from './contactTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { BusinessEntityContactTableComponent } from '../shared/businessEntityContactTable';
 
 interface ContactTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class ContactTypeDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -118,6 +119,22 @@ class ContactTypeDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>BusinessEntityContacts</h3>
+            <BusinessEntityContactTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.ContactTypes +
+                '/' +
+                this.state.model!.contactTypeID +
+                '/' +
+                ApiRoutes.BusinessEntityContacts
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,5 +149,5 @@ export const WrappedContactTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>492aef16ba466c053cf9e774f260c1c5</Hash>
+    <Hash>7b0c9af993f99b67127f2a5507757065</Hash>
 </Codenesium>*/

@@ -94,6 +94,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<Sale>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Sale>()
+			       .Include(x => x.PetIdNavigation)
 			       .Where(x => x.PetId == petId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
@@ -131,5 +132,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9036fa6895bf0cbfd6990f20105b5ca4</Hash>
+    <Hash>c1536592520157e1e306ef2a15360451</Hash>
 </Codenesium>*/

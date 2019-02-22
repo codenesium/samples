@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostMapper from './postMapper';
 import PostViewModel from './postViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PostEditComponentProps {
@@ -151,7 +151,7 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"AcceptedAnswerId"} id={"acceptedAnswerId"} /> )}
+              ( <Input placeholder={"AcceptedAnswerId"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -161,17 +161,19 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"AnswerCount"} id={"answerCount"} /> )}
+              ( <Input placeholder={"AnswerCount"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='body'>Body</label>
               <br />             
               {getFieldDecorator('body', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"Body"} id={"body"} /> )}
+              ( <Input placeholder={"Body"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -181,7 +183,7 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"ClosedDate"} id={"closedDate"} /> )}
+              ( <Input placeholder={"ClosedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -191,7 +193,7 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"CommentCount"} id={"commentCount"} /> )}
+              ( <Input placeholder={"CommentCount"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -201,17 +203,19 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"CommunityOwnedDate"} id={"communityOwnedDate"} /> )}
+              ( <Input placeholder={"CommunityOwnedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='creationDate'>CreationDate</label>
               <br />             
               {getFieldDecorator('creationDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"CreationDate"} id={"creationDate"} /> )}
+              ( <Input placeholder={"CreationDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -221,17 +225,19 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"FavoriteCount"} id={"favoriteCount"} /> )}
+              ( <Input placeholder={"FavoriteCount"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='lastActivityDate'>LastActivityDate</label>
               <br />             
               {getFieldDecorator('lastActivityDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"LastActivityDate"} id={"lastActivityDate"} /> )}
+              ( <Input placeholder={"LastActivityDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -241,17 +247,18 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"LastEditDate"} id={"lastEditDate"} /> )}
+              ( <Input placeholder={"LastEditDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='lastEditorDisplayName'>LastEditorDisplayName</label>
               <br />             
               {getFieldDecorator('lastEditorDisplayName', {
-              rules:[],
+              rules:[{ max: 40, message: 'Exceeds max length of 40' },
+],
               
               })
-              ( <Input placeholder={"LastEditorDisplayName"} id={"lastEditorDisplayName"} /> )}
+              ( <Input placeholder={"LastEditorDisplayName"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -261,7 +268,7 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"LastEditorUserId"} id={"lastEditorUserId"} /> )}
+              ( <Input placeholder={"LastEditorUserId"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -271,7 +278,7 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"OwnerUserId"} id={"ownerUserId"} /> )}
+              ( <Input placeholder={"OwnerUserId"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -281,57 +288,65 @@ class PostEditComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"ParentId"} id={"parentId"} /> )}
+              ( <Input placeholder={"ParentId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='postTypeId'>PostTypeId</label>
               <br />             
               {getFieldDecorator('postTypeId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"PostTypeId"} id={"postTypeId"} /> )}
+              ( <Input placeholder={"PostTypeId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='score'>Score</label>
               <br />             
               {getFieldDecorator('score', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"Score"} id={"score"} /> )}
+              ( <Input placeholder={"Score"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='tag'>Tags</label>
               <br />             
               {getFieldDecorator('tag', {
-              rules:[],
+              rules:[{ max: 150, message: 'Exceeds max length of 150' },
+],
               
               })
-              ( <Input placeholder={"Tags"} id={"tag"} /> )}
+              ( <Input placeholder={"Tags"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='title'>Title</label>
               <br />             
               {getFieldDecorator('title', {
-              rules:[],
+              rules:[{ max: 250, message: 'Exceeds max length of 250' },
+],
               
               })
-              ( <Input placeholder={"Title"} id={"title"} /> )}
+              ( <Input placeholder={"Title"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='viewCount'>ViewCount</label>
               <br />             
               {getFieldDecorator('viewCount', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"ViewCount"} id={"viewCount"} /> )}
+              ( <Input placeholder={"ViewCount"} /> )}
               </Form.Item>
 
 			
@@ -351,5 +366,5 @@ class PostEditComponent extends React.Component<
 export const WrappedPostEditComponent = Form.create({ name: 'Post Edit' })(PostEditComponent);
 
 /*<Codenesium>
-    <Hash>a0bbd4eb31484194cd71635bf7f5d81e</Hash>
+    <Hash>edd6c8da969e8b1be225c42c66e100dd</Hash>
 </Codenesium>*/

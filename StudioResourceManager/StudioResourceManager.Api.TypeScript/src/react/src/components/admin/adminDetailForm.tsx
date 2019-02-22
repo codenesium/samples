@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface AdminDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +75,7 @@ class AdminDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +90,7 @@ class AdminDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,32 +105,32 @@ class AdminDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>birthday</div>
-              <div>{this.state.model!.birthday}</div>
+              <h3>birthday</h3>
+              <p>{String(this.state.model!.birthday)}</p>
             </div>
             <div>
-              <div>email</div>
-              <div>{this.state.model!.email}</div>
+              <h3>email</h3>
+              <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <div>firstName</div>
-              <div>{this.state.model!.firstName}</div>
+              <h3>First Name</h3>
+              <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <div>id</div>
-              <div>{this.state.model!.id}</div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
             </div>
             <div>
-              <div>lastName</div>
-              <div>{this.state.model!.lastName}</div>
+              <h3>Last Name</h3>
+              <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <div>phone</div>
-              <div>{this.state.model!.phone}</div>
+              <h3>phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>userId</h3>
-              <div>{this.state.model!.userIdNavigation!.toDisplay()}</div>
+              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
             </div>
           </div>
           {message}
@@ -150,5 +148,5 @@ export const WrappedAdminDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e739c3e208248f4b8767778820682f86</Hash>
+    <Hash>5be05b7773060d0f1b0bf0d91f47a006</Hash>
 </Codenesium>*/

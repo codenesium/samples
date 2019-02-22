@@ -4,15 +4,17 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CustomerCommunicationMapper from './customerCommunicationMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import CustomerCommunicationViewModel from './customerCommunicationViewModel';
 import "react-table/react-table.css";
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CustomerCommunicationSearchComponentProps
 {
-    history:any;
+     form:WrappedFormUtils;
+	 history:any;
+	 match:any;
 }
 
 interface CustomerCommunicationSearchComponentState
@@ -37,11 +39,11 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.CustomerCommunicationClientResponseModel) {
+    handleEditClick(e:any, row:CustomerCommunicationViewModel) {
          this.props.history.push(ClientRoutes.CustomerCommunications + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.CustomerCommunicationClientResponseModel) {
+    handleDetailClick(e:any, row:CustomerCommunicationViewModel) {
          this.props.history.push(ClientRoutes.CustomerCommunications + '/' + row.id);
     }
 
@@ -98,7 +100,7 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<CustomerCommunicationViewModel>(),filteredRecords:new Array<CustomerCommunicationViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<CustomerCommunicationViewModel>(), filteredRecords:new Array<CustomerCommunicationViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -108,44 +110,58 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
             let errorResponse:JSX.Element = <span></span>;
 
-            if(this.state.deleteSubmitted){
-                if(this.state.deleteSuccess){
-                    errorResponse =<div className="alert alert-success">{this.state.deleteResponse}</div>   
-                }
-                else {
-                    errorResponse = <div className="alert alert-danger">{this.state.deleteResponse}</div>   
-                }
-            }
-            return (
+            if (this.state.deleteSubmitted) {
+				if (this.state.deleteSuccess) {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="success" style={{marginBottom:"25px"}} />
+				  );
+				} else {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="error" style={{marginBottom:"25px"}} />
+				  );
+				}
+			}
+            
+			return (
             <div>
-                { 
-                    errorResponse
-                }
-            <form>
-                <div className="form-group row">
-                    <div className="col-sm-4">
-                    </div>
-                    <div className="col-sm-4">
-                        <input name="search" className="form-control" placeholder={"Search"} value={this.state.searchValue} onChange={e => this.handleSearchChanged(e)}/>
-                    </div>
-                    <div className="col-sm-4">
-                        <button className="btn btn-primary btn-sm align-middle float-right vertically-center search-create-button" onClick={e => this.handleCreateClick(e)}><i className="fas fa-plus"></i></button>
-                    </div>
-                </div>
-            </form>
+            {errorResponse}
+            <Row>
+				<Col span={8}></Col>
+				<Col span={8}>   
+				   <Input 
+					placeholder={"Search"} 
+					id={"search"} 
+					onChange={(e:any) => {
+					  this.handleSearchChanged(e)
+				   }}/>
+				</Col>
+				<Col span={8}>  
+				  <Button 
+				  style={{'float':'right'}}
+				  type="primary" 
+				  onClick={(e:any) => {
+                        this.handleCreateClick(e)
+						}}
+				  >
+				  +
+				  </Button>
+				</Col>
+			</Row>
+			<br />
+			<br />
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'CustomerCommunication',
+                    Header: 'CustomerCommunications',
                     columns: [
 					  {
                       Header: 'CustomerId',
@@ -188,9 +204,43 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
                     },
                     {
                         Header: 'Actions',
-                        Cell: row => (<div><button className="btn btn-sm" onClick={e => {this.handleDetailClick(e, row.original as Api.CustomerCommunicationClientResponseModel)}} ><i className="fas fa-search"></i></button>
-                        &nbsp;<button className="btn btn-primary btn-sm" onClick={e => {this.handleEditClick(e, row.original as Api.CustomerCommunicationClientResponseModel)}} ><i className="fas fa-edit"></i></button>
-                        &nbsp;<button className="btn btn-danger btn-sm" onClick={e => {this.handleDeleteClick(e, row.original as Api.CustomerCommunicationClientResponseModel)}} ><i className="far fa-trash-alt"></i></button>
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
+                            this.handleDetailClick(
+                              e,
+                              row.original as CustomerCommunicationViewModel
+                            );
+                          }}
+                        >
+                          <i className="fas fa-search" />
+                        </Button>
+                        &nbsp;
+                        <Button
+                          type="primary" 
+                          onClick={(e:any) => {
+                            this.handleEditClick(
+                              e,
+                              row.original as CustomerCommunicationViewModel
+                            );
+                          }}
+                        >
+                          <i className="fas fa-edit" />
+                        </Button>
+                        &nbsp;
+                        <Button
+                          type="danger" 
+                          onClick={(e:any) => {
+                            this.handleDeleteClick(
+                              e,
+                              row.original as CustomerCommunicationViewModel
+                            );
+                          }}
+                        >
+                          <i className="far fa-trash-alt" />
+                        </Button>
+
                         </div>)
                     }],
                     
@@ -203,6 +253,8 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
     }
 }
 
+export const WrappedCustomerCommunicationSearchComponent = Form.create({ name: 'CustomerCommunication Search' })(CustomerCommunicationSearchComponent);
+
 /*<Codenesium>
-    <Hash>378deb738249bd55811624a4b475f275</Hash>
+    <Hash>0d29b23ad07b7205b47ba16f268f649f</Hash>
 </Codenesium>*/

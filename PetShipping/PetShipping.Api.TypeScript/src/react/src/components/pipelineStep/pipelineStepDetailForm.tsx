@@ -1,78 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import PipelineStepMapper from './pipelineStepMapper';
 import PipelineStepViewModel from './pipelineStepViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import {HandlerPipelineStepTableComponent} from '../shared/handlerPipelineStepTable'
+	import {OtherTransportTableComponent} from '../shared/otherTransportTable'
+	import {PipelineStepDestinationTableComponent} from '../shared/pipelineStepDestinationTable'
+	import {PipelineStepNoteTableComponent} from '../shared/pipelineStepNoteTable'
+	import {PipelineStepStepRequirementTableComponent} from '../shared/pipelineStepStepRequirementTable'
+	
 
-interface Props {
-  history: any;
-  model?: PipelineStepViewModel;
-}
 
-const PipelineStepDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.PipelineSteps + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="name" className={'col-sm-2 col-form-label'}>
-          Name
-        </label>
-        <div className="col-sm-12">{String(model.model!.name)}</div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="pipelineStepStatusId"
-          className={'col-sm-2 col-form-label'}
-        >
-          PipelineStepStatusId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.pipelineStepStatusIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="shipperId" className={'col-sm-2 col-form-label'}>
-          ShipperId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.shipperIdNavigation!.toDisplay()}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
 
 interface PipelineStepDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface PipelineStepDetailComponentState {
@@ -83,18 +29,22 @@ interface PipelineStepDetailComponentState {
   errorMessage: string;
 }
 
-export default class PipelineStepDetailComponent extends React.Component<
-  PipelineStepDetailComponentProps,
-  PipelineStepDetailComponentState
+class PipelineStepDetailComponent extends React.Component<
+PipelineStepDetailComponentProps,
+PipelineStepDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new PipelineStepViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.PipelineSteps + '/edit/' + this.state.model!.id);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -114,9 +64,9 @@ export default class PipelineStepDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.PipelineStepClientResponseModel;
 
-          let mapper = new PipelineStepMapper();
-
           console.log(response);
+
+          let mapper = new PipelineStepMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -131,24 +81,102 @@ export default class PipelineStepDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <PipelineStepDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>pipelineStepStatusId</h3>
+							<p>{String(this.state.model!.pipelineStepStatusIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>shipperId</h3>
+							<p>{String(this.state.model!.shipperIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
+          {message}
+		 <div>
+            <h3>HandlerPipelineSteps</h3>
+            <HandlerPipelineStepTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.HandlerPipelineSteps}
+			/>
+         </div>
+			 <div>
+            <h3>OtherTransports</h3>
+            <OtherTransportTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.OtherTransports}
+			/>
+         </div>
+			 <div>
+            <h3>PipelineStepDestinations</h3>
+            <PipelineStepDestinationTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepDestinations}
+			/>
+         </div>
+			 <div>
+            <h3>PipelineStepNotes</h3>
+            <PipelineStepNoteTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepNotes}
+			/>
+         </div>
+			 <div>
+            <h3>PipelineStepStepRequirements</h3>
+            <PipelineStepStepRequirementTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepStepRequirements}
+			/>
+         </div>
+	
+
+        </div>
       );
     } else {
       return null;
@@ -156,7 +184,10 @@ export default class PipelineStepDetailComponent extends React.Component<
   }
 }
 
+export const WrappedPipelineStepDetailComponent = Form.create({ name: 'PipelineStep Detail' })(
+  PipelineStepDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>01a8541360ced620aeeaebb401477495</Hash>
+    <Hash>a7f5f00bf1bd6da18b232b0d88b5b03e</Hash>
 </Codenesium>*/

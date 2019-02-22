@@ -1,3 +1,4 @@
+import moment from 'moment';
 import MachineViewModel from '../machine/machineViewModel';
 import ChainViewModel from '../chain/chainViewModel';
 import LinkStatusViewModel from '../linkStatus/linkStatusViewModel';
@@ -26,10 +27,10 @@ export default class LinkViewModel {
   constructor() {
     this.assignedMachineId = undefined;
     this.assignedMachineIdEntity = '';
-    this.assignedMachineIdNavigation = undefined;
+    this.assignedMachineIdNavigation = new MachineViewModel();
     this.chainId = 0;
     this.chainIdEntity = '';
-    this.chainIdNavigation = undefined;
+    this.chainIdNavigation = new ChainViewModel();
     this.dateCompleted = undefined;
     this.dateStarted = undefined;
     this.dynamicParameter = '';
@@ -37,7 +38,7 @@ export default class LinkViewModel {
     this.id = 0;
     this.linkStatusId = 0;
     this.linkStatusIdEntity = '';
-    this.linkStatusIdNavigation = undefined;
+    this.linkStatusIdNavigation = new LinkStatusViewModel();
     this.name = '';
     this.order = 0;
     this.response = '';
@@ -82,5 +83,5 @@ export default class LinkViewModel {
 
 
 /*<Codenesium>
-    <Hash>fa4acc8d960e7d1432130fd227270f35</Hash>
+    <Hash>3a6ade9980743c81a1f9d2a933a33e5e</Hash>
 </Codenesium>*/

@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -171,8 +172,12 @@ class LinkTypeEditComponent extends React.Component<
             <label htmlFor="rwType">Type</label>
             <br />
             {getFieldDecorator('rwType', {
-              rules: [],
-            })(<Input placeholder={'Type'} id={'rwType'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<Input placeholder={'Type'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -195,5 +200,5 @@ export const WrappedLinkTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4d2747ebdbcc8c3a141a055c103f3e93</Hash>
+    <Hash>a9c1fbe44dab614d422d3f507d94444b</Hash>
 </Codenesium>*/

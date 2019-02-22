@@ -39,11 +39,11 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.RateClientResponseModel) {
+    handleEditClick(e:any, row:RateViewModel) {
          this.props.history.push(ClientRoutes.Rates + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.RateClientResponseModel) {
+    handleDetailClick(e:any, row:RateViewModel) {
          this.props.history.push(ClientRoutes.Rates + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<RateViewModel>(),filteredRecords:new Array<RateViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<RateViewModel>(), filteredRecords:new Array<RateViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Rate',
+                    Header: 'Rates',
                     columns: [
 					  {
                       Header: 'AmountPerMinute',
@@ -196,7 +196,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.RateClientResponseModel
+                              row.original as RateViewModel
                             );
                           }}
                         >
@@ -208,7 +208,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.RateClientResponseModel
+                              row.original as RateViewModel
                             );
                           }}
                         >
@@ -220,7 +220,7 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.RateClientResponseModel
+                              row.original as RateViewModel
                             );
                           }}
                         >
@@ -242,5 +242,5 @@ export default class RateSearchComponent extends React.Component<RateSearchCompo
 export const WrappedRateSearchComponent = Form.create({ name: 'Rate Search' })(RateSearchComponent);
 
 /*<Codenesium>
-    <Hash>df799ec3881e829ab292279b1231724b</Hash>
+    <Hash>5fd842e0281fd3b0edbd6136d4aceada</Hash>
 </Codenesium>*/

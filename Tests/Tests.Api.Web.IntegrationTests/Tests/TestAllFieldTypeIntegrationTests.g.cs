@@ -35,9 +35,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTestAllFieldTypeClientRequestModel();
-			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", "B");
 			var model2 = new ApiTestAllFieldTypeClientRequestModel();
-			model2.SetProperties(3, BitConverter.GetBytes(3), true, "C", DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTimeOffset.Parse("1/1/1989 12:00:00 AM"), 3m, 3, BitConverter.GetBytes(3), 3m, "C", "C", 3m, "C", 3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3m, "C", TimeSpan.Parse("03:00:00"), BitConverter.GetBytes(3), 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), BitConverter.GetBytes(3), "C", "C");
+			model2.SetProperties(3, BitConverter.GetBytes(3), true, "C", DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTimeOffset.Parse("1/1/1989 12:00:00 AM"), 3m, 3, 3, 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), BitConverter.GetBytes(3), 3m, "C", "C", 3m, "C", 3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3m, "C", TimeSpan.Parse("03:00:00"), BitConverter.GetBytes(3), 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), BitConverter.GetBytes(3), "C", "C", "C");
 			var request = new List<ApiTestAllFieldTypeClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiTestAllFieldTypeClientResponseModel>> result = await client.TestAllFieldTypeBulkInsertAsync(request);
 
@@ -54,6 +54,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[1].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldType>().ToList()[1].FieldDecimal.Should().Be(2m);
 			context.Set<TestAllFieldType>().ToList()[1].FieldFloat.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[1].FieldGeography.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[1].FieldGeometry.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[1].FieldHierarchyId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<TestAllFieldType>().ToList()[1].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldType>().ToList()[1].FieldMoney.Should().Be(2m);
 			context.Set<TestAllFieldType>().ToList()[1].FieldNChar.Should().Be("B");
@@ -71,6 +74,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[1].FieldUniqueIdentifier.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<TestAllFieldType>().ToList()[1].FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldType>().ToList()[1].FieldVarchar.Should().Be("B");
+			context.Set<TestAllFieldType>().ToList()[1].FieldVariant.Should().Be("B");
 			context.Set<TestAllFieldType>().ToList()[1].FieldXML.Should().Be("B");
 
 			context.Set<TestAllFieldType>().ToList()[2].FieldBigInt.Should().Be(3);
@@ -83,6 +87,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[2].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<TestAllFieldType>().ToList()[2].FieldDecimal.Should().Be(3m);
 			context.Set<TestAllFieldType>().ToList()[2].FieldFloat.Should().Be(3);
+			context.Set<TestAllFieldType>().ToList()[2].FieldGeography.Should().Be(3);
+			context.Set<TestAllFieldType>().ToList()[2].FieldGeometry.Should().Be(3);
+			context.Set<TestAllFieldType>().ToList()[2].FieldHierarchyId.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
 			context.Set<TestAllFieldType>().ToList()[2].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(3));
 			context.Set<TestAllFieldType>().ToList()[2].FieldMoney.Should().Be(3m);
 			context.Set<TestAllFieldType>().ToList()[2].FieldNChar.Should().Be("C");
@@ -100,6 +107,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[2].FieldUniqueIdentifier.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
 			context.Set<TestAllFieldType>().ToList()[2].FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(3));
 			context.Set<TestAllFieldType>().ToList()[2].FieldVarchar.Should().Be("C");
+			context.Set<TestAllFieldType>().ToList()[2].FieldVariant.Should().Be("C");
 			context.Set<TestAllFieldType>().ToList()[2].FieldXML.Should().Be("C");
 		}
 
@@ -114,7 +122,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTestAllFieldTypeClientRequestModel();
-			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", "B");
 			CreateResponse<ApiTestAllFieldTypeClientResponseModel> result = await client.TestAllFieldTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -129,6 +137,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[1].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldType>().ToList()[1].FieldDecimal.Should().Be(2m);
 			context.Set<TestAllFieldType>().ToList()[1].FieldFloat.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[1].FieldGeography.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[1].FieldGeometry.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[1].FieldHierarchyId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<TestAllFieldType>().ToList()[1].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldType>().ToList()[1].FieldMoney.Should().Be(2m);
 			context.Set<TestAllFieldType>().ToList()[1].FieldNChar.Should().Be("B");
@@ -146,6 +157,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[1].FieldUniqueIdentifier.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<TestAllFieldType>().ToList()[1].FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldType>().ToList()[1].FieldVarchar.Should().Be("B");
+			context.Set<TestAllFieldType>().ToList()[1].FieldVariant.Should().Be("B");
 			context.Set<TestAllFieldType>().ToList()[1].FieldXML.Should().Be("B");
 
 			result.Record.FieldBigInt.Should().Be(2);
@@ -158,6 +170,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			result.Record.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.FieldDecimal.Should().Be(2m);
 			result.Record.FieldFloat.Should().Be(2);
+			result.Record.FieldGeography.Should().Be(2);
+			result.Record.FieldGeometry.Should().Be(2);
+			result.Record.FieldHierarchyId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			result.Record.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			result.Record.FieldMoney.Should().Be(2m);
 			result.Record.FieldNChar.Should().Be("B");
@@ -175,6 +190,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			result.Record.FieldUniqueIdentifier.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			result.Record.FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			result.Record.FieldVarchar.Should().Be("B");
+			result.Record.FieldVariant.Should().Be("B");
 			result.Record.FieldXML.Should().Be("B");
 		}
 
@@ -193,7 +209,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			ApiTestAllFieldTypeServerResponseModel model = await service.Get(1);
 
 			ApiTestAllFieldTypeClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			request.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", "B");
 
 			UpdateResponse<ApiTestAllFieldTypeClientResponseModel> updateResponse = await client.TestAllFieldTypeUpdateAsync(model.Id, request);
 
@@ -211,6 +227,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[0].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldType>().ToList()[0].FieldDecimal.Should().Be(2m);
 			context.Set<TestAllFieldType>().ToList()[0].FieldFloat.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[0].FieldGeography.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[0].FieldGeometry.Should().Be(2);
+			context.Set<TestAllFieldType>().ToList()[0].FieldHierarchyId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<TestAllFieldType>().ToList()[0].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldType>().ToList()[0].FieldMoney.Should().Be(2m);
 			context.Set<TestAllFieldType>().ToList()[0].FieldNChar.Should().Be("B");
@@ -228,6 +247,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldType>().ToList()[0].FieldUniqueIdentifier.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<TestAllFieldType>().ToList()[0].FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldType>().ToList()[0].FieldVarchar.Should().Be("B");
+			context.Set<TestAllFieldType>().ToList()[0].FieldVariant.Should().Be("B");
 			context.Set<TestAllFieldType>().ToList()[0].FieldXML.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
@@ -241,6 +261,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			updateResponse.Record.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.FieldDecimal.Should().Be(2m);
 			updateResponse.Record.FieldFloat.Should().Be(2);
+			updateResponse.Record.FieldGeography.Should().Be(2);
+			updateResponse.Record.FieldGeometry.Should().Be(2);
+			updateResponse.Record.FieldHierarchyId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			updateResponse.Record.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			updateResponse.Record.FieldMoney.Should().Be(2m);
 			updateResponse.Record.FieldNChar.Should().Be("B");
@@ -258,6 +281,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			updateResponse.Record.FieldUniqueIdentifier.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			updateResponse.Record.FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			updateResponse.Record.FieldVarchar.Should().Be("B");
+			updateResponse.Record.FieldVariant.Should().Be("B");
 			updateResponse.Record.FieldXML.Should().Be("B");
 		}
 
@@ -273,7 +297,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			ITestAllFieldTypeService service = testServer.Host.Services.GetService(typeof(ITestAllFieldTypeService)) as ITestAllFieldTypeService;
 			var model = new ApiTestAllFieldTypeServerRequestModel();
-			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", "B");
 			CreateResponse<ApiTestAllFieldTypeServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -310,6 +334,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
+			response.FieldGeography.Should().Be(1);
+			response.FieldGeometry.Should().Be(1);
+			response.FieldHierarchyId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
 			response.FieldNChar.Should().Be("A");
@@ -327,6 +354,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldVarchar.Should().Be("A");
+			response.FieldVariant.Should().Be("A");
 			response.FieldXML.Should().Be("A");
 			response.Id.Should().Be(1);
 		}
@@ -368,6 +396,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			response[0].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
 			response[0].FieldDecimal.Should().Be(1m);
 			response[0].FieldFloat.Should().Be(1);
+			response[0].FieldGeography.Should().Be(1);
+			response[0].FieldGeometry.Should().Be(1);
+			response[0].FieldHierarchyId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response[0].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response[0].FieldMoney.Should().Be(1m);
 			response[0].FieldNChar.Should().Be("A");
@@ -385,6 +416,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			response[0].FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response[0].FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response[0].FieldVarchar.Should().Be("A");
+			response[0].FieldVariant.Should().Be("A");
 			response[0].FieldXML.Should().Be("A");
 			response[0].Id.Should().Be(1);
 		}
@@ -412,5 +444,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>e120ecae09db92245d6700f28bdddaf0</Hash>
+    <Hash>059b3b3cc90514888bfdb653a398e4c5</Hash>
 </Codenesium>*/

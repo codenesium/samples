@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,69 +121,58 @@ class CreditCardCreateComponent extends React.Component<
             <label htmlFor="cardNumber">CardNumber</label>
             <br />
             {getFieldDecorator('cardNumber', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'CardNumber'}
-                id={'cardNumber'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 25, message: 'Exceeds max length of 25' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'CardNumber'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="cardType">CardType</label>
             <br />
             {getFieldDecorator('cardType', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'CardType'}
-                id={'cardType'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'CardType'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="expMonth">ExpMonth</label>
             <br />
             {getFieldDecorator('expMonth', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ExpMonth'}
-                id={'expMonth'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ExpMonth'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="expYear">ExpYear</label>
             <br />
             {getFieldDecorator('expYear', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ExpYear'}
-                id={'expYear'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ExpYear'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -206,5 +196,5 @@ export const WrappedCreditCardCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d89860fc559e966902e149d2ce9a9649</Hash>
+    <Hash>708cddfaf4101dbb9c792a2690c00520</Hash>
 </Codenesium>*/

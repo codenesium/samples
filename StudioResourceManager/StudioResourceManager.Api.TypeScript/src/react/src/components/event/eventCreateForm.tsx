@@ -1,15 +1,22 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import EventViewModel from './eventViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface EventCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +113,7 @@ class EventCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -117,8 +124,8 @@ class EventCreateComponent extends React.Component<
               rules: [],
             })(
               <DatePicker
+                format={'YYYY-MM-DD'}
                 placeholder={'Actual End Date'}
-                id={'actualEndDate'}
               />
             )}
           </Form.Item>
@@ -130,8 +137,8 @@ class EventCreateComponent extends React.Component<
               rules: [],
             })(
               <DatePicker
+                format={'YYYY-MM-DD'}
                 placeholder={'Actual Start Date'}
-                id={'actualStartDate'}
               />
             )}
           </Form.Item>
@@ -141,15 +148,18 @@ class EventCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('billAmount', {
               rules: [],
-            })(<InputNumber placeholder={'Bill Amount'} id={'billAmount'} />)}
+            })(<InputNumber placeholder={'Bill Amount'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="eventStatusId">status</label>
             <br />
             {getFieldDecorator('eventStatusId', {
-              rules: [],
-            })(<InputNumber placeholder={'status'} id={'eventStatusId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<InputNumber placeholder={'status'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -159,8 +169,8 @@ class EventCreateComponent extends React.Component<
               rules: [],
             })(
               <DatePicker
+                format={'YYYY-MM-DD'}
                 placeholder={'Scheduled End Date'}
-                id={'scheduledEndDate'}
               />
             )}
           </Form.Item>
@@ -172,8 +182,8 @@ class EventCreateComponent extends React.Component<
               rules: [],
             })(
               <DatePicker
+                format={'YYYY-MM-DD'}
                 placeholder={'Scheduled Start Date'}
-                id={'scheduledStartDate'}
               />
             )}
           </Form.Item>
@@ -183,7 +193,7 @@ class EventCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('studentNote', {
               rules: [],
-            })(<Input placeholder={'Student Notes'} id={'studentNote'} />)}
+            })(<Input placeholder={'Student Notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -191,7 +201,7 @@ class EventCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('teacherNote', {
               rules: [],
-            })(<Input placeholder={'Teacher notes'} id={'teacherNote'} />)}
+            })(<Input placeholder={'Teacher notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -214,5 +224,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2e3fac5e87a591c87560cf39e71a6444</Hash>
+    <Hash>6d8ae93abb90256492a2122a61948b7b</Hash>
 </Codenesium>*/

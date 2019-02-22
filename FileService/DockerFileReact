@@ -1,0 +1,25 @@
+
+FROM alpine:3.7 AS build
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL="${REACT_APP_API_URL}"
+WORKDIR /app
+EXPOSE 80
+
+COPY ./FileService.Api.TypeScript/src/react /react
+
+USER root
+WORKDIR /react
+
+RUN apk update
+RUN apk add --update nodejs nodejs-npm
+RUN npm install
+RUN npm run build
+
+
+FROM alpine:3.7 AS runtime
+WORKDIR /app
+COPY --from=build react/build/ .
+RUN apk update
+RUN apk add --update nodejs nodejs-npm 
+RUN npm install -g serve
+CMD serve -l 80

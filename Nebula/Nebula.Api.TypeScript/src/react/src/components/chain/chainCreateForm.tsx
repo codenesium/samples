@@ -1,177 +1,168 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import ChainMapper from './chainMapper';
 import ChainViewModel from './chainViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:ChainViewModel
+interface ChainCreateComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-   const ChainCreateDisplay: React.SFC<FormikProps<ChainViewModel>> = (props: FormikProps<ChainViewModel>) => {
+interface ChainCreateComponentState {
+  model?: ChainViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
+}
 
-   let status = props.status as CreateResponse<Api.ChainClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof ChainViewModel]  && props.errors[name as keyof ChainViewModel]) {
-            response += props.errors[name as keyof ChainViewModel];
+class ChainCreateComponent extends React.Component<
+  ChainCreateComponentProps,
+  ChainCreateComponentState
+> {
+  state = {
+    model: new ChainViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
+
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as ChainViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model:ChainViewModel) =>
+  {  
+    let mapper = new ChainMapper();
+     axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.Chains,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.ChainClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
+      ); 
+  }
+  
+  render() {
 
-        return response;
-   }
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
+    }
 
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
 
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("chainStatusId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ChainStatusId</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="chainStatusId" className={errorExistForField("chainStatusId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("chainStatusId") && <small className="text-danger">{errorsForField("chainStatusId")}</small>}
-                        </div>
-                    </div>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='chainStatusId'>ChainStatusId</label>
+              <br />             
+              {getFieldDecorator('chainStatusId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"ChainStatusId"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("externalId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>ExternalId</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="externalId" className={errorExistForField("externalId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("externalId") && <small className="text-danger">{errorsForField("externalId")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='externalId'>ExternalId</label>
+              <br />             
+              {getFieldDecorator('externalId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"ExternalId"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
+              
+              })
+              ( <Input placeholder={"Name"} /> )}
+              </Form.Item>
 
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("teamId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>TeamId</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="teamId" className={errorExistForField("teamId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("teamId") && <small className="text-danger">{errorsForField("teamId")}</small>}
-                        </div>
-                    </div>
+						<Form.Item>
+              <label htmlFor='teamId'>TeamId</label>
+              <br />             
+              {getFieldDecorator('teamId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"TeamId"} /> )}
+              </Form.Item>
 
 			
-            <button type="submit" className="btn btn-primary" disabled={false}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
                 Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
-}
-
-
-const ChainCreate = withFormik<Props, ChainViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new ChainViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.chainStatusId,props.model!.externalId,props.model!.id,props.model!.name,props.model!.teamId);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<ChainViewModel> = { };
-
-	  if(values.chainStatusId == 0) {
-                errors.chainStatusId = "Required"
-                    }if(values.externalId == undefined) {
-                errors.externalId = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.teamId == 0) {
-                errors.teamId = "Required"
-                    }
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new ChainMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.Chains,
-        mapper.mapViewModelToApiRequest(values),
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.ChainClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'ChainCreate', 
-  })(ChainCreateDisplay);
-
-  interface ChainCreateComponentProps
-  {
-  }
-
-  interface ChainCreateComponentState
-  {
-      model?:ChainViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class ChainCreateComponent extends React.Component<ChainCreateComponentProps, ChainCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<ChainCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedChainCreateComponent = Form.create({ name: 'Chain Create' })(ChainCreateComponent);
 
 /*<Codenesium>
-    <Hash>1a8427bc1cd973701dfe0935b59e1489</Hash>
+    <Hash>e302100a23cdbe8d0a6d775872d32790</Hash>
 </Codenesium>*/

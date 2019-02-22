@@ -37,38 +37,63 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           component={() => '<div>secure route</div>'}
         />
         <Switch>
-          <Route exact path="/" component={wrapperHeader(Dashboard)} />
+          <Route
+            exact
+            path="/"
+            component={wrapperHeader(Dashboard, 'Dashboard')}
+          />
           <Route
             path={ClientRoutes.Devices + '/create'}
-            component={wrapperHeader(WrappedDeviceCreateComponent)}
+            component={wrapperHeader(
+              WrappedDeviceCreateComponent,
+              'Device Create'
+            )}
           />
           <Route
             path={ClientRoutes.Devices + '/edit/:id'}
-            component={wrapperHeader(WrappedDeviceEditComponent)}
+            component={wrapperHeader(WrappedDeviceEditComponent, 'Device Edit')}
           />
           <Route
             path={ClientRoutes.Devices + '/:id'}
-            component={wrapperHeader(WrappedDeviceDetailComponent)}
+            component={wrapperHeader(
+              WrappedDeviceDetailComponent,
+              'Device Detail'
+            )}
           />
           <Route
             path={ClientRoutes.Devices}
-            component={wrapperHeader(WrappedDeviceSearchComponent)}
+            component={wrapperHeader(
+              WrappedDeviceSearchComponent,
+              'Device Search'
+            )}
           />
           <Route
             path={ClientRoutes.DeviceActions + '/create'}
-            component={wrapperHeader(WrappedDeviceActionCreateComponent)}
+            component={wrapperHeader(
+              WrappedDeviceActionCreateComponent,
+              'DeviceAction Create'
+            )}
           />
           <Route
             path={ClientRoutes.DeviceActions + '/edit/:id'}
-            component={wrapperHeader(WrappedDeviceActionEditComponent)}
+            component={wrapperHeader(
+              WrappedDeviceActionEditComponent,
+              'DeviceAction Edit'
+            )}
           />
           <Route
             path={ClientRoutes.DeviceActions + '/:id'}
-            component={wrapperHeader(WrappedDeviceActionDetailComponent)}
+            component={wrapperHeader(
+              WrappedDeviceActionDetailComponent,
+              'DeviceAction Detail'
+            )}
           />
           <Route
             path={ClientRoutes.DeviceActions}
-            component={wrapperHeader(WrappedDeviceActionSearchComponent)}
+            component={wrapperHeader(
+              WrappedDeviceActionSearchComponent,
+              'DeviceAction Search'
+            )}
           />
         </Switch>
       </Security>
@@ -78,5 +103,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>0d123c39c1335197c36eeca5d6ea772b</Hash>
+    <Hash>b64091e9f0b128359e6bbc97a9ce6811</Hash>
 </Codenesium>*/

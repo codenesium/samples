@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import FamilyMapper from './familyMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import FamilyViewModel from './familyViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FamilySearchComponentProps
@@ -41,11 +39,11 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.FamilyClientResponseModel) {
+    handleEditClick(e:any, row:FamilyViewModel) {
          this.props.history.push(ClientRoutes.Families + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.FamilyClientResponseModel) {
+    handleDetailClick(e:any, row:FamilyViewModel) {
          this.props.history.push(ClientRoutes.Families + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<FamilyViewModel>(),filteredRecords:new Array<FamilyViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<FamilyViewModel>(), filteredRecords:new Array<FamilyViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -163,7 +161,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Family',
+                    Header: 'Families',
                     columns: [
 					  {
                       Header: 'Notes',
@@ -204,7 +202,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.FamilyClientResponseModel
+                              row.original as FamilyViewModel
                             );
                           }}
                         >
@@ -216,7 +214,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.FamilyClientResponseModel
+                              row.original as FamilyViewModel
                             );
                           }}
                         >
@@ -228,7 +226,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.FamilyClientResponseModel
+                              row.original as FamilyViewModel
                             );
                           }}
                         >
@@ -250,5 +248,5 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
 export const WrappedFamilySearchComponent = Form.create({ name: 'Family Search' })(FamilySearchComponent);
 
 /*<Codenesium>
-    <Hash>645872a89f1e8116dc3e9b0164ecfa20</Hash>
+    <Hash>c9059156ce68fe3a31fa904e9c64df73</Hash>
 </Codenesium>*/

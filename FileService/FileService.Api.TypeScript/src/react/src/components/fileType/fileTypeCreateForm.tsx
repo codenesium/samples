@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileTypeMapper from './fileTypeMapper';
 import FileTypeViewModel from './fileTypeViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FileTypeCreateComponentProps {
@@ -102,10 +102,13 @@ class FileTypeCreateComponent extends React.Component<
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 255, message: 'Exceeds max length of 255' },
+],
               
               })
-              ( <Input placeholder={"Name"} id={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 			
@@ -125,5 +128,5 @@ class FileTypeCreateComponent extends React.Component<
 export const WrappedFileTypeCreateComponent = Form.create({ name: 'FileType Create' })(FileTypeCreateComponent);
 
 /*<Codenesium>
-    <Hash>63b65c374a01af724fabd6394f12e52a</Hash>
+    <Hash>c5c1ef52d1f7394f07bc1da39811bc2b</Hash>
 </Codenesium>*/

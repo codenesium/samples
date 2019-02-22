@@ -1,5 +1,5 @@
+import moment from 'moment';
 import MessageViewModel from '../message/messageViewModel';
-import UserViewModel from '../user/userViewModel';
 import UserViewModel from '../user/userViewModel';
 
 export default class MessengerViewModel {
@@ -23,14 +23,14 @@ export default class MessengerViewModel {
     this.id = 0;
     this.messageId = undefined;
     this.messageIdEntity = '';
-    this.messageIdNavigation = undefined;
+    this.messageIdNavigation = new MessageViewModel();
     this.time = undefined;
     this.toUserId = 0;
     this.toUserIdEntity = '';
-    this.toUserIdNavigation = undefined;
+    this.toUserIdNavigation = new UserViewModel();
     this.userId = undefined;
     this.userIdEntity = '';
-    this.userIdNavigation = undefined;
+    this.userIdNavigation = new UserViewModel();
   }
 
   setProperties(
@@ -58,5 +58,5 @@ export default class MessengerViewModel {
 
 
 /*<Codenesium>
-    <Hash>cd5e8180ff53c3896571bbae153f0eff</Hash>
+    <Hash>8735da4f0872446ee8e32c51c0c1d82d</Hash>
 </Codenesium>*/

@@ -6,6 +6,9 @@ import BusinessEntityMapper from './businessEntityMapper';
 import BusinessEntityViewModel from './businessEntityViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { BusinessEntityAddressTableComponent } from '../shared/businessEntityAddressTable';
+import { BusinessEntityContactTableComponent } from '../shared/businessEntityContactTable';
+import { PersonTableComponent } from '../shared/personTable';
 
 interface BusinessEntityDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +80,7 @@ class BusinessEntityDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -120,6 +123,54 @@ class BusinessEntityDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>BusinessEntityAddresses</h3>
+            <BusinessEntityAddressTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.BusinessEntities +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.BusinessEntityAddresses
+              }
+            />
+          </div>
+          <div>
+            <h3>BusinessEntityContacts</h3>
+            <BusinessEntityContactTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.BusinessEntities +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.BusinessEntityContacts
+              }
+            />
+          </div>
+          <div>
+            <h3>People</h3>
+            <PersonTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.BusinessEntities +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.People
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -134,5 +185,5 @@ export const WrappedBusinessEntityDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a7e33a7f1f78a6f588709e0544e57f18</Hash>
+    <Hash>2c874f57f433090d903fb9e7e4dbb60a</Hash>
 </Codenesium>*/

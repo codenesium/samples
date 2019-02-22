@@ -1,3 +1,4 @@
+import moment from 'moment';
 import UserViewModel from '../user/userViewModel';
 
 export default class ReplyViewModel {
@@ -14,7 +15,7 @@ export default class ReplyViewModel {
     this.date = undefined;
     this.replierUserId = 0;
     this.replierUserIdEntity = '';
-    this.replierUserIdNavigation = undefined;
+    this.replierUserIdNavigation = new UserViewModel();
     this.replyId = 0;
     this.time = undefined;
   }
@@ -40,5 +41,5 @@ export default class ReplyViewModel {
 
 
 /*<Codenesium>
-    <Hash>e0b2c1cf35ee84e1d0495b0ae98f08f4</Hash>
+    <Hash>93d3af8a36819a7083ee58ac49adb777</Hash>
 </Codenesium>*/

@@ -75,7 +75,7 @@ class UserDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -172,5 +172,5 @@ export const WrappedUserDetailComponent = Form.create({ name: 'User Detail' })(
 
 
 /*<Codenesium>
-    <Hash>34fd04da1f713799c964352f64bde19d</Hash>
+    <Hash>8265704111e27c64f136587b4d9db36e</Hash>
 </Codenesium>*/

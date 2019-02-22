@@ -1,133 +1,147 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import QuoteTweetMapper from './quoteTweetMapper';
 import QuoteTweetViewModel from './quoteTweetViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-	history:any;
-    model?:QuoteTweetViewModel
+
+
+
+interface QuoteTweetDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const QuoteTweetDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.QuoteTweets + '/edit/' + model.model!.quoteTweetId)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="content" className={"col-sm-2 col-form-label"}>Content</label>
-							<div className="col-sm-12">
-								{String(model.model!.content)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="date" className={"col-sm-2 col-form-label"}>Date</label>
-							<div className="col-sm-12">
-								{String(model.model!.date)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="retweeterUserId" className={"col-sm-2 col-form-label"}>Retweeter_user_id</label>
-							<div className="col-sm-12">
-								{model.model!.retweeterUserIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="sourceTweetId" className={"col-sm-2 col-form-label"}>Source_tweet_id</label>
-							<div className="col-sm-12">
-								{model.model!.sourceTweetIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="time" className={"col-sm-2 col-form-label"}>Time</label>
-							<div className="col-sm-12">
-								{String(model.model!.time)}
-							</div>
-						</div>
-					             </form>
-  );
+interface QuoteTweetDetailComponentState {
+  model?: QuoteTweetViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     quoteTweetId:number;
+class QuoteTweetDetailComponent extends React.Component<
+QuoteTweetDetailComponentProps,
+QuoteTweetDetailComponentState
+> {
+  state = {
+    model: new QuoteTweetViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: ''
+  };
+
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.QuoteTweets + '/edit/' + this.state.model!.quoteTweetId);
   }
   
-  interface IMatch
-  {
-     params: IParams;
-  }
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  interface QuoteTweetDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface QuoteTweetDetailComponentState
-  {
-      model?:QuoteTweetViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-
-  export default class QuoteTweetDetailComponent extends React.Component<QuoteTweetDetailComponentProps, QuoteTweetDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.QuoteTweets + '/' + this.props.match.params.quoteTweetId,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.QuoteTweets +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.QuoteTweetClientResponseModel;
-            
-			let mapper = new QuoteTweetMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<QuoteTweetDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.QuoteTweetClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new QuoteTweetMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>content</h3>
+							<p>{String(this.state.model!.content)}</p>
+						 </div>
+					   						 <div>
+							<h3>date</h3>
+							<p>{String(this.state.model!.date)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>retweeter_user_id</h3>
+							<p>{String(this.state.model!.retweeterUserIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>source_tweet_id</h3>
+							<p>{String(this.state.model!.sourceTweetIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>time</h3>
+							<p>{String(this.state.model!.time)}</p>
+						 </div>
+					   		  </div>
+          {message}
+
+
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
+export const WrappedQuoteTweetDetailComponent = Form.create({ name: 'QuoteTweet Detail' })(
+  QuoteTweetDetailComponent
+);
+
 /*<Codenesium>
-    <Hash>254116001960256a60b784b238f3c736</Hash>
+    <Hash>dd754979ac46b09ee1353000459454b1</Hash>
 </Codenesium>*/

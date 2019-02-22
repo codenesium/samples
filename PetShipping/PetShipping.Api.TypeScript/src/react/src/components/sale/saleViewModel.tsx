@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PetViewModel from '../pet/petViewModel';
 
 export default class SaleViewModel {
@@ -18,7 +19,7 @@ export default class SaleViewModel {
     this.note = '';
     this.petId = 0;
     this.petIdEntity = '';
-    this.petIdNavigation = undefined;
+    this.petIdNavigation = new PetViewModel();
     this.saleDate = undefined;
     this.salesPersonId = 0;
   }
@@ -32,13 +33,13 @@ export default class SaleViewModel {
     saleDate: any,
     salesPersonId: number
   ): void {
-    this.amount = amount;
-    this.cutomerId = cutomerId;
-    this.id = id;
-    this.note = note;
-    this.petId = petId;
-    this.saleDate = saleDate;
-    this.salesPersonId = salesPersonId;
+    this.amount = moment(amount, 'YYYY-MM-DD');
+    this.cutomerId = moment(cutomerId, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.note = moment(note, 'YYYY-MM-DD');
+    this.petId = moment(petId, 'YYYY-MM-DD');
+    this.saleDate = moment(saleDate, 'YYYY-MM-DD');
+    this.salesPersonId = moment(salesPersonId, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -48,5 +49,5 @@ export default class SaleViewModel {
 
 
 /*<Codenesium>
-    <Hash>2a744cd06ab6e6a4a7f2c890770db18b</Hash>
+    <Hash>e3c36d1cb0603857b8ffdeef1503b88a</Hash>
 </Codenesium>*/

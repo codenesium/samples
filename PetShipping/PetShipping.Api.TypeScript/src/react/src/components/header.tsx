@@ -1,259 +1,240 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ClientRoutes, Constants } from '../constants';
+const { Header, Content, Footer, Sider } = Layout;
 
-interface Props {}
+const SubMenu = Menu.SubMenu;
 
-interface State {
-  menuExpanded: boolean;
+interface WrapperHeaderProps {}
+
+interface WrapperHeaderState {
+  collapsed: boolean;
 }
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+    state = { collapsed: true };
 
-export class Header extends React.Component<Props, State> {
-  state = { menuExpanded: false };
-
-  handleClick(e: React.FormEvent) {
-    this.setState({ menuExpanded: !this.state.menuExpanded });
-  }
-
-  render() {
-    return (
-      <div className="row col-12">
-        <nav
-          className="navbar navbar-expand-lg navbar-light bg-white"
-          id="navbar"
-        >
-          <a className="navbar-brand" href="/">
-            PetShipping
-          </a>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            onClick={e => this.handleClick(e)}
+    onCollapse = () => {
+      this.setState({ ...this.state, collapsed: !this.state.collapsed });
+    };
+    render() {
+      return (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            collapsible
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
           >
-            <span className="navbar-toggler-icon" />
-          </button>
+            <div className="logo" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+               <MenuItem
+                key="Home"
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+              >
+                <Icon type="home" />
+                <span>Home</span>
+                <Link to={'/'}></Link>
+              </MenuItem>
 
-          <div
-            className={
-              this.state.menuExpanded
-                ? 'collapse.expand navbar-collapse'
-                : 'collapse navbar-collapse'
-            }
-            id="navbarSupportedContent"
-          >
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/airlines"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Airlines
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/airtransports"
-                  onClick={e => this.handleClick(e)}
-                >
-                  AirTransports
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/breeds"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Breeds
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/countries"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Countries
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/countryrequirements"
-                  onClick={e => this.handleClick(e)}
-                >
-                  CountryRequirements
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/customers"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Customers
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/customercommunications"
-                  onClick={e => this.handleClick(e)}
-                >
-                  CustomerCommunications
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/destinations"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Destinations
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/employees"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Employees
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/handlers"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Handlers
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/handlerpipelinesteps"
-                  onClick={e => this.handleClick(e)}
-                >
-                  HandlerPipelineSteps
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/othertransports"
-                  onClick={e => this.handleClick(e)}
-                >
-                  OtherTransports
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pets"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Pets
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pipelines"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Pipelines
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pipelinestatus"
-                  onClick={e => this.handleClick(e)}
-                >
-                  PipelineStatus
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pipelinesteps"
-                  onClick={e => this.handleClick(e)}
-                >
-                  PipelineSteps
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pipelinestepdestinations"
-                  onClick={e => this.handleClick(e)}
-                >
-                  PipelineStepDestinations
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pipelinestepnotes"
-                  onClick={e => this.handleClick(e)}
-                >
-                  PipelineStepNotes
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pipelinestepstatus"
-                  onClick={e => this.handleClick(e)}
-                >
-                  PipelineStepStatus
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/pipelinestepsteprequirements"
-                  onClick={e => this.handleClick(e)}
-                >
-                  PipelineStepStepRequirements
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/sales"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Sales
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/species"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Species
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
+			   			   <MenuItem
+                key="airline"
+              >
+			  <Icon type="pie-chart" />
+              <span>Airlines</span>
+              <Link to={ClientRoutes.Airlines}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="airTransport"
+              >
+			  <Icon type="rise" />
+              <span>AirTransports</span>
+              <Link to={ClientRoutes.AirTransports}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="breed"
+              >
+			  <Icon type="bars" />
+              <span>Breeds</span>
+              <Link to={ClientRoutes.Breeds}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="country"
+              >
+			  <Icon type="cloud" />
+              <span>Countries</span>
+              <Link to={ClientRoutes.Countries}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="countryRequirement"
+              >
+			  <Icon type="code" />
+              <span>CountryRequirements</span>
+              <Link to={ClientRoutes.CountryRequirements}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="customer"
+              >
+			  <Icon type="smile" />
+              <span>Customers</span>
+              <Link to={ClientRoutes.Customers}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="customerCommunication"
+              >
+			  <Icon type="laptop" />
+              <span>CustomerCommunications</span>
+              <Link to={ClientRoutes.CustomerCommunications}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="destination"
+              >
+			  <Icon type="mobile" />
+              <span>Destinations</span>
+              <Link to={ClientRoutes.Destinations}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="employee"
+              >
+			  <Icon type="paper-clip" />
+              <span>Employees</span>
+              <Link to={ClientRoutes.Employees}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="handler"
+              >
+			  <Icon type="setting" />
+              <span>Handlers</span>
+              <Link to={ClientRoutes.Handlers}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="handlerPipelineStep"
+              >
+			  <Icon type="user" />
+              <span>HandlerPipelineSteps</span>
+              <Link to={ClientRoutes.HandlerPipelineSteps}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="otherTransport"
+              >
+			  <Icon type="home" />
+              <span>OtherTransports</span>
+              <Link to={ClientRoutes.OtherTransports}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pet"
+              >
+			  <Icon type="camera" />
+              <span>Pets</span>
+              <Link to={ClientRoutes.Pets}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pipeline"
+              >
+			  <Icon type="like" />
+              <span>Pipelines</span>
+              <Link to={ClientRoutes.Pipelines}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pipelineStatu"
+              >
+			  <Icon type="bulb" />
+              <span>PipelineStatus</span>
+              <Link to={ClientRoutes.PipelineStatus}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pipelineStep"
+              >
+			  <Icon type="tool" />
+              <span>PipelineSteps</span>
+              <Link to={ClientRoutes.PipelineSteps}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pipelineStepDestination"
+              >
+			  <Icon type="coffee" />
+              <span>PipelineStepDestinations</span>
+              <Link to={ClientRoutes.PipelineStepDestinations}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pipelineStepNote"
+              >
+			  <Icon type="experiment" />
+              <span>PipelineStepNotes</span>
+              <Link to={ClientRoutes.PipelineStepNotes}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pipelineStepStatu"
+              >
+			  <Icon type="security-scan" />
+              <span>PipelineStepStatus</span>
+              <Link to={ClientRoutes.PipelineStepStatus}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="pipelineStepStepRequirement"
+              >
+			  <Icon type="thunderbolt" />
+              <span>PipelineStepStepRequirements</span>
+              <Link to={ClientRoutes.PipelineStepStepRequirements}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="sale"
+              >
+			  <Icon type="gateway" />
+              <span>Sales</span>
+              <Link to={ClientRoutes.Sales}></Link>
+              </MenuItem>
+
+							   <MenuItem
+                key="species"
+              >
+			  <Icon type="shopping" />
+              <span>Species</span>
+              <Link to={ClientRoutes.Species}></Link>
+              </MenuItem>
+
+				
+            </Menu>
+          </Sider>
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }} />
+            <Content style={{ margin: '0 16px' }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <Component {...this.props} />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+          </Layout>
+        </Layout>
+      );
+    }
   }
-}
-
+  return WrapperHeaderComponent;
+};
 
 /*<Codenesium>
-    <Hash>f308f8aede647e85507b59be5fd499cc</Hash>
+    <Hash>a595470a7e2e62f87fbc90e55d49c75d</Hash>
 </Codenesium>*/

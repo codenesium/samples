@@ -39,11 +39,11 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.CityClientResponseModel) {
+    handleEditClick(e:any, row:CityViewModel) {
          this.props.history.push(ClientRoutes.Cities + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.CityClientResponseModel) {
+    handleDetailClick(e:any, row:CityViewModel) {
          this.props.history.push(ClientRoutes.Cities + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<CityViewModel>(),filteredRecords:new Array<CityViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<CityViewModel>(), filteredRecords:new Array<CityViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'City',
+                    Header: 'Cities',
                     columns: [
 					  {
                       Header: 'Name',
@@ -188,7 +188,7 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.CityClientResponseModel
+                              row.original as CityViewModel
                             );
                           }}
                         >
@@ -200,7 +200,7 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.CityClientResponseModel
+                              row.original as CityViewModel
                             );
                           }}
                         >
@@ -212,7 +212,7 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.CityClientResponseModel
+                              row.original as CityViewModel
                             );
                           }}
                         >
@@ -234,5 +234,5 @@ export default class CitySearchComponent extends React.Component<CitySearchCompo
 export const WrappedCitySearchComponent = Form.create({ name: 'City Search' })(CitySearchComponent);
 
 /*<Codenesium>
-    <Hash>7f3d8189fe398b2d22c3f78a0c09403b</Hash>
+    <Hash>f6be2b091a7d1bb0830be1080c067993</Hash>
 </Codenesium>*/

@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,28 +121,24 @@ class UserCreateComponent extends React.Component<
             <label htmlFor="password">password</label>
             <br />
             {getFieldDecorator('password', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'password'}
-                id={'password'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'password'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="username">username</label>
             <br />
             {getFieldDecorator('username', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'username'}
-                id={'username'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'username'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -164,5 +161,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>9b2be7cf62f2d916412a73d94c28ba0d</Hash>
+    <Hash>d472a6ab60e6c9853983dc4e82b1a327</Hash>
 </Codenesium>*/

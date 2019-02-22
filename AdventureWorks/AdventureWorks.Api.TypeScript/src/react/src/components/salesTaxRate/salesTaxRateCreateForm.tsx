@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SalesTaxRateMapper from './salesTaxRateMapper';
 import SalesTaxRateViewModel from './salesTaxRateViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SalesTaxRateCreateComponentProps {
@@ -102,60 +102,73 @@ class SalesTaxRateCreateComponent extends React.Component<
               <label htmlFor='modifiedDate'>ModifiedDate</label>
               <br />             
               {getFieldDecorator('modifiedDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 50, message: 'Exceeds max length of 50' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} id={"name"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='rowguid'>rowguid</label>
               <br />             
               {getFieldDecorator('rowguid', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='stateProvinceID'>StateProvinceID</label>
               <br />             
               {getFieldDecorator('stateProvinceID', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceID"} id={"stateProvinceID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StateProvinceID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='taxRate'>TaxRate</label>
               <br />             
               {getFieldDecorator('taxRate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxRate"} id={"taxRate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxRate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='taxType'>TaxType</label>
               <br />             
               {getFieldDecorator('taxType', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxType"} id={"taxType"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxType"} /> )}
               </Form.Item>
 
 			
@@ -175,5 +188,5 @@ class SalesTaxRateCreateComponent extends React.Component<
 export const WrappedSalesTaxRateCreateComponent = Form.create({ name: 'SalesTaxRate Create' })(SalesTaxRateCreateComponent);
 
 /*<Codenesium>
-    <Hash>0412d4a4c8c2dac2a02f681de17f1b92</Hash>
+    <Hash>fa72a1176db7ba15c6404e484808b3fd</Hash>
 </Codenesium>*/

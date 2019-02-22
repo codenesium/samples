@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceActionMapper from './deviceActionMapper';
 import DeviceActionViewModel from './deviceActionViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface DeviceActionCreateComponentProps {
@@ -102,30 +102,38 @@ class DeviceActionCreateComponent extends React.Component<
               <label htmlFor='action'>Action</label>
               <br />             
               {getFieldDecorator('action', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 4000, message: 'Exceeds max length of 4000' },
+],
               
               })
-              ( <Input placeholder={"Action"} id={"action"} /> )}
+              ( <Input placeholder={"Action"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='deviceId'>Device</label>
               <br />             
               {getFieldDecorator('deviceId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"Device"} id={"deviceId"} /> )}
+              ( <Input placeholder={"Device"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 90, message: 'Exceeds max length of 90' },
+],
               
               })
-              ( <Input placeholder={"Name"} id={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 			
@@ -145,5 +153,5 @@ class DeviceActionCreateComponent extends React.Component<
 export const WrappedDeviceActionCreateComponent = Form.create({ name: 'DeviceAction Create' })(DeviceActionCreateComponent);
 
 /*<Codenesium>
-    <Hash>1bd8d19f6ba0682a50c04ab37125b59d</Hash>
+    <Hash>a5dc5302002a971efc6bd9cf63030fd2</Hash>
 </Codenesium>*/

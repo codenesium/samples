@@ -6,6 +6,8 @@ import LocationMapper from './locationMapper';
 import LocationViewModel from './locationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ProductInventoryTableComponent } from '../shared/productInventoryTable';
+import { WorkOrderRoutingTableComponent } from '../shared/workOrderRoutingTable';
 
 interface LocationDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +77,7 @@ class LocationDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -126,6 +128,38 @@ class LocationDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>ProductInventories</h3>
+            <ProductInventoryTableComponent
+              productID={this.state.model!.productID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Locations +
+                '/' +
+                this.state.model!.locationID +
+                '/' +
+                ApiRoutes.ProductInventories
+              }
+            />
+          </div>
+          <div>
+            <h3>WorkOrderRoutings</h3>
+            <WorkOrderRoutingTableComponent
+              workOrderID={this.state.model!.workOrderID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Locations +
+                '/' +
+                this.state.model!.locationID +
+                '/' +
+                ApiRoutes.WorkOrderRoutings
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -140,5 +174,5 @@ export const WrappedLocationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2089b53b352b5a45d939b3ffb2bc3aaa</Hash>
+    <Hash>601d91956935c1fad5f7cc5532794fa7</Hash>
 </Codenesium>*/

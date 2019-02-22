@@ -75,7 +75,7 @@ class TagDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -136,5 +136,5 @@ export const WrappedTagDetailComponent = Form.create({ name: 'Tag Detail' })(
 
 
 /*<Codenesium>
-    <Hash>d29f2f2a02a3bc8e732c736c6a707d70</Hash>
+    <Hash>408d24f29af56946aadbda10e0cec7a1</Hash>
 </Codenesium>*/

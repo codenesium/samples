@@ -1,15 +1,22 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FamilyMapper from './familyMapper';
 import FamilyViewModel from './familyViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface FamilyCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +113,7 @@ class FamilyCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -115,20 +122,15 @@ class FamilyCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('note', {
               rules: [],
-            })(<Input placeholder={'notes'} id={'note'} />)}
+            })(<Input placeholder={'notes'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="primaryContactEmail">Primary Contact Email</label>
             <br />
             {getFieldDecorator('primaryContactEmail', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'Primary Contact Email'}
-                id={'primaryContactEmail'}
-              />
-            )}
+              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
+            })(<Input placeholder={'Primary Contact Email'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -137,13 +139,8 @@ class FamilyCreateComponent extends React.Component<
             </label>
             <br />
             {getFieldDecorator('primaryContactFirstName', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'Primary Contact First Name'}
-                id={'primaryContactFirstName'}
-              />
-            )}
+              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
+            })(<Input placeholder={'Primary Contact First Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -152,26 +149,20 @@ class FamilyCreateComponent extends React.Component<
             </label>
             <br />
             {getFieldDecorator('primaryContactLastName', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'Primary Contact Last Name'}
-                id={'primaryContactLastName'}
-              />
-            )}
+              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
+            })(<Input placeholder={'Primary Contact Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="primaryContactPhone">Primary Contact Phone</label>
             <br />
             {getFieldDecorator('primaryContactPhone', {
-              rules: [],
-            })(
-              <InputNumber
-                placeholder={'Primary Contact Phone'}
-                id={'primaryContactPhone'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<InputNumber placeholder={'Primary Contact Phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -194,5 +185,5 @@ export const WrappedFamilyCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e728e9958ec2cff7791536a95161d9b8</Hash>
+    <Hash>791224a96df01ef1380f2f618b748c1f</Hash>
 </Codenesium>*/

@@ -75,7 +75,7 @@ class PostHistoryDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -152,5 +152,5 @@ export const WrappedPostHistoryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1733075221f058351170c9a97bdc7a8c</Hash>
+    <Hash>961a25a031a993ef4976e41fc72ab61a</Hash>
 </Codenesium>*/

@@ -1,351 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
-import AirTransportViewModel from './airTransportViewModel';
+import * as Api from '../../api/models';
 import AirTransportMapper from './airTransportMapper';
-
-interface Props {
-  model?: AirTransportViewModel;
-}
-
-const AirTransportEditDisplay = (props: FormikProps<AirTransportViewModel>) => {
-  let status = props.status as UpdateResponse<
-    Api.AirTransportClientRequestModel
-  >;
-
-  let errorsForField = (name: string): string => {
-    let response = '';
-    if (
-      props.touched[name as keyof AirTransportViewModel] &&
-      props.errors[name as keyof AirTransportViewModel]
-    ) {
-      response += props.errors[name as keyof AirTransportViewModel];
-    }
-
-    if (
-      status &&
-      status.validationErrors &&
-      status.validationErrors.find(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )
-    ) {
-      response += status.validationErrors.filter(
-        f => f.propertyName.toLowerCase() == name.toLowerCase()
-      )[0].errorMessage;
-    }
-
-    return response;
-  };
-
-  let errorExistForField = (name: string): boolean => {
-    return errorsForField(name) != '';
-  };
-
-  return (
-    <form onSubmit={props.handleSubmit} role="form">
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('airlineId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          AirlineId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="airlineId"
-            className={
-              errorExistForField('airlineId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('airlineId') && (
-            <small className="text-danger">{errorsForField('airlineId')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('flightNumber')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          FlightNumber
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="flightNumber"
-            className={
-              errorExistForField('flightNumber')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('flightNumber') && (
-            <small className="text-danger">
-              {errorsForField('flightNumber')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('handlerId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          HandlerId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="handlerId"
-            className={
-              errorExistForField('handlerId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('handlerId') && (
-            <small className="text-danger">{errorsForField('handlerId')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('landDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          LandDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="landDate"
-            className={
-              errorExistForField('landDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('landDate') && (
-            <small className="text-danger">{errorsForField('landDate')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('pipelineStepId')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          PipelineStepId
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="pipelineStepId"
-            className={
-              errorExistForField('pipelineStepId')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('pipelineStepId') && (
-            <small className="text-danger">
-              {errorsForField('pipelineStepId')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('takeoffDate')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          TakeoffDate
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="takeoffDate"
-            className={
-              errorExistForField('takeoffDate')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('takeoffDate') && (
-            <small className="text-danger">
-              {errorsForField('takeoffDate')}
-            </small>
-          )}
-        </div>
-      </div>
-
-      <button type="submit" className="btn btn-primary" disabled={false}>
-        Submit
-      </button>
-      <br />
-      <br />
-      {status && status.success ? (
-        <div className="alert alert-success">Success</div>
-      ) : null}
-
-      {status && !status.success ? (
-        <div className="alert alert-danger">Error occurred</div>
-      ) : null}
-    </form>
-  );
-};
-
-const AirTransportEdit = withFormik<Props, AirTransportViewModel>({
-  mapPropsToValues: props => {
-    let response = new AirTransportViewModel();
-    response.setProperties(
-      props.model!.airlineId,
-      props.model!.flightNumber,
-      props.model!.handlerId,
-      props.model!.id,
-      props.model!.landDate,
-      props.model!.pipelineStepId,
-      props.model!.takeoffDate
-    );
-    return response;
-  },
-
-  // Custom sync validation
-  validate: values => {
-    let errors: FormikErrors<AirTransportViewModel> = {};
-
-    if (values.airlineId == 0) {
-      errors.airlineId = 'Required';
-    }
-    if (values.flightNumber == '') {
-      errors.flightNumber = 'Required';
-    }
-    if (values.handlerId == 0) {
-      errors.handlerId = 'Required';
-    }
-    if (values.id == 0) {
-      errors.id = 'Required';
-    }
-    if (values.landDate == undefined) {
-      errors.landDate = 'Required';
-    }
-    if (values.pipelineStepId == 0) {
-      errors.pipelineStepId = 'Required';
-    }
-    if (values.takeoffDate == undefined) {
-      errors.takeoffDate = 'Required';
-    }
-
-    return errors;
-  },
-  handleSubmit: (values, actions) => {
-    actions.setStatus(undefined);
-
-    let mapper = new AirTransportMapper();
-
-    axios
-      .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.AirTransports +
-          '/' +
-          values.airlineId,
-
-        mapper.mapViewModelToApiRequest(values),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as UpdateResponse<
-            Api.AirTransportClientRequestModel
-          >;
-          actions.setStatus(response);
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          actions.setStatus('Error from API');
-        }
-      )
-      .then(response => {
-        // cleanup
-      });
-  },
-
-  displayName: 'AirTransportEdit',
-})(AirTransportEditDisplay);
-
-interface IParams {
-  airlineId: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import AirTransportViewModel from './airTransportViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface AirTransportEditComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface AirTransportEditComponentState {
@@ -354,18 +30,20 @@ interface AirTransportEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
-export default class AirTransportEditComponent extends React.Component<
+class AirTransportEditComponent extends React.Component<
   AirTransportEditComponentProps,
   AirTransportEditComponentState
 > {
   state = {
-    model: undefined,
+    model: new AirTransportViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
+    submitted: false,
   };
 
   componentDidMount() {
@@ -376,7 +54,7 @@ export default class AirTransportEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.AirTransports +
           '/' +
-          this.props.match.params.airlineId,
+          this.props.match.params.id,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -398,6 +76,10 @@ export default class AirTransportEditComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
+
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -411,20 +93,176 @@ export default class AirTransportEditComponent extends React.Component<
         }
       );
   }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as AirTransportViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
+
+  submit = (model: AirTransportViewModel) => {
+    let mapper = new AirTransportMapper();
+    axios
+      .put(
+        Constants.ApiEndpoint +
+          ApiRoutes.AirTransports +
+          '/' +
+          this.state.model!.airlineId,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.AirTransportClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
   render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
-      return <AirTransportEdit model={this.state.model} />;
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="flightNumber">flightNumber</label>
+            <br />
+            {getFieldDecorator('flightNumber', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 12, message: 'Exceeds max length of 12' },
+              ],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'flightNumber'} />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="handlerId">handlerId</label>
+            <br />
+            {getFieldDecorator('handlerId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'handlerId'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="id">id</label>
+            <br />
+            {getFieldDecorator('id', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'id'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="landDate">landDate</label>
+            <br />
+            {getFieldDecorator('landDate', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'landDate'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="pipelineStepId">pipelineStepId</label>
+            <br />
+            {getFieldDecorator('pipelineStepId', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'pipelineStepId'}
+              />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="takeoffDate">takeoffDate</label>
+            <br />
+            {getFieldDecorator('takeoffDate', {
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'takeoffDate'} />
+            )}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
+export const WrappedAirTransportEditComponent = Form.create({
+  name: 'AirTransport Edit',
+})(AirTransportEditComponent);
+
 
 /*<Codenesium>
-    <Hash>f0da6c1db3168bf7378d4de5e9b4e66d</Hash>
+    <Hash>f30456d4e614c2d26ca3d575b35faabb</Hash>
 </Codenesium>*/

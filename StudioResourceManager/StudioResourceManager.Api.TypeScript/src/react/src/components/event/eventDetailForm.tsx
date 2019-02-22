@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import EventViewModel from './eventViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface EventDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +75,7 @@ class EventDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +90,7 @@ class EventDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,38 +105,38 @@ class EventDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>actualEndDate</div>
-              <div>{this.state.model!.actualEndDate}</div>
+              <h3>Actual End Date</h3>
+              <p>{String(this.state.model!.actualEndDate)}</p>
             </div>
             <div>
-              <div>actualStartDate</div>
-              <div>{this.state.model!.actualStartDate}</div>
+              <h3>Actual Start Date</h3>
+              <p>{String(this.state.model!.actualStartDate)}</p>
             </div>
             <div>
-              <div>billAmount</div>
-              <div>{this.state.model!.billAmount}</div>
+              <h3>Bill Amount</h3>
+              <p>{String(this.state.model!.billAmount)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>eventStatusId</h3>
-              <div>
-                {this.state.model!.eventStatusIdNavigation!.toDisplay()}
-              </div>
+              <h3>status</h3>
+              <p>
+                {String(this.state.model!.eventStatusIdNavigation!.toDisplay())}
+              </p>
             </div>
             <div>
-              <div>scheduledEndDate</div>
-              <div>{this.state.model!.scheduledEndDate}</div>
+              <h3>Scheduled End Date</h3>
+              <p>{String(this.state.model!.scheduledEndDate)}</p>
             </div>
             <div>
-              <div>scheduledStartDate</div>
-              <div>{this.state.model!.scheduledStartDate}</div>
+              <h3>Scheduled Start Date</h3>
+              <p>{String(this.state.model!.scheduledStartDate)}</p>
             </div>
             <div>
-              <div>studentNote</div>
-              <div>{this.state.model!.studentNote}</div>
+              <h3>Student Notes</h3>
+              <p>{String(this.state.model!.studentNote)}</p>
             </div>
             <div>
-              <div>teacherNote</div>
-              <div>{this.state.model!.teacherNote}</div>
+              <h3>Teacher notes</h3>
+              <p>{String(this.state.model!.teacherNote)}</p>
             </div>
           </div>
           {message}
@@ -156,5 +154,5 @@ export const WrappedEventDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>07f6b144774e35d7a24d959b72a1e769</Hash>
+    <Hash>c3ed95b69da4d5c03de15d4982e6c851</Hash>
 </Codenesium>*/

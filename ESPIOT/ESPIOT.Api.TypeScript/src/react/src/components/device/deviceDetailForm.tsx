@@ -6,6 +6,7 @@ import DeviceMapper from './deviceMapper';
 import DeviceViewModel from './deviceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { DeviceActionTableComponent } from '../shared/deviceActionTable';
 
 interface DeviceDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class DeviceDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -122,6 +123,22 @@ class DeviceDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>DeviceActions</h3>
+            <DeviceActionTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Devices +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.DeviceActions
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,5 +153,5 @@ export const WrappedDeviceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>246418f9563029326a8dece73c514701</Hash>
+    <Hash>ece1fac45f84f03dc6cba63b1668193d</Hash>
 </Codenesium>*/

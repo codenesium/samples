@@ -77,7 +77,7 @@ class AWBuildVersionDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -138,5 +138,5 @@ export const WrappedAWBuildVersionDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>46d9ed30d30b6a079152c527db80933f</Hash>
+    <Hash>378a644f6ee292411dabb863d432bf6b</Hash>
 </Codenesium>*/

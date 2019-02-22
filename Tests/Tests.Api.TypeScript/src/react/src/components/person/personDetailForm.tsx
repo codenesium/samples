@@ -6,6 +6,7 @@ import PersonMapper from './personMapper';
 import PersonViewModel from './personViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ColumnSameAsFKTableTableComponent } from '../shared/columnSameAsFKTableTable';
 
 interface PersonDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class PersonDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -114,6 +115,22 @@ class PersonDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>ColumnSameAsFKTables</h3>
+            <ColumnSameAsFKTableTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.personId +
+                '/' +
+                ApiRoutes.ColumnSameAsFKTables
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -128,5 +145,5 @@ export const WrappedPersonDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5848572d71a02cfd9443d4168846210e</Hash>
+    <Hash>d54c03312b6831f9b9a8bd30da2645b0</Hash>
 </Codenesium>*/

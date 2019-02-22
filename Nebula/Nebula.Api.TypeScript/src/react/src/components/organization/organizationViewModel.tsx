@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class OrganizationViewModel {
   id: number;
   name: string;
@@ -19,5 +21,5 @@ export default class OrganizationViewModel {
 
 
 /*<Codenesium>
-    <Hash>641312349d65a516461c8ecb5f20acc6</Hash>
+    <Hash>b160ab517a45590aa7b28b262a15b30a</Hash>
 </Codenesium>*/

@@ -93,6 +93,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinationsByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStepDestination>()
+			       .Include(x => x.DestinationIdNavigation)
 			       .Where(x => x.DestinationId == destinationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
 		}
 
@@ -130,5 +131,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>11322c3f4f6d1f2ce90fb5334a04c580</Hash>
+    <Hash>e35793b6e899c9fa5b2f85945ca11539</Hash>
 </Codenesium>*/

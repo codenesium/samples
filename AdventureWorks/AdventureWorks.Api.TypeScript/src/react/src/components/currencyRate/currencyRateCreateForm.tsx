@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,12 @@ class CurrencyRateCreateComponent extends React.Component<
             <label htmlFor="averageRate">AverageRate</label>
             <br />
             {getFieldDecorator('averageRate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'AverageRate'}
-                id={'averageRate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'AverageRate'} />
             )}
           </Form.Item>
 
@@ -134,12 +134,14 @@ class CurrencyRateCreateComponent extends React.Component<
             <label htmlFor="currencyRateDate">CurrencyRateDate</label>
             <br />
             {getFieldDecorator('currencyRateDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'CurrencyRateDate'}
-                id={'currencyRateDate'}
               />
             )}
           </Form.Item>
@@ -148,13 +150,12 @@ class CurrencyRateCreateComponent extends React.Component<
             <label htmlFor="endOfDayRate">EndOfDayRate</label>
             <br />
             {getFieldDecorator('endOfDayRate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'EndOfDayRate'}
-                id={'endOfDayRate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'EndOfDayRate'} />
             )}
           </Form.Item>
 
@@ -162,12 +163,15 @@ class CurrencyRateCreateComponent extends React.Component<
             <label htmlFor="fromCurrencyCode">FromCurrencyCode</label>
             <br />
             {getFieldDecorator('fromCurrencyCode', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 3, message: 'Exceeds max length of 3' },
+              ],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'FromCurrencyCode'}
-                id={'fromCurrencyCode'}
               />
             )}
           </Form.Item>
@@ -176,13 +180,12 @@ class CurrencyRateCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -190,12 +193,15 @@ class CurrencyRateCreateComponent extends React.Component<
             <label htmlFor="toCurrencyCode">ToCurrencyCode</label>
             <br />
             {getFieldDecorator('toCurrencyCode', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 3, message: 'Exceeds max length of 3' },
+              ],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'ToCurrencyCode'}
-                id={'toCurrencyCode'}
               />
             )}
           </Form.Item>
@@ -220,5 +226,5 @@ export const WrappedCurrencyRateCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>196f63a192bbbe2fa62828c64082dcce</Hash>
+    <Hash>1176e0ad4947261dfadc0a4a92be4fdc</Hash>
 </Codenesium>*/

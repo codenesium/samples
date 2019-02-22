@@ -106,6 +106,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByCurrencyRateID(int currencyRateID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>()
+			       .Include(x => x.CurrencyRateIDNavigation)
 			       .Where(x => x.CurrencyRateID == currencyRateID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
@@ -151,5 +152,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dfbf411f7772df804c1f7578c0a91237</Hash>
+    <Hash>02071f841e074181484e62a91aec700e</Hash>
 </Codenesium>*/

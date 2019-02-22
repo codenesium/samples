@@ -50,11 +50,11 @@ export default class UserSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.UserClientResponseModel) {
+  handleEditClick(e: any, row: UserViewModel) {
     this.props.history.push(ClientRoutes.Users + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.UserClientResponseModel) {
+  handleDetailClick(e: any, row: UserViewModel) {
     this.props.history.push(ClientRoutes.Users + '/' + row.id);
   }
 
@@ -134,7 +134,7 @@ export default class UserSearchComponent extends React.Component<
             records: new Array<UserViewModel>(),
             filteredRecords: new Array<UserViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -204,7 +204,7 @@ export default class UserSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'User',
+                Header: 'Users',
                 columns: [
                   {
                     Header: 'Id',
@@ -236,7 +236,7 @@ export default class UserSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.UserClientResponseModel
+                              row.original as UserViewModel
                             );
                           }}
                         >
@@ -248,7 +248,7 @@ export default class UserSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.UserClientResponseModel
+                              row.original as UserViewModel
                             );
                           }}
                         >
@@ -260,7 +260,7 @@ export default class UserSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.UserClientResponseModel
+                              row.original as UserViewModel
                             );
                           }}
                         >
@@ -287,5 +287,5 @@ export const WrappedUserSearchComponent = Form.create({ name: 'User Search' })(
 
 
 /*<Codenesium>
-    <Hash>b4c9efcdec88a9002673ed2f64e14e96</Hash>
+    <Hash>ae18e6ad696acdfc80b42dec2bb73090</Hash>
 </Codenesium>*/

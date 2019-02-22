@@ -1,3 +1,4 @@
+import moment from 'moment';
 import HandlerViewModel from '../handler/handlerViewModel';
 
 export default class AirTransportViewModel {
@@ -16,7 +17,7 @@ export default class AirTransportViewModel {
     this.flightNumber = '';
     this.handlerId = 0;
     this.handlerIdEntity = '';
-    this.handlerIdNavigation = undefined;
+    this.handlerIdNavigation = new HandlerViewModel();
     this.id = 0;
     this.landDate = undefined;
     this.pipelineStepId = 0;
@@ -32,13 +33,13 @@ export default class AirTransportViewModel {
     pipelineStepId: number,
     takeoffDate: any
   ): void {
-    this.airlineId = airlineId;
-    this.flightNumber = flightNumber;
-    this.handlerId = handlerId;
-    this.id = id;
-    this.landDate = landDate;
-    this.pipelineStepId = pipelineStepId;
-    this.takeoffDate = takeoffDate;
+    this.airlineId = moment(airlineId, 'YYYY-MM-DD');
+    this.flightNumber = moment(flightNumber, 'YYYY-MM-DD');
+    this.handlerId = moment(handlerId, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.landDate = moment(landDate, 'YYYY-MM-DD');
+    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+    this.takeoffDate = moment(takeoffDate, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -48,5 +49,5 @@ export default class AirTransportViewModel {
 
 
 /*<Codenesium>
-    <Hash>b3b4136265c81a288583b995a87943c1</Hash>
+    <Hash>498e43099f4bef4587b7e0a8d878a811</Hash>
 </Codenesium>*/

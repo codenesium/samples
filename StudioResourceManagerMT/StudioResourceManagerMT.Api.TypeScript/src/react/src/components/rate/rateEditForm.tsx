@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -168,12 +169,14 @@ class RateEditComponent extends React.Component<
             <label htmlFor="amountPerMinute">amountPerMinute</label>
             <br />
             {getFieldDecorator('amountPerMinute', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'amountPerMinute'}
-                id={'amountPerMinute'}
               />
             )}
           </Form.Item>
@@ -182,26 +185,25 @@ class RateEditComponent extends React.Component<
             <label htmlFor="teacherId">teacherId</label>
             <br />
             {getFieldDecorator('teacherId', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'teacherId'}
-                id={'teacherId'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'teacherId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="teacherSkillId">teacherSkillId</label>
             <br />
             {getFieldDecorator('teacherSkillId', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'teacherSkillId'}
-                id={'teacherSkillId'}
               />
             )}
           </Form.Item>
@@ -226,5 +228,5 @@ export const WrappedRateEditComponent = Form.create({ name: 'Rate Edit' })(
 
 
 /*<Codenesium>
-    <Hash>001a2a7847f572c23f96865c7c44eb7b</Hash>
+    <Hash>b574f942cbecb4646f9e3a45593497d1</Hash>
 </Codenesium>*/

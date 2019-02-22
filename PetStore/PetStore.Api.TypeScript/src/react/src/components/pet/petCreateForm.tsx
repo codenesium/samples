@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -118,40 +119,55 @@ class PetCreateComponent extends React.Component<
             <label htmlFor="acquiredDate">acquiredDate</label>
             <br />
             {getFieldDecorator('acquiredDate', {
-              rules: [],
-            })(<Input placeholder={'acquiredDate'} id={'acquiredDate'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'acquiredDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="breedId">breedId</label>
             <br />
             {getFieldDecorator('breedId', {
-              rules: [],
-            })(<Input placeholder={'breedId'} id={'breedId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'breedId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="description">description</label>
             <br />
             {getFieldDecorator('description', {
-              rules: [],
-            })(<Input placeholder={'description'} id={'description'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'description'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="penId">penId</label>
             <br />
             {getFieldDecorator('penId', {
-              rules: [],
-            })(<Input placeholder={'penId'} id={'penId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'penId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="price">price</label>
             <br />
             {getFieldDecorator('price', {
-              rules: [],
-            })(<Input placeholder={'price'} id={'price'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'price'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -174,5 +190,5 @@ export const WrappedPetCreateComponent = Form.create({ name: 'Pet Create' })(
 
 
 /*<Codenesium>
-    <Hash>78835ba81da2d6b70d49edc37335b20c</Hash>
+    <Hash>d4b39fc27027397c83d24e8472a8dd6a</Hash>
 </Codenesium>*/

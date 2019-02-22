@@ -50,11 +50,11 @@ export default class SpeciesSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.SpeciesClientResponseModel) {
+  handleEditClick(e: any, row: SpeciesViewModel) {
     this.props.history.push(ClientRoutes.Species + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.SpeciesClientResponseModel) {
+  handleDetailClick(e: any, row: SpeciesViewModel) {
     this.props.history.push(ClientRoutes.Species + '/' + row.id);
   }
 
@@ -135,7 +135,7 @@ export default class SpeciesSearchComponent extends React.Component<
             records: new Array<SpeciesViewModel>(),
             filteredRecords: new Array<SpeciesViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -223,7 +223,7 @@ export default class SpeciesSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.SpeciesClientResponseModel
+                              row.original as SpeciesViewModel
                             );
                           }}
                         >
@@ -235,7 +235,7 @@ export default class SpeciesSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.SpeciesClientResponseModel
+                              row.original as SpeciesViewModel
                             );
                           }}
                         >
@@ -247,7 +247,7 @@ export default class SpeciesSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.SpeciesClientResponseModel
+                              row.original as SpeciesViewModel
                             );
                           }}
                         >
@@ -274,5 +274,5 @@ export const WrappedSpeciesSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6e8e06930e5c9db0b19598a9bde0e694</Hash>
+    <Hash>b13a5406ffa20b2aaaf8550536c2e22d</Hash>
 </Codenesium>*/

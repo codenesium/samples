@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import UserViewModel from './userViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface UserSearchComponentProps
@@ -41,11 +39,11 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.UserClientResponseModel) {
+    handleEditClick(e:any, row:UserViewModel) {
          this.props.history.push(ClientRoutes.Users + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.UserClientResponseModel) {
+    handleDetailClick(e:any, row:UserViewModel) {
          this.props.history.push(ClientRoutes.Users + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<UserViewModel>(),filteredRecords:new Array<UserViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<UserViewModel>(), filteredRecords:new Array<UserViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -163,7 +161,7 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'User',
+                    Header: 'Users',
                     columns: [
 					  {
                       Header: 'Password',
@@ -186,7 +184,7 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.UserClientResponseModel
+                              row.original as UserViewModel
                             );
                           }}
                         >
@@ -198,7 +196,7 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.UserClientResponseModel
+                              row.original as UserViewModel
                             );
                           }}
                         >
@@ -210,7 +208,7 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.UserClientResponseModel
+                              row.original as UserViewModel
                             );
                           }}
                         >
@@ -232,5 +230,5 @@ export default class UserSearchComponent extends React.Component<UserSearchCompo
 export const WrappedUserSearchComponent = Form.create({ name: 'User Search' })(UserSearchComponent);
 
 /*<Codenesium>
-    <Hash>7153bb42370f6a3a2ad56d717ddc5a53</Hash>
+    <Hash>3f00c71dffbd8e69eaa6099de4e1c851</Hash>
 </Codenesium>*/

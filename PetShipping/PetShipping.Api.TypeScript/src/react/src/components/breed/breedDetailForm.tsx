@@ -1,121 +1,155 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import BreedMapper from './breedMapper';
 import BreedViewModel from './breedViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { PetTableComponent } from '../shared/petTable';
 
-interface Props {
-	history:any;
-    model?:BreedViewModel
+interface BreedDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const BreedDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Breeds + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="id" className={"col-sm-2 col-form-label"}>Id</label>
-							<div className="col-sm-12">
-								{String(model.model!.id)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="speciesId" className={"col-sm-2 col-form-label"}>SpeciesId</label>
-							<div className="col-sm-12">
-								{model.model!.speciesIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					             </form>
-  );
+interface BreedDetailComponentState {
+  model?: BreedViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class BreedDetailComponent extends React.Component<
+  BreedDetailComponentProps,
+  BreedDetailComponentState
+> {
+  state = {
+    model: new BreedViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface BreedDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface BreedDetailComponentState
-  {
-      model?:BreedViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Breeds + '/edit/' + this.state.model!.id
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class BreedDetailComponent extends React.Component<BreedDetailComponentProps, BreedDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Breeds + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Breeds +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.BreedClientResponseModel;
-            
-			let mapper = new BreedMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<BreedDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.BreedClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new BreedMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>speciesId</h3>
+              <p>
+                {String(this.state.model!.speciesIdNavigation!.toDisplay())}
+              </p>
+            </div>
+          </div>
+          {message}
+          <div>
+            <h3>Pets</h3>
+            <PetTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Breeds +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Pets
+              }
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedBreedDetailComponent = Form.create({
+  name: 'Breed Detail',
+})(BreedDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>e7ced3b00b982e6771f02e898c708163</Hash>
+    <Hash>e035cd18ea4a4aed6c5e7d2d7e24040e</Hash>
 </Codenesium>*/

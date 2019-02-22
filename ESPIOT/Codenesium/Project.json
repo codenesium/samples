@@ -237,14 +237,14 @@
       {
         "$id": "28",
         "AppSchemaName": "dbo",
-        "AppSchemaId": "7d20fbfd-ce80-42e4-82bf-6e692ea9cb00",
+        "AppSchemaId": "feebdfd7-5459-42b8-984c-0c2a9b14247d",
         "Tables": [
           {
             "$id": "29",
             "AppTableName": "Device",
             "AppTableNamePlural": "Devices",
             "AppDoNotProcess": false,
-            "AppTableId": "7ce7c3ff-eff1-446e-864d-c4a9d0945fae",
+            "AppTableId": "d6fb7388-eaf4-4482-b289-fda84aef77ca",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -513,7 +513,7 @@
             "AppTableName": "DeviceAction",
             "AppTableNamePlural": "DeviceActions",
             "AppDoNotProcess": false,
-            "AppTableId": "4b7b7ab9-81dd-468d-861b-e0e83e9119ff",
+            "AppTableId": "6ebc3223-b11b-4c4f-95a4-50025a058234",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -965,6 +965,26 @@
         "AppViewControlLabel": "Name",
         "AppName": "Name",
         "AppNamePlural": "Names"
+      },
+      {
+        "$id": "61",
+        "Table": "DeviceAction",
+        "Schema": "dbo",
+        "Column": "rwValue",
+        "AppCLRType": "string",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 11,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "value",
+        "AppName": "RwValue",
+        "AppNamePlural": "Values"
       }
     ],
     "VirtualForeignKeys": [],

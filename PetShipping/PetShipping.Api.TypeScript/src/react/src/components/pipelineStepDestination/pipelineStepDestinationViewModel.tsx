@@ -1,3 +1,4 @@
+import moment from 'moment';
 import DestinationViewModel from '../destination/destinationViewModel';
 import PipelineStepViewModel from '../pipelineStep/pipelineStepViewModel';
 
@@ -13,11 +14,11 @@ export default class PipelineStepDestinationViewModel {
   constructor() {
     this.destinationId = 0;
     this.destinationIdEntity = '';
-    this.destinationIdNavigation = undefined;
+    this.destinationIdNavigation = new DestinationViewModel();
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
-    this.pipelineStepIdNavigation = undefined;
+    this.pipelineStepIdNavigation = new PipelineStepViewModel();
   }
 
   setProperties(
@@ -25,9 +26,9 @@ export default class PipelineStepDestinationViewModel {
     id: number,
     pipelineStepId: number
   ): void {
-    this.destinationId = destinationId;
-    this.id = id;
-    this.pipelineStepId = pipelineStepId;
+    this.destinationId = moment(destinationId, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -37,5 +38,5 @@ export default class PipelineStepDestinationViewModel {
 
 
 /*<Codenesium>
-    <Hash>0f4a70f2866ecf7e516bc116353d5b9c</Hash>
+    <Hash>618c5fd33a9cd39f7c72ed577891dd17</Hash>
 </Codenesium>*/

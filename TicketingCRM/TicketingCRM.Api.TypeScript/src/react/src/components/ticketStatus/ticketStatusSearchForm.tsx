@@ -39,11 +39,11 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.TicketStatusClientResponseModel) {
+    handleEditClick(e:any, row:TicketStatusViewModel) {
          this.props.history.push(ClientRoutes.TicketStatus + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.TicketStatusClientResponseModel) {
+    handleDetailClick(e:any, row:TicketStatusViewModel) {
          this.props.history.push(ClientRoutes.TicketStatus + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<TicketStatusViewModel>(),filteredRecords:new Array<TicketStatusViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<TicketStatusViewModel>(), filteredRecords:new Array<TicketStatusViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -178,7 +178,7 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.TicketStatusClientResponseModel
+                              row.original as TicketStatusViewModel
                             );
                           }}
                         >
@@ -190,7 +190,7 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.TicketStatusClientResponseModel
+                              row.original as TicketStatusViewModel
                             );
                           }}
                         >
@@ -202,7 +202,7 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.TicketStatusClientResponseModel
+                              row.original as TicketStatusViewModel
                             );
                           }}
                         >
@@ -224,5 +224,5 @@ export default class TicketStatusSearchComponent extends React.Component<TicketS
 export const WrappedTicketStatusSearchComponent = Form.create({ name: 'TicketStatus Search' })(TicketStatusSearchComponent);
 
 /*<Codenesium>
-    <Hash>117b8c12d1a6d47137b4ee49a085bfe9</Hash>
+    <Hash>6290a30b84da0fdaf2a03caf96337dfa</Hash>
 </Codenesium>*/

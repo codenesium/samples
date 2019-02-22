@@ -48,31 +48,31 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         redirect_uri={config.oidc.redirectUri}>
 	    <SecureRoute path="/protected" component={() => '<div>secure route</div>'} />
         <Switch>
-          <Route exact path="/" component={wrapperHeader(Dashboard)} />
-		  <Route path={ClientRoutes.Breeds + "/create"} component={wrapperHeader(WrappedBreedCreateComponent)} />
-                      <Route path={ClientRoutes.Breeds + "/edit/:id"} component={wrapperHeader(WrappedBreedEditComponent)} />
-                      <Route path={ClientRoutes.Breeds + "/:id"} component={wrapperHeader(WrappedBreedDetailComponent)} />
-                      <Route path={ClientRoutes.Breeds} component={wrapperHeader(WrappedBreedSearchComponent)} />
-					<Route path={ClientRoutes.PaymentTypes + "/create"} component={wrapperHeader(WrappedPaymentTypeCreateComponent)} />
-                      <Route path={ClientRoutes.PaymentTypes + "/edit/:id"} component={wrapperHeader(WrappedPaymentTypeEditComponent)} />
-                      <Route path={ClientRoutes.PaymentTypes + "/:id"} component={wrapperHeader(WrappedPaymentTypeDetailComponent)} />
-                      <Route path={ClientRoutes.PaymentTypes} component={wrapperHeader(WrappedPaymentTypeSearchComponent)} />
-					<Route path={ClientRoutes.Pens + "/create"} component={wrapperHeader(WrappedPenCreateComponent)} />
-                      <Route path={ClientRoutes.Pens + "/edit/:id"} component={wrapperHeader(WrappedPenEditComponent)} />
-                      <Route path={ClientRoutes.Pens + "/:id"} component={wrapperHeader(WrappedPenDetailComponent)} />
-                      <Route path={ClientRoutes.Pens} component={wrapperHeader(WrappedPenSearchComponent)} />
-					<Route path={ClientRoutes.Pets + "/create"} component={wrapperHeader(WrappedPetCreateComponent)} />
-                      <Route path={ClientRoutes.Pets + "/edit/:id"} component={wrapperHeader(WrappedPetEditComponent)} />
-                      <Route path={ClientRoutes.Pets + "/:id"} component={wrapperHeader(WrappedPetDetailComponent)} />
-                      <Route path={ClientRoutes.Pets} component={wrapperHeader(WrappedPetSearchComponent)} />
-					<Route path={ClientRoutes.Sales + "/create"} component={wrapperHeader(WrappedSaleCreateComponent)} />
-                      <Route path={ClientRoutes.Sales + "/edit/:id"} component={wrapperHeader(WrappedSaleEditComponent)} />
-                      <Route path={ClientRoutes.Sales + "/:id"} component={wrapperHeader(WrappedSaleDetailComponent)} />
-                      <Route path={ClientRoutes.Sales} component={wrapperHeader(WrappedSaleSearchComponent)} />
-					<Route path={ClientRoutes.Species + "/create"} component={wrapperHeader(WrappedSpeciesCreateComponent)} />
-                      <Route path={ClientRoutes.Species + "/edit/:id"} component={wrapperHeader(WrappedSpeciesEditComponent)} />
-                      <Route path={ClientRoutes.Species + "/:id"} component={wrapperHeader(WrappedSpeciesDetailComponent)} />
-                      <Route path={ClientRoutes.Species} component={wrapperHeader(WrappedSpeciesSearchComponent)} />
+          <Route exact path="/" component={wrapperHeader(Dashboard, "Dashboard")} />
+		  <Route path={ClientRoutes.Breeds + "/create"} component={wrapperHeader(WrappedBreedCreateComponent, "Breed Create")} />
+                      <Route path={ClientRoutes.Breeds + "/edit/:id"} component={wrapperHeader(WrappedBreedEditComponent, "Breed Edit")} />
+                      <Route path={ClientRoutes.Breeds + "/:id"} component={wrapperHeader(WrappedBreedDetailComponent , "Breed Detail")} />
+                      <Route path={ClientRoutes.Breeds} component={wrapperHeader(WrappedBreedSearchComponent, "Breed Search")} />
+					<Route path={ClientRoutes.PaymentTypes + "/create"} component={wrapperHeader(WrappedPaymentTypeCreateComponent, "PaymentType Create")} />
+                      <Route path={ClientRoutes.PaymentTypes + "/edit/:id"} component={wrapperHeader(WrappedPaymentTypeEditComponent, "PaymentType Edit")} />
+                      <Route path={ClientRoutes.PaymentTypes + "/:id"} component={wrapperHeader(WrappedPaymentTypeDetailComponent , "PaymentType Detail")} />
+                      <Route path={ClientRoutes.PaymentTypes} component={wrapperHeader(WrappedPaymentTypeSearchComponent, "PaymentType Search")} />
+					<Route path={ClientRoutes.Pens + "/create"} component={wrapperHeader(WrappedPenCreateComponent, "Pen Create")} />
+                      <Route path={ClientRoutes.Pens + "/edit/:id"} component={wrapperHeader(WrappedPenEditComponent, "Pen Edit")} />
+                      <Route path={ClientRoutes.Pens + "/:id"} component={wrapperHeader(WrappedPenDetailComponent , "Pen Detail")} />
+                      <Route path={ClientRoutes.Pens} component={wrapperHeader(WrappedPenSearchComponent, "Pen Search")} />
+					<Route path={ClientRoutes.Pets + "/create"} component={wrapperHeader(WrappedPetCreateComponent, "Pet Create")} />
+                      <Route path={ClientRoutes.Pets + "/edit/:id"} component={wrapperHeader(WrappedPetEditComponent, "Pet Edit")} />
+                      <Route path={ClientRoutes.Pets + "/:id"} component={wrapperHeader(WrappedPetDetailComponent , "Pet Detail")} />
+                      <Route path={ClientRoutes.Pets} component={wrapperHeader(WrappedPetSearchComponent, "Pet Search")} />
+					<Route path={ClientRoutes.Sales + "/create"} component={wrapperHeader(WrappedSaleCreateComponent, "Sale Create")} />
+                      <Route path={ClientRoutes.Sales + "/edit/:id"} component={wrapperHeader(WrappedSaleEditComponent, "Sale Edit")} />
+                      <Route path={ClientRoutes.Sales + "/:id"} component={wrapperHeader(WrappedSaleDetailComponent , "Sale Detail")} />
+                      <Route path={ClientRoutes.Sales} component={wrapperHeader(WrappedSaleSearchComponent, "Sale Search")} />
+					<Route path={ClientRoutes.Species + "/create"} component={wrapperHeader(WrappedSpeciesCreateComponent, "Species Create")} />
+                      <Route path={ClientRoutes.Species + "/edit/:id"} component={wrapperHeader(WrappedSpeciesEditComponent, "Species Edit")} />
+                      <Route path={ClientRoutes.Species + "/:id"} component={wrapperHeader(WrappedSpeciesDetailComponent , "Species Detail")} />
+                      <Route path={ClientRoutes.Species} component={wrapperHeader(WrappedSpeciesSearchComponent, "Species Search")} />
 					        </Switch>
 	  </Security>
     </BrowserRouter>
@@ -80,5 +80,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>0a24136e07daec8a95b017eb4599f580</Hash>
+    <Hash>fee3b02b9dca69c08acae5ae440e8c32</Hash>
 </Codenesium>*/

@@ -1,133 +1,180 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import ChainMapper from './chainMapper';
 import ChainViewModel from './chainViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ClaspTableComponent } from '../shared/claspTable';
+import { LinkTableComponent } from '../shared/linkTable';
 
-interface Props {
-	history:any;
-    model?:ChainViewModel
+interface ChainDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const ChainDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Chains + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="chainStatusId" className={"col-sm-2 col-form-label"}>ChainStatusId</label>
-							<div className="col-sm-12">
-								{model.model!.chainStatusIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="externalId" className={"col-sm-2 col-form-label"}>ExternalId</label>
-							<div className="col-sm-12">
-								{String(model.model!.externalId)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="id" className={"col-sm-2 col-form-label"}>Id</label>
-							<div className="col-sm-12">
-								{String(model.model!.id)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="teamId" className={"col-sm-2 col-form-label"}>TeamId</label>
-							<div className="col-sm-12">
-								{model.model!.teamIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					             </form>
-  );
+interface ChainDetailComponentState {
+  model?: ChainViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class ChainDetailComponent extends React.Component<
+  ChainDetailComponentProps,
+  ChainDetailComponentState
+> {
+  state = {
+    model: new ChainViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface ChainDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface ChainDetailComponentState
-  {
-      model?:ChainViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Chains + '/edit/' + this.state.model!.id
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class ChainDetailComponent extends React.Component<ChainDetailComponentProps, ChainDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Chains + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Chains +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.ChainClientResponseModel;
-            
-			let mapper = new ChainMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<ChainDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.ChainClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new ChainMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>ChainStatusId</h3>
+              <p>
+                {String(this.state.model!.chainStatusIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>ExternalId</h3>
+              <p>{String(this.state.model!.externalId)}</p>
+            </div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>TeamId</h3>
+              <p>{String(this.state.model!.teamIdNavigation!.toDisplay())}</p>
+            </div>
+          </div>
+          {message}
+          <div>
+            <h3>Clasps</h3>
+            <ClaspTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Chains +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Clasps
+              }
+            />
+          </div>
+          <div>
+            <h3>Links</h3>
+            <LinkTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Chains +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Links
+              }
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedChainDetailComponent = Form.create({
+  name: 'Chain Detail',
+})(ChainDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>6eab93d6ae94f408b9212c4b19682655</Hash>
+    <Hash>dc1fef6085e3d36173968b92d0aa8d55</Hash>
 </Codenesium>*/

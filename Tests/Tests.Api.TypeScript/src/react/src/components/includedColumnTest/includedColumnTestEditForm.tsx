@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -171,16 +172,24 @@ class IncludedColumnTestEditComponent extends React.Component<
             <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'Name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="name2">Name2</label>
             <br />
             {getFieldDecorator('name2', {
-              rules: [],
-            })(<Input placeholder={'Name2'} id={'name2'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<Input placeholder={'Name2'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -203,5 +212,5 @@ export const WrappedIncludedColumnTestEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0a510945ae827b2b280c257b2a9d423b</Hash>
+    <Hash>3c4ef79d5e1f3fef2c85ae3b98fbd77c</Hash>
 </Codenesium>*/

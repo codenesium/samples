@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class FamilyViewModel {
   id: number;
   note: string;
@@ -23,7 +25,7 @@ export default class FamilyViewModel {
     primaryContactLastName: string,
     primaryContactPhone: string
   ): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.note = note;
     this.primaryContactEmail = primaryContactEmail;
     this.primaryContactFirstName = primaryContactFirstName;
@@ -38,5 +40,5 @@ export default class FamilyViewModel {
 
 
 /*<Codenesium>
-    <Hash>a75d43e5894662c143e4c511e6237183</Hash>
+    <Hash>be401ea436ccc6caa27aa8de064f38c4</Hash>
 </Codenesium>*/

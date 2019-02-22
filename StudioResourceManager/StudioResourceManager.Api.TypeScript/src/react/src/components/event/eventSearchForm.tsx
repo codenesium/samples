@@ -4,12 +4,10 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import EventViewModel from './eventViewModel';
 import "react-table/react-table.css";
-import { Form, Button, Input, Row, Col, Alert } from 'antd';
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface EventSearchComponentProps
@@ -41,11 +39,11 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.EventClientResponseModel) {
+    handleEditClick(e:any, row:EventViewModel) {
          this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.EventClientResponseModel) {
+    handleDetailClick(e:any, row:EventViewModel) {
          this.props.history.push(ClientRoutes.Events + '/' + row.id);
     }
 
@@ -102,7 +100,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<EventViewModel>(),filteredRecords:new Array<EventViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<EventViewModel>(), filteredRecords:new Array<EventViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -112,10 +110,10 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
@@ -163,7 +161,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Event',
+                    Header: 'Events',
                     columns: [
 					  {
                       Header: 'Actual End Date',
@@ -226,7 +224,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.EventClientResponseModel
+                              row.original as EventViewModel
                             );
                           }}
                         >
@@ -238,7 +236,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.EventClientResponseModel
+                              row.original as EventViewModel
                             );
                           }}
                         >
@@ -250,7 +248,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.EventClientResponseModel
+                              row.original as EventViewModel
                             );
                           }}
                         >
@@ -272,5 +270,5 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
 export const WrappedEventSearchComponent = Form.create({ name: 'Event Search' })(EventSearchComponent);
 
 /*<Codenesium>
-    <Hash>451305b6fe7069aa26af8d7e93c2e06a</Hash>
+    <Hash>f92b5eff4bdfd07f8df19b9349ffc3a6</Hash>
 </Codenesium>*/

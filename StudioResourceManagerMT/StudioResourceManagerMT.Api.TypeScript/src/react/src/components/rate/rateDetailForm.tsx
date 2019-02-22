@@ -75,7 +75,7 @@ class RateDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -136,5 +136,5 @@ export const WrappedRateDetailComponent = Form.create({ name: 'Rate Detail' })(
 
 
 /*<Codenesium>
-    <Hash>e86f04d454d0c8ea6949271c320d8d1f</Hash>
+    <Hash>6fe85f2da2111f228286390430719135</Hash>
 </Codenesium>*/

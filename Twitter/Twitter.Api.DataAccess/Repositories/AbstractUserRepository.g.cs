@@ -109,6 +109,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<DirectTweet>> DirectTweetsByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<DirectTweet>()
+			       .Include(x => x.TaggedUserIdNavigation)
 			       .Where(x => x.TaggedUserId == taggedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DirectTweet>();
 		}
 
@@ -116,6 +117,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Follower>> FollowersByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Follower>()
+			       .Include(x => x.FollowedUserIdNavigation)
 			       .Where(x => x.FollowedUserId == followedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
@@ -123,6 +125,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Follower>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Follower>()
+			       .Include(x => x.FollowingUserIdNavigation)
 			       .Where(x => x.FollowingUserId == followingUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
@@ -130,6 +133,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Message>> MessagesBySenderUserId(int senderUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Message>()
+			       .Include(x => x.SenderUserIdNavigation)
 			       .Where(x => x.SenderUserId == senderUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Message>();
 		}
 
@@ -137,6 +141,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Messenger>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Messenger>()
+			       .Include(x => x.ToUserIdNavigation)
 			       .Where(x => x.ToUserId == toUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
@@ -144,6 +149,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Messenger>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Messenger>()
+			       .Include(x => x.UserIdNavigation)
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
@@ -151,6 +157,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<QuoteTweet>> QuoteTweetsByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<QuoteTweet>()
+			       .Include(x => x.RetweeterUserIdNavigation)
 			       .Where(x => x.RetweeterUserId == retweeterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
@@ -158,6 +165,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Reply>> RepliesByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Reply>()
+			       .Include(x => x.ReplierUserIdNavigation)
 			       .Where(x => x.ReplierUserId == replierUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Reply>();
 		}
 
@@ -165,6 +173,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Retweet>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Retweet>()
+			       .Include(x => x.RetwitterUserIdNavigation)
 			       .Where(x => x.RetwitterUserId == retwitterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
@@ -172,6 +181,7 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Tweet>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Tweet>()
+			       .Include(x => x.UserUserIdNavigation)
 			       .Where(x => x.UserUserId == userUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
@@ -236,5 +246,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>092258e13fdd2b30b85d7aaee2aa5f1f</Hash>
+    <Hash>7d6d971684d7e8e2b30d460554307d7b</Hash>
 </Codenesium>*/

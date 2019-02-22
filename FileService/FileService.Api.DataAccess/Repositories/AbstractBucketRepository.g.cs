@@ -108,6 +108,7 @@ namespace FileServiceNS.Api.DataAccess
 		public async virtual Task<List<File>> FilesByBucketId(int bucketId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<File>()
+			       .Include(x => x.BucketIdNavigation)
 			       .Where(x => x.BucketId == bucketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
 		}
 
@@ -137,5 +138,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c7f8fbe17e628f314bcc907a2e48e069</Hash>
+    <Hash>846937d4720faf37ff19a69eccd49f98</Hash>
 </Codenesium>*/

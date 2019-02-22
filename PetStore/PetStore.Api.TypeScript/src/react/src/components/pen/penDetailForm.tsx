@@ -6,6 +6,7 @@ import PenMapper from './penMapper';
 import PenViewModel from './penViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { PetTableComponent } from '../shared/petTable';
 
 interface PenDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class PenDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -110,6 +111,22 @@ class PenDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Pets</h3>
+            <PetTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Pens +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Pets
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -124,5 +141,5 @@ export const WrappedPenDetailComponent = Form.create({ name: 'Pen Detail' })(
 
 
 /*<Codenesium>
-    <Hash>535b8b8ad3bcaf3589ff023a5f01dafd</Hash>
+    <Hash>72b7814c9f88486c76ba3f8ba923b6d4</Hash>
 </Codenesium>*/

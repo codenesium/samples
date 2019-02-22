@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -172,15 +173,15 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldBigInt', {
               rules: [],
-            })(<Input placeholder={'FieldBigInt'} id={'fieldBigInt'} />)}
+            })(<Input placeholder={'FieldBigInt'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="fieldBinary">FieldBinary</label>
             <br />
             {getFieldDecorator('fieldBinary', {
-              rules: [],
-            })(<Input placeholder={'FieldBinary'} id={'fieldBinary'} />)}
+              rules: [{ max: 50, message: 'Exceeds max length of 50' }],
+            })(<Input placeholder={'FieldBinary'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -188,15 +189,15 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldBit', {
               rules: [],
-            })(<Input placeholder={'FieldBit'} id={'fieldBit'} />)}
+            })(<Input placeholder={'FieldBit'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="fieldChar">FieldChar</label>
             <br />
             {getFieldDecorator('fieldChar', {
-              rules: [],
-            })(<Input placeholder={'FieldChar'} id={'fieldChar'} />)}
+              rules: [{ max: 10, message: 'Exceeds max length of 10' }],
+            })(<Input placeholder={'FieldChar'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -204,7 +205,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldDate', {
               rules: [],
-            })(<Input placeholder={'FieldDate'} id={'fieldDate'} />)}
+            })(<Input placeholder={'FieldDate'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -212,7 +213,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldDateTime', {
               rules: [],
-            })(<Input placeholder={'FieldDateTime'} id={'fieldDateTime'} />)}
+            })(<Input placeholder={'FieldDateTime'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -220,7 +221,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldDateTime2', {
               rules: [],
-            })(<Input placeholder={'FieldDateTime2'} id={'fieldDateTime2'} />)}
+            })(<Input placeholder={'FieldDateTime2'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -228,12 +229,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldDateTimeOffset', {
               rules: [],
-            })(
-              <Input
-                placeholder={'FieldDateTimeOffset'}
-                id={'fieldDateTimeOffset'}
-              />
-            )}
+            })(<Input placeholder={'FieldDateTimeOffset'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -241,7 +237,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldDecimal', {
               rules: [],
-            })(<Input placeholder={'FieldDecimal'} id={'fieldDecimal'} />)}
+            })(<Input placeholder={'FieldDecimal'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -249,7 +245,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldFloat', {
               rules: [],
-            })(<Input placeholder={'FieldFloat'} id={'fieldFloat'} />)}
+            })(<Input placeholder={'FieldFloat'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -257,7 +253,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldImage', {
               rules: [],
-            })(<Input placeholder={'FieldImage'} id={'fieldImage'} />)}
+            })(<Input placeholder={'FieldImage'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -265,23 +261,28 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldMoney', {
               rules: [],
-            })(<Input placeholder={'FieldMoney'} id={'fieldMoney'} />)}
+            })(<Input placeholder={'FieldMoney'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="fieldNChar">FieldNChar</label>
             <br />
             {getFieldDecorator('fieldNChar', {
-              rules: [],
-            })(<Input placeholder={'FieldNChar'} id={'fieldNChar'} />)}
+              rules: [{ max: 10, message: 'Exceeds max length of 10' }],
+            })(<Input placeholder={'FieldNChar'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="fieldNText">FieldNText</label>
             <br />
             {getFieldDecorator('fieldNText', {
-              rules: [],
-            })(<Input placeholder={'FieldNText'} id={'fieldNText'} />)}
+              rules: [
+                {
+                  max: 1073741823,
+                  message: 'Exceeds max length of 1073741823',
+                },
+              ],
+            })(<Input placeholder={'FieldNText'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -289,15 +290,15 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldNumeric', {
               rules: [],
-            })(<Input placeholder={'FieldNumeric'} id={'fieldNumeric'} />)}
+            })(<Input placeholder={'FieldNumeric'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="fieldNVarchar">FieldNVarchar</label>
             <br />
             {getFieldDecorator('fieldNVarchar', {
-              rules: [],
-            })(<Input placeholder={'FieldNVarchar'} id={'fieldNVarchar'} />)}
+              rules: [{ max: 50, message: 'Exceeds max length of 50' }],
+            })(<Input placeholder={'FieldNVarchar'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -305,7 +306,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldReal', {
               rules: [],
-            })(<Input placeholder={'FieldReal'} id={'fieldReal'} />)}
+            })(<Input placeholder={'FieldReal'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -313,12 +314,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldSmallDateTime', {
               rules: [],
-            })(
-              <Input
-                placeholder={'FieldSmallDateTime'}
-                id={'fieldSmallDateTime'}
-              />
-            )}
+            })(<Input placeholder={'FieldSmallDateTime'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -326,7 +322,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldSmallInt', {
               rules: [],
-            })(<Input placeholder={'FieldSmallInt'} id={'fieldSmallInt'} />)}
+            })(<Input placeholder={'FieldSmallInt'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -334,9 +330,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldSmallMoney', {
               rules: [],
-            })(
-              <Input placeholder={'FieldSmallMoney'} id={'fieldSmallMoney'} />
-            )}
+            })(<Input placeholder={'FieldSmallMoney'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -344,7 +338,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldText', {
               rules: [],
-            })(<Input placeholder={'FieldText'} id={'fieldText'} />)}
+            })(<Input placeholder={'FieldText'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -352,7 +346,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldTime', {
               rules: [],
-            })(<Input placeholder={'FieldTime'} id={'fieldTime'} />)}
+            })(<Input placeholder={'FieldTime'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -360,7 +354,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldTimestamp', {
               rules: [],
-            })(<Input placeholder={'FieldTimestamp'} id={'fieldTimestamp'} />)}
+            })(<Input placeholder={'FieldTimestamp'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -368,7 +362,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldTinyInt', {
               rules: [],
-            })(<Input placeholder={'FieldTinyInt'} id={'fieldTinyInt'} />)}
+            })(<Input placeholder={'FieldTinyInt'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -376,28 +370,23 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldUniqueIdentifier', {
               rules: [],
-            })(
-              <Input
-                placeholder={'FieldUniqueIdentifier'}
-                id={'fieldUniqueIdentifier'}
-              />
-            )}
+            })(<Input placeholder={'FieldUniqueIdentifier'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="fieldVarBinary">FieldVarBinary</label>
             <br />
             {getFieldDecorator('fieldVarBinary', {
-              rules: [],
-            })(<Input placeholder={'FieldVarBinary'} id={'fieldVarBinary'} />)}
+              rules: [{ max: 50, message: 'Exceeds max length of 50' }],
+            })(<Input placeholder={'FieldVarBinary'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="fieldVarchar">FieldVarchar</label>
             <br />
             {getFieldDecorator('fieldVarchar', {
-              rules: [],
-            })(<Input placeholder={'FieldVarchar'} id={'fieldVarchar'} />)}
+              rules: [{ max: 50, message: 'Exceeds max length of 50' }],
+            })(<Input placeholder={'FieldVarchar'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -405,7 +394,7 @@ class TestAllFieldTypesNullableEditComponent extends React.Component<
             <br />
             {getFieldDecorator('fieldXML', {
               rules: [],
-            })(<Input placeholder={'FieldXML'} id={'fieldXML'} />)}
+            })(<Input placeholder={'FieldXML'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -428,5 +417,5 @@ export const WrappedTestAllFieldTypesNullableEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>44dc91aa7d956c775b23c31f90c2d661</Hash>
+    <Hash>2b91fed27932ce2b2337417772daf56a</Hash>
 </Codenesium>*/

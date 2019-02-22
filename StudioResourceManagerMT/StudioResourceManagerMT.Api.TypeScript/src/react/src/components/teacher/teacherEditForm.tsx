@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherMapper from './teacherMapper';
 import TeacherViewModel from './teacherViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TeacherEditComponentProps {
@@ -148,60 +148,74 @@ class TeacherEditComponent extends React.Component<
               <label htmlFor='birthday'>birthday</label>
               <br />             
               {getFieldDecorator('birthday', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"birthday"} id={"birthday"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"birthday"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='email'>email</label>
               <br />             
               {getFieldDecorator('email', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"email"} id={"email"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"email"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='firstName'>firstName</label>
               <br />             
               {getFieldDecorator('firstName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"firstName"} id={"firstName"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"firstName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='lastName'>lastName</label>
               <br />             
               {getFieldDecorator('lastName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"lastName"} id={"lastName"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"lastName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='phone'>phone</label>
               <br />             
               {getFieldDecorator('phone', {
-              rules:[],
+              rules:[{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"phone"} id={"phone"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"phone"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='userId'>userId</label>
               <br />             
               {getFieldDecorator('userId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"userId"} id={"userId"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"userId"} /> )}
               </Form.Item>
 
 			
@@ -221,5 +235,5 @@ class TeacherEditComponent extends React.Component<
 export const WrappedTeacherEditComponent = Form.create({ name: 'Teacher Edit' })(TeacherEditComponent);
 
 /*<Codenesium>
-    <Hash>b739abaf5601a25009cfd6457ce85196</Hash>
+    <Hash>325d506ccf617afdf3b2ed8b8a92b6dc</Hash>
 </Codenesium>*/

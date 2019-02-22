@@ -1,3 +1,4 @@
+import moment from 'moment'
 import CountryViewModel from '../country/countryViewModel'
 	
 
@@ -11,7 +12,7 @@ id:number;
     constructor() {
 		this.countryId = 0;
 this.countryIdEntity = '';
-this.countryIdNavigation = undefined;
+this.countryIdNavigation = new CountryViewModel();
 this.detail = '';
 this.id = 0;
 
@@ -19,9 +20,9 @@ this.id = 0;
 
 	setProperties(countryId : number,detail : string,id : number) : void
 	{
-		this.countryId = countryId;
-this.detail = detail;
-this.id = id;
+		this.countryId = moment(countryId,'YYYY-MM-DD');
+this.detail = moment(detail,'YYYY-MM-DD');
+this.id = moment(id,'YYYY-MM-DD');
 
 	}
 
@@ -32,5 +33,5 @@ this.id = id;
 };
 
 /*<Codenesium>
-    <Hash>121c57186ad18b225a3ba33eb8ef9e6c</Hash>
+    <Hash>ba671c83874f6b20d8229c4e89027d05</Hash>
 </Codenesium>*/

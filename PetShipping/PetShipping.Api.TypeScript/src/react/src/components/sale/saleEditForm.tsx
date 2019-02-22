@@ -1,241 +1,237 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import SaleViewModel from './saleViewModel';
+import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
+import SaleViewModel from './saleViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:SaleViewModel
+interface SaleEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-  const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.SaleClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof SaleViewModel]  && props.errors[name as keyof SaleViewModel]) {
-            response += props.errors[name as keyof SaleViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("amount") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Amount</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="amount" className={errorExistForField("amount") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("amount") && <small className="text-danger">{errorsForField("amount")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("cutomerId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CutomerId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="cutomerId" className={errorExistForField("cutomerId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("cutomerId") && <small className="text-danger">{errorsForField("cutomerId")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("id") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Id</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="id" className={errorExistForField("id") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("id") && <small className="text-danger">{errorsForField("id")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("note") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Note</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="note" className={errorExistForField("note") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("note") && <small className="text-danger">{errorsForField("note")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("petId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>PetId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="petId" className={errorExistForField("petId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("petId") && <small className="text-danger">{errorsForField("petId")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("saleDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SaleDate</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="saleDate" className={errorExistForField("saleDate") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("saleDate") && <small className="text-danger">{errorsForField("saleDate")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("salesPersonId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>SalesPersonId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="salesPersonId" className={errorExistForField("salesPersonId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("salesPersonId") && <small className="text-danger">{errorsForField("salesPersonId")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface SaleEditComponentState {
+  model?: SaleViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
 }
 
+class SaleEditComponent extends React.Component<
+  SaleEditComponentProps,
+  SaleEditComponentState
+> {
+  state = {
+    model: new SaleViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
 
-const SaleEdit = withFormik<Props, SaleViewModel>({
-    mapPropsToValues: props => {
-        let response = new SaleViewModel();
-		response.setProperties(props.model!.amount,props.model!.cutomerId,props.model!.id,props.model!.note,props.model!.petId,props.model!.saleDate,props.model!.salesPersonId);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<SaleViewModel> = { };
+    componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.amount == 0) {
-                errors.amount = "Required"
-                    }if(values.cutomerId == 0) {
-                errors.cutomerId = "Required"
-                    }if(values.id == 0) {
-                errors.id = "Required"
-                    }if(values.note == '') {
-                errors.note = "Required"
-                    }if(values.petId == 0) {
-                errors.petId = "Required"
-                    }if(values.saleDate == undefined) {
-                errors.saleDate = "Required"
-                    }if(values.salesPersonId == 0) {
-                errors.salesPersonId = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new SaleMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.Sales +'/' + values.id,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Sales +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.SaleClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'SaleEdit', 
-  })(SaleEditDisplay);
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.SaleClientResponseModel;
 
+          console.log(response);
+
+          let mapper = new SaleMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+ }
  
-  interface IParams 
-  {
-     id:number;
-  }
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as SaleViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-  interface IMatch
-  {
-     params: IParams;
+  submit = (model:SaleViewModel) =>
+  {  
+    let mapper = new SaleMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Sales + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.SaleClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
   
-  interface SaleEditComponentProps
-  {
-     match:IMatch;
-  }
+  render() {
 
-  interface SaleEditComponentState
-  {
-      model?:SaleViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class SaleEditComponent extends React.Component<SaleEditComponentProps, SaleEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Sales + '/' + this.props.match.params.id, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.SaleClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new SaleMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
     }
-    render () {
 
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<SaleEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='amount'>amount</label>
+              <br />             
+              {getFieldDecorator('amount', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"amount"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='cutomerId'>cutomerId</label>
+              <br />             
+              {getFieldDecorator('cutomerId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"cutomerId"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='note'>note</label>
+              <br />             
+              {getFieldDecorator('note', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"note"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='petId'>petId</label>
+              <br />             
+              {getFieldDecorator('petId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"petId"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='saleDate'>saleDate</label>
+              <br />             
+              {getFieldDecorator('saleDate', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"saleDate"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='salesPersonId'>salesPersonId</label>
+              <br />             
+              {getFieldDecorator('salesPersonId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"salesPersonId"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(SaleEditComponent);
 
 /*<Codenesium>
-    <Hash>4f61d3b687b05da9b5bcfc56d12d3431</Hash>
+    <Hash>4c9981d6c923b68e8653e5ed5a3be96c</Hash>
 </Codenesium>*/

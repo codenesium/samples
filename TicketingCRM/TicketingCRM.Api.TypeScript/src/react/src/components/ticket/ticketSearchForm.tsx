@@ -39,11 +39,11 @@ export default class TicketSearchComponent extends React.Component<TicketSearchC
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.TicketClientResponseModel) {
+    handleEditClick(e:any, row:TicketViewModel) {
          this.props.history.push(ClientRoutes.Tickets + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.TicketClientResponseModel) {
+    handleDetailClick(e:any, row:TicketViewModel) {
          this.props.history.push(ClientRoutes.Tickets + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class TicketSearchComponent extends React.Component<TicketSearchC
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<TicketViewModel>(),filteredRecords:new Array<TicketViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<TicketViewModel>(), filteredRecords:new Array<TicketViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class TicketSearchComponent extends React.Component<TicketSearchC
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Ticket',
+                    Header: 'Tickets',
                     columns: [
 					  {
                       Header: 'PublicId',
@@ -188,7 +188,7 @@ export default class TicketSearchComponent extends React.Component<TicketSearchC
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.TicketClientResponseModel
+                              row.original as TicketViewModel
                             );
                           }}
                         >
@@ -200,7 +200,7 @@ export default class TicketSearchComponent extends React.Component<TicketSearchC
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.TicketClientResponseModel
+                              row.original as TicketViewModel
                             );
                           }}
                         >
@@ -212,7 +212,7 @@ export default class TicketSearchComponent extends React.Component<TicketSearchC
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.TicketClientResponseModel
+                              row.original as TicketViewModel
                             );
                           }}
                         >
@@ -234,5 +234,5 @@ export default class TicketSearchComponent extends React.Component<TicketSearchC
 export const WrappedTicketSearchComponent = Form.create({ name: 'Ticket Search' })(TicketSearchComponent);
 
 /*<Codenesium>
-    <Hash>e5762fd7dae84315652b96cbe207630f</Hash>
+    <Hash>639eac90b88b57099f5445d05a828d8d</Hash>
 </Codenesium>*/

@@ -1,83 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import HandlerMapper from './handlerMapper';
 import HandlerViewModel from './handlerViewModel';
-
-interface Props {
-  history: any;
-  model?: HandlerViewModel;
-}
-
-const HandlerDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Handlers + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="countryId" className={'col-sm-2 col-form-label'}>
-          CountryId
-        </label>
-        <div className="col-sm-12">{String(model.model!.countryId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="email" className={'col-sm-2 col-form-label'}>
-          Email
-        </label>
-        <div className="col-sm-12">{String(model.model!.email)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
-          FirstName
-        </label>
-        <div className="col-sm-12">{String(model.model!.firstName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
-          LastName
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="phone" className={'col-sm-2 col-form-label'}>
-          Phone
-        </label>
-        <div className="col-sm-12">{String(model.model!.phone)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { AirTransportTableComponent } from '../shared/airTransportTable';
+import { HandlerPipelineStepTableComponent } from '../shared/handlerPipelineStepTable';
+import { OtherTransportTableComponent } from '../shared/otherTransportTable';
 
 interface HandlerDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface HandlerDetailComponentState {
@@ -88,17 +24,23 @@ interface HandlerDetailComponentState {
   errorMessage: string;
 }
 
-export default class HandlerDetailComponent extends React.Component<
+class HandlerDetailComponent extends React.Component<
   HandlerDetailComponentProps,
   HandlerDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new HandlerViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Handlers + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -119,9 +61,9 @@ export default class HandlerDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.HandlerClientResponseModel;
 
-          let mapper = new HandlerMapper();
-
           console.log(response);
+
+          let mapper = new HandlerMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -136,24 +78,110 @@ export default class HandlerDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <HandlerDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>countryId</h3>
+              <p>{String(this.state.model!.countryId)}</p>
+            </div>
+            <div>
+              <h3>email</h3>
+              <p>{String(this.state.model!.email)}</p>
+            </div>
+            <div>
+              <h3>firstName</h3>
+              <p>{String(this.state.model!.firstName)}</p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>lastName</h3>
+              <p>{String(this.state.model!.lastName)}</p>
+            </div>
+            <div>
+              <h3>phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
+            </div>
+          </div>
+          {message}
+          <div>
+            <h3>AirTransports</h3>
+            <AirTransportTableComponent
+              airlineId={this.state.model!.airlineId}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Handlers +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.AirTransports
+              }
+            />
+          </div>
+          <div>
+            <h3>HandlerPipelineSteps</h3>
+            <HandlerPipelineStepTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Handlers +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.HandlerPipelineSteps
+              }
+            />
+          </div>
+          <div>
+            <h3>OtherTransports</h3>
+            <OtherTransportTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Handlers +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.OtherTransports
+              }
+            />
+          </div>
+        </div>
       );
     } else {
       return null;
@@ -161,7 +189,11 @@ export default class HandlerDetailComponent extends React.Component<
   }
 }
 
+export const WrappedHandlerDetailComponent = Form.create({
+  name: 'Handler Detail',
+})(HandlerDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>59784d93aaf8b597c88df2528a2d717d</Hash>
+    <Hash>5ace3bfed259ae19e8d2b2c0810a697e</Hash>
 </Codenesium>*/

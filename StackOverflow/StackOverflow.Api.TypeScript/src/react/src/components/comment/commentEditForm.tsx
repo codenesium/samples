@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -168,16 +169,22 @@ class CommentEditComponent extends React.Component<
             <label htmlFor="creationDate">CreationDate</label>
             <br />
             {getFieldDecorator('creationDate', {
-              rules: [],
-            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'CreationDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="postId">PostId</label>
             <br />
             {getFieldDecorator('postId', {
-              rules: [],
-            })(<Input placeholder={'PostId'} id={'postId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'PostId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -185,15 +192,19 @@ class CommentEditComponent extends React.Component<
             <br />
             {getFieldDecorator('score', {
               rules: [],
-            })(<Input placeholder={'Score'} id={'score'} />)}
+            })(<Input placeholder={'Score'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="text">Text</label>
             <br />
             {getFieldDecorator('text', {
-              rules: [],
-            })(<Input placeholder={'Text'} id={'text'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 700, message: 'Exceeds max length of 700' },
+              ],
+            })(<Input placeholder={'Text'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -201,7 +212,7 @@ class CommentEditComponent extends React.Component<
             <br />
             {getFieldDecorator('userId', {
               rules: [],
-            })(<Input placeholder={'UserId'} id={'userId'} />)}
+            })(<Input placeholder={'UserId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -224,5 +235,5 @@ export const WrappedCommentEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>834f767154dfb418dc56c0361b034fde</Hash>
+    <Hash>f8c92e584db1ea96d4b1dd7b80b90927</Hash>
 </Codenesium>*/

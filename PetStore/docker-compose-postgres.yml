@@ -1,22 +1,38 @@
 version: '2'
 
 services:
-
-  web:
+  app:
     container_name: 'petstore-app'
-    image: 'petstore'
+    image: 'petstore-app'
     build:
       context: .
-      dockerfile: DockerFile
+      dockerfile: DockerFileReact
+	  args
+	  - REACT_APP_API_URL=http://192.168.99.100:81/
     environment:
-       - ASPNETCORE_URLS=http://+:80
-       - ConnectionStrings__ApplicationDbContext=Host=petstore-db;Persist Security Info=False;User ID=postgres;Password=test;Database=petstore;
-       - DatabaseProvider=POSTGRESQL
-       - MigrateDatabase=true
+       - REACT_APP_API_URL=http://192.168.99.100:81/
     volumes:
       - .:/var/www/app
     ports:
      - "80:80"
+    networks:
+      - petstore-network
+
+  api:
+    container_name: 'petstore-api'
+    image: 'petstore-api'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:81
+       - ConnectionStrings__ApplicationDbContext=Host=petstore-db;Persist Security Info=False;User ID=postgres;Password=test;Database=petstore;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
+    volumes:
+      - .:/var/www/api
+    ports:
+     - "81:81"
     depends_on:
      - "db"
     networks:

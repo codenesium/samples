@@ -39,11 +39,11 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.AdminClientResponseModel) {
+    handleEditClick(e:any, row:AdminViewModel) {
          this.props.history.push(ClientRoutes.Admins + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.AdminClientResponseModel) {
+    handleDetailClick(e:any, row:AdminViewModel) {
          this.props.history.push(ClientRoutes.Admins + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<AdminViewModel>(),filteredRecords:new Array<AdminViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<AdminViewModel>(), filteredRecords:new Array<AdminViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Admin',
+                    Header: 'Admins',
                     columns: [
 					  {
                       Header: 'Birthday',
@@ -214,7 +214,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.AdminClientResponseModel
+                              row.original as AdminViewModel
                             );
                           }}
                         >
@@ -226,7 +226,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.AdminClientResponseModel
+                              row.original as AdminViewModel
                             );
                           }}
                         >
@@ -238,7 +238,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.AdminClientResponseModel
+                              row.original as AdminViewModel
                             );
                           }}
                         >
@@ -260,5 +260,5 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
 export const WrappedAdminSearchComponent = Form.create({ name: 'Admin Search' })(AdminSearchComponent);
 
 /*<Codenesium>
-    <Hash>bfb220e30d22c6c5c57414231e1430d1</Hash>
+    <Hash>a88554bc990e5b9577e3f3b5c735c477</Hash>
 </Codenesium>*/

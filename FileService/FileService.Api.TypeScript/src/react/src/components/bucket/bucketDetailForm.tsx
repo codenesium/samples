@@ -6,6 +6,10 @@ import BucketMapper from './bucketMapper';
 import BucketViewModel from './bucketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import {FileTableComponent} from '../shared/fileTable'
+	
+
+
 
 interface BucketDetailComponentProps {
   form: WrappedFormUtils;
@@ -73,7 +77,7 @@ BucketDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -113,6 +117,17 @@ BucketDetailComponentState
 						 </div>
 					   		  </div>
           {message}
+		 <div>
+            <h3>Files</h3>
+            <FileTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Buckets + '/' + this.state.model!.id + '/' + ApiRoutes.Files}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -126,5 +141,5 @@ export const WrappedBucketDetailComponent = Form.create({ name: 'Bucket Detail' 
 );
 
 /*<Codenesium>
-    <Hash>3dc22cbd71e1bc017257db568d964326</Hash>
+    <Hash>f25437aabef78988870767d0d293fee3</Hash>
 </Codenesium>*/

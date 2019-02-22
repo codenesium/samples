@@ -75,7 +75,7 @@ class TimestampCheckDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -132,5 +132,5 @@ export const WrappedTimestampCheckDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cb8aa05c2e5c5a0e61d38ee053f3c6c3</Hash>
+    <Hash>cfa60de1bce36d864bca12890c8848da</Hash>
 </Codenesium>*/

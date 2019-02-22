@@ -7,6 +7,9 @@ import PostHistoryTypeViewModel from './postHistoryTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface PostHistoryTypeDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -73,7 +76,7 @@ PostHistoryTypeDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -109,6 +112,8 @@ PostHistoryTypeDetailComponentState
 						 </div>
 					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -122,5 +127,5 @@ export const WrappedPostHistoryTypeDetailComponent = Form.create({ name: 'PostHi
 );
 
 /*<Codenesium>
-    <Hash>2a4927169d9fb1819bc9862b334b05fa</Hash>
+    <Hash>17f5dd3146c32fa90e45a9b10561e659</Hash>
 </Codenesium>*/

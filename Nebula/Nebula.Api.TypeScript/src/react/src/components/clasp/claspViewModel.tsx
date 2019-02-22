@@ -1,4 +1,4 @@
-import ChainViewModel from '../chain/chainViewModel';
+import moment from 'moment';
 import ChainViewModel from '../chain/chainViewModel';
 
 export default class ClaspViewModel {
@@ -14,10 +14,10 @@ export default class ClaspViewModel {
     this.id = 0;
     this.nextChainId = 0;
     this.nextChainIdEntity = '';
-    this.nextChainIdNavigation = undefined;
+    this.nextChainIdNavigation = new ChainViewModel();
     this.previousChainId = 0;
     this.previousChainIdEntity = '';
-    this.previousChainIdNavigation = undefined;
+    this.previousChainIdNavigation = new ChainViewModel();
   }
 
   setProperties(
@@ -37,5 +37,5 @@ export default class ClaspViewModel {
 
 
 /*<Codenesium>
-    <Hash>8cb1832dfb10dc7e7d49352850d3a731</Hash>
+    <Hash>938ec3eda8c409eddb6cca0f679bb617</Hash>
 </Codenesium>*/

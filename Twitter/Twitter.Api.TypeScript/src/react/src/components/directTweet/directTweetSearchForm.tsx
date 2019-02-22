@@ -4,15 +4,17 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import DirectTweetMapper from './directTweetMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
 import ReactTable from "react-table";
 import DirectTweetViewModel from './directTweetViewModel';
 import "react-table/react-table.css";
+import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface DirectTweetSearchComponentProps
 {
-    history:any;
+     form:WrappedFormUtils;
+	 history:any;
+	 match:any;
 }
 
 interface DirectTweetSearchComponentState
@@ -37,11 +39,11 @@ export default class DirectTweetSearchComponent extends React.Component<DirectTw
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.DirectTweetClientResponseModel) {
+    handleEditClick(e:any, row:DirectTweetViewModel) {
          this.props.history.push(ClientRoutes.DirectTweets + '/edit/' + row.tweetId);
     }
 
-    handleDetailClick(e:any, row:Api.DirectTweetClientResponseModel) {
+    handleDetailClick(e:any, row:DirectTweetViewModel) {
          this.props.history.push(ClientRoutes.DirectTweets + '/' + row.tweetId);
     }
 
@@ -98,7 +100,7 @@ export default class DirectTweetSearchComponent extends React.Component<DirectTw
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<DirectTweetViewModel>(),filteredRecords:new Array<DirectTweetViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<DirectTweetViewModel>(), filteredRecords:new Array<DirectTweetViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -108,44 +110,58 @@ export default class DirectTweetSearchComponent extends React.Component<DirectTw
     
     render () {
         if(this.state.loading) {
-            return <LoadingForm />;
+            return <Spin size="large" />;
         } 
 		else if(this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+            return <Alert message={this.state.errorMessage} type="error" />
         }
         else if(this.state.loaded) {
 
             let errorResponse:JSX.Element = <span></span>;
 
-            if(this.state.deleteSubmitted){
-                if(this.state.deleteSuccess){
-                    errorResponse =<div className="alert alert-success">{this.state.deleteResponse}</div>   
-                }
-                else {
-                    errorResponse = <div className="alert alert-danger">{this.state.deleteResponse}</div>   
-                }
-            }
-            return (
+            if (this.state.deleteSubmitted) {
+				if (this.state.deleteSuccess) {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="success" style={{marginBottom:"25px"}} />
+				  );
+				} else {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="error" style={{marginBottom:"25px"}} />
+				  );
+				}
+			}
+            
+			return (
             <div>
-                { 
-                    errorResponse
-                }
-            <form>
-                <div className="form-group row">
-                    <div className="col-sm-4">
-                    </div>
-                    <div className="col-sm-4">
-                        <input name="search" className="form-control" placeholder={"Search"} value={this.state.searchValue} onChange={e => this.handleSearchChanged(e)}/>
-                    </div>
-                    <div className="col-sm-4">
-                        <button className="btn btn-primary btn-sm align-middle float-right vertically-center search-create-button" onClick={e => this.handleCreateClick(e)}><i className="fas fa-plus"></i></button>
-                    </div>
-                </div>
-            </form>
+            {errorResponse}
+            <Row>
+				<Col span={8}></Col>
+				<Col span={8}>   
+				   <Input 
+					placeholder={"Search"} 
+					id={"search"} 
+					onChange={(e:any) => {
+					  this.handleSearchChanged(e)
+				   }}/>
+				</Col>
+				<Col span={8}>  
+				  <Button 
+				  style={{'float':'right'}}
+				  type="primary" 
+				  onClick={(e:any) => {
+                        this.handleCreateClick(e)
+						}}
+				  >
+				  +
+				  </Button>
+				</Col>
+			</Row>
+			<br />
+			<br />
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'DirectTweet',
+                    Header: 'DirectTweets',
                     columns: [
 					  {
                       Header: 'Content',
@@ -178,9 +194,43 @@ export default class DirectTweetSearchComponent extends React.Component<DirectTw
                     },
                     {
                         Header: 'Actions',
-                        Cell: row => (<div><button className="btn btn-sm" onClick={e => {this.handleDetailClick(e, row.original as Api.DirectTweetClientResponseModel)}} ><i className="fas fa-search"></i></button>
-                        &nbsp;<button className="btn btn-primary btn-sm" onClick={e => {this.handleEditClick(e, row.original as Api.DirectTweetClientResponseModel)}} ><i className="fas fa-edit"></i></button>
-                        &nbsp;<button className="btn btn-danger btn-sm" onClick={e => {this.handleDeleteClick(e, row.original as Api.DirectTweetClientResponseModel)}} ><i className="far fa-trash-alt"></i></button>
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
+                            this.handleDetailClick(
+                              e,
+                              row.original as DirectTweetViewModel
+                            );
+                          }}
+                        >
+                          <i className="fas fa-search" />
+                        </Button>
+                        &nbsp;
+                        <Button
+                          type="primary" 
+                          onClick={(e:any) => {
+                            this.handleEditClick(
+                              e,
+                              row.original as DirectTweetViewModel
+                            );
+                          }}
+                        >
+                          <i className="fas fa-edit" />
+                        </Button>
+                        &nbsp;
+                        <Button
+                          type="danger" 
+                          onClick={(e:any) => {
+                            this.handleDeleteClick(
+                              e,
+                              row.original as DirectTweetViewModel
+                            );
+                          }}
+                        >
+                          <i className="far fa-trash-alt" />
+                        </Button>
+
                         </div>)
                     }],
                     
@@ -193,6 +243,8 @@ export default class DirectTweetSearchComponent extends React.Component<DirectTw
     }
 }
 
+export const WrappedDirectTweetSearchComponent = Form.create({ name: 'DirectTweet Search' })(DirectTweetSearchComponent);
+
 /*<Codenesium>
-    <Hash>a1db27da780c0647abff66624a27dc42</Hash>
+    <Hash>4f1dc653e896d73c1f8bd1f8901b9550</Hash>
 </Codenesium>*/

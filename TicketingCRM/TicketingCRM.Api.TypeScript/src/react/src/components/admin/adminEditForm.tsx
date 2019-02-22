@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface AdminEditComponentProps {
@@ -148,60 +148,78 @@ class AdminEditComponent extends React.Component<
               <label htmlFor='email'>email</label>
               <br />             
               {getFieldDecorator('email', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"email"} id={"email"} /> )}
+              ( <Input placeholder={"email"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='firstName'>firstName</label>
               <br />             
               {getFieldDecorator('firstName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"firstName"} id={"firstName"} /> )}
+              ( <Input placeholder={"firstName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='lastName'>lastName</label>
               <br />             
               {getFieldDecorator('lastName', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"lastName"} id={"lastName"} /> )}
+              ( <Input placeholder={"lastName"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='password'>password</label>
               <br />             
               {getFieldDecorator('password', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"password"} id={"password"} /> )}
+              ( <Input placeholder={"password"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='phone'>phone</label>
               <br />             
               {getFieldDecorator('phone', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <InputNumber placeholder={"phone"} id={"phone"} /> )}
+              ( <InputNumber placeholder={"phone"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='username'>username</label>
               <br />             
               {getFieldDecorator('username', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"username"} id={"username"} /> )}
+              ( <Input placeholder={"username"} /> )}
               </Form.Item>
 
 			
@@ -221,5 +239,5 @@ class AdminEditComponent extends React.Component<
 export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(AdminEditComponent);
 
 /*<Codenesium>
-    <Hash>6d4aebcad6597d1b70b358e20114abeb</Hash>
+    <Hash>12212362228ca9c929f815552282ffd5</Hash>
 </Codenesium>*/

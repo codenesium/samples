@@ -1,214 +1,202 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import DestinationViewModel from './destinationViewModel';
+import * as Api from '../../api/models';
 import DestinationMapper from './destinationMapper';
+import DestinationViewModel from './destinationViewModel';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:DestinationViewModel
+interface DestinationEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
-  const DestinationEditDisplay = (props: FormikProps<DestinationViewModel>) => {
-
-   let status = props.status as UpdateResponse<Api.DestinationClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   { 
-        let response = '';
-        if(props.touched[name as keyof DestinationViewModel]  && props.errors[name as keyof DestinationViewModel]) {
-            response += props.errors[name as keyof DestinationViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-    
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (
-
-          <form onSubmit={props.handleSubmit} role="form">
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("countryId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CountryId</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="countryId" className={errorExistForField("countryId") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("countryId") && <small className="text-danger">{errorsForField("countryId")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("id") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Id</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="id" className={errorExistForField("id") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("id") && <small className="text-danger">{errorsForField("id")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("order") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Order</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="order" className={errorExistForField("order") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("order") && <small className="text-danger">{errorsForField("order")}</small>}
-                        </div>
-                    </div>
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>
-  );
+interface DestinationEditComponentState {
+  model?: DestinationViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted:boolean;
 }
 
+class DestinationEditComponent extends React.Component<
+  DestinationEditComponentProps,
+  DestinationEditComponentState
+> {
+  state = {
+    model: new DestinationViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+	submitted:false
+  };
 
-const DestinationEdit = withFormik<Props, DestinationViewModel>({
-    mapPropsToValues: props => {
-        let response = new DestinationViewModel();
-		response.setProperties(props.model!.countryId,props.model!.id,props.model!.name,props.model!.order);	
-		return response;
-      },
-  
-    // Custom sync validation
-    validate: values => {
-      let errors:FormikErrors<DestinationViewModel> = { };
+    componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-	  if(values.countryId == 0) {
-                errors.countryId = "Required"
-                    }if(values.id == 0) {
-                errors.id = "Required"
-                    }if(values.name == '') {
-                errors.name = "Required"
-                    }if(values.order == 0) {
-                errors.order = "Required"
-                    }
-
-      return errors;
-    },
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-		  
-	    let mapper = new DestinationMapper();
-
-        axios.put(Constants.ApiEndpoint + ApiRoutes.Destinations +'/' + values.id,
-           
-	    mapper.mapViewModelToApiRequest(values),
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Destinations +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as UpdateResponse<Api.DestinationClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-        }, 
-		error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-        .then(response =>
-        {
-            // cleanup
-        })
-    },
-  
-    displayName: 'DestinationEdit', 
-  })(DestinationEditDisplay);
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.DestinationClientResponseModel;
 
+          console.log(response);
+
+          let mapper = new DestinationMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+ }
  
-  interface IParams 
-  {
-     id:number;
-  }
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
+      if (!err) {
+        let model = values as DestinationViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-  interface IMatch
-  {
-     params: IParams;
+  submit = (model:DestinationViewModel) =>
+  {  
+    let mapper = new DestinationMapper();
+     axios
+      .put(
+        Constants.ApiEndpoint + ApiRoutes.Destinations + '/' + this.state.model!.id,
+        mapper.mapViewModelToApiRequest(model),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.DestinationClientRequestModel
+          >;
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+        }
+      ); 
   }
   
-  interface DestinationEditComponentProps
-  {
-     match:IMatch;
-  }
+  render() {
 
-  interface DestinationEditComponentState
-  {
-      model?:DestinationViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class DestinationEditComponent extends React.Component<DestinationEditComponentProps, DestinationEditComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Destinations + '/' + this.props.match.params.id, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.DestinationClientResponseModel;
-            
-            console.log(response);
-
-			let mapper = new DestinationMapper();
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, 
-		error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
+      }
     }
-    render () {
 
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-        else if (this.state.errorOccurred) {
-			return <ErrorForm message={this.state.errorMessage} />;
-        }
-        else if (this.state.loaded) {
-            return (<DestinationEdit model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } 
+    else if (this.state.loaded) {
+
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='countryId'>countryId</label>
+              <br />             
+              {getFieldDecorator('countryId', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"countryId"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='name'>name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"name"} /> )}
+              </Form.Item>
+
+						<Form.Item>
+              <label htmlFor='order'>order</label>
+              <br />             
+              {getFieldDecorator('order', {
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"order"} /> )}
+              </Form.Item>
+
+			
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
+    } else {
+      return null;
     }
+  }
 }
+
+export const WrappedDestinationEditComponent = Form.create({ name: 'Destination Edit' })(DestinationEditComponent);
 
 /*<Codenesium>
-    <Hash>8539ba4e27288df4a3a4284c6029f177</Hash>
+    <Hash>4b2801bc739b8a7c8e628637980f2dbc</Hash>
 </Codenesium>*/

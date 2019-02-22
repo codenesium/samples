@@ -7,6 +7,9 @@ import BadgeViewModel from './badgeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface BadgeDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -73,7 +76,7 @@ BadgeDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -117,6 +120,8 @@ BadgeDetailComponentState
 						 </div>
 					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -130,5 +135,5 @@ export const WrappedBadgeDetailComponent = Form.create({ name: 'Badge Detail' })
 );
 
 /*<Codenesium>
-    <Hash>15867a33a5136141aa6e87f01447b80e</Hash>
+    <Hash>b0d1e79ee4e95b0f09b652aed7f8582e</Hash>
 </Codenesium>*/

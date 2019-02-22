@@ -13,13 +13,14 @@ interface WrapperHeaderState {
   collapsed: boolean;
 }
 export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
 ) => {
   class WrapperHeaderComponent extends React.Component<
     WrapperHeaderProps & RouteComponentProps,
     WrapperHeaderState
   > {
-    state = { collapsed: false };
+    state = { collapsed: true };
 
     onCollapse = () => {
       this.setState({ ...this.state, collapsed: !this.state.collapsed });
@@ -34,10 +35,15 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem key="Home">
+              <MenuItem
+                key="Home"
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
+              >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}>Home</Link>
+                <Link to={'/'} />
               </MenuItem>
 
               <MenuItem key="breed">
@@ -80,6 +86,7 @@ export const wrapperHeader = (
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
+              <h2>{displayName}</h2>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
@@ -95,5 +102,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>e47b902ec48f887ed2c649c7e46eeca0</Hash>
+    <Hash>746d83b4699d820c3d58077111fc7fae</Hash>
 </Codenesium>*/

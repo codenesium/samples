@@ -11,6 +11,9 @@ export default class TestAllFieldTypeViewModel {
   fieldDateTimeOffset: any;
   fieldDecimal: number;
   fieldFloat: number;
+  fieldGeography: number;
+  fieldGeometry: number;
+  fieldHierarchyId: any;
   fieldImage: any;
   fieldMoney: number;
   fieldNChar: string;
@@ -28,6 +31,7 @@ export default class TestAllFieldTypeViewModel {
   fieldUniqueIdentifier: any;
   fieldVarBinary: any;
   fieldVarchar: string;
+  fieldVariant: string;
   fieldXML: string;
   id: number;
 
@@ -42,6 +46,9 @@ export default class TestAllFieldTypeViewModel {
     this.fieldDateTimeOffset = undefined;
     this.fieldDecimal = 0;
     this.fieldFloat = 0;
+    this.fieldGeography = 0;
+    this.fieldGeometry = 0;
+    this.fieldHierarchyId = undefined;
     this.fieldImage = undefined;
     this.fieldMoney = 0;
     this.fieldNChar = '';
@@ -59,6 +66,7 @@ export default class TestAllFieldTypeViewModel {
     this.fieldUniqueIdentifier = undefined;
     this.fieldVarBinary = undefined;
     this.fieldVarchar = '';
+    this.fieldVariant = '';
     this.fieldXML = '';
     this.id = 0;
   }
@@ -74,6 +82,9 @@ export default class TestAllFieldTypeViewModel {
     fieldDateTimeOffset: any,
     fieldDecimal: number,
     fieldFloat: number,
+    fieldGeography: number,
+    fieldGeometry: number,
+    fieldHierarchyId: any,
     fieldImage: any,
     fieldMoney: number,
     fieldNChar: string,
@@ -91,6 +102,7 @@ export default class TestAllFieldTypeViewModel {
     fieldUniqueIdentifier: any,
     fieldVarBinary: any,
     fieldVarchar: string,
+    fieldVariant: string,
     fieldXML: string,
     id: number
   ): void {
@@ -98,12 +110,15 @@ export default class TestAllFieldTypeViewModel {
     this.fieldBinary = fieldBinary;
     this.fieldBit = fieldBit;
     this.fieldChar = fieldChar;
-    this.fieldDate = fieldDate;
-    this.fieldDateTime = fieldDateTime;
-    this.fieldDateTime2 = fieldDateTime2;
+    this.fieldDate = moment(fieldDate, 'YYYY-MM-DD');
+    this.fieldDateTime = moment(fieldDateTime, 'YYYY-MM-DD');
+    this.fieldDateTime2 = moment(fieldDateTime2, 'YYYY-MM-DD');
     this.fieldDateTimeOffset = fieldDateTimeOffset;
     this.fieldDecimal = fieldDecimal;
     this.fieldFloat = fieldFloat;
+    this.fieldGeography = fieldGeography;
+    this.fieldGeometry = fieldGeometry;
+    this.fieldHierarchyId = fieldHierarchyId;
     this.fieldImage = fieldImage;
     this.fieldMoney = fieldMoney;
     this.fieldNChar = fieldNChar;
@@ -111,7 +126,7 @@ export default class TestAllFieldTypeViewModel {
     this.fieldNumeric = fieldNumeric;
     this.fieldNVarchar = fieldNVarchar;
     this.fieldReal = fieldReal;
-    this.fieldSmallDateTime = fieldSmallDateTime;
+    this.fieldSmallDateTime = moment(fieldSmallDateTime, 'YYYY-MM-DD');
     this.fieldSmallInt = fieldSmallInt;
     this.fieldSmallMoney = fieldSmallMoney;
     this.fieldText = fieldText;
@@ -121,6 +136,7 @@ export default class TestAllFieldTypeViewModel {
     this.fieldUniqueIdentifier = fieldUniqueIdentifier;
     this.fieldVarBinary = fieldVarBinary;
     this.fieldVarchar = fieldVarchar;
+    this.fieldVariant = fieldVariant;
     this.fieldXML = fieldXML;
     this.id = id;
   }
@@ -132,5 +148,5 @@ export default class TestAllFieldTypeViewModel {
 
 
 /*<Codenesium>
-    <Hash>f422f3576e4ac3f912444de6ac732457</Hash>
+    <Hash>c9dfa9ca971c671acc9e534cdb37d75f</Hash>
 </Codenesium>*/

@@ -75,7 +75,7 @@ class ColumnSameAsFKTableDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -132,5 +132,5 @@ export const WrappedColumnSameAsFKTableDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>aa0b88c430a9c607579278cf08d3de81</Hash>
+    <Hash>ea4c2c3f84a0f9ae46bc802f03142982</Hash>
 </Codenesium>*/

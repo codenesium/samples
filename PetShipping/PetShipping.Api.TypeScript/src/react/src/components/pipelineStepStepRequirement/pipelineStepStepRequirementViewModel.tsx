@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PipelineStepViewModel from '../pipelineStep/pipelineStepViewModel';
 
 export default class PipelineStepStepRequirementViewModel {
@@ -13,7 +14,7 @@ export default class PipelineStepStepRequirementViewModel {
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
-    this.pipelineStepIdNavigation = undefined;
+    this.pipelineStepIdNavigation = new PipelineStepViewModel();
     this.requirementMet = false;
   }
 
@@ -23,10 +24,10 @@ export default class PipelineStepStepRequirementViewModel {
     pipelineStepId: number,
     requirementMet: boolean
   ): void {
-    this.detail = detail;
-    this.id = id;
-    this.pipelineStepId = pipelineStepId;
-    this.requirementMet = requirementMet;
+    this.detail = moment(detail, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+    this.requirementMet = moment(requirementMet, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -36,5 +37,5 @@ export default class PipelineStepStepRequirementViewModel {
 
 
 /*<Codenesium>
-    <Hash>64aab7b917359412e18729590730b47c</Hash>
+    <Hash>2c14ab164cb93f89d7a9a9d5ada44a24</Hash>
 </Codenesium>*/

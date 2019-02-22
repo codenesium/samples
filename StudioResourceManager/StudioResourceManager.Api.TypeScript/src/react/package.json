@@ -9,16 +9,14 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@types/react-router-dom": "latest",
-    "@types/react-select": "latest",
     "@types/react-table": "latest",
     "@types/yup": "latest",
     "antd": "latest",
     "axios": "latest",
-    "formik": "latest",
+	"moment": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
-    "react-select": "latest",
     "react-scripts": "latest",
     "react-table": "latest",
     "typescript": "latest",
@@ -26,8 +24,8 @@
     "babel-loader": "^8.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "set REACT_APP_API_URL=http://localhost/&& react-scripts start",
+    "build": "set REACT_APP_API_URL=http://localhost/&& react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

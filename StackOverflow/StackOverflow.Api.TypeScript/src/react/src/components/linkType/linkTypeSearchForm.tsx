@@ -50,11 +50,11 @@ export default class LinkTypeSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.LinkTypeClientResponseModel) {
+  handleEditClick(e: any, row: LinkTypeViewModel) {
     this.props.history.push(ClientRoutes.LinkTypes + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.LinkTypeClientResponseModel) {
+  handleDetailClick(e: any, row: LinkTypeViewModel) {
     this.props.history.push(ClientRoutes.LinkTypes + '/' + row.id);
   }
 
@@ -135,7 +135,7 @@ export default class LinkTypeSearchComponent extends React.Component<
             records: new Array<LinkTypeViewModel>(),
             filteredRecords: new Array<LinkTypeViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -205,7 +205,7 @@ export default class LinkTypeSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'LinkType',
+                Header: 'LinkTypes',
                 columns: [
                   {
                     Header: 'Type',
@@ -223,7 +223,7 @@ export default class LinkTypeSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.LinkTypeClientResponseModel
+                              row.original as LinkTypeViewModel
                             );
                           }}
                         >
@@ -235,7 +235,7 @@ export default class LinkTypeSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.LinkTypeClientResponseModel
+                              row.original as LinkTypeViewModel
                             );
                           }}
                         >
@@ -247,7 +247,7 @@ export default class LinkTypeSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.LinkTypeClientResponseModel
+                              row.original as LinkTypeViewModel
                             );
                           }}
                         >
@@ -274,5 +274,5 @@ export const WrappedLinkTypeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fd72b8e73d0ac893f0b9bf9860027120</Hash>
+    <Hash>411e1ac2389af4abd3aca521ada74fe2</Hash>
 </Codenesium>*/

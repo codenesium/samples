@@ -1,13 +1,12 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherSkillMapper from './teacherSkillMapper';
 import TeacherSkillViewModel from './teacherSkillViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
+import { RateTableComponent } from '../shared/rateTable';
 
 interface TeacherSkillDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,21 +23,23 @@ interface TeacherSkillDetailComponentState {
 }
 
 class TeacherSkillDetailComponent extends React.Component<
-TeacherSkillDetailComponentProps,
-TeacherSkillDetailComponentState
+  TeacherSkillDetailComponentProps,
+  TeacherSkillDetailComponentState
 > {
   state = {
     model: new TeacherSkillViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.TeacherSkills + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.TeacherSkills + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -75,7 +76,7 @@ TeacherSkillDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -84,33 +85,48 @@ TeacherSkillDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<div>name</div>
-							<div>{this.state.model!.name}</div>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
+          <div>
+            <h3>Rates</h3>
+            <RateTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.TeacherSkills +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Rates
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -119,10 +135,11 @@ TeacherSkillDetailComponentState
   }
 }
 
-export const WrappedTeacherSkillDetailComponent = Form.create({ name: 'TeacherSkill Detail' })(
-  TeacherSkillDetailComponent
-);
+export const WrappedTeacherSkillDetailComponent = Form.create({
+  name: 'TeacherSkill Detail',
+})(TeacherSkillDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>253b56b6a836e9af0f9ed05d05f2ae21</Hash>
+    <Hash>59a1f3e04dcce95b0881fed0abb08220</Hash>
 </Codenesium>*/

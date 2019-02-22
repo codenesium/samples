@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SalesOrderHeaderMapper from './salesOrderHeaderMapper';
 import SalesOrderHeaderViewModel from './salesOrderHeaderViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SalesOrderHeaderCreateComponentProps {
@@ -102,40 +102,45 @@ class SalesOrderHeaderCreateComponent extends React.Component<
               <label htmlFor='accountNumber'>AccountNumber</label>
               <br />             
               {getFieldDecorator('accountNumber', {
-              rules:[],
+              rules:[{ max: 15, message: 'Exceeds max length of 15' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AccountNumber"} id={"accountNumber"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AccountNumber"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='billToAddressID'>BillToAddressID</label>
               <br />             
               {getFieldDecorator('billToAddressID', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"BillToAddressID"} id={"billToAddressID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"BillToAddressID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='comment'>Comment</label>
               <br />             
               {getFieldDecorator('comment', {
-              rules:[],
+              rules:[{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Comment"} id={"comment"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Comment"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='creditCardApprovalCode'>CreditCardApprovalCode</label>
               <br />             
               {getFieldDecorator('creditCardApprovalCode', {
-              rules:[],
+              rules:[{ max: 15, message: 'Exceeds max length of 15' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CreditCardApprovalCode"} id={"creditCardApprovalCode"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CreditCardApprovalCode"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -145,7 +150,7 @@ class SalesOrderHeaderCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CreditCardID"} id={"creditCardID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CreditCardID"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -155,107 +160,127 @@ class SalesOrderHeaderCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CurrencyRateID"} id={"currencyRateID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CurrencyRateID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='customerID'>CustomerID</label>
               <br />             
               {getFieldDecorator('customerID', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CustomerID"} id={"customerID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CustomerID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='dueDate'>DueDate</label>
               <br />             
               {getFieldDecorator('dueDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DueDate"} id={"dueDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DueDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='freight'>Freight</label>
               <br />             
               {getFieldDecorator('freight', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Freight"} id={"freight"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Freight"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='modifiedDate'>ModifiedDate</label>
               <br />             
               {getFieldDecorator('modifiedDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='onlineOrderFlag'>OnlineOrderFlag</label>
               <br />             
               {getFieldDecorator('onlineOrderFlag', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"OnlineOrderFlag"} id={"onlineOrderFlag"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"OnlineOrderFlag"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='orderDate'>OrderDate</label>
               <br />             
               {getFieldDecorator('orderDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"OrderDate"} id={"orderDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"OrderDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='purchaseOrderNumber'>PurchaseOrderNumber</label>
               <br />             
               {getFieldDecorator('purchaseOrderNumber', {
-              rules:[],
+              rules:[{ max: 25, message: 'Exceeds max length of 25' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PurchaseOrderNumber"} id={"purchaseOrderNumber"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PurchaseOrderNumber"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='revisionNumber'>RevisionNumber</label>
               <br />             
               {getFieldDecorator('revisionNumber', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"RevisionNumber"} id={"revisionNumber"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"RevisionNumber"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='rowguid'>rowguid</label>
               <br />             
               {getFieldDecorator('rowguid', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='salesOrderNumber'>SalesOrderNumber</label>
               <br />             
               {getFieldDecorator('salesOrderNumber', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 25, message: 'Exceeds max length of 25' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SalesOrderNumber"} id={"salesOrderNumber"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SalesOrderNumber"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -265,7 +290,7 @@ class SalesOrderHeaderCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SalesPersonID"} id={"salesPersonID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SalesPersonID"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -275,57 +300,67 @@ class SalesOrderHeaderCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ShipDate"} id={"shipDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ShipDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='shipMethodID'>ShipMethodID</label>
               <br />             
               {getFieldDecorator('shipMethodID', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ShipMethodID"} id={"shipMethodID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ShipMethodID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='shipToAddressID'>ShipToAddressID</label>
               <br />             
               {getFieldDecorator('shipToAddressID', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ShipToAddressID"} id={"shipToAddressID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ShipToAddressID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='status'>Status</label>
               <br />             
               {getFieldDecorator('status', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Status"} id={"status"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Status"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='subTotal'>SubTotal</label>
               <br />             
               {getFieldDecorator('subTotal', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SubTotal"} id={"subTotal"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SubTotal"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='taxAmt'>TaxAmt</label>
               <br />             
               {getFieldDecorator('taxAmt', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxAmt"} id={"taxAmt"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TaxAmt"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -335,17 +370,19 @@ class SalesOrderHeaderCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} id={"territoryID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='totalDue'>TotalDue</label>
               <br />             
               {getFieldDecorator('totalDue', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TotalDue"} id={"totalDue"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TotalDue"} /> )}
               </Form.Item>
 
 			
@@ -365,5 +402,5 @@ class SalesOrderHeaderCreateComponent extends React.Component<
 export const WrappedSalesOrderHeaderCreateComponent = Form.create({ name: 'SalesOrderHeader Create' })(SalesOrderHeaderCreateComponent);
 
 /*<Codenesium>
-    <Hash>4fe5c25dd8e378e7734dae91de961fef</Hash>
+    <Hash>a9e6fa8ed82b6ac0e05eb674048d5a27</Hash>
 </Codenesium>*/

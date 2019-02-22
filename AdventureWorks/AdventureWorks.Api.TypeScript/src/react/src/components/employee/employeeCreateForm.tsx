@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EmployeeMapper from './employeeMapper';
 import EmployeeViewModel from './employeeViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface EmployeeCreateComponentProps {
@@ -102,90 +102,113 @@ class EmployeeCreateComponent extends React.Component<
               <label htmlFor='birthDate'>BirthDate</label>
               <br />             
               {getFieldDecorator('birthDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"BirthDate"} id={"birthDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"BirthDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='currentFlag'>CurrentFlag</label>
               <br />             
               {getFieldDecorator('currentFlag', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CurrentFlag"} id={"currentFlag"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"CurrentFlag"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='gender'>Gender</label>
               <br />             
               {getFieldDecorator('gender', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 1, message: 'Exceeds max length of 1' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Gender"} id={"gender"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Gender"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='hireDate'>HireDate</label>
               <br />             
               {getFieldDecorator('hireDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"HireDate"} id={"hireDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"HireDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='jobTitle'>JobTitle</label>
               <br />             
               {getFieldDecorator('jobTitle', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 50, message: 'Exceeds max length of 50' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"JobTitle"} id={"jobTitle"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"JobTitle"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='loginID'>LoginID</label>
               <br />             
               {getFieldDecorator('loginID', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 256, message: 'Exceeds max length of 256' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"LoginID"} id={"loginID"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"LoginID"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='maritalStatu'>MaritalStatus</label>
               <br />             
               {getFieldDecorator('maritalStatu', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 1, message: 'Exceeds max length of 1' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"MaritalStatus"} id={"maritalStatu"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"MaritalStatus"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='modifiedDate'>ModifiedDate</label>
               <br />             
               {getFieldDecorator('modifiedDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} id={"modifiedDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='nationalIDNumber'>NationalIDNumber</label>
               <br />             
               {getFieldDecorator('nationalIDNumber', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 15, message: 'Exceeds max length of 15' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"NationalIDNumber"} id={"nationalIDNumber"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"NationalIDNumber"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -195,47 +218,55 @@ class EmployeeCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"OrganizationLevel"} id={"organizationLevel"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"OrganizationLevel"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='rowguid'>rowguid</label>
               <br />             
               {getFieldDecorator('rowguid', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} id={"rowguid"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='salariedFlag'>SalariedFlag</label>
               <br />             
               {getFieldDecorator('salariedFlag', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SalariedFlag"} id={"salariedFlag"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SalariedFlag"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='sickLeaveHour'>SickLeaveHours</label>
               <br />             
               {getFieldDecorator('sickLeaveHour', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SickLeaveHours"} id={"sickLeaveHour"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"SickLeaveHours"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='vacationHour'>VacationHours</label>
               <br />             
               {getFieldDecorator('vacationHour', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"VacationHours"} id={"vacationHour"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"VacationHours"} /> )}
               </Form.Item>
 
 			
@@ -255,5 +286,5 @@ class EmployeeCreateComponent extends React.Component<
 export const WrappedEmployeeCreateComponent = Form.create({ name: 'Employee Create' })(EmployeeCreateComponent);
 
 /*<Codenesium>
-    <Hash>a4b6ce382246afbcc7617393b7fc9a94</Hash>
+    <Hash>8361cce526a3d26f8d0b4f4af4a0a798</Hash>
 </Codenesium>*/

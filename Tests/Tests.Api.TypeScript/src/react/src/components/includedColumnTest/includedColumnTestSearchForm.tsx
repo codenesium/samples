@@ -50,13 +50,13 @@ export default class IncludedColumnTestSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.IncludedColumnTestClientResponseModel) {
+  handleEditClick(e: any, row: IncludedColumnTestViewModel) {
     this.props.history.push(
       ClientRoutes.IncludedColumnTests + '/edit/' + row.id
     );
   }
 
-  handleDetailClick(e: any, row: Api.IncludedColumnTestClientResponseModel) {
+  handleDetailClick(e: any, row: IncludedColumnTestViewModel) {
     this.props.history.push(ClientRoutes.IncludedColumnTests + '/' + row.id);
   }
 
@@ -142,7 +142,7 @@ export default class IncludedColumnTestSearchComponent extends React.Component<
             records: new Array<IncludedColumnTestViewModel>(),
             filteredRecords: new Array<IncludedColumnTestViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -212,7 +212,7 @@ export default class IncludedColumnTestSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'IncludedColumnTest',
+                Header: 'IncludedColumnTests',
                 columns: [
                   {
                     Header: 'Id',
@@ -244,7 +244,7 @@ export default class IncludedColumnTestSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.IncludedColumnTestClientResponseModel
+                              row.original as IncludedColumnTestViewModel
                             );
                           }}
                         >
@@ -256,7 +256,7 @@ export default class IncludedColumnTestSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.IncludedColumnTestClientResponseModel
+                              row.original as IncludedColumnTestViewModel
                             );
                           }}
                         >
@@ -268,7 +268,7 @@ export default class IncludedColumnTestSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.IncludedColumnTestClientResponseModel
+                              row.original as IncludedColumnTestViewModel
                             );
                           }}
                         >
@@ -295,5 +295,5 @@ export const WrappedIncludedColumnTestSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f01f1d3c7f65721e21f74c3a60527851</Hash>
+    <Hash>1ed012dad0ecd899c397cc2ef6851faf</Hash>
 </Codenesium>*/

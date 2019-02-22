@@ -102,6 +102,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async virtual Task<List<Rate>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Rate>()
+			       .Include(x => x.TeacherIdNavigation)
 			       .Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
@@ -139,5 +140,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>300deece3ed03b501ffc7fc29ce639db</Hash>
+    <Hash>5c01b8a987be9b93665d0cf0b0240906</Hash>
 </Codenesium>*/

@@ -75,7 +75,7 @@ class TestAllFieldTypesNullableDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -236,5 +236,5 @@ export const WrappedTestAllFieldTypesNullableDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6329733baee34f11a7e7b075db52bf9e</Hash>
+    <Hash>e9f194a18a11194f712fa837f07a4ae3</Hash>
 </Codenesium>*/

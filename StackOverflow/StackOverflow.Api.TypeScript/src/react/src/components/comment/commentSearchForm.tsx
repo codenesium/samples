@@ -39,11 +39,11 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.CommentClientResponseModel) {
+    handleEditClick(e:any, row:CommentViewModel) {
          this.props.history.push(ClientRoutes.Comments + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.CommentClientResponseModel) {
+    handleDetailClick(e:any, row:CommentViewModel) {
          this.props.history.push(ClientRoutes.Comments + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<CommentViewModel>(),filteredRecords:new Array<CommentViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<CommentViewModel>(), filteredRecords:new Array<CommentViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Comment',
+                    Header: 'Comments',
                     columns: [
 					  {
                       Header: 'CreationDate',
@@ -202,7 +202,7 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.CommentClientResponseModel
+                              row.original as CommentViewModel
                             );
                           }}
                         >
@@ -214,7 +214,7 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.CommentClientResponseModel
+                              row.original as CommentViewModel
                             );
                           }}
                         >
@@ -226,7 +226,7 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.CommentClientResponseModel
+                              row.original as CommentViewModel
                             );
                           }}
                         >
@@ -248,5 +248,5 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
 export const WrappedCommentSearchComponent = Form.create({ name: 'Comment Search' })(CommentSearchComponent);
 
 /*<Codenesium>
-    <Hash>cbf9255b8f610db431b55ace06199c35</Hash>
+    <Hash>be45084b9b42c5b0ea407f15ccaad377</Hash>
 </Codenesium>*/

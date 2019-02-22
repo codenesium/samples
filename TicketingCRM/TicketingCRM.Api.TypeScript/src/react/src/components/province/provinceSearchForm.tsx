@@ -39,11 +39,11 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.ProvinceClientResponseModel) {
+    handleEditClick(e:any, row:ProvinceViewModel) {
          this.props.history.push(ClientRoutes.Provinces + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.ProvinceClientResponseModel) {
+    handleDetailClick(e:any, row:ProvinceViewModel) {
          this.props.history.push(ClientRoutes.Provinces + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<ProvinceViewModel>(),filteredRecords:new Array<ProvinceViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<ProvinceViewModel>(), filteredRecords:new Array<ProvinceViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Province',
+                    Header: 'Provinces',
                     columns: [
 					  {
                       Header: 'CountryId',
@@ -188,7 +188,7 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.ProvinceClientResponseModel
+                              row.original as ProvinceViewModel
                             );
                           }}
                         >
@@ -200,7 +200,7 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.ProvinceClientResponseModel
+                              row.original as ProvinceViewModel
                             );
                           }}
                         >
@@ -212,7 +212,7 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.ProvinceClientResponseModel
+                              row.original as ProvinceViewModel
                             );
                           }}
                         >
@@ -234,5 +234,5 @@ export default class ProvinceSearchComponent extends React.Component<ProvinceSea
 export const WrappedProvinceSearchComponent = Form.create({ name: 'Province Search' })(ProvinceSearchComponent);
 
 /*<Codenesium>
-    <Hash>ca02670498a24ed2b95750116733e6c0</Hash>
+    <Hash>9974f49af998adb84196990ce75eadf0</Hash>
 </Codenesium>*/

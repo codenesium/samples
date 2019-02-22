@@ -1,69 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import PipelineStepDestinationMapper from './pipelineStepDestinationMapper';
 import PipelineStepDestinationViewModel from './pipelineStepDestinationViewModel';
-
-interface Props {
-  history: any;
-  model?: PipelineStepDestinationViewModel;
-}
-
-const PipelineStepDestinationDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.PipelineStepDestinations + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="destinationId" className={'col-sm-2 col-form-label'}>
-          DestinationId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.destinationIdNavigation!.toDisplay()}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="pipelineStepId" className={'col-sm-2 col-form-label'}>
-          PipelineStepId
-        </label>
-        <div className="col-sm-12">
-          {model.model!.pipelineStepIdNavigation!.toDisplay()}
-        </div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PipelineStepDestinationDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface PipelineStepDestinationDetailComponentState {
@@ -74,17 +21,23 @@ interface PipelineStepDestinationDetailComponentState {
   errorMessage: string;
 }
 
-export default class PipelineStepDestinationDetailComponent extends React.Component<
+class PipelineStepDestinationDetailComponent extends React.Component<
   PipelineStepDestinationDetailComponentProps,
   PipelineStepDestinationDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new PipelineStepDestinationViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
     errorMessage: '',
   };
+
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PipelineStepDestinations + '/edit/' + this.state.model!.id
+    );
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
@@ -105,9 +58,9 @@ export default class PipelineStepDestinationDetailComponent extends React.Compon
         resp => {
           let response = resp.data as Api.PipelineStepDestinationClientResponseModel;
 
-          let mapper = new PipelineStepDestinationMapper();
-
           console.log(response);
+
+          let mapper = new PipelineStepDestinationMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -122,24 +75,56 @@ export default class PipelineStepDestinationDetailComponent extends React.Compon
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    }
+
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <PipelineStepDestinationDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>destinationId</h3>
+              <p>
+                {String(this.state.model!.destinationIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>pipelineStepId</h3>
+              <p>
+                {String(
+                  this.state.model!.pipelineStepIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
+          {message}
+        </div>
       );
     } else {
       return null;
@@ -147,7 +132,11 @@ export default class PipelineStepDestinationDetailComponent extends React.Compon
   }
 }
 
+export const WrappedPipelineStepDestinationDetailComponent = Form.create({
+  name: 'PipelineStepDestination Detail',
+})(PipelineStepDestinationDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>fa7ea9a2eae182f73a35a56747760ee1</Hash>
+    <Hash>6070ddce00a28ae305c668a14c812c1b</Hash>
 </Codenesium>*/

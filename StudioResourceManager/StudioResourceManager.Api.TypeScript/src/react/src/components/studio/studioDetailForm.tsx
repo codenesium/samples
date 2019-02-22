@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudioMapper from './studioMapper';
 import StudioViewModel from './studioViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface StudioDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +75,7 @@ class StudioDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +90,7 @@ class StudioDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,32 +105,32 @@ class StudioDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>address1</div>
-              <div>{this.state.model!.address1}</div>
+              <h3>address1</h3>
+              <p>{String(this.state.model!.address1)}</p>
             </div>
             <div>
-              <div>address2</div>
-              <div>{this.state.model!.address2}</div>
+              <h3>address2</h3>
+              <p>{String(this.state.model!.address2)}</p>
             </div>
             <div>
-              <div>city</div>
-              <div>{this.state.model!.city}</div>
+              <h3>city</h3>
+              <p>{String(this.state.model!.city)}</p>
             </div>
             <div>
-              <div>name</div>
-              <div>{this.state.model!.name}</div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
             </div>
             <div>
-              <div>province</div>
-              <div>{this.state.model!.province}</div>
+              <h3>province</h3>
+              <p>{String(this.state.model!.province)}</p>
             </div>
             <div>
-              <div>website</div>
-              <div>{this.state.model!.website}</div>
+              <h3>website</h3>
+              <p>{String(this.state.model!.website)}</p>
             </div>
             <div>
-              <div>zip</div>
-              <div>{this.state.model!.zip}</div>
+              <h3>zip</h3>
+              <p>{String(this.state.model!.zip)}</p>
             </div>
           </div>
           {message}
@@ -150,5 +148,5 @@ export const WrappedStudioDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8ef850f96279ec0f7b98d0bacb6890a6</Hash>
+    <Hash>615671295ee53c32ed9a1ef3b07f21b3</Hash>
 </Codenesium>*/

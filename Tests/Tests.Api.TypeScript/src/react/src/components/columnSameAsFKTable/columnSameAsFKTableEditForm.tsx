@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -171,16 +172,22 @@ class ColumnSameAsFKTableEditComponent extends React.Component<
             <label htmlFor="person">Person</label>
             <br />
             {getFieldDecorator('person', {
-              rules: [],
-            })(<Input placeholder={'Person'} id={'person'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'Person'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="personId">PersonId</label>
             <br />
             {getFieldDecorator('personId', {
-              rules: [],
-            })(<Input placeholder={'PersonId'} id={'personId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'PersonId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -203,5 +210,5 @@ export const WrappedColumnSameAsFKTableEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5c728842470d5c722fd84164700bb567</Hash>
+    <Hash>4a8e38ac9bb5affd3b1982ae52eccd9b</Hash>
 </Codenesium>*/

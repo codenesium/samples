@@ -24,8 +24,8 @@
     "babel-loader": "^8.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "set REACT_APP_API_URL=http://localhost/&& react-scripts start",
+    "build": "set REACT_APP_API_URL=http://localhost/&& react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -1,13 +1,11 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { LoadingForm } from '../../lib/components/loadingForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudentMapper from './studentMapper';
 import StudentViewModel from './studentViewModel';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface StudentDetailComponentProps {
   form: WrappedFormUtils;
@@ -77,7 +75,7 @@ class StudentDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -92,7 +90,7 @@ class StudentDetailComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
@@ -107,44 +105,44 @@ class StudentDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <div>birthday</div>
-              <div>{this.state.model!.birthday}</div>
+              <h3>birthday</h3>
+              <p>{String(this.state.model!.birthday)}</p>
             </div>
             <div>
-              <div>email</div>
-              <div>{this.state.model!.email}</div>
+              <h3>email</h3>
+              <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <div>emailRemindersEnabled</div>
-              <div>{this.state.model!.emailRemindersEnabled}</div>
+              <h3>Email Reminders Enabled</h3>
+              <p>{String(this.state.model!.emailRemindersEnabled)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>familyId</h3>
-              <div>{this.state.model!.familyIdNavigation!.toDisplay()}</div>
+              <p>{String(this.state.model!.familyIdNavigation!.toDisplay())}</p>
             </div>
             <div>
-              <div>firstName</div>
-              <div>{this.state.model!.firstName}</div>
+              <h3>First Name</h3>
+              <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <div>isAdult</div>
-              <div>{this.state.model!.isAdult}</div>
+              <h3>Is Adult</h3>
+              <p>{String(this.state.model!.isAdult)}</p>
             </div>
             <div>
-              <div>lastName</div>
-              <div>{this.state.model!.lastName}</div>
+              <h3>Last Name</h3>
+              <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <div>phone</div>
-              <div>{this.state.model!.phone}</div>
+              <h3>phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
             </div>
             <div>
-              <div>smsRemindersEnabled</div>
-              <div>{this.state.model!.smsRemindersEnabled}</div>
+              <h3>SMS Reminders Enabled</h3>
+              <p>{String(this.state.model!.smsRemindersEnabled)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>userId</h3>
-              <div>{this.state.model!.userIdNavigation!.toDisplay()}</div>
+              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
             </div>
           </div>
           {message}
@@ -162,5 +160,5 @@ export const WrappedStudentDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>26bea170f3912a9e8e5f3787e04bd563</Hash>
+    <Hash>1681e7f470e0b827b05f6bf1dff7a52e</Hash>
 </Codenesium>*/

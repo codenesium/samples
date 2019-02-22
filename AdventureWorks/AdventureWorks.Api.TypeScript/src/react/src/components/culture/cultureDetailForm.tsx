@@ -6,6 +6,7 @@ import CultureMapper from './cultureMapper';
 import CultureViewModel from './cultureViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ProductModelProductDescriptionCultureTableComponent } from '../shared/productModelProductDescriptionCultureTable';
 
 interface CultureDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class CultureDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -118,6 +119,22 @@ class CultureDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>ProductModelProductDescriptionCultures</h3>
+            <ProductModelProductDescriptionCultureTableComponent
+              productModelID={this.state.model!.productModelID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Cultures +
+                '/' +
+                this.state.model!.cultureID +
+                '/' +
+                ApiRoutes.ProductModelProductDescriptionCultures
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,5 +149,5 @@ export const WrappedCultureDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>82d8939b2ed981ce0ee4ee3147605810</Hash>
+    <Hash>b2deca62d733b4222e79852fcad12c12</Hash>
 </Codenesium>*/

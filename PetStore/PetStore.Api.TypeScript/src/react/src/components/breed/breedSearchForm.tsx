@@ -39,11 +39,11 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.BreedClientResponseModel) {
+    handleEditClick(e:any, row:BreedViewModel) {
          this.props.history.push(ClientRoutes.Breeds + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.BreedClientResponseModel) {
+    handleDetailClick(e:any, row:BreedViewModel) {
          this.props.history.push(ClientRoutes.Breeds + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<BreedViewModel>(),filteredRecords:new Array<BreedViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<BreedViewModel>(), filteredRecords:new Array<BreedViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Breed',
+                    Header: 'Breeds',
                     columns: [
 					  {
                       Header: 'Name',
@@ -188,7 +188,7 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.BreedClientResponseModel
+                              row.original as BreedViewModel
                             );
                           }}
                         >
@@ -200,7 +200,7 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.BreedClientResponseModel
+                              row.original as BreedViewModel
                             );
                           }}
                         >
@@ -212,7 +212,7 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.BreedClientResponseModel
+                              row.original as BreedViewModel
                             );
                           }}
                         >
@@ -234,5 +234,5 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
 export const WrappedBreedSearchComponent = Form.create({ name: 'Breed Search' })(BreedSearchComponent);
 
 /*<Codenesium>
-    <Hash>5bfaec50e3ce429be976ca5b87314655</Hash>
+    <Hash>0fd1debdcebddc1e59a62a33f0cbba21</Hash>
 </Codenesium>*/

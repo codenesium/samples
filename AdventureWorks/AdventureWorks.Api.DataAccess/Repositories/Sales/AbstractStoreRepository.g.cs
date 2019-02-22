@@ -116,6 +116,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<Customer>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Customer>()
+			       .Include(x => x.StoreIDNavigation)
 			       .Where(x => x.StoreID == storeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
@@ -153,5 +154,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>88d74d551ebfdf633393c6c64a98e3b1</Hash>
+    <Hash>44a3cd570af82daec2eabdc18e60a993</Hash>
 </Codenesium>*/

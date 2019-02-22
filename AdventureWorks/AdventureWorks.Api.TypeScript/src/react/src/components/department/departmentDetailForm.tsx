@@ -6,6 +6,7 @@ import DepartmentMapper from './departmentMapper';
 import DepartmentViewModel from './departmentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { EmployeeDepartmentHistoryTableComponent } from '../shared/employeeDepartmentHistoryTable';
 
 interface DepartmentDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +76,7 @@ class DepartmentDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -122,6 +123,22 @@ class DepartmentDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>EmployeeDepartmentHistories</h3>
+            <EmployeeDepartmentHistoryTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Departments +
+                '/' +
+                this.state.model!.departmentID +
+                '/' +
+                ApiRoutes.EmployeeDepartmentHistories
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,5 +153,5 @@ export const WrappedDepartmentDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>be289e03ef2a6f0533f18222e139f647</Hash>
+    <Hash>848e5452f863bf61cd78288042d305b2</Hash>
 </Codenesium>*/

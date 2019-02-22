@@ -75,7 +75,7 @@ class PostTypeDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -124,5 +124,5 @@ export const WrappedPostTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3d593510d56410b62a4535b447755105</Hash>
+    <Hash>d1af9d08436ba6f1894ca4d8f77fecc4</Hash>
 </Codenesium>*/

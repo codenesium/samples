@@ -1,6 +1,4 @@
 import moment from 'moment';
-import SelfReferenceViewModel from '../selfReference/selfReferenceViewModel';
-import SelfReferenceViewModel from '../selfReference/selfReferenceViewModel';
 
 export default class SelfReferenceViewModel {
   id: number;
@@ -34,5 +32,5 @@ export default class SelfReferenceViewModel {
 
 
 /*<Codenesium>
-    <Hash>7ae47628627d5318164a50a1b0df4509</Hash>
+    <Hash>8133c4ece25f196c3005107413328bf4</Hash>
 </Codenesium>*/

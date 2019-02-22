@@ -1,3 +1,4 @@
+import moment from 'moment';
 import CountryViewModel from '../country/countryViewModel';
 
 export default class DestinationViewModel {
@@ -11,7 +12,7 @@ export default class DestinationViewModel {
   constructor() {
     this.countryId = 0;
     this.countryIdEntity = '';
-    this.countryIdNavigation = undefined;
+    this.countryIdNavigation = new CountryViewModel();
     this.id = 0;
     this.name = '';
     this.order = 0;
@@ -23,10 +24,10 @@ export default class DestinationViewModel {
     name: string,
     order: number
   ): void {
-    this.countryId = countryId;
-    this.id = id;
-    this.name = name;
-    this.order = order;
+    this.countryId = moment(countryId, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+    this.order = moment(order, 'YYYY-MM-DD');
   }
 
   toDisplay(): string {
@@ -36,5 +37,5 @@ export default class DestinationViewModel {
 
 
 /*<Codenesium>
-    <Hash>341c9131c1e30b79da9cfd1b41d2183f</Hash>
+    <Hash>f0a6dd4c615f782b48bc3a06a848edf8</Hash>
 </Codenesium>*/

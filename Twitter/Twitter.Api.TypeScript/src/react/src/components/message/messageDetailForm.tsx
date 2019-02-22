@@ -1,115 +1,151 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import MessageMapper from './messageMapper';
 import MessageViewModel from './messageViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { MessengerTableComponent } from '../shared/messengerTable';
 
-interface Props {
-	history:any;
-    model?:MessageViewModel
+interface MessageDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const MessageDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Messages + '/edit/' + model.model!.messageId)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="content" className={"col-sm-2 col-form-label"}>Content</label>
-							<div className="col-sm-12">
-								{String(model.model!.content)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="senderUserId" className={"col-sm-2 col-form-label"}>Sender_user_id</label>
-							<div className="col-sm-12">
-								{model.model!.senderUserIdNavigation!.toDisplay()}
-							</div>
-						</div>
-					             </form>
-  );
+interface MessageDetailComponentState {
+  model?: MessageViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     messageId:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class MessageDetailComponent extends React.Component<
+  MessageDetailComponentProps,
+  MessageDetailComponentState
+> {
+  state = {
+    model: new MessageViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface MessageDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface MessageDetailComponentState
-  {
-      model?:MessageViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Messages + '/edit/' + this.state.model!.messageId
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class MessageDetailComponent extends React.Component<MessageDetailComponentProps, MessageDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Messages + '/' + this.props.match.params.messageId,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Messages +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.MessageClientResponseModel;
-            
-			let mapper = new MessageMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<MessageDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.MessageClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new MessageMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>content</h3>
+              <p>{String(this.state.model!.content)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>sender_user_id</h3>
+              <p>
+                {String(this.state.model!.senderUserIdNavigation!.toDisplay())}
+              </p>
+            </div>
+          </div>
+          {message}
+          <div>
+            <h3>Messengers</h3>
+            <MessengerTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Messages +
+                '/' +
+                this.state.model!.messageId +
+                '/' +
+                ApiRoutes.Messengers
+              }
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedMessageDetailComponent = Form.create({
+  name: 'Message Detail',
+})(MessageDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>ed95617dff3774150d8cca4e0df0fa8e</Hash>
+    <Hash>ad3cf47954f0dee87704adcd290a588f</Hash>
 </Codenesium>*/

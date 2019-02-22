@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class LocationViewModel {
   gpsLat: number;
   gpsLong: number;
@@ -30,5 +32,5 @@ export default class LocationViewModel {
 
 
 /*<Codenesium>
-    <Hash>d80dc08efb6cbb91e0e7cb611acfab14</Hash>
+    <Hash>aa9cd391c708108c2e676bd030e45bc8</Hash>
 </Codenesium>*/

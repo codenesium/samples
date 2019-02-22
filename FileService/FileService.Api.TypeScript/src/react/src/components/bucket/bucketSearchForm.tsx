@@ -39,11 +39,11 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.BucketClientResponseModel) {
+    handleEditClick(e:any, row:BucketViewModel) {
          this.props.history.push(ClientRoutes.Buckets + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.BucketClientResponseModel) {
+    handleDetailClick(e:any, row:BucketViewModel) {
          this.props.history.push(ClientRoutes.Buckets + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<BucketViewModel>(),filteredRecords:new Array<BucketViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<BucketViewModel>(), filteredRecords:new Array<BucketViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Bucket',
+                    Header: 'Buckets',
                     columns: [
 					  {
                       Header: 'ExternalId',
@@ -184,7 +184,7 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.BucketClientResponseModel
+                              row.original as BucketViewModel
                             );
                           }}
                         >
@@ -196,7 +196,7 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.BucketClientResponseModel
+                              row.original as BucketViewModel
                             );
                           }}
                         >
@@ -208,7 +208,7 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.BucketClientResponseModel
+                              row.original as BucketViewModel
                             );
                           }}
                         >
@@ -230,5 +230,5 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
 export const WrappedBucketSearchComponent = Form.create({ name: 'Bucket Search' })(BucketSearchComponent);
 
 /*<Codenesium>
-    <Hash>a35e95b81c0929ac7ff1d75a57c88215</Hash>
+    <Hash>cd69d8f590c122a41a1f9a9012c6672e</Hash>
 </Codenesium>*/

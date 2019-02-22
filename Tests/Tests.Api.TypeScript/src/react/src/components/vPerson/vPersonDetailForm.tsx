@@ -75,7 +75,7 @@ class VPersonDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -128,5 +128,5 @@ export const WrappedVPersonDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7be8bba2ebc109f2e78fda93e9d78b4b</Hash>
+    <Hash>c8cda40113bf0631cffc5c171350b8e8</Hash>
 </Codenesium>*/

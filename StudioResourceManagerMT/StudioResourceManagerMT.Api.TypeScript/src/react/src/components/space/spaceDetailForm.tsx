@@ -75,7 +75,7 @@ class SpaceDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -132,5 +132,5 @@ export const WrappedSpaceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a1f601cf63edaac37cca3c59ef8e153b</Hash>
+    <Hash>b2afec706a8a309654bd8ddb39c63051</Hash>
 </Codenesium>*/

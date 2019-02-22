@@ -7,6 +7,9 @@ import VenueViewModel from './venueViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface VenueDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -73,7 +76,7 @@ VenueDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -141,6 +144,8 @@ VenueDetailComponentState
 						 </div>
 					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -154,5 +159,5 @@ export const WrappedVenueDetailComponent = Form.create({ name: 'Venue Detail' })
 );
 
 /*<Codenesium>
-    <Hash>ff2ec570d6b68c7e65258c1990105cfc</Hash>
+    <Hash>e4103b83a58b067d5c756bfa034b00dd</Hash>
 </Codenesium>*/

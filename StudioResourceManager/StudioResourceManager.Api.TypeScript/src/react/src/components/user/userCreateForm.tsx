@@ -1,15 +1,22 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface UserCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +113,7 @@ class UserCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -114,16 +121,24 @@ class UserCreateComponent extends React.Component<
             <label htmlFor="password">password</label>
             <br />
             {getFieldDecorator('password', {
-              rules: [],
-            })(<Input placeholder={'password'} id={'password'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'password'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="username">username</label>
             <br />
             {getFieldDecorator('username', {
-              rules: [],
-            })(<Input placeholder={'username'} id={'username'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'username'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -146,5 +161,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>70a482b66084ee24de9452b685ab90ee</Hash>
+    <Hash>c4b707dee5cda53582403b1871a2e6cf</Hash>
 </Codenesium>*/

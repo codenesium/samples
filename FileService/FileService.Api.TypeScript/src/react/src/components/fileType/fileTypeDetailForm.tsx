@@ -6,6 +6,10 @@ import FileTypeMapper from './fileTypeMapper';
 import FileTypeViewModel from './fileTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import {FileTableComponent} from '../shared/fileTable'
+	
+
+
 
 interface FileTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -73,7 +77,7 @@ FileTypeDetailComponentState
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -109,6 +113,17 @@ FileTypeDetailComponentState
 						 </div>
 					   		  </div>
           {message}
+		 <div>
+            <h3>Files</h3>
+            <FileTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.FileTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Files}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -122,5 +137,5 @@ export const WrappedFileTypeDetailComponent = Form.create({ name: 'FileType Deta
 );
 
 /*<Codenesium>
-    <Hash>e6142e3017aab0ac71ccb10a91f72f61</Hash>
+    <Hash>b8b38ec755b83100b92bf06a69781e2d</Hash>
 </Codenesium>*/

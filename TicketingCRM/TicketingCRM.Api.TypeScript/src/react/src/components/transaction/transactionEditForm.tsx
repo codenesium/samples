@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -171,8 +172,11 @@ class TransactionEditComponent extends React.Component<
             <label htmlFor="amount">amount</label>
             <br />
             {getFieldDecorator('amount', {
-              rules: [],
-            })(<InputNumber placeholder={'amount'} id={'amount'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<InputNumber placeholder={'amount'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -181,26 +185,23 @@ class TransactionEditComponent extends React.Component<
             </label>
             <br />
             {getFieldDecorator('gatewayConfirmationNumber', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'gatewayConfirmationNumber'}
-                id={'gatewayConfirmationNumber'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 1, message: 'Exceeds max length of 1' },
+              ],
+            })(<Input placeholder={'gatewayConfirmationNumber'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="transactionStatusId">transactionStatusId</label>
             <br />
             {getFieldDecorator('transactionStatusId', {
-              rules: [],
-            })(
-              <Input
-                placeholder={'transactionStatusId'}
-                id={'transactionStatusId'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'transactionStatusId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -223,5 +224,5 @@ export const WrappedTransactionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ba6497b1dc8e71e42f560e91cbfeed95</Hash>
+    <Hash>96c9ead3a721210d5bd8f50ccb74cc76</Hash>
 </Codenesium>*/

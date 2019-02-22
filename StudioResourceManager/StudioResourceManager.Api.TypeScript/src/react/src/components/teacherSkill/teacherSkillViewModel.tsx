@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class TeacherSkillViewModel {
   id: number;
   name: string;
@@ -8,7 +10,7 @@ export default class TeacherSkillViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = id;
+    this.id = moment(id, 'YYYY-MM-DD');
     this.name = name;
   }
 
@@ -19,5 +21,5 @@ export default class TeacherSkillViewModel {
 
 
 /*<Codenesium>
-    <Hash>d15fb6c6b3b6110e5bee3179df77cf47</Hash>
+    <Hash>6b6a0590f2aaaab67ea10d25746c080b</Hash>
 </Codenesium>*/

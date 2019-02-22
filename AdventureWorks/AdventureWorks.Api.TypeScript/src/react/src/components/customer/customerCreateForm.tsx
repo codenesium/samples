@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,13 @@ class CustomerCreateComponent extends React.Component<
             <label htmlFor="accountNumber">AccountNumber</label>
             <br />
             {getFieldDecorator('accountNumber', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 10, message: 'Exceeds max length of 10' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'AccountNumber'}
-                id={'accountNumber'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'AccountNumber'} />
             )}
           </Form.Item>
 
@@ -134,13 +135,12 @@ class CustomerCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -149,27 +149,18 @@ class CustomerCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('personID', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'PersonID'}
-                id={'personID'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'PersonID'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'rowguid'}
-                id={'rowguid'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -177,13 +168,7 @@ class CustomerCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('storeID', {
               rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'StoreID'}
-                id={'storeID'}
-              />
-            )}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'StoreID'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -192,11 +177,7 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('territoryID', {
               rules: [],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'TerritoryID'}
-                id={'territoryID'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'TerritoryID'} />
             )}
           </Form.Item>
 
@@ -220,5 +201,5 @@ export const WrappedCustomerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5d07cc629016e8f07864c62b90261214</Hash>
+    <Hash>3b791d9210b6bce3a664e7df14e33cb4</Hash>
 </Codenesium>*/

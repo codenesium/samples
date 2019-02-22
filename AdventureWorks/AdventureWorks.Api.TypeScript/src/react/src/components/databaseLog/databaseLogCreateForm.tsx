@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,13 @@ class DatabaseLogCreateComponent extends React.Component<
             <label htmlFor="databaseUser">DatabaseUser</label>
             <br />
             {getFieldDecorator('databaseUser', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'DatabaseUser'}
-                id={'databaseUser'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'DatabaseUser'} />
             )}
           </Form.Item>
 
@@ -134,56 +135,41 @@ class DatabaseLogCreateComponent extends React.Component<
             <label htmlFor="postTime">PostTime</label>
             <br />
             {getFieldDecorator('postTime', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'PostTime'}
-                id={'postTime'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'PostTime'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="schema">Schema</label>
             <br />
             {getFieldDecorator('schema', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Schema'}
-                id={'schema'}
-              />
-            )}
+              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Schema'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="tsql">TSQL</label>
             <br />
             {getFieldDecorator('tsql', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'TSQL'}
-                id={'tsql'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'TSQL'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="xmlEvent">XmlEvent</label>
             <br />
             {getFieldDecorator('xmlEvent', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'XmlEvent'}
-                id={'xmlEvent'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'XmlEvent'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -206,5 +192,5 @@ export const WrappedDatabaseLogCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8633559378c5000d2c0d114205de0067</Hash>
+    <Hash>02b70dde8977539d128b4ada529be019</Hash>
 </Codenesium>*/

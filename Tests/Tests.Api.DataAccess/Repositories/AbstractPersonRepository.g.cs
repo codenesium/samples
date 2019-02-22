@@ -91,6 +91,7 @@ namespace TestsNS.Api.DataAccess
 		public async virtual Task<List<ColumnSameAsFKTable>> ColumnSameAsFKTablesByPerson(int person, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ColumnSameAsFKTable>()
+			       .Include(x => x.PersonNavigation)
 			       .Where(x => x.Person == person).AsQueryable().Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
 		}
 
@@ -98,6 +99,7 @@ namespace TestsNS.Api.DataAccess
 		public async virtual Task<List<ColumnSameAsFKTable>> ColumnSameAsFKTablesByPersonId(int personId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ColumnSameAsFKTable>()
+			       .Include(x => x.PersonIdNavigation)
 			       .Where(x => x.PersonId == personId).AsQueryable().Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
 		}
 
@@ -127,5 +129,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4e5995e530ffc0a6d82221475518df0d</Hash>
+    <Hash>8f6643da337a3f6ab560f14f2c4c170c</Hash>
 </Codenesium>*/

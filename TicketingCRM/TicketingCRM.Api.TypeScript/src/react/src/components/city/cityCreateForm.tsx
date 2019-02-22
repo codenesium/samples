@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,16 +121,23 @@ class CityCreateComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="provinceId">provinceId</label>
             <br />
             {getFieldDecorator('provinceId', {
-              rules: [],
-            })(<Input placeholder={'provinceId'} id={'provinceId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'provinceId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -152,5 +160,5 @@ export const WrappedCityCreateComponent = Form.create({ name: 'City Create' })(
 
 
 /*<Codenesium>
-    <Hash>cf8e67ea506bc0148f8233618a808791</Hash>
+    <Hash>9b534fe2fea6cb7a1a8b3a9ec40e42b2</Hash>
 </Codenesium>*/

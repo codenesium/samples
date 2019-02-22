@@ -39,11 +39,11 @@ export default class EventStatuSearchComponent extends React.Component<EventStat
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.EventStatuClientResponseModel) {
+    handleEditClick(e:any, row:EventStatuViewModel) {
          this.props.history.push(ClientRoutes.EventStatus + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.EventStatuClientResponseModel) {
+    handleDetailClick(e:any, row:EventStatuViewModel) {
          this.props.history.push(ClientRoutes.EventStatus + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class EventStatuSearchComponent extends React.Component<EventStat
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<EventStatuViewModel>(),filteredRecords:new Array<EventStatuViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<EventStatuViewModel>(), filteredRecords:new Array<EventStatuViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class EventStatuSearchComponent extends React.Component<EventStat
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'EventStatu',
+                    Header: 'EventStatus',
                     columns: [
 					  {
                       Header: 'Id',
@@ -184,7 +184,7 @@ export default class EventStatuSearchComponent extends React.Component<EventStat
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.EventStatuClientResponseModel
+                              row.original as EventStatuViewModel
                             );
                           }}
                         >
@@ -196,7 +196,7 @@ export default class EventStatuSearchComponent extends React.Component<EventStat
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.EventStatuClientResponseModel
+                              row.original as EventStatuViewModel
                             );
                           }}
                         >
@@ -208,7 +208,7 @@ export default class EventStatuSearchComponent extends React.Component<EventStat
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.EventStatuClientResponseModel
+                              row.original as EventStatuViewModel
                             );
                           }}
                         >
@@ -230,5 +230,5 @@ export default class EventStatuSearchComponent extends React.Component<EventStat
 export const WrappedEventStatuSearchComponent = Form.create({ name: 'EventStatu Search' })(EventStatuSearchComponent);
 
 /*<Codenesium>
-    <Hash>e4a2514cc0620a11b458e731cd568696</Hash>
+    <Hash>ce02a346170da58e3a4e90a549736e33</Hash>
 </Codenesium>*/

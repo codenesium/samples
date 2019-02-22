@@ -1,3 +1,4 @@
+import moment from 'moment';
 import UserViewModel from '../user/userViewModel';
 
 export default class AdminViewModel {
@@ -20,7 +21,7 @@ export default class AdminViewModel {
     this.phone = '';
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = undefined;
+    this.userIdNavigation = new UserViewModel();
   }
 
   setProperties(
@@ -32,7 +33,7 @@ export default class AdminViewModel {
     phone: string,
     userId: number
   ): void {
-    this.birthday = birthday;
+    this.birthday = moment(birthday, 'YYYY-MM-DD');
     this.email = email;
     this.firstName = firstName;
     this.id = id;
@@ -48,5 +49,5 @@ export default class AdminViewModel {
 
 
 /*<Codenesium>
-    <Hash>b81e8463676d0b172e6ef497682a62cb</Hash>
+    <Hash>5f557ef7aa841df0783834d632c94290</Hash>
 </Codenesium>*/

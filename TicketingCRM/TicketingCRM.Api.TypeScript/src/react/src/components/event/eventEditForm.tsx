@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import EventViewModel from './eventViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface EventEditComponentProps {
@@ -148,100 +148,125 @@ class EventEditComponent extends React.Component<
               <label htmlFor='address1'>address1</label>
               <br />             
               {getFieldDecorator('address1', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"address1"} id={"address1"} /> )}
+              ( <Input placeholder={"address1"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='address2'>address2</label>
               <br />             
               {getFieldDecorator('address2', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"address2"} id={"address2"} /> )}
+              ( <Input placeholder={"address2"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='cityId'>cityId</label>
               <br />             
               {getFieldDecorator('cityId', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"cityId"} id={"cityId"} /> )}
+              ( <Input placeholder={"cityId"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='date'>date</label>
               <br />             
               {getFieldDecorator('date', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"date"} id={"date"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"date"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='description'>description</label>
               <br />             
               {getFieldDecorator('description', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <Input placeholder={"description"} id={"description"} /> )}
+              ( <Input placeholder={"description"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='endDate'>endDate</label>
               <br />             
               {getFieldDecorator('endDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"endDate"} id={"endDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"endDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='facebook'>facebook</label>
               <br />             
               {getFieldDecorator('facebook', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"facebook"} id={"facebook"} /> )}
+              ( <Input placeholder={"facebook"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"name"} id={"name"} /> )}
+              ( <Input placeholder={"name"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='startDate'>startDate</label>
               <br />             
               {getFieldDecorator('startDate', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"startDate"} id={"startDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"startDate"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='website'>website</label>
               <br />             
               {getFieldDecorator('website', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <Input placeholder={"website"} id={"website"} /> )}
+              ( <Input placeholder={"website"} /> )}
               </Form.Item>
 
 			
@@ -261,5 +286,5 @@ class EventEditComponent extends React.Component<
 export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(EventEditComponent);
 
 /*<Codenesium>
-    <Hash>57995ae2f2d96660cb0dd504ee117214</Hash>
+    <Hash>921a6c3ca08c9f276eb63cadee68067b</Hash>
 </Codenesium>*/

@@ -6,6 +6,8 @@ import ProvinceMapper from './provinceMapper';
 import ProvinceViewModel from './provinceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { CityTableComponent } from '../shared/cityTable';
+import { VenueTableComponent } from '../shared/venueTable';
 
 interface ProvinceDetailComponentProps {
   form: WrappedFormUtils;
@@ -75,7 +77,7 @@ class ProvinceDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -116,6 +118,38 @@ class ProvinceDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>Cities</h3>
+            <CityTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Provinces +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Cities
+              }
+            />
+          </div>
+          <div>
+            <h3>Venues</h3>
+            <VenueTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Provinces +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Venues
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -130,5 +164,5 @@ export const WrappedProvinceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ba40f021ed1384a2d9d2896459e81b47</Hash>
+    <Hash>02e7c1c69adbeb3843f1738604697a01</Hash>
 </Codenesium>*/

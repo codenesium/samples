@@ -75,7 +75,7 @@ class DeviceActionDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -132,5 +132,5 @@ export const WrappedDeviceActionDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2a4bd8618038e60a8e15d38013e9bf52</Hash>
+    <Hash>e9c0e633d7bf77c41d62bedf91d2541c</Hash>
 </Codenesium>*/

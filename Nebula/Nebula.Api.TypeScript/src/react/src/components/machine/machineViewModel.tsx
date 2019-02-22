@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class MachineViewModel {
   description: string;
   id: number;
@@ -38,5 +40,5 @@ export default class MachineViewModel {
 
 
 /*<Codenesium>
-    <Hash>ed2fd6551e9c5676f54f09d62eb1a526</Hash>
+    <Hash>2c4e50cfb11e77e595b0215ff117ec96</Hash>
 </Codenesium>*/

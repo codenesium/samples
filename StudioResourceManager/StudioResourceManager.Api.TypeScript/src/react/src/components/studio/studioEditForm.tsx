@@ -1,15 +1,22 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudioMapper from './studioMapper';
 import StudioViewModel from './studioViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface StudioEditComponentProps {
   form: WrappedFormUtils;
@@ -154,7 +161,7 @@ class StudioEditComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -162,56 +169,80 @@ class StudioEditComponent extends React.Component<
             <label htmlFor="address1">address1</label>
             <br />
             {getFieldDecorator('address1', {
-              rules: [],
-            })(<Input placeholder={'address1'} id={'address1'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'address1'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="address2">address2</label>
             <br />
             {getFieldDecorator('address2', {
-              rules: [],
-            })(<Input placeholder={'address2'} id={'address2'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'address2'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="city">city</label>
             <br />
             {getFieldDecorator('city', {
-              rules: [],
-            })(<Input placeholder={'city'} id={'city'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'city'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="province">province</label>
             <br />
             {getFieldDecorator('province', {
-              rules: [],
-            })(<Input placeholder={'province'} id={'province'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 90, message: 'Exceeds max length of 90' },
+              ],
+            })(<Input placeholder={'province'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="website">website</label>
             <br />
             {getFieldDecorator('website', {
-              rules: [],
-            })(<Input placeholder={'website'} id={'website'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'website'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="zip">zip</label>
             <br />
             {getFieldDecorator('zip', {
-              rules: [],
-            })(<Input placeholder={'zip'} id={'zip'} />)}
+              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
+            })(<Input placeholder={'zip'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -234,5 +265,5 @@ export const WrappedStudioEditComponent = Form.create({ name: 'Studio Edit' })(
 
 
 /*<Codenesium>
-    <Hash>5303a61910030c6568c7bea099ad1cf5</Hash>
+    <Hash>3479095833c0aa1fc4a8f65b6ba809ef</Hash>
 </Codenesium>*/

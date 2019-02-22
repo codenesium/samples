@@ -25,6 +25,9 @@ namespace TestsNS.Api.DataAccess
 			DateTimeOffset fieldDateTimeOffset,
 			decimal fieldDecimal,
 			double fieldFloat,
+			double fieldGeography,
+			double fieldGeometry,
+			Guid fieldHierarchyId,
 			byte[] fieldImage,
 			decimal fieldMoney,
 			string fieldNChar,
@@ -42,6 +45,7 @@ namespace TestsNS.Api.DataAccess
 			Guid fieldUniqueIdentifier,
 			byte[] fieldVarBinary,
 			string fieldVarchar,
+			string fieldVariant,
 			string fieldXML)
 		{
 			this.Id = id;
@@ -55,6 +59,9 @@ namespace TestsNS.Api.DataAccess
 			this.FieldDateTimeOffset = fieldDateTimeOffset;
 			this.FieldDecimal = fieldDecimal;
 			this.FieldFloat = fieldFloat;
+			this.FieldGeography = fieldGeography;
+			this.FieldGeometry = fieldGeometry;
+			this.FieldHierarchyId = fieldHierarchyId;
 			this.FieldImage = fieldImage;
 			this.FieldMoney = fieldMoney;
 			this.FieldNChar = fieldNChar;
@@ -72,6 +79,7 @@ namespace TestsNS.Api.DataAccess
 			this.FieldUniqueIdentifier = fieldUniqueIdentifier;
 			this.FieldVarBinary = fieldVarBinary;
 			this.FieldVarchar = fieldVarchar;
+			this.FieldVariant = fieldVariant;
 			this.FieldXML = fieldXML;
 		}
 
@@ -106,6 +114,15 @@ namespace TestsNS.Api.DataAccess
 
 		[Column("fieldFloat")]
 		public virtual double FieldFloat { get; private set; }
+
+		[Column("fieldGeography")]
+		public virtual double FieldGeography { get; private set; }
+
+		[Column("fieldGeometry")]
+		public virtual double FieldGeometry { get; private set; }
+
+		[Column("fieldHierarchyId")]
+		public virtual Guid FieldHierarchyId { get; private set; }
 
 		[Column("fieldImage")]
 		public virtual byte[] FieldImage { get; private set; }
@@ -164,6 +181,9 @@ namespace TestsNS.Api.DataAccess
 		[Column("fieldVarchar")]
 		public virtual string FieldVarchar { get; private set; }
 
+		[Column("fieldVariant")]
+		public virtual string FieldVariant { get; private set; }
+
 		[Column("fieldXML")]
 		public virtual string FieldXML { get; private set; }
 
@@ -174,5 +194,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>76eaf05965ca8cc45f4dd6e9bee49465</Hash>
+    <Hash>a15f8772771621c512570f4036cca4e9</Hash>
 </Codenesium>*/

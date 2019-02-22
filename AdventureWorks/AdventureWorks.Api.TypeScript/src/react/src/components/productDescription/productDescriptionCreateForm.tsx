@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,13 +121,13 @@ class ProductDescriptionCreateComponent extends React.Component<
             <label htmlFor="description">Description</label>
             <br />
             {getFieldDecorator('description', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 400, message: 'Exceeds max length of 400' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'Description'}
-                id={'description'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Description'} />
             )}
           </Form.Item>
 
@@ -134,13 +135,12 @@ class ProductDescriptionCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -148,14 +148,11 @@ class ProductDescriptionCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'rowguid'}
-                id={'rowguid'}
-              />
-            )}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -178,5 +175,5 @@ export const WrappedProductDescriptionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7f87428e65f4c97011e164b483e7c0e9</Hash>
+    <Hash>ee02b2bc78eccf569ebc6b8070099e25</Hash>
 </Codenesium>*/

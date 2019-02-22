@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -121,23 +122,29 @@ class VoteCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('bountyAmount', {
               rules: [],
-            })(<Input placeholder={'BountyAmount'} id={'bountyAmount'} />)}
+            })(<Input placeholder={'BountyAmount'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="creationDate">CreationDate</label>
             <br />
             {getFieldDecorator('creationDate', {
-              rules: [],
-            })(<Input placeholder={'CreationDate'} id={'creationDate'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'CreationDate'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="postId">PostId</label>
             <br />
             {getFieldDecorator('postId', {
-              rules: [],
-            })(<Input placeholder={'PostId'} id={'postId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'PostId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -145,15 +152,18 @@ class VoteCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('userId', {
               rules: [],
-            })(<Input placeholder={'UserId'} id={'userId'} />)}
+            })(<Input placeholder={'UserId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="voteTypeId">VoteTypeId</label>
             <br />
             {getFieldDecorator('voteTypeId', {
-              rules: [],
-            })(<Input placeholder={'VoteTypeId'} id={'voteTypeId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'VoteTypeId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -176,5 +186,5 @@ export const WrappedVoteCreateComponent = Form.create({ name: 'Vote Create' })(
 
 
 /*<Codenesium>
-    <Hash>2e21ff7b0b595038c1a8500ba298a0a5</Hash>
+    <Hash>518c0721c9509e3c59342e4036c27952</Hash>
 </Codenesium>*/

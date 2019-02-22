@@ -98,6 +98,7 @@ namespace PetStoreNS.Api.DataAccess
 		public async virtual Task<List<Pet>> PetsByBreedId(int breedId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Pet>()
+			       .Include(x => x.BreedIdNavigation)
 			       .Where(x => x.BreedId == breedId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
 
@@ -135,5 +136,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f4e7dedf0d98f9fd898b61d25636bc37</Hash>
+    <Hash>32fadb810fdf8f5b8e296efed757b429</Hash>
 </Codenesium>*/

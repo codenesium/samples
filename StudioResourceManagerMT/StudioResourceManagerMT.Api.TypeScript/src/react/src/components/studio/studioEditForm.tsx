@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudioMapper from './studioMapper';
 import StudioViewModel from './studioViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface StudioEditComponentProps {
@@ -148,70 +148,89 @@ class StudioEditComponent extends React.Component<
               <label htmlFor='address1'>address1</label>
               <br />             
               {getFieldDecorator('address1', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address1"} id={"address1"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address1"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='address2'>address2</label>
               <br />             
               {getFieldDecorator('address2', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address2"} id={"address2"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"address2"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='city'>city</label>
               <br />             
               {getFieldDecorator('city', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"city"} id={"city"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"city"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='name'>name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"name"} id={"name"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"name"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='province'>province</label>
               <br />             
               {getFieldDecorator('province', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 90, message: 'Exceeds max length of 90' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"province"} id={"province"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"province"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='website'>website</label>
               <br />             
               {getFieldDecorator('website', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"website"} id={"website"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"website"} /> )}
               </Form.Item>
 
 						<Form.Item>
               <label htmlFor='zip'>zip</label>
               <br />             
               {getFieldDecorator('zip', {
-              rules:[],
+              rules:[{ max: 128, message: 'Exceeds max length of 128' },
+],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"zip"} id={"zip"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"zip"} /> )}
               </Form.Item>
 
 			
@@ -231,5 +250,5 @@ class StudioEditComponent extends React.Component<
 export const WrappedStudioEditComponent = Form.create({ name: 'Studio Edit' })(StudioEditComponent);
 
 /*<Codenesium>
-    <Hash>bd141526205c1ede68323d92f475a396</Hash>
+    <Hash>ea4e8a5b2956aea9bbe606d5c705298c</Hash>
 </Codenesium>*/

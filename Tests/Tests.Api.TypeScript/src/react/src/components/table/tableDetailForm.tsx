@@ -75,7 +75,7 @@ class TableDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -128,5 +128,5 @@ export const WrappedTableDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8027c039aa875edb1d489cdf4d9fee6e</Hash>
+    <Hash>37a2d6f4aa42f95aa83fbe3c03d1a2c2</Hash>
 </Codenesium>*/

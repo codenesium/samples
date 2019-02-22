@@ -39,11 +39,11 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
         this.loadRecords();
     }
 
-    handleEditClick(e:any, row:Api.FamilyClientResponseModel) {
+    handleEditClick(e:any, row:FamilyViewModel) {
          this.props.history.push(ClientRoutes.Families + '/edit/' + row.id);
     }
 
-    handleDetailClick(e:any, row:Api.FamilyClientResponseModel) {
+    handleDetailClick(e:any, row:FamilyViewModel) {
          this.props.history.push(ClientRoutes.Families + '/' + row.id);
     }
 
@@ -100,7 +100,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
 
 	   }, error => {
 		   console.log(error);
-		   this.setState({records:new Array<FamilyViewModel>(),filteredRecords:new Array<FamilyViewModel>(), loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
+		   this.setState({records:new Array<FamilyViewModel>(), filteredRecords:new Array<FamilyViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
 	   })
     }
 
@@ -161,7 +161,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Family',
+                    Header: 'Families',
                     columns: [
 					  {
                       Header: 'Id',
@@ -208,7 +208,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
                           onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.FamilyClientResponseModel
+                              row.original as FamilyViewModel
                             );
                           }}
                         >
@@ -220,7 +220,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
                           onClick={(e:any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.FamilyClientResponseModel
+                              row.original as FamilyViewModel
                             );
                           }}
                         >
@@ -232,7 +232,7 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
                           onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.FamilyClientResponseModel
+                              row.original as FamilyViewModel
                             );
                           }}
                         >
@@ -254,5 +254,5 @@ export default class FamilySearchComponent extends React.Component<FamilySearchC
 export const WrappedFamilySearchComponent = Form.create({ name: 'Family Search' })(FamilySearchComponent);
 
 /*<Codenesium>
-    <Hash>6c458ef244d32db44f2f420198ed2d0e</Hash>
+    <Hash>fa385e3f2a74d0754714fc7fa74ece86</Hash>
 </Codenesium>*/

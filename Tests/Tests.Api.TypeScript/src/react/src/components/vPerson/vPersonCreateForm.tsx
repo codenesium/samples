@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,8 +121,12 @@ class VPersonCreateComponent extends React.Component<
             <label htmlFor="personName">PersonName</label>
             <br />
             {getFieldDecorator('personName', {
-              rules: [],
-            })(<Input placeholder={'PersonName'} id={'personName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(<Input placeholder={'PersonName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -144,5 +149,5 @@ export const WrappedVPersonCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1046fb35e76d151a590faab8627aa484</Hash>
+    <Hash>1d7ac9fbd78542974e0c3da96479678e</Hash>
 </Codenesium>*/

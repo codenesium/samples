@@ -1,139 +1,165 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects'
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps,FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
+import * as Api from '../../api/models';
 import MachineMapper from './machineMapper';
 import MachineViewModel from './machineViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import { LinkTableComponent } from '../shared/linkTable';
 
-interface Props {
-	history:any;
-    model?:MachineViewModel
+interface MachineDetailComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-const MachineDetailDisplay = (model:Props) => {
-
-   return (
-          <form  role="form">
-				<button
-                  className="btn btn-primary btn-sm align-middle float-right vertically-center"
-                  onClick={(e) => { model.history.push(ClientRoutes.Machines + '/edit/' + model.model!.id)}}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-			 						 <div className="form-group row">
-							<label htmlFor="description" className={"col-sm-2 col-form-label"}>Description</label>
-							<div className="col-sm-12">
-								{String(model.model!.description)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="id" className={"col-sm-2 col-form-label"}>Id</label>
-							<div className="col-sm-12">
-								{String(model.model!.id)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="jwtKey" className={"col-sm-2 col-form-label"}>JwtKey</label>
-							<div className="col-sm-12">
-								{String(model.model!.jwtKey)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="lastIpAddress" className={"col-sm-2 col-form-label"}>LastIpAddress</label>
-							<div className="col-sm-12">
-								{String(model.model!.lastIpAddress)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="machineGuid" className={"col-sm-2 col-form-label"}>MachineGuid</label>
-							<div className="col-sm-12">
-								{String(model.model!.machineGuid)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
-							<label htmlFor="name" className={"col-sm-2 col-form-label"}>Name</label>
-							<div className="col-sm-12">
-								{String(model.model!.name)}
-							</div>
-						</div>
-					             </form>
-  );
+interface MachineDetailComponentState {
+  model?: MachineViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
 }
 
-  interface IParams 
-  {
-     id:number;
-  }
-  
-  interface IMatch
-  {
-     params: IParams;
-  }
+class MachineDetailComponent extends React.Component<
+  MachineDetailComponentProps,
+  MachineDetailComponentState
+> {
+  state = {
+    model: new MachineViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-  interface MachineDetailComponentProps
-  {
-     match:IMatch;
-	 history:any;
-  }
-
-  interface MachineDetailComponentState
-  {
-      model?:MachineViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Machines + '/edit/' + this.state.model!.id
+    );
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
 
-  export default class MachineDetailComponent extends React.Component<MachineDetailComponentProps, MachineDetailComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:false, errorOccurred:false, errorMessage:''});
-
-    componentDidMount () {
-        this.setState({...this.state,loading:true});
-
-        axios.get(Constants.ApiEndpoint + ApiRoutes.Machines + '/' + this.props.match.params.id,
+    axios
+      .get(
+        Constants.ApiEndpoint +
+          ApiRoutes.Machines +
+          '/' +
+          this.props.match.params.id,
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as Api.MachineClientResponseModel;
-            
-			let mapper = new MachineMapper();
-
-            console.log(response);
-
-            this.setState({model:mapper.mapApiResponseToViewModel(response), loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-        }, error => {
-            console.log(error);
-            this.setState({model:undefined, loading:false, loaded:false, errorOccurred:true, errorMessage:'Error from API'});
-        })
-    }
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-		else if (this.state.errorOccurred) {
-            return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<MachineDetailDisplay history={this.props.history} model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as Api.MachineClientResponseModel;
+
+          console.log(response);
+
+          let mapper = new MachineMapper();
+
+          this.setState({
+            model: mapper.mapApiResponseToViewModel(response),
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            model: undefined,
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  render() {
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Description</h3>
+              <p>{String(this.state.model!.description)}</p>
+            </div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>JwtKey</h3>
+              <p>{String(this.state.model!.jwtKey)}</p>
+            </div>
+            <div>
+              <h3>LastIpAddress</h3>
+              <p>{String(this.state.model!.lastIpAddress)}</p>
+            </div>
+            <div>
+              <h3>MachineGuid</h3>
+              <p>{String(this.state.model!.machineGuid)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
+          {message}
+          <div>
+            <h3>Links</h3>
+            <LinkTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Machines +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Links
+              }
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedMachineDetailComponent = Form.create({
+  name: 'Machine Detail',
+})(MachineDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>43cd5a13a2b8fe4e3f5c398b577dc424</Hash>
+    <Hash>fcd8e368b8bedffb78872518877700f0</Hash>
 </Codenesium>*/

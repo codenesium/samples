@@ -5,7 +5,7 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileTypeMapper from './fileTypeMapper';
 import FileTypeViewModel from './fileTypeViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert } from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FileTypeEditComponentProps {
@@ -148,10 +148,13 @@ class FileTypeEditComponent extends React.Component<
               <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
-              rules:[],
+              rules:[{ required: true, message: 'Required' },
+{ whitespace: true, message: 'Required' },
+{ max: 255, message: 'Exceeds max length of 255' },
+],
               
               })
-              ( <Input placeholder={"Name"} id={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 			
@@ -171,5 +174,5 @@ class FileTypeEditComponent extends React.Component<
 export const WrappedFileTypeEditComponent = Form.create({ name: 'FileType Edit' })(FileTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>8276ea7441ab4dbfc73e1fc04fbffd6a</Hash>
+    <Hash>f97592958c500ae4a74c51eed768a762</Hash>
 </Codenesium>*/

@@ -75,7 +75,7 @@ class SelfReferenceDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -140,5 +140,5 @@ export const WrappedSelfReferenceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6f9cc5af8669a78cc751f3c088c62908</Hash>
+    <Hash>abf0234b850d75d5e945a029f832c65b</Hash>
 </Codenesium>*/

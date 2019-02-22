@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -118,32 +119,45 @@ class TagCreateComponent extends React.Component<
             <label htmlFor="count">Count</label>
             <br />
             {getFieldDecorator('count', {
-              rules: [],
-            })(<Input placeholder={'Count'} id={'count'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'Count'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="excerptPostId">ExcerptPostId</label>
             <br />
             {getFieldDecorator('excerptPostId', {
-              rules: [],
-            })(<Input placeholder={'ExcerptPostId'} id={'excerptPostId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'ExcerptPostId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="tagName">TagName</label>
             <br />
             {getFieldDecorator('tagName', {
-              rules: [],
-            })(<Input placeholder={'TagName'} id={'tagName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 150, message: 'Exceeds max length of 150' },
+              ],
+            })(<Input placeholder={'TagName'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="wikiPostId">WikiPostId</label>
             <br />
             {getFieldDecorator('wikiPostId', {
-              rules: [],
-            })(<Input placeholder={'WikiPostId'} id={'wikiPostId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<Input placeholder={'WikiPostId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -166,5 +180,5 @@ export const WrappedTagCreateComponent = Form.create({ name: 'Tag Create' })(
 
 
 /*<Codenesium>
-    <Hash>9907d4aeb94b0295b45e53c4397ad027</Hash>
+    <Hash>b9a5598e2b8954f58f2f42db9fa58010</Hash>
 </Codenesium>*/

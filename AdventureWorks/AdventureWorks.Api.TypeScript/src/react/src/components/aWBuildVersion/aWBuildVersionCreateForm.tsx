@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -120,12 +121,15 @@ class AWBuildVersionCreateComponent extends React.Component<
             <label htmlFor="database_Version">Database Version</label>
             <br />
             {getFieldDecorator('database_Version', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 25, message: 'Exceeds max length of 25' },
+              ],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
                 placeholder={'Database Version'}
-                id={'database_Version'}
               />
             )}
           </Form.Item>
@@ -134,13 +138,12 @@ class AWBuildVersionCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'ModifiedDate'}
-                id={'modifiedDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
           </Form.Item>
 
@@ -148,13 +151,12 @@ class AWBuildVersionCreateComponent extends React.Component<
             <label htmlFor="versionDate">VersionDate</label>
             <br />
             {getFieldDecorator('versionDate', {
-              rules: [],
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
             })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'VersionDate'}
-                id={'versionDate'}
-              />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'VersionDate'} />
             )}
           </Form.Item>
 
@@ -178,5 +180,5 @@ export const WrappedAWBuildVersionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7365a0676539e52f710dfd43e54746d7</Hash>
+    <Hash>8b2eaee3c12c69e520f864a3bb1107f0</Hash>
 </Codenesium>*/

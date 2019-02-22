@@ -77,7 +77,7 @@ class BillOfMaterialDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -158,5 +158,5 @@ export const WrappedBillOfMaterialDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0edb865a5c7e9346fd905016bea55f65</Hash>
+    <Hash>ed354c389f12f409f06631354ed8ad16</Hash>
 </Codenesium>*/

@@ -1,77 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import * as Api from '../../api/models';
-import { UpdateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
+import * as Api from '../../api/models';
 import EmployeeMapper from './employeeMapper';
 import EmployeeViewModel from './employeeViewModel';
+import { Form, Input, Button, Spin, Alert } from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
+import {CustomerCommunicationTableComponent} from '../shared/customerCommunicationTable'
+	import {PipelineStepTableComponent} from '../shared/pipelineStepTable'
+	import {PipelineStepNoteTableComponent} from '../shared/pipelineStepNoteTable'
+	
 
-interface Props {
-  history: any;
-  model?: EmployeeViewModel;
-}
 
-const EmployeeDetailDisplay = (model: Props) => {
-  return (
-    <form role="form">
-      <button
-        className="btn btn-primary btn-sm align-middle float-right vertically-center"
-        onClick={e => {
-          model.history.push(
-            ClientRoutes.Employees + '/edit/' + model.model!.id
-          );
-        }}
-      >
-        <i className="fas fa-edit" />
-      </button>
-      <div className="form-group row">
-        <label htmlFor="firstName" className={'col-sm-2 col-form-label'}>
-          FirstName
-        </label>
-        <div className="col-sm-12">{String(model.model!.firstName)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="isSalesPerson" className={'col-sm-2 col-form-label'}>
-          IsSalesPerson
-        </label>
-        <div className="col-sm-12">{String(model.model!.isSalesPerson)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="isShipper" className={'col-sm-2 col-form-label'}>
-          IsShipper
-        </label>
-        <div className="col-sm-12">{String(model.model!.isShipper)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
-          LastName
-        </label>
-        <div className="col-sm-12">{String(model.model!.lastName)}</div>
-      </div>
-    </form>
-  );
-};
-
-interface IParams {
-  id: number;
-}
-
-interface IMatch {
-  params: IParams;
-}
 
 interface EmployeeDetailComponentProps {
-  match: IMatch;
+  form: WrappedFormUtils;
   history: any;
+  match: any;
 }
 
 interface EmployeeDetailComponentState {
@@ -82,18 +27,22 @@ interface EmployeeDetailComponentState {
   errorMessage: string;
 }
 
-export default class EmployeeDetailComponent extends React.Component<
-  EmployeeDetailComponentProps,
-  EmployeeDetailComponentState
+class EmployeeDetailComponent extends React.Component<
+EmployeeDetailComponentProps,
+EmployeeDetailComponentState
 > {
   state = {
-    model: undefined,
+    model: new EmployeeViewModel(),
     loading: false,
-    loaded: false,
+    loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Employees + '/edit/' + this.state.model!.id);
+  }
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -113,9 +62,9 @@ export default class EmployeeDetailComponent extends React.Component<
         resp => {
           let response = resp.data as Api.EmployeeClientResponseModel;
 
-          let mapper = new EmployeeMapper();
-
           console.log(response);
+
+          let mapper = new EmployeeMapper();
 
           this.setState({
             model: mapper.mapApiResponseToViewModel(response),
@@ -130,24 +79,88 @@ export default class EmployeeDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
         }
       );
   }
+
   render() {
+    
+    let message: JSX.Element = <div />;
+    if (this.state.errorOccurred) {
+      message = <Alert message={this.state.errorMessage} type="error" />;
+    } 
+  
     if (this.state.loading) {
-      return <LoadingForm />;
-    } else if (this.state.errorOccurred) {
-      return <ErrorForm message={this.state.errorMessage} />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
-        <EmployeeDetailDisplay
-          history={this.props.history}
-          model={this.state.model}
-        />
+        <div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>firstName</h3>
+							<p>{String(this.state.model!.firstName)}</p>
+						 </div>
+					   						 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>isSalesPerson</h3>
+							<p>{String(this.state.model!.isSalesPerson)}</p>
+						 </div>
+					   						 <div>
+							<h3>isShipper</h3>
+							<p>{String(this.state.model!.isShipper)}</p>
+						 </div>
+					   						 <div>
+							<h3>lastName</h3>
+							<p>{String(this.state.model!.lastName)}</p>
+						 </div>
+					   		  </div>
+          {message}
+		 <div>
+            <h3>CustomerCommunications</h3>
+            <CustomerCommunicationTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.id + '/' + ApiRoutes.CustomerCommunications}
+			/>
+         </div>
+			 <div>
+            <h3>PipelineSteps</h3>
+            <PipelineStepTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineSteps}
+			/>
+         </div>
+			 <div>
+            <h3>PipelineStepNotes</h3>
+            <PipelineStepNoteTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepNotes}
+			/>
+         </div>
+	
+
+        </div>
       );
     } else {
       return null;
@@ -155,7 +168,10 @@ export default class EmployeeDetailComponent extends React.Component<
   }
 }
 
+export const WrappedEmployeeDetailComponent = Form.create({ name: 'Employee Detail' })(
+  EmployeeDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>020e1a48f591b9b3bf21aa46c99ddc0a</Hash>
+    <Hash>b5d47844b126490c119bf3069872f4ca</Hash>
 </Codenesium>*/

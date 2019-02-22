@@ -50,11 +50,11 @@ export default class PostLinkSearchComponent extends React.Component<
     this.loadRecords();
   }
 
-  handleEditClick(e: any, row: Api.PostLinkClientResponseModel) {
+  handleEditClick(e: any, row: PostLinkViewModel) {
     this.props.history.push(ClientRoutes.PostLinks + '/edit/' + row.id);
   }
 
-  handleDetailClick(e: any, row: Api.PostLinkClientResponseModel) {
+  handleDetailClick(e: any, row: PostLinkViewModel) {
     this.props.history.push(ClientRoutes.PostLinks + '/' + row.id);
   }
 
@@ -135,7 +135,7 @@ export default class PostLinkSearchComponent extends React.Component<
             records: new Array<PostLinkViewModel>(),
             filteredRecords: new Array<PostLinkViewModel>(),
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -205,7 +205,7 @@ export default class PostLinkSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'PostLink',
+                Header: 'PostLinks',
                 columns: [
                   {
                     Header: 'CreationDate',
@@ -246,7 +246,7 @@ export default class PostLinkSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
-                              row.original as Api.PostLinkClientResponseModel
+                              row.original as PostLinkViewModel
                             );
                           }}
                         >
@@ -258,7 +258,7 @@ export default class PostLinkSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
-                              row.original as Api.PostLinkClientResponseModel
+                              row.original as PostLinkViewModel
                             );
                           }}
                         >
@@ -270,7 +270,7 @@ export default class PostLinkSearchComponent extends React.Component<
                           onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
-                              row.original as Api.PostLinkClientResponseModel
+                              row.original as PostLinkViewModel
                             );
                           }}
                         >
@@ -297,5 +297,5 @@ export const WrappedPostLinkSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>edf28167d971ca1f9bfbcda1e0f47940</Hash>
+    <Hash>13966901d714bca2c61b16e6f33e989d</Hash>
 </Codenesium>*/

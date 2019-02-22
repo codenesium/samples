@@ -1,153 +1,157 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects'
-import { FormikProps, FormikErrors, Field, withFormik } from 'formik';
-import * as Yup from 'yup'
-import { LoadingForm } from '../../lib/components/loadingForm'
-import { ErrorForm } from '../../lib/components/errorForm'
-import * as Api from '../../api/models';
+import { CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
+import * as Api from '../../api/models';
 import FollowingMapper from './followingMapper';
 import FollowingViewModel from './followingViewModel';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface Props {
-    model?:FollowingViewModel
+interface FollowingCreateComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-   const FollowingCreateDisplay: React.SFC<FormikProps<FollowingViewModel>> = (props: FormikProps<FollowingViewModel>) => {
-
-   let status = props.status as CreateResponse<Api.FollowingClientRequestModel>;
-   
-   let errorsForField = (name:string) : string =>
-   {
-        let response = '';
-        if(props.touched[name as keyof FollowingViewModel]  && props.errors[name as keyof FollowingViewModel]) {
-            response += props.errors[name as keyof FollowingViewModel];
-        }
-
-        if(status && status.validationErrors && status.validationErrors.find(f => f.propertyName.toLowerCase() == name.toLowerCase())) {
-            response += status.validationErrors.filter(f => f.propertyName.toLowerCase() == name.toLowerCase())[0].errorMessage;
-        }
-
-        return response;
-   }
-
-   let errorExistForField = (name:string) : boolean =>
-   {
-        return errorsForField(name) != '';
-   }
-
-   return (<form onSubmit={props.handleSubmit} role="form">            
-            			<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("dateFollowed") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Date_followed</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="dateFollowed" className={errorExistForField("dateFollowed") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("dateFollowed") && <small className="text-danger">{errorsForField("dateFollowed")}</small>}
-                        </div>
-                    </div>
-
-						<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("muted") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Muted</label>
-					    <div className="col-sm-12">
-                             <Field type="textbox" name="muted" className={errorExistForField("muted") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("muted") && <small className="text-danger">{errorsForField("muted")}</small>}
-                        </div>
-                    </div>
-
-			
-            <button type="submit" className="btn btn-primary" disabled={false}>
-                Submit
-            </button>
-            <br />
-            <br />
-            { 
-                status && status.success ? (<div className="alert alert-success">Success</div>): (null)
-            }
-                        
-            { 
-                status && !status.success ? (<div className="alert alert-danger">Error occurred</div>): (null)
-            }
-          </form>);
+interface FollowingCreateComponentState {
+  model?: FollowingViewModel;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  submitted: boolean;
 }
 
+class FollowingCreateComponent extends React.Component<
+  FollowingCreateComponentProps,
+  FollowingCreateComponentState
+> {
+  state = {
+    model: new FollowingViewModel(),
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+    submitted: false,
+  };
 
-const FollowingCreate = withFormik<Props, FollowingViewModel>({
-    mapPropsToValues: props => {
-                
-		let response = new FollowingViewModel();
-		if (props.model != undefined)
-		{
-			response.setProperties(props.model!.dateFollowed,props.model!.muted,props.model!.userId);	
-		}
-		return response;
-      },
-  
-    validate: values => {
-      let errors:FormikErrors<FollowingViewModel> = { };
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        let model = values as FollowingViewModel;
+        console.log('Received values of form: ', model);
+        this.submit(model);
+      }
+    });
+  };
 
-	  
-
-      return errors;
-    },
-  
-    handleSubmit: (values, actions) => {
-        actions.setStatus(undefined);
-        let mapper = new FollowingMapper();
-
-        axios.post(Constants.ApiEndpoint + ApiRoutes.Followings,
-        mapper.mapViewModelToApiRequest(values),
+  submit = (model: FollowingViewModel) => {
+    let mapper = new FollowingMapper();
+    axios
+      .post(
+        Constants.ApiEndpoint + ApiRoutes.Followings,
+        mapper.mapViewModelToApiRequest(model),
         {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            let response = resp.data as CreateResponse<Api.FollowingClientRequestModel>;
-            actions.setStatus(response);
-            console.log(response);
-    
-        }, error => {
-		    console.log(error);
-            actions.setStatus('Error from API');
-        })
-    },
-    displayName: 'FollowingCreate', 
-  })(FollowingCreateDisplay);
-
-  interface FollowingCreateComponentProps
-  {
-  }
-
-  interface FollowingCreateComponentState
-  {
-      model?:FollowingViewModel;
-      loading:boolean;
-      loaded:boolean;
-      errorOccurred:boolean;
-      errorMessage:string;
-  }
-
-  export default class FollowingCreateComponent extends React.Component<FollowingCreateComponentProps, FollowingCreateComponentState> {
-
-    state = ({model:undefined, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-    render () {
-
-        if (this.state.loading) {
-            return <LoadingForm />;
-        } 
-	    else if (this.state.errorOccurred) {
-             return <ErrorForm message={this.state.errorMessage} />;
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        else if (this.state.loaded) {
-            return (<FollowingCreate model={this.state.model} />);
-        } 
-		else {
-		  return null;
-		}
+      )
+      .then(
+        resp => {
+          let response = resp.data as CreateResponse<
+            Api.FollowingClientRequestModel
+          >;
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
+      if (this.state.errorOccurred) {
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
+      }
     }
+
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="dateFollowed">date_followed</label>
+            <br />
+            {getFieldDecorator('dateFollowed', {
+              rules: [],
+            })(<Input placeholder={'date_followed'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <label htmlFor="muted">muted</label>
+            <br />
+            {getFieldDecorator('muted', {
+              rules: [{ max: 1, message: 'Exceeds max length of 1' }],
+            })(<Input placeholder={'muted'} />)}
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
+export const WrappedFollowingCreateComponent = Form.create({
+  name: 'Following Create',
+})(FollowingCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>838099540139ece7abe80ba763aee562</Hash>
+    <Hash>ec4bf5ea8f2a2adff2653e63c21ece99</Hash>
 </Codenesium>*/

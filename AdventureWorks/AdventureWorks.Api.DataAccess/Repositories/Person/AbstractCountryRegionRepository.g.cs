@@ -100,6 +100,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<StateProvince>> StateProvincesByCountryRegionCode(string countryRegionCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<StateProvince>()
+			       .Include(x => x.CountryRegionCodeNavigation)
 			       .Where(x => x.CountryRegionCode == countryRegionCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<StateProvince>();
 		}
 
@@ -129,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d8fabf90add04791399f1ba95f4eb4a</Hash>
+    <Hash>15ee1cf379f6debf9fea2c7bd8e7485a</Hash>
 </Codenesium>*/

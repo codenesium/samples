@@ -14,6 +14,7 @@ import {
   DatePicker,
   Spin,
   Alert,
+  TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
@@ -166,8 +167,12 @@ class PenEditComponent extends React.Component<
             <label htmlFor="name">name</label>
             <br />
             {getFieldDecorator('name', {
-              rules: [],
-            })(<Input placeholder={'name'} id={'name'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -190,5 +195,5 @@ export const WrappedPenEditComponent = Form.create({ name: 'Pen Edit' })(
 
 
 /*<Codenesium>
-    <Hash>c40366360c1187d293f02a97dc1f241c</Hash>
+    <Hash>51b94db24bec4f42185baf2233037726</Hash>
 </Codenesium>*/

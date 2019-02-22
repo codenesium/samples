@@ -75,7 +75,7 @@ class ErrorLogDetailComponent extends React.Component<
           this.setState({
             model: undefined,
             loading: false,
-            loaded: false,
+            loaded: true,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -156,5 +156,5 @@ export const WrappedErrorLogDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5e2d4365b78b5ca6746a6e0ba125adca</Hash>
+    <Hash>7e30608b30cf359d04829e544ea5276a</Hash>
 </Codenesium>*/

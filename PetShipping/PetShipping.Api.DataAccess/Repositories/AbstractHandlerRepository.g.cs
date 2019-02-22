@@ -95,6 +95,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<AirTransport>> AirTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<AirTransport>()
+			       .Include(x => x.HandlerIdNavigation)
 			       .Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
@@ -102,6 +103,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineStepsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<HandlerPipelineStep>()
+			       .Include(x => x.HandlerIdNavigation)
 			       .Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
 		}
 
@@ -109,6 +111,7 @@ namespace PetShippingNS.Api.DataAccess
 		public async virtual Task<List<OtherTransport>> OtherTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<OtherTransport>()
+			       .Include(x => x.HandlerIdNavigation)
 			       .Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
 		}
 
@@ -138,5 +141,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e7fc74a2f3c30e67514a193d0bea0079</Hash>
+    <Hash>4258fb43d3e463379c5ed14930a63d5b</Hash>
 </Codenesium>*/

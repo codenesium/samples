@@ -1,15 +1,22 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
 import { CreateResponse } from '../../api/apiObjects';
-import { LoadingForm } from '../../lib/components/loadingForm';
-import { ErrorForm } from '../../lib/components/errorForm';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudentMapper from './studentMapper';
 import StudentViewModel from './studentViewModel';
-import { Form, Input, Button, Checkbox, InputNumber, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { Alert } from 'antd';
 
 interface StudentCreateComponentProps {
   form: WrappedFormUtils;
@@ -106,7 +113,7 @@ class StudentCreateComponent extends React.Component<
     }
 
     if (this.state.loading) {
-      return <LoadingForm />;
+      return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
@@ -114,16 +121,23 @@ class StudentCreateComponent extends React.Component<
             <label htmlFor="birthday">birthday</label>
             <br />
             {getFieldDecorator('birthday', {
-              rules: [],
-            })(<DatePicker placeholder={'birthday'} id={'birthday'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'birthday'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="email">email</label>
             <br />
             {getFieldDecorator('email', {
-              rules: [],
-            })(<Input placeholder={'email'} id={'email'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'email'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -132,64 +146,94 @@ class StudentCreateComponent extends React.Component<
             </label>
             <br />
             {getFieldDecorator('emailRemindersEnabled', {
-              rules: [],
-            })(<Checkbox />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+              valuePropName: 'checked',
+            })(<Switch />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="familyId">familyId</label>
             <br />
             {getFieldDecorator('familyId', {
-              rules: [],
-            })(<InputNumber placeholder={'familyId'} id={'familyId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<InputNumber placeholder={'familyId'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="firstName">First Name</label>
             <br />
             {getFieldDecorator('firstName', {
-              rules: [],
-            })(<Input placeholder={'First Name'} id={'firstName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'First Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="isAdult">Is Adult</label>
             <br />
             {getFieldDecorator('isAdult', {
-              rules: [],
-            })(<Checkbox />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+              valuePropName: 'checked',
+            })(<Switch />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="lastName">Last Name</label>
             <br />
             {getFieldDecorator('lastName', {
-              rules: [],
-            })(<Input placeholder={'Last Name'} id={'lastName'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="phone">phone</label>
             <br />
             {getFieldDecorator('phone', {
-              rules: [],
-            })(<InputNumber placeholder={'phone'} id={'phone'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<InputNumber placeholder={'phone'} />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="smsRemindersEnabled">SMS Reminders Enabled</label>
             <br />
             {getFieldDecorator('smsRemindersEnabled', {
-              rules: [],
-            })(<Checkbox />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+              valuePropName: 'checked',
+            })(<Switch />)}
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="userId">userId</label>
             <br />
             {getFieldDecorator('userId', {
-              rules: [],
-            })(<InputNumber placeholder={'userId'} id={'userId'} />)}
+              rules: [
+                { required: true, message: 'Required' },
+                { whitespace: true, message: 'Required' },
+              ],
+            })(<InputNumber placeholder={'userId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -212,5 +256,5 @@ export const WrappedStudentCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e70d7e628c61171e39891d8951ea420f</Hash>
+    <Hash>9b596c10db5b745232d684a8c048579b</Hash>
 </Codenesium>*/

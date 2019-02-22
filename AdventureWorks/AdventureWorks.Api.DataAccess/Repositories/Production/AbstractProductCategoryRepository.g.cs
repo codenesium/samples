@@ -109,6 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<ProductSubcategory>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductSubcategory>()
+			       .Include(x => x.ProductCategoryIDNavigation)
 			       .Where(x => x.ProductCategoryID == productCategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
 		}
 
@@ -138,5 +139,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d8e7a0ecc3fffbef76cbb4299cd89dec</Hash>
+    <Hash>858047dc0d3206de996a166ce8e8fe51</Hash>
 </Codenesium>*/

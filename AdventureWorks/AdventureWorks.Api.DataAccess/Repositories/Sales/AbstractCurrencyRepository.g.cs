@@ -100,6 +100,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<CurrencyRate>> CurrencyRatesByFromCurrencyCode(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CurrencyRate>()
+			       .Include(x => x.FromCurrencyCodeNavigation)
 			       .Where(x => x.FromCurrencyCode == fromCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
 		}
 
@@ -107,6 +108,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<CurrencyRate>> CurrencyRatesByToCurrencyCode(string toCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CurrencyRate>()
+			       .Include(x => x.ToCurrencyCodeNavigation)
 			       .Where(x => x.ToCurrencyCode == toCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
 		}
 
@@ -136,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>12c050adef34f3a107932b9f61300ab7</Hash>
+    <Hash>a8a0b131af4266d8f06982a40150cd5e</Hash>
 </Codenesium>*/
