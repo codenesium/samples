@@ -123,7 +123,6 @@ class EmployeeCreateComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
@@ -133,10 +132,7 @@ class EmployeeCreateComponent extends React.Component<
             <label htmlFor="isSalesPerson">isSalesPerson</label>
             <br />
             {getFieldDecorator('isSalesPerson', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'isSalesPerson'} />
             )}
@@ -146,10 +142,7 @@ class EmployeeCreateComponent extends React.Component<
             <label htmlFor="isShipper">isShipper</label>
             <br />
             {getFieldDecorator('isShipper', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'isShipper'} />)}
           </Form.Item>
 
@@ -159,7 +152,6 @@ class EmployeeCreateComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
@@ -185,5 +177,5 @@ export const WrappedEmployeeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e33e39eaebfe203b939bca7dae512ace</Hash>
+    <Hash>ae89083c99fb62c0be2c6c1687b07b39</Hash>
 </Codenesium>*/

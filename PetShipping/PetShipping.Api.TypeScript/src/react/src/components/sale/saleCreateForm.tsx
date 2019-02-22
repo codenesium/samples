@@ -121,10 +121,7 @@ class SaleCreateComponent extends React.Component<
             <label htmlFor="amount">amount</label>
             <br />
             {getFieldDecorator('amount', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'amount'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class SaleCreateComponent extends React.Component<
             <label htmlFor="cutomerId">cutomerId</label>
             <br />
             {getFieldDecorator('cutomerId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'cutomerId'} />)}
           </Form.Item>
 
@@ -143,10 +137,7 @@ class SaleCreateComponent extends React.Component<
             <label htmlFor="note">note</label>
             <br />
             {getFieldDecorator('note', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'note'} />)}
           </Form.Item>
 
@@ -154,10 +145,7 @@ class SaleCreateComponent extends React.Component<
             <label htmlFor="petId">petId</label>
             <br />
             {getFieldDecorator('petId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'petId'} />)}
           </Form.Item>
 
@@ -165,10 +153,7 @@ class SaleCreateComponent extends React.Component<
             <label htmlFor="saleDate">saleDate</label>
             <br />
             {getFieldDecorator('saleDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'saleDate'} />)}
           </Form.Item>
 
@@ -176,10 +161,7 @@ class SaleCreateComponent extends React.Component<
             <label htmlFor="salesPersonId">salesPersonId</label>
             <br />
             {getFieldDecorator('salesPersonId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'salesPersonId'} />
             )}
@@ -205,5 +187,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>bc8c8a2b946c0d60b0dcc088427790de</Hash>
+    <Hash>162c01f88bbee9b24167fca93a53b872</Hash>
 </Codenesium>*/

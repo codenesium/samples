@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesTaxRateService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ISalesTaxRateRepository SalesTaxRateRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractSalesTaxRateService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			IApiSalesTaxRateServerRequestModelValidator salesTaxRateModelValidator,
 			IDALSalesTaxRateMapper dalSalesTaxRateMapper)
@@ -144,5 +143,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34af3b0c9621c4c9afe958ee9ee0a090</Hash>
+    <Hash>09f8ae456b488ff53212a3df86004359</Hash>
 </Codenesium>*/

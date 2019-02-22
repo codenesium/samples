@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractStudioService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IStudioRepository StudioRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractStudioService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IStudioRepository studioRepository,
 			IApiStudioServerRequestModelValidator studioModelValidator,
 			IDALStudioMapper dalStudioMapper)
@@ -116,5 +115,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02b8b359ed459a7d0ef0329906bcd1bc</Hash>
+    <Hash>218a19b2ef1850d5e4bd848981f40afe</Hash>
 </Codenesium>*/

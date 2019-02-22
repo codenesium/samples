@@ -159,7 +159,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('dateCreated', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -182,7 +181,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('expiration', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -194,7 +192,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('extension', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 32, message: 'Exceeds max length of 32' },
 ],
               
@@ -207,7 +204,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('externalId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -219,7 +215,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fileSizeInByte', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -231,7 +226,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fileTypeId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -243,7 +237,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('location', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 255, message: 'Exceeds max length of 255' },
 ],
               
@@ -256,7 +249,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('privateKey', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 64, message: 'Exceeds max length of 64' },
 ],
               
@@ -269,7 +261,6 @@ class FileEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('publicKey', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 64, message: 'Exceeds max length of 64' },
 ],
               
@@ -294,5 +285,5 @@ class FileEditComponent extends React.Component<
 export const WrappedFileEditComponent = Form.create({ name: 'File Edit' })(FileEditComponent);
 
 /*<Codenesium>
-    <Hash>59410d8b74739e15da461444f0939d04</Hash>
+    <Hash>d5535b5f2796f2f3bcc48e48ea98848b</Hash>
 </Codenesium>*/

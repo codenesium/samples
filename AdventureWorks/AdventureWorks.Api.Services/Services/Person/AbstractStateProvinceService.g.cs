@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractStateProvinceService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IStateProvinceRepository StateProvinceRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractStateProvinceService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IStateProvinceRepository stateProvinceRepository,
 			IApiStateProvinceServerRequestModelValidator stateProvinceModelValidator,
 			IDALStateProvinceMapper dalStateProvinceMapper,
@@ -169,5 +168,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3fc7515b2d5b02a46bc0dc7572063934</Hash>
+    <Hash>334827183959c1fd0a843132c4acfd4e</Hash>
 </Codenesium>*/

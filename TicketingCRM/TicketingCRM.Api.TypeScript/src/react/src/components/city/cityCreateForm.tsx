@@ -123,7 +123,6 @@ class CityCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -133,10 +132,7 @@ class CityCreateComponent extends React.Component<
             <label htmlFor="provinceId">provinceId</label>
             <br />
             {getFieldDecorator('provinceId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'provinceId'} />)}
           </Form.Item>
 
@@ -160,5 +156,5 @@ export const WrappedCityCreateComponent = Form.create({ name: 'City Create' })(
 
 
 /*<Codenesium>
-    <Hash>9b534fe2fea6cb7a1a8b3a9ec40e42b2</Hash>
+    <Hash>1af8c40e2beb8b65b8f46cacd6f838fa</Hash>
 </Codenesium>*/

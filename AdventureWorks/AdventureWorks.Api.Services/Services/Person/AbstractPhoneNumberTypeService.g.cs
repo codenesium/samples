@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPhoneNumberTypeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IPhoneNumberTypeRepository PhoneNumberTypeRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractPhoneNumberTypeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
 			IApiPhoneNumberTypeServerRequestModelValidator phoneNumberTypeModelValidator,
 			IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper)
@@ -116,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5435d63840da0282bfa0bd868329333f</Hash>
+    <Hash>1805c0bf5a829e15df2fcf2eb47da92d</Hash>
 </Codenesium>*/

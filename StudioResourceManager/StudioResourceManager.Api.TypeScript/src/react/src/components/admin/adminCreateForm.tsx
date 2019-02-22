@@ -131,7 +131,6 @@ class AdminCreateComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'email'} />)}
@@ -143,7 +142,6 @@ class AdminCreateComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'First Name'} />)}
@@ -155,7 +153,6 @@ class AdminCreateComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Last Name'} />)}
@@ -173,10 +170,7 @@ class AdminCreateComponent extends React.Component<
             <label htmlFor="userId">userId</label>
             <br />
             {getFieldDecorator('userId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'userId'} />)}
           </Form.Item>
 
@@ -200,5 +194,5 @@ export const WrappedAdminCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7d997eb75d3c03ac06202f5b75ab49b3</Hash>
+    <Hash>4a1df162994b7d4b912f895bb8595d66</Hash>
 </Codenesium>*/

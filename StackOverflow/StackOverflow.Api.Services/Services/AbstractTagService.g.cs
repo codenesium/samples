@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractTagService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITagRepository TagRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractTagService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITagRepository tagRepository,
 			IApiTagServerRequestModelValidator tagModelValidator,
 			IDALTagMapper dalTagMapper)
@@ -116,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d01356ca9d5fe5bc59ad15e293bf6a6</Hash>
+    <Hash>ae35f016188909f92aeebe95d79c735a</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractOrganizationService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IOrganizationRepository OrganizationRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractOrganizationService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IOrganizationRepository organizationRepository,
 			IApiOrganizationServerRequestModelValidator organizationModelValidator,
 			IDALOrganizationMapper dalOrganizationMapper,
@@ -141,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5998094f3c87a41422437dffea29d903</Hash>
+    <Hash>7af65513b543807760c824fc6412a1d7</Hash>
 </Codenesium>*/

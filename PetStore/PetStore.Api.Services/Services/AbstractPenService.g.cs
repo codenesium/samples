@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractPenService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IPenRepository PenRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace PetStoreNS.Api.Services
 
 		public AbstractPenService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IPenRepository penRepository,
 			IApiPenServerRequestModelValidator penModelValidator,
 			IDALPenMapper dalPenMapper,
@@ -127,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b00c3a3959e2558065c26b3e44140a70</Hash>
+    <Hash>3b60b0e548eb8a50e8a5380380dd2a63</Hash>
 </Codenesium>*/

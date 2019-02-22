@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractReplyService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IReplyRepository ReplyRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractReplyService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IReplyRepository replyRepository,
 			IApiReplyServerRequestModelValidator replyModelValidator,
 			IDALReplyMapper dalReplyMapper)
@@ -123,5 +122,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b84621014135da11ee814cf2a42aa72</Hash>
+    <Hash>6a89ffb353f9dfdb5a224ba0226e34da</Hash>
 </Codenesium>*/

@@ -121,10 +121,7 @@ class TeacherCreateComponent extends React.Component<
             <label htmlFor="birthday">birthday</label>
             <br />
             {getFieldDecorator('birthday', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'birthday'} />)}
           </Form.Item>
 
@@ -134,7 +131,6 @@ class TeacherCreateComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'email'} />)}
@@ -146,7 +142,6 @@ class TeacherCreateComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'First Name'} />)}
@@ -158,7 +153,6 @@ class TeacherCreateComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Last Name'} />)}
@@ -176,10 +170,7 @@ class TeacherCreateComponent extends React.Component<
             <label htmlFor="userId">userId</label>
             <br />
             {getFieldDecorator('userId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'userId'} />)}
           </Form.Item>
 
@@ -203,5 +194,5 @@ export const WrappedTeacherCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5f8f686323612ba89a66db7fe5778fc5</Hash>
+    <Hash>41b1c78bde3716951e17a3638fa3bc89</Hash>
 </Codenesium>*/

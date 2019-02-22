@@ -123,7 +123,6 @@ class StudioCreateComponent extends React.Component<
             {getFieldDecorator('address1', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'address1'} />)}
@@ -135,7 +134,6 @@ class StudioCreateComponent extends React.Component<
             {getFieldDecorator('address2', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'address2'} />)}
@@ -147,7 +145,6 @@ class StudioCreateComponent extends React.Component<
             {getFieldDecorator('city', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'city'} />)}
@@ -159,7 +156,6 @@ class StudioCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -171,7 +167,6 @@ class StudioCreateComponent extends React.Component<
             {getFieldDecorator('province', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 90, message: 'Exceeds max length of 90' },
               ],
             })(<Input placeholder={'province'} />)}
@@ -183,7 +178,6 @@ class StudioCreateComponent extends React.Component<
             {getFieldDecorator('website', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'website'} />)}
@@ -217,5 +211,5 @@ export const WrappedStudioCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8e30dc8f37acf2b0458baa90328286ac</Hash>
+    <Hash>2ce0a65e81800b5cd0c9df39c92eb8f4</Hash>
 </Codenesium>*/

@@ -121,10 +121,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
             <label htmlFor="customerId">customerId</label>
             <br />
             {getFieldDecorator('customerId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'customerId'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
             <label htmlFor="dateCreated">dateCreated</label>
             <br />
             {getFieldDecorator('dateCreated', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'dateCreated'} />
             )}
@@ -145,10 +139,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
             <label htmlFor="employeeId">employeeId</label>
             <br />
             {getFieldDecorator('employeeId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'employeeId'} />)}
           </Form.Item>
 
@@ -156,10 +147,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
             <label htmlFor="note">notes</label>
             <br />
             {getFieldDecorator('note', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'notes'} />)}
           </Form.Item>
 
@@ -183,5 +171,5 @@ export const WrappedCustomerCommunicationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6b0365b7728af8993c32179848862385</Hash>
+    <Hash>9de2236abc6ef64603df41246e0f3657</Hash>
 </Codenesium>*/

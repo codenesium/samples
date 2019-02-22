@@ -207,7 +207,6 @@ class FamilyEditComponent extends React.Component<
             {getFieldDecorator('primaryContactPhone', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<InputNumber placeholder={'Primary Contact Phone'} />)}
@@ -233,5 +232,5 @@ export const WrappedFamilyEditComponent = Form.create({ name: 'Family Edit' })(
 
 
 /*<Codenesium>
-    <Hash>139cf12b5bd5ad7627d6fac6b8b15745</Hash>
+    <Hash>747d616ca27b3a108b835a3fb72d86cd</Hash>
 </Codenesium>*/

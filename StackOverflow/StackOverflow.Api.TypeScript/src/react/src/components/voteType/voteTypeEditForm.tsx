@@ -149,7 +149,6 @@ class VoteTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 50, message: 'Exceeds max length of 50' },
 ],
               
@@ -174,5 +173,5 @@ class VoteTypeEditComponent extends React.Component<
 export const WrappedVoteTypeEditComponent = Form.create({ name: 'VoteType Edit' })(VoteTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>05dd535cf386d3a02f2d01cc06040bb2</Hash>
+    <Hash>ea57ab02e43a12f4fdf6accbdc5af2c8</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractFamilyService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IFamilyRepository FamilyRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractFamilyService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IFamilyRepository familyRepository,
 			IApiFamilyServerRequestModelValidator familyModelValidator,
 			IDALFamilyMapper dalFamilyMapper,
@@ -127,5 +126,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>09160409b1d61bf82e41793990aae085</Hash>
+    <Hash>3e0adca9f09041f24ac115deb3537ae9</Hash>
 </Codenesium>*/

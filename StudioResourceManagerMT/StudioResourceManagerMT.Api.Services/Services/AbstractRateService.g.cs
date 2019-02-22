@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractRateService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IRateRepository RateRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractRateService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IRateRepository rateRepository,
 			IApiRateServerRequestModelValidator rateModelValidator,
 			IDALRateMapper dalRateMapper)
@@ -116,5 +115,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2675c74cb45d587f4396003e6b60bfc9</Hash>
+    <Hash>31d35f11766e3f4edbd6223ccd6e700b</Hash>
 </Codenesium>*/

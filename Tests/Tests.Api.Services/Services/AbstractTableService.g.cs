@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTableService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITableRepository TableRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractTableService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITableRepository tableRepository,
 			IApiTableServerRequestModelValidator tableModelValidator,
 			IDALTableMapper dalTableMapper)
@@ -116,5 +115,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48b01f24026c7dbd81ffda03ac23303a</Hash>
+    <Hash>205788af5cd50207c2ea64acfebfb588</Hash>
 </Codenesium>*/

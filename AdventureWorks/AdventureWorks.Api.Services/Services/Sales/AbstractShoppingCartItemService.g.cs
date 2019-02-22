@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShoppingCartItemService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IShoppingCartItemRepository ShoppingCartItemRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractShoppingCartItemService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IShoppingCartItemRepository shoppingCartItemRepository,
 			IApiShoppingCartItemServerRequestModelValidator shoppingCartItemModelValidator,
 			IDALShoppingCartItemMapper dalShoppingCartItemMapper)
@@ -123,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f8a9808e0388d22168d7431d22c783a</Hash>
+    <Hash>d14177391cf53a8aba0eacca3a95cbbe</Hash>
 </Codenesium>*/

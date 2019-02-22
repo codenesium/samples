@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractWorkOrderService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IWorkOrderRepository WorkOrderRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractWorkOrderService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IWorkOrderRepository workOrderRepository,
 			IApiWorkOrderServerRequestModelValidator workOrderModelValidator,
 			IDALWorkOrderMapper dalWorkOrderMapper)
@@ -130,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>28b97ff41d85566e6f987ca4c89610df</Hash>
+    <Hash>d8cdc71187e75e10eb51c0219cc8ac80</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractAdminService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IAdminRepository AdminRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractAdminService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
 			IDALAdminMapper dalAdminMapper,
@@ -127,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f91c6c539e8cb02de03d57446a931f5</Hash>
+    <Hash>b8ba30bdf9b51b4608d21375dc2d0dd1</Hash>
 </Codenesium>*/

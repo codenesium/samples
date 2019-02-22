@@ -174,7 +174,6 @@ class LinkTypeEditComponent extends React.Component<
             {getFieldDecorator('rwType', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'Type'} />)}
@@ -200,5 +199,5 @@ export const WrappedLinkTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a9c1fbe44dab614d422d3f507d94444b</Hash>
+    <Hash>df90aab7b8673af8ddc05f46756591f3</Hash>
 </Codenesium>*/

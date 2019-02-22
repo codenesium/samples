@@ -121,10 +121,7 @@ class CountryRegionCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -136,7 +133,6 @@ class CountryRegionCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -162,5 +158,5 @@ export const WrappedCountryRegionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7e23724e3e29ce20d00ba3a54ecf0a31</Hash>
+    <Hash>857a080ee628ec1ebac469cc1819a3b9</Hash>
 </Codenesium>*/

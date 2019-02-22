@@ -174,7 +174,6 @@ class PostHistoryTypeEditComponent extends React.Component<
             {getFieldDecorator('rwType', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'Type'} />)}
@@ -200,5 +199,5 @@ export const WrappedPostHistoryTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5e0100c73f9517904a8a1fbbf6f97daa</Hash>
+    <Hash>d2f0fe05d2460cba16af198275bd390a</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractSelfReferenceService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ISelfReferenceRepository SelfReferenceRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractSelfReferenceService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ISelfReferenceRepository selfReferenceRepository,
 			IApiSelfReferenceServerRequestModelValidator selfReferenceModelValidator,
 			IDALSelfReferenceMapper dalSelfReferenceMapper)
@@ -130,5 +129,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d2ea53d8a95d493a763d513436599ca</Hash>
+    <Hash>163c8b95e4ce33f4dc51086237c153a4</Hash>
 </Codenesium>*/

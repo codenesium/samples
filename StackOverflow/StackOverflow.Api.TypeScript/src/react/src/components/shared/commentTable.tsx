@@ -6,11 +6,11 @@ import CommentMapper from '../comment/commentMapper';
 import CommentViewModel from '../comment/commentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface CommentTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface CommentTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<CommentViewModel>;
+  filteredRecords : Array<CommentViewModel>;
 }
 
-export class CommentTableComponent extends React.Component<
-  CommentTableComponentProps,
-  CommentTableComponentState
+export class  CommentTableComponent extends React.Component<
+CommentTableComponentProps,
+CommentTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: CommentViewModel) {
-    this.props.history.push(ClientRoutes.Comments + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: CommentViewModel) {
+  this.props.history.push(ClientRoutes.Comments + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: CommentViewModel) {
-    this.props.history.push(ClientRoutes.Comments + '/' + row.id);
-  }
+handleDetailClick(e:any, row: CommentViewModel) {
+  this.props.history.push(ClientRoutes.Comments + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.CommentClientResponseModel>;
@@ -59,11 +61,12 @@ export class CommentTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new CommentMapper();
+          
+          let comments:Array<CommentViewModel> = [];
 
-          let comments: Array<CommentViewModel> = [];
-
-          response.forEach(x => {
-            comments.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              comments.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,68 +91,65 @@ export class CommentTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Comments',
-                columns: [
-                  {
-                    Header: 'CreationDate',
-                    accessor: 'creationDate',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Comments',
+                    columns: [
+					  {
+                      Header: 'CreationDate',
+                      accessor: 'creationDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.creationDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PostId',
-                    accessor: 'postId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'PostId',
+                      accessor: 'postId',
+                      Cell: (props) => {
                       return <span>{String(props.original.postId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Score',
-                    accessor: 'score',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Score',
+                      accessor: 'score',
+                      Cell: (props) => {
                       return <span>{String(props.original.score)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Text',
-                    accessor: 'text',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Text',
+                      accessor: 'text',
+                      Cell: (props) => {
                       return <span>{String(props.original.text)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'UserId',
-                    accessor: 'userId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'UserId',
+                      accessor: 'userId',
+                      Cell: (props) => {
                       return <span>{String(props.original.userId)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as CommentViewModel
@@ -160,8 +160,8 @@ export class CommentTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as CommentViewModel
@@ -170,14 +170,11 @@ export class CommentTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -185,7 +182,6 @@ export class CommentTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>356909b7087680a94207a70f9167de87</Hash>
+    <Hash>8446af50c2cdcfb0d1683ef190c515d9</Hash>
 </Codenesium>*/

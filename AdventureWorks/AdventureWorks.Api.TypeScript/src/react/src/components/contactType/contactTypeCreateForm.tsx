@@ -121,10 +121,7 @@ class ContactTypeCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -136,7 +133,6 @@ class ContactTypeCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -162,5 +158,5 @@ export const WrappedContactTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>36608000336ea71e0964d7f82823bbc0</Hash>
+    <Hash>9cb26237eec43416c8eee2a778c7cece</Hash>
 </Codenesium>*/

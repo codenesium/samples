@@ -7,6 +7,9 @@ import HandlerPipelineStepViewModel from './handlerPipelineStepViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface HandlerPipelineStepDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface HandlerPipelineStepDetailComponentState {
 }
 
 class HandlerPipelineStepDetailComponent extends React.Component<
-  HandlerPipelineStepDetailComponentProps,
-  HandlerPipelineStepDetailComponentState
+HandlerPipelineStepDetailComponentProps,
+HandlerPipelineStepDetailComponentState
 > {
   state = {
     model: new HandlerPipelineStepViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.HandlerPipelineSteps + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.HandlerPipelineSteps + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,46 +85,43 @@ class HandlerPipelineStepDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>handlerId</h3>
-              <p>
-                {String(this.state.model!.handlerIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>pipelineStepId</h3>
-              <p>
-                {String(
-                  this.state.model!.pipelineStepIdNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>handlerId</h3>
+							<p>{String(this.state.model!.handlerIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>pipelineStepId</h3>
+							<p>{String(this.state.model!.pipelineStepIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -132,11 +130,10 @@ class HandlerPipelineStepDetailComponent extends React.Component<
   }
 }
 
-export const WrappedHandlerPipelineStepDetailComponent = Form.create({
-  name: 'HandlerPipelineStep Detail',
-})(HandlerPipelineStepDetailComponent);
-
+export const WrappedHandlerPipelineStepDetailComponent = Form.create({ name: 'HandlerPipelineStep Detail' })(
+  HandlerPipelineStepDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>230ad96a7413d80f63182b4391d46ad9</Hash>
+    <Hash>f293013bc406a57bf60d3bef1ec4dbf4</Hash>
 </Codenesium>*/

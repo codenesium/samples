@@ -1,6 +1,5 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractFileTypeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IFileTypeRepository FileTypeRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace FileServiceNS.Api.Services
 
 		public AbstractFileTypeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IFileTypeRepository fileTypeRepository,
 			IApiFileTypeServerRequestModelValidator fileTypeModelValidator,
 			IDALFileTypeMapper dalFileTypeMapper,
@@ -127,5 +126,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6f93d875d90a87f180a700cc30382b8b</Hash>
+    <Hash>9ee65c3b3aa9dfbda2ae33cef8f6b260</Hash>
 </Codenesium>*/

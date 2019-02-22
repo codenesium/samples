@@ -121,10 +121,7 @@ class ShoppingCartItemCreateComponent extends React.Component<
             <label htmlFor="dateCreated">DateCreated</label>
             <br />
             {getFieldDecorator('dateCreated', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'DateCreated'} />
             )}
@@ -134,10 +131,7 @@ class ShoppingCartItemCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -147,10 +141,7 @@ class ShoppingCartItemCreateComponent extends React.Component<
             <label htmlFor="productID">ProductID</label>
             <br />
             {getFieldDecorator('productID', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ProductID'} />)}
           </Form.Item>
 
@@ -158,10 +149,7 @@ class ShoppingCartItemCreateComponent extends React.Component<
             <label htmlFor="quantity">Quantity</label>
             <br />
             {getFieldDecorator('quantity', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Quantity'} />)}
           </Form.Item>
 
@@ -171,7 +159,6 @@ class ShoppingCartItemCreateComponent extends React.Component<
             {getFieldDecorator('shoppingCartID', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(
@@ -202,5 +189,5 @@ export const WrappedShoppingCartItemCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0ba1b9d30c65239af27f6c31850508aa</Hash>
+    <Hash>cc8c94ba474d3902168e411054c88d95</Hash>
 </Codenesium>*/

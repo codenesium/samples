@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesTerritoryService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ISalesTerritoryRepository SalesTerritoryRepository { get; private set; }
 
@@ -28,7 +27,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractSalesTerritoryService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ISalesTerritoryRepository salesTerritoryRepository,
 			IApiSalesTerritoryServerRequestModelValidator salesTerritoryModelValidator,
 			IDALSalesTerritoryMapper dalSalesTerritoryMapper,
@@ -177,5 +176,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98133dd0f6f6d8fe50c335072172fb8b</Hash>
+    <Hash>710925ca21190c05a9225d44198edd4a</Hash>
 </Codenesium>*/

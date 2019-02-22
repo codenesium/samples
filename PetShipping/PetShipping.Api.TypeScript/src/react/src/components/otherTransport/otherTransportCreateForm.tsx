@@ -121,10 +121,7 @@ class OtherTransportCreateComponent extends React.Component<
             <label htmlFor="handlerId">handlerId</label>
             <br />
             {getFieldDecorator('handlerId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'handlerId'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class OtherTransportCreateComponent extends React.Component<
             <label htmlFor="pipelineStepId">pipelineStepId</label>
             <br />
             {getFieldDecorator('pipelineStepId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -164,5 +158,5 @@ export const WrappedOtherTransportCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>42bbbadc33e5c5ce05d6560183615654</Hash>
+    <Hash>295b57e38ec7c4e133002f764f66ae93</Hash>
 </Codenesium>*/

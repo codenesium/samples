@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractBadgeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IBadgeRepository BadgeRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractBadgeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IBadgeRepository badgeRepository,
 			IApiBadgeServerRequestModelValidator badgeModelValidator,
 			IDALBadgeMapper dalBadgeMapper)
@@ -116,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48b69e1fb5e8d6eadd7c12b4094b4703</Hash>
+    <Hash>75cf67fcfd646cd861a51e2d90032af1</Hash>
 </Codenesium>*/

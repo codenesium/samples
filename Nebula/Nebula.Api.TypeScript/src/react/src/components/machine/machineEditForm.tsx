@@ -169,10 +169,7 @@ class MachineEditComponent extends React.Component<
             <label htmlFor="description">Description</label>
             <br />
             {getFieldDecorator('description', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'Description'} />)}
           </Form.Item>
 
@@ -182,7 +179,6 @@ class MachineEditComponent extends React.Component<
             {getFieldDecorator('jwtKey', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'JwtKey'} />)}
@@ -194,7 +190,6 @@ class MachineEditComponent extends React.Component<
             {getFieldDecorator('lastIpAddress', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'LastIpAddress'} />)}
@@ -204,10 +199,7 @@ class MachineEditComponent extends React.Component<
             <label htmlFor="machineGuid">MachineGuid</label>
             <br />
             {getFieldDecorator('machineGuid', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'MachineGuid'} />)}
           </Form.Item>
 
@@ -217,7 +209,6 @@ class MachineEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -243,5 +234,5 @@ export const WrappedMachineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0dea1b956a1585e427d83699a7ae8026</Hash>
+    <Hash>01444499ae7b46ac35eb073285e3769a</Hash>
 </Codenesium>*/

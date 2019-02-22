@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractPostTypeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IPostTypeRepository PostTypeRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractPostTypeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IPostTypeRepository postTypeRepository,
 			IApiPostTypeServerRequestModelValidator postTypeModelValidator,
 			IDALPostTypeMapper dalPostTypeMapper)
@@ -116,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d8b852a2a0904be3911586363b1d34d</Hash>
+    <Hash>4370cf1a3d7be57a3d93240b2dab91d1</Hash>
 </Codenesium>*/

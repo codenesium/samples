@@ -103,7 +103,6 @@ class ShiftCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('endTime', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -115,7 +114,6 @@ class ShiftCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('modifiedDate', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -127,7 +125,6 @@ class ShiftCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 50, message: 'Exceeds max length of 50' },
 ],
               
@@ -140,7 +137,6 @@ class ShiftCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('startTime', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -164,5 +160,5 @@ class ShiftCreateComponent extends React.Component<
 export const WrappedShiftCreateComponent = Form.create({ name: 'Shift Create' })(ShiftCreateComponent);
 
 /*<Codenesium>
-    <Hash>12dc7ec49f5a5fe9b1f8931ddb3640be</Hash>
+    <Hash>6e2b33e58cfe132064634d90b73611db</Hash>
 </Codenesium>*/

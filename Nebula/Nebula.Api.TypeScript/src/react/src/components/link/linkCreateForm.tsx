@@ -129,10 +129,7 @@ class LinkCreateComponent extends React.Component<
             <label htmlFor="chainId">ChainId</label>
             <br />
             {getFieldDecorator('chainId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ChainId'} />)}
           </Form.Item>
 
@@ -164,10 +161,7 @@ class LinkCreateComponent extends React.Component<
             <label htmlFor="externalId">ExternalId</label>
             <br />
             {getFieldDecorator('externalId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ExternalId'} />)}
           </Form.Item>
 
@@ -175,10 +169,7 @@ class LinkCreateComponent extends React.Component<
             <label htmlFor="linkStatusId">LinkStatusId</label>
             <br />
             {getFieldDecorator('linkStatusId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'LinkStatusId'} />)}
           </Form.Item>
 
@@ -188,7 +179,6 @@ class LinkCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -198,10 +188,7 @@ class LinkCreateComponent extends React.Component<
             <label htmlFor="order">Order</label>
             <br />
             {getFieldDecorator('order', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'Order'} />)}
           </Form.Item>
 
@@ -225,10 +212,7 @@ class LinkCreateComponent extends React.Component<
             <label htmlFor="timeoutInSecond">TimeoutInSecond</label>
             <br />
             {getFieldDecorator('timeoutInSecond', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'TimeoutInSecond'} />)}
           </Form.Item>
 
@@ -252,5 +236,5 @@ export const WrappedLinkCreateComponent = Form.create({ name: 'Link Create' })(
 
 
 /*<Codenesium>
-    <Hash>6abbf7c9561f80e1a0d4511932717363</Hash>
+    <Hash>083fa9026dd59a592f949a54e8596721</Hash>
 </Codenesium>*/

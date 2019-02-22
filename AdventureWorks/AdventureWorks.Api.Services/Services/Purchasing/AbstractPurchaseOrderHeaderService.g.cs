@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPurchaseOrderHeaderService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractPurchaseOrderHeaderService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
 			IApiPurchaseOrderHeaderServerRequestModelValidator purchaseOrderHeaderModelValidator,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
@@ -130,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d357ccf71382a9f3c57296be34b74c71</Hash>
+    <Hash>86fbcbafdd00a0473b7145158c61d6a2</Hash>
 </Codenesium>*/

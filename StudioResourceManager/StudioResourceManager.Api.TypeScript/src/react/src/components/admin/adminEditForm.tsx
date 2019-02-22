@@ -159,7 +159,6 @@ class AdminEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('email', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -172,7 +171,6 @@ class AdminEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('firstName', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -185,7 +183,6 @@ class AdminEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('lastName', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -209,7 +206,6 @@ class AdminEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('userId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -233,5 +229,5 @@ class AdminEditComponent extends React.Component<
 export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(AdminEditComponent);
 
 /*<Codenesium>
-    <Hash>e9c8905d61437df40b8bd07eb061f1b3</Hash>
+    <Hash>d8fbf96881cfce8033e9d1cc62eec1af</Hash>
 </Codenesium>*/

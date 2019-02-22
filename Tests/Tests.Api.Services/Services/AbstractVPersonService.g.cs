@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractVPersonService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IVPersonRepository VPersonRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractVPersonService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IVPersonRepository vPersonRepository,
 			IApiVPersonServerRequestModelValidator vPersonModelValidator,
 			IDALVPersonMapper dalVPersonMapper)
@@ -116,5 +115,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e149c64c9eeb301e10cf417cf1f2341f</Hash>
+    <Hash>445c3260fd892c5d18200cd59280d2d5</Hash>
 </Codenesium>*/

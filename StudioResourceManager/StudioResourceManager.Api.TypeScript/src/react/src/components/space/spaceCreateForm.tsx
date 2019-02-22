@@ -123,10 +123,9 @@ class SpaceCreateComponent extends React.Component<
             {getFieldDecorator('description', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input.Text placeholder={'description'} />)}
+            })(<Input.TextArea placeholder={'description'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -135,7 +134,6 @@ class SpaceCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -161,5 +159,5 @@ export const WrappedSpaceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>766c4931c87bab698b2c71c89a1fae68</Hash>
+    <Hash>9d547ea2ba4dd58c6c5f9180de8f4c66</Hash>
 </Codenesium>*/

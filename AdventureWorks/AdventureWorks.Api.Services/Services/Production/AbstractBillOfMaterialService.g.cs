@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractBillOfMaterialService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IBillOfMaterialRepository BillOfMaterialRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractBillOfMaterialService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IBillOfMaterialRepository billOfMaterialRepository,
 			IApiBillOfMaterialServerRequestModelValidator billOfMaterialModelValidator,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper)
@@ -123,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8cd5f5afa1d99aa483ff4ec861887cb9</Hash>
+    <Hash>13b741d9f022d99eea5de59cf99a3a12</Hash>
 </Codenesium>*/

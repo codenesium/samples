@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractPipelineService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IPipelineRepository PipelineRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractPipelineService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IPipelineRepository pipelineRepository,
 			IApiPipelineServerRequestModelValidator pipelineModelValidator,
 			IDALPipelineMapper dalPipelineMapper)
@@ -116,5 +115,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>650a0ee109e8ab51bf134e6b1d2333b5</Hash>
+    <Hash>f8e6f8b628cce403f409558841698512</Hash>
 </Codenesium>*/

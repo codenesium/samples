@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractCountryRequirementService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICountryRequirementRepository CountryRequirementRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractCountryRequirementService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICountryRequirementRepository countryRequirementRepository,
 			IApiCountryRequirementServerRequestModelValidator countryRequirementModelValidator,
 			IDALCountryRequirementMapper dalCountryRequirementMapper)
@@ -116,5 +115,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9c1beb025309a542981a8c679442561</Hash>
+    <Hash>20043780a9ba0238dc12921bbd8df402</Hash>
 </Codenesium>*/

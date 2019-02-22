@@ -193,10 +193,7 @@ class RetweetEditComponent extends React.Component<
             <label htmlFor="tweetTweetId">tweet_tweet_id</label>
             <br />
             {getFieldDecorator('tweetTweetId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'tweet_tweet_id'} />)}
           </Form.Item>
 
@@ -220,5 +217,5 @@ export const WrappedRetweetEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e30c33c4b32210f95bffb303e723ae99</Hash>
+    <Hash>31ea610a0f92bb2f6e9a71db540da987</Hash>
 </Codenesium>*/

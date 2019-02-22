@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDocumentService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IDocumentRepository DocumentRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractDocumentService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IDocumentRepository documentRepository,
 			IApiDocumentServerRequestModelValidator documentModelValidator,
 			IDALDocumentMapper dalDocumentMapper)
@@ -137,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>960ff983f026f1543ddc024b2d70c27c</Hash>
+    <Hash>f105d71fc3e6ff57fa2b55bf41f563d7</Hash>
 </Codenesium>*/

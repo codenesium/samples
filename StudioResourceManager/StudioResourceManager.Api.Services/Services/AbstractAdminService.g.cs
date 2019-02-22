@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractAdminService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IAdminRepository AdminRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractAdminService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
 			IDALAdminMapper dalAdminMapper)
@@ -123,5 +122,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6c50fb6a7b327d7b1fbf9437fe765c66</Hash>
+    <Hash>38c143706bed749d70acbfefb53c8070</Hash>
 </Codenesium>*/

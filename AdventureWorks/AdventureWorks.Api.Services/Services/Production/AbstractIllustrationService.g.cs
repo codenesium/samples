@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractIllustrationService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IIllustrationRepository IllustrationRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractIllustrationService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IIllustrationRepository illustrationRepository,
 			IApiIllustrationServerRequestModelValidator illustrationModelValidator,
 			IDALIllustrationMapper dalIllustrationMapper)
@@ -116,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>baf8a0e98808694a88b55a4f3fbd72f2</Hash>
+    <Hash>7ab111ddcb510dd0de1601597ee7a400</Hash>
 </Codenesium>*/

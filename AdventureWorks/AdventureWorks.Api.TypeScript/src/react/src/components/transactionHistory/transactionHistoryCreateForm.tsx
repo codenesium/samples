@@ -121,10 +121,7 @@ class TransactionHistoryCreateComponent extends React.Component<
             <label htmlFor="actualCost">ActualCost</label>
             <br />
             {getFieldDecorator('actualCost', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ActualCost'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class TransactionHistoryCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -145,10 +139,7 @@ class TransactionHistoryCreateComponent extends React.Component<
             <label htmlFor="productID">ProductID</label>
             <br />
             {getFieldDecorator('productID', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ProductID'} />)}
           </Form.Item>
 
@@ -156,10 +147,7 @@ class TransactionHistoryCreateComponent extends React.Component<
             <label htmlFor="quantity">Quantity</label>
             <br />
             {getFieldDecorator('quantity', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Quantity'} />)}
           </Form.Item>
 
@@ -167,10 +155,7 @@ class TransactionHistoryCreateComponent extends React.Component<
             <label htmlFor="referenceOrderID">ReferenceOrderID</label>
             <br />
             {getFieldDecorator('referenceOrderID', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -183,10 +168,7 @@ class TransactionHistoryCreateComponent extends React.Component<
             <label htmlFor="referenceOrderLineID">ReferenceOrderLineID</label>
             <br />
             {getFieldDecorator('referenceOrderLineID', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -199,10 +181,7 @@ class TransactionHistoryCreateComponent extends React.Component<
             <label htmlFor="transactionDate">TransactionDate</label>
             <br />
             {getFieldDecorator('transactionDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -217,7 +196,6 @@ class TransactionHistoryCreateComponent extends React.Component<
             {getFieldDecorator('transactionType', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 1, message: 'Exceeds max length of 1' },
               ],
             })(
@@ -248,5 +226,5 @@ export const WrappedTransactionHistoryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>34d4746cc4d01ddc3dbb095343438f7d</Hash>
+    <Hash>ba3557864ed13493fd94ef394b139bdd</Hash>
 </Codenesium>*/

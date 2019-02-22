@@ -121,10 +121,7 @@ class LinkLogCreateComponent extends React.Component<
             <label htmlFor="dateEntered">DateEntered</label>
             <br />
             {getFieldDecorator('dateEntered', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'DateEntered'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class LinkLogCreateComponent extends React.Component<
             <label htmlFor="linkId">LinkId</label>
             <br />
             {getFieldDecorator('linkId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'LinkId'} />)}
           </Form.Item>
 
@@ -143,10 +137,7 @@ class LinkLogCreateComponent extends React.Component<
             <label htmlFor="log">Log</label>
             <br />
             {getFieldDecorator('log', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'Log'} />)}
           </Form.Item>
 
@@ -170,5 +161,5 @@ export const WrappedLinkLogCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9eb4f85b65ee81ff34804eddadc4a08d</Hash>
+    <Hash>2b159df4fc21f5a3d6e989dc0f413ed7</Hash>
 </Codenesium>*/

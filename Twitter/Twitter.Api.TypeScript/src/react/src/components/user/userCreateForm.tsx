@@ -147,7 +147,6 @@ class UserCreateComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 32, message: 'Exceeds max length of 32' },
               ],
             })(<Input placeholder={'email'} />)}
@@ -159,7 +158,6 @@ class UserCreateComponent extends React.Component<
             {getFieldDecorator('fullName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 64, message: 'Exceeds max length of 64' },
               ],
             })(<Input placeholder={'full_name'} />)}
@@ -185,10 +183,7 @@ class UserCreateComponent extends React.Component<
             <label htmlFor="locationLocationId">location_location_id</label>
             <br />
             {getFieldDecorator('locationLocationId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'location_location_id'} />)}
           </Form.Item>
 
@@ -198,7 +193,6 @@ class UserCreateComponent extends React.Component<
             {getFieldDecorator('password', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 32, message: 'Exceeds max length of 32' },
               ],
             })(<Input placeholder={'password'} />)}
@@ -218,7 +212,6 @@ class UserCreateComponent extends React.Component<
             {getFieldDecorator('privacy', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 1, message: 'Exceeds max length of 1' },
               ],
             })(<Input placeholder={'privacy'} />)}
@@ -230,7 +223,6 @@ class UserCreateComponent extends React.Component<
             {getFieldDecorator('username', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 64, message: 'Exceeds max length of 64' },
               ],
             })(<Input placeholder={'username'} />)}
@@ -264,5 +256,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>dfa2c7a6e6bade8f5dd901d5b7bb286e</Hash>
+    <Hash>c3d25b03cb698a813decf69ae93549f7</Hash>
 </Codenesium>*/

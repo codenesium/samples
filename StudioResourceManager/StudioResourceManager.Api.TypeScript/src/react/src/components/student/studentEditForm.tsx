@@ -149,7 +149,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('birthday', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -161,7 +160,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('email', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -174,7 +172,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('emailRemindersEnabled', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               valuePropName: 'checked'
               })
@@ -186,7 +183,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('familyId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -198,7 +194,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('firstName', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -211,7 +206,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('isAdult', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               valuePropName: 'checked'
               })
@@ -223,7 +217,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('lastName', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -236,7 +229,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('phone', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -249,7 +241,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('smsRemindersEnabled', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               valuePropName: 'checked'
               })
@@ -261,7 +252,6 @@ class StudentEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('userId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -285,5 +275,5 @@ class StudentEditComponent extends React.Component<
 export const WrappedStudentEditComponent = Form.create({ name: 'Student Edit' })(StudentEditComponent);
 
 /*<Codenesium>
-    <Hash>b7ef49a58b5f79c1e9bf661ad7071c5e</Hash>
+    <Hash>64dd96de78a653b9a78757e2d3d736bc</Hash>
 </Codenesium>*/

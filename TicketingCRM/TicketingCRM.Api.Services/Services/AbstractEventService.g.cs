@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractEventService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IEventRepository EventRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractEventService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
 			IDALEventMapper dalEventMapper)
@@ -123,5 +122,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e179a04096fe4d6093138648c7080908</Hash>
+    <Hash>4dcde64e2ce703fa437fb9aacec83cbc</Hash>
 </Codenesium>*/

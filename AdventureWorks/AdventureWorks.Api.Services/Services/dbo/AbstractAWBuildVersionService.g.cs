@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractAWBuildVersionService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IAWBuildVersionRepository AWBuildVersionRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractAWBuildVersionService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IAWBuildVersionRepository aWBuildVersionRepository,
 			IApiAWBuildVersionServerRequestModelValidator aWBuildVersionModelValidator,
 			IDALAWBuildVersionMapper dalAWBuildVersionMapper)
@@ -116,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>58c44ea4364761ab5d591b0aef040c00</Hash>
+    <Hash>c9bcdbd6ae86dcbd46ef80a0efd94ccd</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractLinkTypeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ILinkTypeRepository LinkTypeRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractLinkTypeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ILinkTypeRepository linkTypeRepository,
 			IApiLinkTypeServerRequestModelValidator linkTypeModelValidator,
 			IDALLinkTypeMapper dalLinkTypeMapper)
@@ -116,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69e06029d949ceea6025cf3ace4112cd</Hash>
+    <Hash>fbeb87287dc6ec7679d758c070bfb489</Hash>
 </Codenesium>*/

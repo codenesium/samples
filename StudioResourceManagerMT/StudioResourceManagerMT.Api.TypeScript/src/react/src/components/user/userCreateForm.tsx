@@ -103,7 +103,6 @@ class UserCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('password', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -116,7 +115,6 @@ class UserCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('username', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -141,5 +139,5 @@ class UserCreateComponent extends React.Component<
 export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(UserCreateComponent);
 
 /*<Codenesium>
-    <Hash>ff9bdbc477f2682490a1fe054dba293b</Hash>
+    <Hash>17b36a8d12be6351d38ed84dea597b25</Hash>
 </Codenesium>*/

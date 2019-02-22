@@ -123,7 +123,6 @@ class SpaceFeatureCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedSpaceFeatureCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>427c71fb1443dbc10621c7b8a6d75b4b</Hash>
+    <Hash>b3a2b75064db9c2fd0b51bc6f2c854f1</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCurrencyService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICurrencyRepository CurrencyRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCurrencyService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICurrencyRepository currencyRepository,
 			IApiCurrencyServerRequestModelValidator currencyModelValidator,
 			IDALCurrencyMapper dalCurrencyMapper,
@@ -148,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85448dc2139f91b4bf25f214c7779c5f</Hash>
+    <Hash>29e2e8f74f2c419594179109ba59eb63</Hash>
 </Codenesium>*/

@@ -142,10 +142,7 @@ class ProductPhotoCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -199,5 +196,5 @@ export const WrappedProductPhotoCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>08b03b21075151d15c7ceb85e453be28</Hash>
+    <Hash>605f6c62f7ebf37b459d83ad48b51b56</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractEventService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IEventRepository EventRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractEventService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
 			IDALEventMapper dalEventMapper)
@@ -116,5 +115,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a701c2ce48a42514f535de61591cf214</Hash>
+    <Hash>5ec8004b44cefe42eb0ae098c546c2a0</Hash>
 </Codenesium>*/

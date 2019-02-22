@@ -149,7 +149,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldBigInt', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -161,7 +160,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldBinary', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 50, message: 'Exceeds max length of 50' },
 ],
               
@@ -174,7 +172,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldBit', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               valuePropName: 'checked'
               })
@@ -186,7 +183,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldChar', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 10, message: 'Exceeds max length of 10' },
 ],
               
@@ -199,7 +195,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldDate', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -211,7 +206,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldDateTime', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -223,7 +217,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldDateTime2', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -235,7 +228,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldDateTimeOffset', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -247,7 +239,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldDecimal', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -259,7 +250,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldFloat', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -271,7 +261,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldGeography', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -283,7 +272,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldGeometry', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -295,7 +283,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldHierarchyId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 892, message: 'Exceeds max length of 892' },
 ],
               
@@ -308,7 +295,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldImage', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -320,7 +306,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldMoney', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -332,7 +317,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldNChar', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 10, message: 'Exceeds max length of 10' },
 ],
               
@@ -345,12 +329,11 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldNText', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 1073741823, message: 'Exceeds max length of 1073741823' },
 ],
               
               })
-              ( <Input.Text placeholder={"NText"} /> )}
+              ( <Input.TextArea placeholder={"NText"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -358,7 +341,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldNumeric', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -370,7 +352,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldNVarchar', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 50, message: 'Exceeds max length of 50' },
 ],
               
@@ -383,7 +364,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldReal', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -395,7 +375,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldSmallDateTime', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -407,7 +386,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldSmallInt', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -419,7 +397,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldSmallMoney', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -431,11 +408,10 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldText', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
-              ( <Input.Text placeholder={"Text"} /> )}
+              ( <Input.TextArea placeholder={"Text"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -443,7 +419,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldTime', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -455,7 +430,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldTimestamp', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -467,7 +441,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldTinyInt', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -479,7 +452,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldUniqueIdentifier', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -491,7 +463,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldVarBinary', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 50, message: 'Exceeds max length of 50' },
 ],
               
@@ -504,7 +475,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldVarchar', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 50, message: 'Exceeds max length of 50' },
 ],
               
@@ -517,7 +487,6 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldVariant', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -529,11 +498,10 @@ class TestAllFieldTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('fieldXML', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
-              ( <Input.Text placeholder={"XML"} /> )}
+              ( <Input.TextArea placeholder={"XML"} /> )}
               </Form.Item>
 
 			
@@ -553,5 +521,5 @@ class TestAllFieldTypeEditComponent extends React.Component<
 export const WrappedTestAllFieldTypeEditComponent = Form.create({ name: 'TestAllFieldType Edit' })(TestAllFieldTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>759754f0d1cd8580fcc89781611f0a49</Hash>
+    <Hash>bd671bcdca8dfa40f3a93b767dece35b</Hash>
 </Codenesium>*/

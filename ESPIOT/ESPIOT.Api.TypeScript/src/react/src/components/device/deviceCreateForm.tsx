@@ -121,10 +121,7 @@ class DeviceCreateComponent extends React.Component<
             <label htmlFor="dateOfLastPing">Date of Last Ping</label>
             <br />
             {getFieldDecorator('dateOfLastPing', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -137,10 +134,7 @@ class DeviceCreateComponent extends React.Component<
             <label htmlFor="isActive">Active</label>
             <br />
             {getFieldDecorator('isActive', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
               valuePropName: 'checked',
             })(<Switch />)}
           </Form.Item>
@@ -151,7 +145,6 @@ class DeviceCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 90, message: 'Exceeds max length of 90' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -161,10 +154,7 @@ class DeviceCreateComponent extends React.Component<
             <label htmlFor="publicId">Public Id</label>
             <br />
             {getFieldDecorator('publicId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'Public Id'} />)}
           </Form.Item>
 
@@ -188,5 +178,5 @@ export const WrappedDeviceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0f22f5a9fe0e5afa39aaf947b1e99c5e</Hash>
+    <Hash>61b1ac4f97fda1e0e1835abc08f62618</Hash>
 </Codenesium>*/

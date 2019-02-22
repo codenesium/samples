@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTimestampCheckService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITimestampCheckRepository TimestampCheckRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractTimestampCheckService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITimestampCheckRepository timestampCheckRepository,
 			IApiTimestampCheckServerRequestModelValidator timestampCheckModelValidator,
 			IDALTimestampCheckMapper dalTimestampCheckMapper)
@@ -116,5 +115,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a67303c2d4f6926a445612faedb0a44</Hash>
+    <Hash>1ab907db65b46e1f50bfdaa00c072d22</Hash>
 </Codenesium>*/

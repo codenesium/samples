@@ -123,7 +123,6 @@ class TicketStatusCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedTicketStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2d89d5adbfc07fdc46162559f9a5cb3a</Hash>
+    <Hash>75e3fb437d571239923b784a64d934f4</Hash>
 </Codenesium>*/

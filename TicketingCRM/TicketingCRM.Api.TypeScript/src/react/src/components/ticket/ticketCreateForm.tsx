@@ -123,7 +123,6 @@ class TicketCreateComponent extends React.Component<
             {getFieldDecorator('publicId', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 8, message: 'Exceeds max length of 8' },
               ],
             })(<Input placeholder={'publicId'} />)}
@@ -133,10 +132,7 @@ class TicketCreateComponent extends React.Component<
             <label htmlFor="ticketStatusId">ticketStatusId</label>
             <br />
             {getFieldDecorator('ticketStatusId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ticketStatusId'} />)}
           </Form.Item>
 
@@ -160,5 +156,5 @@ export const WrappedTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8d0c2703cf38bd5eee12dd9e1337357e</Hash>
+    <Hash>bf4a607d791e1fd8516456f12ab324a4</Hash>
 </Codenesium>*/

@@ -123,7 +123,6 @@ class TeamCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -133,10 +132,7 @@ class TeamCreateComponent extends React.Component<
             <label htmlFor="organizationId">OrganizationId</label>
             <br />
             {getFieldDecorator('organizationId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'OrganizationId'} />)}
           </Form.Item>
 
@@ -160,5 +156,5 @@ export const WrappedTeamCreateComponent = Form.create({ name: 'Team Create' })(
 
 
 /*<Codenesium>
-    <Hash>c14d6c57829175552bd88d9558dbdb1f</Hash>
+    <Hash>b1516f507f5b0a488cb6f2839eed71da</Hash>
 </Codenesium>*/

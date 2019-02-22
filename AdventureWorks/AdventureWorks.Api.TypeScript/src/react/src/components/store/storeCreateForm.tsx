@@ -131,10 +131,7 @@ class StoreCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -146,7 +143,6 @@ class StoreCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -156,10 +152,7 @@ class StoreCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
@@ -193,5 +186,5 @@ export const WrappedStoreCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>82d078ab81a77c004f66387f1c71f652</Hash>
+    <Hash>7a1057081ecbd4022d8bc75851f4b7bf</Hash>
 </Codenesium>*/

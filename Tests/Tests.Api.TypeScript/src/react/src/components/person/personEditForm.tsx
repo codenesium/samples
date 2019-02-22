@@ -174,7 +174,6 @@ class PersonEditComponent extends React.Component<
             {getFieldDecorator('personName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'PersonName'} />)}
@@ -200,5 +199,5 @@ export const WrappedPersonEditComponent = Form.create({ name: 'Person Edit' })(
 
 
 /*<Codenesium>
-    <Hash>e6363d3a87580fd5560cdedd94c2a6a0</Hash>
+    <Hash>092c9a1f86ca4d81ac51539227e4a843</Hash>
 </Codenesium>*/

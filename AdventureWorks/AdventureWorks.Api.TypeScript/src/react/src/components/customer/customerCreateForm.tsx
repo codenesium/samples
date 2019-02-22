@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
 import CustomerViewModel from './customerViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CustomerCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface CustomerCreateComponentState {
@@ -20,7 +30,7 @@ interface CustomerCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class CustomerCreateComponent extends React.Component<
@@ -33,12 +43,12 @@ class CustomerCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as CustomerViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +57,9 @@ class CustomerCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:CustomerViewModel) =>
-  {  
+  submit = (model: CustomerViewModel) => {
     let mapper = new CustomerMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Customers,
         mapper.mapViewModelToApiRequest(model),
@@ -65,122 +74,125 @@ class CustomerCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.CustomerClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="accountNumber">AccountNumber</label>
+            <br />
+            {getFieldDecorator('accountNumber', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 10, message: 'Exceeds max length of 10' },
+              ],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'AccountNumber'} />
+            )}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='accountNumber'>AccountNumber</label>
-              <br />             
-              {getFieldDecorator('accountNumber', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-{ max: 10, message: 'Exceeds max length of 10' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AccountNumber"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [{ required: true, message: 'Required' }],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='modifiedDate'>ModifiedDate</label>
-              <br />             
-              {getFieldDecorator('modifiedDate', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="personID">PersonID</label>
+            <br />
+            {getFieldDecorator('personID', {
+              rules: [],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'PersonID'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='personID'>PersonID</label>
-              <br />             
-              {getFieldDecorator('personID', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PersonID"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="rowguid">rowguid</label>
+            <br />
+            {getFieldDecorator('rowguid', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='rowguid'>rowguid</label>
-              <br />             
-              {getFieldDecorator('rowguid', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="storeID">StoreID</label>
+            <br />
+            {getFieldDecorator('storeID', {
+              rules: [],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'StoreID'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='storeID'>StoreID</label>
-              <br />             
-              {getFieldDecorator('storeID', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StoreID"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="territoryID">TerritoryID</label>
+            <br />
+            {getFieldDecorator('territoryID', {
+              rules: [],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'TerritoryID'} />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='territoryID'>TerritoryID</label>
-              <br />             
-              {getFieldDecorator('territoryID', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedCustomerCreateComponent = Form.create({ name: 'Customer Create' })(CustomerCreateComponent);
+export const WrappedCustomerCreateComponent = Form.create({
+  name: 'Customer Create',
+})(CustomerCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>2505c4e72391023f98ce5b59cf05e14e</Hash>
+    <Hash>98b48a0baa85ce5fb49b8ea73dbe153d</Hash>
 </Codenesium>*/

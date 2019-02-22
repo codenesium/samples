@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCreditCardService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICreditCardRepository CreditCardRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCreditCardService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICreditCardRepository creditCardRepository,
 			IApiCreditCardServerRequestModelValidator creditCardModelValidator,
 			IDALCreditCardMapper dalCreditCardMapper,
@@ -141,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4bef2615259f0a6edbbfa9c57a6bf314</Hash>
+    <Hash>7ad431ff6ff5369f1da46f3e74c430f8</Hash>
 </Codenesium>*/

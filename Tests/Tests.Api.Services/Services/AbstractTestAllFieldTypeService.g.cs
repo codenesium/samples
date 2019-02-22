@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTestAllFieldTypeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITestAllFieldTypeRepository TestAllFieldTypeRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractTestAllFieldTypeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITestAllFieldTypeRepository testAllFieldTypeRepository,
 			IApiTestAllFieldTypeServerRequestModelValidator testAllFieldTypeModelValidator,
 			IDALTestAllFieldTypeMapper dalTestAllFieldTypeMapper)
@@ -116,5 +115,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2711c997d2bc51602955b49cac75064a</Hash>
+    <Hash>6fa5035a41f1f0daa6987dce32bc76fd</Hash>
 </Codenesium>*/

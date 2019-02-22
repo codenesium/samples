@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractLinkLogService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ILinkLogRepository LinkLogRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractLinkLogService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ILinkLogRepository linkLogRepository,
 			IApiLinkLogServerRequestModelValidator linkLogModelValidator,
 			IDALLinkLogMapper dalLinkLogMapper)
@@ -116,5 +115,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7a10aa53a56cc5fbeb34fa2c88ebabfd</Hash>
+    <Hash>633769bbfcc211a1c832867bb3d35bd4</Hash>
 </Codenesium>*/

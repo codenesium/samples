@@ -123,7 +123,6 @@ class RowVersionCheckCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -133,10 +132,7 @@ class RowVersionCheckCreateComponent extends React.Component<
             <label htmlFor="rowVersion">RowVersion</label>
             <br />
             {getFieldDecorator('rowVersion', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'RowVersion'} />)}
           </Form.Item>
 
@@ -160,5 +156,5 @@ export const WrappedRowVersionCheckCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ce9e9e36835deb584244ccdc41533687</Hash>
+    <Hash>f782af153040c28788bcca8ab82fe461</Hash>
 </Codenesium>*/

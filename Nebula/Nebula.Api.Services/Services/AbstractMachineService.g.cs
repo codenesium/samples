@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractMachineService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IMachineRepository MachineRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractMachineService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IMachineRepository machineRepository,
 			IApiMachineServerRequestModelValidator machineModelValidator,
 			IDALMachineMapper dalMachineMapper,
@@ -141,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29f572bcbaee80825c3042919eef8754</Hash>
+    <Hash>f6b5516ac95158cba47f3fa9404d9dd1</Hash>
 </Codenesium>*/

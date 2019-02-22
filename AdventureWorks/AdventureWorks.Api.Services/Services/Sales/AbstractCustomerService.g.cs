@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCustomerService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICustomerRepository CustomerRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCustomerService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
 			IDALCustomerMapper dalCustomerMapper,
@@ -162,5 +161,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4d693d94b553aa4350c2954a60b14f31</Hash>
+    <Hash>bb9f3395d92eef9ce5567c52672002be</Hash>
 </Codenesium>*/

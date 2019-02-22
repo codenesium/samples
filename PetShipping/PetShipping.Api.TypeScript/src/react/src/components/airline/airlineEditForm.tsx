@@ -171,7 +171,6 @@ class AirlineEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -197,5 +196,5 @@ export const WrappedAirlineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ac039fd4506ee399aff4fab32c279e2c</Hash>
+    <Hash>a55c00d2c4091e37df22feeb4ce28e57</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCountryRegionService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICountryRegionRepository CountryRegionRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCountryRegionService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICountryRegionRepository countryRegionRepository,
 			IApiCountryRegionServerRequestModelValidator countryRegionModelValidator,
 			IDALCountryRegionMapper dalCountryRegionMapper,
@@ -141,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f8943ea45508e67e079a99b411fcde51</Hash>
+    <Hash>e14387ae2519792afbcfdbf006ca474f</Hash>
 </Codenesium>*/

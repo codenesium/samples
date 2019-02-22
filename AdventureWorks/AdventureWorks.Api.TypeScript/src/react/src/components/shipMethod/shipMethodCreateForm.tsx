@@ -121,10 +121,7 @@ class ShipMethodCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -136,7 +133,6 @@ class ShipMethodCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -146,10 +142,7 @@ class ShipMethodCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
@@ -157,10 +150,7 @@ class ShipMethodCreateComponent extends React.Component<
             <label htmlFor="shipBase">ShipBase</label>
             <br />
             {getFieldDecorator('shipBase', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ShipBase'} />)}
           </Form.Item>
 
@@ -168,10 +158,7 @@ class ShipMethodCreateComponent extends React.Component<
             <label htmlFor="shipRate">ShipRate</label>
             <br />
             {getFieldDecorator('shipRate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ShipRate'} />)}
           </Form.Item>
 
@@ -195,5 +182,5 @@ export const WrappedShipMethodCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6a7937b4ff449288a56cb9de0da1b774</Hash>
+    <Hash>e538fc832dbc231731bbb08c672e1a21</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractUnitMeasureService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IUnitMeasureRepository UnitMeasureRepository { get; private set; }
 
@@ -26,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractUnitMeasureService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IUnitMeasureRepository unitMeasureRepository,
 			IApiUnitMeasureServerRequestModelValidator unitMeasureModelValidator,
 			IDALUnitMeasureMapper dalUnitMeasureMapper,
@@ -159,5 +158,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71114f01480935e4883d6f979cd4f6b6</Hash>
+    <Hash>adfdc20f25e8652effc4f31678f2448e</Hash>
 </Codenesium>*/

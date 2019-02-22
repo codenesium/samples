@@ -121,10 +121,7 @@ class SaleTicketCreateComponent extends React.Component<
             <label htmlFor="saleId">saleId</label>
             <br />
             {getFieldDecorator('saleId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'saleId'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class SaleTicketCreateComponent extends React.Component<
             <label htmlFor="ticketId">ticketId</label>
             <br />
             {getFieldDecorator('ticketId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ticketId'} />)}
           </Form.Item>
 
@@ -159,5 +153,5 @@ export const WrappedSaleTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>12c38f78c0ed27aa5224fc597c3a5ba7</Hash>
+    <Hash>e81eeb8d1adaed963f520148946656a4</Hash>
 </Codenesium>*/

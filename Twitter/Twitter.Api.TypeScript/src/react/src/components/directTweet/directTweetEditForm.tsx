@@ -174,7 +174,6 @@ class DirectTweetEditComponent extends React.Component<
             {getFieldDecorator('content', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 140, message: 'Exceeds max length of 140' },
               ],
             })(<Input placeholder={'content'} />)}
@@ -184,10 +183,7 @@ class DirectTweetEditComponent extends React.Component<
             <label htmlFor="date">date</label>
             <br />
             {getFieldDecorator('date', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'date'} />)}
           </Form.Item>
 
@@ -195,10 +191,7 @@ class DirectTweetEditComponent extends React.Component<
             <label htmlFor="taggedUserId">tagged_user_id</label>
             <br />
             {getFieldDecorator('taggedUserId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'tagged_user_id'} />)}
           </Form.Item>
 
@@ -206,10 +199,7 @@ class DirectTweetEditComponent extends React.Component<
             <label htmlFor="time">time</label>
             <br />
             {getFieldDecorator('time', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'time'} />)}
           </Form.Item>
 
@@ -233,5 +223,5 @@ export const WrappedDirectTweetEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8f231bb404a7b86108d20c54e925e26c</Hash>
+    <Hash>1cb2663bcb63074c0b82b048e371586f</Hash>
 </Codenesium>*/

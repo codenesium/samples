@@ -203,10 +203,7 @@ class EventEditComponent extends React.Component<
             <label htmlFor="eventStatusId">status</label>
             <br />
             {getFieldDecorator('eventStatusId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'status'} />)}
           </Form.Item>
 
@@ -272,5 +269,5 @@ export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
 
 
 /*<Codenesium>
-    <Hash>309b6d3e347c0fe8707761491f1cc234</Hash>
+    <Hash>6bad692b18952ddd4d50b74ba98296c9</Hash>
 </Codenesium>*/

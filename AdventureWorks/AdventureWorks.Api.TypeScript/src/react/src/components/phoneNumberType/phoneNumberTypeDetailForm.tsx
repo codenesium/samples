@@ -6,10 +6,7 @@ import PhoneNumberTypeMapper from './phoneNumberTypeMapper';
 import PhoneNumberTypeViewModel from './phoneNumberTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {PersonPhoneTableComponent} from '../shared/personPhoneTable'
-	
-
-
+import { PersonPhoneTableComponent } from '../shared/personPhoneTable';
 
 interface PhoneNumberTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,25 @@ interface PhoneNumberTypeDetailComponentState {
 }
 
 class PhoneNumberTypeDetailComponent extends React.Component<
-PhoneNumberTypeDetailComponentProps,
-PhoneNumberTypeDetailComponentState
+  PhoneNumberTypeDetailComponentProps,
+  PhoneNumberTypeDetailComponentState
 > {
   state = {
     model: new PhoneNumberTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.PhoneNumberTypes + '/edit/' + this.state.model!.phoneNumberTypeID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PhoneNumberTypes +
+        '/edit/' +
+        this.state.model!.phoneNumberTypeID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,52 +87,56 @@ PhoneNumberTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div>
-							<h3>PhoneNumberTypeID</h3>
-							<p>{String(this.state.model!.phoneNumberTypeID)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>PhoneNumberTypeID</h3>
+              <p>{String(this.state.model!.phoneNumberTypeID)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>PersonPhones</h3>
-            <PersonPhoneTableComponent 
-			businessEntityID={this.state.model!.businessEntityID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.PhoneNumberTypes + '/' + this.state.model!.phoneNumberTypeID + '/' + ApiRoutes.PersonPhones}
-			/>
-         </div>
-	
-
+            <PersonPhoneTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.PhoneNumberTypes +
+                '/' +
+                this.state.model!.phoneNumberTypeID +
+                '/' +
+                ApiRoutes.PersonPhones
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -140,10 +145,11 @@ PhoneNumberTypeDetailComponentState
   }
 }
 
-export const WrappedPhoneNumberTypeDetailComponent = Form.create({ name: 'PhoneNumberType Detail' })(
-  PhoneNumberTypeDetailComponent
-);
+export const WrappedPhoneNumberTypeDetailComponent = Form.create({
+  name: 'PhoneNumberType Detail',
+})(PhoneNumberTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>3c7f7093a689e582a75eec29d3fc3d1a</Hash>
+    <Hash>dadc5105f255def9d6d77cf85f51f136</Hash>
 </Codenesium>*/

@@ -119,10 +119,7 @@ class PetCreateComponent extends React.Component<
             <label htmlFor="acquiredDate">acquiredDate</label>
             <br />
             {getFieldDecorator('acquiredDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'acquiredDate'} />)}
           </Form.Item>
 
@@ -130,10 +127,7 @@ class PetCreateComponent extends React.Component<
             <label htmlFor="breedId">breedId</label>
             <br />
             {getFieldDecorator('breedId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'breedId'} />)}
           </Form.Item>
 
@@ -141,10 +135,7 @@ class PetCreateComponent extends React.Component<
             <label htmlFor="description">description</label>
             <br />
             {getFieldDecorator('description', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'description'} />)}
           </Form.Item>
 
@@ -152,10 +143,7 @@ class PetCreateComponent extends React.Component<
             <label htmlFor="penId">penId</label>
             <br />
             {getFieldDecorator('penId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'penId'} />)}
           </Form.Item>
 
@@ -163,10 +151,7 @@ class PetCreateComponent extends React.Component<
             <label htmlFor="price">price</label>
             <br />
             {getFieldDecorator('price', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'price'} />)}
           </Form.Item>
 
@@ -190,5 +175,5 @@ export const WrappedPetCreateComponent = Form.create({ name: 'Pet Create' })(
 
 
 /*<Codenesium>
-    <Hash>d4b39fc27027397c83d24e8472a8dd6a</Hash>
+    <Hash>52129fa650e4df6a6d9030ce3d8ee9ce</Hash>
 </Codenesium>*/

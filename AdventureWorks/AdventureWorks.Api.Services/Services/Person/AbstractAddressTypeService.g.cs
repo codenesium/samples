@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractAddressTypeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IAddressTypeRepository AddressTypeRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractAddressTypeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IAddressTypeRepository addressTypeRepository,
 			IApiAddressTypeServerRequestModelValidator addressTypeModelValidator,
 			IDALAddressTypeMapper dalAddressTypeMapper)
@@ -144,5 +143,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d223505e9ae8cfad665aba606d5fcbc3</Hash>
+    <Hash>760aa6d5e46b60234ef8934d4c2ef625</Hash>
 </Codenesium>*/

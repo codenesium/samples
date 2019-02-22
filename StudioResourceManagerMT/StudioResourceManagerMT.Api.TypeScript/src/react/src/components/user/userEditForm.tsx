@@ -171,7 +171,6 @@ class UserEditComponent extends React.Component<
             {getFieldDecorator('password', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'password'} />)}
@@ -183,7 +182,6 @@ class UserEditComponent extends React.Component<
             {getFieldDecorator('username', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'username'} />)}
@@ -209,5 +207,5 @@ export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(
 
 
 /*<Codenesium>
-    <Hash>bba289a70fb465e57d64c20158ff78de</Hash>
+    <Hash>156c2e18135cfc5208487eca99e15488</Hash>
 </Codenesium>*/

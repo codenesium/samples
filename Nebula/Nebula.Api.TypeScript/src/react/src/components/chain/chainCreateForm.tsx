@@ -121,10 +121,7 @@ class ChainCreateComponent extends React.Component<
             <label htmlFor="chainStatusId">ChainStatusId</label>
             <br />
             {getFieldDecorator('chainStatusId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ChainStatusId'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class ChainCreateComponent extends React.Component<
             <label htmlFor="externalId">ExternalId</label>
             <br />
             {getFieldDecorator('externalId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ExternalId'} />)}
           </Form.Item>
 
@@ -145,7 +139,6 @@ class ChainCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -155,10 +148,7 @@ class ChainCreateComponent extends React.Component<
             <label htmlFor="teamId">TeamId</label>
             <br />
             {getFieldDecorator('teamId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'TeamId'} />)}
           </Form.Item>
 
@@ -182,5 +172,5 @@ export const WrappedChainCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bc8459903005581563f7e55cf1c3093f</Hash>
+    <Hash>1703a11379ce93e16a8592850c456183</Hash>
 </Codenesium>*/

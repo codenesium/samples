@@ -121,10 +121,7 @@ class RateCreateComponent extends React.Component<
             <label htmlFor="amountPerMinute">Amount Per Minute</label>
             <br />
             {getFieldDecorator('amountPerMinute', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'Amount Per Minute'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class RateCreateComponent extends React.Component<
             <label htmlFor="teacherId">teacherId</label>
             <br />
             {getFieldDecorator('teacherId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'teacherId'} />)}
           </Form.Item>
 
@@ -143,10 +137,7 @@ class RateCreateComponent extends React.Component<
             <label htmlFor="teacherSkillId">teacherSkillId</label>
             <br />
             {getFieldDecorator('teacherSkillId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'teacherSkillId'} />)}
           </Form.Item>
 
@@ -170,5 +161,5 @@ export const WrappedRateCreateComponent = Form.create({ name: 'Rate Create' })(
 
 
 /*<Codenesium>
-    <Hash>7d6175570b51b5f8a2f849da45b283f8</Hash>
+    <Hash>7a177e8ebbac6088fae30821a645d977</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractRowVersionCheckService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IRowVersionCheckRepository RowVersionCheckRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractRowVersionCheckService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IRowVersionCheckRepository rowVersionCheckRepository,
 			IApiRowVersionCheckServerRequestModelValidator rowVersionCheckModelValidator,
 			IDALRowVersionCheckMapper dalRowVersionCheckMapper)
@@ -116,5 +115,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23ae5c9b57f04f4723c41cc1216f52ea</Hash>
+    <Hash>7fa507f7a6430322cdd7af4b5ab1fd46</Hash>
 </Codenesium>*/

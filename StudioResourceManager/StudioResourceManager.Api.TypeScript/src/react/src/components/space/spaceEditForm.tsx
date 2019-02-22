@@ -171,10 +171,9 @@ class SpaceEditComponent extends React.Component<
             {getFieldDecorator('description', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input.Text placeholder={'description'} />)}
+            })(<Input.TextArea placeholder={'description'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -183,7 +182,6 @@ class SpaceEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -209,5 +207,5 @@ export const WrappedSpaceEditComponent = Form.create({ name: 'Space Edit' })(
 
 
 /*<Codenesium>
-    <Hash>5b67a7a08ef1a6572f1825b559a42ff5</Hash>
+    <Hash>b5656ddf69fae3764fdea43e95db17f2</Hash>
 </Codenesium>*/

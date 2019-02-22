@@ -6,11 +6,11 @@ import AdminMapper from '../admin/adminMapper';
 import AdminViewModel from '../admin/adminViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface AdminTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface AdminTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<AdminViewModel>;
+  filteredRecords : Array<AdminViewModel>;
 }
 
-export class AdminTableComponent extends React.Component<
-  AdminTableComponentProps,
-  AdminTableComponentState
+export class  AdminTableComponent extends React.Component<
+AdminTableComponentProps,
+AdminTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: AdminViewModel) {
-    this.props.history.push(ClientRoutes.Admins + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: AdminViewModel) {
+  this.props.history.push(ClientRoutes.Admins + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: AdminViewModel) {
-    this.props.history.push(ClientRoutes.Admins + '/' + row.id);
-  }
+handleDetailClick(e:any, row: AdminViewModel) {
+  this.props.history.push(ClientRoutes.Admins + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.AdminClientResponseModel>;
@@ -59,11 +61,12 @@ export class AdminTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new AdminMapper();
+          
+          let admins:Array<AdminViewModel> = [];
 
-          let admins: Array<AdminViewModel> = [];
-
-          response.forEach(x => {
-            admins.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              admins.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,75 +91,71 @@ export class AdminTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Admins',
-                columns: [
-                  {
-                    Header: 'Email',
-                    accessor: 'email',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Admins',
+                    columns: [
+					  {
+                      Header: 'Email',
+                      accessor: 'email',
+                      Cell: (props) => {
                       return <span>{String(props.original.email)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'FirstName',
-                    accessor: 'firstName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'FirstName',
+                      accessor: 'firstName',
+                      Cell: (props) => {
                       return <span>{String(props.original.firstName)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LastName',
-                    accessor: 'lastName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'LastName',
+                      accessor: 'lastName',
+                      Cell: (props) => {
                       return <span>{String(props.original.lastName)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Password',
-                    accessor: 'password',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Password',
+                      accessor: 'password',
+                      Cell: (props) => {
                       return <span>{String(props.original.password)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Phone',
-                    accessor: 'phone',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Phone',
+                      accessor: 'phone',
+                      Cell: (props) => {
                       return <span>{String(props.original.phone)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Username',
-                    accessor: 'username',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Username',
+                      accessor: 'username',
+                      Cell: (props) => {
                       return <span>{String(props.original.username)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as AdminViewModel
@@ -167,8 +166,8 @@ export class AdminTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as AdminViewModel
@@ -177,14 +176,11 @@ export class AdminTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -192,7 +188,6 @@ export class AdminTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>8766283cb06cacb67150dd340eb865b2</Hash>
+    <Hash>eaebb465996fa475f319855ec64f7d69</Hash>
 </Codenesium>*/

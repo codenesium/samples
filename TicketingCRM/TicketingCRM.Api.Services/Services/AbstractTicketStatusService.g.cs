@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractTicketStatusService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITicketStatusRepository TicketStatusRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractTicketStatusService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITicketStatusRepository ticketStatusRepository,
 			IApiTicketStatusServerRequestModelValidator ticketStatusModelValidator,
 			IDALTicketStatusMapper dalTicketStatusMapper,
@@ -127,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ccecb4be9b5cba0fcf0f5b64efb6f6f</Hash>
+    <Hash>9d07876d886569883d9ec2977a1386a5</Hash>
 </Codenesium>*/

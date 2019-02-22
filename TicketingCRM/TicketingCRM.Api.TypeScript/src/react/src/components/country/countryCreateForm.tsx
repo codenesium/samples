@@ -123,7 +123,6 @@ class CountryCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedCountryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6e5f9900ecc03eede7285fbc05d3c851</Hash>
+    <Hash>6c57be523e97b622eb8e5e41f315910f</Hash>
 </Codenesium>*/

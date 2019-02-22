@@ -171,7 +171,6 @@ class VenueEditComponent extends React.Component<
             {getFieldDecorator('address1', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'address1'} />)}
@@ -183,7 +182,6 @@ class VenueEditComponent extends React.Component<
             {getFieldDecorator('address2', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'address2'} />)}
@@ -193,10 +191,7 @@ class VenueEditComponent extends React.Component<
             <label htmlFor="adminId">adminId</label>
             <br />
             {getFieldDecorator('adminId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'adminId'} />)}
           </Form.Item>
 
@@ -206,7 +201,6 @@ class VenueEditComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
@@ -218,7 +212,6 @@ class VenueEditComponent extends React.Component<
             {getFieldDecorator('facebook', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'facebook'} />)}
@@ -230,7 +223,6 @@ class VenueEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -242,7 +234,6 @@ class VenueEditComponent extends React.Component<
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'phone'} />)}
@@ -252,10 +243,7 @@ class VenueEditComponent extends React.Component<
             <label htmlFor="provinceId">provinceId</label>
             <br />
             {getFieldDecorator('provinceId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'provinceId'} />)}
           </Form.Item>
 
@@ -265,7 +253,6 @@ class VenueEditComponent extends React.Component<
             {getFieldDecorator('website', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'website'} />)}
@@ -291,5 +278,5 @@ export const WrappedVenueEditComponent = Form.create({ name: 'Venue Edit' })(
 
 
 /*<Codenesium>
-    <Hash>b04631979035bef1e3026d0a93a8c4de</Hash>
+    <Hash>8f5f60465d38633edccbe9e319f8c534</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractJobCandidateService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IJobCandidateRepository JobCandidateRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractJobCandidateService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IJobCandidateRepository jobCandidateRepository,
 			IApiJobCandidateServerRequestModelValidator jobCandidateModelValidator,
 			IDALJobCandidateMapper dalJobCandidateMapper)
@@ -123,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5ea5f8bb91c39dbc893574940776181</Hash>
+    <Hash>2c27c895a70ba73784984ba455a2efeb</Hash>
 </Codenesium>*/

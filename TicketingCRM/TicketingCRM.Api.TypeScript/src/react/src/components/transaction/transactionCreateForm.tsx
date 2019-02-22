@@ -121,10 +121,7 @@ class TransactionCreateComponent extends React.Component<
             <label htmlFor="amount">amount</label>
             <br />
             {getFieldDecorator('amount', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'amount'} />)}
           </Form.Item>
 
@@ -136,7 +133,6 @@ class TransactionCreateComponent extends React.Component<
             {getFieldDecorator('gatewayConfirmationNumber', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 1, message: 'Exceeds max length of 1' },
               ],
             })(<Input placeholder={'gatewayConfirmationNumber'} />)}
@@ -146,10 +142,7 @@ class TransactionCreateComponent extends React.Component<
             <label htmlFor="transactionStatusId">transactionStatusId</label>
             <br />
             {getFieldDecorator('transactionStatusId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'transactionStatusId'} />)}
           </Form.Item>
 
@@ -173,5 +166,5 @@ export const WrappedTransactionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b8598e99b808da9fb1900aa57042c3c3</Hash>
+    <Hash>22ece65f3ed6890382bae5832748545f</Hash>
 </Codenesium>*/

@@ -103,7 +103,6 @@ class PostTypeCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('rwType', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 50, message: 'Exceeds max length of 50' },
 ],
               
@@ -128,5 +127,5 @@ class PostTypeCreateComponent extends React.Component<
 export const WrappedPostTypeCreateComponent = Form.create({ name: 'PostType Create' })(PostTypeCreateComponent);
 
 /*<Codenesium>
-    <Hash>9ea8667d3eac5cf94fa571ad0b69cfaf</Hash>
+    <Hash>20c7eaa910cb56765b63fb47d9674614</Hash>
 </Codenesium>*/

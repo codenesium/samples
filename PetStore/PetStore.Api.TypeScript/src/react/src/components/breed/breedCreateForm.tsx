@@ -123,7 +123,6 @@ class BreedCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -133,10 +132,7 @@ class BreedCreateComponent extends React.Component<
             <label htmlFor="speciesId">speciesId</label>
             <br />
             {getFieldDecorator('speciesId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'speciesId'} />)}
           </Form.Item>
 
@@ -160,5 +156,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7c93a423aee6704b32058e511843c6c2</Hash>
+    <Hash>dc94ea3885090528cbe80d225e724bd4</Hash>
 </Codenesium>*/

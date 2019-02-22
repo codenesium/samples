@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractTeacherSkillService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITeacherSkillRepository TeacherSkillRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractTeacherSkillService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITeacherSkillRepository teacherSkillRepository,
 			IApiTeacherSkillServerRequestModelValidator teacherSkillModelValidator,
 			IDALTeacherSkillMapper dalTeacherSkillMapper,
@@ -127,5 +126,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ff0d3f1bd67822a6fb3daa5fd3628d5</Hash>
+    <Hash>5932325ecf2c5a535a8d966f2ce28180</Hash>
 </Codenesium>*/

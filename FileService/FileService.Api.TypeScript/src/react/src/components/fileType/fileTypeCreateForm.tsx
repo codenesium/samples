@@ -103,7 +103,6 @@ class FileTypeCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 255, message: 'Exceeds max length of 255' },
 ],
               
@@ -128,5 +127,5 @@ class FileTypeCreateComponent extends React.Component<
 export const WrappedFileTypeCreateComponent = Form.create({ name: 'FileType Create' })(FileTypeCreateComponent);
 
 /*<Codenesium>
-    <Hash>c5c1ef52d1f7394f07bc1da39811bc2b</Hash>
+    <Hash>0aa4b038db629707255ad19ba86bf7c0</Hash>
 </Codenesium>*/

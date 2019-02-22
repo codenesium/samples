@@ -174,7 +174,6 @@ class PostTypeEditComponent extends React.Component<
             {getFieldDecorator('rwType', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'Type'} />)}
@@ -200,5 +199,5 @@ export const WrappedPostTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7f22e7355fc5717b839bddde9dd27f15</Hash>
+    <Hash>3069561d4cf64b83ea8f4a3149c26223</Hash>
 </Codenesium>*/

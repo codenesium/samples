@@ -169,10 +169,7 @@ class ChainEditComponent extends React.Component<
             <label htmlFor="chainStatusId">ChainStatusId</label>
             <br />
             {getFieldDecorator('chainStatusId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ChainStatusId'} />)}
           </Form.Item>
 
@@ -180,10 +177,7 @@ class ChainEditComponent extends React.Component<
             <label htmlFor="externalId">ExternalId</label>
             <br />
             {getFieldDecorator('externalId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'ExternalId'} />)}
           </Form.Item>
 
@@ -193,7 +187,6 @@ class ChainEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -203,10 +196,7 @@ class ChainEditComponent extends React.Component<
             <label htmlFor="teamId">TeamId</label>
             <br />
             {getFieldDecorator('teamId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'TeamId'} />)}
           </Form.Item>
 
@@ -230,5 +220,5 @@ export const WrappedChainEditComponent = Form.create({ name: 'Chain Edit' })(
 
 
 /*<Codenesium>
-    <Hash>0346b46151e99b388be5fff1556df4ee</Hash>
+    <Hash>b94a56f9e7546596d55772b6eb061072</Hash>
 </Codenesium>*/

@@ -121,10 +121,7 @@ class ProvinceCreateComponent extends React.Component<
             <label htmlFor="countryId">countryId</label>
             <br />
             {getFieldDecorator('countryId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'countryId'} />)}
           </Form.Item>
 
@@ -134,7 +131,6 @@ class ProvinceCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -160,5 +156,5 @@ export const WrappedProvinceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5c0b31ce8407e960287f00caa5136c53</Hash>
+    <Hash>8a83863dbaadead679291a21ace4cc0d</Hash>
 </Codenesium>*/

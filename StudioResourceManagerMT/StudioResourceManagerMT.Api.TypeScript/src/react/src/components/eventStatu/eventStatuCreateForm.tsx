@@ -123,7 +123,6 @@ class EventStatuCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedEventStatuCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>65182777846627a5d05dd931a1c4377b</Hash>
+    <Hash>4d8b894cd14bc671e4adcc99d3a69387</Hash>
 </Codenesium>*/

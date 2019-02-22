@@ -169,10 +169,7 @@ class ClaspEditComponent extends React.Component<
             <label htmlFor="nextChainId">NextChainId</label>
             <br />
             {getFieldDecorator('nextChainId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'NextChainId'} />)}
           </Form.Item>
 
@@ -180,10 +177,7 @@ class ClaspEditComponent extends React.Component<
             <label htmlFor="previousChainId">PreviousChainId</label>
             <br />
             {getFieldDecorator('previousChainId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'PreviousChainId'} />)}
           </Form.Item>
 
@@ -207,5 +201,5 @@ export const WrappedClaspEditComponent = Form.create({ name: 'Clasp Edit' })(
 
 
 /*<Codenesium>
-    <Hash>8eea4647f87fbfc7462057ffe3fa4a93</Hash>
+    <Hash>ecb3ac2c82b84ac9b83d6f484d280e38</Hash>
 </Codenesium>*/

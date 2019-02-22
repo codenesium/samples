@@ -169,10 +169,7 @@ class SaleEditComponent extends React.Component<
             <label htmlFor="amount">amount</label>
             <br />
             {getFieldDecorator('amount', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'amount'} />)}
           </Form.Item>
 
@@ -182,7 +179,6 @@ class SaleEditComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 90, message: 'Exceeds max length of 90' },
               ],
             })(<Input placeholder={'firstName'} />)}
@@ -194,7 +190,6 @@ class SaleEditComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 90, message: 'Exceeds max length of 90' },
               ],
             })(<Input placeholder={'lastName'} />)}
@@ -204,10 +199,7 @@ class SaleEditComponent extends React.Component<
             <label htmlFor="paymentTypeId">paymentTypeId</label>
             <br />
             {getFieldDecorator('paymentTypeId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'paymentTypeId'} />)}
           </Form.Item>
 
@@ -215,10 +207,7 @@ class SaleEditComponent extends React.Component<
             <label htmlFor="petId">petId</label>
             <br />
             {getFieldDecorator('petId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'petId'} />)}
           </Form.Item>
 
@@ -228,7 +217,6 @@ class SaleEditComponent extends React.Component<
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
             })(<Input placeholder={'phone'} />)}
@@ -254,5 +242,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>836af4069d5737366de40c597e994fd2</Hash>
+    <Hash>50ff5e8feed886969b7400f5a8227b19</Hash>
 </Codenesium>*/

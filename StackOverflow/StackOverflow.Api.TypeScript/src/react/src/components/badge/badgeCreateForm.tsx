@@ -103,7 +103,6 @@ class BadgeCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('date', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -115,7 +114,6 @@ class BadgeCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 40, message: 'Exceeds max length of 40' },
 ],
               
@@ -128,7 +126,6 @@ class BadgeCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('userId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -152,5 +149,5 @@ class BadgeCreateComponent extends React.Component<
 export const WrappedBadgeCreateComponent = Form.create({ name: 'Badge Create' })(BadgeCreateComponent);
 
 /*<Codenesium>
-    <Hash>3e5a6585fc143ed68f7d67eda3e0fdd7</Hash>
+    <Hash>d016fb9ec6570f2aa502bdd963113d53</Hash>
 </Codenesium>*/

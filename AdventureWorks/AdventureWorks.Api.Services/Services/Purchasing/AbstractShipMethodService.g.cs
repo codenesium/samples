@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShipMethodService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IShipMethodRepository ShipMethodRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractShipMethodService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IShipMethodRepository shipMethodRepository,
 			IApiShipMethodServerRequestModelValidator shipMethodModelValidator,
 			IDALShipMethodMapper dalShipMethodMapper,
@@ -155,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05013bbf7adbd488a63b6180b3fc80f4</Hash>
+    <Hash>7687caca65bf83bd0ad0b482a296a634</Hash>
 </Codenesium>*/

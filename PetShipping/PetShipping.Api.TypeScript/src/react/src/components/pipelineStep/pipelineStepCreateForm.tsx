@@ -103,7 +103,6 @@ class PipelineStepCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -116,7 +115,6 @@ class PipelineStepCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('pipelineStepStatusId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -128,7 +126,6 @@ class PipelineStepCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('shipperId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -152,5 +149,5 @@ class PipelineStepCreateComponent extends React.Component<
 export const WrappedPipelineStepCreateComponent = Form.create({ name: 'PipelineStep Create' })(PipelineStepCreateComponent);
 
 /*<Codenesium>
-    <Hash>10b4f768dc3239e7a5c37aac782348a4</Hash>
+    <Hash>244b8ef3149a1d3df377fa12515d15f6</Hash>
 </Codenesium>*/

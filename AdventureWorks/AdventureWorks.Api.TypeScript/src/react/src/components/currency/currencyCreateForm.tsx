@@ -121,10 +121,7 @@ class CurrencyCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -136,7 +133,6 @@ class CurrencyCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -162,5 +158,5 @@ export const WrappedCurrencyCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e94257fba818f02d7aad12c16890f520</Hash>
+    <Hash>0fd24b15e169c31325394154294acd1b</Hash>
 </Codenesium>*/

@@ -198,7 +198,6 @@ class UserEditComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 32, message: 'Exceeds max length of 32' },
               ],
             })(<Input placeholder={'email'} />)}
@@ -210,7 +209,6 @@ class UserEditComponent extends React.Component<
             {getFieldDecorator('fullName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 64, message: 'Exceeds max length of 64' },
               ],
             })(<Input placeholder={'full_name'} />)}
@@ -236,10 +234,7 @@ class UserEditComponent extends React.Component<
             <label htmlFor="locationLocationId">location_location_id</label>
             <br />
             {getFieldDecorator('locationLocationId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'location_location_id'} />)}
           </Form.Item>
 
@@ -249,7 +244,6 @@ class UserEditComponent extends React.Component<
             {getFieldDecorator('password', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 32, message: 'Exceeds max length of 32' },
               ],
             })(<Input placeholder={'password'} />)}
@@ -269,7 +263,6 @@ class UserEditComponent extends React.Component<
             {getFieldDecorator('privacy', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 1, message: 'Exceeds max length of 1' },
               ],
             })(<Input placeholder={'privacy'} />)}
@@ -281,7 +274,6 @@ class UserEditComponent extends React.Component<
             {getFieldDecorator('username', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 64, message: 'Exceeds max length of 64' },
               ],
             })(<Input placeholder={'username'} />)}
@@ -315,5 +307,5 @@ export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(
 
 
 /*<Codenesium>
-    <Hash>2b5e5e4e5bead611ce57a28b5196e86a</Hash>
+    <Hash>c110d8d1d4d247aebe512f7ab35127ca</Hash>
 </Codenesium>*/

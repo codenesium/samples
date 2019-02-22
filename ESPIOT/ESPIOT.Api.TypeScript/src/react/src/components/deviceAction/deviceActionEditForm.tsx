@@ -174,7 +174,6 @@ class DeviceActionEditComponent extends React.Component<
             {getFieldDecorator('action', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 4000, message: 'Exceeds max length of 4000' },
               ],
             })(<Input placeholder={'Action'} />)}
@@ -184,10 +183,7 @@ class DeviceActionEditComponent extends React.Component<
             <label htmlFor="deviceId">Device</label>
             <br />
             {getFieldDecorator('deviceId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'Device'} />)}
           </Form.Item>
 
@@ -197,7 +193,6 @@ class DeviceActionEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 90, message: 'Exceeds max length of 90' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -223,5 +218,5 @@ export const WrappedDeviceActionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bbfa2bfaa48e65cf60fb558fbc539131</Hash>
+    <Hash>a96c806804552f75b3701d9df22798cc</Hash>
 </Codenesium>*/

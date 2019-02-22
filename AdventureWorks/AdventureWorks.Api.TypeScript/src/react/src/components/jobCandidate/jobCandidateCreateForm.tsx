@@ -134,10 +134,7 @@ class JobCandidateCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -171,5 +168,5 @@ export const WrappedJobCandidateCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c09374d35f7a4e415b887556161d4b61</Hash>
+    <Hash>ddb7e8215b614482d336f59329f24546</Hash>
 </Codenesium>*/

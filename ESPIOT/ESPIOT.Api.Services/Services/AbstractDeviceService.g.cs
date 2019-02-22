@@ -1,6 +1,5 @@
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace ESPIOTNS.Api.Services
 {
 	public abstract class AbstractDeviceService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IDeviceRepository DeviceRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace ESPIOTNS.Api.Services
 
 		public AbstractDeviceService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IDeviceRepository deviceRepository,
 			IApiDeviceServerRequestModelValidator deviceModelValidator,
 			IDALDeviceMapper dalDeviceMapper,
@@ -141,5 +140,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4162c9f7de2e62f487fca7ba91b44852</Hash>
+    <Hash>eb7898fb21c0512b776a5050c490a02a</Hash>
 </Codenesium>*/

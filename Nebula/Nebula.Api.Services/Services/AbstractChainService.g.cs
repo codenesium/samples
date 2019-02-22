@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractChainService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IChainRepository ChainRepository { get; private set; }
 
@@ -26,7 +25,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractChainService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IChainRepository chainRepository,
 			IApiChainServerRequestModelValidator chainModelValidator,
 			IDALChainMapper dalChainMapper,
@@ -159,5 +158,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>92d962874c0dbd4c260da73a1f5e7fd8</Hash>
+    <Hash>c6626471a8afc029ea71af221f34191a</Hash>
 </Codenesium>*/

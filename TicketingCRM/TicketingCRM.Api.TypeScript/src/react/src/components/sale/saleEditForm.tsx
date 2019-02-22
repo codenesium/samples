@@ -171,7 +171,6 @@ class SaleEditComponent extends React.Component<
             {getFieldDecorator('ipAddress', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'ipAddress'} />)}
@@ -181,10 +180,7 @@ class SaleEditComponent extends React.Component<
             <label htmlFor="note">notes</label>
             <br />
             {getFieldDecorator('note', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'notes'} />)}
           </Form.Item>
 
@@ -192,10 +188,7 @@ class SaleEditComponent extends React.Component<
             <label htmlFor="saleDate">saleDate</label>
             <br />
             {getFieldDecorator('saleDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'saleDate'} />)}
           </Form.Item>
 
@@ -203,10 +196,7 @@ class SaleEditComponent extends React.Component<
             <label htmlFor="transactionId">transactionId</label>
             <br />
             {getFieldDecorator('transactionId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'transactionId'} />)}
           </Form.Item>
 
@@ -230,5 +220,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>9721b0c7801fc693e1c440ae86783675</Hash>
+    <Hash>f75a9b39f045ca8f24cad83f50bb1fe5</Hash>
 </Codenesium>*/

@@ -123,7 +123,6 @@ class TransactionStatusCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedTransactionStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>41725ef27e7d43f6e6217807dc787315</Hash>
+    <Hash>cb314b323eb8f9c0ea82aaea172cfb01</Hash>
 </Codenesium>*/

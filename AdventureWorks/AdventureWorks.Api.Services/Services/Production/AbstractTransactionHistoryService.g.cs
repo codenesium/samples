@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractTransactionHistoryService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITransactionHistoryRepository TransactionHistoryRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractTransactionHistoryService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITransactionHistoryRepository transactionHistoryRepository,
 			IApiTransactionHistoryServerRequestModelValidator transactionHistoryModelValidator,
 			IDALTransactionHistoryMapper dalTransactionHistoryMapper)
@@ -130,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4852794f20124ae360bf353a9f63c0c3</Hash>
+    <Hash>776a038511a8a6bd74b670325489feca</Hash>
 </Codenesium>*/

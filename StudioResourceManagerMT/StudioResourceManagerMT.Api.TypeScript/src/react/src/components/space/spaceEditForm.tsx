@@ -171,7 +171,6 @@ class SpaceEditComponent extends React.Component<
             {getFieldDecorator('description', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(
@@ -185,7 +184,6 @@ class SpaceEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -211,5 +209,5 @@ export const WrappedSpaceEditComponent = Form.create({ name: 'Space Edit' })(
 
 
 /*<Codenesium>
-    <Hash>c8f7b9aad71cda02fd0b7931366be123</Hash>
+    <Hash>80e14e4bc19c355e1fa11c14cdf9046c</Hash>
 </Codenesium>*/

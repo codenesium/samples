@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractCustomerService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICustomerRepository CustomerRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractCustomerService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
 			IDALCustomerMapper dalCustomerMapper)
@@ -116,5 +115,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72490c33972f8ee11ac14d5c10b704e2</Hash>
+    <Hash>59df836e9b37c7fceeb52718a8806a45</Hash>
 </Codenesium>*/

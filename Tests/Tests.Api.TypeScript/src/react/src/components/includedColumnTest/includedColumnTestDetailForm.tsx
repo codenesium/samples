@@ -7,9 +7,6 @@ import IncludedColumnTestViewModel from './includedColumnTestViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface IncludedColumnTestDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface IncludedColumnTestDetailComponentState {
 }
 
 class IncludedColumnTestDetailComponent extends React.Component<
-IncludedColumnTestDetailComponentProps,
-IncludedColumnTestDetailComponentState
+  IncludedColumnTestDetailComponentProps,
+  IncludedColumnTestDetailComponentState
 > {
   state = {
     model: new IncludedColumnTestViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.IncludedColumnTests + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.IncludedColumnTests + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,43 +84,40 @@ IncludedColumnTestDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name2</h3>
-							<p>{String(this.state.model!.name2)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>Name2</h3>
+              <p>{String(this.state.model!.name2)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +126,11 @@ IncludedColumnTestDetailComponentState
   }
 }
 
-export const WrappedIncludedColumnTestDetailComponent = Form.create({ name: 'IncludedColumnTest Detail' })(
-  IncludedColumnTestDetailComponent
-);
+export const WrappedIncludedColumnTestDetailComponent = Form.create({
+  name: 'IncludedColumnTest Detail',
+})(IncludedColumnTestDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>f3c76bec54a9eda9fa2ba10139f286ec</Hash>
+    <Hash>8d7f2866bd659ee5e0a68a44ad7bf821</Hash>
 </Codenesium>*/

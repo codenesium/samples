@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCultureService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICultureRepository CultureRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCultureService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICultureRepository cultureRepository,
 			IApiCultureServerRequestModelValidator cultureModelValidator,
 			IDALCultureMapper dalCultureMapper)
@@ -130,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5168c67192cf1c130753da1a3abcc18f</Hash>
+    <Hash>2b9e935763bd023c218d9811e2b87dac</Hash>
 </Codenesium>*/

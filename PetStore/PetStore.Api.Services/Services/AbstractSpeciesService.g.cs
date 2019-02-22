@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractSpeciesService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ISpeciesRepository SpeciesRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace PetStoreNS.Api.Services
 
 		public AbstractSpeciesService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ISpeciesRepository speciesRepository,
 			IApiSpeciesServerRequestModelValidator speciesModelValidator,
 			IDALSpeciesMapper dalSpeciesMapper,
@@ -127,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe27e1a540553b43c18512b8217b5401</Hash>
+    <Hash>eb554d9db441e967ae4ec2c5f80d9792</Hash>
 </Codenesium>*/

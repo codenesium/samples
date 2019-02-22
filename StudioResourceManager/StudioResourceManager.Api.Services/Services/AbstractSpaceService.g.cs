@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractSpaceService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ISpaceRepository SpaceRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractSpaceService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ISpaceRepository spaceRepository,
 			IApiSpaceServerRequestModelValidator spaceModelValidator,
 			IDALSpaceMapper dalSpaceMapper)
@@ -116,5 +115,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05e669ac88a3a36028d512ddf91949ea</Hash>
+    <Hash>e00217d605f36a31a0f918ce970dfeb6</Hash>
 </Codenesium>*/

@@ -174,7 +174,6 @@ class PaymentTypeEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -200,5 +199,5 @@ export const WrappedPaymentTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>aabe10d00e3849708bcc386f0949b637</Hash>
+    <Hash>94b88c37f63858e08feea13a966a5f22</Hash>
 </Codenesium>*/

@@ -171,7 +171,6 @@ class SpeciesEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -197,5 +196,5 @@ export const WrappedSpeciesEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>da77d67acb3858e6d5264d82c7f32b75</Hash>
+    <Hash>62002194d08ae6b20b50acae2e012390</Hash>
 </Codenesium>*/

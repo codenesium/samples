@@ -149,7 +149,6 @@ class PipelineStepStatuEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -174,5 +173,5 @@ class PipelineStepStatuEditComponent extends React.Component<
 export const WrappedPipelineStepStatuEditComponent = Form.create({ name: 'PipelineStepStatu Edit' })(PipelineStepStatuEditComponent);
 
 /*<Codenesium>
-    <Hash>97fb2908a0888c2c7f84bdf6ac2f808b</Hash>
+    <Hash>210eb2f1f1b7748b93be2452196eb2cf</Hash>
 </Codenesium>*/

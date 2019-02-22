@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractErrorLogService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IErrorLogRepository ErrorLogRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractErrorLogService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IErrorLogRepository errorLogRepository,
 			IApiErrorLogServerRequestModelValidator errorLogModelValidator,
 			IDALErrorLogMapper dalErrorLogMapper)
@@ -116,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7340dfe8d74e051c1f2e4e7ad331b16</Hash>
+    <Hash>136ec3fcf80d090c5fca77a3107928b3</Hash>
 </Codenesium>*/

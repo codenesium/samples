@@ -121,10 +121,7 @@ class ScrapReasonCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -136,7 +133,6 @@ class ScrapReasonCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -162,5 +158,5 @@ export const WrappedScrapReasonCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9d6f3697e8600ada816665b069884ef7</Hash>
+    <Hash>73dfad02914bd6e05427dcb9ab85888d</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductCategoryService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IProductCategoryRepository ProductCategoryRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractProductCategoryService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IProductCategoryRepository productCategoryRepository,
 			IApiProductCategoryServerRequestModelValidator productCategoryModelValidator,
 			IDALProductCategoryMapper dalProductCategoryMapper,
@@ -155,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6ab480d3e42a2729142980c4c96037f7</Hash>
+    <Hash>f966092559b69f2cd83066d0af2b6d9e</Hash>
 </Codenesium>*/

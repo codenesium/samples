@@ -174,7 +174,6 @@ class EventStatuEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -200,5 +199,5 @@ export const WrappedEventStatuEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bacebca138428757db15f2b3e682a565</Hash>
+    <Hash>f5f44fd8d73e0f609b59987a9cdc7c7c</Hash>
 </Codenesium>*/

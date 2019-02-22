@@ -174,7 +174,6 @@ class LinkStatusEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -200,5 +199,5 @@ export const WrappedLinkStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>54ba0f4c12bbec58941abc92a06b768e</Hash>
+    <Hash>ec2e6d3e7404f8b72403b4b916da2f1d</Hash>
 </Codenesium>*/

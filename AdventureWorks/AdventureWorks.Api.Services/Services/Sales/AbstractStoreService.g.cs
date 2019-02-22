@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractStoreService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IStoreRepository StoreRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractStoreService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IStoreRepository storeRepository,
 			IApiStoreServerRequestModelValidator storeModelValidator,
 			IDALStoreMapper dalStoreMapper,
@@ -155,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a8ba08b769c7febd8d020ec18da839ac</Hash>
+    <Hash>0db1d80a7d1ee46ba3d39e010447b502</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import TeacherMapper from '../teacher/teacherMapper';
 import TeacherViewModel from '../teacher/teacherViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface TeacherTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface TeacherTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<TeacherViewModel>;
+  filteredRecords : Array<TeacherViewModel>;
 }
 
-export class TeacherTableComponent extends React.Component<
-  TeacherTableComponentProps,
-  TeacherTableComponentState
+export class  TeacherTableComponent extends React.Component<
+TeacherTableComponentProps,
+TeacherTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: TeacherViewModel) {
-    this.props.history.push(ClientRoutes.Teachers + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: TeacherViewModel) {
+  this.props.history.push(ClientRoutes.Teachers + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: TeacherViewModel) {
-    this.props.history.push(ClientRoutes.Teachers + '/' + row.id);
-  }
+handleDetailClick(e:any, row: TeacherViewModel) {
+  this.props.history.push(ClientRoutes.Teachers + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.TeacherClientResponseModel>;
@@ -59,11 +61,12 @@ export class TeacherTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new TeacherMapper();
+          
+          let teachers:Array<TeacherViewModel> = [];
 
-          let teachers: Array<TeacherViewModel> = [];
-
-          response.forEach(x => {
-            teachers.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              teachers.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,82 +91,77 @@ export class TeacherTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Teachers',
-                columns: [
-                  {
-                    Header: 'Birthday',
-                    accessor: 'birthday',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Teachers',
+                    columns: [
+					  {
+                      Header: 'Birthday',
+                      accessor: 'birthday',
+                      Cell: (props) => {
                       return <span>{String(props.original.birthday)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Email',
-                    accessor: 'email',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Email',
+                      accessor: 'email',
+                      Cell: (props) => {
                       return <span>{String(props.original.email)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'FirstName',
-                    accessor: 'firstName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'FirstName',
+                      accessor: 'firstName',
+                      Cell: (props) => {
                       return <span>{String(props.original.firstName)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Id',
+                      accessor: 'id',
+                      Cell: (props) => {
                       return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LastName',
-                    accessor: 'lastName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'LastName',
+                      accessor: 'lastName',
+                      Cell: (props) => {
                       return <span>{String(props.original.lastName)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Phone',
-                    accessor: 'phone',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Phone',
+                      accessor: 'phone',
+                      Cell: (props) => {
                       return <span>{String(props.original.phone)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'UserId',
-                    accessor: 'userId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'UserId',
+                      accessor: 'userId',
+                      Cell: (props) => {
                       return <span>{String(props.original.userId)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TeacherViewModel
@@ -174,8 +172,8 @@ export class TeacherTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as TeacherViewModel
@@ -184,14 +182,11 @@ export class TeacherTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -199,7 +194,6 @@ export class TeacherTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>47ee35ff42297faa9353a8f6944c6cf2</Hash>
+    <Hash>66aafa85f62f6be2809e52993810247b</Hash>
 </Codenesium>*/

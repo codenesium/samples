@@ -123,7 +123,6 @@ class PostCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('body', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -165,7 +164,6 @@ class PostCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('creationDate', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -187,7 +185,6 @@ class PostCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('lastActivityDate', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -250,7 +247,6 @@ class PostCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('postTypeId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -262,7 +258,6 @@ class PostCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('score', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -296,7 +291,6 @@ class PostCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('viewCount', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -320,5 +314,5 @@ class PostCreateComponent extends React.Component<
 export const WrappedPostCreateComponent = Form.create({ name: 'Post Create' })(PostCreateComponent);
 
 /*<Codenesium>
-    <Hash>46736178b39f08fec1b7a3f1856bdf8a</Hash>
+    <Hash>dc8c8766a370c6a974542a7a03e1b922</Hash>
 </Codenesium>*/

@@ -174,7 +174,6 @@ class ChainStatusEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -200,5 +199,5 @@ export const WrappedChainStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9bcf31a380cef526328d81579be43d6c</Hash>
+    <Hash>ec7b7c34fb694b9d9a45144cd5e76aa0</Hash>
 </Codenesium>*/

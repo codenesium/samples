@@ -155,10 +155,7 @@ class EventCreateComponent extends React.Component<
             <label htmlFor="eventStatusId">status</label>
             <br />
             {getFieldDecorator('eventStatusId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<InputNumber placeholder={'status'} />)}
           </Form.Item>
 
@@ -224,5 +221,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6d8ae93abb90256492a2122a61948b7b</Hash>
+    <Hash>130d52236d266efb4fa1c22fc282fe2e</Hash>
 </Codenesium>*/

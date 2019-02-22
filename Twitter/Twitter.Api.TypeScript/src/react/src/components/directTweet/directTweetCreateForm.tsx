@@ -103,7 +103,6 @@ class DirectTweetCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('content', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 140, message: 'Exceeds max length of 140' },
 ],
               
@@ -116,7 +115,6 @@ class DirectTweetCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('date', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -128,7 +126,6 @@ class DirectTweetCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('taggedUserId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -140,7 +137,6 @@ class DirectTweetCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('time', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -164,5 +160,5 @@ class DirectTweetCreateComponent extends React.Component<
 export const WrappedDirectTweetCreateComponent = Form.create({ name: 'DirectTweet Create' })(DirectTweetCreateComponent);
 
 /*<Codenesium>
-    <Hash>a9b94b5522d66b5d7492f22bb388be10</Hash>
+    <Hash>62f371f630564d4588faa402d0bd538e</Hash>
 </Codenesium>*/

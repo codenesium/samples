@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractVenueService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IVenueRepository VenueRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractVenueService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IVenueRepository venueRepository,
 			IApiVenueServerRequestModelValidator venueModelValidator,
 			IDALVenueMapper dalVenueMapper)
@@ -130,5 +129,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ccf24ef78259ff36d3d89cd9d1247385</Hash>
+    <Hash>89a26c816cdc35378a982d98f86f1d90</Hash>
 </Codenesium>*/

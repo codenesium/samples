@@ -1,17 +1,15 @@
 using CADNS.Api.Contracts;
 using CADNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unit = CADNS.Api.DataAccess.Unit;
 
 namespace CADNS.Api.Services
 {
 	public abstract class AbstractUnitService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IUnitRepository UnitRepository { get; private set; }
 
@@ -27,7 +25,7 @@ namespace CADNS.Api.Services
 
 		public AbstractUnitService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IUnitRepository unitRepository,
 			IApiUnitServerRequestModelValidator unitModelValidator,
 			IDALUnitMapper dalUnitMapper,
@@ -139,5 +137,5 @@ namespace CADNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95614a7a46f296f58307d32029961108</Hash>
+    <Hash>c0d2bcd5ed295e8a59aaa356422a009b</Hash>
 </Codenesium>*/

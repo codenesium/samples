@@ -180,10 +180,7 @@ class TimestampCheckEditComponent extends React.Component<
             <label htmlFor="timestamp">Timestamp</label>
             <br />
             {getFieldDecorator('timestamp', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'Timestamp'} />)}
           </Form.Item>
 
@@ -207,5 +204,5 @@ export const WrappedTimestampCheckEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0e649ba645dbc5f790c3aefd49b91351</Hash>
+    <Hash>7669b0a7693d42b3cb3d39e9bca81f41</Hash>
 </Codenesium>*/

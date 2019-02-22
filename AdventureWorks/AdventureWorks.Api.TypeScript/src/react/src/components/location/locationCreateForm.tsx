@@ -121,10 +121,7 @@ class LocationCreateComponent extends React.Component<
             <label htmlFor="availability">Availability</label>
             <br />
             {getFieldDecorator('availability', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'Availability'} />
             )}
@@ -134,10 +131,7 @@ class LocationCreateComponent extends React.Component<
             <label htmlFor="costRate">CostRate</label>
             <br />
             {getFieldDecorator('costRate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'CostRate'} />)}
           </Form.Item>
 
@@ -145,10 +139,7 @@ class LocationCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -160,7 +151,6 @@ class LocationCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -186,5 +176,5 @@ export const WrappedLocationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>387c1c12c67d2a71423b16ad1d25d2eb</Hash>
+    <Hash>f0e72f0c7597aa6cfeba0616b1cac483</Hash>
 </Codenesium>*/

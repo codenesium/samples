@@ -123,7 +123,6 @@ class OrganizationCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -149,5 +148,5 @@ export const WrappedOrganizationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2e921795f7acf12aa72399de7fe845d9</Hash>
+    <Hash>a33994961f71987f59e393db37aeb4cd</Hash>
 </Codenesium>*/

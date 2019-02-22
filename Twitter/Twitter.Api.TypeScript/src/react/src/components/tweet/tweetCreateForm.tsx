@@ -123,7 +123,6 @@ class TweetCreateComponent extends React.Component<
             {getFieldDecorator('content', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 140, message: 'Exceeds max length of 140' },
               ],
             })(<Input placeholder={'content'} />)}
@@ -133,10 +132,7 @@ class TweetCreateComponent extends React.Component<
             <label htmlFor="date">date</label>
             <br />
             {getFieldDecorator('date', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'date'} />)}
           </Form.Item>
 
@@ -144,10 +140,7 @@ class TweetCreateComponent extends React.Component<
             <label htmlFor="locationId">location_id</label>
             <br />
             {getFieldDecorator('locationId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'location_id'} />)}
           </Form.Item>
 
@@ -155,10 +148,7 @@ class TweetCreateComponent extends React.Component<
             <label htmlFor="time">time</label>
             <br />
             {getFieldDecorator('time', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'time'} />)}
           </Form.Item>
 
@@ -166,10 +156,7 @@ class TweetCreateComponent extends React.Component<
             <label htmlFor="userUserId">user_user_id</label>
             <br />
             {getFieldDecorator('userUserId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'user_user_id'} />)}
           </Form.Item>
 
@@ -193,5 +180,5 @@ export const WrappedTweetCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>087894e73315a59f49b750447b4e1463</Hash>
+    <Hash>597259fca1d8a6f67bcccdb69cb08021</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractRetweetService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IRetweetRepository RetweetRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractRetweetService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IRetweetRepository retweetRepository,
 			IApiRetweetServerRequestModelValidator retweetModelValidator,
 			IDALRetweetMapper dalRetweetMapper)
@@ -130,5 +129,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c759e89b5f1efc4832d6ce8aca40aab3</Hash>
+    <Hash>cb44c5bda0b93b6ee918284af7e40eb7</Hash>
 </Codenesium>*/

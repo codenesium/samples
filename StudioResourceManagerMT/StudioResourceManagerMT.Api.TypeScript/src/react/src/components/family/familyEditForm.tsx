@@ -192,7 +192,6 @@ class FamilyEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('primaryContactPhone', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -217,5 +216,5 @@ class FamilyEditComponent extends React.Component<
 export const WrappedFamilyEditComponent = Form.create({ name: 'Family Edit' })(FamilyEditComponent);
 
 /*<Codenesium>
-    <Hash>24edb13c0dd4deb31fd3f9edfab5dd84</Hash>
+    <Hash>825081e10f1919b13f50c713cc77deea</Hash>
 </Codenesium>*/

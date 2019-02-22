@@ -167,10 +167,7 @@ class PetEditComponent extends React.Component<
             <label htmlFor="breedId">breedId</label>
             <br />
             {getFieldDecorator('breedId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'breedId'} />)}
           </Form.Item>
 
@@ -178,10 +175,7 @@ class PetEditComponent extends React.Component<
             <label htmlFor="clientId">clientId</label>
             <br />
             {getFieldDecorator('clientId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'clientId'} />)}
           </Form.Item>
 
@@ -191,7 +185,6 @@ class PetEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -201,10 +194,7 @@ class PetEditComponent extends React.Component<
             <label htmlFor="weight">weight</label>
             <br />
             {getFieldDecorator('weight', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'weight'} />)}
           </Form.Item>
 
@@ -228,5 +218,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>b0b2b683a62eadaba5d70bf73ae1636f</Hash>
+    <Hash>4df69a11073b65ef1c835fee75110667</Hash>
 </Codenesium>*/

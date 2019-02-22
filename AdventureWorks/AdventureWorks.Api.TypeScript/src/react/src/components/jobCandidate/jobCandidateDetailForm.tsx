@@ -7,9 +7,6 @@ import JobCandidateViewModel from './jobCandidateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface JobCandidateDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface JobCandidateDetailComponentState {
 }
 
 class JobCandidateDetailComponent extends React.Component<
-JobCandidateDetailComponentProps,
-JobCandidateDetailComponentState
+  JobCandidateDetailComponentProps,
+  JobCandidateDetailComponentState
 > {
   state = {
     model: new JobCandidateViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.JobCandidates + '/edit/' + this.state.model!.jobCandidateID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.JobCandidates + '/edit/' + this.state.model!.jobCandidateID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,47 +84,44 @@ JobCandidateDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>BusinessEntityID</h3>
-							<p>{String(this.state.model!.businessEntityID)}</p>
-						 </div>
-					   						 <div>
-							<h3>JobCandidateID</h3>
-							<p>{String(this.state.model!.jobCandidateID)}</p>
-						 </div>
-					   						 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>Resume</h3>
-							<p>{String(this.state.model!.resume)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>BusinessEntityID</h3>
+              <p>{String(this.state.model!.businessEntityID)}</p>
+            </div>
+            <div>
+              <h3>JobCandidateID</h3>
+              <p>{String(this.state.model!.jobCandidateID)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Resume</h3>
+              <p>{String(this.state.model!.resume)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -134,10 +130,11 @@ JobCandidateDetailComponentState
   }
 }
 
-export const WrappedJobCandidateDetailComponent = Form.create({ name: 'JobCandidate Detail' })(
-  JobCandidateDetailComponent
-);
+export const WrappedJobCandidateDetailComponent = Form.create({
+  name: 'JobCandidate Detail',
+})(JobCandidateDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>a572522c71d23a23ca75f8b00010f3e7</Hash>
+    <Hash>493bae60d1d759acb4004ece4d282303</Hash>
 </Codenesium>*/

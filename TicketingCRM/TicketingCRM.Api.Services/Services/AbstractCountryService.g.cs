@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractCountryService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICountryRepository CountryRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractCountryService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
 			IDALCountryMapper dalCountryMapper,
@@ -127,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4d53cc666d8e197aa76f273de85e1b87</Hash>
+    <Hash>a1e16e1f3e4e18182e4afd5181426ac2</Hash>
 </Codenesium>*/

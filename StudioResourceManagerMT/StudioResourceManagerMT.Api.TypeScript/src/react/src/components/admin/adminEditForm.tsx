@@ -179,7 +179,6 @@ class AdminEditComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
@@ -191,7 +190,6 @@ class AdminEditComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
@@ -203,7 +201,6 @@ class AdminEditComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
@@ -221,10 +218,7 @@ class AdminEditComponent extends React.Component<
             <label htmlFor="userId">userId</label>
             <br />
             {getFieldDecorator('userId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'userId'} />)}
           </Form.Item>
 
@@ -248,5 +242,5 @@ export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(
 
 
 /*<Codenesium>
-    <Hash>b06bc6b6133b86b242e3db0b903d0e36</Hash>
+    <Hash>2b4c32234527869e028b28afc99d8c54</Hash>
 </Codenesium>*/

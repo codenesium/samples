@@ -129,10 +129,7 @@ class IllustrationCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -158,5 +155,5 @@ export const WrappedIllustrationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>36dd1acb9dedcdb49af8cdd6ad402b64</Hash>
+    <Hash>0f7880f7504c4d606fcfe02220f29a44</Hash>
 </Codenesium>*/

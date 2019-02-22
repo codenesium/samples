@@ -123,7 +123,6 @@ class PipelineStepStatuCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedPipelineStepStatuCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0b53e8d2fa6d5b46dca92b009ab051e3</Hash>
+    <Hash>50e2f061a9ff11c52a10c3c59d648073</Hash>
 </Codenesium>*/

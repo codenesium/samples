@@ -174,7 +174,6 @@ class IncludedColumnTestEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -186,7 +185,6 @@ class IncludedColumnTestEditComponent extends React.Component<
             {getFieldDecorator('name2', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'Name2'} />)}
@@ -212,5 +210,5 @@ export const WrappedIncludedColumnTestEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3c4ef79d5e1f3fef2c85ae3b98fbd77c</Hash>
+    <Hash>7c693bddb51ebed5b9b12b0694c168d6</Hash>
 </Codenesium>*/

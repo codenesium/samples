@@ -123,7 +123,6 @@ class TeacherSkillCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedTeacherSkillCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d8811b84e52c759dd2b89eab53e06a6f</Hash>
+    <Hash>89a32b996b02aa936ad557f06a016220</Hash>
 </Codenesium>*/

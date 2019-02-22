@@ -121,10 +121,7 @@ class SalesTaxRateCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -136,7 +133,6 @@ class SalesTaxRateCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -146,10 +142,7 @@ class SalesTaxRateCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
@@ -157,10 +150,7 @@ class SalesTaxRateCreateComponent extends React.Component<
             <label htmlFor="stateProvinceID">StateProvinceID</label>
             <br />
             {getFieldDecorator('stateProvinceID', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -173,10 +163,7 @@ class SalesTaxRateCreateComponent extends React.Component<
             <label htmlFor="taxRate">TaxRate</label>
             <br />
             {getFieldDecorator('taxRate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'TaxRate'} />)}
           </Form.Item>
 
@@ -184,10 +171,7 @@ class SalesTaxRateCreateComponent extends React.Component<
             <label htmlFor="taxType">TaxType</label>
             <br />
             {getFieldDecorator('taxType', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'TaxType'} />)}
           </Form.Item>
 
@@ -211,5 +195,5 @@ export const WrappedSalesTaxRateCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>61a70711a07550dc9553cf4b3cbb6795</Hash>
+    <Hash>0623e91bc7a1636a13b516d8d924c494</Hash>
 </Codenesium>*/

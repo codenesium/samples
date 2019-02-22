@@ -134,10 +134,7 @@ class PostHistoryCreateComponent extends React.Component<
             <label htmlFor="creationDate">CreationDate</label>
             <br />
             {getFieldDecorator('creationDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'CreationDate'} />)}
           </Form.Item>
 
@@ -145,10 +142,7 @@ class PostHistoryCreateComponent extends React.Component<
             <label htmlFor="postHistoryTypeId">PostHistoryTypeId</label>
             <br />
             {getFieldDecorator('postHistoryTypeId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'PostHistoryTypeId'} />)}
           </Form.Item>
 
@@ -156,10 +150,7 @@ class PostHistoryCreateComponent extends React.Component<
             <label htmlFor="postId">PostId</label>
             <br />
             {getFieldDecorator('postId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'PostId'} />)}
           </Form.Item>
 
@@ -169,7 +160,6 @@ class PostHistoryCreateComponent extends React.Component<
             {getFieldDecorator('revisionGUID', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 36, message: 'Exceeds max length of 36' },
               ],
             })(<Input placeholder={'RevisionGUID'} />)}
@@ -224,5 +214,5 @@ export const WrappedPostHistoryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>db1be32681b76ac4fa1412ee8eda20a1</Hash>
+    <Hash>5a728d1a6523f6416adb04a1d201eb95</Hash>
 </Codenesium>*/

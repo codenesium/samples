@@ -169,10 +169,7 @@ class HandlerEditComponent extends React.Component<
             <label htmlFor="countryId">countryId</label>
             <br />
             {getFieldDecorator('countryId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'countryId'} />)}
           </Form.Item>
 
@@ -182,7 +179,6 @@ class HandlerEditComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
@@ -194,7 +190,6 @@ class HandlerEditComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
@@ -206,7 +201,6 @@ class HandlerEditComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
@@ -218,7 +212,6 @@ class HandlerEditComponent extends React.Component<
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'phone'} />)}
@@ -244,5 +237,5 @@ export const WrappedHandlerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>52cf159ea08c1031921a624bedfc7931</Hash>
+    <Hash>087827033f5cd9125af35be9bbcdbebf</Hash>
 </Codenesium>*/

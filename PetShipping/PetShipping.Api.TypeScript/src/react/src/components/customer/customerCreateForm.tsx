@@ -123,7 +123,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
@@ -135,7 +134,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
@@ -147,7 +145,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
@@ -167,7 +164,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'phone'} />)}
@@ -193,5 +189,5 @@ export const WrappedCustomerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>832f281a793215703bfc6ee6b24b8221</Hash>
+    <Hash>6a301df499b58c79c5da90f405dd551a</Hash>
 </Codenesium>*/

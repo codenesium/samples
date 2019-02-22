@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSpecialOfferService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ISpecialOfferRepository SpecialOfferRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractSpecialOfferService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ISpecialOfferRepository specialOfferRepository,
 			IApiSpecialOfferServerRequestModelValidator specialOfferModelValidator,
 			IDALSpecialOfferMapper dalSpecialOfferMapper)
@@ -130,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5c7a9a0f8fd6c17bf6c935589508696</Hash>
+    <Hash>e143e29f3cb74d3234b8a5be8796f691</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractTeamService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ITeamRepository TeamRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractTeamService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ITeamRepository teamRepository,
 			IApiTeamServerRequestModelValidator teamModelValidator,
 			IDALTeamMapper dalTeamMapper,
@@ -141,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d2166e0326ce13e9164146c7c4f13f4</Hash>
+    <Hash>573e61e5085b7665ca8eb64e337ea3ef</Hash>
 </Codenesium>*/

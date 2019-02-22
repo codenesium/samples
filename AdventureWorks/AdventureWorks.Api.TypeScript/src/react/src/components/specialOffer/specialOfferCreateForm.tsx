@@ -123,7 +123,6 @@ class SpecialOfferCreateComponent extends React.Component<
             {getFieldDecorator('category', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Category'} />)}
@@ -135,7 +134,6 @@ class SpecialOfferCreateComponent extends React.Component<
             {getFieldDecorator('description', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 255, message: 'Exceeds max length of 255' },
               ],
             })(
@@ -147,10 +145,7 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="discountPct">DiscountPct</label>
             <br />
             {getFieldDecorator('discountPct', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'DiscountPct'} />
             )}
@@ -160,10 +155,7 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="endDate">EndDate</label>
             <br />
             {getFieldDecorator('endDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'EndDate'} />)}
           </Form.Item>
 
@@ -179,10 +171,7 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="minQty">MinQty</label>
             <br />
             {getFieldDecorator('minQty', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'MinQty'} />)}
           </Form.Item>
 
@@ -190,10 +179,7 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -203,10 +189,7 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
@@ -214,10 +197,7 @@ class SpecialOfferCreateComponent extends React.Component<
             <label htmlFor="startDate">StartDate</label>
             <br />
             {getFieldDecorator('startDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'StartDate'} />)}
           </Form.Item>
 
@@ -241,5 +221,5 @@ export const WrappedSpecialOfferCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>234cccd31c327bf7d910649ebeacf82b</Hash>
+    <Hash>a5d9d193aea1ca88c6e8ba9df3641bb1</Hash>
 </Codenesium>*/

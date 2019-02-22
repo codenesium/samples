@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractVoteTypeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IVoteTypeRepository VoteTypeRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractVoteTypeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IVoteTypeRepository voteTypeRepository,
 			IApiVoteTypeServerRequestModelValidator voteTypeModelValidator,
 			IDALVoteTypeMapper dalVoteTypeMapper)
@@ -116,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9ffb9a9107dba2a10c19a9070aa0a07</Hash>
+    <Hash>b798234a2ff7efd6a348b686e55b1de7</Hash>
 </Codenesium>*/

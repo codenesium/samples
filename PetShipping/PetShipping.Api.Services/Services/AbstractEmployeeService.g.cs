@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractEmployeeService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IEmployeeRepository EmployeeRepository { get; private set; }
 
@@ -28,7 +27,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractEmployeeService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IEmployeeRepository employeeRepository,
 			IApiEmployeeServerRequestModelValidator employeeModelValidator,
 			IDALEmployeeMapper dalEmployeeMapper,
@@ -149,5 +148,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f6202b8749903a3d15e367f5dd952b1</Hash>
+    <Hash>d10f6a8b6f5f4a7278c8793064e19f46</Hash>
 </Codenesium>*/

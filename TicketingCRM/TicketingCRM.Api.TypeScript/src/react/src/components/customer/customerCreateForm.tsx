@@ -123,7 +123,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'email'} />)}
@@ -135,7 +134,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'firstName'} />)}
@@ -147,7 +145,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'lastName'} />)}
@@ -159,7 +156,6 @@ class CustomerCreateComponent extends React.Component<
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<InputNumber placeholder={'phone'} />)}
@@ -185,5 +181,5 @@ export const WrappedCustomerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fd8b0e95cd54b79fa31c8980118b5832</Hash>
+    <Hash>38d4a3369028ae6fc004c933d6732600</Hash>
 </Codenesium>*/

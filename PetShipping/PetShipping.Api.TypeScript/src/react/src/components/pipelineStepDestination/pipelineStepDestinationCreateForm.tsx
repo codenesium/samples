@@ -121,10 +121,7 @@ class PipelineStepDestinationCreateComponent extends React.Component<
             <label htmlFor="destinationId">destinationId</label>
             <br />
             {getFieldDecorator('destinationId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'destinationId'} />
             )}
@@ -134,10 +131,7 @@ class PipelineStepDestinationCreateComponent extends React.Component<
             <label htmlFor="pipelineStepId">pipelineStepId</label>
             <br />
             {getFieldDecorator('pipelineStepId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -166,5 +160,5 @@ export const WrappedPipelineStepDestinationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f3db57ef96769baed904995a2dd5c5b2</Hash>
+    <Hash>8c6b8ac0abbc656af8b01259ee5eb946</Hash>
 </Codenesium>*/

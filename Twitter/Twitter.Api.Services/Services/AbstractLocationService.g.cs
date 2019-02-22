@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractLocationService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ILocationRepository LocationRepository { get; private set; }
 
@@ -26,7 +25,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractLocationService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ILocationRepository locationRepository,
 			IApiLocationServerRequestModelValidator locationModelValidator,
 			IDALLocationMapper dalLocationMapper,
@@ -138,5 +137,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ce686dcbbdb16fc1977dcf4c6267376</Hash>
+    <Hash>cd6a1cd7240314202098359c5c120041</Hash>
 </Codenesium>*/

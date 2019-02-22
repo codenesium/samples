@@ -101,6 +101,16 @@ GO
 --ALTER TABLE [dbo].[VehicleRefCapability] DROP CONSTRAINT [FK_VehicleRefCapability_vehicleId_Vehicle_id]
 --END
 --GO
+--IF (OBJECT_ID('dbo.fk_callassignment_callid_call_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[CallAssignment] DROP CONSTRAINT [fk_callassignment_callid_call_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_callassignment_unitid_unit_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[CallAssignment] DROP CONSTRAINT [fk_callassignment_unitid_unit_id]
+--END
+--GO
 
 --IF OBJECT_ID('dbo.Address', 'U') IS NOT NULL 
 --BEGIN
@@ -229,6 +239,8 @@ GO
 
 CREATE TABLE [dbo].[CallAssignment](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[callId] [int]     NOT NULL,
+[unitId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -367,6 +379,16 @@ ADD CONSTRAINT[PK_CallAssignment] PRIMARY KEY CLUSTERED
 (
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[IX_CallAssignment_callId] ON[dbo].[CallAssignment]
+(
+[callId] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[IX_CallAssignment_unitId] ON[dbo].[CallAssignment]
+(
+[unitId] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[CallDisposition]
 ADD CONSTRAINT[PK_CallDisposition] PRIMARY KEY CLUSTERED
@@ -551,6 +573,16 @@ ALTER TABLE[dbo].[VehicleRefCapability]  WITH CHECK ADD  CONSTRAINT[FK_VehicleRe
 REFERENCES[dbo].[Vehicle]([id]) on delete no action on update no action
 GO
 ALTER TABLE[dbo].[VehicleRefCapability] CHECK CONSTRAINT[FK_VehicleRefCapability_vehicleId_Vehicle_id]
+GO
+ALTER TABLE[dbo].[CallAssignment]  WITH CHECK ADD  CONSTRAINT[fk_callassignment_callid_call_id] FOREIGN KEY([callId])
+REFERENCES[dbo].[Call]([id]) on delete no action on update no action
+GO
+ALTER TABLE[dbo].[CallAssignment] CHECK CONSTRAINT[fk_callassignment_callid_call_id]
+GO
+ALTER TABLE[dbo].[CallAssignment]  WITH CHECK ADD  CONSTRAINT[fk_callassignment_unitid_unit_id] FOREIGN KEY([unitId])
+REFERENCES[dbo].[Unit]([id]) on delete no action on update no action
+GO
+ALTER TABLE[dbo].[CallAssignment] CHECK CONSTRAINT[fk_callassignment_unitid_unit_id]
 GO
 
 ");

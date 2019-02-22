@@ -172,10 +172,7 @@ class PipelineStepNoteEditComponent extends React.Component<
             <label htmlFor="employeeId">employeeId</label>
             <br />
             {getFieldDecorator('employeeId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'employeeId'} />)}
           </Form.Item>
 
@@ -183,10 +180,7 @@ class PipelineStepNoteEditComponent extends React.Component<
             <label htmlFor="note">note</label>
             <br />
             {getFieldDecorator('note', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'note'} />)}
           </Form.Item>
 
@@ -194,10 +188,7 @@ class PipelineStepNoteEditComponent extends React.Component<
             <label htmlFor="pipelineStepId">pipelineStepId</label>
             <br />
             {getFieldDecorator('pipelineStepId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker
                 format={'YYYY-MM-DD'}
@@ -226,5 +217,5 @@ export const WrappedPipelineStepNoteEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>297bc5f2c0ba2f6dfe0d2011ee9adff9</Hash>
+    <Hash>5f60d92cdfc258bb83336af2120055a2</Hash>
 </Codenesium>*/

@@ -185,10 +185,7 @@ class PostHistoryEditComponent extends React.Component<
             <label htmlFor="creationDate">CreationDate</label>
             <br />
             {getFieldDecorator('creationDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'CreationDate'} />)}
           </Form.Item>
 
@@ -196,10 +193,7 @@ class PostHistoryEditComponent extends React.Component<
             <label htmlFor="postHistoryTypeId">PostHistoryTypeId</label>
             <br />
             {getFieldDecorator('postHistoryTypeId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'PostHistoryTypeId'} />)}
           </Form.Item>
 
@@ -207,10 +201,7 @@ class PostHistoryEditComponent extends React.Component<
             <label htmlFor="postId">PostId</label>
             <br />
             {getFieldDecorator('postId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'PostId'} />)}
           </Form.Item>
 
@@ -220,7 +211,6 @@ class PostHistoryEditComponent extends React.Component<
             {getFieldDecorator('revisionGUID', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 36, message: 'Exceeds max length of 36' },
               ],
             })(<Input placeholder={'RevisionGUID'} />)}
@@ -275,5 +265,5 @@ export const WrappedPostHistoryEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>05eda0454fd09b7a4bd3f1204f8fa23f</Hash>
+    <Hash>ff167c3738ffeae841c95164ef15e849</Hash>
 </Codenesium>*/

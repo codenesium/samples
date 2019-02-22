@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShiftService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IShiftRepository ShiftRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractShiftService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IShiftRepository shiftRepository,
 			IApiShiftServerRequestModelValidator shiftModelValidator,
 			IDALShiftMapper dalShiftMapper)
@@ -144,5 +143,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8703e6ea140415373cea110219d5e34</Hash>
+    <Hash>67050afa8d6db399e9ba8d9f290fde8b</Hash>
 </Codenesium>*/

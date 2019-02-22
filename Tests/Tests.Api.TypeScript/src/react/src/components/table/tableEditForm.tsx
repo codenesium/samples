@@ -171,7 +171,6 @@ class TableEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<Input placeholder={'Name'} />)}
@@ -197,5 +196,5 @@ export const WrappedTableEditComponent = Form.create({ name: 'Table Edit' })(
 
 
 /*<Codenesium>
-    <Hash>ed02c02acf921d5f3d7e490c135ca3f5</Hash>
+    <Hash>a7f11365ab3793ddeae139016ec31e30</Hash>
 </Codenesium>*/

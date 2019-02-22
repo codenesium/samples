@@ -149,7 +149,6 @@ class TagEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('count', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -161,7 +160,6 @@ class TagEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('excerptPostId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -173,7 +171,6 @@ class TagEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('tagName', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 150, message: 'Exceeds max length of 150' },
 ],
               
@@ -186,7 +183,6 @@ class TagEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('wikiPostId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -210,5 +206,5 @@ class TagEditComponent extends React.Component<
 export const WrappedTagEditComponent = Form.create({ name: 'Tag Edit' })(TagEditComponent);
 
 /*<Codenesium>
-    <Hash>df68ca1b6e80d43b83261bb443c19e40</Hash>
+    <Hash>c83aa95d4210d0842eb60922ae6fe12e</Hash>
 </Codenesium>*/

@@ -6,7 +6,10 @@ import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { SaleTableComponent } from '../shared/saleTable';
+import {SaleTableComponent} from '../shared/saleTable'
+	
+
+
 
 interface PetDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface PetDetailComponentState {
 }
 
 class PetDetailComponent extends React.Component<
-  PetDetailComponentProps,
-  PetDetailComponentState
+PetDetailComponentProps,
+PetDetailComponentState
 > {
   state = {
     model: new PetViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Pets + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Pets + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,64 +86,60 @@ class PetDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>acquiredDate</h3>
-              <p>{String(this.state.model!.acquiredDate)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>breedId</h3>
-              <p>{String(this.state.model!.breedIdNavigation!.toDisplay())}</p>
-            </div>
-            <div>
-              <h3>description</h3>
-              <p>{String(this.state.model!.description)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>penId</h3>
-              <p>{String(this.state.model!.penIdNavigation!.toDisplay())}</p>
-            </div>
-            <div>
-              <h3>price</h3>
-              <p>{String(this.state.model!.price)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>acquiredDate</h3>
+							<p>{String(this.state.model!.acquiredDate)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>breedId</h3>
+							<p>{String(this.state.model!.breedIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>description</h3>
+							<p>{String(this.state.model!.description)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>penId</h3>
+							<p>{String(this.state.model!.penIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>price</h3>
+							<p>{String(this.state.model!.price)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Sales</h3>
-            <SaleTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Pets +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Sales
-              }
-            />
-          </div>
+            <SaleTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Pets + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -155,7 +152,6 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
   PetDetailComponent
 );
 
-
 /*<Codenesium>
-    <Hash>56581f918c46bfbecc0188fe73c79ae2</Hash>
+    <Hash>ca57e02de18a22a466275f67e6059b13</Hash>
 </Codenesium>*/

@@ -121,10 +121,7 @@ class UnitMeasureCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -136,7 +133,6 @@ class UnitMeasureCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Name'} />)}
@@ -162,5 +158,5 @@ export const WrappedUnitMeasureCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fc4a75eccae6c39981dc5752a71d5455</Hash>
+    <Hash>45a715e4813ecde798e672962d908d98</Hash>
 </Codenesium>*/

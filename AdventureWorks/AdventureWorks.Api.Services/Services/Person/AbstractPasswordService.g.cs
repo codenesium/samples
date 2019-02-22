@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPasswordService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IPasswordRepository PasswordRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractPasswordService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IPasswordRepository passwordRepository,
 			IApiPasswordServerRequestModelValidator passwordModelValidator,
 			IDALPasswordMapper dalPasswordMapper)
@@ -116,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>37d0c102dced34582f204d0f38c73abd</Hash>
+    <Hash>eddc8ec5422666bad1a800736bbdd340</Hash>
 </Codenesium>*/

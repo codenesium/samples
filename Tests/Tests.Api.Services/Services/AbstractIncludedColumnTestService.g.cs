@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractIncludedColumnTestService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IIncludedColumnTestRepository IncludedColumnTestRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractIncludedColumnTestService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IIncludedColumnTestRepository includedColumnTestRepository,
 			IApiIncludedColumnTestServerRequestModelValidator includedColumnTestModelValidator,
 			IDALIncludedColumnTestMapper dalIncludedColumnTestMapper)
@@ -116,5 +115,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>37f87b5f9142ca1c0b7fead542bb0a67</Hash>
+    <Hash>80c1607b6442a84c7c581d86cf7a933d</Hash>
 </Codenesium>*/

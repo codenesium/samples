@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractBusinessEntityService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IBusinessEntityRepository BusinessEntityRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractBusinessEntityService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IBusinessEntityRepository businessEntityRepository,
 			IApiBusinessEntityServerRequestModelValidator businessEntityModelValidator,
 			IDALBusinessEntityMapper dalBusinessEntityMapper,
@@ -141,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e32ff3a5a736e79a29df57042187a1ec</Hash>
+    <Hash>f8efd38672ef37f33c6ecdb0a362d3c4</Hash>
 </Codenesium>*/

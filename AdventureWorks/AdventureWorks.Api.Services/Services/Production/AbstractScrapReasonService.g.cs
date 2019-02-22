@@ -1,6 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractScrapReasonService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IScrapReasonRepository ScrapReasonRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractScrapReasonService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IScrapReasonRepository scrapReasonRepository,
 			IApiScrapReasonServerRequestModelValidator scrapReasonModelValidator,
 			IDALScrapReasonMapper dalScrapReasonMapper,
@@ -141,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f14621604a14153f429da5b43968fbf</Hash>
+    <Hash>cf1c7097d70fc23799dabcf20928efa0</Hash>
 </Codenesium>*/

@@ -121,10 +121,7 @@ class SalesPersonCreateComponent extends React.Component<
             <label htmlFor="bonus">Bonus</label>
             <br />
             {getFieldDecorator('bonus', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Bonus'} />)}
           </Form.Item>
 
@@ -132,10 +129,7 @@ class SalesPersonCreateComponent extends React.Component<
             <label htmlFor="commissionPct">CommissionPct</label>
             <br />
             {getFieldDecorator('commissionPct', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'CommissionPct'} />
             )}
@@ -145,10 +139,7 @@ class SalesPersonCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -158,10 +149,7 @@ class SalesPersonCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
@@ -169,10 +157,7 @@ class SalesPersonCreateComponent extends React.Component<
             <label htmlFor="salesLastYear">SalesLastYear</label>
             <br />
             {getFieldDecorator('salesLastYear', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'SalesLastYear'} />
             )}
@@ -190,10 +175,7 @@ class SalesPersonCreateComponent extends React.Component<
             <label htmlFor="salesYTD">SalesYTD</label>
             <br />
             {getFieldDecorator('salesYTD', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'SalesYTD'} />)}
           </Form.Item>
 
@@ -227,5 +209,5 @@ export const WrappedSalesPersonCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>730a4d86bf33e405b27dd0a1582106f5</Hash>
+    <Hash>7c208a7d8887ae00e6f863c5a63ccc3d</Hash>
 </Codenesium>*/

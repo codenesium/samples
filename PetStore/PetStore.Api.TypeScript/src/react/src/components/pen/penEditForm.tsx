@@ -169,7 +169,6 @@ class PenEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -195,5 +194,5 @@ export const WrappedPenEditComponent = Form.create({ name: 'Pen Edit' })(
 
 
 /*<Codenesium>
-    <Hash>51b94db24bec4f42185baf2233037726</Hash>
+    <Hash>0cf48026f10c1c33134c696b8eb1346c</Hash>
 </Codenesium>*/

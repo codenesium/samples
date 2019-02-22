@@ -123,7 +123,6 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('address1', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'address1'} />)}
@@ -135,7 +134,6 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('address2', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'address2'} />)}
@@ -145,10 +143,7 @@ class EventCreateComponent extends React.Component<
             <label htmlFor="cityId">cityId</label>
             <br />
             {getFieldDecorator('cityId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'cityId'} />)}
           </Form.Item>
 
@@ -156,10 +151,7 @@ class EventCreateComponent extends React.Component<
             <label htmlFor="date">date</label>
             <br />
             {getFieldDecorator('date', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'date'} />)}
           </Form.Item>
 
@@ -167,10 +159,7 @@ class EventCreateComponent extends React.Component<
             <label htmlFor="description">description</label>
             <br />
             {getFieldDecorator('description', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<Input placeholder={'description'} />)}
           </Form.Item>
 
@@ -178,10 +167,7 @@ class EventCreateComponent extends React.Component<
             <label htmlFor="endDate">endDate</label>
             <br />
             {getFieldDecorator('endDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'endDate'} />)}
           </Form.Item>
 
@@ -191,7 +177,6 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('facebook', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'facebook'} />)}
@@ -203,7 +188,6 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -213,10 +197,7 @@ class EventCreateComponent extends React.Component<
             <label htmlFor="startDate">startDate</label>
             <br />
             {getFieldDecorator('startDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'startDate'} />)}
           </Form.Item>
 
@@ -226,7 +207,6 @@ class EventCreateComponent extends React.Component<
             {getFieldDecorator('website', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'website'} />)}
@@ -252,5 +232,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f586d75139ffd9731dd967724754e20f</Hash>
+    <Hash>152b2140e01555bb0031dd431839041e</Hash>
 </Codenesium>*/

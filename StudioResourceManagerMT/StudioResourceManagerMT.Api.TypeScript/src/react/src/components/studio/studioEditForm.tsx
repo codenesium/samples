@@ -171,7 +171,6 @@ class StudioEditComponent extends React.Component<
             {getFieldDecorator('address1', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'address1'} />)}
@@ -183,7 +182,6 @@ class StudioEditComponent extends React.Component<
             {getFieldDecorator('address2', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'address2'} />)}
@@ -195,7 +193,6 @@ class StudioEditComponent extends React.Component<
             {getFieldDecorator('city', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'city'} />)}
@@ -207,7 +204,6 @@ class StudioEditComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
@@ -219,7 +215,6 @@ class StudioEditComponent extends React.Component<
             {getFieldDecorator('province', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 90, message: 'Exceeds max length of 90' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'province'} />)}
@@ -231,7 +226,6 @@ class StudioEditComponent extends React.Component<
             {getFieldDecorator('website', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'website'} />)}
@@ -265,5 +259,5 @@ export const WrappedStudioEditComponent = Form.create({ name: 'Studio Edit' })(
 
 
 /*<Codenesium>
-    <Hash>99854902d024ef00bfb8355ceacf4758</Hash>
+    <Hash>f6704f4f7c61bebfff64b8912df1be8b</Hash>
 </Codenesium>*/

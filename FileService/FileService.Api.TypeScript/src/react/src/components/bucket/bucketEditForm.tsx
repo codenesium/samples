@@ -149,7 +149,6 @@ class BucketEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('externalId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -161,7 +160,6 @@ class BucketEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 255, message: 'Exceeds max length of 255' },
 ],
               
@@ -186,5 +184,5 @@ class BucketEditComponent extends React.Component<
 export const WrappedBucketEditComponent = Form.create({ name: 'Bucket Edit' })(BucketEditComponent);
 
 /*<Codenesium>
-    <Hash>963f95c1208bd4efb5c2b28a3fd4feb2</Hash>
+    <Hash>7e0d154998848ddcc12f2876b4f22187</Hash>
 </Codenesium>*/

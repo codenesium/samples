@@ -123,7 +123,6 @@ class AWBuildVersionCreateComponent extends React.Component<
             {getFieldDecorator('database_Version', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 25, message: 'Exceeds max length of 25' },
               ],
             })(
@@ -138,10 +137,7 @@ class AWBuildVersionCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -151,10 +147,7 @@ class AWBuildVersionCreateComponent extends React.Component<
             <label htmlFor="versionDate">VersionDate</label>
             <br />
             {getFieldDecorator('versionDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'VersionDate'} />
             )}
@@ -180,5 +173,5 @@ export const WrappedAWBuildVersionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8b2eaee3c12c69e520f864a3bb1107f0</Hash>
+    <Hash>390be7a2a0f776bb08f733df99811a82</Hash>
 </Codenesium>*/

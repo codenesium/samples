@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractClaspService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IClaspRepository ClaspRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractClaspService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IClaspRepository claspRepository,
 			IApiClaspServerRequestModelValidator claspModelValidator,
 			IDALClaspMapper dalClaspMapper)
@@ -116,5 +115,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>037ea50838dd053d61381f448325bbb4</Hash>
+    <Hash>ea1e8d31e68275b5c003d37eedc72631</Hash>
 </Codenesium>*/

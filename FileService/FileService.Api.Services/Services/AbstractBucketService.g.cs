@@ -1,6 +1,5 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractBucketService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IBucketRepository BucketRepository { get; private set; }
 
@@ -24,7 +23,7 @@ namespace FileServiceNS.Api.Services
 
 		public AbstractBucketService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IBucketRepository bucketRepository,
 			IApiBucketServerRequestModelValidator bucketModelValidator,
 			IDALBucketMapper dalBucketMapper,
@@ -155,5 +154,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e02907cb1250996f49cce650c24c01de</Hash>
+    <Hash>f713b9c2fc19808fa46c5523ca61c02e</Hash>
 </Codenesium>*/

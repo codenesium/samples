@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -10,7 +9,7 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractCommentService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected ICommentRepository CommentRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractCommentService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			ICommentRepository commentRepository,
 			IApiCommentServerRequestModelValidator commentModelValidator,
 			IDALCommentMapper dalCommentMapper)
@@ -116,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42cc39b47df1a7cb1ab32808230d8b5d</Hash>
+    <Hash>f18afe5cb3c9035da706152edb441906</Hash>
 </Codenesium>*/

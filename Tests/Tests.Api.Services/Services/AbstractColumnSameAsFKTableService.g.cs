@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractColumnSameAsFKTableService : AbstractService
 	{
-		private IMediator mediator;
+		private MediatR.IMediator mediator;
 
 		protected IColumnSameAsFKTableRepository ColumnSameAsFKTableRepository { get; private set; }
 
@@ -22,7 +21,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractColumnSameAsFKTableService(
 			ILogger logger,
-			IMediator mediator,
+			MediatR.IMediator mediator,
 			IColumnSameAsFKTableRepository columnSameAsFKTableRepository,
 			IApiColumnSameAsFKTableServerRequestModelValidator columnSameAsFKTableModelValidator,
 			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper)
@@ -116,5 +115,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d78e7a2fc1e9ebd902110dc12aa143f8</Hash>
+    <Hash>68795b3240f484a27fbe4a11176317f0</Hash>
 </Codenesium>*/

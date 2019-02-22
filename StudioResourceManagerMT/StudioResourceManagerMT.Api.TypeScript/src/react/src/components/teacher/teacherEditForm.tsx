@@ -169,10 +169,7 @@ class TeacherEditComponent extends React.Component<
             <label htmlFor="birthday">birthday</label>
             <br />
             {getFieldDecorator('birthday', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'birthday'} />)}
           </Form.Item>
 
@@ -182,7 +179,6 @@ class TeacherEditComponent extends React.Component<
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
@@ -194,7 +190,6 @@ class TeacherEditComponent extends React.Component<
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
@@ -206,7 +201,6 @@ class TeacherEditComponent extends React.Component<
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
@@ -224,10 +218,7 @@ class TeacherEditComponent extends React.Component<
             <label htmlFor="userId">userId</label>
             <br />
             {getFieldDecorator('userId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'userId'} />)}
           </Form.Item>
 
@@ -251,5 +242,5 @@ export const WrappedTeacherEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4fd128bd2e0d0f8801a0b9be3edba36d</Hash>
+    <Hash>4663029a7b3995e0b695b2a047e4f595</Hash>
 </Codenesium>*/

@@ -123,7 +123,6 @@ class ProductDescriptionCreateComponent extends React.Component<
             {getFieldDecorator('description', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 400, message: 'Exceeds max length of 400' },
               ],
             })(
@@ -135,10 +134,7 @@ class ProductDescriptionCreateComponent extends React.Component<
             <label htmlFor="modifiedDate">ModifiedDate</label>
             <br />
             {getFieldDecorator('modifiedDate', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(
               <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
             )}
@@ -148,10 +144,7 @@ class ProductDescriptionCreateComponent extends React.Component<
             <label htmlFor="rowguid">rowguid</label>
             <br />
             {getFieldDecorator('rowguid', {
-              rules: [
-                { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
-              ],
+              rules: [{ required: true, message: 'Required' }],
             })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
           </Form.Item>
 
@@ -175,5 +168,5 @@ export const WrappedProductDescriptionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ee02b2bc78eccf569ebc6b8070099e25</Hash>
+    <Hash>aecfc38360a9d75d309f05ccadd9274d</Hash>
 </Codenesium>*/
