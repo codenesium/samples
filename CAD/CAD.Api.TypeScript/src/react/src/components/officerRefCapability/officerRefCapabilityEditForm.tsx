@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import OfficerRefCapabilityMapper from './officerRefCapabilityMapper';
 import OfficerRefCapabilityViewModel from './officerRefCapabilityViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface OfficerRefCapabilityEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface OfficerRefCapabilityEditComponentState {
@@ -20,7 +30,7 @@ interface OfficerRefCapabilityEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class OfficerRefCapabilityEditComponent extends React.Component<
@@ -33,10 +43,10 @@ class OfficerRefCapabilityEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -67,7 +77,9 @@ class OfficerRefCapabilityEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -80,11 +92,11 @@ class OfficerRefCapabilityEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as OfficerRefCapabilityViewModel;
         console.log('Received values of form: ', model);
@@ -93,12 +105,14 @@ class OfficerRefCapabilityEditComponent extends React.Component<
     });
   };
 
-  submit = (model:OfficerRefCapabilityViewModel) =>
-  {  
+  submit = (model: OfficerRefCapabilityViewModel) => {
     let mapper = new OfficerRefCapabilityMapper();
-     axios
+    axios
       .put(
-        Constants.ApiEndpoint + ApiRoutes.OfficerRefCapabilities + '/' + this.state.model!.id,
+        Constants.ApiEndpoint +
+          ApiRoutes.OfficerRefCapabilities +
+          '/' +
+          this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -111,79 +125,84 @@ class OfficerRefCapabilityEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.OfficerRefCapabilityClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="capabilityId">capabilityId</label>
+            <br />
+            {getFieldDecorator('capabilityId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'capabilityId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='capabilityId'>capabilityId</label>
-              <br />             
-              {getFieldDecorator('capabilityId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"capabilityId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="officerId">officerId</label>
+            <br />
+            {getFieldDecorator('officerId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'officerId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='officerId'>officerId</label>
-              <br />             
-              {getFieldDecorator('officerId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"officerId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedOfficerRefCapabilityEditComponent = Form.create({ name: 'OfficerRefCapability Edit' })(OfficerRefCapabilityEditComponent);
+export const WrappedOfficerRefCapabilityEditComponent = Form.create({
+  name: 'OfficerRefCapability Edit',
+})(OfficerRefCapabilityEditComponent);
+
 
 /*<Codenesium>
-    <Hash>44168c8997f166f89ec3e04001cddd6b</Hash>
+    <Hash>d94f3a1db70e3954ce444cad8f3fccf2</Hash>
 </Codenesium>*/

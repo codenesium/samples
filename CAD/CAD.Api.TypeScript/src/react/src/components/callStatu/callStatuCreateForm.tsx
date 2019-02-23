@@ -123,7 +123,6 @@ class CallStatuCreateComponent extends React.Component<
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
-                { whitespace: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
             })(<Input placeholder={'name'} />)}
@@ -149,5 +148,5 @@ export const WrappedCallStatuCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5ee04b4243a02b69578ac80f3e16746b</Hash>
+    <Hash>1d02ffe7d7235e6587517bc324d3d056</Hash>
 </Codenesium>*/

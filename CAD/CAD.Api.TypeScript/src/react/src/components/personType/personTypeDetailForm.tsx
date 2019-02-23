@@ -6,10 +6,7 @@ import PersonTypeMapper from './personTypeMapper';
 import PersonTypeViewModel from './personTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {CallPersonTableComponent} from '../shared/callPersonTable'
-	
-
-
+import { CallPersonTableComponent } from '../shared/callPersonTable';
 
 interface PersonTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface PersonTypeDetailComponentState {
 }
 
 class PersonTypeDetailComponent extends React.Component<
-PersonTypeDetailComponentProps,
-PersonTypeDetailComponentState
+  PersonTypeDetailComponentProps,
+  PersonTypeDetailComponentState
 > {
   state = {
     model: new PersonTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.PersonTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PersonTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,48 @@ PersonTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>CallPersons</h3>
-            <CallPersonTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.PersonTypes + '/' + this.state.model!.id + '/' + ApiRoutes.CallPersons}
-			/>
-         </div>
-	
-
+            <CallPersonTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.PersonTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.CallPersons
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +135,11 @@ PersonTypeDetailComponentState
   }
 }
 
-export const WrappedPersonTypeDetailComponent = Form.create({ name: 'PersonType Detail' })(
-  PersonTypeDetailComponent
-);
+export const WrappedPersonTypeDetailComponent = Form.create({
+  name: 'PersonType Detail',
+})(PersonTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>52d7ef46fce81390f0d6f17b6f0636f1</Hash>
+    <Hash>014541ef0d311b0dfc750c947a42be81</Hash>
 </Codenesium>*/

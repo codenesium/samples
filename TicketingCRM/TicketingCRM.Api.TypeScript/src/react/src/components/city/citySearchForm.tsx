@@ -4,246 +4,188 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CityMapper from './cityMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 import CityViewModel from './cityViewModel';
-import 'react-table/react-table.css';
+import "react-table/react-table.css";
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface CitySearchComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+interface CitySearchComponentProps
+{
+     form:WrappedFormUtils;
+	 history:any;
+	 match:any;
 }
 
-interface CitySearchComponentState {
-  records: Array<CityViewModel>;
-  filteredRecords: Array<CityViewModel>;
-  loading: boolean;
-  loaded: boolean;
-  errorOccurred: boolean;
-  errorMessage: string;
-  searchValue: string;
-  deleteSubmitted: boolean;
-  deleteSuccess: boolean;
-  deleteResponse: string;
+interface CitySearchComponentState
+{
+    records:Array<CityViewModel>;
+    filteredRecords:Array<CityViewModel>;
+    loading:boolean;
+    loaded:boolean;
+    errorOccurred:boolean;
+    errorMessage:string;
+    searchValue:string;
+    deleteSubmitted:boolean;
+    deleteSuccess:boolean;
+    deleteResponse:string;
 }
 
-export default class CitySearchComponent extends React.Component<
-  CitySearchComponentProps,
-  CitySearchComponentState
-> {
-  state = {
-    deleteSubmitted: false,
-    deleteSuccess: false,
-    deleteResponse: '',
-    records: new Array<CityViewModel>(),
-    filteredRecords: new Array<CityViewModel>(),
-    searchValue: '',
-    loading: false,
-    loaded: true,
-    errorOccurred: false,
-    errorMessage: '',
-  };
+export default class CitySearchComponent extends React.Component<CitySearchComponentProps, CitySearchComponentState> {
 
-  componentDidMount() {
-    this.loadRecords();
-  }
-
-  handleEditClick(e: any, row: CityViewModel) {
-    this.props.history.push(ClientRoutes.Cities + '/edit/' + row.id);
-  }
-
-  handleDetailClick(e: any, row: CityViewModel) {
-    this.props.history.push(ClientRoutes.Cities + '/' + row.id);
-  }
-
-  handleCreateClick(e: any) {
-    this.props.history.push(ClientRoutes.Cities + '/create');
-  }
-
-  handleDeleteClick(e: any, row: Api.CityClientResponseModel) {
-    axios
-      .delete(Constants.ApiEndpoint + ApiRoutes.Cities + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
-  }
-
-  handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
-    this.loadRecords(e.currentTarget.value);
-  }
-
-  loadRecords(query: string = '') {
-    this.setState({ ...this.state, searchValue: query });
-    let searchEndpoint =
-      Constants.ApiEndpoint + ApiRoutes.Cities + '?limit=100';
-
-    if (query) {
-      searchEndpoint += '&query=' + query;
+    state = ({deleteSubmitted:false, deleteSuccess:false, deleteResponse:'', records:new Array<CityViewModel>(), filteredRecords:new Array<CityViewModel>(), searchValue:'', loading:false, loaded:true, errorOccurred:false, errorMessage:''});
+    
+    componentDidMount () {
+        this.loadRecords();
     }
 
-    axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.CityClientResponseModel>;
-          let viewModels: Array<CityViewModel> = [];
-          let mapper = new CityMapper();
+    handleEditClick(e:any, row:CityViewModel) {
+         this.props.history.push(ClientRoutes.Cities + '/edit/' + row.id);
+    }
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+    handleDetailClick(e:any, row:CityViewModel) {
+         this.props.history.push(ClientRoutes.Cities + '/' + row.id);
+    }
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<CityViewModel>(),
-            filteredRecords: new Array<CityViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+    handleCreateClick(e:any) {
+        this.props.history.push(ClientRoutes.Cities + '/create');
+    }
+
+    handleDeleteClick(e:any, row:Api.CityClientResponseModel) {
+        axios.delete(Constants.ApiEndpoint + ApiRoutes.Cities + '/' + row.id,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(resp => {
+            this.setState({...this.state, deleteResponse:'Record deleted', deleteSuccess:true, deleteSubmitted:true});
+            this.loadRecords(this.state.searchValue);
+        }, error => {
+            console.log(error);
+            this.setState({...this.state, deleteResponse:'Error deleting record', deleteSuccess:false, deleteSubmitted:true});
+        })
+    }
+
+   handleSearchChanged(e:React.FormEvent<HTMLInputElement>) {
+		this.loadRecords(e.currentTarget.value);
+   }
+   
+   loadRecords(query:string = '') {
+	   this.setState({...this.state, searchValue:query});
+	   let searchEndpoint = Constants.ApiEndpoint + ApiRoutes.Cities + '?limit=100';
+
+	   if(query)
+	   {
+		   searchEndpoint += '&query=' +  query;
+	   }
+
+	   axios.get(searchEndpoint,
+	   {
+		   headers: {
+			   'Content-Type': 'application/json',
+		   }
+	   })
+	   .then(resp => {
+		    let response = resp.data as Array<Api.CityClientResponseModel>;
+		    let viewModels : Array<CityViewModel> = [];
+			let mapper = new CityMapper();
+
+			response.forEach(x =>
+			{
+				viewModels.push(mapper.mapApiResponseToViewModel(x));
+			})
+
+            this.setState({records:viewModels, filteredRecords:viewModels, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
+
+	   }, error => {
+		   console.log(error);
+		   this.setState({records:new Array<CityViewModel>(), filteredRecords:new Array<CityViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
+	   })
+    }
+
+    filterGrid() {
+
+    }
+    
+    render () {
+        if(this.state.loading) {
+            return <Spin size="large" />;
+        } 
+		else if(this.state.errorOccurred) {
+            return <Alert message={this.state.errorMessage} type="error" />
         }
-      );
-  }
+        else if(this.state.loaded) {
 
-  filterGrid() {}
+            let errorResponse:JSX.Element = <span></span>;
 
-  render() {
-    if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
-      let errorResponse: JSX.Element = <span />;
-
-      if (this.state.deleteSubmitted) {
-        if (this.state.deleteSuccess) {
-          errorResponse = (
-            <Alert
-              message={this.state.deleteResponse}
-              type="success"
-              style={{ marginBottom: '25px' }}
-            />
-          );
-        } else {
-          errorResponse = (
-            <Alert
-              message={this.state.deleteResponse}
-              type="error"
-              style={{ marginBottom: '25px' }}
-            />
-          );
-        }
-      }
-
-      return (
-        <div>
-          {errorResponse}
-          <Row>
-            <Col span={8} />
-            <Col span={8}>
-              <Input
-                placeholder={'Search'}
-                id={'search'}
-                onChange={(e: any) => {
-                  this.handleSearchChanged(e);
-                }}
-              />
-            </Col>
-            <Col span={8}>
-              <Button
-                style={{ float: 'right' }}
-                type="primary"
-                onClick={(e: any) => {
-                  this.handleCreateClick(e);
-                }}
-              >
-                +
-              </Button>
-            </Col>
-          </Row>
-          <br />
-          <br />
-          <ReactTable
-            data={this.state.filteredRecords}
-            columns={[
-              {
-                Header: 'Cities',
-                columns: [
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+            if (this.state.deleteSubmitted) {
+				if (this.state.deleteSuccess) {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="success" style={{marginBottom:"25px"}} />
+				  );
+				} else {
+				  errorResponse = (
+					<Alert message={this.state.deleteResponse} type="error" style={{marginBottom:"25px"}} />
+				  );
+				}
+			}
+            
+			return (
+            <div>
+            {errorResponse}
+            <Row>
+				<Col span={8}></Col>
+				<Col span={8}>   
+				   <Input 
+					placeholder={"Search"} 
+					id={"search"} 
+					onChange={(e:any) => {
+					  this.handleSearchChanged(e)
+				   }}/>
+				</Col>
+				<Col span={8}>  
+				  <Button 
+				  style={{'float':'right'}}
+				  type="primary" 
+				  onClick={(e:any) => {
+                        this.handleCreateClick(e)
+						}}
+				  >
+				  +
+				  </Button>
+				</Col>
+			</Row>
+			<br />
+			<br />
+            <ReactTable 
+                data={this.state.filteredRecords}
+                columns={[{
+                    Header: 'Cities',
+                    columns: [
+					  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ProvinceId',
-                    accessor: 'provinceId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Provinces +
-                                '/' +
-                                props.original.provinceId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'ProvinceId',
+                      accessor: 'provinceId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Provinces + '/' + props.original.provinceId); }}>
                           {String(
                             props.original.provinceIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as CityViewModel
@@ -254,8 +196,8 @@ export default class CitySearchComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as CityViewModel
@@ -266,8 +208,8 @@ export default class CitySearchComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="danger"
-                          onClick={(e: any) => {
+                          type="danger" 
+                          onClick={(e:any) => {
                             this.handleDeleteClick(
                               e,
                               row.original as CityViewModel
@@ -276,26 +218,21 @@ export default class CitySearchComponent extends React.Component<
                         >
                           <i className="far fa-trash-alt" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
-      );
-    } else {
-      return null;
+
+                        </div>)
+                    }],
+                    
+                  }]} />
+                  </div>);
+        } 
+		else {
+		  return null;
+		}
     }
-  }
 }
 
-export const WrappedCitySearchComponent = Form.create({ name: 'City Search' })(
-  CitySearchComponent
-);
-
+export const WrappedCitySearchComponent = Form.create({ name: 'City Search' })(CitySearchComponent);
 
 /*<Codenesium>
-    <Hash>125d17ba43e1c04f8c5509d02a18588e</Hash>
+    <Hash>f6be2b091a7d1bb0830be1080c067993</Hash>
 </Codenesium>*/

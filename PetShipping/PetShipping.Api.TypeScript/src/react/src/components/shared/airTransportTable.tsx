@@ -6,11 +6,11 @@ import AirTransportMapper from '../airTransport/airTransportMapper';
 import AirTransportViewModel from '../airTransport/airTransportViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface AirTransportTableComponentProps {
-  airlineId:number,
-  apiRoute:string;
+  airlineId: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,53 +20,52 @@ interface AirTransportTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<AirTransportViewModel>;
+  filteredRecords: Array<AirTransportViewModel>;
 }
 
-export class  AirTransportTableComponent extends React.Component<
-AirTransportTableComponentProps,
-AirTransportTableComponentState
+export class AirTransportTableComponent extends React.Component<
+  AirTransportTableComponentProps,
+  AirTransportTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: AirTransportViewModel) {
-  this.props.history.push(ClientRoutes.AirTransports + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: AirTransportViewModel) {
+    this.props.history.push(ClientRoutes.AirTransports + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: AirTransportViewModel) {
-  this.props.history.push(ClientRoutes.AirTransports + '/' + row.id);
-}
+  handleDetailClick(e: any, row: AirTransportViewModel) {
+    this.props.history.push(ClientRoutes.AirTransports + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.AirTransportClientResponseModel>;
+          let response = resp.data as Array<
+            Api.AirTransportClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new AirTransportMapper();
-          
-          let airTransports:Array<AirTransportViewModel> = [];
 
-          response.forEach(x =>
-          {
-              airTransports.push(mapper.mapApiResponseToViewModel(x));
+          let airTransports: Array<AirTransportViewModel> = [];
+
+          response.forEach(x => {
+            airTransports.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,81 +90,100 @@ handleDetailClick(e:any, row: AirTransportViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'AirTransports',
-                    columns: [
-					  {
-                      Header: 'AirlineId',
-                      accessor: 'airlineId',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'AirTransports',
+                columns: [
+                  {
+                    Header: 'AirlineId',
+                    accessor: 'airlineId',
+                    Cell: props => {
                       return <span>{String(props.original.airlineId)}</span>;
-                      }           
-                    },  {
-                      Header: 'FlightNumber',
-                      accessor: 'flightNumber',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'FlightNumber',
+                    accessor: 'flightNumber',
+                    Cell: props => {
                       return <span>{String(props.original.flightNumber)}</span>;
-                      }           
-                    },  {
-                      Header: 'HandlerId',
-                      accessor: 'handlerId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Handlers + '/' + props.original.handlerId); }}>
+                    },
+                  },
+                  {
+                    Header: 'HandlerId',
+                    accessor: 'handlerId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Handlers +
+                                '/' +
+                                props.original.handlerId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.handlerIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'LandDate',
-                      accessor: 'landDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.landDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'PipelineStepId',
-                      accessor: 'pipelineStepId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.pipelineStepId)}</span>;
-                      }           
-                    },  {
-                      Header: 'TakeoffDate',
-                      accessor: 'takeoffDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.takeoffDate)}</span>;
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
+                      return <span>{String(props.original.id)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'LandDate',
+                    accessor: 'landDate',
+                    Cell: props => {
+                      return <span>{String(props.original.landDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PipelineStepId',
+                    accessor: 'pipelineStepId',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.pipelineStepId)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'TakeoffDate',
+                    accessor: 'takeoffDate',
+                    Cell: props => {
+                      return <span>{String(props.original.takeoffDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as AirTransportViewModel
@@ -176,8 +194,8 @@ handleDetailClick(e:any, row: AirTransportViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as AirTransportViewModel
@@ -186,11 +204,14 @@ handleDetailClick(e:any, row: AirTransportViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -198,6 +219,7 @@ handleDetailClick(e:any, row: AirTransportViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>bb03c158ec9c1b366994b5d077050387</Hash>
+    <Hash>ffe1027db6d72f7ca361a4c74eb14e4b</Hash>
 </Codenesium>*/

@@ -6,10 +6,7 @@ import OfficerCapabilityMapper from './officerCapabilityMapper';
 import OfficerCapabilityViewModel from './officerCapabilityViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {OfficerRefCapabilityTableComponent} from '../shared/officerRefCapabilityTable'
-	
-
-
+import { OfficerRefCapabilityTableComponent } from '../shared/officerRefCapabilityTable';
 
 interface OfficerCapabilityDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface OfficerCapabilityDetailComponentState {
 }
 
 class OfficerCapabilityDetailComponent extends React.Component<
-OfficerCapabilityDetailComponentProps,
-OfficerCapabilityDetailComponentState
+  OfficerCapabilityDetailComponentProps,
+  OfficerCapabilityDetailComponentState
 > {
   state = {
     model: new OfficerCapabilityViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.OfficerCapabilities + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.OfficerCapabilities + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,48 @@ OfficerCapabilityDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>OfficerRefCapabilities</h3>
-            <OfficerRefCapabilityTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.OfficerCapabilities + '/' + this.state.model!.id + '/' + ApiRoutes.OfficerRefCapabilities}
-			/>
-         </div>
-	
-
+            <OfficerRefCapabilityTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.OfficerCapabilities +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.OfficerRefCapabilities
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +135,11 @@ OfficerCapabilityDetailComponentState
   }
 }
 
-export const WrappedOfficerCapabilityDetailComponent = Form.create({ name: 'OfficerCapability Detail' })(
-  OfficerCapabilityDetailComponent
-);
+export const WrappedOfficerCapabilityDetailComponent = Form.create({
+  name: 'OfficerCapability Detail',
+})(OfficerCapabilityDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>8f0cfedf0ed8a0e9039ae6a6b5d83b73</Hash>
+    <Hash>499d6fe4dc52071aa8938adfd6b0d2fa</Hash>
 </Codenesium>*/

@@ -103,7 +103,6 @@ class UnitOfficerCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('officerId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -115,7 +114,6 @@ class UnitOfficerCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('unitId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -139,5 +137,5 @@ class UnitOfficerCreateComponent extends React.Component<
 export const WrappedUnitOfficerCreateComponent = Form.create({ name: 'UnitOfficer Create' })(UnitOfficerCreateComponent);
 
 /*<Codenesium>
-    <Hash>517f46b2516b09a5e7386349ca4ae787</Hash>
+    <Hash>00e5f0f32057adb1d1994870244668d4</Hash>
 </Codenesium>*/

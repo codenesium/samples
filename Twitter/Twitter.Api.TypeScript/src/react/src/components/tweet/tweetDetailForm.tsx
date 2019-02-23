@@ -6,9 +6,12 @@ import TweetMapper from './tweetMapper';
 import TweetViewModel from './tweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { LikeTableComponent } from '../shared/likeTable';
-import { QuoteTweetTableComponent } from '../shared/quoteTweetTable';
-import { RetweetTableComponent } from '../shared/retweetTable';
+import {LikeTableComponent} from '../shared/likeTable'
+	import {QuoteTweetTableComponent} from '../shared/quoteTweetTable'
+	import {RetweetTableComponent} from '../shared/retweetTable'
+	
+
+
 
 interface TweetDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,23 +28,21 @@ interface TweetDetailComponentState {
 }
 
 class TweetDetailComponent extends React.Component<
-  TweetDetailComponentProps,
-  TweetDetailComponentState
+TweetDetailComponentProps,
+TweetDetailComponentState
 > {
   state = {
     model: new TweetViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Tweets + '/edit/' + this.state.model!.tweetId
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Tweets + '/edit/' + this.state.model!.tweetId);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,100 +88,78 @@ class TweetDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>content</h3>
-              <p>{String(this.state.model!.content)}</p>
-            </div>
-            <div>
-              <h3>date</h3>
-              <p>{String(this.state.model!.date)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>location_id</h3>
-              <p>
-                {String(this.state.model!.locationIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>time</h3>
-              <p>{String(this.state.model!.time)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>user_user_id</h3>
-              <p>
-                {String(this.state.model!.userUserIdNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>content</h3>
+							<p>{String(this.state.model!.content)}</p>
+						 </div>
+					   						 <div>
+							<h3>date</h3>
+							<p>{String(this.state.model!.date)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>location_id</h3>
+							<p>{String(this.state.model!.locationIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>time</h3>
+							<p>{String(this.state.model!.time)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>user_user_id</h3>
+							<p>{String(this.state.model!.userUserIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Likes</h3>
-            <LikeTableComponent
-              likerUserId={this.state.model!.likerUserId}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Tweets +
-                '/' +
-                this.state.model!.tweetId +
-                '/' +
-                ApiRoutes.Likes
-              }
-            />
-          </div>
-          <div>
+            <LikeTableComponent 
+			likerUserId={this.state.model!.likerUserId} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Tweets + '/' + this.state.model!.tweetId + '/' + ApiRoutes.Likes}
+			/>
+         </div>
+			 <div>
             <h3>QuoteTweets</h3>
-            <QuoteTweetTableComponent
-              quoteTweetId={this.state.model!.quoteTweetId}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Tweets +
-                '/' +
-                this.state.model!.tweetId +
-                '/' +
-                ApiRoutes.QuoteTweets
-              }
-            />
-          </div>
-          <div>
+            <QuoteTweetTableComponent 
+			quoteTweetId={this.state.model!.quoteTweetId} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Tweets + '/' + this.state.model!.tweetId + '/' + ApiRoutes.QuoteTweets}
+			/>
+         </div>
+			 <div>
             <h3>Retweets</h3>
-            <RetweetTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Tweets +
-                '/' +
-                this.state.model!.tweetId +
-                '/' +
-                ApiRoutes.Retweets
-              }
-            />
-          </div>
+            <RetweetTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Tweets + '/' + this.state.model!.tweetId + '/' + ApiRoutes.Retweets}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -189,11 +168,10 @@ class TweetDetailComponent extends React.Component<
   }
 }
 
-export const WrappedTweetDetailComponent = Form.create({
-  name: 'Tweet Detail',
-})(TweetDetailComponent);
-
+export const WrappedTweetDetailComponent = Form.create({ name: 'Tweet Detail' })(
+  TweetDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>54f83d4aec0ba2529b69c86b6cab1291</Hash>
+    <Hash>b3806ca57f58d4a59121a957b0c234c9</Hash>
 </Codenesium>*/

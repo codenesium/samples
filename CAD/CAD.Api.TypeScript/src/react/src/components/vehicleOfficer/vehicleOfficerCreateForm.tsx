@@ -103,7 +103,6 @@ class VehicleOfficerCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('officerId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -115,7 +114,6 @@ class VehicleOfficerCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('vehicleId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -139,5 +137,5 @@ class VehicleOfficerCreateComponent extends React.Component<
 export const WrappedVehicleOfficerCreateComponent = Form.create({ name: 'VehicleOfficer Create' })(VehicleOfficerCreateComponent);
 
 /*<Codenesium>
-    <Hash>937c47982355c4c91b1dfa41dab94f99</Hash>
+    <Hash>38e75e191ffb7cf30a0bd36545499098</Hash>
 </Codenesium>*/

@@ -7,9 +7,6 @@ import AirTransportViewModel from './airTransportViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface AirTransportDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface AirTransportDetailComponentState {
 }
 
 class AirTransportDetailComponent extends React.Component<
-AirTransportDetailComponentProps,
-AirTransportDetailComponentState
+  AirTransportDetailComponentProps,
+  AirTransportDetailComponentState
 > {
   state = {
     model: new AirTransportViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.AirTransports + '/edit/' + this.state.model!.airlineId);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.AirTransports + '/edit/' + this.state.model!.airlineId
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,59 +84,58 @@ AirTransportDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>airlineId</h3>
-							<p>{String(this.state.model!.airlineId)}</p>
-						 </div>
-					   						 <div>
-							<h3>flightNumber</h3>
-							<p>{String(this.state.model!.flightNumber)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>handlerId</h3>
-							<p>{String(this.state.model!.handlerIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>landDate</h3>
-							<p>{String(this.state.model!.landDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>pipelineStepId</h3>
-							<p>{String(this.state.model!.pipelineStepId)}</p>
-						 </div>
-					   						 <div>
-							<h3>takeoffDate</h3>
-							<p>{String(this.state.model!.takeoffDate)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>airlineId</h3>
+              <p>{String(this.state.model!.airlineId)}</p>
+            </div>
+            <div>
+              <h3>flightNumber</h3>
+              <p>{String(this.state.model!.flightNumber)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>handlerId</h3>
+              <p>
+                {String(this.state.model!.handlerIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>landDate</h3>
+              <p>{String(this.state.model!.landDate)}</p>
+            </div>
+            <div>
+              <h3>pipelineStepId</h3>
+              <p>{String(this.state.model!.pipelineStepId)}</p>
+            </div>
+            <div>
+              <h3>takeoffDate</h3>
+              <p>{String(this.state.model!.takeoffDate)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -146,10 +144,11 @@ AirTransportDetailComponentState
   }
 }
 
-export const WrappedAirTransportDetailComponent = Form.create({ name: 'AirTransport Detail' })(
-  AirTransportDetailComponent
-);
+export const WrappedAirTransportDetailComponent = Form.create({
+  name: 'AirTransport Detail',
+})(AirTransportDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>da2a9872973d7da9a73821b7d876c23d</Hash>
+    <Hash>2d364eaeff19685464939c0f7f98a2c5</Hash>
 </Codenesium>*/

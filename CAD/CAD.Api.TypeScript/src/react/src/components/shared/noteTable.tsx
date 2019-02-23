@@ -6,11 +6,11 @@ import NoteMapper from '../note/noteMapper';
 import NoteViewModel from '../note/noteViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface NoteTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface NoteTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<NoteViewModel>;
+  filteredRecords : Array<NoteViewModel>;
 }
 
-export class NoteTableComponent extends React.Component<
-  NoteTableComponentProps,
-  NoteTableComponentState
+export class  NoteTableComponent extends React.Component<
+NoteTableComponentProps,
+NoteTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: NoteViewModel) {
-    this.props.history.push(ClientRoutes.Notes + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: NoteViewModel) {
+  this.props.history.push(ClientRoutes.Notes + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: NoteViewModel) {
-    this.props.history.push(ClientRoutes.Notes + '/' + row.id);
-  }
+handleDetailClick(e:any, row: NoteViewModel) {
+  this.props.history.push(ClientRoutes.Notes + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.NoteClientResponseModel>;
@@ -59,11 +61,12 @@ export class NoteTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new NoteMapper();
+          
+          let notes:Array<NoteViewModel> = [];
 
-          let notes: Array<NoteViewModel> = [];
-
-          response.forEach(x => {
-            notes.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              notes.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,89 +91,67 @@ export class NoteTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Notes',
-                columns: [
-                  {
-                    Header: 'CallId',
-                    accessor: 'callId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Calls + '/' + props.original.callId
-                            );
-                          }}
-                        >
-                          {String(props.original.callIdNavigation.toDisplay())}
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Notes',
+                    columns: [
+					  {
+                      Header: 'CallId',
+                      accessor: 'callId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Calls + '/' + props.original.callId); }}>
+                          {String(
+                            props.original.callIdNavigation.toDisplay()
+                          )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'DateCreated',
-                    accessor: 'dateCreated',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'DateCreated',
+                      accessor: 'dateCreated',
+                      Cell: (props) => {
                       return <span>{String(props.original.dateCreated)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'NoteText',
-                    accessor: 'noteText',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'NoteText',
+                      accessor: 'noteText',
+                      Cell: (props) => {
                       return <span>{String(props.original.noteText)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'OfficerId',
-                    accessor: 'officerId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Officers +
-                                '/' +
-                                props.original.officerId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'OfficerId',
+                      accessor: 'officerId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Officers + '/' + props.original.officerId); }}>
                           {String(
                             props.original.officerIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as NoteViewModel
@@ -181,8 +162,8 @@ export class NoteTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as NoteViewModel
@@ -191,14 +172,11 @@ export class NoteTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -206,7 +184,6 @@ export class NoteTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>0b1af3b22dee30325f28ec8f642bd52c</Hash>
+    <Hash>ed9aeabb386aa791762811519f4895fb</Hash>
 </Codenesium>*/

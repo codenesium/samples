@@ -103,7 +103,6 @@ class UnitDispositionCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -128,5 +127,5 @@ class UnitDispositionCreateComponent extends React.Component<
 export const WrappedUnitDispositionCreateComponent = Form.create({ name: 'UnitDisposition Create' })(UnitDispositionCreateComponent);
 
 /*<Codenesium>
-    <Hash>dec8e0460dc4ff18c7d50aa8787b94d0</Hash>
+    <Hash>564ddf9546463af0a5a2f34c11b5fdb4</Hash>
 </Codenesium>*/

@@ -160,7 +160,6 @@ class OfficerEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('email', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -173,7 +172,6 @@ class OfficerEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('firstName', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -186,7 +184,6 @@ class OfficerEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('lastName', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -199,7 +196,6 @@ class OfficerEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('password', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -224,5 +220,5 @@ class OfficerEditComponent extends React.Component<
 export const WrappedOfficerEditComponent = Form.create({ name: 'Officer Edit' })(OfficerEditComponent);
 
 /*<Codenesium>
-    <Hash>dc272c722c57e9f60557e67e17f7681e</Hash>
+    <Hash>0339b0a8de0cada511b904bf86b859b5</Hash>
 </Codenesium>*/

@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface SaleCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface SaleCreateComponentState {
@@ -20,7 +30,7 @@ interface SaleCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class SaleCreateComponent extends React.Component<
@@ -33,12 +43,12 @@ class SaleCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as SaleViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +57,9 @@ class SaleCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:SaleViewModel) =>
-  {  
+  submit = (model: SaleViewModel) => {
     let mapper = new SaleMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Sales,
         mapper.mapViewModelToApiRequest(model),
@@ -65,124 +74,125 @@ class SaleCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.SaleClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="amount">amount</label>
+            <br />
+            {getFieldDecorator('amount', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'amount'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='amount'>amount</label>
-              <br />             
-              {getFieldDecorator('amount', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"amount"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="firstName">firstName</label>
+            <br />
+            {getFieldDecorator('firstName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 90, message: 'Exceeds max length of 90' },
+              ],
+            })(<Input placeholder={'firstName'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='firstName'>firstName</label>
-              <br />             
-              {getFieldDecorator('firstName', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 90, message: 'Exceeds max length of 90' },
-],
-              
-              })
-              ( <Input placeholder={"firstName"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="lastName">lastName</label>
+            <br />
+            {getFieldDecorator('lastName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 90, message: 'Exceeds max length of 90' },
+              ],
+            })(<Input placeholder={'lastName'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='lastName'>lastName</label>
-              <br />             
-              {getFieldDecorator('lastName', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 90, message: 'Exceeds max length of 90' },
-],
-              
-              })
-              ( <Input placeholder={"lastName"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="paymentTypeId">paymentTypeId</label>
+            <br />
+            {getFieldDecorator('paymentTypeId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'paymentTypeId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='paymentTypeId'>paymentTypeId</label>
-              <br />             
-              {getFieldDecorator('paymentTypeId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"paymentTypeId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="petId">petId</label>
+            <br />
+            {getFieldDecorator('petId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'petId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='petId'>petId</label>
-              <br />             
-              {getFieldDecorator('petId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"petId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="phone">phone</label>
+            <br />
+            {getFieldDecorator('phone', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 10, message: 'Exceeds max length of 10' },
+              ],
+            })(<Input placeholder={'phone'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='phone'>phone</label>
-              <br />             
-              {getFieldDecorator('phone', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 10, message: 'Exceeds max length of 10' },
-],
-              
-              })
-              ( <Input placeholder={"phone"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(SaleCreateComponent);
+export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
+  SaleCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>adaa13f246f4ee4e32ee74b6afd21eb6</Hash>
+    <Hash>5b2fa3f0bb58d9ab0043faa340b34ef6</Hash>
 </Codenesium>*/

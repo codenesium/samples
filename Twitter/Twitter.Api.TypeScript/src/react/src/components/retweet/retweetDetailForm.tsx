@@ -7,6 +7,9 @@ import RetweetViewModel from './retweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface RetweetDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface RetweetDetailComponentState {
 }
 
 class RetweetDetailComponent extends React.Component<
-  RetweetDetailComponentProps,
-  RetweetDetailComponentState
+RetweetDetailComponentProps,
+RetweetDetailComponentState
 > {
   state = {
     model: new RetweetViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Retweets + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Retweets + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,50 +85,47 @@ class RetweetDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>date</h3>
-              <p>{String(this.state.model!.date)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>retwitter_user_id</h3>
-              <p>
-                {String(
-                  this.state.model!.retwitterUserIdNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-            <div>
-              <h3>time</h3>
-              <p>{String(this.state.model!.time)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>tweet_tweet_id</h3>
-              <p>
-                {String(this.state.model!.tweetTweetIdNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>date</h3>
+							<p>{String(this.state.model!.date)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>retwitter_user_id</h3>
+							<p>{String(this.state.model!.retwitterUserIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>time</h3>
+							<p>{String(this.state.model!.time)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>tweet_tweet_id</h3>
+							<p>{String(this.state.model!.tweetTweetIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -136,11 +134,10 @@ class RetweetDetailComponent extends React.Component<
   }
 }
 
-export const WrappedRetweetDetailComponent = Form.create({
-  name: 'Retweet Detail',
-})(RetweetDetailComponent);
-
+export const WrappedRetweetDetailComponent = Form.create({ name: 'Retweet Detail' })(
+  RetweetDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>9668839a66d36d77b7f87e11172de9c8</Hash>
+    <Hash>dfe47a35e1497493fadc4b0a001d272d</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import OfficerRefCapabilityMapper from '../officerRefCapability/officerRefCapabi
 import OfficerRefCapabilityViewModel from '../officerRefCapability/officerRefCapabilityViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface OfficerRefCapabilityTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,53 +20,54 @@ interface OfficerRefCapabilityTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<OfficerRefCapabilityViewModel>;
+  filteredRecords: Array<OfficerRefCapabilityViewModel>;
 }
 
-export class  OfficerRefCapabilityTableComponent extends React.Component<
-OfficerRefCapabilityTableComponentProps,
-OfficerRefCapabilityTableComponentState
+export class OfficerRefCapabilityTableComponent extends React.Component<
+  OfficerRefCapabilityTableComponentProps,
+  OfficerRefCapabilityTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: OfficerRefCapabilityViewModel) {
-  this.props.history.push(ClientRoutes.OfficerRefCapabilities + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: OfficerRefCapabilityViewModel) {
+    this.props.history.push(
+      ClientRoutes.OfficerRefCapabilities + '/edit/' + row.id
+    );
+  }
 
-handleDetailClick(e:any, row: OfficerRefCapabilityViewModel) {
-  this.props.history.push(ClientRoutes.OfficerRefCapabilities + '/' + row.id);
-}
+  handleDetailClick(e: any, row: OfficerRefCapabilityViewModel) {
+    this.props.history.push(ClientRoutes.OfficerRefCapabilities + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.OfficerRefCapabilityClientResponseModel>;
+          let response = resp.data as Array<
+            Api.OfficerRefCapabilityClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new OfficerRefCapabilityMapper();
-          
-          let officerRefCapabilities:Array<OfficerRefCapabilityViewModel> = [];
 
-          response.forEach(x =>
-          {
-              officerRefCapabilities.push(mapper.mapApiResponseToViewModel(x));
+          let officerRefCapabilities: Array<OfficerRefCapabilityViewModel> = [];
+
+          response.forEach(x => {
+            officerRefCapabilities.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,55 +92,79 @@ handleDetailClick(e:any, row: OfficerRefCapabilityViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'OfficerRefCapabilities',
-                    columns: [
-					  {
-                      Header: 'CapabilityId',
-                      accessor: 'capabilityId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.OfficerCapabilities + '/' + props.original.capabilityId); }}>
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'OfficerRefCapabilities',
+                columns: [
+                  {
+                    Header: 'CapabilityId',
+                    accessor: 'capabilityId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.OfficerCapabilities +
+                                '/' +
+                                props.original.capabilityId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.capabilityIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'OfficerId',
-                      accessor: 'officerId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Officers + '/' + props.original.officerId); }}>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'OfficerId',
+                    accessor: 'officerId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Officers +
+                                '/' +
+                                props.original.officerId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.officerIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as OfficerRefCapabilityViewModel
@@ -150,8 +175,8 @@ handleDetailClick(e:any, row: OfficerRefCapabilityViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as OfficerRefCapabilityViewModel
@@ -160,11 +185,14 @@ handleDetailClick(e:any, row: OfficerRefCapabilityViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -172,6 +200,7 @@ handleDetailClick(e:any, row: OfficerRefCapabilityViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>3734a871f56df659f13a433e2143d595</Hash>
+    <Hash>847811ac0fb6d138ad245f57675308f2</Hash>
 </Codenesium>*/

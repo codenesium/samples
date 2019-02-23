@@ -5,13 +5,23 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UnitOfficerMapper from './unitOfficerMapper';
 import UnitOfficerViewModel from './unitOfficerViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface UnitOfficerEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface UnitOfficerEditComponentState {
@@ -20,7 +30,7 @@ interface UnitOfficerEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class UnitOfficerEditComponent extends React.Component<
@@ -33,10 +43,10 @@ class UnitOfficerEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -67,7 +77,9 @@ class UnitOfficerEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -80,11 +92,11 @@ class UnitOfficerEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as UnitOfficerViewModel;
         console.log('Received values of form: ', model);
@@ -93,12 +105,14 @@ class UnitOfficerEditComponent extends React.Component<
     });
   };
 
-  submit = (model:UnitOfficerViewModel) =>
-  {  
+  submit = (model: UnitOfficerViewModel) => {
     let mapper = new UnitOfficerMapper();
-     axios
+    axios
       .put(
-        Constants.ApiEndpoint + ApiRoutes.UnitOfficers + '/' + this.state.model!.id,
+        Constants.ApiEndpoint +
+          ApiRoutes.UnitOfficers +
+          '/' +
+          this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -111,79 +125,84 @@ class UnitOfficerEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.UnitOfficerClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="officerId">officerId</label>
+            <br />
+            {getFieldDecorator('officerId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'officerId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='officerId'>officerId</label>
-              <br />             
-              {getFieldDecorator('officerId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"officerId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="unitId">unitId</label>
+            <br />
+            {getFieldDecorator('unitId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'unitId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='unitId'>unitId</label>
-              <br />             
-              {getFieldDecorator('unitId', {
-              rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"unitId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedUnitOfficerEditComponent = Form.create({ name: 'UnitOfficer Edit' })(UnitOfficerEditComponent);
+export const WrappedUnitOfficerEditComponent = Form.create({
+  name: 'UnitOfficer Edit',
+})(UnitOfficerEditComponent);
+
 
 /*<Codenesium>
-    <Hash>e47b085429410c861de2fbc75e2d6499</Hash>
+    <Hash>1840011c88f5d8468c8d349fb0ebd9e2</Hash>
 </Codenesium>*/

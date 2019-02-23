@@ -103,7 +103,6 @@ class OfficerCapabilityCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -128,5 +127,5 @@ class OfficerCapabilityCreateComponent extends React.Component<
 export const WrappedOfficerCapabilityCreateComponent = Form.create({ name: 'OfficerCapability Create' })(OfficerCapabilityCreateComponent);
 
 /*<Codenesium>
-    <Hash>16789042b4dc19599c5ad8c1a605d1cf</Hash>
+    <Hash>790dd38bafa19d82f869e1ddd3ccca84</Hash>
 </Codenesium>*/

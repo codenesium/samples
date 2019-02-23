@@ -6,7 +6,10 @@ import TeacherMapper from './teacherMapper';
 import TeacherViewModel from './teacherViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { RateTableComponent } from '../shared/rateTable';
+import {RateTableComponent} from '../shared/rateTable'
+	
+
+
 
 interface TeacherDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface TeacherDetailComponentState {
 }
 
 class TeacherDetailComponent extends React.Component<
-  TeacherDetailComponentProps,
-  TeacherDetailComponentState
+TeacherDetailComponentProps,
+TeacherDetailComponentState
 > {
   state = {
     model: new TeacherViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Teachers + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Teachers + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,68 +86,64 @@ class TeacherDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>birthday</h3>
-              <p>{String(this.state.model!.birthday)}</p>
-            </div>
-            <div>
-              <h3>email</h3>
-              <p>{String(this.state.model!.email)}</p>
-            </div>
-            <div>
-              <h3>First Name</h3>
-              <p>{String(this.state.model!.firstName)}</p>
-            </div>
-            <div>
-              <h3>Last Name</h3>
-              <p>{String(this.state.model!.lastName)}</p>
-            </div>
-            <div>
-              <h3>phone</h3>
-              <p>{String(this.state.model!.phone)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>userId</h3>
-              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>birthday</h3>
+							<p>{String(this.state.model!.birthday)}</p>
+						 </div>
+					   						 <div>
+							<h3>email</h3>
+							<p>{String(this.state.model!.email)}</p>
+						 </div>
+					   						 <div>
+							<h3>First Name</h3>
+							<p>{String(this.state.model!.firstName)}</p>
+						 </div>
+					   						 <div>
+							<h3>Last Name</h3>
+							<p>{String(this.state.model!.lastName)}</p>
+						 </div>
+					   						 <div>
+							<h3>phone</h3>
+							<p>{String(this.state.model!.phone)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>userId</h3>
+							<p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Rates</h3>
-            <RateTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Teachers +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Rates
-              }
-            />
-          </div>
+            <RateTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Teachers + '/' + this.state.model!.id + '/' + ApiRoutes.Rates}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -155,11 +152,10 @@ class TeacherDetailComponent extends React.Component<
   }
 }
 
-export const WrappedTeacherDetailComponent = Form.create({
-  name: 'Teacher Detail',
-})(TeacherDetailComponent);
-
+export const WrappedTeacherDetailComponent = Form.create({ name: 'Teacher Detail' })(
+  TeacherDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>081eaef41965f499801484a1b00f795f</Hash>
+    <Hash>d8da578e271db5681231b08edec2c1d7</Hash>
 </Codenesium>*/

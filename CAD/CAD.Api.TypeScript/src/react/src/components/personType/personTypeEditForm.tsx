@@ -149,7 +149,6 @@ class PersonTypeEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -174,5 +173,5 @@ class PersonTypeEditComponent extends React.Component<
 export const WrappedPersonTypeEditComponent = Form.create({ name: 'PersonType Edit' })(PersonTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>6af1c5c465c3081d8d3bb916b7bd3936</Hash>
+    <Hash>7949f3fdfa1480bcec54b0515733dc57</Hash>
 </Codenesium>*/

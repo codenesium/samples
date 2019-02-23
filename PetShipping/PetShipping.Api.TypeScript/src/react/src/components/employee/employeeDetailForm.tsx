@@ -6,9 +6,12 @@ import EmployeeMapper from './employeeMapper';
 import EmployeeViewModel from './employeeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { CustomerCommunicationTableComponent } from '../shared/customerCommunicationTable';
-import { PipelineStepTableComponent } from '../shared/pipelineStepTable';
-import { PipelineStepNoteTableComponent } from '../shared/pipelineStepNoteTable';
+import {CustomerCommunicationTableComponent} from '../shared/customerCommunicationTable'
+	import {PipelineStepTableComponent} from '../shared/pipelineStepTable'
+	import {PipelineStepNoteTableComponent} from '../shared/pipelineStepNoteTable'
+	
+
+
 
 interface EmployeeDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,23 +28,21 @@ interface EmployeeDetailComponentState {
 }
 
 class EmployeeDetailComponent extends React.Component<
-  EmployeeDetailComponentProps,
-  EmployeeDetailComponentState
+EmployeeDetailComponentProps,
+EmployeeDetailComponentState
 > {
   state = {
     model: new EmployeeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Employees + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Employees + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,96 +88,78 @@ class EmployeeDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>firstName</h3>
-              <p>{String(this.state.model!.firstName)}</p>
-            </div>
-            <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>isSalesPerson</h3>
-              <p>{String(this.state.model!.isSalesPerson)}</p>
-            </div>
-            <div>
-              <h3>isShipper</h3>
-              <p>{String(this.state.model!.isShipper)}</p>
-            </div>
-            <div>
-              <h3>lastName</h3>
-              <p>{String(this.state.model!.lastName)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>firstName</h3>
+							<p>{String(this.state.model!.firstName)}</p>
+						 </div>
+					   						 <div>
+							<h3>id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>isSalesPerson</h3>
+							<p>{String(this.state.model!.isSalesPerson)}</p>
+						 </div>
+					   						 <div>
+							<h3>isShipper</h3>
+							<p>{String(this.state.model!.isShipper)}</p>
+						 </div>
+					   						 <div>
+							<h3>lastName</h3>
+							<p>{String(this.state.model!.lastName)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>CustomerCommunications</h3>
-            <CustomerCommunicationTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Employees +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.CustomerCommunications
-              }
-            />
-          </div>
-          <div>
+            <CustomerCommunicationTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.id + '/' + ApiRoutes.CustomerCommunications}
+			/>
+         </div>
+			 <div>
             <h3>PipelineSteps</h3>
-            <PipelineStepTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Employees +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.PipelineSteps
-              }
-            />
-          </div>
-          <div>
+            <PipelineStepTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineSteps}
+			/>
+         </div>
+			 <div>
             <h3>PipelineStepNotes</h3>
-            <PipelineStepNoteTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Employees +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.PipelineStepNotes
-              }
-            />
-          </div>
+            <PipelineStepNoteTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepNotes}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -185,11 +168,10 @@ class EmployeeDetailComponent extends React.Component<
   }
 }
 
-export const WrappedEmployeeDetailComponent = Form.create({
-  name: 'Employee Detail',
-})(EmployeeDetailComponent);
-
+export const WrappedEmployeeDetailComponent = Form.create({ name: 'Employee Detail' })(
+  EmployeeDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>334c2f848b85d6af80f43c485a340005</Hash>
+    <Hash>b5d47844b126490c119bf3069872f4ca</Hash>
 </Codenesium>*/

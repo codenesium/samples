@@ -6,11 +6,11 @@ import VPersonMapper from '../vPerson/vPersonMapper';
 import VPersonViewModel from '../vPerson/vPersonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface VPersonTableComponentProps {
-  pERSON_ID: number;
-  apiRoute: string;
+  pERSON_ID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface VPersonTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<VPersonViewModel>;
+  filteredRecords : Array<VPersonViewModel>;
 }
 
-export class VPersonTableComponent extends React.Component<
-  VPersonTableComponentProps,
-  VPersonTableComponentState
+export class  VPersonTableComponent extends React.Component<
+VPersonTableComponentProps,
+VPersonTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: VPersonViewModel) {
-    this.props.history.push(ClientRoutes.VPersons + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: VPersonViewModel) {
+  this.props.history.push(ClientRoutes.VPersons + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: VPersonViewModel) {
-    this.props.history.push(ClientRoutes.VPersons + '/' + row.id);
-  }
+handleDetailClick(e:any, row: VPersonViewModel) {
+  this.props.history.push(ClientRoutes.VPersons + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.VPersonClientResponseModel>;
@@ -59,11 +61,12 @@ export class VPersonTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new VPersonMapper();
+          
+          let vPersons:Array<VPersonViewModel> = [];
 
-          let vPersons: Array<VPersonViewModel> = [];
-
-          response.forEach(x => {
-            vPersons.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              vPersons.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,47 +91,47 @@ export class VPersonTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'VPersons',
-                columns: [
-                  {
-                    Header: 'PersonId',
-                    accessor: 'personId',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'VPersons',
+                    columns: [
+					  {
+                      Header: 'PersonId',
+                      accessor: 'personId',
+                      Cell: (props) => {
                       return <span>{String(props.original.personId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PersonName',
-                    accessor: 'personName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'PersonName',
+                      accessor: 'personName',
+                      Cell: (props) => {
                       return <span>{String(props.original.personName)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as VPersonViewModel
@@ -139,8 +142,8 @@ export class VPersonTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as VPersonViewModel
@@ -149,14 +152,11 @@ export class VPersonTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -164,7 +164,6 @@ export class VPersonTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>a7b6ec773b28310a70ddc9636b963ec7</Hash>
+    <Hash>cfec6d0246280e8db4eca0c341ffe2d5</Hash>
 </Codenesium>*/

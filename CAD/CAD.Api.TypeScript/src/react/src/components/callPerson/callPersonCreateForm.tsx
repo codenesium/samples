@@ -114,7 +114,6 @@ class CallPersonCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('personId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -126,7 +125,6 @@ class CallPersonCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('personTypeId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -150,5 +148,5 @@ class CallPersonCreateComponent extends React.Component<
 export const WrappedCallPersonCreateComponent = Form.create({ name: 'CallPerson Create' })(CallPersonCreateComponent);
 
 /*<Codenesium>
-    <Hash>d0b1b34513b392a46593139e2d18e983</Hash>
+    <Hash>cb7d9ed54a8b5c8a975c5c44375b2744</Hash>
 </Codenesium>*/

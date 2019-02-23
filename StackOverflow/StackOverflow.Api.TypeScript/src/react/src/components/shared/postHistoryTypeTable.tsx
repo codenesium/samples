@@ -6,11 +6,11 @@ import PostHistoryTypeMapper from '../postHistoryType/postHistoryTypeMapper';
 import PostHistoryTypeViewModel from '../postHistoryType/postHistoryTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface PostHistoryTypeTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,52 +20,53 @@ interface PostHistoryTypeTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<PostHistoryTypeViewModel>;
+  filteredRecords : Array<PostHistoryTypeViewModel>;
 }
 
-export class PostHistoryTypeTableComponent extends React.Component<
-  PostHistoryTypeTableComponentProps,
-  PostHistoryTypeTableComponentState
+export class  PostHistoryTypeTableComponent extends React.Component<
+PostHistoryTypeTableComponentProps,
+PostHistoryTypeTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: PostHistoryTypeViewModel) {
-    this.props.history.push(ClientRoutes.PostHistoryTypes + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: PostHistoryTypeViewModel) {
+  this.props.history.push(ClientRoutes.PostHistoryTypes + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: PostHistoryTypeViewModel) {
-    this.props.history.push(ClientRoutes.PostHistoryTypes + '/' + row.id);
-  }
+handleDetailClick(e:any, row: PostHistoryTypeViewModel) {
+  this.props.history.push(ClientRoutes.PostHistoryTypes + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.PostHistoryTypeClientResponseModel
-          >;
+          let response = resp.data as Array<Api.PostHistoryTypeClientResponseModel>;
 
           console.log(response);
 
           let mapper = new PostHistoryTypeMapper();
+          
+          let postHistoryTypes:Array<PostHistoryTypeViewModel> = [];
 
-          let postHistoryTypes: Array<PostHistoryTypeViewModel> = [];
-
-          response.forEach(x => {
-            postHistoryTypes.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              postHistoryTypes.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -90,40 +91,41 @@ export class PostHistoryTypeTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'PostHistoryTypes',
-                columns: [
-                  {
-                    Header: 'Type',
-                    accessor: 'rwType',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'PostHistoryTypes',
+                    columns: [
+					  {
+                      Header: 'Type',
+                      accessor: 'rwType',
+                      Cell: (props) => {
                       return <span>{String(props.original.rwType)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PostHistoryTypeViewModel
@@ -134,8 +136,8 @@ export class PostHistoryTypeTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as PostHistoryTypeViewModel
@@ -144,14 +146,11 @@ export class PostHistoryTypeTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -159,7 +158,6 @@ export class PostHistoryTypeTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>a0f9fd090ed1f77fc8410b5e50f61e6a</Hash>
+    <Hash>4838ea6594d7f1e811bccbd22d64c356</Hash>
 </Codenesium>*/

@@ -149,7 +149,6 @@ class VehicleRefCapabilityEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('vehicleCapabilityId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -161,7 +160,6 @@ class VehicleRefCapabilityEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('vehicleId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -185,5 +183,5 @@ class VehicleRefCapabilityEditComponent extends React.Component<
 export const WrappedVehicleRefCapabilityEditComponent = Form.create({ name: 'VehicleRefCapability Edit' })(VehicleRefCapabilityEditComponent);
 
 /*<Codenesium>
-    <Hash>ba9686667ea7901015fe4427de81e695</Hash>
+    <Hash>ec6d27c27517e5162d24707bc34bc9b6</Hash>
 </Codenesium>*/

@@ -7,9 +7,6 @@ import EventStatuViewModel from './eventStatuViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface EventStatuDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface EventStatuDetailComponentState {
 }
 
 class EventStatuDetailComponent extends React.Component<
-EventStatuDetailComponentProps,
-EventStatuDetailComponentState
+  EventStatuDetailComponentProps,
+  EventStatuDetailComponentState
 > {
   state = {
     model: new EventStatuViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.EventStatus + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.EventStatus + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,39 +84,36 @@ EventStatuDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -126,10 +122,11 @@ EventStatuDetailComponentState
   }
 }
 
-export const WrappedEventStatuDetailComponent = Form.create({ name: 'EventStatu Detail' })(
-  EventStatuDetailComponent
-);
+export const WrappedEventStatuDetailComponent = Form.create({
+  name: 'EventStatu Detail',
+})(EventStatuDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>227a0f7d7b040d7dd6b0c1bdc269184e</Hash>
+    <Hash>27b262c18c1e82b083dd2ca7cfe7fe0d</Hash>
 </Codenesium>*/

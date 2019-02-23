@@ -7,6 +7,9 @@ import AWBuildVersionViewModel from './aWBuildVersionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface AWBuildVersionDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,25 +25,21 @@ interface AWBuildVersionDetailComponentState {
 }
 
 class AWBuildVersionDetailComponent extends React.Component<
-  AWBuildVersionDetailComponentProps,
-  AWBuildVersionDetailComponentState
+AWBuildVersionDetailComponentProps,
+AWBuildVersionDetailComponentState
 > {
   state = {
     model: new AWBuildVersionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.AWBuildVersions +
-        '/edit/' +
-        this.state.model!.systemInformationID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.AWBuildVersions + '/edit/' + this.state.model!.systemInformationID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,47 @@ class AWBuildVersionDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Database Version</h3>
-              <p>{String(this.state.model!.database_Version)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>SystemInformationID</h3>
-              <p>{String(this.state.model!.systemInformationID)}</p>
-            </div>
-            <div>
-              <h3>VersionDate</h3>
-              <p>{String(this.state.model!.versionDate)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Database Version</h3>
+							<p>{String(this.state.model!.database_Version)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>SystemInformationID</h3>
+							<p>{String(this.state.model!.systemInformationID)}</p>
+						 </div>
+					   						 <div>
+							<h3>VersionDate</h3>
+							<p>{String(this.state.model!.versionDate)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -132,11 +134,10 @@ class AWBuildVersionDetailComponent extends React.Component<
   }
 }
 
-export const WrappedAWBuildVersionDetailComponent = Form.create({
-  name: 'AWBuildVersion Detail',
-})(AWBuildVersionDetailComponent);
-
+export const WrappedAWBuildVersionDetailComponent = Form.create({ name: 'AWBuildVersion Detail' })(
+  AWBuildVersionDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>378a644f6ee292411dabb863d432bf6b</Hash>
+    <Hash>4b56e8e6b846cf0c4e0eeaa83e04e2df</Hash>
 </Codenesium>*/

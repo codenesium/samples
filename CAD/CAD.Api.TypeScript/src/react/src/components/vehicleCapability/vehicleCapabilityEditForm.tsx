@@ -149,7 +149,6 @@ class VehicleCapabilityEditComponent extends React.Component<
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 { max: 128, message: 'Exceeds max length of 128' },
 ],
               
@@ -174,5 +173,5 @@ class VehicleCapabilityEditComponent extends React.Component<
 export const WrappedVehicleCapabilityEditComponent = Form.create({ name: 'VehicleCapability Edit' })(VehicleCapabilityEditComponent);
 
 /*<Codenesium>
-    <Hash>46b85736917e5eb8b999c328eb3da014</Hash>
+    <Hash>d658f4f560a99d21e4aeae157f8daaba</Hash>
 </Codenesium>*/

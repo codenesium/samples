@@ -6,10 +6,7 @@ import CultureMapper from './cultureMapper';
 import CultureViewModel from './cultureViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {ProductModelProductDescriptionCultureTableComponent} from '../shared/productModelProductDescriptionCultureTable'
-	
-
-
+import { ProductModelProductDescriptionCultureTableComponent } from '../shared/productModelProductDescriptionCultureTable';
 
 interface CultureDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface CultureDetailComponentState {
 }
 
 class CultureDetailComponent extends React.Component<
-CultureDetailComponentProps,
-CultureDetailComponentState
+  CultureDetailComponentProps,
+  CultureDetailComponentState
 > {
   state = {
     model: new CultureViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Cultures + '/edit/' + this.state.model!.cultureID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Cultures + '/edit/' + this.state.model!.cultureID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,52 +85,56 @@ CultureDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>CultureID</h3>
-							<p>{String(this.state.model!.cultureID)}</p>
-						 </div>
-					   						 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>CultureID</h3>
+              <p>{String(this.state.model!.cultureID)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>ProductModelProductDescriptionCultures</h3>
-            <ProductModelProductDescriptionCultureTableComponent 
-			productModelID={this.state.model!.productModelID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Cultures + '/' + this.state.model!.cultureID + '/' + ApiRoutes.ProductModelProductDescriptionCultures}
-			/>
-         </div>
-	
-
+            <ProductModelProductDescriptionCultureTableComponent
+              productModelID={this.state.model!.productModelID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Cultures +
+                '/' +
+                this.state.model!.cultureID +
+                '/' +
+                ApiRoutes.ProductModelProductDescriptionCultures
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -140,10 +143,11 @@ CultureDetailComponentState
   }
 }
 
-export const WrappedCultureDetailComponent = Form.create({ name: 'Culture Detail' })(
-  CultureDetailComponent
-);
+export const WrappedCultureDetailComponent = Form.create({
+  name: 'Culture Detail',
+})(CultureDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>537ddb03d526bd59912336c3c6dd900e</Hash>
+    <Hash>b2deca62d733b4222e79852fcad12c12</Hash>
 </Codenesium>*/

@@ -103,7 +103,6 @@ class CallAssignmentCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('callId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -115,7 +114,6 @@ class CallAssignmentCreateComponent extends React.Component<
               <br />             
               {getFieldDecorator('unitId', {
               rules:[{ required: true, message: 'Required' },
-{ whitespace: true, message: 'Required' },
 ],
               
               })
@@ -139,5 +137,5 @@ class CallAssignmentCreateComponent extends React.Component<
 export const WrappedCallAssignmentCreateComponent = Form.create({ name: 'CallAssignment Create' })(CallAssignmentCreateComponent);
 
 /*<Codenesium>
-    <Hash>8b78ac77a63fe894cfba56db24f017bd</Hash>
+    <Hash>3ee879f579b96d1de3b1dbc0e944002c</Hash>
 </Codenesium>*/

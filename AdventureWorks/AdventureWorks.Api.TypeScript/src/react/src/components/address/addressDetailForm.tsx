@@ -6,7 +6,10 @@ import AddressMapper from './addressMapper';
 import AddressViewModel from './addressViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { BusinessEntityAddressTableComponent } from '../shared/businessEntityAddressTable';
+import {BusinessEntityAddressTableComponent} from '../shared/businessEntityAddressTable'
+	
+
+
 
 interface AddressDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface AddressDetailComponentState {
 }
 
 class AddressDetailComponent extends React.Component<
-  AddressDetailComponentProps,
-  AddressDetailComponentState
+AddressDetailComponentProps,
+AddressDetailComponentState
 > {
   state = {
     model: new AddressViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Addresses + '/edit/' + this.state.model!.addressID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Addresses + '/edit/' + this.state.model!.addressID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,76 +86,72 @@ class AddressDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>AddressID</h3>
-              <p>{String(this.state.model!.addressID)}</p>
-            </div>
-            <div>
-              <h3>AddressLine1</h3>
-              <p>{String(this.state.model!.addressLine1)}</p>
-            </div>
-            <div>
-              <h3>AddressLine2</h3>
-              <p>{String(this.state.model!.addressLine2)}</p>
-            </div>
-            <div>
-              <h3>City</h3>
-              <p>{String(this.state.model!.city)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>PostalCode</h3>
-              <p>{String(this.state.model!.postalCode)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-            <div>
-              <h3>StateProvinceID</h3>
-              <p>{String(this.state.model!.stateProvinceID)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>AddressID</h3>
+							<p>{String(this.state.model!.addressID)}</p>
+						 </div>
+					   						 <div>
+							<h3>AddressLine1</h3>
+							<p>{String(this.state.model!.addressLine1)}</p>
+						 </div>
+					   						 <div>
+							<h3>AddressLine2</h3>
+							<p>{String(this.state.model!.addressLine2)}</p>
+						 </div>
+					   						 <div>
+							<h3>City</h3>
+							<p>{String(this.state.model!.city)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>PostalCode</h3>
+							<p>{String(this.state.model!.postalCode)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   						 <div>
+							<h3>StateProvinceID</h3>
+							<p>{String(this.state.model!.stateProvinceID)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>BusinessEntityAddresses</h3>
-            <BusinessEntityAddressTableComponent
-              businessEntityID={this.state.model!.businessEntityID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Addresses +
-                '/' +
-                this.state.model!.addressID +
-                '/' +
-                ApiRoutes.BusinessEntityAddresses
-              }
-            />
-          </div>
+            <BusinessEntityAddressTableComponent 
+			businessEntityID={this.state.model!.businessEntityID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Addresses + '/' + this.state.model!.addressID + '/' + ApiRoutes.BusinessEntityAddresses}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -163,11 +160,10 @@ class AddressDetailComponent extends React.Component<
   }
 }
 
-export const WrappedAddressDetailComponent = Form.create({
-  name: 'Address Detail',
-})(AddressDetailComponent);
-
+export const WrappedAddressDetailComponent = Form.create({ name: 'Address Detail' })(
+  AddressDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>a20e09c3f4cb22832cb50306e2c7c91a</Hash>
+    <Hash>508ae822375759802dd66ff7de4e39ea</Hash>
 </Codenesium>*/

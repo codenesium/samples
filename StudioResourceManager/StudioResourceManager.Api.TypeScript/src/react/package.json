@@ -24,8 +24,8 @@
     "babel-loader": "^8.0.5"
   },
   "scripts": {
-    "start": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feStudioResourceManager react-scripts start",
-    "build": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feStudioResourceManager react-scripts build",
+    "start": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feStudioResourceManager/ react-scripts start",
+    "build": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feStudioResourceManager/ react-scripts build",
 	"start-win": "set REACT_APP_API_URL=http://localhost/&& react-scripts start",
     "build-win": "set REACT_APP_API_URL=http://localhost/&& react-scripts build",
     "test": "react-scripts test",

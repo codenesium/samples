@@ -7,9 +7,6 @@ import SpaceViewModel from './spaceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface SpaceDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface SpaceDetailComponentState {
 }
 
 class SpaceDetailComponent extends React.Component<
-SpaceDetailComponentProps,
-SpaceDetailComponentState
+  SpaceDetailComponentProps,
+  SpaceDetailComponentState
 > {
   state = {
     model: new SpaceViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Spaces + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Spaces + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,43 +84,40 @@ SpaceDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>description</h3>
-							<p>{String(this.state.model!.description)}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>description</h3>
+              <p>{String(this.state.model!.description)}</p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +126,11 @@ SpaceDetailComponentState
   }
 }
 
-export const WrappedSpaceDetailComponent = Form.create({ name: 'Space Detail' })(
-  SpaceDetailComponent
-);
+export const WrappedSpaceDetailComponent = Form.create({
+  name: 'Space Detail',
+})(SpaceDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>39d42c17532b0e7172dba7b19b5b840c</Hash>
+    <Hash>b2afec706a8a309654bd8ddb39c63051</Hash>
 </Codenesium>*/

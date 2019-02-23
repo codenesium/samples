@@ -7,9 +7,6 @@ import AdminViewModel from './adminViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface AdminDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface AdminDetailComponentState {
 }
 
 class AdminDetailComponent extends React.Component<
-AdminDetailComponentProps,
-AdminDetailComponentState
+  AdminDetailComponentProps,
+  AdminDetailComponentState
 > {
   state = {
     model: new AdminViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Admins + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Admins + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,59 +84,56 @@ AdminDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>birthday</h3>
-							<p>{String(this.state.model!.birthday)}</p>
-						 </div>
-					   						 <div>
-							<h3>email</h3>
-							<p>{String(this.state.model!.email)}</p>
-						 </div>
-					   						 <div>
-							<h3>firstName</h3>
-							<p>{String(this.state.model!.firstName)}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>lastName</h3>
-							<p>{String(this.state.model!.lastName)}</p>
-						 </div>
-					   						 <div>
-							<h3>phone</h3>
-							<p>{String(this.state.model!.phone)}</p>
-						 </div>
-					   						 <div>
-							<h3>userId</h3>
-							<p>{String(this.state.model!.userId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>birthday</h3>
+              <p>{String(this.state.model!.birthday)}</p>
+            </div>
+            <div>
+              <h3>email</h3>
+              <p>{String(this.state.model!.email)}</p>
+            </div>
+            <div>
+              <h3>firstName</h3>
+              <p>{String(this.state.model!.firstName)}</p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>lastName</h3>
+              <p>{String(this.state.model!.lastName)}</p>
+            </div>
+            <div>
+              <h3>phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
+            </div>
+            <div>
+              <h3>userId</h3>
+              <p>{String(this.state.model!.userId)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -146,10 +142,11 @@ AdminDetailComponentState
   }
 }
 
-export const WrappedAdminDetailComponent = Form.create({ name: 'Admin Detail' })(
-  AdminDetailComponent
-);
+export const WrappedAdminDetailComponent = Form.create({
+  name: 'Admin Detail',
+})(AdminDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>143cfc900615a8514de3b1541ecc3fde</Hash>
+    <Hash>420475ba93f693a2e08c19b3e08e76e7</Hash>
 </Codenesium>*/
