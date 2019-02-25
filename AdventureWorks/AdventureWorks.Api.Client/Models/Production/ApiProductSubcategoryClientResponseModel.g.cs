@@ -19,6 +19,16 @@ namespace AdventureWorksNS.Api.Client
 			this.Name = name;
 			this.ProductCategoryID = productCategoryID;
 			this.Rowguid = rowguid;
+
+			this.ProductCategoryIDEntity = nameof(ApiResponse.ProductCategories);
+		}
+
+		[JsonProperty]
+		public ApiProductCategoryClientResponseModel ProductCategoryIDNavigation { get; private set; }
+
+		public void SetProductCategoryIDNavigation(ApiProductCategoryClientResponseModel value)
+		{
+			this.ProductCategoryIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -31,6 +41,9 @@ namespace AdventureWorksNS.Api.Client
 		public int ProductCategoryID { get; private set; }
 
 		[JsonProperty]
+		public string ProductCategoryIDEntity { get; set; }
+
+		[JsonProperty]
 		public int ProductSubcategoryID { get; private set; }
 
 		[JsonProperty]
@@ -39,5 +52,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>bb325d6f2d6555f5d12aab1195002eb4</Hash>
+    <Hash>f668bb2eb329107c65f9d73735252a13</Hash>
 </Codenesium>*/

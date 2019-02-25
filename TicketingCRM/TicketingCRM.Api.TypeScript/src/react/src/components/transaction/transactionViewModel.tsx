@@ -26,7 +26,7 @@ export default class TransactionViewModel {
   ): void {
     this.amount = amount;
     this.gatewayConfirmationNumber = gatewayConfirmationNumber;
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.id = id;
     this.transactionStatusId = transactionStatusId;
   }
 
@@ -37,5 +37,5 @@ export default class TransactionViewModel {
 
 
 /*<Codenesium>
-    <Hash>821934b377aa6dc7eeb8f5255b6b494f</Hash>
+    <Hash>0004300ea2a095a280d246ed8cf95802</Hash>
 </Codenesium>*/

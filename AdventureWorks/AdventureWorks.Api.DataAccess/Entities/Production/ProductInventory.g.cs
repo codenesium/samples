@@ -54,9 +54,25 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(10)]
 		[Column("Shelf")]
 		public virtual string Shelf { get; private set; }
+
+		[ForeignKey("LocationID")]
+		public virtual Location LocationIDNavigation { get; private set; }
+
+		public void SetLocationIDNavigation(Location item)
+		{
+			this.LocationIDNavigation = item;
+		}
+
+		[ForeignKey("ProductID")]
+		public virtual Product ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(Product item)
+		{
+			this.ProductIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e00ac4287c92cc41019cfd216c49bca6</Hash>
+    <Hash>f027e0c9a4c65134660190c28a8d52b9</Hash>
 </Codenesium>*/

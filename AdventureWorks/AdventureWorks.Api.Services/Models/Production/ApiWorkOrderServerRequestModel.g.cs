@@ -54,14 +54,14 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; } = default(int);
+		public int ProductID { get; private set; }
 
 		[Required]
 		[JsonProperty]
 		public short ScrappedQty { get; private set; } = default(short);
 
 		[JsonProperty]
-		public short? ScrapReasonID { get; private set; } = default(short);
+		public short? ScrapReasonID { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84f4fe848a2c948d94c635df8c856289</Hash>
+    <Hash>78abb3e782a8802c9e36b0a357618305</Hash>
 </Codenesium>*/

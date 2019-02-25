@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Client
 		}
 
 		[JsonProperty]
-		public string CountryRegionCode { get; private set; } = default(string);
+		public string CountryRegionCode { get; private set; }
 
 		[JsonProperty]
 		public bool IsOnlyStateProvinceFlag { get; private set; } = default(bool);
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>401b62fa412d20499fbaeee8da09c3cc</Hash>
+    <Hash>7ba961d8302868775390c72f7e6ec68d</Hash>
 </Codenesium>*/

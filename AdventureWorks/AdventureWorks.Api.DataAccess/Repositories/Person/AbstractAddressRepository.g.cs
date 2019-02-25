@@ -97,6 +97,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<Address> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<Address>()
+			       .Include(x => x.StateProvinceIDNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
@@ -105,6 +106,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
 		{
 			return await this.Context.Set<Address>()
+			       .Include(x => x.StateProvinceIDNavigation)
 
 			       .FirstOrDefaultAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
 		}
@@ -113,6 +115,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<Address>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.StateProvinceID == stateProvinceID, limit, offset);
+		}
+
+		// Foreign key reference to table StateProvince via stateProvinceID.
+		public async virtual Task<StateProvince> StateProvinceByStateProvinceID(int stateProvinceID)
+		{
+			return await this.Context.Set<StateProvince>()
+			       .SingleOrDefaultAsync(x => x.StateProvinceID == stateProvinceID);
 		}
 
 		protected async Task<List<Address>> Where(
@@ -127,6 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Address>()
+			       .Include(x => x.StateProvinceIDNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
 		}
@@ -141,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2371bddd4c8a1b45f8993c8ba06a475</Hash>
+    <Hash>ea8acbae0b174d00a981816635405535</Hash>
 </Codenesium>*/

@@ -60,9 +60,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(50)]
 		[Column("ReviewerName")]
 		public virtual string ReviewerName { get; private set; }
+
+		[ForeignKey("ProductID")]
+		public virtual Product ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(Product item)
+		{
+			this.ProductIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d0e5f1c1dbdffa154dfba1642d5c24e</Hash>
+    <Hash>483c0677d294e3d82a49249a8c46d977</Hash>
 </Codenesium>*/

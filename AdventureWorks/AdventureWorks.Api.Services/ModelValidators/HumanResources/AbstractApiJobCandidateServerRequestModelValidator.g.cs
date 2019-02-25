@@ -28,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void BusinessEntityIDRules()
 		{
+			this.RuleFor(x => x.BusinessEntityID).MustAsync(this.BeValidEmployeeByBusinessEntityID).When(x => !x?.BusinessEntityID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -37,9 +38,16 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void ResumeRules()
 		{
 		}
+
+		protected async Task<bool> BeValidEmployeeByBusinessEntityID(int? id,  CancellationToken cancellationToken)
+		{
+			var record = await this.JobCandidateRepository.EmployeeByBusinessEntityID(id.GetValueOrDefault());
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e795d00e1f44235ab6490aa5ec196b85</Hash>
+    <Hash>b572798b79ca3478170aecf473a2cf60</Hash>
 </Codenesium>*/

@@ -82,9 +82,25 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("VendorID")]
 		public virtual int VendorID { get; private set; }
+
+		[ForeignKey("ShipMethodID")]
+		public virtual ShipMethod ShipMethodIDNavigation { get; private set; }
+
+		public void SetShipMethodIDNavigation(ShipMethod item)
+		{
+			this.ShipMethodIDNavigation = item;
+		}
+
+		[ForeignKey("VendorID")]
+		public virtual Vendor VendorIDNavigation { get; private set; }
+
+		public void SetVendorIDNavigation(Vendor item)
+		{
+			this.VendorIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec62b8579568629d80ee87eba4d312e4</Hash>
+    <Hash>45e44f0acf8e9a9bbbaa968e646c4a76</Hash>
 </Codenesium>*/

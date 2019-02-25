@@ -32,6 +32,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ComponentIDRules()
 		{
+			this.RuleFor(x => x.ComponentID).MustAsync(this.BeValidProductByComponentID).When(x => !x?.ComponentID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void EndDateRules()
@@ -48,6 +49,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductAssemblyIDRules()
 		{
+			this.RuleFor(x => x.ProductAssemblyID).MustAsync(this.BeValidProductByProductAssemblyID).When(x => !x?.ProductAssemblyID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void StartDateRules()
@@ -57,11 +59,33 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void UnitMeasureCodeRules()
 		{
 			this.RuleFor(x => x.UnitMeasureCode).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.UnitMeasureCode).MustAsync(this.BeValidUnitMeasureByUnitMeasureCode).When(x => !x?.UnitMeasureCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		protected async Task<bool> BeValidProductByComponentID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.BillOfMaterialRepository.ProductByComponentID(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidProductByProductAssemblyID(int? id,  CancellationToken cancellationToken)
+		{
+			var record = await this.BillOfMaterialRepository.ProductByProductAssemblyID(id.GetValueOrDefault());
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidUnitMeasureByUnitMeasureCode(string id,  CancellationToken cancellationToken)
+		{
+			var record = await this.BillOfMaterialRepository.UnitMeasureByUnitMeasureCode(id);
+
+			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>505af56875de96be8263b9bac9d25cbc</Hash>
+    <Hash>ab81ba2a461072fe14dee74236708e37</Hash>
 </Codenesium>*/

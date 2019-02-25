@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; } = default(int);
+		public int ProductID { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ba60ba96b54fdfeddee6bba9bf0222d</Hash>
+    <Hash>df29008c55057b2234f05da52e4c56c6</Hash>
 </Codenesium>*/

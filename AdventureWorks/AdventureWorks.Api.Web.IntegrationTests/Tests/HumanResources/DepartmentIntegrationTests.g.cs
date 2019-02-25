@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			var mapper = new ApiDepartmentServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IDepartmentService service = testServer.Host.Services.GetService(typeof(IDepartmentService)) as IDepartmentService;
-			ApiDepartmentServerResponseModel model = await service.Get(1);
+			ApiDepartmentServerResponseModel model = await service.Get((short)1);
 
 			ApiDepartmentClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
 			request.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
@@ -100,12 +100,12 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Entry(context.Set<Department>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-			updateResponse.Record.DepartmentID.Should().Be(1);
+			updateResponse.Record.DepartmentID.Should().Be((short)1);
 			context.Set<Department>().ToList()[0].GroupName.Should().Be("B");
 			context.Set<Department>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Department>().ToList()[0].Name.Should().Be("B");
 
-			updateResponse.Record.DepartmentID.Should().Be(1);
+			updateResponse.Record.DepartmentID.Should().Be((short)1);
 			updateResponse.Record.GroupName.Should().Be("B");
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Name.Should().Be("B");
@@ -128,10 +128,10 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			createdResponse.Success.Should().BeTrue();
 
-			ActionResponse deleteResult = await client.DepartmentDeleteAsync(2);
+			ActionResponse deleteResult = await client.DepartmentDeleteAsync((short)2);
 
 			deleteResult.Success.Should().BeTrue();
-			ApiDepartmentServerResponseModel verifyResponse = await service.Get(2);
+			ApiDepartmentServerResponseModel verifyResponse = await service.Get((short)2);
 
 			verifyResponse.Should().BeNull();
 		}
@@ -147,7 +147,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			var client = new ApiClient(testServer.CreateClient());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			ApiDepartmentClientResponseModel response = await client.DepartmentGetAsync(1);
+			ApiDepartmentClientResponseModel response = await client.DepartmentGetAsync((short)1);
 
 			response.Should().NotBeNull();
 			response.DepartmentID.Should().Be(1);
@@ -245,5 +245,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3d5e96288d94d1f94f9400c9b3a70d13</Hash>
+    <Hash>8f139406bc1e96fb0efae4ee9f1cd0fa</Hash>
 </Codenesium>*/

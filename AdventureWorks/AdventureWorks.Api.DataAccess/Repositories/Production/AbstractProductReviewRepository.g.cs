@@ -99,6 +99,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.ProductID == productID && x.ReviewerName == reviewerName, limit, offset);
 		}
 
+		// Foreign key reference to table Product via productID.
+		public async virtual Task<Product> ProductByProductID(int productID)
+		{
+			return await this.Context.Set<Product>()
+			       .SingleOrDefaultAsync(x => x.ProductID == productID);
+		}
+
 		protected async Task<List<ProductReview>> Where(
 			Expression<Func<ProductReview, bool>> predicate,
 			int limit = int.MaxValue,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<ProductReview>()
+			       .Include(x => x.ProductIDNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductReview>();
 		}
@@ -125,5 +133,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>74782ea526e71e795e3c04a8e10716d8</Hash>
+    <Hash>545a6c64b316cfb1b3351db227978eaf</Hash>
 </Codenesium>*/

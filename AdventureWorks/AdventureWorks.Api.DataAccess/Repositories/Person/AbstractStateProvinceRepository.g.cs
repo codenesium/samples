@@ -97,6 +97,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<StateProvince> ByName(string name)
 		{
 			return await this.Context.Set<StateProvince>()
+			       .Include(x => x.CountryRegionCodeNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
@@ -105,6 +106,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<StateProvince> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<StateProvince>()
+			       .Include(x => x.CountryRegionCodeNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
@@ -113,6 +115,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
 			return await this.Context.Set<StateProvince>()
+			       .Include(x => x.CountryRegionCodeNavigation)
 
 			       .FirstOrDefaultAsync(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 		}
@@ -123,6 +126,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Address>()
 			       .Include(x => x.StateProvinceIDNavigation)
 			       .Where(x => x.StateProvinceID == stateProvinceID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Address>();
+		}
+
+		// Foreign key reference to table CountryRegion via countryRegionCode.
+		public async virtual Task<CountryRegion> CountryRegionByCountryRegionCode(string countryRegionCode)
+		{
+			return await this.Context.Set<CountryRegion>()
+			       .SingleOrDefaultAsync(x => x.CountryRegionCode == countryRegionCode);
 		}
 
 		protected async Task<List<StateProvince>> Where(
@@ -137,6 +147,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<StateProvince>()
+			       .Include(x => x.CountryRegionCodeNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
 		}
@@ -151,5 +162,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b18bb97e74157450b006763640779080</Hash>
+    <Hash>715d424163dc40b65de72c30d905914b</Hash>
 </Codenesium>*/

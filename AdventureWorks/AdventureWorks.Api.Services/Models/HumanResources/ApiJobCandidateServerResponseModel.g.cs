@@ -25,6 +25,17 @@ namespace AdventureWorksNS.Api.Services
 		public int? BusinessEntityID { get; private set; }
 
 		[JsonProperty]
+		public string BusinessEntityIDEntity { get; private set; } = RouteConstants.Employees;
+
+		[JsonProperty]
+		public ApiEmployeeServerResponseModel BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(ApiEmployeeServerResponseModel value)
+		{
+			this.BusinessEntityIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public int JobCandidateID { get; private set; }
 
 		[JsonProperty]
@@ -37,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebbaf66dd762dea065d4c1ab558484cd</Hash>
+    <Hash>857339c6abac4dde3352d0ffbe433756</Hash>
 </Codenesium>*/

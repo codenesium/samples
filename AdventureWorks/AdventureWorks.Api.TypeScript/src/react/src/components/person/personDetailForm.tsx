@@ -112,9 +112,13 @@ class PersonDetailComponent extends React.Component<
               <h3>AdditionalContactInfo</h3>
               <p>{String(this.state.model!.additionalContactInfo)}</p>
             </div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>BusinessEntityID</h3>
-              <p>{String(this.state.model!.businessEntityID)}</p>
+              <p>
+                {String(
+                  this.state.model!.businessEntityIDNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>Demographics</h3>
@@ -240,5 +244,5 @@ export const WrappedPersonDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cc40d02f1c9dc5cbc1d66c8110dcf875</Hash>
+    <Hash>921714b9eb7d3a0c5b7df0fb6307596b</Hash>
 </Codenesium>*/

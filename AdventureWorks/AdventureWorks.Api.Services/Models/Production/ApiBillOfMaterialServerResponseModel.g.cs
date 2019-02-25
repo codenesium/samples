@@ -39,6 +39,17 @@ namespace AdventureWorksNS.Api.Services
 		[JsonProperty]
 		public int ComponentID { get; private set; }
 
+		[JsonProperty]
+		public string ComponentIDEntity { get; private set; } = RouteConstants.Products;
+
+		[JsonProperty]
+		public ApiProductServerResponseModel ComponentIDNavigation { get; private set; }
+
+		public void SetComponentIDNavigation(ApiProductServerResponseModel value)
+		{
+			this.ComponentIDNavigation = value;
+		}
+
 		[Required]
 		[JsonProperty]
 		public DateTime? EndDate { get; private set; }
@@ -54,13 +65,35 @@ namespace AdventureWorksNS.Api.Services
 		public int? ProductAssemblyID { get; private set; }
 
 		[JsonProperty]
+		public string ProductAssemblyIDEntity { get; private set; } = RouteConstants.Products;
+
+		[JsonProperty]
+		public ApiProductServerResponseModel ProductAssemblyIDNavigation { get; private set; }
+
+		public void SetProductAssemblyIDNavigation(ApiProductServerResponseModel value)
+		{
+			this.ProductAssemblyIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime StartDate { get; private set; }
 
 		[JsonProperty]
 		public string UnitMeasureCode { get; private set; }
+
+		[JsonProperty]
+		public string UnitMeasureCodeEntity { get; private set; } = RouteConstants.UnitMeasures;
+
+		[JsonProperty]
+		public ApiUnitMeasureServerResponseModel UnitMeasureCodeNavigation { get; private set; }
+
+		public void SetUnitMeasureCodeNavigation(ApiUnitMeasureServerResponseModel value)
+		{
+			this.UnitMeasureCodeNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc09885f168d529d8a3e08b4947aed1a</Hash>
+    <Hash>7d36ef4e3b2d5b57f43ab5ef9fa89e5d</Hash>
 </Codenesium>*/

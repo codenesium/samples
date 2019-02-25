@@ -43,9 +43,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("RateChangeDate")]
 		public virtual DateTime RateChangeDate { get; private set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual Employee BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(Employee item)
+		{
+			this.BusinessEntityIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>96c978bfbfe2cd0b614b53097ed655e2</Hash>
+    <Hash>9bec72b3ee13edbd95ccf79327729149</Hash>
 </Codenesium>*/

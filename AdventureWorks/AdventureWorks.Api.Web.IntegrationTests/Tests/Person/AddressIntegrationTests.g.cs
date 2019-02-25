@@ -35,9 +35,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiAddressClientRequestModel();
-			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			var model2 = new ApiAddressClientRequestModel();
-			model2.SetProperties("C", "C", "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3);
+			model2.SetProperties("C", "C", "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 1);
 			var request = new List<ApiAddressClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiAddressClientResponseModel>> result = await client.AddressBulkInsertAsync(request);
 
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Address>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Address>().ToList()[1].PostalCode.Should().Be("B");
 			context.Set<Address>().ToList()[1].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			context.Set<Address>().ToList()[1].StateProvinceID.Should().Be(2);
+			context.Set<Address>().ToList()[1].StateProvinceID.Should().Be(1);
 
 			context.Set<Address>().ToList()[2].AddressLine1.Should().Be("C");
 			context.Set<Address>().ToList()[2].AddressLine2.Should().Be("C");
@@ -58,7 +58,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Address>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Address>().ToList()[2].PostalCode.Should().Be("C");
 			context.Set<Address>().ToList()[2].Rowguid.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
-			context.Set<Address>().ToList()[2].StateProvinceID.Should().Be(3);
+			context.Set<Address>().ToList()[2].StateProvinceID.Should().Be(1);
 		}
 
 		[Fact]
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiAddressClientRequestModel();
-			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			CreateResponse<ApiAddressClientResponseModel> result = await client.AddressCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -83,7 +83,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Address>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Address>().ToList()[1].PostalCode.Should().Be("B");
 			context.Set<Address>().ToList()[1].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			context.Set<Address>().ToList()[1].StateProvinceID.Should().Be(2);
+			context.Set<Address>().ToList()[1].StateProvinceID.Should().Be(1);
 
 			result.Record.AddressLine1.Should().Be("B");
 			result.Record.AddressLine2.Should().Be("B");
@@ -91,7 +91,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.PostalCode.Should().Be("B");
 			result.Record.Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			result.Record.StateProvinceID.Should().Be(2);
+			result.Record.StateProvinceID.Should().Be(1);
 		}
 
 		[Fact]
@@ -109,7 +109,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiAddressServerResponseModel model = await service.Get(1);
 
 			ApiAddressClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			request.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 
 			UpdateResponse<ApiAddressClientResponseModel> updateResponse = await client.AddressUpdateAsync(model.AddressID, request);
 
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Address>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Address>().ToList()[0].PostalCode.Should().Be("B");
 			context.Set<Address>().ToList()[0].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			context.Set<Address>().ToList()[0].StateProvinceID.Should().Be(2);
+			context.Set<Address>().ToList()[0].StateProvinceID.Should().Be(1);
 
 			updateResponse.Record.AddressID.Should().Be(1);
 			updateResponse.Record.AddressLine1.Should().Be("B");
@@ -132,7 +132,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.PostalCode.Should().Be("B");
 			updateResponse.Record.Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			updateResponse.Record.StateProvinceID.Should().Be(2);
+			updateResponse.Record.StateProvinceID.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,7 +147,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IAddressService service = testServer.Host.Services.GetService(typeof(IAddressService)) as IAddressService;
 			var model = new ApiAddressServerRequestModel();
-			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			CreateResponse<ApiAddressServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -354,5 +354,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>0c7a2592863ea4724d0b811c77f1a3cc</Hash>
+    <Hash>a2cca8e306f05bfdccce0a02c04d4b6f</Hash>
 </Codenesium>*/

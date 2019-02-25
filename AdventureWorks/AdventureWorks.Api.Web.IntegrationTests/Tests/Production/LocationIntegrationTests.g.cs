@@ -94,7 +94,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			var mapper = new ApiLocationServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			ILocationService service = testServer.Host.Services.GetService(typeof(ILocationService)) as ILocationService;
-			ApiLocationServerResponseModel model = await service.Get(1);
+			ApiLocationServerResponseModel model = await service.Get((short)1);
 
 			ApiLocationClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
 			request.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
@@ -104,13 +104,13 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Entry(context.Set<Location>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-			updateResponse.Record.LocationID.Should().Be(1);
+			updateResponse.Record.LocationID.Should().Be((short)1);
 			context.Set<Location>().ToList()[0].Availability.Should().Be(2);
 			context.Set<Location>().ToList()[0].CostRate.Should().Be(2m);
 			context.Set<Location>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Location>().ToList()[0].Name.Should().Be("B");
 
-			updateResponse.Record.LocationID.Should().Be(1);
+			updateResponse.Record.LocationID.Should().Be((short)1);
 			updateResponse.Record.Availability.Should().Be(2);
 			updateResponse.Record.CostRate.Should().Be(2m);
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -134,10 +134,10 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			createdResponse.Success.Should().BeTrue();
 
-			ActionResponse deleteResult = await client.LocationDeleteAsync(2);
+			ActionResponse deleteResult = await client.LocationDeleteAsync((short)2);
 
 			deleteResult.Success.Should().BeTrue();
-			ApiLocationServerResponseModel verifyResponse = await service.Get(2);
+			ApiLocationServerResponseModel verifyResponse = await service.Get((short)2);
 
 			verifyResponse.Should().BeNull();
 		}
@@ -153,7 +153,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			var client = new ApiClient(testServer.CreateClient());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			ApiLocationClientResponseModel response = await client.LocationGetAsync(1);
+			ApiLocationClientResponseModel response = await client.LocationGetAsync((short)1);
 
 			response.Should().NotBeNull();
 			response.Availability.Should().Be(1);
@@ -254,5 +254,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a7fd423aa968d459a4b35d3aefd70fa4</Hash>
+    <Hash>ba0143fa030923b5d672949ae1f2397b</Hash>
 </Codenesium>*/

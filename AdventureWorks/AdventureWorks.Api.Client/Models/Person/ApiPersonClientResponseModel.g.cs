@@ -35,6 +35,16 @@ namespace AdventureWorksNS.Api.Client
 			this.Rowguid = rowguid;
 			this.Suffix = suffix;
 			this.Title = title;
+
+			this.BusinessEntityIDEntity = nameof(ApiResponse.BusinessEntities);
+		}
+
+		[JsonProperty]
+		public ApiBusinessEntityClientResponseModel BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(ApiBusinessEntityClientResponseModel value)
+		{
+			this.BusinessEntityIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -42,6 +52,9 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public int BusinessEntityID { get; private set; }
+
+		[JsonProperty]
+		public string BusinessEntityIDEntity { get; set; }
 
 		[JsonProperty]
 		public string Demographic { get; private set; }
@@ -79,5 +92,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>753553d1f5566f43ce9696b7e6fdd46e</Hash>
+    <Hash>f6edf5849a1094f035aa37bd1e5257ed</Hash>
 </Codenesium>*/

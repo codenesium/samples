@@ -27,6 +27,16 @@ namespace AdventureWorksNS.Api.Client
 			this.ReferenceOrderLineID = referenceOrderLineID;
 			this.TransactionDate = transactionDate;
 			this.TransactionType = transactionType;
+
+			this.ProductIDEntity = nameof(ApiResponse.Products);
+		}
+
+		[JsonProperty]
+		public ApiProductClientResponseModel ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(ApiProductClientResponseModel value)
+		{
+			this.ProductIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -37,6 +47,9 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public int ProductID { get; private set; }
+
+		[JsonProperty]
+		public string ProductIDEntity { get; set; }
 
 		[JsonProperty]
 		public int Quantity { get; private set; }
@@ -59,5 +72,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>965908543a2624a9ea636f9bc5ff026d</Hash>
+    <Hash>438bedc0c4e3a410f32462a908cefc1b</Hash>
 </Codenesium>*/

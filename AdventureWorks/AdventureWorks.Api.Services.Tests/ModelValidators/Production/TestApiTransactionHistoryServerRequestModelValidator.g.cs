@@ -25,6 +25,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ProductID_Create_Valid_Reference()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.ProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<Product>(new Product()));
+
+			var validator = new ApiTransactionHistoryServerRequestModelValidator(transactionHistoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTransactionHistoryServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductID, 1);
+		}
+
+		[Fact]
+		public async void ProductID_Create_Invalid_Reference()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.ProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<Product>(null));
+
+			var validator = new ApiTransactionHistoryServerRequestModelValidator(transactionHistoryRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiTransactionHistoryServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductID, 1);
+		}
+
+		[Fact]
+		public async void ProductID_Update_Valid_Reference()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.ProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<Product>(new Product()));
+
+			var validator = new ApiTransactionHistoryServerRequestModelValidator(transactionHistoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductID, 1);
+		}
+
+		[Fact]
+		public async void ProductID_Update_Invalid_Reference()
+		{
+			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
+			transactionHistoryRepository.Setup(x => x.ProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<Product>(null));
+
+			var validator = new ApiTransactionHistoryServerRequestModelValidator(transactionHistoryRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductID, 1);
+		}
+
+		[Fact]
 		public async void TransactionType_Create_null()
 		{
 			Mock<ITransactionHistoryRepository> transactionHistoryRepository = new Mock<ITransactionHistoryRepository>();
@@ -75,5 +125,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cfa411fda4f321cac38b76a8518c2d5f</Hash>
+    <Hash>1b4cb24b2a5a5b7fd17b16e2815c931c</Hash>
 </Codenesium>*/

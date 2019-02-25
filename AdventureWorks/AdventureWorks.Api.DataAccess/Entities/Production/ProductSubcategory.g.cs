@@ -43,9 +43,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("rowguid")]
 		public virtual Guid Rowguid { get; private set; }
+
+		[ForeignKey("ProductCategoryID")]
+		public virtual ProductCategory ProductCategoryIDNavigation { get; private set; }
+
+		public void SetProductCategoryIDNavigation(ProductCategory item)
+		{
+			this.ProductCategoryIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>56bcd4ef2db1805c6a667e12bad8b2c5</Hash>
+    <Hash>4cf5701d754c32f702f0fd1f634ea0d1</Hash>
 </Codenesium>*/

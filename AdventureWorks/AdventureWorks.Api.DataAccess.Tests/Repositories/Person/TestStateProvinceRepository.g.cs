@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new StateProvinceRepository(loggerMoc.Object, context);
 
 			StateProvince entity = new StateProvince();
-			entity.SetProperties(default(int), "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			entity.SetProperties(default(int), "A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			context.Set<StateProvince>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new StateProvinceRepository(loggerMoc.Object, context);
 
 			var entity = new StateProvince();
-			entity.SetProperties(default(int), "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			entity.SetProperties(default(int), "A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<StateProvince>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = StateProvinceRepositoryMoc.GetContext();
 			var repository = new StateProvinceRepository(loggerMoc.Object, context);
 			StateProvince entity = new StateProvince();
-			entity.SetProperties(default(int), "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			entity.SetProperties(default(int), "A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			context.Set<StateProvince>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = StateProvinceRepositoryMoc.GetContext();
 			var repository = new StateProvinceRepository(loggerMoc.Object, context);
 			StateProvince entity = new StateProvince();
-			entity.SetProperties(default(int), "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			entity.SetProperties(default(int), "A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			context.Set<StateProvince>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = StateProvinceRepositoryMoc.GetContext();
 			var repository = new StateProvinceRepository(loggerMoc.Object, context);
 			StateProvince entity = new StateProvince();
-			entity.SetProperties(default(int), "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			entity.SetProperties(default(int), "A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			context.Set<StateProvince>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ae9fd6890e7f1953215a809ef61f231</Hash>
+    <Hash>181099f9dd5993bcdfb3908ad1bd130c</Hash>
 </Codenesium>*/

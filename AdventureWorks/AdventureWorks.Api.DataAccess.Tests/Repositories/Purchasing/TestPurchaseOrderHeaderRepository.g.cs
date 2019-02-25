@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2m, 2m, 2m, 1);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 
 			var entity = new PurchaseOrderHeader();
-			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2m, 2m, 2m, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<PurchaseOrderHeader>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2m, 2m, 2m, 1);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2m, 2m, 2m, 1);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2m, 2m, 2m, 1);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>28490234e4edb441db36af425aee6c77</Hash>
+    <Hash>cde88c12013a3da9ebe746e2ff81f5f4</Hash>
 </Codenesium>*/

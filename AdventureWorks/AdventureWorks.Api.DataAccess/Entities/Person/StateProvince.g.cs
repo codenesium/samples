@@ -60,9 +60,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("TerritoryID")]
 		public virtual int TerritoryID { get; private set; }
+
+		[ForeignKey("CountryRegionCode")]
+		public virtual CountryRegion CountryRegionCodeNavigation { get; private set; }
+
+		public void SetCountryRegionCodeNavigation(CountryRegion item)
+		{
+			this.CountryRegionCodeNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74dd5ba28fa3027f862e1df1a7082a9a</Hash>
+    <Hash>e281a4577785d6a235a486f500634bd7</Hash>
 </Codenesium>*/

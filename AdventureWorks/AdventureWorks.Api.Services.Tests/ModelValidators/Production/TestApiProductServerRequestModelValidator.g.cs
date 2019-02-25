@@ -121,6 +121,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ProductModelID_Create_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductModelByProductModelID(It.IsAny<int>())).Returns(Task.FromResult<ProductModel>(new ProductModel()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductModelID, 1);
+		}
+
+		[Fact]
+		public async void ProductModelID_Create_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductModelByProductModelID(It.IsAny<int>())).Returns(Task.FromResult<ProductModel>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductModelID, 1);
+		}
+
+		[Fact]
+		public async void ProductModelID_Update_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductModelByProductModelID(It.IsAny<int>())).Returns(Task.FromResult<ProductModel>(new ProductModel()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductModelID, 1);
+		}
+
+		[Fact]
+		public async void ProductModelID_Update_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductModelByProductModelID(It.IsAny<int>())).Returns(Task.FromResult<ProductModel>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductModelID, 1);
+		}
+
+		[Fact]
 		public async void ProductNumber_Create_null()
 		{
 			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -166,6 +216,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.ProductNumber, new string('A', 26));
+		}
+
+		[Fact]
+		public async void ProductSubcategoryID_Create_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductSubcategoryByProductSubcategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductSubcategory>(new ProductSubcategory()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductSubcategoryID, 1);
+		}
+
+		[Fact]
+		public async void ProductSubcategoryID_Create_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductSubcategoryByProductSubcategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductSubcategory>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductSubcategoryID, 1);
+		}
+
+		[Fact]
+		public async void ProductSubcategoryID_Update_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductSubcategoryByProductSubcategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductSubcategory>(new ProductSubcategory()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductSubcategoryID, 1);
+		}
+
+		[Fact]
+		public async void ProductSubcategoryID_Update_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.ProductSubcategoryByProductSubcategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductSubcategory>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductSubcategoryID, 1);
 		}
 
 		[Fact]
@@ -217,6 +317,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void SizeUnitMeasureCode_Create_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureBySizeUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.SizeUnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void SizeUnitMeasureCode_Create_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureBySizeUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.SizeUnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void SizeUnitMeasureCode_Update_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureBySizeUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.SizeUnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void SizeUnitMeasureCode_Update_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureBySizeUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.SizeUnitMeasureCode, "A");
+		}
+
+		[Fact]
 		public async void Style_Create_length()
 		{
 			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -262,6 +412,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.WeightUnitMeasureCode, new string('A', 4));
+		}
+
+		[Fact]
+		public async void WeightUnitMeasureCode_Create_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureByWeightUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.WeightUnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void WeightUnitMeasureCode_Create_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureByWeightUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.WeightUnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void WeightUnitMeasureCode_Update_Valid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureByWeightUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.WeightUnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void WeightUnitMeasureCode_Update_Invalid_Reference()
+		{
+			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+			productRepository.Setup(x => x.UnitMeasureByWeightUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+
+			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.WeightUnitMeasureCode, "A");
 		}
 
 		[Fact]
@@ -315,5 +515,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c2783023fb5a1522cc4b152bbe785d99</Hash>
+    <Hash>cf838cf4080206719d94c034a9ba69a7</Hash>
 </Codenesium>*/

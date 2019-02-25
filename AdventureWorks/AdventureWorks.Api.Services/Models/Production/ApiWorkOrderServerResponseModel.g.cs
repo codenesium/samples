@@ -49,11 +49,33 @@ namespace AdventureWorksNS.Api.Services
 		public int ProductID { get; private set; }
 
 		[JsonProperty]
+		public string ProductIDEntity { get; private set; } = RouteConstants.Products;
+
+		[JsonProperty]
+		public ApiProductServerResponseModel ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(ApiProductServerResponseModel value)
+		{
+			this.ProductIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public short ScrappedQty { get; private set; }
 
 		[Required]
 		[JsonProperty]
 		public short? ScrapReasonID { get; private set; }
+
+		[JsonProperty]
+		public string ScrapReasonIDEntity { get; private set; } = RouteConstants.ScrapReasons;
+
+		[JsonProperty]
+		public ApiScrapReasonServerResponseModel ScrapReasonIDNavigation { get; private set; }
+
+		public void SetScrapReasonIDNavigation(ApiScrapReasonServerResponseModel value)
+		{
+			this.ScrapReasonIDNavigation = value;
+		}
 
 		[JsonProperty]
 		public DateTime StartDate { get; private set; }
@@ -67,5 +89,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bdf7010c1f850aa06cc02bb861901496</Hash>
+    <Hash>6f64fee774cddf9a186384c3764256cc</Hash>
 </Codenesium>*/

@@ -25,6 +25,106 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ComponentID_Create_Valid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByComponentID(It.IsAny<int>())).Returns(Task.FromResult<Product>(new Product()));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
+
+		[Fact]
+		public async void ComponentID_Create_Invalid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByComponentID(It.IsAny<int>())).Returns(Task.FromResult<Product>(null));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
+
+		[Fact]
+		public async void ComponentID_Update_Valid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByComponentID(It.IsAny<int>())).Returns(Task.FromResult<Product>(new Product()));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
+
+		[Fact]
+		public async void ComponentID_Update_Invalid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByComponentID(It.IsAny<int>())).Returns(Task.FromResult<Product>(null));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ComponentID, 1);
+		}
+
+		[Fact]
+		public async void ProductAssemblyID_Create_Valid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByProductAssemblyID(It.IsAny<int>())).Returns(Task.FromResult<Product>(new Product()));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductAssemblyID, 1);
+		}
+
+		[Fact]
+		public async void ProductAssemblyID_Create_Invalid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByProductAssemblyID(It.IsAny<int>())).Returns(Task.FromResult<Product>(null));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductAssemblyID, 1);
+		}
+
+		[Fact]
+		public async void ProductAssemblyID_Update_Valid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByProductAssemblyID(It.IsAny<int>())).Returns(Task.FromResult<Product>(new Product()));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductAssemblyID, 1);
+		}
+
+		[Fact]
+		public async void ProductAssemblyID_Update_Invalid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.ProductByProductAssemblyID(It.IsAny<int>())).Returns(Task.FromResult<Product>(null));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductAssemblyID, 1);
+		}
+
+		[Fact]
 		public async void UnitMeasureCode_Create_null()
 		{
 			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
@@ -71,9 +171,59 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
 		}
+
+		[Fact]
+		public async void UnitMeasureCode_Create_Valid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.UnitMeasureByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void UnitMeasureCode_Create_Invalid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.UnitMeasureByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void UnitMeasureCode_Update_Valid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.UnitMeasureByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(new UnitMeasure()));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UnitMeasureCode, "A");
+		}
+
+		[Fact]
+		public async void UnitMeasureCode_Update_Invalid_Reference()
+		{
+			Mock<IBillOfMaterialRepository> billOfMaterialRepository = new Mock<IBillOfMaterialRepository>();
+			billOfMaterialRepository.Setup(x => x.UnitMeasureByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
+
+			var validator = new ApiBillOfMaterialServerRequestModelValidator(billOfMaterialRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, "A");
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c010c51d53590b8980ac5326ad97ba4b</Hash>
+    <Hash>576c64d1904c7c52a7edc73ed362433c</Hash>
 </Codenesium>*/

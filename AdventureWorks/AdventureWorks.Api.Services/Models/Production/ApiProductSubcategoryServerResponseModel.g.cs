@@ -32,6 +32,17 @@ namespace AdventureWorksNS.Api.Services
 		public int ProductCategoryID { get; private set; }
 
 		[JsonProperty]
+		public string ProductCategoryIDEntity { get; private set; } = RouteConstants.ProductCategories;
+
+		[JsonProperty]
+		public ApiProductCategoryServerResponseModel ProductCategoryIDNavigation { get; private set; }
+
+		public void SetProductCategoryIDNavigation(ApiProductCategoryServerResponseModel value)
+		{
+			this.ProductCategoryIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public int ProductSubcategoryID { get; private set; }
 
 		[JsonProperty]
@@ -40,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd23897b8c31618d217bc59af667b63e</Hash>
+    <Hash>26f7c8e67173fe728693391ad0727005</Hash>
 </Codenesium>*/

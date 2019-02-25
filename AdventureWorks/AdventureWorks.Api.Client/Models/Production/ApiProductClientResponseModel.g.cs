@@ -57,6 +57,46 @@ namespace AdventureWorksNS.Api.Client
 			this.Style = style;
 			this.Weight = weight;
 			this.WeightUnitMeasureCode = weightUnitMeasureCode;
+
+			this.ProductModelIDEntity = nameof(ApiResponse.ProductModels);
+
+			this.ProductSubcategoryIDEntity = nameof(ApiResponse.ProductSubcategories);
+
+			this.SizeUnitMeasureCodeEntity = nameof(ApiResponse.UnitMeasures);
+
+			this.WeightUnitMeasureCodeEntity = nameof(ApiResponse.UnitMeasures);
+		}
+
+		[JsonProperty]
+		public ApiProductModelClientResponseModel ProductModelIDNavigation { get; private set; }
+
+		public void SetProductModelIDNavigation(ApiProductModelClientResponseModel value)
+		{
+			this.ProductModelIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiProductSubcategoryClientResponseModel ProductSubcategoryIDNavigation { get; private set; }
+
+		public void SetProductSubcategoryIDNavigation(ApiProductSubcategoryClientResponseModel value)
+		{
+			this.ProductSubcategoryIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUnitMeasureClientResponseModel SizeUnitMeasureCodeNavigation { get; private set; }
+
+		public void SetSizeUnitMeasureCodeNavigation(ApiUnitMeasureClientResponseModel value)
+		{
+			this.SizeUnitMeasureCodeNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUnitMeasureClientResponseModel WeightUnitMeasureCodeNavigation { get; private set; }
+
+		public void SetWeightUnitMeasureCodeNavigation(ApiUnitMeasureClientResponseModel value)
+		{
+			this.WeightUnitMeasureCodeNavigation = value;
 		}
 
 		[JsonProperty]
@@ -93,10 +133,16 @@ namespace AdventureWorksNS.Api.Client
 		public int? ProductModelID { get; private set; }
 
 		[JsonProperty]
+		public string ProductModelIDEntity { get; set; }
+
+		[JsonProperty]
 		public string ProductNumber { get; private set; }
 
 		[JsonProperty]
 		public int? ProductSubcategoryID { get; private set; }
+
+		[JsonProperty]
+		public string ProductSubcategoryIDEntity { get; set; }
 
 		[JsonProperty]
 		public short ReorderPoint { get; private set; }
@@ -120,6 +166,9 @@ namespace AdventureWorksNS.Api.Client
 		public string SizeUnitMeasureCode { get; private set; }
 
 		[JsonProperty]
+		public string SizeUnitMeasureCodeEntity { get; set; }
+
+		[JsonProperty]
 		public decimal StandardCost { get; private set; }
 
 		[JsonProperty]
@@ -130,9 +179,12 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public string WeightUnitMeasureCode { get; private set; }
+
+		[JsonProperty]
+		public string WeightUnitMeasureCodeEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>efc05dd822481e45664f8d0cb8c6faa4</Hash>
+    <Hash>15a1a8347f89c99af1aea118c77cd2cc</Hash>
 </Codenesium>*/

@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new AddressRepository(loggerMoc.Object, context);
 
 			Address entity = new Address();
-			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			context.Set<Address>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new AddressRepository(loggerMoc.Object, context);
 
 			var entity = new Address();
-			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Address>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
 			var repository = new AddressRepository(loggerMoc.Object, context);
 			Address entity = new Address();
-			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			context.Set<Address>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
 			var repository = new AddressRepository(loggerMoc.Object, context);
 			Address entity = new Address();
-			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			context.Set<Address>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = AddressRepositoryMoc.GetContext();
 			var repository = new AddressRepository(loggerMoc.Object, context);
 			Address entity = new Address();
-			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2);
+			entity.SetProperties(default(int), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
 			context.Set<Address>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>18c33bb495c69979185871763aba7be8</Hash>
+    <Hash>4457c633de9d2030bcf4b22e3a54a653</Hash>
 </Codenesium>*/

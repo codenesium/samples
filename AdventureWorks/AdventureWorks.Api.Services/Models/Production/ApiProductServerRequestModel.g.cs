@@ -99,14 +99,14 @@ namespace AdventureWorksNS.Api.Services
 		public string ProductLine { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? ProductModelID { get; private set; } = default(int);
+		public int? ProductModelID { get; private set; }
 
 		[Required]
 		[JsonProperty]
 		public string ProductNumber { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? ProductSubcategoryID { get; private set; } = default(int);
+		public int? ProductSubcategoryID { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -131,7 +131,7 @@ namespace AdventureWorksNS.Api.Services
 		public string Size { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string SizeUnitMeasureCode { get; private set; } = default(string);
+		public string SizeUnitMeasureCode { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -144,10 +144,10 @@ namespace AdventureWorksNS.Api.Services
 		public double? Weight { get; private set; } = default(double);
 
 		[JsonProperty]
-		public string WeightUnitMeasureCode { get; private set; } = default(string);
+		public string WeightUnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>960a286052d4af805a49add5d27ed938</Hash>
+    <Hash>42e7f4cf55bd52277061cb8f4b7cbe17</Hash>
 </Codenesium>*/

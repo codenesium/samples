@@ -44,9 +44,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("rowguid")]
 		public virtual Guid Rowguid { get; private set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual Person BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(Person item)
+		{
+			this.BusinessEntityIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f13844793ddb51550f91a11ae0fa7d8e</Hash>
+    <Hash>49691d26a41184199339ee1095c7e735</Hash>
 </Codenesium>*/

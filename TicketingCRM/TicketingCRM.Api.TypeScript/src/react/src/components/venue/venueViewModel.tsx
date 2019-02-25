@@ -47,16 +47,16 @@ export default class VenueViewModel {
     provinceId: number,
     website: string
   ): void {
-    this.address1 = moment(address1, 'YYYY-MM-DD');
-    this.address2 = moment(address2, 'YYYY-MM-DD');
-    this.adminId = moment(adminId, 'YYYY-MM-DD');
-    this.email = moment(email, 'YYYY-MM-DD');
-    this.facebook = moment(facebook, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
-    this.phone = moment(phone, 'YYYY-MM-DD');
-    this.provinceId = moment(provinceId, 'YYYY-MM-DD');
-    this.website = moment(website, 'YYYY-MM-DD');
+    this.address1 = address1;
+    this.address2 = address2;
+    this.adminId = adminId;
+    this.email = email;
+    this.facebook = facebook;
+    this.id = id;
+    this.name = name;
+    this.phone = phone;
+    this.provinceId = provinceId;
+    this.website = website;
   }
 
   toDisplay(): string {
@@ -66,5 +66,5 @@ export default class VenueViewModel {
 
 
 /*<Codenesium>
-    <Hash>e98b68c052919e1085f70c02718e6e70</Hash>
+    <Hash>34111ec381ceac06f8b81ec63156c8c9</Hash>
 </Codenesium>*/

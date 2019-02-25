@@ -125,7 +125,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'address1'} />)}
+            })(<Input placeholder={'address1'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -136,7 +136,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'address2'} />)}
+            })(<Input placeholder={'address2'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -144,7 +144,7 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('adminId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'adminId'} />)}
+            })(<Input placeholder={'adminId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -155,7 +155,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
+            })(<Input placeholder={'email'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -166,7 +166,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'facebook'} />)}
+            })(<Input placeholder={'facebook'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -177,7 +177,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -188,7 +188,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'phone'} />)}
+            })(<InputNumber placeholder={'phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -196,7 +196,7 @@ class VenueCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('provinceId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'provinceId'} />)}
+            })(<Input placeholder={'provinceId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -207,7 +207,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'website'} />)}
+            })(<Input placeholder={'website'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -230,5 +230,5 @@ export const WrappedVenueCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f36c5cfcd25817c8bffeb14bbea7dba9</Hash>
+    <Hash>696aa96ac1592ce5079a5c1b8634a433</Hash>
 </Codenesium>*/

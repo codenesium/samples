@@ -35,6 +35,26 @@ namespace AdventureWorksNS.Api.Client
 			this.TaxAmt = taxAmt;
 			this.TotalDue = totalDue;
 			this.VendorID = vendorID;
+
+			this.ShipMethodIDEntity = nameof(ApiResponse.ShipMethods);
+
+			this.VendorIDEntity = nameof(ApiResponse.Vendors);
+		}
+
+		[JsonProperty]
+		public ApiShipMethodClientResponseModel ShipMethodIDNavigation { get; private set; }
+
+		public void SetShipMethodIDNavigation(ApiShipMethodClientResponseModel value)
+		{
+			this.ShipMethodIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiVendorClientResponseModel VendorIDNavigation { get; private set; }
+
+		public void SetVendorIDNavigation(ApiVendorClientResponseModel value)
+		{
+			this.VendorIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -62,6 +82,9 @@ namespace AdventureWorksNS.Api.Client
 		public int ShipMethodID { get; private set; }
 
 		[JsonProperty]
+		public string ShipMethodIDEntity { get; set; }
+
+		[JsonProperty]
 		public int Status { get; private set; }
 
 		[JsonProperty]
@@ -75,9 +98,12 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public int VendorID { get; private set; }
+
+		[JsonProperty]
+		public string VendorIDEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf165b230ad79f9295c1dc769f32c71e</Hash>
+    <Hash>bf562cbdd23a385718c2ddc67777a51d</Hash>
 </Codenesium>*/

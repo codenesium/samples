@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new JobCandidateRepository(loggerMoc.Object, context);
 
 			JobCandidate entity = new JobCandidate();
-			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<JobCandidate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new JobCandidateRepository(loggerMoc.Object, context);
 
 			var entity = new JobCandidate();
-			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<JobCandidate>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = JobCandidateRepositoryMoc.GetContext();
 			var repository = new JobCandidateRepository(loggerMoc.Object, context);
 			JobCandidate entity = new JobCandidate();
-			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<JobCandidate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = JobCandidateRepositoryMoc.GetContext();
 			var repository = new JobCandidateRepository(loggerMoc.Object, context);
 			JobCandidate entity = new JobCandidate();
-			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<JobCandidate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = JobCandidateRepositoryMoc.GetContext();
 			var repository = new JobCandidateRepository(loggerMoc.Object, context);
 			JobCandidate entity = new JobCandidate();
-			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<JobCandidate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6dcb0c9853d9ff99e8b7cd2d844d4d1b</Hash>
+    <Hash>136b1257f74a5ebd86941e61b04c4237</Hash>
 </Codenesium>*/

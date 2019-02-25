@@ -25,10 +25,23 @@ namespace AdventureWorksNS.Api.Client
 			this.Rowguid = rowguid;
 			this.StateProvinceCode = stateProvinceCode;
 			this.TerritoryID = territoryID;
+
+			this.CountryRegionCodeEntity = nameof(ApiResponse.CountryRegions);
+		}
+
+		[JsonProperty]
+		public ApiCountryRegionClientResponseModel CountryRegionCodeNavigation { get; private set; }
+
+		public void SetCountryRegionCodeNavigation(ApiCountryRegionClientResponseModel value)
+		{
+			this.CountryRegionCodeNavigation = value;
 		}
 
 		[JsonProperty]
 		public string CountryRegionCode { get; private set; }
+
+		[JsonProperty]
+		public string CountryRegionCodeEntity { get; set; }
 
 		[JsonProperty]
 		public bool IsOnlyStateProvinceFlag { get; private set; }
@@ -54,5 +67,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d70edbda8f260fb9a3e922e409842675</Hash>
+    <Hash>24439e9ab889eb7f69ee3ced640d4218</Hash>
 </Codenesium>*/

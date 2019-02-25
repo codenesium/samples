@@ -50,9 +50,33 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("StartDate")]
 		public virtual DateTime StartDate { get; private set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual Employee BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(Employee item)
+		{
+			this.BusinessEntityIDNavigation = item;
+		}
+
+		[ForeignKey("DepartmentID")]
+		public virtual Department DepartmentIDNavigation { get; private set; }
+
+		public void SetDepartmentIDNavigation(Department item)
+		{
+			this.DepartmentIDNavigation = item;
+		}
+
+		[ForeignKey("ShiftID")]
+		public virtual Shift ShiftIDNavigation { get; private set; }
+
+		public void SetShiftIDNavigation(Shift item)
+		{
+			this.ShiftIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>751c50c67cdd37c9903c21022319fc8d</Hash>
+    <Hash>37d75880a514b5e4329ed22d795c5064</Hash>
 </Codenesium>*/

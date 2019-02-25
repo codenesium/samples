@@ -27,6 +27,36 @@ namespace AdventureWorksNS.Api.Client
 			this.ProductAssemblyID = productAssemblyID;
 			this.StartDate = startDate;
 			this.UnitMeasureCode = unitMeasureCode;
+
+			this.ComponentIDEntity = nameof(ApiResponse.Products);
+
+			this.ProductAssemblyIDEntity = nameof(ApiResponse.Products);
+
+			this.UnitMeasureCodeEntity = nameof(ApiResponse.UnitMeasures);
+		}
+
+		[JsonProperty]
+		public ApiProductClientResponseModel ComponentIDNavigation { get; private set; }
+
+		public void SetComponentIDNavigation(ApiProductClientResponseModel value)
+		{
+			this.ComponentIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiProductClientResponseModel ProductAssemblyIDNavigation { get; private set; }
+
+		public void SetProductAssemblyIDNavigation(ApiProductClientResponseModel value)
+		{
+			this.ProductAssemblyIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUnitMeasureClientResponseModel UnitMeasureCodeNavigation { get; private set; }
+
+		public void SetUnitMeasureCodeNavigation(ApiUnitMeasureClientResponseModel value)
+		{
+			this.UnitMeasureCodeNavigation = value;
 		}
 
 		[JsonProperty]
@@ -37,6 +67,9 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public int ComponentID { get; private set; }
+
+		[JsonProperty]
+		public string ComponentIDEntity { get; set; }
 
 		[JsonProperty]
 		public DateTime? EndDate { get; private set; }
@@ -51,13 +84,19 @@ namespace AdventureWorksNS.Api.Client
 		public int? ProductAssemblyID { get; private set; }
 
 		[JsonProperty]
+		public string ProductAssemblyIDEntity { get; set; }
+
+		[JsonProperty]
 		public DateTime StartDate { get; private set; }
 
 		[JsonProperty]
 		public string UnitMeasureCode { get; private set; }
+
+		[JsonProperty]
+		public string UnitMeasureCodeEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d1f0651c139c89c630524b221f92bfc</Hash>
+    <Hash>50a5e0b916646fb63620899eb43fff6d</Hash>
 </Codenesium>*/

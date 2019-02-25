@@ -18,7 +18,7 @@ export default class ProvinceViewModel {
 
   setProperties(countryId: number, id: number, name: string): void {
     this.countryId = countryId;
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.id = id;
     this.name = name;
   }
 
@@ -29,5 +29,5 @@ export default class ProvinceViewModel {
 
 
 /*<Codenesium>
-    <Hash>67f6d0b8a819388a34ea5b19eec50ac0</Hash>
+    <Hash>817540f6a6acc298b4be725f8a40a3bb</Hash>
 </Codenesium>*/

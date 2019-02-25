@@ -22,9 +22,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<ProductSubcategory> ByRowguid(Guid rowguid);
 
 		Task<List<Product>> ProductsByProductSubcategoryID(int productSubcategoryID, int limit = int.MaxValue, int offset = 0);
+
+		Task<ProductCategory> ProductCategoryByProductCategoryID(int productCategoryID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>39d344e43d13ef82aa1cddca1db702a9</Hash>
+    <Hash>e8e6eadd9b936c0018561c37812e3b04</Hash>
 </Codenesium>*/

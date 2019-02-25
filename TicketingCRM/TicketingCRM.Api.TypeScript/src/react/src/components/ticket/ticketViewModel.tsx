@@ -17,7 +17,7 @@ export default class TicketViewModel {
   }
 
   setProperties(id: number, publicId: string, ticketStatusId: number): void {
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.id = id;
     this.publicId = publicId;
     this.ticketStatusId = ticketStatusId;
   }
@@ -29,5 +29,5 @@ export default class TicketViewModel {
 
 
 /*<Codenesium>
-    <Hash>0cb2aa3edce68cce20e7188f1a475852</Hash>
+    <Hash>8fea0cf00ee0fdd8852195810916f2f0</Hash>
 </Codenesium>*/

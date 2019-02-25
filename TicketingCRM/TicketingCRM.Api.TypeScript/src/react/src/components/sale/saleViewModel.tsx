@@ -27,7 +27,7 @@ export default class SaleViewModel {
     saleDate: any,
     transactionId: number
   ): void {
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.id = id;
     this.ipAddress = ipAddress;
     this.note = note;
     this.saleDate = moment(saleDate, 'YYYY-MM-DD');
@@ -41,5 +41,5 @@ export default class SaleViewModel {
 
 
 /*<Codenesium>
-    <Hash>76bad278ba2b156497c23a5327d7d339</Hash>
+    <Hash>c0ab27c2d16791114b0e68a6fa4e11a7</Hash>
 </Codenesium>*/

@@ -35,9 +35,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiBillOfMaterialClientRequestModel();
-			model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			var model2 = new ApiBillOfMaterialClientRequestModel();
-			model2.SetProperties(3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			model2.SetProperties(3, 1, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 1, DateTime.Parse("1/1/1989 12:00:00 AM"), "A");
 			var request = new List<ApiBillOfMaterialClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiBillOfMaterialClientResponseModel>> result = await client.BillOfMaterialBulkInsertAsync(request);
 
@@ -45,22 +45,22 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			result.Record.Should().NotBeNull();
 
 			context.Set<BillOfMaterial>().ToList()[1].BOMLevel.Should().Be(2);
-			context.Set<BillOfMaterial>().ToList()[1].ComponentID.Should().Be(2);
+			context.Set<BillOfMaterial>().ToList()[1].ComponentID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[1].EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[1].PerAssemblyQty.Should().Be(2);
-			context.Set<BillOfMaterial>().ToList()[1].ProductAssemblyID.Should().Be(2);
+			context.Set<BillOfMaterial>().ToList()[1].ProductAssemblyID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[1].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<BillOfMaterial>().ToList()[1].UnitMeasureCode.Should().Be("B");
+			context.Set<BillOfMaterial>().ToList()[1].UnitMeasureCode.Should().Be("A");
 
 			context.Set<BillOfMaterial>().ToList()[2].BOMLevel.Should().Be(3);
-			context.Set<BillOfMaterial>().ToList()[2].ComponentID.Should().Be(3);
+			context.Set<BillOfMaterial>().ToList()[2].ComponentID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[2].EndDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[2].PerAssemblyQty.Should().Be(3);
-			context.Set<BillOfMaterial>().ToList()[2].ProductAssemblyID.Should().Be(3);
+			context.Set<BillOfMaterial>().ToList()[2].ProductAssemblyID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[2].StartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
-			context.Set<BillOfMaterial>().ToList()[2].UnitMeasureCode.Should().Be("C");
+			context.Set<BillOfMaterial>().ToList()[2].UnitMeasureCode.Should().Be("A");
 		}
 
 		[Fact]
@@ -74,28 +74,28 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiBillOfMaterialClientRequestModel();
-			model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			CreateResponse<ApiBillOfMaterialClientResponseModel> result = await client.BillOfMaterialCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 			context.Set<BillOfMaterial>().ToList()[1].BOMLevel.Should().Be(2);
-			context.Set<BillOfMaterial>().ToList()[1].ComponentID.Should().Be(2);
+			context.Set<BillOfMaterial>().ToList()[1].ComponentID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[1].EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[1].PerAssemblyQty.Should().Be(2);
-			context.Set<BillOfMaterial>().ToList()[1].ProductAssemblyID.Should().Be(2);
+			context.Set<BillOfMaterial>().ToList()[1].ProductAssemblyID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[1].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<BillOfMaterial>().ToList()[1].UnitMeasureCode.Should().Be("B");
+			context.Set<BillOfMaterial>().ToList()[1].UnitMeasureCode.Should().Be("A");
 
 			result.Record.BOMLevel.Should().Be(2);
-			result.Record.ComponentID.Should().Be(2);
+			result.Record.ComponentID.Should().Be(1);
 			result.Record.EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.PerAssemblyQty.Should().Be(2);
-			result.Record.ProductAssemblyID.Should().Be(2);
+			result.Record.ProductAssemblyID.Should().Be(1);
 			result.Record.StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			result.Record.UnitMeasureCode.Should().Be("B");
+			result.Record.UnitMeasureCode.Should().Be("A");
 		}
 
 		[Fact]
@@ -113,7 +113,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiBillOfMaterialServerResponseModel model = await service.Get(1);
 
 			ApiBillOfMaterialClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			request.SetProperties(2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 
 			UpdateResponse<ApiBillOfMaterialClientResponseModel> updateResponse = await client.BillOfMaterialUpdateAsync(model.BillOfMaterialsID, request);
 
@@ -122,23 +122,23 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.BillOfMaterialsID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[0].BOMLevel.Should().Be(2);
-			context.Set<BillOfMaterial>().ToList()[0].ComponentID.Should().Be(2);
+			context.Set<BillOfMaterial>().ToList()[0].ComponentID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[0].EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<BillOfMaterial>().ToList()[0].PerAssemblyQty.Should().Be(2);
-			context.Set<BillOfMaterial>().ToList()[0].ProductAssemblyID.Should().Be(2);
+			context.Set<BillOfMaterial>().ToList()[0].ProductAssemblyID.Should().Be(1);
 			context.Set<BillOfMaterial>().ToList()[0].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<BillOfMaterial>().ToList()[0].UnitMeasureCode.Should().Be("B");
+			context.Set<BillOfMaterial>().ToList()[0].UnitMeasureCode.Should().Be("A");
 
 			updateResponse.Record.BillOfMaterialsID.Should().Be(1);
 			updateResponse.Record.BOMLevel.Should().Be(2);
-			updateResponse.Record.ComponentID.Should().Be(2);
+			updateResponse.Record.ComponentID.Should().Be(1);
 			updateResponse.Record.EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.PerAssemblyQty.Should().Be(2);
-			updateResponse.Record.ProductAssemblyID.Should().Be(2);
+			updateResponse.Record.ProductAssemblyID.Should().Be(1);
 			updateResponse.Record.StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			updateResponse.Record.UnitMeasureCode.Should().Be("B");
+			updateResponse.Record.UnitMeasureCode.Should().Be("A");
 		}
 
 		[Fact]
@@ -153,7 +153,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IBillOfMaterialService service = testServer.Host.Services.GetService(typeof(IBillOfMaterialService)) as IBillOfMaterialService;
 			var model = new ApiBillOfMaterialServerRequestModel();
-			model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			CreateResponse<ApiBillOfMaterialServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -289,5 +289,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d0ab1765a1e2f996854123271c2e3465</Hash>
+    <Hash>2972d2e118a4f2bb68faa0c6192107fa</Hash>
 </Codenesium>*/

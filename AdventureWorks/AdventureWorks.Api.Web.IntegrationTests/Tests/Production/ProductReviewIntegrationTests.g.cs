@@ -35,9 +35,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiProductReviewClientRequestModel();
-			model.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			var model2 = new ApiProductReviewClientRequestModel();
-			model2.SetProperties("C", "C", DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			model2.SetProperties("C", "C", DateTime.Parse("1/1/1989 12:00:00 AM"), 1, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
 			var request = new List<ApiProductReviewClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiProductReviewClientResponseModel>> result = await client.ProductReviewBulkInsertAsync(request);
 
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<ProductReview>().ToList()[1].Comment.Should().Be("B");
 			context.Set<ProductReview>().ToList()[1].EmailAddress.Should().Be("B");
 			context.Set<ProductReview>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<ProductReview>().ToList()[1].ProductID.Should().Be(2);
+			context.Set<ProductReview>().ToList()[1].ProductID.Should().Be(1);
 			context.Set<ProductReview>().ToList()[1].Rating.Should().Be(2);
 			context.Set<ProductReview>().ToList()[1].ReviewDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<ProductReview>().ToList()[1].ReviewerName.Should().Be("B");
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<ProductReview>().ToList()[2].Comment.Should().Be("C");
 			context.Set<ProductReview>().ToList()[2].EmailAddress.Should().Be("C");
 			context.Set<ProductReview>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
-			context.Set<ProductReview>().ToList()[2].ProductID.Should().Be(3);
+			context.Set<ProductReview>().ToList()[2].ProductID.Should().Be(1);
 			context.Set<ProductReview>().ToList()[2].Rating.Should().Be(3);
 			context.Set<ProductReview>().ToList()[2].ReviewDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<ProductReview>().ToList()[2].ReviewerName.Should().Be("C");
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiProductReviewClientRequestModel();
-			model.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			CreateResponse<ApiProductReviewClientResponseModel> result = await client.ProductReviewCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -80,7 +80,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<ProductReview>().ToList()[1].Comment.Should().Be("B");
 			context.Set<ProductReview>().ToList()[1].EmailAddress.Should().Be("B");
 			context.Set<ProductReview>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<ProductReview>().ToList()[1].ProductID.Should().Be(2);
+			context.Set<ProductReview>().ToList()[1].ProductID.Should().Be(1);
 			context.Set<ProductReview>().ToList()[1].Rating.Should().Be(2);
 			context.Set<ProductReview>().ToList()[1].ReviewDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<ProductReview>().ToList()[1].ReviewerName.Should().Be("B");
@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			result.Record.Comment.Should().Be("B");
 			result.Record.EmailAddress.Should().Be("B");
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			result.Record.ProductID.Should().Be(2);
+			result.Record.ProductID.Should().Be(1);
 			result.Record.Rating.Should().Be(2);
 			result.Record.ReviewDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.ReviewerName.Should().Be("B");
@@ -109,7 +109,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiProductReviewServerResponseModel model = await service.Get(1);
 
 			ApiProductReviewClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			request.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 
 			UpdateResponse<ApiProductReviewClientResponseModel> updateResponse = await client.ProductReviewUpdateAsync(model.ProductReviewID, request);
 
@@ -120,7 +120,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<ProductReview>().ToList()[0].Comment.Should().Be("B");
 			context.Set<ProductReview>().ToList()[0].EmailAddress.Should().Be("B");
 			context.Set<ProductReview>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<ProductReview>().ToList()[0].ProductID.Should().Be(2);
+			context.Set<ProductReview>().ToList()[0].ProductID.Should().Be(1);
 			context.Set<ProductReview>().ToList()[0].Rating.Should().Be(2);
 			context.Set<ProductReview>().ToList()[0].ReviewDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<ProductReview>().ToList()[0].ReviewerName.Should().Be("B");
@@ -129,7 +129,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.Comment.Should().Be("B");
 			updateResponse.Record.EmailAddress.Should().Be("B");
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			updateResponse.Record.ProductID.Should().Be(2);
+			updateResponse.Record.ProductID.Should().Be(1);
 			updateResponse.Record.Rating.Should().Be(2);
 			updateResponse.Record.ReviewDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.ReviewerName.Should().Be("B");
@@ -147,7 +147,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IProductReviewService service = testServer.Host.Services.GetService(typeof(IProductReviewService)) as IProductReviewService;
 			var model = new ApiProductReviewServerRequestModel();
-			model.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			CreateResponse<ApiProductReviewServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -280,5 +280,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>63b871db1ee793c376f7270fdd17feca</Hash>
+    <Hash>aa469cf9a84831f7b63d56a83b6e9cb0</Hash>
 </Codenesium>*/

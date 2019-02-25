@@ -193,6 +193,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void StateProvinceID_Create_Valid_Reference()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.StateProvinceByStateProvinceID(It.IsAny<int>())).Returns(Task.FromResult<StateProvince>(new StateProvince()));
+
+			var validator = new ApiAddressServerRequestModelValidator(addressRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAddressServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
+
+		[Fact]
+		public async void StateProvinceID_Create_Invalid_Reference()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.StateProvinceByStateProvinceID(It.IsAny<int>())).Returns(Task.FromResult<StateProvince>(null));
+
+			var validator = new ApiAddressServerRequestModelValidator(addressRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiAddressServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
+
+		[Fact]
+		public async void StateProvinceID_Update_Valid_Reference()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.StateProvinceByStateProvinceID(It.IsAny<int>())).Returns(Task.FromResult<StateProvince>(new StateProvince()));
+
+			var validator = new ApiAddressServerRequestModelValidator(addressRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
+
+		[Fact]
+		public async void StateProvinceID_Update_Invalid_Reference()
+		{
+			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
+			addressRepository.Setup(x => x.StateProvinceByStateProvinceID(It.IsAny<int>())).Returns(Task.FromResult<StateProvince>(null));
+
+			var validator = new ApiAddressServerRequestModelValidator(addressRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiAddressServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StateProvinceID, 1);
+		}
+
+		[Fact]
 		private async void BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode_Create_Exists()
 		{
 			Mock<IAddressRepository> addressRepository = new Mock<IAddressRepository>();
@@ -243,5 +293,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>68eb5786d857b7d529bd7e62e4c1a619</Hash>
+    <Hash>7d7fe11550337ffb09f42dbd50b14b4b</Hash>
 </Codenesium>*/

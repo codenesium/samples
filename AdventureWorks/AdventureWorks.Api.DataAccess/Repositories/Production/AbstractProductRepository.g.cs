@@ -113,6 +113,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<Product> ByName(string name)
 		{
 			return await this.Context.Set<Product>()
+			       .Include(x => x.ProductModelIDNavigation)
+			       .Include(x => x.ProductSubcategoryIDNavigation)
+			       .Include(x => x.SizeUnitMeasureCodeNavigation)
+			       .Include(x => x.WeightUnitMeasureCodeNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
@@ -121,6 +125,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<Product> ByProductNumber(string productNumber)
 		{
 			return await this.Context.Set<Product>()
+			       .Include(x => x.ProductModelIDNavigation)
+			       .Include(x => x.ProductSubcategoryIDNavigation)
+			       .Include(x => x.SizeUnitMeasureCodeNavigation)
+			       .Include(x => x.WeightUnitMeasureCodeNavigation)
 
 			       .FirstOrDefaultAsync(x => x.ProductNumber == productNumber);
 		}
@@ -129,6 +137,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<Product> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<Product>()
+			       .Include(x => x.ProductModelIDNavigation)
+			       .Include(x => x.ProductSubcategoryIDNavigation)
+			       .Include(x => x.SizeUnitMeasureCodeNavigation)
+			       .Include(x => x.WeightUnitMeasureCodeNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
@@ -173,6 +185,34 @@ namespace AdventureWorksNS.Api.DataAccess
 			       .Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
 
+		// Foreign key reference to table ProductModel via productModelID.
+		public async virtual Task<ProductModel> ProductModelByProductModelID(int? productModelID)
+		{
+			return await this.Context.Set<ProductModel>()
+			       .SingleOrDefaultAsync(x => x.ProductModelID == productModelID);
+		}
+
+		// Foreign key reference to table ProductSubcategory via productSubcategoryID.
+		public async virtual Task<ProductSubcategory> ProductSubcategoryByProductSubcategoryID(int? productSubcategoryID)
+		{
+			return await this.Context.Set<ProductSubcategory>()
+			       .SingleOrDefaultAsync(x => x.ProductSubcategoryID == productSubcategoryID);
+		}
+
+		// Foreign key reference to table UnitMeasure via sizeUnitMeasureCode.
+		public async virtual Task<UnitMeasure> UnitMeasureBySizeUnitMeasureCode(string sizeUnitMeasureCode)
+		{
+			return await this.Context.Set<UnitMeasure>()
+			       .SingleOrDefaultAsync(x => x.UnitMeasureCode == sizeUnitMeasureCode);
+		}
+
+		// Foreign key reference to table UnitMeasure via weightUnitMeasureCode.
+		public async virtual Task<UnitMeasure> UnitMeasureByWeightUnitMeasureCode(string weightUnitMeasureCode)
+		{
+			return await this.Context.Set<UnitMeasure>()
+			       .SingleOrDefaultAsync(x => x.UnitMeasureCode == weightUnitMeasureCode);
+		}
+
 		protected async Task<List<Product>> Where(
 			Expression<Func<Product, bool>> predicate,
 			int limit = int.MaxValue,
@@ -185,6 +225,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Product>()
+			       .Include(x => x.ProductModelIDNavigation)
+			       .Include(x => x.ProductSubcategoryIDNavigation)
+			       .Include(x => x.SizeUnitMeasureCodeNavigation)
+			       .Include(x => x.WeightUnitMeasureCodeNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Product>();
 		}
@@ -199,5 +243,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>82eccd521fcb0dda8092557c35a0bdb1</Hash>
+    <Hash>d445d0f110e02eae6e137e3126d6ba0b</Hash>
 </Codenesium>*/

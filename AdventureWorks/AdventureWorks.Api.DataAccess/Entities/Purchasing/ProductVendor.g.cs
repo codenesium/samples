@@ -74,9 +74,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(3)]
 		[Column("UnitMeasureCode")]
 		public virtual string UnitMeasureCode { get; private set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual Vendor BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(Vendor item)
+		{
+			this.BusinessEntityIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>19c09fcdeaf48000b860de24073aafd0</Hash>
+    <Hash>e071539ff44923552a9c1cc2de908229</Hash>
 </Codenesium>*/

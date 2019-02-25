@@ -32,9 +32,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<TransactionHistory>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<WorkOrder>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+
+		Task<ProductModel> ProductModelByProductModelID(int? productModelID);
+
+		Task<ProductSubcategory> ProductSubcategoryByProductSubcategoryID(int? productSubcategoryID);
+
+		Task<UnitMeasure> UnitMeasureBySizeUnitMeasureCode(string sizeUnitMeasureCode);
+
+		Task<UnitMeasure> UnitMeasureByWeightUnitMeasureCode(string weightUnitMeasureCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>eaaff96c83ca15a4436b025e92604b16</Hash>
+    <Hash>6e068add808ccb1f29dfac286f4b819b</Hash>
 </Codenesium>*/

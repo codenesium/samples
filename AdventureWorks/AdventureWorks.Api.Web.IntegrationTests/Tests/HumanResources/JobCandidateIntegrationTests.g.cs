@@ -35,20 +35,20 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiJobCandidateClientRequestModel();
-			model.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			var model2 = new ApiJobCandidateClientRequestModel();
-			model2.SetProperties(3, DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			model2.SetProperties(1, DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
 			var request = new List<ApiJobCandidateClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiJobCandidateClientResponseModel>> result = await client.JobCandidateBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<JobCandidate>().ToList()[1].BusinessEntityID.Should().Be(2);
+			context.Set<JobCandidate>().ToList()[1].BusinessEntityID.Should().Be(1);
 			context.Set<JobCandidate>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<JobCandidate>().ToList()[1].Resume.Should().Be("B");
 
-			context.Set<JobCandidate>().ToList()[2].BusinessEntityID.Should().Be(3);
+			context.Set<JobCandidate>().ToList()[2].BusinessEntityID.Should().Be(1);
 			context.Set<JobCandidate>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<JobCandidate>().ToList()[2].Resume.Should().Be("C");
 		}
@@ -64,16 +64,16 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiJobCandidateClientRequestModel();
-			model.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			CreateResponse<ApiJobCandidateClientResponseModel> result = await client.JobCandidateCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<JobCandidate>().ToList()[1].BusinessEntityID.Should().Be(2);
+			context.Set<JobCandidate>().ToList()[1].BusinessEntityID.Should().Be(1);
 			context.Set<JobCandidate>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<JobCandidate>().ToList()[1].Resume.Should().Be("B");
 
-			result.Record.BusinessEntityID.Should().Be(2);
+			result.Record.BusinessEntityID.Should().Be(1);
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Resume.Should().Be("B");
 		}
@@ -93,7 +93,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiJobCandidateServerResponseModel model = await service.Get(1);
 
 			ApiJobCandidateClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			request.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 
 			UpdateResponse<ApiJobCandidateClientResponseModel> updateResponse = await client.JobCandidateUpdateAsync(model.JobCandidateID, request);
 
@@ -101,12 +101,12 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.JobCandidateID.Should().Be(1);
-			context.Set<JobCandidate>().ToList()[0].BusinessEntityID.Should().Be(2);
+			context.Set<JobCandidate>().ToList()[0].BusinessEntityID.Should().Be(1);
 			context.Set<JobCandidate>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<JobCandidate>().ToList()[0].Resume.Should().Be("B");
 
 			updateResponse.Record.JobCandidateID.Should().Be(1);
-			updateResponse.Record.BusinessEntityID.Should().Be(2);
+			updateResponse.Record.BusinessEntityID.Should().Be(1);
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Resume.Should().Be("B");
 		}
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IJobCandidateService service = testServer.Host.Services.GetService(typeof(IJobCandidateService)) as IJobCandidateService;
 			var model = new ApiJobCandidateServerRequestModel();
-			model.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			CreateResponse<ApiJobCandidateServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -244,5 +244,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>1992c44db18f3debd09ad2b763ea9e39</Hash>
+    <Hash>83325dfe91cd9a902880a51886fd0a14</Hash>
 </Codenesium>*/

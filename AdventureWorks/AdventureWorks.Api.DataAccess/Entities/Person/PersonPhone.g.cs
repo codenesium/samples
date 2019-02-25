@@ -40,9 +40,25 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("PhoneNumberTypeID")]
 		public virtual int PhoneNumberTypeID { get; private set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual Person BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(Person item)
+		{
+			this.BusinessEntityIDNavigation = item;
+		}
+
+		[ForeignKey("PhoneNumberTypeID")]
+		public virtual PhoneNumberType PhoneNumberTypeIDNavigation { get; private set; }
+
+		public void SetPhoneNumberTypeIDNavigation(PhoneNumberType item)
+		{
+			this.PhoneNumberTypeIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>278bfe176e2e786f7b75075ee74c4a35</Hash>
+    <Hash>149af0e3ecdc269c22700aa8d28c4429</Hash>
 </Codenesium>*/

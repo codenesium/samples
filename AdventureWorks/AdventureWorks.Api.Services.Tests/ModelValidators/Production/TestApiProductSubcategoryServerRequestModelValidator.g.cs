@@ -73,6 +73,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ProductCategoryID_Create_Valid_Reference()
+		{
+			Mock<IProductSubcategoryRepository> productSubcategoryRepository = new Mock<IProductSubcategoryRepository>();
+			productSubcategoryRepository.Setup(x => x.ProductCategoryByProductCategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductCategory>(new ProductCategory()));
+
+			var validator = new ApiProductSubcategoryServerRequestModelValidator(productSubcategoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProductSubcategoryServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductCategoryID, 1);
+		}
+
+		[Fact]
+		public async void ProductCategoryID_Create_Invalid_Reference()
+		{
+			Mock<IProductSubcategoryRepository> productSubcategoryRepository = new Mock<IProductSubcategoryRepository>();
+			productSubcategoryRepository.Setup(x => x.ProductCategoryByProductCategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductCategory>(null));
+
+			var validator = new ApiProductSubcategoryServerRequestModelValidator(productSubcategoryRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiProductSubcategoryServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductCategoryID, 1);
+		}
+
+		[Fact]
+		public async void ProductCategoryID_Update_Valid_Reference()
+		{
+			Mock<IProductSubcategoryRepository> productSubcategoryRepository = new Mock<IProductSubcategoryRepository>();
+			productSubcategoryRepository.Setup(x => x.ProductCategoryByProductCategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductCategory>(new ProductCategory()));
+
+			var validator = new ApiProductSubcategoryServerRequestModelValidator(productSubcategoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProductSubcategoryServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ProductCategoryID, 1);
+		}
+
+		[Fact]
+		public async void ProductCategoryID_Update_Invalid_Reference()
+		{
+			Mock<IProductSubcategoryRepository> productSubcategoryRepository = new Mock<IProductSubcategoryRepository>();
+			productSubcategoryRepository.Setup(x => x.ProductCategoryByProductCategoryID(It.IsAny<int>())).Returns(Task.FromResult<ProductCategory>(null));
+
+			var validator = new ApiProductSubcategoryServerRequestModelValidator(productSubcategoryRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiProductSubcategoryServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ProductCategoryID, 1);
+		}
+
+		[Fact]
 		private async void BeUniqueByName_Create_Exists()
 		{
 			Mock<IProductSubcategoryRepository> productSubcategoryRepository = new Mock<IProductSubcategoryRepository>();
@@ -123,5 +173,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>25c741ddaf4b487f994c1744f935c5f4</Hash>
+    <Hash>9b8dd965e1b5524c0d03cec4b9490d32</Hash>
 </Codenesium>*/

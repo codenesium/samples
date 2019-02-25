@@ -94,6 +94,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<ProductSubcategory> ByName(string name)
 		{
 			return await this.Context.Set<ProductSubcategory>()
+			       .Include(x => x.ProductCategoryIDNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
@@ -102,6 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<ProductSubcategory> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<ProductSubcategory>()
+			       .Include(x => x.ProductCategoryIDNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
@@ -112,6 +114,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Product>()
 			       .Include(x => x.ProductSubcategoryIDNavigation)
 			       .Where(x => x.ProductSubcategoryID == productSubcategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+		}
+
+		// Foreign key reference to table ProductCategory via productCategoryID.
+		public async virtual Task<ProductCategory> ProductCategoryByProductCategoryID(int productCategoryID)
+		{
+			return await this.Context.Set<ProductCategory>()
+			       .SingleOrDefaultAsync(x => x.ProductCategoryID == productCategoryID);
 		}
 
 		protected async Task<List<ProductSubcategory>> Where(
@@ -126,6 +135,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<ProductSubcategory>()
+			       .Include(x => x.ProductCategoryIDNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
 		}
@@ -140,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d53e6f51a7df4bd69d8a41bbce79c901</Hash>
+    <Hash>0c63ab49acdd65555ba8f2360e12bca4</Hash>
 </Codenesium>*/

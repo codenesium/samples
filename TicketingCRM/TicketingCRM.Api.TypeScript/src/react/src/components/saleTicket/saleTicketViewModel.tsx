@@ -22,7 +22,7 @@ export default class SaleTicketViewModel {
   }
 
   setProperties(id: number, saleId: number, ticketId: number): void {
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.id = id;
     this.saleId = saleId;
     this.ticketId = ticketId;
   }
@@ -34,5 +34,5 @@ export default class SaleTicketViewModel {
 
 
 /*<Codenesium>
-    <Hash>65273db8995ad046f614be81c42105d4</Hash>
+    <Hash>caf21eae567186882df711b67fa7a4c5</Hash>
 </Codenesium>*/

@@ -73,6 +73,56 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void CountryRegionCode_Create_Valid_Reference()
+		{
+			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
+			stateProvinceRepository.Setup(x => x.CountryRegionByCountryRegionCode(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(new CountryRegion()));
+
+			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStateProvinceServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+		}
+
+		[Fact]
+		public async void CountryRegionCode_Create_Invalid_Reference()
+		{
+			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
+			stateProvinceRepository.Setup(x => x.CountryRegionByCountryRegionCode(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
+
+			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiStateProvinceServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+		}
+
+		[Fact]
+		public async void CountryRegionCode_Update_Valid_Reference()
+		{
+			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
+			stateProvinceRepository.Setup(x => x.CountryRegionByCountryRegionCode(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(new CountryRegion()));
+
+			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStateProvinceServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+		}
+
+		[Fact]
+		public async void CountryRegionCode_Update_Invalid_Reference()
+		{
+			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
+			stateProvinceRepository.Setup(x => x.CountryRegionByCountryRegionCode(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
+
+			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiStateProvinceServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+		}
+
+		[Fact]
 		public async void Name_Create_null()
 		{
 			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
@@ -219,5 +269,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d7e15ef7fe6d30a6d4ead544df4ff2c2</Hash>
+    <Hash>145dbf5de22b251066148c62c5dd7302</Hash>
 </Codenesium>*/

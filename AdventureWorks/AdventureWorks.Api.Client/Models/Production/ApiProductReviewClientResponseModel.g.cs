@@ -25,6 +25,16 @@ namespace AdventureWorksNS.Api.Client
 			this.Rating = rating;
 			this.ReviewDate = reviewDate;
 			this.ReviewerName = reviewerName;
+
+			this.ProductIDEntity = nameof(ApiResponse.Products);
+		}
+
+		[JsonProperty]
+		public ApiProductClientResponseModel ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(ApiProductClientResponseModel value)
+		{
+			this.ProductIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -38,6 +48,9 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public int ProductID { get; private set; }
+
+		[JsonProperty]
+		public string ProductIDEntity { get; set; }
 
 		[JsonProperty]
 		public int ProductReviewID { get; private set; }
@@ -54,5 +67,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>137ba36d22d3eb03f087f0ce45ea344d</Hash>
+    <Hash>04fda79cf41d5ce87c92914f1afa27ad</Hash>
 </Codenesium>*/

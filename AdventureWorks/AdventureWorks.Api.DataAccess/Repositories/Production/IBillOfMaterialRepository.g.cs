@@ -18,9 +18,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<BillOfMaterial>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
+
+		Task<Product> ProductByComponentID(int componentID);
+
+		Task<Product> ProductByProductAssemblyID(int? productAssemblyID);
+
+		Task<UnitMeasure> UnitMeasureByUnitMeasureCode(string unitMeasureCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>de260fd56c443a840ff5ab641691fbc2</Hash>
+    <Hash>6798aea7f55b98d892664183743c24e9</Hash>
 </Codenesium>*/

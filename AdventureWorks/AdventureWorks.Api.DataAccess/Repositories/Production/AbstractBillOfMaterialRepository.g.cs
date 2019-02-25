@@ -100,6 +100,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.UnitMeasureCode == unitMeasureCode, limit, offset);
 		}
 
+		// Foreign key reference to table Product via componentID.
+		public async virtual Task<Product> ProductByComponentID(int componentID)
+		{
+			return await this.Context.Set<Product>()
+			       .SingleOrDefaultAsync(x => x.ProductID == componentID);
+		}
+
+		// Foreign key reference to table Product via productAssemblyID.
+		public async virtual Task<Product> ProductByProductAssemblyID(int? productAssemblyID)
+		{
+			return await this.Context.Set<Product>()
+			       .SingleOrDefaultAsync(x => x.ProductID == productAssemblyID);
+		}
+
+		// Foreign key reference to table UnitMeasure via unitMeasureCode.
+		public async virtual Task<UnitMeasure> UnitMeasureByUnitMeasureCode(string unitMeasureCode)
+		{
+			return await this.Context.Set<UnitMeasure>()
+			       .SingleOrDefaultAsync(x => x.UnitMeasureCode == unitMeasureCode);
+		}
+
 		protected async Task<List<BillOfMaterial>> Where(
 			Expression<Func<BillOfMaterial, bool>> predicate,
 			int limit = int.MaxValue,
@@ -112,6 +133,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<BillOfMaterial>()
+			       .Include(x => x.ComponentIDNavigation)
+			       .Include(x => x.ProductAssemblyIDNavigation)
+			       .Include(x => x.UnitMeasureCodeNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
@@ -126,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dbf9209db827d087925f7a2b556a984d</Hash>
+    <Hash>8edfa6cdb2a461d8061fc3dd45030732</Hash>
 </Codenesium>*/

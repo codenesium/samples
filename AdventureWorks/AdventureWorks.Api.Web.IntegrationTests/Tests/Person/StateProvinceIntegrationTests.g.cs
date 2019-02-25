@@ -35,16 +35,16 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiStateProvinceClientRequestModel();
-			model.SetProperties("B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			model.SetProperties("A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			var model2 = new ApiStateProvinceClientRequestModel();
-			model2.SetProperties("C", true, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), "C", 3);
+			model2.SetProperties("A", true, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), "C", 3);
 			var request = new List<ApiStateProvinceClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiStateProvinceClientResponseModel>> result = await client.StateProvinceBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<StateProvince>().ToList()[1].CountryRegionCode.Should().Be("B");
+			context.Set<StateProvince>().ToList()[1].CountryRegionCode.Should().Be("A");
 			context.Set<StateProvince>().ToList()[1].IsOnlyStateProvinceFlag.Should().Be(true);
 			context.Set<StateProvince>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<StateProvince>().ToList()[1].Name.Should().Be("B");
@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<StateProvince>().ToList()[1].StateProvinceCode.Should().Be("B");
 			context.Set<StateProvince>().ToList()[1].TerritoryID.Should().Be(2);
 
-			context.Set<StateProvince>().ToList()[2].CountryRegionCode.Should().Be("C");
+			context.Set<StateProvince>().ToList()[2].CountryRegionCode.Should().Be("A");
 			context.Set<StateProvince>().ToList()[2].IsOnlyStateProvinceFlag.Should().Be(true);
 			context.Set<StateProvince>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<StateProvince>().ToList()[2].Name.Should().Be("C");
@@ -72,12 +72,12 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiStateProvinceClientRequestModel();
-			model.SetProperties("B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			model.SetProperties("A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			CreateResponse<ApiStateProvinceClientResponseModel> result = await client.StateProvinceCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<StateProvince>().ToList()[1].CountryRegionCode.Should().Be("B");
+			context.Set<StateProvince>().ToList()[1].CountryRegionCode.Should().Be("A");
 			context.Set<StateProvince>().ToList()[1].IsOnlyStateProvinceFlag.Should().Be(true);
 			context.Set<StateProvince>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<StateProvince>().ToList()[1].Name.Should().Be("B");
@@ -85,7 +85,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<StateProvince>().ToList()[1].StateProvinceCode.Should().Be("B");
 			context.Set<StateProvince>().ToList()[1].TerritoryID.Should().Be(2);
 
-			result.Record.CountryRegionCode.Should().Be("B");
+			result.Record.CountryRegionCode.Should().Be("A");
 			result.Record.IsOnlyStateProvinceFlag.Should().Be(true);
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Name.Should().Be("B");
@@ -109,7 +109,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiStateProvinceServerResponseModel model = await service.Get(1);
 
 			ApiStateProvinceClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			request.SetProperties("A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 
 			UpdateResponse<ApiStateProvinceClientResponseModel> updateResponse = await client.StateProvinceUpdateAsync(model.StateProvinceID, request);
 
@@ -117,7 +117,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.StateProvinceID.Should().Be(1);
-			context.Set<StateProvince>().ToList()[0].CountryRegionCode.Should().Be("B");
+			context.Set<StateProvince>().ToList()[0].CountryRegionCode.Should().Be("A");
 			context.Set<StateProvince>().ToList()[0].IsOnlyStateProvinceFlag.Should().Be(true);
 			context.Set<StateProvince>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<StateProvince>().ToList()[0].Name.Should().Be("B");
@@ -126,7 +126,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<StateProvince>().ToList()[0].TerritoryID.Should().Be(2);
 
 			updateResponse.Record.StateProvinceID.Should().Be(1);
-			updateResponse.Record.CountryRegionCode.Should().Be("B");
+			updateResponse.Record.CountryRegionCode.Should().Be("A");
 			updateResponse.Record.IsOnlyStateProvinceFlag.Should().Be(true);
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Name.Should().Be("B");
@@ -147,7 +147,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IStateProvinceService service = testServer.Host.Services.GetService(typeof(IStateProvinceService)) as IStateProvinceService;
 			var model = new ApiStateProvinceServerRequestModel();
-			model.SetProperties("B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
+			model.SetProperties("A", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
 			CreateResponse<ApiStateProvinceServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -383,5 +383,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>0070927540c31513b3de131a451a703d</Hash>
+    <Hash>7db0647671123597b25018cbd9dfac07</Hash>
 </Codenesium>*/

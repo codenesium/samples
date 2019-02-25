@@ -44,6 +44,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductIDRules()
 		{
+			this.RuleFor(x => x.ProductID).MustAsync(this.BeValidProductByProductID).When(x => !x?.ProductID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ScrappedQtyRules()
@@ -52,6 +53,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ScrapReasonIDRules()
 		{
+			this.RuleFor(x => x.ScrapReasonID).MustAsync(this.BeValidScrapReasonByScrapReasonID).When(x => !x?.ScrapReasonID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void StartDateRules()
@@ -61,9 +63,23 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void StockedQtyRules()
 		{
 		}
+
+		protected async Task<bool> BeValidProductByProductID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.WorkOrderRepository.ProductByProductID(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidScrapReasonByScrapReasonID(short? id,  CancellationToken cancellationToken)
+		{
+			var record = await this.WorkOrderRepository.ScrapReasonByScrapReasonID(id.GetValueOrDefault());
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e13492fde7c2a41b66c6e25a76374dd4</Hash>
+    <Hash>eb4e0f95cb1d8d7a3762f0e55c31b6a2</Hash>
 </Codenesium>*/

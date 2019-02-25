@@ -35,9 +35,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiWorkOrderClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			var model2 = new ApiWorkOrderClientRequestModel();
-			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3, 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), 3);
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 1, 3, 1, DateTime.Parse("1/1/1989 12:00:00 AM"), 3);
 			var request = new List<ApiWorkOrderClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiWorkOrderClientResponseModel>> result = await client.WorkOrderBulkInsertAsync(request);
 
@@ -48,9 +48,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<WorkOrder>().ToList()[1].EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[1].OrderQty.Should().Be(2);
-			context.Set<WorkOrder>().ToList()[1].ProductID.Should().Be(2);
+			context.Set<WorkOrder>().ToList()[1].ProductID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[1].ScrappedQty.Should().Be(2);
-			context.Set<WorkOrder>().ToList()[1].ScrapReasonID.Should().Be(2);
+			context.Set<WorkOrder>().ToList()[1].ScrapReasonID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[1].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[1].StockedQty.Should().Be(2);
 
@@ -58,9 +58,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<WorkOrder>().ToList()[2].EndDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[2].OrderQty.Should().Be(3);
-			context.Set<WorkOrder>().ToList()[2].ProductID.Should().Be(3);
+			context.Set<WorkOrder>().ToList()[2].ProductID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[2].ScrappedQty.Should().Be(3);
-			context.Set<WorkOrder>().ToList()[2].ScrapReasonID.Should().Be(3);
+			context.Set<WorkOrder>().ToList()[2].ScrapReasonID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[2].StartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[2].StockedQty.Should().Be(3);
 		}
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiWorkOrderClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			CreateResponse<ApiWorkOrderClientResponseModel> result = await client.WorkOrderCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -85,9 +85,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<WorkOrder>().ToList()[1].EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[1].OrderQty.Should().Be(2);
-			context.Set<WorkOrder>().ToList()[1].ProductID.Should().Be(2);
+			context.Set<WorkOrder>().ToList()[1].ProductID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[1].ScrappedQty.Should().Be(2);
-			context.Set<WorkOrder>().ToList()[1].ScrapReasonID.Should().Be(2);
+			context.Set<WorkOrder>().ToList()[1].ScrapReasonID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[1].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[1].StockedQty.Should().Be(2);
 
@@ -95,9 +95,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			result.Record.EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.OrderQty.Should().Be(2);
-			result.Record.ProductID.Should().Be(2);
+			result.Record.ProductID.Should().Be(1);
 			result.Record.ScrappedQty.Should().Be(2);
-			result.Record.ScrapReasonID.Should().Be(2);
+			result.Record.ScrapReasonID.Should().Be(1);
 			result.Record.StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.StockedQty.Should().Be(2);
 		}
@@ -117,7 +117,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiWorkOrderServerResponseModel model = await service.Get(1);
 
 			ApiWorkOrderClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 
 			UpdateResponse<ApiWorkOrderClientResponseModel> updateResponse = await client.WorkOrderUpdateAsync(model.WorkOrderID, request);
 
@@ -129,9 +129,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<WorkOrder>().ToList()[0].EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[0].OrderQty.Should().Be(2);
-			context.Set<WorkOrder>().ToList()[0].ProductID.Should().Be(2);
+			context.Set<WorkOrder>().ToList()[0].ProductID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[0].ScrappedQty.Should().Be(2);
-			context.Set<WorkOrder>().ToList()[0].ScrapReasonID.Should().Be(2);
+			context.Set<WorkOrder>().ToList()[0].ScrapReasonID.Should().Be(1);
 			context.Set<WorkOrder>().ToList()[0].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<WorkOrder>().ToList()[0].StockedQty.Should().Be(2);
 
@@ -140,9 +140,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.EndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.OrderQty.Should().Be(2);
-			updateResponse.Record.ProductID.Should().Be(2);
+			updateResponse.Record.ProductID.Should().Be(1);
 			updateResponse.Record.ScrappedQty.Should().Be(2);
-			updateResponse.Record.ScrapReasonID.Should().Be(2);
+			updateResponse.Record.ScrapReasonID.Should().Be(1);
 			updateResponse.Record.StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.StockedQty.Should().Be(2);
 		}
@@ -159,7 +159,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IWorkOrderService service = testServer.Host.Services.GetService(typeof(IWorkOrderService)) as IWorkOrderService;
 			var model = new ApiWorkOrderServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			CreateResponse<ApiWorkOrderServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -336,5 +336,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>83d635d142ebecb9053da4c8da8ddf64</Hash>
+    <Hash>6c0d0f97f5e947d78547c3ed4f4f78cc</Hash>
 </Codenesium>*/

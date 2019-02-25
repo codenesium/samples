@@ -61,6 +61,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void StateProvinceIDRules()
 		{
+			this.RuleFor(x => x.StateProvinceID).MustAsync(this.BeValidStateProvinceByStateProvinceID).When(x => !x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidStateProvinceByStateProvinceID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.AddressRepository.StateProvinceByStateProvinceID(id);
+
+			return record != null;
 		}
 
 		protected async Task<bool> BeUniqueByRowguid(ApiAddressServerRequestModel model,  CancellationToken cancellationToken)
@@ -94,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5db2c29b2185da500d7d405b765f74c8</Hash>
+    <Hash>36557967cd8f739cbd1d5ddcf938182e</Hash>
 </Codenesium>*/

@@ -35,9 +35,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTransactionHistoryClientRequestModel();
-			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			var model2 = new ApiTransactionHistoryClientRequestModel();
-			model2.SetProperties(3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3, 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			model2.SetProperties(3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 1, 3, 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
 			var request = new List<ApiTransactionHistoryClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiTransactionHistoryClientResponseModel>> result = await client.TransactionHistoryBulkInsertAsync(request);
 
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			context.Set<TransactionHistory>().ToList()[1].ActualCost.Should().Be(2m);
 			context.Set<TransactionHistory>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<TransactionHistory>().ToList()[1].ProductID.Should().Be(2);
+			context.Set<TransactionHistory>().ToList()[1].ProductID.Should().Be(1);
 			context.Set<TransactionHistory>().ToList()[1].Quantity.Should().Be(2);
 			context.Set<TransactionHistory>().ToList()[1].ReferenceOrderID.Should().Be(2);
 			context.Set<TransactionHistory>().ToList()[1].ReferenceOrderLineID.Should().Be(2);
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			context.Set<TransactionHistory>().ToList()[2].ActualCost.Should().Be(3m);
 			context.Set<TransactionHistory>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
-			context.Set<TransactionHistory>().ToList()[2].ProductID.Should().Be(3);
+			context.Set<TransactionHistory>().ToList()[2].ProductID.Should().Be(1);
 			context.Set<TransactionHistory>().ToList()[2].Quantity.Should().Be(3);
 			context.Set<TransactionHistory>().ToList()[2].ReferenceOrderID.Should().Be(3);
 			context.Set<TransactionHistory>().ToList()[2].ReferenceOrderLineID.Should().Be(3);
@@ -74,14 +74,14 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTransactionHistoryClientRequestModel();
-			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			CreateResponse<ApiTransactionHistoryClientResponseModel> result = await client.TransactionHistoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 			context.Set<TransactionHistory>().ToList()[1].ActualCost.Should().Be(2m);
 			context.Set<TransactionHistory>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<TransactionHistory>().ToList()[1].ProductID.Should().Be(2);
+			context.Set<TransactionHistory>().ToList()[1].ProductID.Should().Be(1);
 			context.Set<TransactionHistory>().ToList()[1].Quantity.Should().Be(2);
 			context.Set<TransactionHistory>().ToList()[1].ReferenceOrderID.Should().Be(2);
 			context.Set<TransactionHistory>().ToList()[1].ReferenceOrderLineID.Should().Be(2);
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			result.Record.ActualCost.Should().Be(2m);
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			result.Record.ProductID.Should().Be(2);
+			result.Record.ProductID.Should().Be(1);
 			result.Record.Quantity.Should().Be(2);
 			result.Record.ReferenceOrderID.Should().Be(2);
 			result.Record.ReferenceOrderLineID.Should().Be(2);
@@ -113,7 +113,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiTransactionHistoryServerResponseModel model = await service.Get(1);
 
 			ApiTransactionHistoryClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			request.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 
 			UpdateResponse<ApiTransactionHistoryClientResponseModel> updateResponse = await client.TransactionHistoryUpdateAsync(model.TransactionID, request);
 
@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.TransactionID.Should().Be(1);
 			context.Set<TransactionHistory>().ToList()[0].ActualCost.Should().Be(2m);
 			context.Set<TransactionHistory>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<TransactionHistory>().ToList()[0].ProductID.Should().Be(2);
+			context.Set<TransactionHistory>().ToList()[0].ProductID.Should().Be(1);
 			context.Set<TransactionHistory>().ToList()[0].Quantity.Should().Be(2);
 			context.Set<TransactionHistory>().ToList()[0].ReferenceOrderID.Should().Be(2);
 			context.Set<TransactionHistory>().ToList()[0].ReferenceOrderLineID.Should().Be(2);
@@ -133,7 +133,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.TransactionID.Should().Be(1);
 			updateResponse.Record.ActualCost.Should().Be(2m);
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			updateResponse.Record.ProductID.Should().Be(2);
+			updateResponse.Record.ProductID.Should().Be(1);
 			updateResponse.Record.Quantity.Should().Be(2);
 			updateResponse.Record.ReferenceOrderID.Should().Be(2);
 			updateResponse.Record.ReferenceOrderLineID.Should().Be(2);
@@ -153,7 +153,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			ITransactionHistoryService service = testServer.Host.Services.GetService(typeof(ITransactionHistoryService)) as ITransactionHistoryService;
 			var model = new ApiTransactionHistoryServerRequestModel();
-			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			CreateResponse<ApiTransactionHistoryServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -326,5 +326,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c15748675d77fb6f5607f604158ef05f</Hash>
+    <Hash>d220937740c96f909afe17ab05cf0c50</Hash>
 </Codenesium>*/

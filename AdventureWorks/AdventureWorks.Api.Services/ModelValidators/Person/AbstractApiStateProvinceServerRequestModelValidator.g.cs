@@ -29,6 +29,7 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void CountryRegionCodeRules()
 		{
 			this.RuleFor(x => x.CountryRegionCode).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.CountryRegionCode).MustAsync(this.BeValidCountryRegionByCountryRegionCode).When(x => !x?.CountryRegionCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 			this.RuleFor(x => x.CountryRegionCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -61,6 +62,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void TerritoryIDRules()
 		{
+		}
+
+		protected async Task<bool> BeValidCountryRegionByCountryRegionCode(string id,  CancellationToken cancellationToken)
+		{
+			var record = await this.StateProvinceRepository.CountryRegionByCountryRegionCode(id);
+
+			return record != null;
 		}
 
 		protected async Task<bool> BeUniqueByName(ApiStateProvinceServerRequestModel model,  CancellationToken cancellationToken)
@@ -108,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>264958d1183f38283b374f395b603ab4</Hash>
+    <Hash>b8561cbbeb52fc850f4568269d16af4e</Hash>
 </Codenesium>*/

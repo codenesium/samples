@@ -45,6 +45,17 @@ namespace AdventureWorksNS.Api.Services
 		[JsonProperty]
 		public int BusinessEntityID { get; private set; }
 
+		[JsonProperty]
+		public string BusinessEntityIDEntity { get; private set; } = RouteConstants.BusinessEntities;
+
+		[JsonProperty]
+		public ApiBusinessEntityServerResponseModel BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(ApiBusinessEntityServerResponseModel value)
+		{
+			this.BusinessEntityIDNavigation = value;
+		}
+
 		[Required]
 		[JsonProperty]
 		public string Demographic { get; private set; }
@@ -85,5 +96,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a1b6f83210d59fe9f0a78fbac0671ce</Hash>
+    <Hash>41cdbc954811457f1edecd65d2cbddc2</Hash>
 </Codenesium>*/

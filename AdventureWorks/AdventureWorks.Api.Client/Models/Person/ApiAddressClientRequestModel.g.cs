@@ -51,10 +51,10 @@ namespace AdventureWorksNS.Api.Client
 		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[JsonProperty]
-		public int StateProvinceID { get; private set; } = default(int);
+		public int StateProvinceID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f8acb293460b79917411f35840bc4ace</Hash>
+    <Hash>32f1b9fb61c214cd5b4750f80d9c5e92</Hash>
 </Codenesium>*/

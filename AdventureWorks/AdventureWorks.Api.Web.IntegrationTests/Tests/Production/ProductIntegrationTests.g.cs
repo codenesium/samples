@@ -35,9 +35,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiProductClientRequestModel();
-			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 1, "B", 1, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "A", 2m, "B", 2, "A");
 			var model2 = new ApiProductClientRequestModel();
-			model2.SetProperties("C", 3, DateTime.Parse("1/1/1989 12:00:00 AM"), true, 3m, true, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", 3, "C", 3, 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", 3m, "C", 3, "C");
+			model2.SetProperties("C", 3, DateTime.Parse("1/1/1989 12:00:00 AM"), true, 3m, true, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", 1, "C", 1, 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "A", 3m, "C", 3, "A");
 			var request = new List<ApiProductClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiProductClientResponseModel>> result = await client.ProductBulkInsertAsync(request);
 
@@ -53,20 +53,20 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Product>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[1].Name.Should().Be("B");
 			context.Set<Product>().ToList()[1].ProductLine.Should().Be("B");
-			context.Set<Product>().ToList()[1].ProductModelID.Should().Be(2);
+			context.Set<Product>().ToList()[1].ProductModelID.Should().Be(1);
 			context.Set<Product>().ToList()[1].ProductNumber.Should().Be("B");
-			context.Set<Product>().ToList()[1].ProductSubcategoryID.Should().Be(2);
+			context.Set<Product>().ToList()[1].ProductSubcategoryID.Should().Be(1);
 			context.Set<Product>().ToList()[1].ReorderPoint.Should().Be(2);
 			context.Set<Product>().ToList()[1].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Product>().ToList()[1].SafetyStockLevel.Should().Be(2);
 			context.Set<Product>().ToList()[1].SellEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[1].SellStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[1].Size.Should().Be("B");
-			context.Set<Product>().ToList()[1].SizeUnitMeasureCode.Should().Be("B");
+			context.Set<Product>().ToList()[1].SizeUnitMeasureCode.Should().Be("A");
 			context.Set<Product>().ToList()[1].StandardCost.Should().Be(2m);
 			context.Set<Product>().ToList()[1].Style.Should().Be("B");
 			context.Set<Product>().ToList()[1].Weight.Should().Be(2);
-			context.Set<Product>().ToList()[1].WeightUnitMeasureCode.Should().Be("B");
+			context.Set<Product>().ToList()[1].WeightUnitMeasureCode.Should().Be("A");
 
 			context.Set<Product>().ToList()[2].Color.Should().Be("C");
 			context.Set<Product>().ToList()[2].DaysToManufacture.Should().Be(3);
@@ -77,20 +77,20 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Product>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Product>().ToList()[2].Name.Should().Be("C");
 			context.Set<Product>().ToList()[2].ProductLine.Should().Be("C");
-			context.Set<Product>().ToList()[2].ProductModelID.Should().Be(3);
+			context.Set<Product>().ToList()[2].ProductModelID.Should().Be(1);
 			context.Set<Product>().ToList()[2].ProductNumber.Should().Be("C");
-			context.Set<Product>().ToList()[2].ProductSubcategoryID.Should().Be(3);
+			context.Set<Product>().ToList()[2].ProductSubcategoryID.Should().Be(1);
 			context.Set<Product>().ToList()[2].ReorderPoint.Should().Be(3);
 			context.Set<Product>().ToList()[2].Rowguid.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
 			context.Set<Product>().ToList()[2].SafetyStockLevel.Should().Be(3);
 			context.Set<Product>().ToList()[2].SellEndDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Product>().ToList()[2].SellStartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Product>().ToList()[2].Size.Should().Be("C");
-			context.Set<Product>().ToList()[2].SizeUnitMeasureCode.Should().Be("C");
+			context.Set<Product>().ToList()[2].SizeUnitMeasureCode.Should().Be("A");
 			context.Set<Product>().ToList()[2].StandardCost.Should().Be(3m);
 			context.Set<Product>().ToList()[2].Style.Should().Be("C");
 			context.Set<Product>().ToList()[2].Weight.Should().Be(3);
-			context.Set<Product>().ToList()[2].WeightUnitMeasureCode.Should().Be("C");
+			context.Set<Product>().ToList()[2].WeightUnitMeasureCode.Should().Be("A");
 		}
 
 		[Fact]
@@ -104,7 +104,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiProductClientRequestModel();
-			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 1, "B", 1, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "A", 2m, "B", 2, "A");
 			CreateResponse<ApiProductClientResponseModel> result = await client.ProductCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -118,20 +118,20 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Product>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[1].Name.Should().Be("B");
 			context.Set<Product>().ToList()[1].ProductLine.Should().Be("B");
-			context.Set<Product>().ToList()[1].ProductModelID.Should().Be(2);
+			context.Set<Product>().ToList()[1].ProductModelID.Should().Be(1);
 			context.Set<Product>().ToList()[1].ProductNumber.Should().Be("B");
-			context.Set<Product>().ToList()[1].ProductSubcategoryID.Should().Be(2);
+			context.Set<Product>().ToList()[1].ProductSubcategoryID.Should().Be(1);
 			context.Set<Product>().ToList()[1].ReorderPoint.Should().Be(2);
 			context.Set<Product>().ToList()[1].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Product>().ToList()[1].SafetyStockLevel.Should().Be(2);
 			context.Set<Product>().ToList()[1].SellEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[1].SellStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[1].Size.Should().Be("B");
-			context.Set<Product>().ToList()[1].SizeUnitMeasureCode.Should().Be("B");
+			context.Set<Product>().ToList()[1].SizeUnitMeasureCode.Should().Be("A");
 			context.Set<Product>().ToList()[1].StandardCost.Should().Be(2m);
 			context.Set<Product>().ToList()[1].Style.Should().Be("B");
 			context.Set<Product>().ToList()[1].Weight.Should().Be(2);
-			context.Set<Product>().ToList()[1].WeightUnitMeasureCode.Should().Be("B");
+			context.Set<Product>().ToList()[1].WeightUnitMeasureCode.Should().Be("A");
 
 			result.Record.Color.Should().Be("B");
 			result.Record.DaysToManufacture.Should().Be(2);
@@ -142,20 +142,20 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Name.Should().Be("B");
 			result.Record.ProductLine.Should().Be("B");
-			result.Record.ProductModelID.Should().Be(2);
+			result.Record.ProductModelID.Should().Be(1);
 			result.Record.ProductNumber.Should().Be("B");
-			result.Record.ProductSubcategoryID.Should().Be(2);
+			result.Record.ProductSubcategoryID.Should().Be(1);
 			result.Record.ReorderPoint.Should().Be(2);
 			result.Record.Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			result.Record.SafetyStockLevel.Should().Be(2);
 			result.Record.SellEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.SellStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Size.Should().Be("B");
-			result.Record.SizeUnitMeasureCode.Should().Be("B");
+			result.Record.SizeUnitMeasureCode.Should().Be("A");
 			result.Record.StandardCost.Should().Be(2m);
 			result.Record.Style.Should().Be("B");
 			result.Record.Weight.Should().Be(2);
-			result.Record.WeightUnitMeasureCode.Should().Be("B");
+			result.Record.WeightUnitMeasureCode.Should().Be("A");
 		}
 
 		[Fact]
@@ -173,7 +173,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiProductServerResponseModel model = await service.Get(1);
 
 			ApiProductClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			request.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 1, "B", 1, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "A", 2m, "B", 2, "A");
 
 			UpdateResponse<ApiProductClientResponseModel> updateResponse = await client.ProductUpdateAsync(model.ProductID, request);
 
@@ -190,20 +190,20 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Product>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[0].Name.Should().Be("B");
 			context.Set<Product>().ToList()[0].ProductLine.Should().Be("B");
-			context.Set<Product>().ToList()[0].ProductModelID.Should().Be(2);
+			context.Set<Product>().ToList()[0].ProductModelID.Should().Be(1);
 			context.Set<Product>().ToList()[0].ProductNumber.Should().Be("B");
-			context.Set<Product>().ToList()[0].ProductSubcategoryID.Should().Be(2);
+			context.Set<Product>().ToList()[0].ProductSubcategoryID.Should().Be(1);
 			context.Set<Product>().ToList()[0].ReorderPoint.Should().Be(2);
 			context.Set<Product>().ToList()[0].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Product>().ToList()[0].SafetyStockLevel.Should().Be(2);
 			context.Set<Product>().ToList()[0].SellEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[0].SellStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Product>().ToList()[0].Size.Should().Be("B");
-			context.Set<Product>().ToList()[0].SizeUnitMeasureCode.Should().Be("B");
+			context.Set<Product>().ToList()[0].SizeUnitMeasureCode.Should().Be("A");
 			context.Set<Product>().ToList()[0].StandardCost.Should().Be(2m);
 			context.Set<Product>().ToList()[0].Style.Should().Be("B");
 			context.Set<Product>().ToList()[0].Weight.Should().Be(2);
-			context.Set<Product>().ToList()[0].WeightUnitMeasureCode.Should().Be("B");
+			context.Set<Product>().ToList()[0].WeightUnitMeasureCode.Should().Be("A");
 
 			updateResponse.Record.ProductID.Should().Be(1);
 			updateResponse.Record.Color.Should().Be("B");
@@ -215,20 +215,20 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Name.Should().Be("B");
 			updateResponse.Record.ProductLine.Should().Be("B");
-			updateResponse.Record.ProductModelID.Should().Be(2);
+			updateResponse.Record.ProductModelID.Should().Be(1);
 			updateResponse.Record.ProductNumber.Should().Be("B");
-			updateResponse.Record.ProductSubcategoryID.Should().Be(2);
+			updateResponse.Record.ProductSubcategoryID.Should().Be(1);
 			updateResponse.Record.ReorderPoint.Should().Be(2);
 			updateResponse.Record.Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			updateResponse.Record.SafetyStockLevel.Should().Be(2);
 			updateResponse.Record.SellEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.SellStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Size.Should().Be("B");
-			updateResponse.Record.SizeUnitMeasureCode.Should().Be("B");
+			updateResponse.Record.SizeUnitMeasureCode.Should().Be("A");
 			updateResponse.Record.StandardCost.Should().Be(2m);
 			updateResponse.Record.Style.Should().Be("B");
 			updateResponse.Record.Weight.Should().Be(2);
-			updateResponse.Record.WeightUnitMeasureCode.Should().Be("B");
+			updateResponse.Record.WeightUnitMeasureCode.Should().Be("A");
 		}
 
 		[Fact]
@@ -243,7 +243,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IProductService service = testServer.Host.Services.GetService(typeof(IProductService)) as IProductService;
 			var model = new ApiProductServerRequestModel();
-			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 1, "B", 1, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "A", 2m, "B", 2, "A");
 			CreateResponse<ApiProductServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -671,5 +671,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3d4cb9c0077dd4e3926e0df86216fb7e</Hash>
+    <Hash>7bccc6981bed43ff47a8f040a9535be5</Hash>
 </Codenesium>*/

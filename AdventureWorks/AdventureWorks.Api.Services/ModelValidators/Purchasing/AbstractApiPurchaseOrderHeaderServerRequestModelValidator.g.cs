@@ -52,6 +52,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ShipMethodIDRules()
 		{
+			this.RuleFor(x => x.ShipMethodID).MustAsync(this.BeValidShipMethodByShipMethodID).When(x => !x?.ShipMethodID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void StatusRules()
@@ -72,10 +73,25 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void VendorIDRules()
 		{
+			this.RuleFor(x => x.VendorID).MustAsync(this.BeValidVendorByVendorID).When(x => !x?.VendorID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidShipMethodByShipMethodID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.PurchaseOrderHeaderRepository.ShipMethodByShipMethodID(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidVendorByVendorID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.PurchaseOrderHeaderRepository.VendorByVendorID(id);
+
+			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>49ccc3557cf580ed4c0ea83621c17f06</Hash>
+    <Hash>0e9ba5486b5de1f1270f2ce4360298ae</Hash>
 </Codenesium>*/

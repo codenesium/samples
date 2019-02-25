@@ -33,9 +33,25 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("ProductModelID")]
 		public virtual int ProductModelID { get; private set; }
+
+		[ForeignKey("IllustrationID")]
+		public virtual Illustration IllustrationIDNavigation { get; private set; }
+
+		public void SetIllustrationIDNavigation(Illustration item)
+		{
+			this.IllustrationIDNavigation = item;
+		}
+
+		[ForeignKey("ProductModelID")]
+		public virtual ProductModel ProductModelIDNavigation { get; private set; }
+
+		public void SetProductModelIDNavigation(ProductModel item)
+		{
+			this.ProductModelIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>81c6b8318e406e8432aaffd7ea764275</Hash>
+    <Hash>38c83897587ef46cc638dab270e07d2d</Hash>
 </Codenesium>*/

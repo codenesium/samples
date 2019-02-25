@@ -104,9 +104,13 @@ class PasswordDetailComponent extends React.Component<
             <i className="fas fa-edit" />
           </Button>
           <div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>BusinessEntityID</h3>
-              <p>{String(this.state.model!.businessEntityID)}</p>
+              <p>
+                {String(
+                  this.state.model!.businessEntityIDNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>ModifiedDate</h3>
@@ -140,5 +144,5 @@ export const WrappedPasswordDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1efe7308ab1b73639be1eb3948fafc4a</Hash>
+    <Hash>c9c67c27d5f18cd11a24405e86a83c15</Hash>
 </Codenesium>*/

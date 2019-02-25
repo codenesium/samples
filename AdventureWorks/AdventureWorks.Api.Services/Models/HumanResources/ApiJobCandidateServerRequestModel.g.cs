@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		[JsonProperty]
-		public int? BusinessEntityID { get; private set; } = default(int);
+		public int? BusinessEntityID { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>411fdb6d7c14cc503dff35b6f079461a</Hash>
+    <Hash>a3daa591d779d58cf1d787807aa3dae0</Hash>
 </Codenesium>*/

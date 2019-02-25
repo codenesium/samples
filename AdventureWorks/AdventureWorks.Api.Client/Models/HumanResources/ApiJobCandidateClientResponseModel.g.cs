@@ -17,10 +17,23 @@ namespace AdventureWorksNS.Api.Client
 			this.BusinessEntityID = businessEntityID;
 			this.ModifiedDate = modifiedDate;
 			this.Resume = resume;
+
+			this.BusinessEntityIDEntity = nameof(ApiResponse.Employees);
+		}
+
+		[JsonProperty]
+		public ApiEmployeeClientResponseModel BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(ApiEmployeeClientResponseModel value)
+		{
+			this.BusinessEntityIDNavigation = value;
 		}
 
 		[JsonProperty]
 		public int? BusinessEntityID { get; private set; }
+
+		[JsonProperty]
+		public string BusinessEntityIDEntity { get; set; }
 
 		[JsonProperty]
 		public int JobCandidateID { get; private set; }
@@ -34,5 +47,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>85c8f07e2ab0a4cab37f59f30552b0d4</Hash>
+    <Hash>1d81ccdd40f79417bba0d4ce4bc7269a</Hash>
 </Codenesium>*/

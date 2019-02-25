@@ -19,10 +19,23 @@ namespace AdventureWorksNS.Api.Client
 			this.PasswordHash = passwordHash;
 			this.PasswordSalt = passwordSalt;
 			this.Rowguid = rowguid;
+
+			this.BusinessEntityIDEntity = nameof(ApiResponse.People);
+		}
+
+		[JsonProperty]
+		public ApiPersonClientResponseModel BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(ApiPersonClientResponseModel value)
+		{
+			this.BusinessEntityIDNavigation = value;
 		}
 
 		[JsonProperty]
 		public int BusinessEntityID { get; private set; }
+
+		[JsonProperty]
+		public string BusinessEntityIDEntity { get; set; }
 
 		[JsonProperty]
 		public DateTime ModifiedDate { get; private set; }
@@ -39,5 +52,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>109fff617b81d0c1a50267ba021665ff</Hash>
+    <Hash>3fda71c955f4bc0d9ea5b273a4160527</Hash>
 </Codenesium>*/

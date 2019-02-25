@@ -37,9 +37,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("Resume")]
 		public virtual string Resume { get; private set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual Employee BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(Employee item)
+		{
+			this.BusinessEntityIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>706b1fcf8f1d91796f816b1642361df6</Hash>
+    <Hash>e18c88b7a15682506c52dba4ab6e7cb1</Hash>
 </Codenesium>*/

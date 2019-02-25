@@ -18,9 +18,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<JobCandidate>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID, int limit = int.MaxValue, int offset = 0);
+
+		Task<Employee> EmployeeByBusinessEntityID(int? businessEntityID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>63972c7332889644bf2a83100a755a8c</Hash>
+    <Hash>20d9e6f7d9f194e673af325655b29160</Hash>
 </Codenesium>*/

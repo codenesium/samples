@@ -114,9 +114,11 @@ class BillOfMaterialDetailComponent extends React.Component<
               <h3>BOMLevel</h3>
               <p>{String(this.state.model!.bOMLevel)}</p>
             </div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>ComponentID</h3>
-              <p>{String(this.state.model!.componentID)}</p>
+              <p>
+                {String(this.state.model!.componentIDNavigation!.toDisplay())}
+              </p>
             </div>
             <div>
               <h3>EndDate</h3>
@@ -130,17 +132,25 @@ class BillOfMaterialDetailComponent extends React.Component<
               <h3>PerAssemblyQty</h3>
               <p>{String(this.state.model!.perAssemblyQty)}</p>
             </div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>ProductAssemblyID</h3>
-              <p>{String(this.state.model!.productAssemblyID)}</p>
+              <p>
+                {String(
+                  this.state.model!.productAssemblyIDNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>StartDate</h3>
               <p>{String(this.state.model!.startDate)}</p>
             </div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>UnitMeasureCode</h3>
-              <p>{String(this.state.model!.unitMeasureCode)}</p>
+              <p>
+                {String(
+                  this.state.model!.unitMeasureCodeNavigation!.toDisplay()
+                )}
+              </p>
             </div>
           </div>
           {message}
@@ -158,5 +168,5 @@ export const WrappedBillOfMaterialDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ed354c389f12f409f06631354ed8ad16</Hash>
+    <Hash>f0682cdeff82f3ad1c82573c5660588f</Hash>
 </Codenesium>*/

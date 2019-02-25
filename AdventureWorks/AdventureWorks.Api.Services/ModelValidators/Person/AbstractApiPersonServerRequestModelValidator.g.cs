@@ -84,6 +84,13 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.Title).Length(0, 8).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
+		protected async Task<bool> BeValidBusinessEntityByBusinessEntityID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.PersonRepository.BusinessEntityByBusinessEntityID(id);
+
+			return record != null;
+		}
+
 		protected async Task<bool> BeUniqueByRowguid(ApiPersonServerRequestModel model,  CancellationToken cancellationToken)
 		{
 			Person record = await this.PersonRepository.ByRowguid(model.Rowguid);
@@ -101,5 +108,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e63d382ebe1cdf31baf8add993e8125</Hash>
+    <Hash>685bd949fb5ff3ee0109064d0fca1966</Hash>
 </Codenesium>*/

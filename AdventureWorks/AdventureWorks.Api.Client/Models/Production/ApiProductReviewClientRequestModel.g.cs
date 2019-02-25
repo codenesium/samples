@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Client
 		public DateTime ModifiedDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[JsonProperty]
-		public int ProductID { get; private set; } = default(int);
+		public int ProductID { get; private set; }
 
 		[JsonProperty]
 		public int Rating { get; private set; } = default(int);
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9c3398f3e447ab72397e0d759c6b2aed</Hash>
+    <Hash>f9c557980eae7a576adde58f83e18e4e</Hash>
 </Codenesium>*/

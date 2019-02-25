@@ -104,9 +104,13 @@ class JobCandidateDetailComponent extends React.Component<
             <i className="fas fa-edit" />
           </Button>
           <div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>BusinessEntityID</h3>
-              <p>{String(this.state.model!.businessEntityID)}</p>
+              <p>
+                {String(
+                  this.state.model!.businessEntityIDNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>JobCandidateID</h3>
@@ -136,5 +140,5 @@ export const WrappedJobCandidateDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>493bae60d1d759acb4004ece4d282303</Hash>
+    <Hash>88b39f482e0079a441f893e264ee1934</Hash>
 </Codenesium>*/

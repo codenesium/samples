@@ -105,9 +105,13 @@ class StateProvinceDetailComponent extends React.Component<
             <i className="fas fa-edit" />
           </Button>
           <div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>CountryRegionCode</h3>
-              <p>{String(this.state.model!.countryRegionCode)}</p>
+              <p>
+                {String(
+                  this.state.model!.countryRegionCodeNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>IsOnlyStateProvinceFlag</h3>
@@ -169,5 +173,5 @@ export const WrappedStateProvinceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0e1a2faa68a2aff7864a04a3f5f251dc</Hash>
+    <Hash>47f3df3589b4061063a27a43c6ae8a9b</Hash>
 </Codenesium>*/

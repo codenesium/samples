@@ -25,6 +25,16 @@ namespace AdventureWorksNS.Api.Client
 			this.PostalCode = postalCode;
 			this.Rowguid = rowguid;
 			this.StateProvinceID = stateProvinceID;
+
+			this.StateProvinceIDEntity = nameof(ApiResponse.StateProvinces);
+		}
+
+		[JsonProperty]
+		public ApiStateProvinceClientResponseModel StateProvinceIDNavigation { get; private set; }
+
+		public void SetStateProvinceIDNavigation(ApiStateProvinceClientResponseModel value)
+		{
+			this.StateProvinceIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -50,9 +60,12 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public int StateProvinceID { get; private set; }
+
+		[JsonProperty]
+		public string StateProvinceIDEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>20c08d961f94014807f19ebf5ae197af</Hash>
+    <Hash>fcac5ba8956300a3463ea451990b9d17</Hash>
 </Codenesium>*/

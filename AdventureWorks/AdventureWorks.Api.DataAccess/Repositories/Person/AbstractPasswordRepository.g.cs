@@ -90,6 +90,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Person via businessEntityID.
+		public async virtual Task<Person> PersonByBusinessEntityID(int businessEntityID)
+		{
+			return await this.Context.Set<Person>()
+			       .SingleOrDefaultAsync(x => x.BusinessEntityID == businessEntityID);
+		}
+
 		protected async Task<List<Password>> Where(
 			Expression<Func<Password, bool>> predicate,
 			int limit = int.MaxValue,
@@ -102,6 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Password>()
+			       .Include(x => x.BusinessEntityIDNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Password>();
 		}
@@ -116,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>95a39adefaa65dda43a1f46344e98429</Hash>
+    <Hash>40e068a81a28ee6ef82ecf6aae58cecd</Hash>
 </Codenesium>*/

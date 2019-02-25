@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new TransactionHistoryRepository(loggerMoc.Object, context);
 
 			TransactionHistory entity = new TransactionHistory();
-			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<TransactionHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new TransactionHistoryRepository(loggerMoc.Object, context);
 
 			var entity = new TransactionHistory();
-			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<TransactionHistory>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = TransactionHistoryRepositoryMoc.GetContext();
 			var repository = new TransactionHistoryRepository(loggerMoc.Object, context);
 			TransactionHistory entity = new TransactionHistory();
-			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<TransactionHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = TransactionHistoryRepositoryMoc.GetContext();
 			var repository = new TransactionHistoryRepository(loggerMoc.Object, context);
 			TransactionHistory entity = new TransactionHistory();
-			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<TransactionHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = TransactionHistoryRepositoryMoc.GetContext();
 			var repository = new TransactionHistoryRepository(loggerMoc.Object, context);
 			TransactionHistory entity = new TransactionHistory();
-			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<TransactionHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b17be80918b3615f5b2f7e8d40cf64ce</Hash>
+    <Hash>618d36c4502294b8ba64b056ec2c81d1</Hash>
 </Codenesium>*/

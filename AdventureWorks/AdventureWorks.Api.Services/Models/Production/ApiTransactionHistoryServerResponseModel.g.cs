@@ -40,6 +40,17 @@ namespace AdventureWorksNS.Api.Services
 		public int ProductID { get; private set; }
 
 		[JsonProperty]
+		public string ProductIDEntity { get; private set; } = RouteConstants.Products;
+
+		[JsonProperty]
+		public ApiProductServerResponseModel ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(ApiProductServerResponseModel value)
+		{
+			this.ProductIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Quantity { get; private set; }
 
 		[JsonProperty]
@@ -60,5 +71,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>759d9ebf7be82109915ca2501a0615dc</Hash>
+    <Hash>441a9e6e0b6f84574287ea8474979993</Hash>
 </Codenesium>*/

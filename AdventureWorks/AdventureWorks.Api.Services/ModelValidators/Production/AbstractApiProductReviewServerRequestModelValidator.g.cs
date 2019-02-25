@@ -43,6 +43,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductIDRules()
 		{
+			this.RuleFor(x => x.ProductID).MustAsync(this.BeValidProductByProductID).When(x => !x?.ProductID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void RatingRules()
@@ -58,9 +59,16 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.ReviewerName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.ReviewerName).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
+
+		protected async Task<bool> BeValidProductByProductID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.ProductReviewRepository.ProductByProductID(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e73ee1c8ebb63dab96739e62f8853bb</Hash>
+    <Hash>44a4f106f5c7e40839da6a4d940ea410</Hash>
 </Codenesium>*/

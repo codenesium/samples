@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int ShipMethodID { get; private set; } = default(int);
+		public int ShipMethodID { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -88,10 +88,10 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int VendorID { get; private set; } = default(int);
+		public int VendorID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c7e2d9ad396ee39118380dadeb05fa9</Hash>
+    <Hash>a74704b0c4715b8323652a09876b33b0</Hash>
 </Codenesium>*/

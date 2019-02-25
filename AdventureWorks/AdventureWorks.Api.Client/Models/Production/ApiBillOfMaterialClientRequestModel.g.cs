@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.Client
 		public short BOMLevel { get; private set; } = default(short);
 
 		[JsonProperty]
-		public int ComponentID { get; private set; } = default(int);
+		public int ComponentID { get; private set; }
 
 		[JsonProperty]
 		public DateTime? EndDate { get; private set; } = null;
@@ -50,16 +50,16 @@ namespace AdventureWorksNS.Api.Client
 		public double PerAssemblyQty { get; private set; } = default(double);
 
 		[JsonProperty]
-		public int? ProductAssemblyID { get; private set; } = default(int);
+		public int? ProductAssemblyID { get; private set; }
 
 		[JsonProperty]
 		public DateTime StartDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[JsonProperty]
-		public string UnitMeasureCode { get; private set; } = default(string);
+		public string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>510b894d3f5e9b49e06c23675e79ee20</Hash>
+    <Hash>8429e2f0f3e1a7d477b1844183ad0613</Hash>
 </Codenesium>*/

@@ -63,9 +63,33 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(3)]
 		[Column("UnitMeasureCode")]
 		public virtual string UnitMeasureCode { get; private set; }
+
+		[ForeignKey("ComponentID")]
+		public virtual Product ComponentIDNavigation { get; private set; }
+
+		public void SetComponentIDNavigation(Product item)
+		{
+			this.ComponentIDNavigation = item;
+		}
+
+		[ForeignKey("ProductAssemblyID")]
+		public virtual Product ProductAssemblyIDNavigation { get; private set; }
+
+		public void SetProductAssemblyIDNavigation(Product item)
+		{
+			this.ProductAssemblyIDNavigation = item;
+		}
+
+		[ForeignKey("UnitMeasureCode")]
+		public virtual UnitMeasure UnitMeasureCodeNavigation { get; private set; }
+
+		public void SetUnitMeasureCodeNavigation(UnitMeasure item)
+		{
+			this.UnitMeasureCodeNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>864fc5a3f931e28ec85e51996b5f8fbe</Hash>
+    <Hash>899c7cd4f0af9e06d47c23a296985b7b</Hash>
 </Codenesium>*/

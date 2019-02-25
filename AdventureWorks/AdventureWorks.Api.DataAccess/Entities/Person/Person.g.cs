@@ -88,9 +88,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(8)]
 		[Column("Title")]
 		public virtual string Title { get; private set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual BusinessEntity BusinessEntityIDNavigation { get; private set; }
+
+		public void SetBusinessEntityIDNavigation(BusinessEntity item)
+		{
+			this.BusinessEntityIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>357bd7bc6c10a6f6a4cec24778d926d6</Hash>
+    <Hash>7ac3e976d6e97715f5c643b817f2e5bf</Hash>
 </Codenesium>*/

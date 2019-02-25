@@ -43,9 +43,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("StartDate")]
 		public virtual DateTime StartDate { get; private set; }
+
+		[ForeignKey("ProductID")]
+		public virtual Product ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(Product item)
+		{
+			this.ProductIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b122e2ad9ee368ac98c57e86ff0d8ef</Hash>
+    <Hash>936a779c06b2df8c66fec65ab8489521</Hash>
 </Codenesium>*/

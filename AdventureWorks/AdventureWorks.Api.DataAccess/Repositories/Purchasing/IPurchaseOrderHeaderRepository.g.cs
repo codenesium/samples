@@ -20,9 +20,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0);
+
+		Task<ShipMethod> ShipMethodByShipMethodID(int shipMethodID);
+
+		Task<Vendor> VendorByVendorID(int vendorID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>286476b1a8db65f1cac5b7a8757648cb</Hash>
+    <Hash>7fa9cf2d123d9e67ee3c58f2c8943dd9</Hash>
 </Codenesium>*/

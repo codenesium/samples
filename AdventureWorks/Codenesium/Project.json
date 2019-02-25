@@ -50220,10 +50220,36 @@
       "IsMultiTenant": false,
       "UseSoftDeletes": false
     },
-    "TableParameterSettings": [],
-    "ColumnParameterSettings": [
+    "TableParameterSettings": [
       {
         "$id": "2999",
+        "Table": "ProductDocument",
+        "Schema": "Production",
+        "AppDoNotProcess": true,
+        "AppTableName": "ProductDocument",
+        "AppTableNamePlural": "ProductDocuments",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": ""
+      }
+    ],
+    "ColumnParameterSettings": [
+      {
+        "$id": "3000",
         "Table": "Product",
         "Schema": "Production",
         "Column": "Class",
@@ -50248,7 +50274,7 @@
     "VirtualConstraints": [],
     "ConstraintParameterSettings": [
       {
-        "$id": "3000",
+        "$id": "3001",
         "SchemaName": "Sales",
         "TableName": "SpecialOfferProduct",
         "Name": "IX_SpecialOfferProduct_ProductID",

@@ -52,9 +52,20 @@ namespace AdventureWorksNS.Api.Services
 
 		[JsonProperty]
 		public int StateProvinceID { get; private set; }
+
+		[JsonProperty]
+		public string StateProvinceIDEntity { get; private set; } = RouteConstants.StateProvinces;
+
+		[JsonProperty]
+		public ApiStateProvinceServerResponseModel StateProvinceIDNavigation { get; private set; }
+
+		public void SetStateProvinceIDNavigation(ApiStateProvinceServerResponseModel value)
+		{
+			this.StateProvinceIDNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1c043f3d3c349aa7466aa2716dd2e64</Hash>
+    <Hash>915a02e29d2ada8b61757a61ddfecbcd</Hash>
 </Codenesium>*/

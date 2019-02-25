@@ -45,9 +45,16 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void RowguidRules()
 		{
 		}
+
+		protected async Task<bool> BeValidPersonByBusinessEntityID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.PasswordRepository.PersonByBusinessEntityID(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>36f9de31c46fda56debf0b8c72256430</Hash>
+    <Hash>74df0b720a234749a5d5b6674cc55aec</Hash>
 </Codenesium>*/

@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string CountryRegionCode { get; private set; } = default(string);
+		public string CountryRegionCode { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d379acbf141e18bb31cf90442bea4719</Hash>
+    <Hash>76dd852d7446a1139372f73da7d41de4</Hash>
 </Codenesium>*/

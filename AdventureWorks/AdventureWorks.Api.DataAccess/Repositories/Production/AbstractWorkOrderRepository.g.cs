@@ -107,6 +107,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.ScrapReasonID == scrapReasonID, limit, offset);
 		}
 
+		// Foreign key reference to table Product via productID.
+		public async virtual Task<Product> ProductByProductID(int productID)
+		{
+			return await this.Context.Set<Product>()
+			       .SingleOrDefaultAsync(x => x.ProductID == productID);
+		}
+
+		// Foreign key reference to table ScrapReason via scrapReasonID.
+		public async virtual Task<ScrapReason> ScrapReasonByScrapReasonID(short? scrapReasonID)
+		{
+			return await this.Context.Set<ScrapReason>()
+			       .SingleOrDefaultAsync(x => x.ScrapReasonID == scrapReasonID);
+		}
+
 		protected async Task<List<WorkOrder>> Where(
 			Expression<Func<WorkOrder, bool>> predicate,
 			int limit = int.MaxValue,
@@ -119,6 +133,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<WorkOrder>()
+			       .Include(x => x.ProductIDNavigation)
+			       .Include(x => x.ScrapReasonIDNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
@@ -133,5 +149,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>076429c7e71b8b076ae39a82559117bd</Hash>
+    <Hash>e38baea5346531e297b0b0a321acc4e7</Hash>
 </Codenesium>*/

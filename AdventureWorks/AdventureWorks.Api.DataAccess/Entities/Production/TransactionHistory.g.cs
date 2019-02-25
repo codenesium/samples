@@ -63,9 +63,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(1)]
 		[Column("TransactionType")]
 		public virtual string TransactionType { get; private set; }
+
+		[ForeignKey("ProductID")]
+		public virtual Product ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(Product item)
+		{
+			this.ProductIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e97e0337113bb9b263cf880fd3ab378</Hash>
+    <Hash>b94f41770b5363fd9028414782d70434</Hash>
 </Codenesium>*/

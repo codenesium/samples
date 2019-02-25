@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Client
 		}
 
 		[JsonProperty]
-		public int? BusinessEntityID { get; private set; } = default(int);
+		public int? BusinessEntityID { get; private set; }
 
 		[JsonProperty]
 		public DateTime ModifiedDate { get; private set; } = SqlDateTime.MinValue.Value;
@@ -36,5 +36,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>458fb820067a3584ce18d975cd17061e</Hash>
+    <Hash>241a43b0073ff7c4e6588b385f2744a2</Hash>
 </Codenesium>*/

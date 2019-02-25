@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int ComponentID { get; private set; } = default(int);
+		public int ComponentID { get; private set; }
 
 		[JsonProperty]
 		public DateTime? EndDate { get; private set; } = null;
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Services
 		public double PerAssemblyQty { get; private set; } = default(double);
 
 		[JsonProperty]
-		public int? ProductAssemblyID { get; private set; } = default(int);
+		public int? ProductAssemblyID { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -63,10 +63,10 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string UnitMeasureCode { get; private set; } = default(string);
+		public string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>353569ae5d7d4430f5cc1c38080d3097</Hash>
+    <Hash>3aa8c3f3036923c5e7c6659db30c40cd</Hash>
 </Codenesium>*/

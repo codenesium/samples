@@ -110,6 +110,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.VendorID == vendorID, limit, offset);
 		}
 
+		// Foreign key reference to table ShipMethod via shipMethodID.
+		public async virtual Task<ShipMethod> ShipMethodByShipMethodID(int shipMethodID)
+		{
+			return await this.Context.Set<ShipMethod>()
+			       .SingleOrDefaultAsync(x => x.ShipMethodID == shipMethodID);
+		}
+
+		// Foreign key reference to table Vendor via vendorID.
+		public async virtual Task<Vendor> VendorByVendorID(int vendorID)
+		{
+			return await this.Context.Set<Vendor>()
+			       .SingleOrDefaultAsync(x => x.BusinessEntityID == vendorID);
+		}
+
 		protected async Task<List<PurchaseOrderHeader>> Where(
 			Expression<Func<PurchaseOrderHeader, bool>> predicate,
 			int limit = int.MaxValue,
@@ -122,6 +136,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<PurchaseOrderHeader>()
+			       .Include(x => x.ShipMethodIDNavigation)
+			       .Include(x => x.VendorIDNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
 		}
@@ -136,5 +152,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>685fbc658a03ef65fc2f2cef0ae205bc</Hash>
+    <Hash>5207ad275b230ecfe9002a33645cf5bd</Hash>
 </Codenesium>*/

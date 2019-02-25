@@ -69,6 +69,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductModelIDRules()
 		{
+			this.RuleFor(x => x.ProductModelID).MustAsync(this.BeValidProductModelByProductModelID).When(x => !x?.ProductModelID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ProductNumberRules()
@@ -80,6 +81,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductSubcategoryIDRules()
 		{
+			this.RuleFor(x => x.ProductSubcategoryID).MustAsync(this.BeValidProductSubcategoryByProductSubcategoryID).When(x => !x?.ProductSubcategoryID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ReorderPointRules()
@@ -110,6 +112,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void SizeUnitMeasureCodeRules()
 		{
+			this.RuleFor(x => x.SizeUnitMeasureCode).MustAsync(this.BeValidUnitMeasureBySizeUnitMeasureCode).When(x => !x?.SizeUnitMeasureCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 			this.RuleFor(x => x.SizeUnitMeasureCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -128,7 +131,36 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void WeightUnitMeasureCodeRules()
 		{
+			this.RuleFor(x => x.WeightUnitMeasureCode).MustAsync(this.BeValidUnitMeasureByWeightUnitMeasureCode).When(x => !x?.WeightUnitMeasureCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 			this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		protected async Task<bool> BeValidProductModelByProductModelID(int? id,  CancellationToken cancellationToken)
+		{
+			var record = await this.ProductRepository.ProductModelByProductModelID(id.GetValueOrDefault());
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidProductSubcategoryByProductSubcategoryID(int? id,  CancellationToken cancellationToken)
+		{
+			var record = await this.ProductRepository.ProductSubcategoryByProductSubcategoryID(id.GetValueOrDefault());
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidUnitMeasureBySizeUnitMeasureCode(string id,  CancellationToken cancellationToken)
+		{
+			var record = await this.ProductRepository.UnitMeasureBySizeUnitMeasureCode(id.GetValueOrDefault());
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidUnitMeasureByWeightUnitMeasureCode(string id,  CancellationToken cancellationToken)
+		{
+			var record = await this.ProductRepository.UnitMeasureByWeightUnitMeasureCode(id.GetValueOrDefault());
+
+			return record != null;
 		}
 
 		protected async Task<bool> BeUniqueByName(ApiProductServerRequestModel model,  CancellationToken cancellationToken)
@@ -176,5 +208,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36347cff1341538d9ef97cfe4a0be3e3</Hash>
+    <Hash>586190a3b7b72ab374e0a8aac5c33b0f</Hash>
 </Codenesium>*/

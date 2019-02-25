@@ -49,13 +49,13 @@ namespace AdventureWorksNS.Api.Client
 		public int OrderQty { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int ProductID { get; private set; } = default(int);
+		public int ProductID { get; private set; }
 
 		[JsonProperty]
 		public short ScrappedQty { get; private set; } = default(short);
 
 		[JsonProperty]
-		public short? ScrapReasonID { get; private set; } = default(short);
+		public short? ScrapReasonID { get; private set; }
 
 		[JsonProperty]
 		public DateTime StartDate { get; private set; } = SqlDateTime.MinValue.Value;
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>23db4916c9bf503bf948bb1512c6e639</Hash>
+    <Hash>8c0ff59bacab2106b087349e5b8c95ba</Hash>
 </Codenesium>*/

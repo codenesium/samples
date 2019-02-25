@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 
 			BillOfMaterial entity = new BillOfMaterial();
-			entity.SetProperties(default(int), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<BillOfMaterial>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 
 			var entity = new BillOfMaterial();
-			entity.SetProperties(default(int), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			await repository.Create(entity);
 
 			var records = await context.Set<BillOfMaterial>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
 			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 			BillOfMaterial entity = new BillOfMaterial();
-			entity.SetProperties(default(int), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<BillOfMaterial>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
 			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 			BillOfMaterial entity = new BillOfMaterial();
-			entity.SetProperties(default(int), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<BillOfMaterial>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = BillOfMaterialRepositoryMoc.GetContext();
 			var repository = new BillOfMaterialRepository(loggerMoc.Object, context);
 			BillOfMaterial entity = new BillOfMaterial();
-			entity.SetProperties(default(int), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<BillOfMaterial>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>228e1e4d5724363c6d7a84f2a0b7f005</Hash>
+    <Hash>d92b5ff3fb301162757329fac43cbf7e</Hash>
 </Codenesium>*/

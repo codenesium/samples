@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
 			ProductReview entity = new ProductReview();
-			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
 			var entity = new ProductReview();
-			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<ProductReview>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 			ProductReview entity = new ProductReview();
-			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 			ProductReview entity = new ProductReview();
-			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 			ProductReview entity = new ProductReview();
-			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5a960e4768a3418e8095fff8b85c0c99</Hash>
+    <Hash>cae32750ce309df6e9f48406418f9bb0</Hash>
 </Codenesium>*/

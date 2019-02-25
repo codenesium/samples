@@ -39,11 +39,19 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductCategoryIDRules()
 		{
+			this.RuleFor(x => x.ProductCategoryID).MustAsync(this.BeValidProductCategoryByProductCategoryID).When(x => !x?.ProductCategoryID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void RowguidRules()
 		{
 			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+		}
+
+		protected async Task<bool> BeValidProductCategoryByProductCategoryID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.ProductSubcategoryRepository.ProductCategoryByProductCategoryID(id);
+
+			return record != null;
 		}
 
 		protected async Task<bool> BeUniqueByName(ApiProductSubcategoryServerRequestModel model,  CancellationToken cancellationToken)
@@ -77,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee803128e517fed434e00bf2009eac43</Hash>
+    <Hash>2f27c18577dc40206acd828ab425a7fa</Hash>
 </Codenesium>*/

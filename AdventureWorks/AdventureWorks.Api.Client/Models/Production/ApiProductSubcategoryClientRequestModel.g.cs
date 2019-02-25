@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Client
 		public string Name { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int ProductCategoryID { get; private set; } = default(int);
+		public int ProductCategoryID { get; private set; }
 
 		[JsonProperty]
 		public Guid Rowguid { get; private set; } = default(Guid);
@@ -41,5 +41,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>eaf8c7e39e7a07595e109b91c121942e</Hash>
+    <Hash>aa64c453909e0ba96da0e87939dde66f</Hash>
 </Codenesium>*/

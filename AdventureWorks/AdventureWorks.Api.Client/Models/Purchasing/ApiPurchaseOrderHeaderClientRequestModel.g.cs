@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.Client
 		public DateTime? ShipDate { get; private set; } = null;
 
 		[JsonProperty]
-		public int ShipMethodID { get; private set; } = default(int);
+		public int ShipMethodID { get; private set; }
 
 		[JsonProperty]
 		public int Status { get; private set; } = default(int);
@@ -76,10 +76,10 @@ namespace AdventureWorksNS.Api.Client
 		public decimal TotalDue { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public int VendorID { get; private set; } = default(int);
+		public int VendorID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9061efcfb7fbc92bc0347350adb841a1</Hash>
+    <Hash>01a0f148810a947fb2fa650a96aee1c9</Hash>
 </Codenesium>*/

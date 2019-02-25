@@ -73,9 +73,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("UnitPrice")]
 		public virtual decimal UnitPrice { get; private set; }
+
+		[ForeignKey("PurchaseOrderID")]
+		public virtual PurchaseOrderHeader PurchaseOrderIDNavigation { get; private set; }
+
+		public void SetPurchaseOrderIDNavigation(PurchaseOrderHeader item)
+		{
+			this.PurchaseOrderIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8bb6fa7325530ba120367743e45d1cd7</Hash>
+    <Hash>053302bf196eff4273f7046671b5b802</Hash>
 </Codenesium>*/

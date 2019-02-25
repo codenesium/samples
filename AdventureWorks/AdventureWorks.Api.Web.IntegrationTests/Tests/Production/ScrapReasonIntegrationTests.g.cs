@@ -86,7 +86,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			var mapper = new ApiScrapReasonServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IScrapReasonService service = testServer.Host.Services.GetService(typeof(IScrapReasonService)) as IScrapReasonService;
-			ApiScrapReasonServerResponseModel model = await service.Get(1);
+			ApiScrapReasonServerResponseModel model = await service.Get((short)1);
 
 			ApiScrapReasonClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
 			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
@@ -96,11 +96,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Entry(context.Set<ScrapReason>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-			updateResponse.Record.ScrapReasonID.Should().Be(1);
+			updateResponse.Record.ScrapReasonID.Should().Be((short)1);
 			context.Set<ScrapReason>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<ScrapReason>().ToList()[0].Name.Should().Be("B");
 
-			updateResponse.Record.ScrapReasonID.Should().Be(1);
+			updateResponse.Record.ScrapReasonID.Should().Be((short)1);
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Name.Should().Be("B");
 		}
@@ -122,10 +122,10 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			createdResponse.Success.Should().BeTrue();
 
-			ActionResponse deleteResult = await client.ScrapReasonDeleteAsync(2);
+			ActionResponse deleteResult = await client.ScrapReasonDeleteAsync((short)2);
 
 			deleteResult.Success.Should().BeTrue();
-			ApiScrapReasonServerResponseModel verifyResponse = await service.Get(2);
+			ApiScrapReasonServerResponseModel verifyResponse = await service.Get((short)2);
 
 			verifyResponse.Should().BeNull();
 		}
@@ -141,7 +141,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			var client = new ApiClient(testServer.CreateClient());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			ApiScrapReasonClientResponseModel response = await client.ScrapReasonGetAsync(1);
+			ApiScrapReasonClientResponseModel response = await client.ScrapReasonGetAsync((short)1);
 
 			response.Should().NotBeNull();
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -264,5 +264,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>8ad203787b88086b0a2615814e3d5c9c</Hash>
+    <Hash>5e644ef9589e561e1f78adb8e985f244</Hash>
 </Codenesium>*/

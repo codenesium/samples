@@ -58,10 +58,10 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int StateProvinceID { get; private set; } = default(int);
+		public int StateProvinceID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe4cfe6059413b8329ec248cde6d4ccc</Hash>
+    <Hash>30841c7a871267b33428e54e750ef617</Hash>
 </Codenesium>*/

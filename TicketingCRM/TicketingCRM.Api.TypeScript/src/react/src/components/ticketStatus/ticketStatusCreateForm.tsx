@@ -125,7 +125,7 @@ class TicketStatusCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -148,5 +148,5 @@ export const WrappedTicketStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>75e3fb437d571239923b784a64d934f4</Hash>
+    <Hash>4adc7342f82d804d2d689b7d17f0bc2b</Hash>
 </Codenesium>*/

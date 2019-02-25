@@ -29,6 +29,26 @@ namespace AdventureWorksNS.Api.Client
 			this.ScrapReasonID = scrapReasonID;
 			this.StartDate = startDate;
 			this.StockedQty = stockedQty;
+
+			this.ProductIDEntity = nameof(ApiResponse.Products);
+
+			this.ScrapReasonIDEntity = nameof(ApiResponse.ScrapReasons);
+		}
+
+		[JsonProperty]
+		public ApiProductClientResponseModel ProductIDNavigation { get; private set; }
+
+		public void SetProductIDNavigation(ApiProductClientResponseModel value)
+		{
+			this.ProductIDNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiScrapReasonClientResponseModel ScrapReasonIDNavigation { get; private set; }
+
+		public void SetScrapReasonIDNavigation(ApiScrapReasonClientResponseModel value)
+		{
+			this.ScrapReasonIDNavigation = value;
 		}
 
 		[JsonProperty]
@@ -47,10 +67,16 @@ namespace AdventureWorksNS.Api.Client
 		public int ProductID { get; private set; }
 
 		[JsonProperty]
+		public string ProductIDEntity { get; set; }
+
+		[JsonProperty]
 		public short ScrappedQty { get; private set; }
 
 		[JsonProperty]
 		public short? ScrapReasonID { get; private set; }
+
+		[JsonProperty]
+		public string ScrapReasonIDEntity { get; set; }
 
 		[JsonProperty]
 		public DateTime StartDate { get; private set; }
@@ -64,5 +90,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>047c046a9cc02436835f42b11f0a34fe</Hash>
+    <Hash>323af1f56e64da42024dd1cbf6df712e</Hash>
 </Codenesium>*/

@@ -102,6 +102,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<Person> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<Person>()
+			       .Include(x => x.BusinessEntityIDNavigation)
 
 			       .FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
@@ -132,6 +133,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			       .Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Password>();
 		}
 
+		// Foreign key reference to table BusinessEntity via businessEntityID.
+		public async virtual Task<BusinessEntity> BusinessEntityByBusinessEntityID(int businessEntityID)
+		{
+			return await this.Context.Set<BusinessEntity>()
+			       .SingleOrDefaultAsync(x => x.BusinessEntityID == businessEntityID);
+		}
+
 		protected async Task<List<Person>> Where(
 			Expression<Func<Person, bool>> predicate,
 			int limit = int.MaxValue,
@@ -144,6 +152,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Person>()
+			       .Include(x => x.BusinessEntityIDNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Person>();
 		}
@@ -158,5 +167,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f1c4689e462614ac75d715cc7b33ae2a</Hash>
+    <Hash>c1ec6e03aca02104123395f2036bd3f5</Hash>
 </Codenesium>*/

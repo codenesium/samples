@@ -36,6 +36,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductIDRules()
 		{
+			this.RuleFor(x => x.ProductID).MustAsync(this.BeValidProductByProductID).When(x => !x?.ProductID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void QuantityRules()
@@ -59,9 +60,16 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.TransactionType).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.TransactionType).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
+
+		protected async Task<bool> BeValidProductByProductID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.TransactionHistoryRepository.ProductByProductID(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb6648babfbb3e1ce7b05287fa7b65ca</Hash>
+    <Hash>b91637d5482fabfbc9b086543fc6a1cf</Hash>
 </Codenesium>*/

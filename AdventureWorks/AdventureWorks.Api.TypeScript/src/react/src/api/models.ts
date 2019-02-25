@@ -353,6 +353,8 @@ this.vacationHour = vacationHour;
 			}
 			export class JobCandidateClientRequestModel {
 				businessEntityID:any;
+businessEntityIDEntity : string;
+businessEntityIDNavigation? : EmployeeClientResponseModel;
 jobCandidateID:number;
 modifiedDate:any;
 resume:string;
@@ -360,6 +362,8 @@ resume:string;
 	
 				constructor() {
 					this.businessEntityID = undefined;
+this.businessEntityIDEntity = '';
+this.businessEntityIDNavigation = undefined;
 this.jobCandidateID = 0;
 this.modifiedDate = undefined;
 this.resume = '';
@@ -378,6 +382,8 @@ this.resume = resume;
 
 			export class JobCandidateClientResponseModel {
 				businessEntityID:any;
+businessEntityIDEntity : string;
+businessEntityIDNavigation? : EmployeeClientResponseModel;
 jobCandidateID:number;
 modifiedDate:any;
 resume:string;
@@ -385,6 +391,8 @@ resume:string;
 	
 				constructor() {
 					this.businessEntityID = undefined;
+this.businessEntityIDEntity = '';
+this.businessEntityIDNavigation = undefined;
 this.jobCandidateID = 0;
 this.modifiedDate = undefined;
 this.resume = '';
@@ -464,6 +472,8 @@ modifiedDate:any;
 postalCode:string;
 rowguid:any;
 stateProvinceID:number;
+stateProvinceIDEntity : string;
+stateProvinceIDNavigation? : StateProvinceClientResponseModel;
 
 	
 				constructor() {
@@ -475,6 +485,8 @@ this.modifiedDate = undefined;
 this.postalCode = '';
 this.rowguid = undefined;
 this.stateProvinceID = 0;
+this.stateProvinceIDEntity = '';
+this.stateProvinceIDNavigation = undefined;
 
 				}
 
@@ -501,6 +513,8 @@ modifiedDate:any;
 postalCode:string;
 rowguid:any;
 stateProvinceID:number;
+stateProvinceIDEntity : string;
+stateProvinceIDNavigation? : StateProvinceClientResponseModel;
 
 	
 				constructor() {
@@ -512,6 +526,8 @@ this.modifiedDate = undefined;
 this.postalCode = '';
 this.rowguid = undefined;
 this.stateProvinceID = 0;
+this.stateProvinceIDEntity = '';
+this.stateProvinceIDNavigation = undefined;
 
 				}
 
@@ -708,6 +724,8 @@ this.name = name;
 			}
 			export class PasswordClientRequestModel {
 				businessEntityID:number;
+businessEntityIDEntity : string;
+businessEntityIDNavigation? : PersonClientResponseModel;
 modifiedDate:any;
 passwordHash:string;
 passwordSalt:string;
@@ -716,6 +734,8 @@ rowguid:any;
 	
 				constructor() {
 					this.businessEntityID = 0;
+this.businessEntityIDEntity = '';
+this.businessEntityIDNavigation = undefined;
 this.modifiedDate = undefined;
 this.passwordHash = '';
 this.passwordSalt = '';
@@ -736,6 +756,8 @@ this.rowguid = rowguid;
 
 			export class PasswordClientResponseModel {
 				businessEntityID:number;
+businessEntityIDEntity : string;
+businessEntityIDNavigation? : PersonClientResponseModel;
 modifiedDate:any;
 passwordHash:string;
 passwordSalt:string;
@@ -744,6 +766,8 @@ rowguid:any;
 	
 				constructor() {
 					this.businessEntityID = 0;
+this.businessEntityIDEntity = '';
+this.businessEntityIDNavigation = undefined;
 this.modifiedDate = undefined;
 this.passwordHash = '';
 this.passwordSalt = '';
@@ -764,6 +788,8 @@ this.rowguid = rowguid;
 			export class PersonClientRequestModel {
 				additionalContactInfo:string;
 businessEntityID:number;
+businessEntityIDEntity : string;
+businessEntityIDNavigation? : BusinessEntityClientResponseModel;
 demographic:string;
 emailPromotion:number;
 firstName:string;
@@ -780,6 +806,8 @@ title:string;
 				constructor() {
 					this.additionalContactInfo = '';
 this.businessEntityID = 0;
+this.businessEntityIDEntity = '';
+this.businessEntityIDNavigation = undefined;
 this.demographic = '';
 this.emailPromotion = 0;
 this.firstName = '';
@@ -816,6 +844,8 @@ this.title = title;
 			export class PersonClientResponseModel {
 				additionalContactInfo:string;
 businessEntityID:number;
+businessEntityIDEntity : string;
+businessEntityIDNavigation? : BusinessEntityClientResponseModel;
 demographic:string;
 emailPromotion:number;
 firstName:string;
@@ -832,6 +862,8 @@ title:string;
 				constructor() {
 					this.additionalContactInfo = '';
 this.businessEntityID = 0;
+this.businessEntityIDEntity = '';
+this.businessEntityIDNavigation = undefined;
 this.demographic = '';
 this.emailPromotion = 0;
 this.firstName = '';
@@ -909,6 +941,8 @@ this.phoneNumberTypeID = phoneNumberTypeID;
 			}
 			export class StateProvinceClientRequestModel {
 				countryRegionCode:string;
+countryRegionCodeEntity : string;
+countryRegionCodeNavigation? : CountryRegionClientResponseModel;
 isOnlyStateProvinceFlag:boolean;
 modifiedDate:any;
 name:string;
@@ -920,6 +954,8 @@ territoryID:number;
 	
 				constructor() {
 					this.countryRegionCode = '';
+this.countryRegionCodeEntity = '';
+this.countryRegionCodeNavigation = undefined;
 this.isOnlyStateProvinceFlag = false;
 this.modifiedDate = undefined;
 this.name = '';
@@ -946,6 +982,8 @@ this.territoryID = territoryID;
 
 			export class StateProvinceClientResponseModel {
 				countryRegionCode:string;
+countryRegionCodeEntity : string;
+countryRegionCodeNavigation? : CountryRegionClientResponseModel;
 isOnlyStateProvinceFlag:boolean;
 modifiedDate:any;
 name:string;
@@ -957,6 +995,8 @@ territoryID:number;
 	
 				constructor() {
 					this.countryRegionCode = '';
+this.countryRegionCodeEntity = '';
+this.countryRegionCodeNavigation = undefined;
 this.isOnlyStateProvinceFlag = false;
 this.modifiedDate = undefined;
 this.name = '';
@@ -984,24 +1024,36 @@ this.territoryID = territoryID;
 				billOfMaterialsID:number;
 bOMLevel:number;
 componentID:number;
+componentIDEntity : string;
+componentIDNavigation? : ProductClientResponseModel;
 endDate:any;
 modifiedDate:any;
 perAssemblyQty:number;
 productAssemblyID:any;
+productAssemblyIDEntity : string;
+productAssemblyIDNavigation? : ProductClientResponseModel;
 startDate:any;
 unitMeasureCode:string;
+unitMeasureCodeEntity : string;
+unitMeasureCodeNavigation? : UnitMeasureClientResponseModel;
 
 	
 				constructor() {
 					this.billOfMaterialsID = 0;
 this.bOMLevel = 0;
 this.componentID = 0;
+this.componentIDEntity = '';
+this.componentIDNavigation = undefined;
 this.endDate = undefined;
 this.modifiedDate = undefined;
 this.perAssemblyQty = 0;
 this.productAssemblyID = undefined;
+this.productAssemblyIDEntity = '';
+this.productAssemblyIDNavigation = undefined;
 this.startDate = undefined;
 this.unitMeasureCode = '';
+this.unitMeasureCodeEntity = '';
+this.unitMeasureCodeNavigation = undefined;
 
 				}
 
@@ -1024,24 +1076,36 @@ this.unitMeasureCode = unitMeasureCode;
 				billOfMaterialsID:number;
 bOMLevel:number;
 componentID:number;
+componentIDEntity : string;
+componentIDNavigation? : ProductClientResponseModel;
 endDate:any;
 modifiedDate:any;
 perAssemblyQty:number;
 productAssemblyID:any;
+productAssemblyIDEntity : string;
+productAssemblyIDNavigation? : ProductClientResponseModel;
 startDate:any;
 unitMeasureCode:string;
+unitMeasureCodeEntity : string;
+unitMeasureCodeNavigation? : UnitMeasureClientResponseModel;
 
 	
 				constructor() {
 					this.billOfMaterialsID = 0;
 this.bOMLevel = 0;
 this.componentID = 0;
+this.componentIDEntity = '';
+this.componentIDNavigation = undefined;
 this.endDate = undefined;
 this.modifiedDate = undefined;
 this.perAssemblyQty = 0;
 this.productAssemblyID = undefined;
+this.productAssemblyIDEntity = '';
+this.productAssemblyIDNavigation = undefined;
 this.startDate = undefined;
 this.unitMeasureCode = '';
+this.unitMeasureCodeEntity = '';
+this.unitMeasureCodeNavigation = undefined;
 
 				}
 
@@ -1315,8 +1379,12 @@ name:string;
 productID:number;
 productLine:string;
 productModelID:any;
+productModelIDEntity : string;
+productModelIDNavigation? : ProductModelClientResponseModel;
 productNumber:string;
 productSubcategoryID:any;
+productSubcategoryIDEntity : string;
+productSubcategoryIDNavigation? : ProductSubcategoryClientResponseModel;
 reorderPoint:number;
 rowguid:any;
 safetyStockLevel:number;
@@ -1324,10 +1392,14 @@ sellEndDate:any;
 sellStartDate:any;
 size:string;
 sizeUnitMeasureCode:string;
+sizeUnitMeasureCodeEntity : string;
+sizeUnitMeasureCodeNavigation? : UnitMeasureClientResponseModel;
 standardCost:number;
 style:string;
 weight:any;
 weightUnitMeasureCode:string;
+weightUnitMeasureCodeEntity : string;
+weightUnitMeasureCodeNavigation? : UnitMeasureClientResponseModel;
 
 	
 				constructor() {
@@ -1342,8 +1414,12 @@ this.name = '';
 this.productID = 0;
 this.productLine = '';
 this.productModelID = undefined;
+this.productModelIDEntity = '';
+this.productModelIDNavigation = undefined;
 this.productNumber = '';
 this.productSubcategoryID = undefined;
+this.productSubcategoryIDEntity = '';
+this.productSubcategoryIDNavigation = undefined;
 this.reorderPoint = 0;
 this.rowguid = undefined;
 this.safetyStockLevel = 0;
@@ -1351,10 +1427,14 @@ this.sellEndDate = undefined;
 this.sellStartDate = undefined;
 this.size = '';
 this.sizeUnitMeasureCode = '';
+this.sizeUnitMeasureCodeEntity = '';
+this.sizeUnitMeasureCodeNavigation = undefined;
 this.standardCost = 0;
 this.style = '';
 this.weight = undefined;
 this.weightUnitMeasureCode = '';
+this.weightUnitMeasureCodeEntity = '';
+this.weightUnitMeasureCodeNavigation = undefined;
 
 				}
 
@@ -1400,8 +1480,12 @@ name:string;
 productID:number;
 productLine:string;
 productModelID:any;
+productModelIDEntity : string;
+productModelIDNavigation? : ProductModelClientResponseModel;
 productNumber:string;
 productSubcategoryID:any;
+productSubcategoryIDEntity : string;
+productSubcategoryIDNavigation? : ProductSubcategoryClientResponseModel;
 reorderPoint:number;
 rowguid:any;
 safetyStockLevel:number;
@@ -1409,10 +1493,14 @@ sellEndDate:any;
 sellStartDate:any;
 size:string;
 sizeUnitMeasureCode:string;
+sizeUnitMeasureCodeEntity : string;
+sizeUnitMeasureCodeNavigation? : UnitMeasureClientResponseModel;
 standardCost:number;
 style:string;
 weight:any;
 weightUnitMeasureCode:string;
+weightUnitMeasureCodeEntity : string;
+weightUnitMeasureCodeNavigation? : UnitMeasureClientResponseModel;
 
 	
 				constructor() {
@@ -1427,8 +1515,12 @@ this.name = '';
 this.productID = 0;
 this.productLine = '';
 this.productModelID = undefined;
+this.productModelIDEntity = '';
+this.productModelIDNavigation = undefined;
 this.productNumber = '';
 this.productSubcategoryID = undefined;
+this.productSubcategoryIDEntity = '';
+this.productSubcategoryIDNavigation = undefined;
 this.reorderPoint = 0;
 this.rowguid = undefined;
 this.safetyStockLevel = 0;
@@ -1436,10 +1528,14 @@ this.sellEndDate = undefined;
 this.sellStartDate = undefined;
 this.size = '';
 this.sizeUnitMeasureCode = '';
+this.sizeUnitMeasureCodeEntity = '';
+this.sizeUnitMeasureCodeNavigation = undefined;
 this.standardCost = 0;
 this.style = '';
 this.weight = undefined;
 this.weightUnitMeasureCode = '';
+this.weightUnitMeasureCodeEntity = '';
+this.weightUnitMeasureCodeNavigation = undefined;
 
 				}
 
@@ -1697,6 +1793,8 @@ this.thumbnailPhotoFileName = thumbnailPhotoFileName;
 emailAddress:string;
 modifiedDate:any;
 productID:number;
+productIDEntity : string;
+productIDNavigation? : ProductClientResponseModel;
 productReviewID:number;
 rating:number;
 reviewDate:any;
@@ -1708,6 +1806,8 @@ reviewerName:string;
 this.emailAddress = '';
 this.modifiedDate = undefined;
 this.productID = 0;
+this.productIDEntity = '';
+this.productIDNavigation = undefined;
 this.productReviewID = 0;
 this.rating = 0;
 this.reviewDate = undefined;
@@ -1734,6 +1834,8 @@ this.reviewerName = reviewerName;
 emailAddress:string;
 modifiedDate:any;
 productID:number;
+productIDEntity : string;
+productIDNavigation? : ProductClientResponseModel;
 productReviewID:number;
 rating:number;
 reviewDate:any;
@@ -1745,6 +1847,8 @@ reviewerName:string;
 this.emailAddress = '';
 this.modifiedDate = undefined;
 this.productID = 0;
+this.productIDEntity = '';
+this.productIDNavigation = undefined;
 this.productReviewID = 0;
 this.rating = 0;
 this.reviewDate = undefined;
@@ -1769,6 +1873,8 @@ this.reviewerName = reviewerName;
 				modifiedDate:any;
 name:string;
 productCategoryID:number;
+productCategoryIDEntity : string;
+productCategoryIDNavigation? : ProductCategoryClientResponseModel;
 productSubcategoryID:number;
 rowguid:any;
 
@@ -1777,6 +1883,8 @@ rowguid:any;
 					this.modifiedDate = undefined;
 this.name = '';
 this.productCategoryID = 0;
+this.productCategoryIDEntity = '';
+this.productCategoryIDNavigation = undefined;
 this.productSubcategoryID = 0;
 this.rowguid = undefined;
 
@@ -1797,6 +1905,8 @@ this.rowguid = rowguid;
 				modifiedDate:any;
 name:string;
 productCategoryID:number;
+productCategoryIDEntity : string;
+productCategoryIDNavigation? : ProductCategoryClientResponseModel;
 productSubcategoryID:number;
 rowguid:any;
 
@@ -1805,6 +1915,8 @@ rowguid:any;
 					this.modifiedDate = undefined;
 this.name = '';
 this.productCategoryID = 0;
+this.productCategoryIDEntity = '';
+this.productCategoryIDNavigation = undefined;
 this.productSubcategoryID = 0;
 this.rowguid = undefined;
 
@@ -1867,6 +1979,8 @@ this.scrapReasonID = scrapReasonID;
 				actualCost:number;
 modifiedDate:any;
 productID:number;
+productIDEntity : string;
+productIDNavigation? : ProductClientResponseModel;
 quantity:number;
 referenceOrderID:number;
 referenceOrderLineID:number;
@@ -1879,6 +1993,8 @@ transactionType:string;
 					this.actualCost = 0;
 this.modifiedDate = undefined;
 this.productID = 0;
+this.productIDEntity = '';
+this.productIDNavigation = undefined;
 this.quantity = 0;
 this.referenceOrderID = 0;
 this.referenceOrderLineID = 0;
@@ -1907,6 +2023,8 @@ this.transactionType = transactionType;
 				actualCost:number;
 modifiedDate:any;
 productID:number;
+productIDEntity : string;
+productIDNavigation? : ProductClientResponseModel;
 quantity:number;
 referenceOrderID:number;
 referenceOrderLineID:number;
@@ -1919,6 +2037,8 @@ transactionType:string;
 					this.actualCost = 0;
 this.modifiedDate = undefined;
 this.productID = 0;
+this.productIDEntity = '';
+this.productIDNavigation = undefined;
 this.quantity = 0;
 this.referenceOrderID = 0;
 this.referenceOrderLineID = 0;
@@ -2070,8 +2190,12 @@ endDate:any;
 modifiedDate:any;
 orderQty:number;
 productID:number;
+productIDEntity : string;
+productIDNavigation? : ProductClientResponseModel;
 scrappedQty:number;
 scrapReasonID:any;
+scrapReasonIDEntity : string;
+scrapReasonIDNavigation? : ScrapReasonClientResponseModel;
 startDate:any;
 stockedQty:number;
 workOrderID:number;
@@ -2083,8 +2207,12 @@ this.endDate = undefined;
 this.modifiedDate = undefined;
 this.orderQty = 0;
 this.productID = 0;
+this.productIDEntity = '';
+this.productIDNavigation = undefined;
 this.scrappedQty = 0;
 this.scrapReasonID = undefined;
+this.scrapReasonIDEntity = '';
+this.scrapReasonIDNavigation = undefined;
 this.startDate = undefined;
 this.stockedQty = 0;
 this.workOrderID = 0;
@@ -2113,8 +2241,12 @@ endDate:any;
 modifiedDate:any;
 orderQty:number;
 productID:number;
+productIDEntity : string;
+productIDNavigation? : ProductClientResponseModel;
 scrappedQty:number;
 scrapReasonID:any;
+scrapReasonIDEntity : string;
+scrapReasonIDNavigation? : ScrapReasonClientResponseModel;
 startDate:any;
 stockedQty:number;
 workOrderID:number;
@@ -2126,8 +2258,12 @@ this.endDate = undefined;
 this.modifiedDate = undefined;
 this.orderQty = 0;
 this.productID = 0;
+this.productIDEntity = '';
+this.productIDNavigation = undefined;
 this.scrappedQty = 0;
 this.scrapReasonID = undefined;
+this.scrapReasonIDEntity = '';
+this.scrapReasonIDNavigation = undefined;
 this.startDate = undefined;
 this.stockedQty = 0;
 this.workOrderID = 0;
@@ -2158,11 +2294,15 @@ purchaseOrderID:number;
 revisionNumber:number;
 shipDate:any;
 shipMethodID:number;
+shipMethodIDEntity : string;
+shipMethodIDNavigation? : ShipMethodClientResponseModel;
 status:number;
 subTotal:number;
 taxAmt:number;
 totalDue:number;
 vendorID:number;
+vendorIDEntity : string;
+vendorIDNavigation? : VendorClientResponseModel;
 
 	
 				constructor() {
@@ -2174,11 +2314,15 @@ this.purchaseOrderID = 0;
 this.revisionNumber = 0;
 this.shipDate = undefined;
 this.shipMethodID = 0;
+this.shipMethodIDEntity = '';
+this.shipMethodIDNavigation = undefined;
 this.status = 0;
 this.subTotal = 0;
 this.taxAmt = 0;
 this.totalDue = 0;
 this.vendorID = 0;
+this.vendorIDEntity = '';
+this.vendorIDNavigation = undefined;
 
 				}
 
@@ -2210,11 +2354,15 @@ purchaseOrderID:number;
 revisionNumber:number;
 shipDate:any;
 shipMethodID:number;
+shipMethodIDEntity : string;
+shipMethodIDNavigation? : ShipMethodClientResponseModel;
 status:number;
 subTotal:number;
 taxAmt:number;
 totalDue:number;
 vendorID:number;
+vendorIDEntity : string;
+vendorIDNavigation? : VendorClientResponseModel;
 
 	
 				constructor() {
@@ -2226,11 +2374,15 @@ this.purchaseOrderID = 0;
 this.revisionNumber = 0;
 this.shipDate = undefined;
 this.shipMethodID = 0;
+this.shipMethodIDEntity = '';
+this.shipMethodIDNavigation = undefined;
 this.status = 0;
 this.subTotal = 0;
 this.taxAmt = 0;
 this.totalDue = 0;
 this.vendorID = 0;
+this.vendorIDEntity = '';
+this.vendorIDNavigation = undefined;
 
 				}
 
@@ -3376,5 +3528,5 @@ this.salesPersonID = salesPersonID;
 			}
 
 /*<Codenesium>
-    <Hash>8d645f8e0bf23ba5b62d4f98a8f86db6</Hash>
+    <Hash>16818c8ec2a9cc1e64fcbb739bf8b3df</Hash>
 </Codenesium>*/

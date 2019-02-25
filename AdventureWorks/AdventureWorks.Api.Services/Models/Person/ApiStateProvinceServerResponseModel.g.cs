@@ -32,6 +32,17 @@ namespace AdventureWorksNS.Api.Services
 		public string CountryRegionCode { get; private set; }
 
 		[JsonProperty]
+		public string CountryRegionCodeEntity { get; private set; } = RouteConstants.CountryRegions;
+
+		[JsonProperty]
+		public ApiCountryRegionServerResponseModel CountryRegionCodeNavigation { get; private set; }
+
+		public void SetCountryRegionCodeNavigation(ApiCountryRegionServerResponseModel value)
+		{
+			this.CountryRegionCodeNavigation = value;
+		}
+
+		[JsonProperty]
 		public bool IsOnlyStateProvinceFlag { get; private set; }
 
 		[JsonProperty]
@@ -55,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>120f0135fa8fe9498592c4c60b2d41cc</Hash>
+    <Hash>e0682826aa9d95ee5cbd0e119b4f8c58</Hash>
 </Codenesium>*/

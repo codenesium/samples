@@ -64,6 +64,17 @@ namespace AdventureWorksNS.Api.Services
 		public int ShipMethodID { get; private set; }
 
 		[JsonProperty]
+		public string ShipMethodIDEntity { get; private set; } = RouteConstants.ShipMethods;
+
+		[JsonProperty]
+		public ApiShipMethodServerResponseModel ShipMethodIDNavigation { get; private set; }
+
+		public void SetShipMethodIDNavigation(ApiShipMethodServerResponseModel value)
+		{
+			this.ShipMethodIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Status { get; private set; }
 
 		[JsonProperty]
@@ -77,9 +88,20 @@ namespace AdventureWorksNS.Api.Services
 
 		[JsonProperty]
 		public int VendorID { get; private set; }
+
+		[JsonProperty]
+		public string VendorIDEntity { get; private set; } = RouteConstants.Vendors;
+
+		[JsonProperty]
+		public ApiVendorServerResponseModel VendorIDNavigation { get; private set; }
+
+		public void SetVendorIDNavigation(ApiVendorServerResponseModel value)
+		{
+			this.VendorIDNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e1bee88d2e5fe8032de793df06e5770</Hash>
+    <Hash>22f4c8acac0d7587fcf8976e1cc36185</Hash>
 </Codenesium>*/

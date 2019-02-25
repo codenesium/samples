@@ -98,11 +98,33 @@ namespace AdventureWorksNS.Api.Services
 		public int? ProductModelID { get; private set; }
 
 		[JsonProperty]
+		public string ProductModelIDEntity { get; private set; } = RouteConstants.ProductModels;
+
+		[JsonProperty]
+		public ApiProductModelServerResponseModel ProductModelIDNavigation { get; private set; }
+
+		public void SetProductModelIDNavigation(ApiProductModelServerResponseModel value)
+		{
+			this.ProductModelIDNavigation = value;
+		}
+
+		[JsonProperty]
 		public string ProductNumber { get; private set; }
 
 		[Required]
 		[JsonProperty]
 		public int? ProductSubcategoryID { get; private set; }
+
+		[JsonProperty]
+		public string ProductSubcategoryIDEntity { get; private set; } = RouteConstants.ProductSubcategories;
+
+		[JsonProperty]
+		public ApiProductSubcategoryServerResponseModel ProductSubcategoryIDNavigation { get; private set; }
+
+		public void SetProductSubcategoryIDNavigation(ApiProductSubcategoryServerResponseModel value)
+		{
+			this.ProductSubcategoryIDNavigation = value;
+		}
 
 		[JsonProperty]
 		public short ReorderPoint { get; private set; }
@@ -129,6 +151,17 @@ namespace AdventureWorksNS.Api.Services
 		public string SizeUnitMeasureCode { get; private set; }
 
 		[JsonProperty]
+		public string SizeUnitMeasureCodeEntity { get; private set; } = RouteConstants.UnitMeasures;
+
+		[JsonProperty]
+		public ApiUnitMeasureServerResponseModel SizeUnitMeasureCodeNavigation { get; private set; }
+
+		public void SetSizeUnitMeasureCodeNavigation(ApiUnitMeasureServerResponseModel value)
+		{
+			this.SizeUnitMeasureCodeNavigation = value;
+		}
+
+		[JsonProperty]
 		public decimal StandardCost { get; private set; }
 
 		[Required]
@@ -142,9 +175,20 @@ namespace AdventureWorksNS.Api.Services
 		[Required]
 		[JsonProperty]
 		public string WeightUnitMeasureCode { get; private set; }
+
+		[JsonProperty]
+		public string WeightUnitMeasureCodeEntity { get; private set; } = RouteConstants.UnitMeasures;
+
+		[JsonProperty]
+		public ApiUnitMeasureServerResponseModel WeightUnitMeasureCodeNavigation { get; private set; }
+
+		public void SetWeightUnitMeasureCodeNavigation(ApiUnitMeasureServerResponseModel value)
+		{
+			this.WeightUnitMeasureCodeNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20ae269b366461368451e9615695c339</Hash>
+    <Hash>02cde37abb610706b3c875e5108f50c0</Hash>
 </Codenesium>*/

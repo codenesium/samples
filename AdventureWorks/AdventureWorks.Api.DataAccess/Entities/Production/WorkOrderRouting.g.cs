@@ -79,9 +79,25 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("WorkOrderID")]
 		public virtual int WorkOrderID { get; private set; }
+
+		[ForeignKey("LocationID")]
+		public virtual Location LocationIDNavigation { get; private set; }
+
+		public void SetLocationIDNavigation(Location item)
+		{
+			this.LocationIDNavigation = item;
+		}
+
+		[ForeignKey("WorkOrderID")]
+		public virtual WorkOrder WorkOrderIDNavigation { get; private set; }
+
+		public void SetWorkOrderIDNavigation(WorkOrder item)
+		{
+			this.WorkOrderIDNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd1f22a87d6cfab7392a7aa4d18c83d8</Hash>
+    <Hash>6539e0258ff3431935b1c702384fcbf2</Hash>
 </Codenesium>*/
