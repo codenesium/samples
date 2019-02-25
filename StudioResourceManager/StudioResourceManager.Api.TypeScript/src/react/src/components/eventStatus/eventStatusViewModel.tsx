@@ -10,7 +10,7 @@ export default class EventStatusViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.id = id;
     this.name = name;
   }
 
@@ -21,5 +21,5 @@ export default class EventStatusViewModel {
 
 
 /*<Codenesium>
-    <Hash>fb4948aab9eaf20e1fae2cd07b95eeae</Hash>
+    <Hash>e90e24eb9460753d2ff7de44147d3365</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import SaleMapper from '../sale/saleMapper';
 import SaleViewModel from '../sale/saleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface SaleTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface SaleTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<SaleViewModel>;
+  filteredRecords: Array<SaleViewModel>;
 }
 
-export class  SaleTableComponent extends React.Component<
-SaleTableComponentProps,
-SaleTableComponentState
+export class SaleTableComponent extends React.Component<
+  SaleTableComponentProps,
+  SaleTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: SaleViewModel) {
-  this.props.history.push(ClientRoutes.Sales + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: SaleViewModel) {
+    this.props.history.push(ClientRoutes.Sales + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: SaleViewModel) {
-  this.props.history.push(ClientRoutes.Sales + '/' + row.id);
-}
+  handleDetailClick(e: any, row: SaleViewModel) {
+    this.props.history.push(ClientRoutes.Sales + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.SaleClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: SaleViewModel) {
           console.log(response);
 
           let mapper = new SaleMapper();
-          
-          let sales:Array<SaleViewModel> = [];
 
-          response.forEach(x =>
-          {
-              sales.push(mapper.mapApiResponseToViewModel(x));
+          let sales: Array<SaleViewModel> = [];
+
+          response.forEach(x => {
+            sales.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,81 +88,96 @@ handleDetailClick(e:any, row: SaleViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Sales',
-                    columns: [
-					  {
-                      Header: 'Amount',
-                      accessor: 'amount',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Sales',
+                columns: [
+                  {
+                    Header: 'Amount',
+                    accessor: 'amount',
+                    Cell: props => {
                       return <span>{String(props.original.amount)}</span>;
-                      }           
-                    },  {
-                      Header: 'CutomerId',
-                      accessor: 'cutomerId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.cutomerId)}</span>;
-                      }           
-                    },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'Note',
-                      accessor: 'note',
-                      Cell: (props) => {
-                      return <span>{String(props.original.note)}</span>;
-                      }           
-                    },  {
-                      Header: 'PetId',
-                      accessor: 'petId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Pets + '/' + props.original.petId); }}>
-                          {String(
-                            props.original.petIdNavigation.toDisplay()
-                          )}
-                        </a>
-                      }           
-                    },  {
-                      Header: 'SaleDate',
-                      accessor: 'saleDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.saleDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'SalesPersonId',
-                      accessor: 'salesPersonId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.salesPersonId)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'CutomerId',
+                    accessor: 'cutomerId',
+                    Cell: props => {
+                      return <span>{String(props.original.cutomerId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
+                      return <span>{String(props.original.id)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Note',
+                    accessor: 'note',
+                    Cell: props => {
+                      return <span>{String(props.original.note)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PetId',
+                    accessor: 'petId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Pets + '/' + props.original.petId
+                            );
+                          }}
+                        >
+                          {String(props.original.petIdNavigation.toDisplay())}
+                        </a>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'SaleDate',
+                    accessor: 'saleDate',
+                    Cell: props => {
+                      return <span>{String(props.original.saleDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'SalesPersonId',
+                    accessor: 'salesPersonId',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.salesPersonId)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SaleViewModel
@@ -176,8 +188,8 @@ handleDetailClick(e:any, row: SaleViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as SaleViewModel
@@ -186,11 +198,14 @@ handleDetailClick(e:any, row: SaleViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -198,6 +213,7 @@ handleDetailClick(e:any, row: SaleViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>a985c41c77958f0f66f7bdb3fc094adf</Hash>
+    <Hash>f8c75fc919488be50af5628fe99e0483</Hash>
 </Codenesium>*/

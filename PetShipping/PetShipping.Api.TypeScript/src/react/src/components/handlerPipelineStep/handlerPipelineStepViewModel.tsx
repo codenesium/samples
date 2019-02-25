@@ -1,42 +1,38 @@
-import moment from 'moment'
-import HandlerViewModel from '../handler/handlerViewModel'
-	import PipelineStepViewModel from '../pipelineStep/pipelineStepViewModel'
-	
+import moment from 'moment';
+import HandlerViewModel from '../handler/handlerViewModel';
+import PipelineStepViewModel from '../pipelineStep/pipelineStepViewModel';
 
 export default class HandlerPipelineStepViewModel {
-    handlerId:number;
-handlerIdEntity : string;
-handlerIdNavigation? : HandlerViewModel;
-id:number;
-pipelineStepId:number;
-pipelineStepIdEntity : string;
-pipelineStepIdNavigation? : PipelineStepViewModel;
+  handlerId: number;
+  handlerIdEntity: string;
+  handlerIdNavigation?: HandlerViewModel;
+  id: number;
+  pipelineStepId: number;
+  pipelineStepIdEntity: string;
+  pipelineStepIdNavigation?: PipelineStepViewModel;
 
-    constructor() {
-		this.handlerId = 0;
-this.handlerIdEntity = '';
-this.handlerIdNavigation = new HandlerViewModel();
-this.id = 0;
-this.pipelineStepId = 0;
-this.pipelineStepIdEntity = '';
-this.pipelineStepIdNavigation = new PipelineStepViewModel();
+  constructor() {
+    this.handlerId = 0;
+    this.handlerIdEntity = '';
+    this.handlerIdNavigation = new HandlerViewModel();
+    this.id = 0;
+    this.pipelineStepId = 0;
+    this.pipelineStepIdEntity = '';
+    this.pipelineStepIdNavigation = new PipelineStepViewModel();
+  }
 
-    }
+  setProperties(handlerId: number, id: number, pipelineStepId: number): void {
+    this.handlerId = moment(handlerId, 'YYYY-MM-DD');
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+  }
 
-	setProperties(handlerId : number,id : number,pipelineStepId : number) : void
-	{
-		this.handlerId = moment(handlerId,'YYYY-MM-DD');
-this.id = moment(id,'YYYY-MM-DD');
-this.pipelineStepId = moment(pipelineStepId,'YYYY-MM-DD');
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>5f0c92aa4774040901ed1bd659496eba</Hash>
+    <Hash>e4d790c5bfd4c45031ab2760ff3f523e</Hash>
 </Codenesium>*/

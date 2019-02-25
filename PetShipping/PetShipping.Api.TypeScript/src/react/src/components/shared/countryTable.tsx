@@ -6,11 +6,11 @@ import CountryMapper from '../country/countryMapper';
 import CountryViewModel from '../country/countryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface CountryTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface CountryTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<CountryViewModel>;
+  filteredRecords: Array<CountryViewModel>;
 }
 
-export class  CountryTableComponent extends React.Component<
-CountryTableComponentProps,
-CountryTableComponentState
+export class CountryTableComponent extends React.Component<
+  CountryTableComponentProps,
+  CountryTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: CountryViewModel) {
-  this.props.history.push(ClientRoutes.Countries + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: CountryViewModel) {
+    this.props.history.push(ClientRoutes.Countries + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: CountryViewModel) {
-  this.props.history.push(ClientRoutes.Countries + '/' + row.id);
-}
+  handleDetailClick(e: any, row: CountryViewModel) {
+    this.props.history.push(ClientRoutes.Countries + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.CountryClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: CountryViewModel) {
           console.log(response);
 
           let mapper = new CountryMapper();
-          
-          let countries:Array<CountryViewModel> = [];
 
-          response.forEach(x =>
-          {
-              countries.push(mapper.mapApiResponseToViewModel(x));
+          let countries: Array<CountryViewModel> = [];
+
+          response.forEach(x => {
+            countries.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,47 +88,47 @@ handleDetailClick(e:any, row: CountryViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Countries',
-                    columns: [
-					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Countries',
+                columns: [
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
                       return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as CountryViewModel
@@ -142,8 +139,8 @@ handleDetailClick(e:any, row: CountryViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as CountryViewModel
@@ -152,11 +149,14 @@ handleDetailClick(e:any, row: CountryViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -164,6 +164,7 @@ handleDetailClick(e:any, row: CountryViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>a92e5efa5f8cdc24771e9c8c1143059e</Hash>
+    <Hash>d55a48a10cc5512d87668f8ff6ab2153</Hash>
 </Codenesium>*/

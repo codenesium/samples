@@ -1,29 +1,25 @@
-import moment from 'moment'
-
+import moment from 'moment';
 
 export default class SpeciesViewModel {
-    id:number;
-name:string;
+  id: number;
+  name: string;
 
-    constructor() {
-		this.id = 0;
-this.name = '';
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
 
-    }
+  setProperties(id: number, name: string): void {
+    this.id = moment(id, 'YYYY-MM-DD');
+    this.name = moment(name, 'YYYY-MM-DD');
+  }
 
-	setProperties(id : number,name : string) : void
-	{
-		this.id = moment(id,'YYYY-MM-DD');
-this.name = moment(name,'YYYY-MM-DD');
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>3b971f13caadb9602a757d373a03a3a5</Hash>
+    <Hash>6ce724e886d63c2be5dfd8d720e9c1fe</Hash>
 </Codenesium>*/

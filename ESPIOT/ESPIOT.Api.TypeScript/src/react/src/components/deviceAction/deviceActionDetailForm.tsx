@@ -7,6 +7,9 @@ import DeviceActionViewModel from './deviceActionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface DeviceActionDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface DeviceActionDetailComponentState {
 }
 
 class DeviceActionDetailComponent extends React.Component<
-  DeviceActionDetailComponentProps,
-  DeviceActionDetailComponentState
+DeviceActionDetailComponentProps,
+DeviceActionDetailComponentState
 > {
   state = {
     model: new DeviceActionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.DeviceActions + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.DeviceActions + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,40 +85,43 @@ class DeviceActionDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Action</h3>
-              <p>{String(this.state.model!.action)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>Device</h3>
-              <p>{String(this.state.model!.deviceIdNavigation!.toDisplay())}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Action</h3>
+							<p>{String(this.state.model!.action)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>Device</h3>
+							<p>{String(this.state.model!.deviceIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -126,11 +130,10 @@ class DeviceActionDetailComponent extends React.Component<
   }
 }
 
-export const WrappedDeviceActionDetailComponent = Form.create({
-  name: 'DeviceAction Detail',
-})(DeviceActionDetailComponent);
-
+export const WrappedDeviceActionDetailComponent = Form.create({ name: 'DeviceAction Detail' })(
+  DeviceActionDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>e9c0e633d7bf77c41d62bedf91d2541c</Hash>
+    <Hash>5391b2c3ac998f908ca96fa8080d390f</Hash>
 </Codenesium>*/
