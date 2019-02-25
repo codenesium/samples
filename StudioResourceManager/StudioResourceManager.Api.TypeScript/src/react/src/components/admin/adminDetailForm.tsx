@@ -117,10 +117,6 @@ class AdminDetailComponent extends React.Component<
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
@@ -148,5 +144,5 @@ export const WrappedAdminDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5be05b7773060d0f1b0bf0d91f47a006</Hash>
+    <Hash>02d7479e309fa56b1bfd654530ea1426</Hash>
 </Codenesium>*/
