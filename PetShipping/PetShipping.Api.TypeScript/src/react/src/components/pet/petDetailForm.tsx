@@ -114,10 +114,6 @@ class PetDetailComponent extends React.Component<
               <p>{String(this.state.model!.clientId)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -157,5 +153,5 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
 
 
 /*<Codenesium>
-    <Hash>3abb29ba17619ea66de7b3ae0313f500</Hash>
+    <Hash>fc50a57676160772db5f32e4e4129363</Hash>
 </Codenesium>*/

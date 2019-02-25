@@ -30,7 +30,7 @@ namespace PetShippingNS.Api.Services
 			                    item.SaleId);
 			if (item.PipelineStatusIdNavigation != null)
 			{
-				var pipelineStatusIdModel = new ApiPipelineStatuServerResponseModel();
+				var pipelineStatusIdModel = new ApiPipelineStatusServerResponseModel();
 				pipelineStatusIdModel.SetProperties(
 					item.PipelineStatusIdNavigation.Id,
 					item.PipelineStatusIdNavigation.Name);
@@ -57,5 +57,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f7e45b12d1deaa1737a38601ef4f3e0</Hash>
+    <Hash>49f6f5c9bcd66958bdef8e5ec53fd24e</Hash>
 </Codenesium>*/

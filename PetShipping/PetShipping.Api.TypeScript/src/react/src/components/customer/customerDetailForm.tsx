@@ -114,14 +114,6 @@ class CustomerDetailComponent extends React.Component<
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>lastName</h3>
-              <p>{String(this.state.model!.lastName)}</p>
-            </div>
-            <div>
               <h3>notes</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
@@ -161,5 +153,5 @@ export const WrappedCustomerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d3be391fd6ed8e3edf656080336bee7e</Hash>
+    <Hash>6964b831ea686150d91202c388d9dc5e</Hash>
 </Codenesium>*/

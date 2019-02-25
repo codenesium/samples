@@ -28,9 +28,9 @@ namespace PetShippingNS.Api.Services
 		public string PipelineStatusIdEntity { get; private set; } = RouteConstants.PipelineStatus;
 
 		[JsonProperty]
-		public ApiPipelineStatuServerResponseModel PipelineStatusIdNavigation { get; private set; }
+		public ApiPipelineStatusServerResponseModel PipelineStatusIdNavigation { get; private set; }
 
-		public void SetPipelineStatusIdNavigation(ApiPipelineStatuServerResponseModel value)
+		public void SetPipelineStatusIdNavigation(ApiPipelineStatusServerResponseModel value)
 		{
 			this.PipelineStatusIdNavigation = value;
 		}
@@ -41,5 +41,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc541cf7cb4ae66c0b81d9b96840dcb8</Hash>
+    <Hash>d75b4022db5699150f3b35e0577b39b5</Hash>
 </Codenesium>*/

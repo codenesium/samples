@@ -236,13 +236,6 @@ export default class OtherTransportSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PipelineStepId',
                     accessor: 'pipelineStepId',
                     Cell: props => {
@@ -325,5 +318,5 @@ export const WrappedOtherTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>566e393ed071bf71ef4965de81487869</Hash>
+    <Hash>1dcfffb3de5a2efa46fac7576e0d24d4</Hash>
 </Codenesium>*/

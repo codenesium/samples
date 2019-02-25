@@ -173,15 +173,7 @@ class PipelineStepNoteEditComponent extends React.Component<
             <br />
             {getFieldDecorator('employeeId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'employeeId'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="note">note</label>
-            <br />
-            {getFieldDecorator('note', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'note'} />)}
+            })(<Input placeholder={'employeeId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -189,12 +181,7 @@ class PipelineStepNoteEditComponent extends React.Component<
             <br />
             {getFieldDecorator('pipelineStepId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'pipelineStepId'}
-              />
-            )}
+            })(<Input placeholder={'pipelineStepId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -217,5 +204,5 @@ export const WrappedPipelineStepNoteEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5f60d92cdfc258bb83336af2120055a2</Hash>
+    <Hash>8df8034dbe5a5a81a0ff67e0aecfa4c0</Hash>
 </Codenesium>*/

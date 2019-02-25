@@ -120,7 +120,7 @@ class PetCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('breedId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'breedId'} />)}
+            })(<Input placeholder={'breedId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -128,7 +128,7 @@ class PetCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('clientId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'clientId'} />)}
+            })(<Input placeholder={'clientId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -139,7 +139,7 @@ class PetCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -147,7 +147,7 @@ class PetCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('weight', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'weight'} />)}
+            })(<Input placeholder={'weight'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -170,5 +170,5 @@ export const WrappedPetCreateComponent = Form.create({ name: 'Pet Create' })(
 
 
 /*<Codenesium>
-    <Hash>127a9993b5e3ad30b3bf897bf91db1c0</Hash>
+    <Hash>ec1d963bddf21d70b46d0cb0ddeb26fa</Hash>
 </Codenesium>*/

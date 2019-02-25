@@ -22,9 +22,9 @@ export default class OtherTransportViewModel {
   }
 
   setProperties(handlerId: number, id: number, pipelineStepId: number): void {
-    this.handlerId = moment(handlerId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+    this.handlerId = handlerId;
+    this.id = id;
+    this.pipelineStepId = pipelineStepId;
   }
 
   toDisplay(): string {
@@ -34,5 +34,5 @@ export default class OtherTransportViewModel {
 
 
 /*<Codenesium>
-    <Hash>96eb58e80385019f02e62d2477d3fa49</Hash>
+    <Hash>9a8cf5ddd1be0ae2bb9f1015c8fb87e0</Hash>
 </Codenesium>*/

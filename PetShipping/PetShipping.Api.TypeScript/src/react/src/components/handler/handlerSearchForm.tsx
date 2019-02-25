@@ -229,13 +229,6 @@ export default class HandlerSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'LastName',
                     accessor: 'lastName',
                     Cell: props => {
@@ -309,5 +302,5 @@ export const WrappedHandlerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2595dec345830d34c0e0830511810e54</Hash>
+    <Hash>86766c9c2cf158a2ecfbfd3d16878bdd</Hash>
 </Codenesium>*/

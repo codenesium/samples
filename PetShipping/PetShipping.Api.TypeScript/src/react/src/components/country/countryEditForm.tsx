@@ -176,7 +176,7 @@ class CountryEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -199,5 +199,5 @@ export const WrappedCountryEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e2f0ab62bcd088308203b85bcf4f2a06</Hash>
+    <Hash>c0b51346773ddd66b4109125320c21d2</Hash>
 </Codenesium>*/

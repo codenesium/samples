@@ -24,10 +24,10 @@ export default class DestinationViewModel {
     name: string,
     order: number
   ): void {
-    this.countryId = moment(countryId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
-    this.order = moment(order, 'YYYY-MM-DD');
+    this.countryId = countryId;
+    this.id = id;
+    this.name = name;
+    this.order = order;
   }
 
   toDisplay(): string {
@@ -37,5 +37,5 @@ export default class DestinationViewModel {
 
 
 /*<Codenesium>
-    <Hash>f0a6dd4c615f782b48bc3a06a848edf8</Hash>
+    <Hash>5bcb41fd4d1c1f92703beb997c40bebd</Hash>
 </Codenesium>*/

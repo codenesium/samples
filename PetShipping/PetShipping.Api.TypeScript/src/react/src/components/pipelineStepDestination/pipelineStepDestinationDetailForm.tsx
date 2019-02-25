@@ -110,10 +110,6 @@ class PipelineStepDestinationDetailComponent extends React.Component<
                 {String(this.state.model!.destinationIdNavigation!.toDisplay())}
               </p>
             </div>
-            <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>pipelineStepId</h3>
               <p>
@@ -138,5 +134,5 @@ export const WrappedPipelineStepDestinationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6070ddce00a28ae305c668a14c812c1b</Hash>
+    <Hash>ab52e7d7768deffcbd8589af776c5934</Hash>
 </Codenesium>*/

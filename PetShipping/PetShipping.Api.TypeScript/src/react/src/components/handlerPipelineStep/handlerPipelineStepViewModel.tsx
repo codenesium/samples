@@ -22,9 +22,9 @@ export default class HandlerPipelineStepViewModel {
   }
 
   setProperties(handlerId: number, id: number, pipelineStepId: number): void {
-    this.handlerId = moment(handlerId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+    this.handlerId = handlerId;
+    this.id = id;
+    this.pipelineStepId = pipelineStepId;
   }
 
   toDisplay(): string {
@@ -34,5 +34,5 @@ export default class HandlerPipelineStepViewModel {
 
 
 /*<Codenesium>
-    <Hash>e4d790c5bfd4c45031ab2760ff3f523e</Hash>
+    <Hash>954d3b473398b7b3d30081133a186ca1</Hash>
 </Codenesium>*/

@@ -176,7 +176,7 @@ class CustomerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
+            })(<Input placeholder={'email'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -187,18 +187,7 @@ class CustomerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="lastName">lastName</label>
-            <br />
-            {getFieldDecorator('lastName', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 128, message: 'Exceeds max length of 128' },
-              ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
+            })(<Input placeholder={'firstName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -206,7 +195,7 @@ class CustomerEditComponent extends React.Component<
             <br />
             {getFieldDecorator('note', {
               rules: [],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'notes'} />)}
+            })(<Input placeholder={'notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -217,7 +206,7 @@ class CustomerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'phone'} />)}
+            })(<InputNumber placeholder={'phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -240,5 +229,5 @@ export const WrappedCustomerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>712a7997c578287bd2434d8557e6b17f</Hash>
+    <Hash>0038caf0e71a9f1e586cbf3b79f0738f</Hash>
 </Codenesium>*/

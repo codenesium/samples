@@ -122,12 +122,7 @@ class PipelineCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('pipelineStatusId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'pipelineStatusId'}
-              />
-            )}
+            })(<Input placeholder={'pipelineStatusId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -135,7 +130,7 @@ class PipelineCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('saleId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'saleId'} />)}
+            })(<Input placeholder={'saleId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -158,5 +153,5 @@ export const WrappedPipelineCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4d7eb659c81ebb6e11f4ee52e21f7e64</Hash>
+    <Hash>29f85f9f33c42760a27f79e8373fd9cb</Hash>
 </Codenesium>*/

@@ -1,25 +1,25 @@
 import moment from 'moment';
-import PipelineStatuViewModel from '../pipelineStatu/pipelineStatuViewModel';
+import PipelineStatusViewModel from '../pipelineStatus/pipelineStatusViewModel';
 
 export default class PipelineViewModel {
   id: number;
   pipelineStatusId: number;
   pipelineStatusIdEntity: string;
-  pipelineStatusIdNavigation?: PipelineStatuViewModel;
+  pipelineStatusIdNavigation?: PipelineStatusViewModel;
   saleId: number;
 
   constructor() {
     this.id = 0;
     this.pipelineStatusId = 0;
     this.pipelineStatusIdEntity = '';
-    this.pipelineStatusIdNavigation = new PipelineStatuViewModel();
+    this.pipelineStatusIdNavigation = new PipelineStatusViewModel();
     this.saleId = 0;
   }
 
   setProperties(id: number, pipelineStatusId: number, saleId: number): void {
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.pipelineStatusId = moment(pipelineStatusId, 'YYYY-MM-DD');
-    this.saleId = moment(saleId, 'YYYY-MM-DD');
+    this.id = id;
+    this.pipelineStatusId = pipelineStatusId;
+    this.saleId = saleId;
   }
 
   toDisplay(): string {
@@ -29,5 +29,5 @@ export default class PipelineViewModel {
 
 
 /*<Codenesium>
-    <Hash>e76be7d7009fcf16f65e98a10436a746</Hash>
+    <Hash>2f12b9001bfbc858025bb275c45e3f72</Hash>
 </Codenesium>*/

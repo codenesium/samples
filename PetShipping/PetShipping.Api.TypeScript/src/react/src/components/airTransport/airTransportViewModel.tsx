@@ -33,12 +33,12 @@ export default class AirTransportViewModel {
     pipelineStepId: number,
     takeoffDate: any
   ): void {
-    this.airlineId = moment(airlineId, 'YYYY-MM-DD');
-    this.flightNumber = moment(flightNumber, 'YYYY-MM-DD');
-    this.handlerId = moment(handlerId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.airlineId = airlineId;
+    this.flightNumber = flightNumber;
+    this.handlerId = handlerId;
+    this.id = id;
     this.landDate = moment(landDate, 'YYYY-MM-DD');
-    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+    this.pipelineStepId = pipelineStepId;
     this.takeoffDate = moment(takeoffDate, 'YYYY-MM-DD');
   }
 
@@ -49,5 +49,5 @@ export default class AirTransportViewModel {
 
 
 /*<Codenesium>
-    <Hash>498e43099f4bef4587b7e0a8d878a811</Hash>
+    <Hash>9cf5e26893b80e6186e25e8de07cce7f</Hash>
 </Codenesium>*/

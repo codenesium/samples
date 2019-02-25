@@ -268,13 +268,6 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Notes',
                     accessor: 'note',
                     Cell: props => {
@@ -341,5 +334,5 @@ export const WrappedCustomerCommunicationSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>55f5edd7fc00654912dac9e1729b4274</Hash>
+    <Hash>82f44807c1771c5e96b8117a7d7c65b7</Hash>
 </Codenesium>*/

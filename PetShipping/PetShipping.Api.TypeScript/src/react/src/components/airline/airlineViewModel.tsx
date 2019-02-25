@@ -10,8 +10,8 @@ export default class AirlineViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
+    this.id = id;
+    this.name = name;
   }
 
   toDisplay(): string {
@@ -21,5 +21,5 @@ export default class AirlineViewModel {
 
 
 /*<Codenesium>
-    <Hash>12375925056ecdb74514d9564cecea43</Hash>
+    <Hash>26848c93e2dce74a673bfc624384fe98</Hash>
 </Codenesium>*/

@@ -25,12 +25,12 @@ export default class HandlerViewModel {
     lastName: string,
     phone: string
   ): void {
-    this.countryId = moment(countryId, 'YYYY-MM-DD');
-    this.email = moment(email, 'YYYY-MM-DD');
-    this.firstName = moment(firstName, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.lastName = moment(lastName, 'YYYY-MM-DD');
-    this.phone = moment(phone, 'YYYY-MM-DD');
+    this.countryId = countryId;
+    this.email = email;
+    this.firstName = firstName;
+    this.id = id;
+    this.lastName = lastName;
+    this.phone = phone;
   }
 
   toDisplay(): string {
@@ -40,5 +40,5 @@ export default class HandlerViewModel {
 
 
 /*<Codenesium>
-    <Hash>45da52bc8716efef43260b7eb635a067</Hash>
+    <Hash>c9df38ecbd623d5a9e8c837e0fb7392c</Hash>
 </Codenesium>*/

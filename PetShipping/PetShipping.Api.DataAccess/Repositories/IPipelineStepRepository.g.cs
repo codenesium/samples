@@ -27,12 +27,12 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<List<PipelineStepStepRequirement>> PipelineStepStepRequirementsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 
-		Task<PipelineStepStatu> PipelineStepStatuByPipelineStepStatusId(int pipelineStepStatusId);
+		Task<PipelineStepStatus> PipelineStepStatusByPipelineStepStatusId(int pipelineStepStatusId);
 
 		Task<Employee> EmployeeByShipperId(int shipperId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>62693b82c6f860769292f02499d86c7f</Hash>
+    <Hash>617c41461ada38e6041c2ef290d7c274</Hash>
 </Codenesium>*/

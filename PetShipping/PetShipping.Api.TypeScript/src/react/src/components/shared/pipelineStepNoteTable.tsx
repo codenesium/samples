@@ -134,20 +134,6 @@ export class PipelineStepNoteTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Note',
-                    accessor: 'note',
-                    Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PipelineStepId',
                     accessor: 'pipelineStepId',
                     Cell: props => {
@@ -214,5 +200,5 @@ export class PipelineStepNoteTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5b5ca048d5914fbfac61e4389abb1623</Hash>
+    <Hash>bf93c58d94a4f167ce75924b20b2ace6</Hash>
 </Codenesium>*/

@@ -123,13 +123,6 @@ export class SaleTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Note',
                     accessor: 'note',
                     Cell: props => {
@@ -215,5 +208,5 @@ export class SaleTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f8c75fc919488be50af5628fe99e0483</Hash>
+    <Hash>c303ef50b3d9e9e047ea838e29c9c70a</Hash>
 </Codenesium>*/

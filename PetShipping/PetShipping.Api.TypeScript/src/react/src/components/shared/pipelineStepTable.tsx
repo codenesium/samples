@@ -111,13 +111,6 @@ export class PipelineStepTableComponent extends React.Component<
                 Header: 'PipelineSteps',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -214,5 +207,5 @@ export class PipelineStepTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6495fcdf4185bf7ac9985177c2d36cd8</Hash>
+    <Hash>dc43f89da542be5405c44d8b3897cc19</Hash>
 </Codenesium>*/

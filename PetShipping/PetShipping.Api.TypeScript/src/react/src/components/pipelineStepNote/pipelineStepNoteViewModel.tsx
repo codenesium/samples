@@ -29,10 +29,10 @@ export default class PipelineStepNoteViewModel {
     note: string,
     pipelineStepId: number
   ): void {
-    this.employeeId = moment(employeeId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.note = moment(note, 'YYYY-MM-DD');
-    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+    this.employeeId = employeeId;
+    this.id = id;
+    this.note = note;
+    this.pipelineStepId = pipelineStepId;
   }
 
   toDisplay(): string {
@@ -42,5 +42,5 @@ export default class PipelineStepNoteViewModel {
 
 
 /*<Codenesium>
-    <Hash>dea1f056f17c6c0f6306ccabbcdd48af</Hash>
+    <Hash>ee77746bbe526beb458b8e7b6bf3e719</Hash>
 </Codenesium>*/

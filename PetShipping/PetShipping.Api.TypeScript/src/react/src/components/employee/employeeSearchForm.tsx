@@ -215,13 +215,6 @@ export default class EmployeeSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'IsSalesPerson',
                     accessor: 'isSalesPerson',
                     Cell: props => {
@@ -304,5 +297,5 @@ export const WrappedEmployeeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2bdb17dff679f1dcba810d06b9ee9620</Hash>
+    <Hash>2e76e814d0c68388678cef5c8c1f186c</Hash>
 </Codenesium>*/

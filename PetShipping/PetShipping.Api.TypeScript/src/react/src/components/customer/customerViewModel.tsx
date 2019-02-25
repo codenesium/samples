@@ -25,12 +25,12 @@ export default class CustomerViewModel {
     note: string,
     phone: string
   ): void {
-    this.email = moment(email, 'YYYY-MM-DD');
-    this.firstName = moment(firstName, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.lastName = moment(lastName, 'YYYY-MM-DD');
-    this.note = moment(note, 'YYYY-MM-DD');
-    this.phone = moment(phone, 'YYYY-MM-DD');
+    this.email = email;
+    this.firstName = firstName;
+    this.id = id;
+    this.lastName = lastName;
+    this.note = note;
+    this.phone = phone;
   }
 
   toDisplay(): string {
@@ -40,5 +40,5 @@ export default class CustomerViewModel {
 
 
 /*<Codenesium>
-    <Hash>10782005ef5c05008e517aa7168a70c2</Hash>
+    <Hash>dfc1a9ac8de99d06305d231af5a17ef6</Hash>
 </Codenesium>*/

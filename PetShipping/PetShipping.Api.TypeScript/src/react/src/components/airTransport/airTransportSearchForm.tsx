@@ -252,13 +252,6 @@ export default class AirTransportSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'LandDate',
                     accessor: 'landDate',
                     Cell: props => {
@@ -341,5 +334,5 @@ export const WrappedAirTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>21fd19cb423e2352c5a6f0992a6dae7e</Hash>
+    <Hash>f25d6a5b6f8e4fa245951608f1f2f313</Hash>
 </Codenesium>*/

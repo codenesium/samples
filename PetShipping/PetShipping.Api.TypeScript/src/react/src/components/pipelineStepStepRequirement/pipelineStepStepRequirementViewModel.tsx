@@ -24,10 +24,10 @@ export default class PipelineStepStepRequirementViewModel {
     pipelineStepId: number,
     requirementMet: boolean
   ): void {
-    this.detail = moment(detail, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
-    this.requirementMet = moment(requirementMet, 'YYYY-MM-DD');
+    this.detail = detail;
+    this.id = id;
+    this.pipelineStepId = pipelineStepId;
+    this.requirementMet = requirementMet;
   }
 
   toDisplay(): string {
@@ -37,5 +37,5 @@ export default class PipelineStepStepRequirementViewModel {
 
 
 /*<Codenesium>
-    <Hash>2c14ab164cb93f89d7a9a9d5ada44a24</Hash>
+    <Hash>26737756d44725e041ed63df0988e2da</Hash>
 </Codenesium>*/

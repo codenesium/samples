@@ -110,14 +110,6 @@ class PipelineStepNoteDetailComponent extends React.Component<
                 {String(this.state.model!.employeeIdNavigation!.toDisplay())}
               </p>
             </div>
-            <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>note</h3>
-              <p>{String(this.state.model!.note)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>pipelineStepId</h3>
               <p>
@@ -142,5 +134,5 @@ export const WrappedPipelineStepNoteDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>416bef174aa22c6b21e2bffb537e959e</Hash>
+    <Hash>33e692235ace45ba600efa1093045c42</Hash>
 </Codenesium>*/

@@ -208,13 +208,6 @@ export default class PipelineSearchComponent extends React.Component<
                 Header: 'Pipelines',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PipelineStatusId',
                     accessor: 'pipelineStatusId',
                     Cell: props => {
@@ -304,5 +297,5 @@ export const WrappedPipelineSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e91ca0f7ba63b6b0e5099075088602de</Hash>
+    <Hash>93edde4de5464792c72e38b4aacf8f6b</Hash>
 </Codenesium>*/

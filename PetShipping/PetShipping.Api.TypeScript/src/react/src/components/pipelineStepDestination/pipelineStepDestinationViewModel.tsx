@@ -26,9 +26,9 @@ export default class PipelineStepDestinationViewModel {
     id: number,
     pipelineStepId: number
   ): void {
-    this.destinationId = moment(destinationId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.pipelineStepId = moment(pipelineStepId, 'YYYY-MM-DD');
+    this.destinationId = destinationId;
+    this.id = id;
+    this.pipelineStepId = pipelineStepId;
   }
 
   toDisplay(): string {
@@ -38,5 +38,5 @@ export default class PipelineStepDestinationViewModel {
 
 
 /*<Codenesium>
-    <Hash>618c5fd33a9cd39f7c72ed577891dd17</Hash>
+    <Hash>0fa6ed6fc72591ef07e627d9a648fec7</Hash>
 </Codenesium>*/

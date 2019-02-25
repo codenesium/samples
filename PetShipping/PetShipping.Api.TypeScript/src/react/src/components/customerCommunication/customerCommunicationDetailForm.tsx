@@ -121,10 +121,6 @@ class CustomerCommunicationDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>notes</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
@@ -144,5 +140,5 @@ export const WrappedCustomerCommunicationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>49ba332699b87ca230277376326a1c5c</Hash>
+    <Hash>5a7a55cba073279e79daf9ef71942aa8</Hash>
 </Codenesium>*/

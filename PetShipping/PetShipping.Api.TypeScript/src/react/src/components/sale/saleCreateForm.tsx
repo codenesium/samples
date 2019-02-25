@@ -122,7 +122,7 @@ class SaleCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('amount', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'amount'} />)}
+            })(<InputNumber placeholder={'amount'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -130,7 +130,7 @@ class SaleCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('cutomerId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'cutomerId'} />)}
+            })(<Input placeholder={'cutomerId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -138,7 +138,7 @@ class SaleCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'note'} />)}
+            })(<Input placeholder={'note'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -146,7 +146,7 @@ class SaleCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('petId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'petId'} />)}
+            })(<Input placeholder={'petId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -162,9 +162,7 @@ class SaleCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('salesPersonId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'salesPersonId'} />
-            )}
+            })(<Input placeholder={'salesPersonId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -187,5 +185,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>162c01f88bbee9b24167fca93a53b872</Hash>
+    <Hash>a1778d23c6eaf3608e65c34fa32faeab</Hash>
 </Codenesium>*/

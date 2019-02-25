@@ -60,7 +60,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual DbSet<Pipeline> Pipelines { get; set; }
 
-		public virtual DbSet<PipelineStatu> PipelineStatus { get; set; }
+		public virtual DbSet<PipelineStatus> PipelineStatus { get; set; }
 
 		public virtual DbSet<PipelineStep> PipelineSteps { get; set; }
 
@@ -68,7 +68,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual DbSet<PipelineStepNote> PipelineStepNotes { get; set; }
 
-		public virtual DbSet<PipelineStepStatu> PipelineStepStatus { get; set; }
+		public virtual DbSet<PipelineStepStatus> PipelineStepStatus { get; set; }
 
 		public virtual DbSet<PipelineStepStepRequirement> PipelineStepStepRequirements { get; set; }
 
@@ -254,13 +254,13 @@ namespace PetShippingNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<PipelineStatu>()
+			modelBuilder.Entity<PipelineStatus>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<PipelineStatu>()
+			modelBuilder.Entity<PipelineStatus>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -298,13 +298,13 @@ namespace PetShippingNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<PipelineStepStatu>()
+			modelBuilder.Entity<PipelineStepStatus>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<PipelineStepStatu>()
+			modelBuilder.Entity<PipelineStepStatus>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -348,5 +348,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>518e8e05032d192c21035248139a905d</Hash>
+    <Hash>a9689c2f3185d5ea81235c590fe73dbc</Hash>
 </Codenesium>*/

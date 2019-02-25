@@ -130,13 +130,6 @@ export class HandlerTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'LastName',
                     accessor: 'lastName',
                     Cell: props => {
@@ -194,5 +187,5 @@ export class HandlerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a003566dc0ae2ded37355deb528416d2</Hash>
+    <Hash>9703d4ad60fa94fb41e3865a8e9b9206</Hash>
 </Codenesium>*/

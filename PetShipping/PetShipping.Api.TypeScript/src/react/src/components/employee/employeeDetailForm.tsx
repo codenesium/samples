@@ -112,10 +112,6 @@ class EmployeeDetailComponent extends React.Component<
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>isSalesPerson</h3>
               <p>{String(this.state.model!.isSalesPerson)}</p>
             </div>
@@ -191,5 +187,5 @@ export const WrappedEmployeeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>334c2f848b85d6af80f43c485a340005</Hash>
+    <Hash>3a98ed220fd12cae1c03911429d3248f</Hash>
 </Codenesium>*/

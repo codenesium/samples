@@ -109,13 +109,6 @@ export class SpeciesTableComponent extends React.Component<
                 Header: 'Species',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -166,5 +159,5 @@ export class SpeciesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a1e4f84aa1e06630fbd770cf1db7fe60</Hash>
+    <Hash>349c86b0d4a9f0860b51722dd02bfa9d</Hash>
 </Codenesium>*/

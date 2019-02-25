@@ -130,7 +130,7 @@ export const wrapperHeader = (
                 <Link to={ClientRoutes.Pipelines} />
               </MenuItem>
 
-              <MenuItem key="pipelineStatu">
+              <MenuItem key="pipelineStatus">
                 <Icon type="bulb" />
                 <span>PipelineStatus</span>
                 <Link to={ClientRoutes.PipelineStatus} />
@@ -154,7 +154,7 @@ export const wrapperHeader = (
                 <Link to={ClientRoutes.PipelineStepNotes} />
               </MenuItem>
 
-              <MenuItem key="pipelineStepStatu">
+              <MenuItem key="pipelineStepStatus">
                 <Icon type="security-scan" />
                 <span>PipelineStepStatus</span>
                 <Link to={ClientRoutes.PipelineStepStatus} />
@@ -198,5 +198,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>7e2a1545c8cdc5c42e9444326dfd1d95</Hash>
+    <Hash>d9934cddf7fda2053d4ac23a7914614a</Hash>
 </Codenesium>*/

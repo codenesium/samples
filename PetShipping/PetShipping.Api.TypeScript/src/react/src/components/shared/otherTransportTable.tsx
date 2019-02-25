@@ -134,13 +134,6 @@ export class OtherTransportTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PipelineStepId',
                     accessor: 'pipelineStepId',
                     Cell: props => {
@@ -207,5 +200,5 @@ export class OtherTransportTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>edbc8360e3bd4c049352bd7ccce28466</Hash>
+    <Hash>40a7e23d0ef013c67ba1788f6c26433c</Hash>
 </Codenesium>*/

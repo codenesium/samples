@@ -208,13 +208,6 @@ export default class CountrySearchComponent extends React.Component<
                 Header: 'Countries',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -281,5 +274,5 @@ export const WrappedCountrySearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d64e24e7d8c6fadd7638fb6d50dbb643</Hash>
+    <Hash>40c8a28b85526233944fa67009fa55f1</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 import * as Api from '../../api/models';
 import PipelineStepViewModel from './pipelineStepViewModel';
-import PipelineStepStatuViewModel from '../pipelineStepStatu/pipelineStepStatuViewModel';
+import PipelineStepStatusViewModel from '../pipelineStepStatus/pipelineStepStatusViewModel';
 import EmployeeViewModel from '../employee/employeeViewModel';
 export default class PipelineStepMapper {
   mapApiResponseToViewModel(
@@ -15,7 +15,7 @@ export default class PipelineStepMapper {
     );
 
     if (dto.pipelineStepStatusIdNavigation != null) {
-      response.pipelineStepStatusIdNavigation = new PipelineStepStatuViewModel();
+      response.pipelineStepStatusIdNavigation = new PipelineStepStatusViewModel();
       response.pipelineStepStatusIdNavigation.setProperties(
         dto.pipelineStepStatusIdNavigation.id,
         dto.pipelineStepStatusIdNavigation.name
@@ -51,5 +51,5 @@ export default class PipelineStepMapper {
 
 
 /*<Codenesium>
-    <Hash>6924d1d531f39d3f34b04e636b5ad3e5</Hash>
+    <Hash>eae456c41cc4dfc1b079eb577304dfbd</Hash>
 </Codenesium>*/

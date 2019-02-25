@@ -27,11 +27,11 @@ namespace PetShippingNS.Api.Client
 			from.OtherTransports.ForEach(x => this.AddOtherTransport(x));
 			from.Pets.ForEach(x => this.AddPet(x));
 			from.Pipelines.ForEach(x => this.AddPipeline(x));
-			from.PipelineStatus.ForEach(x => this.AddPipelineStatu(x));
+			from.PipelineStatus.ForEach(x => this.AddPipelineStatus(x));
 			from.PipelineSteps.ForEach(x => this.AddPipelineStep(x));
 			from.PipelineStepDestinations.ForEach(x => this.AddPipelineStepDestination(x));
 			from.PipelineStepNotes.ForEach(x => this.AddPipelineStepNote(x));
-			from.PipelineStepStatus.ForEach(x => this.AddPipelineStepStatu(x));
+			from.PipelineStepStatus.ForEach(x => this.AddPipelineStepStatus(x));
 			from.PipelineStepStepRequirements.ForEach(x => this.AddPipelineStepStepRequirement(x));
 			from.Sales.ForEach(x => this.AddSale(x));
 			from.Species.ForEach(x => this.AddSpecies(x));
@@ -65,7 +65,7 @@ namespace PetShippingNS.Api.Client
 
 		public List<ApiPipelineClientResponseModel> Pipelines { get; private set; } = new List<ApiPipelineClientResponseModel>();
 
-		public List<ApiPipelineStatuClientResponseModel> PipelineStatus { get; private set; } = new List<ApiPipelineStatuClientResponseModel>();
+		public List<ApiPipelineStatusClientResponseModel> PipelineStatus { get; private set; } = new List<ApiPipelineStatusClientResponseModel>();
 
 		public List<ApiPipelineStepClientResponseModel> PipelineSteps { get; private set; } = new List<ApiPipelineStepClientResponseModel>();
 
@@ -73,7 +73,7 @@ namespace PetShippingNS.Api.Client
 
 		public List<ApiPipelineStepNoteClientResponseModel> PipelineStepNotes { get; private set; } = new List<ApiPipelineStepNoteClientResponseModel>();
 
-		public List<ApiPipelineStepStatuClientResponseModel> PipelineStepStatus { get; private set; } = new List<ApiPipelineStepStatuClientResponseModel>();
+		public List<ApiPipelineStepStatusClientResponseModel> PipelineStepStatus { get; private set; } = new List<ApiPipelineStepStatusClientResponseModel>();
 
 		public List<ApiPipelineStepStepRequirementClientResponseModel> PipelineStepStepRequirements { get; private set; } = new List<ApiPipelineStepStepRequirementClientResponseModel>();
 
@@ -193,7 +193,7 @@ namespace PetShippingNS.Api.Client
 			}
 		}
 
-		public void AddPipelineStatu(ApiPipelineStatuClientResponseModel item)
+		public void AddPipelineStatus(ApiPipelineStatusClientResponseModel item)
 		{
 			if (!this.PipelineStatus.Any(x => x.Id == item.Id))
 			{
@@ -225,7 +225,7 @@ namespace PetShippingNS.Api.Client
 			}
 		}
 
-		public void AddPipelineStepStatu(ApiPipelineStepStatuClientResponseModel item)
+		public void AddPipelineStepStatus(ApiPipelineStepStatusClientResponseModel item)
 		{
 			if (!this.PipelineStepStatus.Any(x => x.Id == item.Id))
 			{
@@ -260,5 +260,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>fd05af83ae67b94b567e67e562b65016</Hash>
+    <Hash>01f388136951f21e51c43411ed0a31fd</Hash>
 </Codenesium>*/

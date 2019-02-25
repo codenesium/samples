@@ -7,6 +7,9 @@ import PipelineViewModel from './pipelineViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface PipelineDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface PipelineDetailComponentState {
 }
 
 class PipelineDetailComponent extends React.Component<
-  PipelineDetailComponentProps,
-  PipelineDetailComponentState
+PipelineDetailComponentProps,
+PipelineDetailComponentState
 > {
   state = {
     model: new PipelineViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Pipelines + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Pipelines + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,44 +85,39 @@ class PipelineDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>pipelineStatusId</h3>
-              <p>
-                {String(
-                  this.state.model!.pipelineStatusIdNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-            <div>
-              <h3>saleId</h3>
-              <p>{String(this.state.model!.saleId)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>pipelineStatusId</h3>
+							<p>{String(this.state.model!.pipelineStatusIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>saleId</h3>
+							<p>{String(this.state.model!.saleId)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -130,11 +126,10 @@ class PipelineDetailComponent extends React.Component<
   }
 }
 
-export const WrappedPipelineDetailComponent = Form.create({
-  name: 'Pipeline Detail',
-})(PipelineDetailComponent);
-
+export const WrappedPipelineDetailComponent = Form.create({ name: 'Pipeline Detail' })(
+  PipelineDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>05ac9fce270e7a7d9f433594d69397a3</Hash>
+    <Hash>613ca1c0f5462deea1dbacc081ae7f62</Hash>
 </Codenesium>*/

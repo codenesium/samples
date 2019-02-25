@@ -176,9 +176,7 @@ class AirTransportEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 12, message: 'Exceeds max length of 12' },
               ],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'flightNumber'} />
-            )}
+            })(<Input placeholder={'flightNumber'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -186,15 +184,7 @@ class AirTransportEditComponent extends React.Component<
             <br />
             {getFieldDecorator('handlerId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'handlerId'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="id">id</label>
-            <br />
-            {getFieldDecorator('id', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'id'} />)}
+            })(<Input placeholder={'handlerId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -210,12 +200,7 @@ class AirTransportEditComponent extends React.Component<
             <br />
             {getFieldDecorator('pipelineStepId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'pipelineStepId'}
-              />
-            )}
+            })(<Input placeholder={'pipelineStepId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -248,5 +233,5 @@ export const WrappedAirTransportEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fded6bd3f727c027b8a87c9219823684</Hash>
+    <Hash>27edc4043b2f7071e4bf8685bbd7a479</Hash>
 </Codenesium>*/

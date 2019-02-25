@@ -112,10 +112,6 @@ class DestinationDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -155,5 +151,5 @@ export const WrappedDestinationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2acec1231349faf0014ce278af0ff28e</Hash>
+    <Hash>cc17d6ae1947fa9699b2618e680453fd</Hash>
 </Codenesium>*/

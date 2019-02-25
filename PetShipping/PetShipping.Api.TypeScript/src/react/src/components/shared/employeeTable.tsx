@@ -116,13 +116,6 @@ export class EmployeeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'IsSalesPerson',
                     accessor: 'isSalesPerson',
                     Cell: props => {
@@ -189,5 +182,5 @@ export class EmployeeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5dfa0ccd23e5eb4c2e78d6457e03d384</Hash>
+    <Hash>d5eb02472ecc9cf78ba2401d53ebccfc</Hash>
 </Codenesium>*/

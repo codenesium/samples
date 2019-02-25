@@ -148,13 +148,6 @@ export class AirTransportTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'LandDate',
                     accessor: 'landDate',
                     Cell: props => {
@@ -221,5 +214,5 @@ export class AirTransportTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ffe1027db6d72f7ca361a4c74eb14e4b</Hash>
+    <Hash>b5f80abdddbd17dde3bfd09ae6aa4f70</Hash>
 </Codenesium>*/

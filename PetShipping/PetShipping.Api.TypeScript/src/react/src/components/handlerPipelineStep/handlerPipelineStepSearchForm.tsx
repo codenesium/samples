@@ -238,13 +238,6 @@ export default class HandlerPipelineStepSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PipelineStepId',
                     accessor: 'pipelineStepId',
                     Cell: props => {
@@ -327,5 +320,5 @@ export const WrappedHandlerPipelineStepSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e8f978f666a91c06a0a9fdd62ab4113c</Hash>
+    <Hash>02bd448c2ab53d4a124891f7ebb21991</Hash>
 </Codenesium>*/

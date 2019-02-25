@@ -10,8 +10,8 @@ export default class SpeciesViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
+    this.id = id;
+    this.name = name;
   }
 
   toDisplay(): string {
@@ -21,5 +21,5 @@ export default class SpeciesViewModel {
 
 
 /*<Codenesium>
-    <Hash>6ce724e886d63c2be5dfd8d720e9c1fe</Hash>
+    <Hash>b1f5616671341290e238d23f21ba2152</Hash>
 </Codenesium>*/

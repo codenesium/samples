@@ -125,7 +125,7 @@ class PipelineStepCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -133,12 +133,7 @@ class PipelineStepCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('pipelineStepStatusId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'pipelineStepStatusId'}
-              />
-            )}
+            })(<Input placeholder={'pipelineStepStatusId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -146,7 +141,7 @@ class PipelineStepCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('shipperId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'shipperId'} />)}
+            })(<Input placeholder={'shipperId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -169,5 +164,5 @@ export const WrappedPipelineStepCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0f8de1c9cac42fc016959108056aa1ab</Hash>
+    <Hash>426bdf41410bd762d4e045106a048801</Hash>
 </Codenesium>*/

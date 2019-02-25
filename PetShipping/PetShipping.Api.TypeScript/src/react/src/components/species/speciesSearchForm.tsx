@@ -208,13 +208,6 @@ export default class SpeciesSearchComponent extends React.Component<
                 Header: 'Species',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -281,5 +274,5 @@ export const WrappedSpeciesSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0a134f3073c3a0353ffc95ff6bbe7e8a</Hash>
+    <Hash>b13a5406ffa20b2aaaf8550536c2e22d</Hash>
 </Codenesium>*/

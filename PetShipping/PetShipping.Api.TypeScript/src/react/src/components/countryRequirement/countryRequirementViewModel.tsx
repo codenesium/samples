@@ -17,9 +17,9 @@ export default class CountryRequirementViewModel {
   }
 
   setProperties(countryId: number, detail: string, id: number): void {
-    this.countryId = moment(countryId, 'YYYY-MM-DD');
-    this.detail = moment(detail, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.countryId = countryId;
+    this.detail = detail;
+    this.id = id;
   }
 
   toDisplay(): string {
@@ -29,5 +29,5 @@ export default class CountryRequirementViewModel {
 
 
 /*<Codenesium>
-    <Hash>9ce2985d87dde73d651542a8a5efc3b9</Hash>
+    <Hash>c2631b3d251a5e9c8968c15f57201aa0</Hash>
 </Codenesium>*/

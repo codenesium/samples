@@ -110,10 +110,6 @@ class PipelineStepStepRequirementDetailComponent extends React.Component<
               <h3>details</h3>
               <p>{String(this.state.model!.detail)}</p>
             </div>
-            <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>pipelineStepId</h3>
               <p>
@@ -142,5 +138,5 @@ export const WrappedPipelineStepStepRequirementDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>127e9050cee49e0a82829f4e86db4f6c</Hash>
+    <Hash>a28edc795f827fea1462f6f501bf12e6</Hash>
 </Codenesium>*/

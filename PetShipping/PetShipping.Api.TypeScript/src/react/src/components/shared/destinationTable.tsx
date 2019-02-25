@@ -132,13 +132,6 @@ export class DestinationTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -196,5 +189,5 @@ export class DestinationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f5c89469836587f0d342dfd26ad663d9</Hash>
+    <Hash>36e35cf42ef8f7d1bb32ce93e7bc52b8</Hash>
 </Codenesium>*/

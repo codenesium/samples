@@ -113,10 +113,6 @@ class SaleDetailComponent extends React.Component<
               <p>{String(this.state.model!.cutomerId)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>note</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
@@ -148,5 +144,5 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 
 
 /*<Codenesium>
-    <Hash>f65b12923c8d58b65cb7e20f84037d81</Hash>
+    <Hash>1ca83420986812244b14435e9299cb4e</Hash>
 </Codenesium>*/

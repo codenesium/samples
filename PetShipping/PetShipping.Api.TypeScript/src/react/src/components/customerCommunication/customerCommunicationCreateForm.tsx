@@ -122,7 +122,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('customerId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'customerId'} />)}
+            })(<Input placeholder={'customerId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -140,7 +140,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('employeeId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'employeeId'} />)}
+            })(<Input placeholder={'employeeId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -148,7 +148,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'notes'} />)}
+            })(<Input placeholder={'notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -171,5 +171,5 @@ export const WrappedCustomerCommunicationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9de2236abc6ef64603df41246e0f3657</Hash>
+    <Hash>9bb988b9b07eace2253572a0fadd66f8</Hash>
 </Codenesium>*/

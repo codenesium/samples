@@ -27,11 +27,11 @@ export default class PetViewModel {
     name: string,
     weight: number
   ): void {
-    this.breedId = moment(breedId, 'YYYY-MM-DD');
-    this.clientId = moment(clientId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
-    this.weight = moment(weight, 'YYYY-MM-DD');
+    this.breedId = breedId;
+    this.clientId = clientId;
+    this.id = id;
+    this.name = name;
+    this.weight = weight;
   }
 
   toDisplay(): string {
@@ -41,5 +41,5 @@ export default class PetViewModel {
 
 
 /*<Codenesium>
-    <Hash>8728bbac58f9966f5e48b49d54e14744</Hash>
+    <Hash>e08dcff225dae65410aa26c3ad2251ca</Hash>
 </Codenesium>*/

@@ -122,7 +122,7 @@ class DestinationCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('countryId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'countryId'} />)}
+            })(<Input placeholder={'countryId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -133,7 +133,7 @@ class DestinationCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -141,7 +141,7 @@ class DestinationCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('order', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'order'} />)}
+            })(<InputNumber placeholder={'order'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -164,5 +164,5 @@ export const WrappedDestinationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cbc67ef49115a9ca23557f90ce57e612</Hash>
+    <Hash>a345ac805168e4c6862c89b6f73a402f</Hash>
 </Codenesium>*/

@@ -122,7 +122,7 @@ class CountryRequirementCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('countryId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'countryId'} />)}
+            })(<Input placeholder={'countryId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -130,7 +130,7 @@ class CountryRequirementCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('detail', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'details'} />)}
+            })(<Input placeholder={'details'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -153,5 +153,5 @@ export const WrappedCountryRequirementCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>88108e6b53f84e632e2ee60ffb58a4e2</Hash>
+    <Hash>8c8ab53ead2cca92cb94942b3675a814</Hash>
 </Codenesium>*/

@@ -60,10 +60,10 @@ import { WrappedPipelineCreateComponent } from './components/pipeline/pipelineCr
 import { WrappedPipelineDetailComponent } from './components/pipeline/pipelineDetailForm';
 import { WrappedPipelineEditComponent } from './components/pipeline/pipelineEditForm';
 import { WrappedPipelineSearchComponent } from './components/pipeline/pipelineSearchForm';
-import { WrappedPipelineStatuCreateComponent } from './components/pipelineStatu/pipelineStatuCreateForm';
-import { WrappedPipelineStatuDetailComponent } from './components/pipelineStatu/pipelineStatuDetailForm';
-import { WrappedPipelineStatuEditComponent } from './components/pipelineStatu/pipelineStatuEditForm';
-import { WrappedPipelineStatuSearchComponent } from './components/pipelineStatu/pipelineStatuSearchForm';
+import { WrappedPipelineStatusCreateComponent } from './components/pipelineStatus/pipelineStatusCreateForm';
+import { WrappedPipelineStatusDetailComponent } from './components/pipelineStatus/pipelineStatusDetailForm';
+import { WrappedPipelineStatusEditComponent } from './components/pipelineStatus/pipelineStatusEditForm';
+import { WrappedPipelineStatusSearchComponent } from './components/pipelineStatus/pipelineStatusSearchForm';
 import { WrappedPipelineStepCreateComponent } from './components/pipelineStep/pipelineStepCreateForm';
 import { WrappedPipelineStepDetailComponent } from './components/pipelineStep/pipelineStepDetailForm';
 import { WrappedPipelineStepEditComponent } from './components/pipelineStep/pipelineStepEditForm';
@@ -76,10 +76,10 @@ import { WrappedPipelineStepNoteCreateComponent } from './components/pipelineSte
 import { WrappedPipelineStepNoteDetailComponent } from './components/pipelineStepNote/pipelineStepNoteDetailForm';
 import { WrappedPipelineStepNoteEditComponent } from './components/pipelineStepNote/pipelineStepNoteEditForm';
 import { WrappedPipelineStepNoteSearchComponent } from './components/pipelineStepNote/pipelineStepNoteSearchForm';
-import { WrappedPipelineStepStatuCreateComponent } from './components/pipelineStepStatu/pipelineStepStatuCreateForm';
-import { WrappedPipelineStepStatuDetailComponent } from './components/pipelineStepStatu/pipelineStepStatuDetailForm';
-import { WrappedPipelineStepStatuEditComponent } from './components/pipelineStepStatu/pipelineStepStatuEditForm';
-import { WrappedPipelineStepStatuSearchComponent } from './components/pipelineStepStatu/pipelineStepStatuSearchForm';
+import { WrappedPipelineStepStatusCreateComponent } from './components/pipelineStepStatus/pipelineStepStatusCreateForm';
+import { WrappedPipelineStepStatusDetailComponent } from './components/pipelineStepStatus/pipelineStepStatusDetailForm';
+import { WrappedPipelineStepStatusEditComponent } from './components/pipelineStepStatus/pipelineStepStatusEditForm';
+import { WrappedPipelineStepStatusSearchComponent } from './components/pipelineStepStatus/pipelineStepStatusSearchForm';
 import { WrappedPipelineStepStepRequirementCreateComponent } from './components/pipelineStepStepRequirement/pipelineStepStepRequirementCreateForm';
 import { WrappedPipelineStepStepRequirementDetailComponent } from './components/pipelineStepStepRequirement/pipelineStepStepRequirementDetailForm';
 import { WrappedPipelineStepStepRequirementEditComponent } from './components/pipelineStepStepRequirement/pipelineStepStepRequirementEditForm';
@@ -502,29 +502,29 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           <Route
             path={ClientRoutes.PipelineStatus + '/create'}
             component={wrapperHeader(
-              WrappedPipelineStatuCreateComponent,
-              'PipelineStatu Create'
+              WrappedPipelineStatusCreateComponent,
+              'PipelineStatus Create'
             )}
           />
           <Route
             path={ClientRoutes.PipelineStatus + '/edit/:id'}
             component={wrapperHeader(
-              WrappedPipelineStatuEditComponent,
-              'PipelineStatu Edit'
+              WrappedPipelineStatusEditComponent,
+              'PipelineStatus Edit'
             )}
           />
           <Route
             path={ClientRoutes.PipelineStatus + '/:id'}
             component={wrapperHeader(
-              WrappedPipelineStatuDetailComponent,
-              'PipelineStatu Detail'
+              WrappedPipelineStatusDetailComponent,
+              'PipelineStatus Detail'
             )}
           />
           <Route
             path={ClientRoutes.PipelineStatus}
             component={wrapperHeader(
-              WrappedPipelineStatuSearchComponent,
-              'PipelineStatu Search'
+              WrappedPipelineStatusSearchComponent,
+              'PipelineStatus Search'
             )}
           />
           <Route
@@ -614,29 +614,29 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           <Route
             path={ClientRoutes.PipelineStepStatus + '/create'}
             component={wrapperHeader(
-              WrappedPipelineStepStatuCreateComponent,
-              'PipelineStepStatu Create'
+              WrappedPipelineStepStatusCreateComponent,
+              'PipelineStepStatus Create'
             )}
           />
           <Route
             path={ClientRoutes.PipelineStepStatus + '/edit/:id'}
             component={wrapperHeader(
-              WrappedPipelineStepStatuEditComponent,
-              'PipelineStepStatu Edit'
+              WrappedPipelineStepStatusEditComponent,
+              'PipelineStepStatus Edit'
             )}
           />
           <Route
             path={ClientRoutes.PipelineStepStatus + '/:id'}
             component={wrapperHeader(
-              WrappedPipelineStepStatuDetailComponent,
-              'PipelineStepStatu Detail'
+              WrappedPipelineStepStatusDetailComponent,
+              'PipelineStepStatus Detail'
             )}
           />
           <Route
             path={ClientRoutes.PipelineStepStatus}
             component={wrapperHeader(
-              WrappedPipelineStepStatuSearchComponent,
-              'PipelineStepStatu Search'
+              WrappedPipelineStepStatusSearchComponent,
+              'PipelineStepStatus Search'
             )}
           />
           <Route
@@ -719,5 +719,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>2069fac2f2cf068df05b8a311db6c924</Hash>
+    <Hash>a5b176b0c958e69dde45fb34fe3235cb</Hash>
 </Codenesium>*/

@@ -135,13 +135,6 @@ export class PetTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -199,5 +192,5 @@ export class PetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>81277c4d536df3bfb194b7d3de9bdcbc</Hash>
+    <Hash>8b644c66dbca89d72a01f9487c73e81b</Hash>
 </Codenesium>*/

@@ -17,9 +17,9 @@ export default class BreedViewModel {
   }
 
   setProperties(id: number, name: string, speciesId: number): void {
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
-    this.speciesId = moment(speciesId, 'YYYY-MM-DD');
+    this.id = id;
+    this.name = name;
+    this.speciesId = speciesId;
   }
 
   toDisplay(): string {
@@ -29,5 +29,5 @@ export default class BreedViewModel {
 
 
 /*<Codenesium>
-    <Hash>bc8801d78239c6422cf61b628c818380</Hash>
+    <Hash>e65e25e4cfd7458387095bb01177fc2d</Hash>
 </Codenesium>*/

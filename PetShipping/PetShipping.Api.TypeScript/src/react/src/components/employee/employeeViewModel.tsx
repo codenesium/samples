@@ -22,11 +22,11 @@ export default class EmployeeViewModel {
     isShipper: boolean,
     lastName: string
   ): void {
-    this.firstName = moment(firstName, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.isSalesPerson = moment(isSalesPerson, 'YYYY-MM-DD');
-    this.isShipper = moment(isShipper, 'YYYY-MM-DD');
-    this.lastName = moment(lastName, 'YYYY-MM-DD');
+    this.firstName = firstName;
+    this.id = id;
+    this.isSalesPerson = isSalesPerson;
+    this.isShipper = isShipper;
+    this.lastName = lastName;
   }
 
   toDisplay(): string {
@@ -36,5 +36,5 @@ export default class EmployeeViewModel {
 
 
 /*<Codenesium>
-    <Hash>9480e428b72c951379343279601bc2ff</Hash>
+    <Hash>ca9212c9d41307c0178ecf44309bdb61</Hash>
 </Codenesium>*/

@@ -122,7 +122,7 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('detail', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'details'} />)}
+            })(<Input placeholder={'details'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -130,12 +130,7 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('pipelineStepId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'pipelineStepId'}
-              />
-            )}
+            })(<Input placeholder={'pipelineStepId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -143,12 +138,7 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('requirementMet', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'requirementMet'}
-              />
-            )}
+            })(<Input placeholder={'requirementMet'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -171,5 +161,5 @@ export const WrappedPipelineStepStepRequirementCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f1f3e7d2a0f45cbdfcab6d922cf75f60</Hash>
+    <Hash>f8ef7d88c5e35453290c26139cc699ac</Hash>
 </Codenesium>*/

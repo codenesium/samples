@@ -125,7 +125,7 @@ class BreedCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -133,7 +133,7 @@ class BreedCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('speciesId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'speciesId'} />)}
+            })(<Input placeholder={'speciesId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -156,5 +156,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ac821feedc80232d6e1ae73d245f815e</Hash>
+    <Hash>dc94ea3885090528cbe80d225e724bd4</Hash>
 </Codenesium>*/

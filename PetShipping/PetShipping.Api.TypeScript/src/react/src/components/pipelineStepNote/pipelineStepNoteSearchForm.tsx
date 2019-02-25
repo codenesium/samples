@@ -236,20 +236,6 @@ export default class PipelineStepNoteSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Note',
-                    accessor: 'note',
-                    Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PipelineStepId',
                     accessor: 'pipelineStepId',
                     Cell: props => {
@@ -332,5 +318,5 @@ export const WrappedPipelineStepNoteSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>257694e159f9f3037c25f23c27709f6b</Hash>
+    <Hash>791b17e343090248742a22db8b73121a</Hash>
 </Codenesium>*/

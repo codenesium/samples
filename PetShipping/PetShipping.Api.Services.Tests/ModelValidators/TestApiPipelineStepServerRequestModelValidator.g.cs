@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStepStatusId_Create_Valid_Reference()
 		{
 			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-			pipelineStepRepository.Setup(x => x.PipelineStepStatuByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatu>(new PipelineStepStatu()));
+			pipelineStepRepository.Setup(x => x.PipelineStepStatusByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(new PipelineStepStatus()));
 
 			var validator = new ApiPipelineStepServerRequestModelValidator(pipelineStepRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPipelineStepServerRequestModel());
@@ -88,7 +88,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStepStatusId_Create_Invalid_Reference()
 		{
 			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-			pipelineStepRepository.Setup(x => x.PipelineStepStatuByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatu>(null));
+			pipelineStepRepository.Setup(x => x.PipelineStepStatusByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(null));
 
 			var validator = new ApiPipelineStepServerRequestModelValidator(pipelineStepRepository.Object);
 
@@ -101,7 +101,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStepStatusId_Update_Valid_Reference()
 		{
 			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-			pipelineStepRepository.Setup(x => x.PipelineStepStatuByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatu>(new PipelineStepStatu()));
+			pipelineStepRepository.Setup(x => x.PipelineStepStatusByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(new PipelineStepStatus()));
 
 			var validator = new ApiPipelineStepServerRequestModelValidator(pipelineStepRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepServerRequestModel());
@@ -113,7 +113,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStepStatusId_Update_Invalid_Reference()
 		{
 			Mock<IPipelineStepRepository> pipelineStepRepository = new Mock<IPipelineStepRepository>();
-			pipelineStepRepository.Setup(x => x.PipelineStepStatuByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatu>(null));
+			pipelineStepRepository.Setup(x => x.PipelineStepStatusByPipelineStepStatusId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStatus>(null));
 
 			var validator = new ApiPipelineStepServerRequestModelValidator(pipelineStepRepository.Object);
 
@@ -175,5 +175,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>35519c2729af3749ac40b823e513a3d4</Hash>
+    <Hash>9f359d942ec64bfbd1c413e9cfe95bfd</Hash>
 </Codenesium>*/

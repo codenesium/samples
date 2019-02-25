@@ -140,13 +140,6 @@ export class PipelineStepDestinationTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PipelineStepId',
                     accessor: 'pipelineStepId',
                     Cell: props => {
@@ -213,5 +206,5 @@ export class PipelineStepDestinationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>33c0dbe844c955a024b0fe0bf07e9f77</Hash>
+    <Hash>c0eebd3358ac46957cc00e2c5854d91b</Hash>
 </Codenesium>*/

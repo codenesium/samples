@@ -109,13 +109,6 @@ export class CountryTableComponent extends React.Component<
                 Header: 'Countries',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -166,5 +159,5 @@ export class CountryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d55a48a10cc5512d87668f8ff6ab2153</Hash>
+    <Hash>2be3c790ed57b65da641458aa1bd70bf</Hash>
 </Codenesium>*/

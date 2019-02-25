@@ -125,7 +125,7 @@ class SpeciesCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -148,5 +148,5 @@ export const WrappedSpeciesCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>09d429f67688599c0ddb9b66c000c1b6</Hash>
+    <Hash>883d81e0878692565f3e3c27b9002f8b</Hash>
 </Codenesium>*/

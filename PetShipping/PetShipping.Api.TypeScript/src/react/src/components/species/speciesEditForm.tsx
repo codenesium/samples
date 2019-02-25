@@ -173,7 +173,7 @@ class SpeciesEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -196,5 +196,5 @@ export const WrappedSpeciesEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>62002194d08ae6b20b50acae2e012390</Hash>
+    <Hash>b35eb93f160d3df0858a0dc52aaa517f</Hash>
 </Codenesium>*/

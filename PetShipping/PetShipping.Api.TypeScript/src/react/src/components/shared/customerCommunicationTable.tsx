@@ -168,13 +168,6 @@ export class CustomerCommunicationTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Notes',
                     accessor: 'note',
                     Cell: props => {
@@ -225,5 +218,5 @@ export class CustomerCommunicationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>919753539f601b3fae895bdfb575380f</Hash>
+    <Hash>de1516208940d2e008ccefb85158441b</Hash>
 </Codenesium>*/

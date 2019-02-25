@@ -173,7 +173,7 @@ class CountryRequirementEditComponent extends React.Component<
             <br />
             {getFieldDecorator('countryId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'countryId'} />)}
+            })(<Input placeholder={'countryId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -181,7 +181,7 @@ class CountryRequirementEditComponent extends React.Component<
             <br />
             {getFieldDecorator('detail', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'details'} />)}
+            })(<Input placeholder={'details'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -204,5 +204,5 @@ export const WrappedCountryRequirementEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6f8fc7858310092827fea1eed9b6f5d5</Hash>
+    <Hash>79b6e59bc6b6be6567dcdd13cb2186cc</Hash>
 </Codenesium>*/

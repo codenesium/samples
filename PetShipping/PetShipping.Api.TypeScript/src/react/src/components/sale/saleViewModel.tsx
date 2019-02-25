@@ -33,13 +33,13 @@ export default class SaleViewModel {
     saleDate: any,
     salesPersonId: number
   ): void {
-    this.amount = moment(amount, 'YYYY-MM-DD');
-    this.cutomerId = moment(cutomerId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.note = moment(note, 'YYYY-MM-DD');
-    this.petId = moment(petId, 'YYYY-MM-DD');
+    this.amount = amount;
+    this.cutomerId = cutomerId;
+    this.id = id;
+    this.note = note;
+    this.petId = petId;
     this.saleDate = moment(saleDate, 'YYYY-MM-DD');
-    this.salesPersonId = moment(salesPersonId, 'YYYY-MM-DD');
+    this.salesPersonId = salesPersonId;
   }
 
   toDisplay(): string {
@@ -49,5 +49,5 @@ export default class SaleViewModel {
 
 
 /*<Codenesium>
-    <Hash>e3c36d1cb0603857b8ffdeef1503b88a</Hash>
+    <Hash>53f3556ec0880f3aa88d6952e2ef1af6</Hash>
 </Codenesium>*/

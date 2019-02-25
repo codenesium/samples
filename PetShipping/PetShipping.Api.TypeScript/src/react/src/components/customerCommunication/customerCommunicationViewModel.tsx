@@ -32,11 +32,11 @@ export default class CustomerCommunicationViewModel {
     id: number,
     note: string
   ): void {
-    this.customerId = moment(customerId, 'YYYY-MM-DD');
+    this.customerId = customerId;
     this.dateCreated = moment(dateCreated, 'YYYY-MM-DD');
-    this.employeeId = moment(employeeId, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.note = moment(note, 'YYYY-MM-DD');
+    this.employeeId = employeeId;
+    this.id = id;
+    this.note = note;
   }
 
   toDisplay(): string {
@@ -46,5 +46,5 @@ export default class CustomerCommunicationViewModel {
 
 
 /*<Codenesium>
-    <Hash>85fcda042c548313a0a9a9532c9024af</Hash>
+    <Hash>2347d796e80002a8a4b02f4bfda64b53</Hash>
 </Codenesium>*/

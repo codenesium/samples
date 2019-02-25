@@ -114,10 +114,6 @@ class CountryRequirementDetailComponent extends React.Component<
               <h3>details</h3>
               <p>{String(this.state.model!.detail)}</p>
             </div>
-            <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
           </div>
           {message}
         </div>
@@ -134,5 +130,5 @@ export const WrappedCountryRequirementDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a88b64b6ef46ecef437524df9d159b09</Hash>
+    <Hash>f88a5eb55ddf400ba248fb8149869e7e</Hash>
 </Codenesium>*/

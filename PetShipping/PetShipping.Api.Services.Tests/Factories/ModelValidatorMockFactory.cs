@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public Mock<IApiPipelineServerRequestModelValidator> PipelineModelValidatorMock { get; set; } = new Mock<IApiPipelineServerRequestModelValidator>();
 
-		public Mock<IApiPipelineStatuServerRequestModelValidator> PipelineStatuModelValidatorMock { get; set; } = new Mock<IApiPipelineStatuServerRequestModelValidator>();
+		public Mock<IApiPipelineStatusServerRequestModelValidator> PipelineStatusModelValidatorMock { get; set; } = new Mock<IApiPipelineStatusServerRequestModelValidator>();
 
 		public Mock<IApiPipelineStepServerRequestModelValidator> PipelineStepModelValidatorMock { get; set; } = new Mock<IApiPipelineStepServerRequestModelValidator>();
 
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public Mock<IApiPipelineStepNoteServerRequestModelValidator> PipelineStepNoteModelValidatorMock { get; set; } = new Mock<IApiPipelineStepNoteServerRequestModelValidator>();
 
-		public Mock<IApiPipelineStepStatuServerRequestModelValidator> PipelineStepStatuModelValidatorMock { get; set; } = new Mock<IApiPipelineStepStatuServerRequestModelValidator>();
+		public Mock<IApiPipelineStepStatusServerRequestModelValidator> PipelineStepStatusModelValidatorMock { get; set; } = new Mock<IApiPipelineStepStatusServerRequestModelValidator>();
 
 		public Mock<IApiPipelineStepStepRequirementServerRequestModelValidator> PipelineStepStepRequirementModelValidatorMock { get; set; } = new Mock<IApiPipelineStepStepRequirementServerRequestModelValidator>();
 
@@ -111,9 +111,9 @@ namespace PetShippingNS.Api.Services.Tests
 			this.PipelineModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PipelineModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PipelineStatuModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PipelineStatuModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PipelineStatuModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PipelineStatusModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PipelineStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PipelineStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.PipelineStepModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PipelineStepModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -127,9 +127,9 @@ namespace PetShippingNS.Api.Services.Tests
 			this.PipelineStepNoteModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepNoteServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PipelineStepNoteModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PipelineStepStatuModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PipelineStepStatuModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PipelineStepStatuModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PipelineStepStatusModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PipelineStepStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PipelineStepStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.PipelineStepStepRequirementModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PipelineStepStepRequirementModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -147,5 +147,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6affb3eee6c5c1765e07e7ac8a092764</Hash>
+    <Hash>51202c1ee0829e22d8424dfae6e088a5</Hash>
 </Codenesium>*/

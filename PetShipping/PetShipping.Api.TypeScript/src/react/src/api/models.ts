@@ -725,7 +725,7 @@ export class PipelineClientRequestModel {
   id: number;
   pipelineStatusId: number;
   pipelineStatusIdEntity: string;
-  pipelineStatusIdNavigation?: PipelineStatuClientResponseModel;
+  pipelineStatusIdNavigation?: PipelineStatusClientResponseModel;
   saleId: number;
 
   constructor() {
@@ -747,7 +747,7 @@ export class PipelineClientResponseModel {
   id: number;
   pipelineStatusId: number;
   pipelineStatusIdEntity: string;
-  pipelineStatusIdNavigation?: PipelineStatuClientResponseModel;
+  pipelineStatusIdNavigation?: PipelineStatusClientResponseModel;
   saleId: number;
 
   constructor() {
@@ -764,7 +764,7 @@ export class PipelineClientResponseModel {
     this.saleId = saleId;
   }
 }
-export class PipelineStatuClientRequestModel {
+export class PipelineStatusClientRequestModel {
   id: number;
   name: string;
 
@@ -779,7 +779,7 @@ export class PipelineStatuClientRequestModel {
   }
 }
 
-export class PipelineStatuClientResponseModel {
+export class PipelineStatusClientResponseModel {
   id: number;
   name: string;
 
@@ -798,7 +798,7 @@ export class PipelineStepClientRequestModel {
   name: string;
   pipelineStepStatusId: number;
   pipelineStepStatusIdEntity: string;
-  pipelineStepStatusIdNavigation?: PipelineStepStatuClientResponseModel;
+  pipelineStepStatusIdNavigation?: PipelineStepStatusClientResponseModel;
   shipperId: number;
   shipperIdEntity: string;
   shipperIdNavigation?: EmployeeClientResponseModel;
@@ -832,7 +832,7 @@ export class PipelineStepClientResponseModel {
   name: string;
   pipelineStepStatusId: number;
   pipelineStepStatusIdEntity: string;
-  pipelineStepStatusIdNavigation?: PipelineStepStatuClientResponseModel;
+  pipelineStepStatusIdNavigation?: PipelineStepStatusClientResponseModel;
   shipperId: number;
   shipperIdEntity: string;
   shipperIdNavigation?: EmployeeClientResponseModel;
@@ -986,7 +986,7 @@ export class PipelineStepNoteClientResponseModel {
     this.pipelineStepId = pipelineStepId;
   }
 }
-export class PipelineStepStatuClientRequestModel {
+export class PipelineStepStatusClientRequestModel {
   id: number;
   name: string;
 
@@ -1001,7 +1001,7 @@ export class PipelineStepStatuClientRequestModel {
   }
 }
 
-export class PipelineStepStatuClientResponseModel {
+export class PipelineStepStatusClientResponseModel {
   id: number;
   name: string;
 
@@ -1189,5 +1189,5 @@ export class SpeciesClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>0481f314692667d9fdc4874dcf1556a1</Hash>
+    <Hash>a689ac0e105a1b65a9cad820e361fc92</Hash>
 </Codenesium>*/

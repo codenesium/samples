@@ -129,10 +129,10 @@ namespace PetShippingNS.Api.DataAccess
 			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
 		}
 
-		// Foreign key reference to table PipelineStepStatu via pipelineStepStatusId.
-		public async virtual Task<PipelineStepStatu> PipelineStepStatuByPipelineStepStatusId(int pipelineStepStatusId)
+		// Foreign key reference to table PipelineStepStatus via pipelineStepStatusId.
+		public async virtual Task<PipelineStepStatus> PipelineStepStatusByPipelineStepStatusId(int pipelineStepStatusId)
 		{
-			return await this.Context.Set<PipelineStepStatu>()
+			return await this.Context.Set<PipelineStepStatus>()
 			       .SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
 		}
 
@@ -171,5 +171,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6f24cafd99edb67dfc3b00fa43f71a31</Hash>
+    <Hash>b7347e127c04265045f78754dd435c13</Hash>
 </Codenesium>*/

@@ -109,13 +109,6 @@ export class AirlineTableComponent extends React.Component<
                 Header: 'Airlines',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -166,5 +159,5 @@ export class AirlineTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e7a3fb9f4c693112d739bca21d5d0753</Hash>
+    <Hash>e0ae272e24112f026b0eed5f596d1619</Hash>
 </Codenesium>*/

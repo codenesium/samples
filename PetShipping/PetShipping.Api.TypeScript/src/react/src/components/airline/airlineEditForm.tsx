@@ -173,7 +173,7 @@ class AirlineEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+            })(<Input placeholder={'name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -196,5 +196,5 @@ export const WrappedAirlineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a55c00d2c4091e37df22feeb4ce28e57</Hash>
+    <Hash>8b348f70897ac7c7bfb37523fa9a5fda</Hash>
 </Codenesium>*/

@@ -88,10 +88,10 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		// Foreign key reference to table PipelineStatu via pipelineStatusId.
-		public async virtual Task<PipelineStatu> PipelineStatuByPipelineStatusId(int pipelineStatusId)
+		// Foreign key reference to table PipelineStatus via pipelineStatusId.
+		public async virtual Task<PipelineStatus> PipelineStatusByPipelineStatusId(int pipelineStatusId)
 		{
-			return await this.Context.Set<PipelineStatu>()
+			return await this.Context.Set<PipelineStatus>()
 			       .SingleOrDefaultAsync(x => x.Id == pipelineStatusId);
 		}
 
@@ -122,5 +122,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bff0ed0a4114fa2966e4f766423ed0ae</Hash>
+    <Hash>318f201b70c5a6521773e767087842ee</Hash>
 </Codenesium>*/

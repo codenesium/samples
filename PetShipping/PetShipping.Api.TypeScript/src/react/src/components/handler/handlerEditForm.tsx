@@ -170,7 +170,7 @@ class HandlerEditComponent extends React.Component<
             <br />
             {getFieldDecorator('countryId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'countryId'} />)}
+            })(<Input placeholder={'countryId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -181,7 +181,7 @@ class HandlerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'email'} />)}
+            })(<Input placeholder={'email'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -192,7 +192,7 @@ class HandlerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
+            })(<Input placeholder={'firstName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -203,7 +203,7 @@ class HandlerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
+            })(<Input placeholder={'lastName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -214,7 +214,7 @@ class HandlerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'phone'} />)}
+            })(<InputNumber placeholder={'phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -237,5 +237,5 @@ export const WrappedHandlerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>087827033f5cd9125af35be9bbcdbebf</Hash>
+    <Hash>2129eae60006fae8434d04c23c7aa162</Hash>
 </Codenesium>*/

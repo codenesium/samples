@@ -8493,26 +8493,6 @@
       },
       {
         "$id": "492",
-        "Table": "Family",
-        "Schema": "dbo",
-        "Column": "IsDeleted",
-        "AppCLRType": "bool",
-        "AppDoNotProcess": true,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": null,
-        "AppViewControlType": 4,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "isDeleted",
-        "AppName": "IsDeleted",
-        "AppNamePlural": "IsDeleteds"
-      },
-      {
-        "$id": "493",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8532,7 +8512,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "494",
+        "$id": "493",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8552,7 +8532,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "495",
+        "$id": "494",
         "Table": "SpaceFeature",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8572,7 +8552,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "496",
+        "$id": "495",
         "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8592,7 +8572,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "497",
+        "$id": "496",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8612,7 +8592,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "498",
+        "$id": "497",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8632,7 +8612,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "499",
+        "$id": "498",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8652,7 +8632,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "500",
+        "$id": "499",
         "Table": "TeacherSkill",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8672,7 +8652,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "501",
+        "$id": "500",
         "Table": "TeacherTeacherSkill",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8692,7 +8672,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "502",
+        "$id": "501",
         "Table": "User",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8757,10 +8737,7 @@
         "$ref": "501"
       },
       {
-        "$ref": "502"
-      },
-      {
-        "$id": "503",
+        "$id": "502",
         "Table": "EventStatu",
         "Schema": "dbo",
         "Column": "Id",
@@ -8780,7 +8757,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "504",
+        "$id": "503",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Id",
@@ -8800,7 +8777,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "505",
+        "$id": "504",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "EventStatusId",
@@ -8818,6 +8795,46 @@
         "AppViewControlLabel": "status",
         "AppName": "EventStatusId",
         "AppNamePlural": "EventStatusIds"
+      },
+      {
+        "$id": "505",
+        "Table": "Family",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 7,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "506",
+        "Table": "Family",
+        "Schema": "dbo",
+        "Column": "IsDeleted",
+        "AppCLRType": "bool",
+        "AppDoNotProcess": true,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 0,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "isDeleted",
+        "AppName": "IsDeleted",
+        "AppNamePlural": "IsDeleteds"
       }
     ],
     "VirtualForeignKeys": [],

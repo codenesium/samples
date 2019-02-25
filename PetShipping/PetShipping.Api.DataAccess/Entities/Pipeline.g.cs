@@ -34,9 +34,9 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual int SaleId { get; private set; }
 
 		[ForeignKey("PipelineStatusId")]
-		public virtual PipelineStatu PipelineStatusIdNavigation { get; private set; }
+		public virtual PipelineStatus PipelineStatusIdNavigation { get; private set; }
 
-		public void SetPipelineStatusIdNavigation(PipelineStatu item)
+		public void SetPipelineStatusIdNavigation(PipelineStatus item)
 		{
 			this.PipelineStatusIdNavigation = item;
 		}
@@ -44,5 +44,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca5c5fe3c1b129ef55c4ddc20fe4a2f9</Hash>
+    <Hash>6a97855a5d8d2a2add0430c611af6f45</Hash>
 </Codenesium>*/

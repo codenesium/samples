@@ -231,13 +231,6 @@ export default class DestinationSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -311,5 +304,5 @@ export const WrappedDestinationSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fa4e7ee6e0364c5d6c79eaf73557d30e</Hash>
+    <Hash>7275e7698fe9f0456913766a58ccaba7</Hash>
 </Codenesium>*/

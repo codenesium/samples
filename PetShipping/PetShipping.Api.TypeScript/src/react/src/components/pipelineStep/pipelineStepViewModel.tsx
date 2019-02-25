@@ -1,5 +1,5 @@
 import moment from 'moment';
-import PipelineStepStatuViewModel from '../pipelineStepStatu/pipelineStepStatuViewModel';
+import PipelineStepStatusViewModel from '../pipelineStepStatus/pipelineStepStatusViewModel';
 import EmployeeViewModel from '../employee/employeeViewModel';
 
 export default class PipelineStepViewModel {
@@ -7,7 +7,7 @@ export default class PipelineStepViewModel {
   name: string;
   pipelineStepStatusId: number;
   pipelineStepStatusIdEntity: string;
-  pipelineStepStatusIdNavigation?: PipelineStepStatuViewModel;
+  pipelineStepStatusIdNavigation?: PipelineStepStatusViewModel;
   shipperId: number;
   shipperIdEntity: string;
   shipperIdNavigation?: EmployeeViewModel;
@@ -17,7 +17,7 @@ export default class PipelineStepViewModel {
     this.name = '';
     this.pipelineStepStatusId = 0;
     this.pipelineStepStatusIdEntity = '';
-    this.pipelineStepStatusIdNavigation = new PipelineStepStatuViewModel();
+    this.pipelineStepStatusIdNavigation = new PipelineStepStatusViewModel();
     this.shipperId = 0;
     this.shipperIdEntity = '';
     this.shipperIdNavigation = new EmployeeViewModel();
@@ -29,10 +29,10 @@ export default class PipelineStepViewModel {
     pipelineStepStatusId: number,
     shipperId: number
   ): void {
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
-    this.pipelineStepStatusId = moment(pipelineStepStatusId, 'YYYY-MM-DD');
-    this.shipperId = moment(shipperId, 'YYYY-MM-DD');
+    this.id = id;
+    this.name = name;
+    this.pipelineStepStatusId = pipelineStepStatusId;
+    this.shipperId = shipperId;
   }
 
   toDisplay(): string {
@@ -42,5 +42,5 @@ export default class PipelineStepViewModel {
 
 
 /*<Codenesium>
-    <Hash>211051219be221ff7dca1f7775e65f5e</Hash>
+    <Hash>2b02ae258e2cee81f566ac54c9ad4bca</Hash>
 </Codenesium>*/

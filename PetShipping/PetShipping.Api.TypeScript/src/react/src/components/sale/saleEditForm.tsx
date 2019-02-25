@@ -170,7 +170,7 @@ class SaleEditComponent extends React.Component<
             <br />
             {getFieldDecorator('amount', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'amount'} />)}
+            })(<InputNumber placeholder={'amount'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -178,7 +178,7 @@ class SaleEditComponent extends React.Component<
             <br />
             {getFieldDecorator('cutomerId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'cutomerId'} />)}
+            })(<Input placeholder={'cutomerId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -186,7 +186,7 @@ class SaleEditComponent extends React.Component<
             <br />
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'note'} />)}
+            })(<Input placeholder={'note'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -194,7 +194,7 @@ class SaleEditComponent extends React.Component<
             <br />
             {getFieldDecorator('petId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'petId'} />)}
+            })(<Input placeholder={'petId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -210,9 +210,7 @@ class SaleEditComponent extends React.Component<
             <br />
             {getFieldDecorator('salesPersonId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'salesPersonId'} />
-            )}
+            })(<Input placeholder={'salesPersonId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -235,5 +233,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>5778c562e9debd4375c60d7dde4fa77f</Hash>
+    <Hash>3dc9023dfc44544e26133d007c6c2519</Hash>
 </Codenesium>*/

@@ -125,7 +125,7 @@ class EmployeeCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'firstName'} />)}
+            })(<Input placeholder={'firstName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -133,9 +133,8 @@ class EmployeeCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('isSalesPerson', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'isSalesPerson'} />
-            )}
+              valuePropName: 'checked',
+            })(<Switch />)}
           </Form.Item>
 
           <Form.Item>
@@ -143,7 +142,8 @@ class EmployeeCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('isShipper', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'isShipper'} />)}
+              valuePropName: 'checked',
+            })(<Switch />)}
           </Form.Item>
 
           <Form.Item>
@@ -154,7 +154,7 @@ class EmployeeCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'lastName'} />)}
+            })(<Input placeholder={'lastName'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -177,5 +177,5 @@ export const WrappedEmployeeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ae89083c99fb62c0be2c6c1687b07b39</Hash>
+    <Hash>772dbce6e6047d620ceafa9831ee1f59</Hash>
 </Codenesium>*/

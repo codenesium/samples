@@ -208,13 +208,6 @@ export default class AirlineSearchComponent extends React.Component<
                 Header: 'Airlines',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -281,5 +274,5 @@ export const WrappedAirlineSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>741832b7e56149f57f8eb920d3344c0a</Hash>
+    <Hash>cb6bb1b897987e91bee93a07f44739e3</Hash>
 </Codenesium>*/

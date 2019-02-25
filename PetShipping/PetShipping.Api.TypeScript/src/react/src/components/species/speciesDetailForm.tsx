@@ -106,10 +106,6 @@ class SpeciesDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -145,5 +141,5 @@ export const WrappedSpeciesDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1c0be1c92234091d3df4e62ec6dedc18</Hash>
+    <Hash>aa9c5afb19f799a13a9c80dceaa40395</Hash>
 </Codenesium>*/

@@ -122,7 +122,7 @@ class HandlerPipelineStepCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('handlerId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'handlerId'} />)}
+            })(<Input placeholder={'handlerId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -130,12 +130,7 @@ class HandlerPipelineStepCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('pipelineStepId', {
               rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker
-                format={'YYYY-MM-DD'}
-                placeholder={'pipelineStepId'}
-              />
-            )}
+            })(<Input placeholder={'pipelineStepId'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -158,5 +153,5 @@ export const WrappedHandlerPipelineStepCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5f5cefaad639f29fd0de0e5ac61e5b8f</Hash>
+    <Hash>cc93d73cb37f9b2f4b808d3808f6f4d3</Hash>
 </Codenesium>*/

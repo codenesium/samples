@@ -1079,31 +1079,31 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStatuClientResponseModel>>> PipelineStatuBulkInsertAsync(List<ApiPipelineStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStatusClientResponseModel>>> PipelineStatusBulkInsertAsync(List<ApiPipelineStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStatus/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStatuClientResponseModel>>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStatusClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiPipelineStatuClientResponseModel>> PipelineStatuCreateAsync(ApiPipelineStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<ApiPipelineStatusClientResponseModel>> PipelineStatusCreateAsync(ApiPipelineStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStatus", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiPipelineStatuClientResponseModel>> PipelineStatuUpdateAsync(int id, ApiPipelineStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<UpdateResponse<ApiPipelineStatusClientResponseModel>> PipelineStatusUpdateAsync(int id, ApiPipelineStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/PipelineStatus/{id}", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> PipelineStatuDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ActionResponse> PipelineStatusDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/PipelineStatus/{id}", cancellationToken).ConfigureAwait(false);
 
@@ -1111,25 +1111,25 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiPipelineStatuClientResponseModel> PipelineStatuGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ApiPipelineStatusClientResponseModel> PipelineStatusGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/PipelineStatus/{id}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiPipelineStatuClientResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiPipelineStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStatuClientResponseModel>> PipelineStatuAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiPipelineStatusClientResponseModel>> PipelineStatusAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			int offset = 0;
 			bool moreRecords = true;
-			List<ApiPipelineStatuClientResponseModel> response = new List<ApiPipelineStatuClientResponseModel>();
+			List<ApiPipelineStatusClientResponseModel> response = new List<ApiPipelineStatusClientResponseModel>();
 			while (moreRecords)
 			{
 				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/PipelineStatus?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
 				this.HandleResponseCode(httpResponse);
-				List<ApiPipelineStatuClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiPipelineStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+				List<ApiPipelineStatusClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiPipelineStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 				response.AddRange(records);
 				if (records.Count < this.MaxLimit)
 				{
@@ -1387,31 +1387,31 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStepStatuClientResponseModel>>> PipelineStepStatuBulkInsertAsync(List<ApiPipelineStepStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStepStatusClientResponseModel>>> PipelineStepStatusBulkInsertAsync(List<ApiPipelineStepStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStepStatus/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepStatuClientResponseModel>>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepStatusClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiPipelineStepStatuClientResponseModel>> PipelineStepStatuCreateAsync(ApiPipelineStepStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<ApiPipelineStepStatusClientResponseModel>> PipelineStepStatusCreateAsync(ApiPipelineStepStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStepStatus", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStepStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStepStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiPipelineStepStatuClientResponseModel>> PipelineStepStatuUpdateAsync(int id, ApiPipelineStepStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<UpdateResponse<ApiPipelineStepStatusClientResponseModel>> PipelineStepStatusUpdateAsync(int id, ApiPipelineStepStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/PipelineStepStatus/{id}", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStepStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStepStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> PipelineStepStatuDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ActionResponse> PipelineStepStatusDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/PipelineStepStatus/{id}", cancellationToken).ConfigureAwait(false);
 
@@ -1419,25 +1419,25 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiPipelineStepStatuClientResponseModel> PipelineStepStatuGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ApiPipelineStepStatusClientResponseModel> PipelineStepStatusGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/PipelineStepStatus/{id}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiPipelineStepStatuClientResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiPipelineStepStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStepStatuClientResponseModel>> PipelineStepStatuAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiPipelineStepStatusClientResponseModel>> PipelineStepStatusAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			int offset = 0;
 			bool moreRecords = true;
-			List<ApiPipelineStepStatuClientResponseModel> response = new List<ApiPipelineStepStatuClientResponseModel>();
+			List<ApiPipelineStepStatusClientResponseModel> response = new List<ApiPipelineStepStatusClientResponseModel>();
 			while (moreRecords)
 			{
 				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/PipelineStepStatus?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
 				this.HandleResponseCode(httpResponse);
-				List<ApiPipelineStepStatuClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiPipelineStepStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+				List<ApiPipelineStepStatusClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiPipelineStepStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 				response.AddRange(records);
 				if (records.Count < this.MaxLimit)
 				{
@@ -1691,5 +1691,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>12a017397c7d4bd98ea8d1ef1ff32418</Hash>
+    <Hash>cf4a53fcdfbaf0cab86f175bc8d7a860</Hash>
 </Codenesium>*/
