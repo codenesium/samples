@@ -12,14 +12,9 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>,
-  displayName: string
-) => {
-  class WrapperHeaderComponent extends React.Component<
-    WrapperHeaderProps & RouteComponentProps,
-    WrapperHeaderState
-  > {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -35,311 +30,407 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+               <MenuItem
                 key="Home"
-                onClick={() => {
-                  this.setState({ ...this.state, collapsed: true });
-                }}
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'} />
+                <Link to={'/'}></Link>
               </MenuItem>
 
-              <MenuItem key="aWBuildVersion">
-                <Icon type="pie-chart" />
-                <span>AWBuildVersions</span>
-                <Link to={ClientRoutes.AWBuildVersions} />
+			   			   <MenuItem
+                key="aWBuildVersion"
+              >
+			  <Icon type="pie-chart" />
+              <span>AWBuildVersions</span>
+              <Link to={ClientRoutes.AWBuildVersions}></Link>
               </MenuItem>
 
-              <MenuItem key="databaseLog">
-                <Icon type="rise" />
-                <span>DatabaseLogs</span>
-                <Link to={ClientRoutes.DatabaseLogs} />
+							   <MenuItem
+                key="databaseLog"
+              >
+			  <Icon type="rise" />
+              <span>DatabaseLogs</span>
+              <Link to={ClientRoutes.DatabaseLogs}></Link>
               </MenuItem>
 
-              <MenuItem key="errorLog">
-                <Icon type="bars" />
-                <span>ErrorLogs</span>
-                <Link to={ClientRoutes.ErrorLogs} />
+							   <MenuItem
+                key="errorLog"
+              >
+			  <Icon type="bars" />
+              <span>ErrorLogs</span>
+              <Link to={ClientRoutes.ErrorLogs}></Link>
               </MenuItem>
 
-              <MenuItem key="department">
-                <Icon type="pie-chart" />
-                <span>Departments</span>
-                <Link to={ClientRoutes.Departments} />
+							   <MenuItem
+                key="department"
+              >
+			  <Icon type="pie-chart" />
+              <span>Departments</span>
+              <Link to={ClientRoutes.Departments}></Link>
               </MenuItem>
 
-              <MenuItem key="employee">
-                <Icon type="rise" />
-                <span>Employees</span>
-                <Link to={ClientRoutes.Employees} />
+							   <MenuItem
+                key="employee"
+              >
+			  <Icon type="rise" />
+              <span>Employees</span>
+              <Link to={ClientRoutes.Employees}></Link>
               </MenuItem>
 
-              <MenuItem key="jobCandidate">
-                <Icon type="bars" />
-                <span>JobCandidates</span>
-                <Link to={ClientRoutes.JobCandidates} />
+							   <MenuItem
+                key="jobCandidate"
+              >
+			  <Icon type="bars" />
+              <span>JobCandidates</span>
+              <Link to={ClientRoutes.JobCandidates}></Link>
               </MenuItem>
 
-              <MenuItem key="shift">
-                <Icon type="cloud" />
-                <span>Shifts</span>
-                <Link to={ClientRoutes.Shifts} />
+							   <MenuItem
+                key="shift"
+              >
+			  <Icon type="cloud" />
+              <span>Shifts</span>
+              <Link to={ClientRoutes.Shifts}></Link>
               </MenuItem>
 
-              <MenuItem key="address">
-                <Icon type="pie-chart" />
-                <span>Addresses</span>
-                <Link to={ClientRoutes.Addresses} />
+							   <MenuItem
+                key="address"
+              >
+			  <Icon type="pie-chart" />
+              <span>Addresses</span>
+              <Link to={ClientRoutes.Addresses}></Link>
               </MenuItem>
 
-              <MenuItem key="addressType">
-                <Icon type="rise" />
-                <span>AddressTypes</span>
-                <Link to={ClientRoutes.AddressTypes} />
+							   <MenuItem
+                key="addressType"
+              >
+			  <Icon type="rise" />
+              <span>AddressTypes</span>
+              <Link to={ClientRoutes.AddressTypes}></Link>
               </MenuItem>
 
-              <MenuItem key="businessEntity">
-                <Icon type="bars" />
-                <span>BusinessEntities</span>
-                <Link to={ClientRoutes.BusinessEntities} />
+							   <MenuItem
+                key="businessEntity"
+              >
+			  <Icon type="bars" />
+              <span>BusinessEntities</span>
+              <Link to={ClientRoutes.BusinessEntities}></Link>
               </MenuItem>
 
-              <MenuItem key="contactType">
-                <Icon type="cloud" />
-                <span>ContactTypes</span>
-                <Link to={ClientRoutes.ContactTypes} />
+							   <MenuItem
+                key="contactType"
+              >
+			  <Icon type="cloud" />
+              <span>ContactTypes</span>
+              <Link to={ClientRoutes.ContactTypes}></Link>
               </MenuItem>
 
-              <MenuItem key="countryRegion">
-                <Icon type="code" />
-                <span>CountryRegions</span>
-                <Link to={ClientRoutes.CountryRegions} />
+							   <MenuItem
+                key="countryRegion"
+              >
+			  <Icon type="code" />
+              <span>CountryRegions</span>
+              <Link to={ClientRoutes.CountryRegions}></Link>
               </MenuItem>
 
-              <MenuItem key="password">
-                <Icon type="smile" />
-                <span>Passwords</span>
-                <Link to={ClientRoutes.Passwords} />
+							   <MenuItem
+                key="password"
+              >
+			  <Icon type="smile" />
+              <span>Passwords</span>
+              <Link to={ClientRoutes.Passwords}></Link>
               </MenuItem>
 
-              <MenuItem key="person">
-                <Icon type="laptop" />
-                <span>People</span>
-                <Link to={ClientRoutes.People} />
+							   <MenuItem
+                key="person"
+              >
+			  <Icon type="laptop" />
+              <span>People</span>
+              <Link to={ClientRoutes.People}></Link>
               </MenuItem>
 
-              <MenuItem key="phoneNumberType">
-                <Icon type="mobile" />
-                <span>PhoneNumberTypes</span>
-                <Link to={ClientRoutes.PhoneNumberTypes} />
+							   <MenuItem
+                key="phoneNumberType"
+              >
+			  <Icon type="mobile" />
+              <span>PhoneNumberTypes</span>
+              <Link to={ClientRoutes.PhoneNumberTypes}></Link>
               </MenuItem>
 
-              <MenuItem key="stateProvince">
-                <Icon type="paper-clip" />
-                <span>StateProvinces</span>
-                <Link to={ClientRoutes.StateProvinces} />
+							   <MenuItem
+                key="stateProvince"
+              >
+			  <Icon type="paper-clip" />
+              <span>StateProvinces</span>
+              <Link to={ClientRoutes.StateProvinces}></Link>
               </MenuItem>
 
-              <MenuItem key="billOfMaterial">
-                <Icon type="pie-chart" />
-                <span>BillOfMaterials</span>
-                <Link to={ClientRoutes.BillOfMaterials} />
+							   <MenuItem
+                key="billOfMaterial"
+              >
+			  <Icon type="pie-chart" />
+              <span>BillOfMaterials</span>
+              <Link to={ClientRoutes.BillOfMaterials}></Link>
               </MenuItem>
 
-              <MenuItem key="culture">
-                <Icon type="rise" />
-                <span>Cultures</span>
-                <Link to={ClientRoutes.Cultures} />
+							   <MenuItem
+                key="culture"
+              >
+			  <Icon type="rise" />
+              <span>Cultures</span>
+              <Link to={ClientRoutes.Cultures}></Link>
               </MenuItem>
 
-              <MenuItem key="document">
-                <Icon type="bars" />
-                <span>Documents</span>
-                <Link to={ClientRoutes.Documents} />
+							   <MenuItem
+                key="document"
+              >
+			  <Icon type="bars" />
+              <span>Documents</span>
+              <Link to={ClientRoutes.Documents}></Link>
               </MenuItem>
 
-              <MenuItem key="illustration">
-                <Icon type="cloud" />
-                <span>Illustrations</span>
-                <Link to={ClientRoutes.Illustrations} />
+							   <MenuItem
+                key="illustration"
+              >
+			  <Icon type="cloud" />
+              <span>Illustrations</span>
+              <Link to={ClientRoutes.Illustrations}></Link>
               </MenuItem>
 
-              <MenuItem key="location">
-                <Icon type="code" />
-                <span>Locations</span>
-                <Link to={ClientRoutes.Locations} />
+							   <MenuItem
+                key="location"
+              >
+			  <Icon type="code" />
+              <span>Locations</span>
+              <Link to={ClientRoutes.Locations}></Link>
               </MenuItem>
 
-              <MenuItem key="product">
-                <Icon type="smile" />
-                <span>Products</span>
-                <Link to={ClientRoutes.Products} />
+							   <MenuItem
+                key="product"
+              >
+			  <Icon type="smile" />
+              <span>Products</span>
+              <Link to={ClientRoutes.Products}></Link>
               </MenuItem>
 
-              <MenuItem key="productCategory">
-                <Icon type="laptop" />
-                <span>ProductCategories</span>
-                <Link to={ClientRoutes.ProductCategories} />
+							   <MenuItem
+                key="productCategory"
+              >
+			  <Icon type="laptop" />
+              <span>ProductCategories</span>
+              <Link to={ClientRoutes.ProductCategories}></Link>
               </MenuItem>
 
-              <MenuItem key="productDescription">
-                <Icon type="mobile" />
-                <span>ProductDescriptions</span>
-                <Link to={ClientRoutes.ProductDescriptions} />
+							   <MenuItem
+                key="productDescription"
+              >
+			  <Icon type="mobile" />
+              <span>ProductDescriptions</span>
+              <Link to={ClientRoutes.ProductDescriptions}></Link>
               </MenuItem>
 
-              <MenuItem key="productModel">
-                <Icon type="paper-clip" />
-                <span>ProductModels</span>
-                <Link to={ClientRoutes.ProductModels} />
+							   <MenuItem
+                key="productModel"
+              >
+			  <Icon type="paper-clip" />
+              <span>ProductModels</span>
+              <Link to={ClientRoutes.ProductModels}></Link>
               </MenuItem>
 
-              <MenuItem key="productPhoto">
-                <Icon type="setting" />
-                <span>ProductPhotoes</span>
-                <Link to={ClientRoutes.ProductPhotoes} />
+							   <MenuItem
+                key="productPhoto"
+              >
+			  <Icon type="setting" />
+              <span>ProductPhotoes</span>
+              <Link to={ClientRoutes.ProductPhotoes}></Link>
               </MenuItem>
 
-              <MenuItem key="productReview">
-                <Icon type="user" />
-                <span>ProductReviews</span>
-                <Link to={ClientRoutes.ProductReviews} />
+							   <MenuItem
+                key="productReview"
+              >
+			  <Icon type="user" />
+              <span>ProductReviews</span>
+              <Link to={ClientRoutes.ProductReviews}></Link>
               </MenuItem>
 
-              <MenuItem key="productSubcategory">
-                <Icon type="home" />
-                <span>ProductSubcategories</span>
-                <Link to={ClientRoutes.ProductSubcategories} />
+							   <MenuItem
+                key="productSubcategory"
+              >
+			  <Icon type="home" />
+              <span>ProductSubcategories</span>
+              <Link to={ClientRoutes.ProductSubcategories}></Link>
               </MenuItem>
 
-              <MenuItem key="scrapReason">
-                <Icon type="camera" />
-                <span>ScrapReasons</span>
-                <Link to={ClientRoutes.ScrapReasons} />
+							   <MenuItem
+                key="scrapReason"
+              >
+			  <Icon type="camera" />
+              <span>ScrapReasons</span>
+              <Link to={ClientRoutes.ScrapReasons}></Link>
               </MenuItem>
 
-              <MenuItem key="transactionHistory">
-                <Icon type="like" />
-                <span>TransactionHistories</span>
-                <Link to={ClientRoutes.TransactionHistories} />
+							   <MenuItem
+                key="transactionHistory"
+              >
+			  <Icon type="like" />
+              <span>TransactionHistories</span>
+              <Link to={ClientRoutes.TransactionHistories}></Link>
               </MenuItem>
 
-              <MenuItem key="transactionHistoryArchive">
-                <Icon type="bulb" />
-                <span>TransactionHistoryArchives</span>
-                <Link to={ClientRoutes.TransactionHistoryArchives} />
+							   <MenuItem
+                key="transactionHistoryArchive"
+              >
+			  <Icon type="bulb" />
+              <span>TransactionHistoryArchives</span>
+              <Link to={ClientRoutes.TransactionHistoryArchives}></Link>
               </MenuItem>
 
-              <MenuItem key="unitMeasure">
-                <Icon type="tool" />
-                <span>UnitMeasures</span>
-                <Link to={ClientRoutes.UnitMeasures} />
+							   <MenuItem
+                key="unitMeasure"
+              >
+			  <Icon type="tool" />
+              <span>UnitMeasures</span>
+              <Link to={ClientRoutes.UnitMeasures}></Link>
               </MenuItem>
 
-              <MenuItem key="workOrder">
-                <Icon type="coffee" />
-                <span>WorkOrders</span>
-                <Link to={ClientRoutes.WorkOrders} />
+							   <MenuItem
+                key="workOrder"
+              >
+			  <Icon type="coffee" />
+              <span>WorkOrders</span>
+              <Link to={ClientRoutes.WorkOrders}></Link>
               </MenuItem>
 
-              <MenuItem key="purchaseOrderHeader">
-                <Icon type="pie-chart" />
-                <span>PurchaseOrderHeaders</span>
-                <Link to={ClientRoutes.PurchaseOrderHeaders} />
+							   <MenuItem
+                key="purchaseOrderHeader"
+              >
+			  <Icon type="pie-chart" />
+              <span>PurchaseOrderHeaders</span>
+              <Link to={ClientRoutes.PurchaseOrderHeaders}></Link>
               </MenuItem>
 
-              <MenuItem key="shipMethod">
-                <Icon type="rise" />
-                <span>ShipMethods</span>
-                <Link to={ClientRoutes.ShipMethods} />
+							   <MenuItem
+                key="shipMethod"
+              >
+			  <Icon type="rise" />
+              <span>ShipMethods</span>
+              <Link to={ClientRoutes.ShipMethods}></Link>
               </MenuItem>
 
-              <MenuItem key="vendor">
-                <Icon type="bars" />
-                <span>Vendors</span>
-                <Link to={ClientRoutes.Vendors} />
+							   <MenuItem
+                key="vendor"
+              >
+			  <Icon type="bars" />
+              <span>Vendors</span>
+              <Link to={ClientRoutes.Vendors}></Link>
               </MenuItem>
 
-              <MenuItem key="creditCard">
-                <Icon type="pie-chart" />
-                <span>CreditCards</span>
-                <Link to={ClientRoutes.CreditCards} />
+							   <MenuItem
+                key="creditCard"
+              >
+			  <Icon type="pie-chart" />
+              <span>CreditCards</span>
+              <Link to={ClientRoutes.CreditCards}></Link>
               </MenuItem>
 
-              <MenuItem key="currency">
-                <Icon type="rise" />
-                <span>Currencies</span>
-                <Link to={ClientRoutes.Currencies} />
+							   <MenuItem
+                key="currency"
+              >
+			  <Icon type="rise" />
+              <span>Currencies</span>
+              <Link to={ClientRoutes.Currencies}></Link>
               </MenuItem>
 
-              <MenuItem key="currencyRate">
-                <Icon type="bars" />
-                <span>CurrencyRates</span>
-                <Link to={ClientRoutes.CurrencyRates} />
+							   <MenuItem
+                key="currencyRate"
+              >
+			  <Icon type="bars" />
+              <span>CurrencyRates</span>
+              <Link to={ClientRoutes.CurrencyRates}></Link>
               </MenuItem>
 
-              <MenuItem key="customer">
-                <Icon type="cloud" />
-                <span>Customers</span>
-                <Link to={ClientRoutes.Customers} />
+							   <MenuItem
+                key="customer"
+              >
+			  <Icon type="cloud" />
+              <span>Customers</span>
+              <Link to={ClientRoutes.Customers}></Link>
               </MenuItem>
 
-              <MenuItem key="salesOrderHeader">
-                <Icon type="code" />
-                <span>SalesOrderHeaders</span>
-                <Link to={ClientRoutes.SalesOrderHeaders} />
+							   <MenuItem
+                key="salesOrderHeader"
+              >
+			  <Icon type="code" />
+              <span>SalesOrderHeaders</span>
+              <Link to={ClientRoutes.SalesOrderHeaders}></Link>
               </MenuItem>
 
-              <MenuItem key="salesPerson">
-                <Icon type="smile" />
-                <span>SalesPersons</span>
-                <Link to={ClientRoutes.SalesPersons} />
+							   <MenuItem
+                key="salesPerson"
+              >
+			  <Icon type="smile" />
+              <span>SalesPersons</span>
+              <Link to={ClientRoutes.SalesPersons}></Link>
               </MenuItem>
 
-              <MenuItem key="salesReason">
-                <Icon type="laptop" />
-                <span>SalesReasons</span>
-                <Link to={ClientRoutes.SalesReasons} />
+							   <MenuItem
+                key="salesReason"
+              >
+			  <Icon type="laptop" />
+              <span>SalesReasons</span>
+              <Link to={ClientRoutes.SalesReasons}></Link>
               </MenuItem>
 
-              <MenuItem key="salesTaxRate">
-                <Icon type="mobile" />
-                <span>SalesTaxRates</span>
-                <Link to={ClientRoutes.SalesTaxRates} />
+							   <MenuItem
+                key="salesTaxRate"
+              >
+			  <Icon type="mobile" />
+              <span>SalesTaxRates</span>
+              <Link to={ClientRoutes.SalesTaxRates}></Link>
               </MenuItem>
 
-              <MenuItem key="salesTerritory">
-                <Icon type="paper-clip" />
-                <span>SalesTerritories</span>
-                <Link to={ClientRoutes.SalesTerritories} />
+							   <MenuItem
+                key="salesTerritory"
+              >
+			  <Icon type="paper-clip" />
+              <span>SalesTerritories</span>
+              <Link to={ClientRoutes.SalesTerritories}></Link>
               </MenuItem>
 
-              <MenuItem key="shoppingCartItem">
-                <Icon type="setting" />
-                <span>ShoppingCartItems</span>
-                <Link to={ClientRoutes.ShoppingCartItems} />
+							   <MenuItem
+                key="shoppingCartItem"
+              >
+			  <Icon type="setting" />
+              <span>ShoppingCartItems</span>
+              <Link to={ClientRoutes.ShoppingCartItems}></Link>
               </MenuItem>
 
-              <MenuItem key="specialOffer">
-                <Icon type="user" />
-                <span>SpecialOffers</span>
-                <Link to={ClientRoutes.SpecialOffers} />
+							   <MenuItem
+                key="specialOffer"
+              >
+			  <Icon type="user" />
+              <span>SpecialOffers</span>
+              <Link to={ClientRoutes.SpecialOffers}></Link>
               </MenuItem>
 
-              <MenuItem key="store">
-                <Icon type="home" />
-                <span>Stores</span>
-                <Link to={ClientRoutes.Stores} />
+							   <MenuItem
+                key="store"
+              >
+			  <Icon type="home" />
+              <span>Stores</span>
+              <Link to={ClientRoutes.Stores}></Link>
               </MenuItem>
+
+				
             </Menu>
           </Sider>
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -352,7 +443,6 @@ export const wrapperHeader = (
   return WrapperHeaderComponent;
 };
 
-
 /*<Codenesium>
-    <Hash>7626e61ec2b0a04802c6197f4fa20413</Hash>
+    <Hash>bf5829500353704528d1202b7b247bdd</Hash>
 </Codenesium>*/

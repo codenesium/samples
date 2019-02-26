@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { PersonSelectComponent } from '../shared/personSelect';
 interface ColumnSameAsFKTableEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -204,5 +204,5 @@ export const WrappedColumnSameAsFKTableEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fa048cb4a843dbe8866aaf362cd0295b</Hash>
+    <Hash>6520aa6620d15911e61074a9bfb5b045</Hash>
 </Codenesium>*/

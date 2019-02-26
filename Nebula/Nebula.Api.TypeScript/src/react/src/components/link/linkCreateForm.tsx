@@ -7,7 +7,10 @@ import LinkMapper from './linkMapper';
 import LinkViewModel from './linkViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { MachineSelectComponent } from '../shared/machineSelect'
+	import { ChainSelectComponent } from '../shared/chainSelect'
+	import { LinkStatusSelectComponent } from '../shared/linkStatusSelect'
+	
 interface LinkCreateComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -242,5 +245,5 @@ class LinkCreateComponent extends React.Component<
 export const WrappedLinkCreateComponent = Form.create({ name: 'Link Create' })(LinkCreateComponent);
 
 /*<Codenesium>
-    <Hash>81d610515cfbb23fc535097e8f752d4d</Hash>
+    <Hash>2917c0e564c0ac80652cb5707818a1e4</Hash>
 </Codenesium>*/

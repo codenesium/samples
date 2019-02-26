@@ -15,11 +15,11 @@ export default class CountryViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>791f956842e2ec421494d3c112b968c7</Hash>
+    <Hash>5289b5a75904a46170b9241101aaa460</Hash>
 </Codenesium>*/

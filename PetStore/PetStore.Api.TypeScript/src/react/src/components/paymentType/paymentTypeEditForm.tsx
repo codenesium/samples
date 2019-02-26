@@ -17,7 +17,6 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface PaymentTypeEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -199,5 +198,5 @@ export const WrappedPaymentTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>94b88c37f63858e08feea13a966a5f22</Hash>
+    <Hash>8eaf9f048727b1bc7534ada2f53e61fe</Hash>
 </Codenesium>*/

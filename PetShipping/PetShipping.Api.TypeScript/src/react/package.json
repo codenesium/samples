@@ -13,7 +13,7 @@
     "@types/yup": "latest",
     "antd": "latest",
     "axios": "latest",
-	"moment": "latest",
+    "moment": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
@@ -26,7 +26,7 @@
   "scripts": {
     "start": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359fePetShipping/ react-scripts start",
     "build": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359fePetShipping/ react-scripts build",
-	"start-win": "set REACT_APP_API_URL=http://localhost/&& react-scripts start",
+    "start-win": "set REACT_APP_API_URL=http://localhost/&& react-scripts start",
     "build-win": "set REACT_APP_API_URL=http://localhost/&& react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

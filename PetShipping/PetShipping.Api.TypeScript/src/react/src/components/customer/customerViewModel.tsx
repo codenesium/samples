@@ -34,11 +34,11 @@ export default class CustomerViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.email);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>dfc1a9ac8de99d06305d231af5a17ef6</Hash>
+    <Hash>8cbf4d7a31141f6e95aaf6bdf559f3b0</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ import BucketMapper from './bucketMapper';
 import BucketViewModel from './bucketViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface BucketEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -184,5 +183,5 @@ class BucketEditComponent extends React.Component<
 export const WrappedBucketEditComponent = Form.create({ name: 'Bucket Edit' })(BucketEditComponent);
 
 /*<Codenesium>
-    <Hash>7e0d154998848ddcc12f2876b4f22187</Hash>
+    <Hash>7b8f6339371be26d3c65e01f47d5d2f4</Hash>
 </Codenesium>*/

@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { LocationSelectComponent } from '../shared/locationSelect';
 
 interface UserCreateComponentProps {
   form: WrappedFormUtils;
@@ -256,5 +257,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>c3d25b03cb698a813decf69ae93549f7</Hash>
+    <Hash>a18b99050a5877cb819f9eeb55ec2f12</Hash>
 </Codenesium>*/

@@ -132,7 +132,7 @@ class HandlerDetailComponent extends React.Component<
           <div>
             <h3>AirTransports</h3>
             <AirTransportTableComponent
-              airlineId={this.state.model!.airlineId}
+              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -191,5 +191,5 @@ export const WrappedHandlerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e6e3623dc64f3966d517d273730fa5ef</Hash>
+    <Hash>dca1050086b3698e0e625ef8e911a493</Hash>
 </Codenesium>*/

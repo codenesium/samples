@@ -6,11 +6,11 @@ import VendorMapper from '../vendor/vendorMapper';
 import VendorViewModel from '../vendor/vendorViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface VendorTableComponentProps {
-  businessEntityID: number;
-  apiRoute: string;
+  businessEntityID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface VendorTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<VendorViewModel>;
+  filteredRecords : Array<VendorViewModel>;
 }
 
-export class VendorTableComponent extends React.Component<
-  VendorTableComponentProps,
-  VendorTableComponentState
+export class  VendorTableComponent extends React.Component<
+VendorTableComponentProps,
+VendorTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: VendorViewModel) {
-    this.props.history.push(ClientRoutes.Vendors + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: VendorViewModel) {
+  this.props.history.push(ClientRoutes.Vendors + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: VendorViewModel) {
-    this.props.history.push(ClientRoutes.Vendors + '/' + row.id);
-  }
+handleDetailClick(e:any, row: VendorViewModel) {
+  this.props.history.push(ClientRoutes.Vendors + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.VendorClientResponseModel>;
@@ -59,11 +61,12 @@ export class VendorTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new VendorMapper();
+          
+          let vendors:Array<VendorViewModel> = [];
 
-          let vendors: Array<VendorViewModel> = [];
-
-          response.forEach(x => {
-            vendors.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              vendors.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,101 +91,83 @@ export class VendorTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Vendors',
-                columns: [
-                  {
-                    Header: 'AccountNumber',
-                    accessor: 'accountNumber',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.accountNumber)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'ActiveFlag',
-                    accessor: 'activeFlag',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Vendors',
+                    columns: [
+					  {
+                      Header: 'AccountNumber',
+                      accessor: 'accountNumber',
+                      Cell: (props) => {
+                      return <span>{String(props.original.accountNumber)}</span>;
+                      }           
+                    },  {
+                      Header: 'ActiveFlag',
+                      accessor: 'activeFlag',
+                      Cell: (props) => {
                       return <span>{String(props.original.activeFlag)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'BusinessEntityID',
-                    accessor: 'businessEntityID',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.businessEntityID)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'CreditRating',
-                    accessor: 'creditRating',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'BusinessEntityID',
+                      accessor: 'businessEntityID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.businessEntityID)}</span>;
+                      }           
+                    },  {
+                      Header: 'CreditRating',
+                      accessor: 'creditRating',
+                      Cell: (props) => {
                       return <span>{String(props.original.creditRating)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
+                    },  {
+                      Header: 'PreferredVendorStatus',
+                      accessor: 'preferredVendorStatu',
+                      Cell: (props) => {
+                      return <span>{String(props.original.preferredVendorStatu)}</span>;
+                      }           
+                    },  {
+                      Header: 'PurchasingWebServiceURL',
+                      accessor: 'purchasingWebServiceURL',
+                      Cell: (props) => {
+                      return <span>{String(props.original.purchasingWebServiceURL)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'PreferredVendorStatus',
-                    accessor: 'preferredVendorStatu',
-                    Cell: props => {
-                      return (
-                        <span>
-                          {String(props.original.preferredVendorStatu)}
-                        </span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'PurchasingWebServiceURL',
-                    accessor: 'purchasingWebServiceURL',
-                    Cell: props => {
-                      return (
-                        <span>
-                          {String(props.original.purchasingWebServiceURL)}
-                        </span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as VendorViewModel
@@ -193,8 +178,8 @@ export class VendorTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as VendorViewModel
@@ -203,14 +188,11 @@ export class VendorTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -218,7 +200,6 @@ export class VendorTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>2d108a4cabbe3e90319ef4b617739fd3</Hash>
+    <Hash>13af17170a14b7cae1972ff02a6937ae</Hash>
 </Codenesium>*/

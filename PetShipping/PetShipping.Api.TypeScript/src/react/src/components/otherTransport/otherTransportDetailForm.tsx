@@ -7,9 +7,6 @@ import OtherTransportViewModel from './otherTransportViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface OtherTransportDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface OtherTransportDetailComponentState {
 }
 
 class OtherTransportDetailComponent extends React.Component<
-OtherTransportDetailComponentProps,
-OtherTransportDetailComponentState
+  OtherTransportDetailComponentProps,
+  OtherTransportDetailComponentState
 > {
   state = {
     model: new OtherTransportViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.OtherTransports + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.OtherTransports + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,39 +84,42 @@ OtherTransportDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div style={{"marginBottom":"10px"}}>
-							<h3>handlerId</h3>
-							<p>{String(this.state.model!.handlerIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>pipelineStepId</h3>
-							<p>{String(this.state.model!.pipelineStepIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>handlerId</h3>
+              <p>
+                {String(this.state.model!.handlerIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>pipelineStepId</h3>
+              <p>
+                {String(
+                  this.state.model!.pipelineStepIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -126,10 +128,11 @@ OtherTransportDetailComponentState
   }
 }
 
-export const WrappedOtherTransportDetailComponent = Form.create({ name: 'OtherTransport Detail' })(
-  OtherTransportDetailComponent
-);
+export const WrappedOtherTransportDetailComponent = Form.create({
+  name: 'OtherTransport Detail',
+})(OtherTransportDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>66008f97861763fa70a329d79b3f70d2</Hash>
+    <Hash>7c3f08770333afe810a2f9266fef977d</Hash>
 </Codenesium>*/

@@ -17,12 +17,12 @@ namespace PetShippingNS.Api.Services
 		{
 			var mapper = new DALAirTransportMapper();
 			ApiAirTransportServerRequestModel model = new ApiAirTransportServerRequestModel();
-			model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			AirTransport response = mapper.MapModelToEntity(1, model);
 
+			response.AirlineId.Should().Be(1);
 			response.FlightNumber.Should().Be("A");
 			response.HandlerId.Should().Be(1);
-			response.Id.Should().Be(1);
 			response.LandDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.PipelineStepId.Should().Be(1);
 			response.TakeoffDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Services
 		{
 			var mapper = new DALAirTransportMapper();
 			AirTransport item = new AirTransport();
-			item.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			item.SetProperties(1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiAirTransportServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.AirlineId.Should().Be(1);
@@ -50,7 +50,7 @@ namespace PetShippingNS.Api.Services
 		{
 			var mapper = new DALAirTransportMapper();
 			AirTransport item = new AirTransport();
-			item.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			item.SetProperties(1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			List<ApiAirTransportServerResponseModel> response = mapper.MapEntityToModel(new List<AirTransport>() { { item} });
 
 			response.Count.Should().Be(1);
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b488fe64b86992110ae642d76bf47a6</Hash>
+    <Hash>7f46c7a9fac2d7aeea2877610fac941f</Hash>
 </Codenesium>*/

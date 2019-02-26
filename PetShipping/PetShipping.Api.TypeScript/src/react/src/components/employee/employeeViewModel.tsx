@@ -30,11 +30,11 @@ export default class EmployeeViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.firstName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ca9212c9d41307c0178ecf44309bdb61</Hash>
+    <Hash>bc756d1a7fcaa32642ea7494fe024177</Hash>
 </Codenesium>*/

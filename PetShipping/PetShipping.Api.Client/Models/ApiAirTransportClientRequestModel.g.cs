@@ -15,29 +15,29 @@ namespace PetShippingNS.Api.Client
 		}
 
 		public virtual void SetProperties(
+			int airlineId,
 			string flightNumber,
 			int handlerId,
-			int id,
 			DateTime landDate,
 			int pipelineStepId,
 			DateTime takeoffDate)
 		{
+			this.AirlineId = airlineId;
 			this.FlightNumber = flightNumber;
 			this.HandlerId = handlerId;
-			this.Id = id;
 			this.LandDate = landDate;
 			this.PipelineStepId = pipelineStepId;
 			this.TakeoffDate = takeoffDate;
 		}
 
 		[JsonProperty]
+		public int AirlineId { get; private set; } = default(int);
+
+		[JsonProperty]
 		public string FlightNumber { get; private set; } = default(string);
 
 		[JsonProperty]
 		public int HandlerId { get; private set; }
-
-		[JsonProperty]
-		public int Id { get; private set; } = default(int);
 
 		[JsonProperty]
 		public DateTime LandDate { get; private set; } = SqlDateTime.MinValue.Value;
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a8ed92d82d42c643a4f85a4f40523a87</Hash>
+    <Hash>c85919a5565b52bf6eb53f5eb6ae34a8</Hash>
 </Codenesium>*/

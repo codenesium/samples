@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.Client.Tests
 		{
 			var mapper = new ApiAirTransportModelMapper();
 			var model = new ApiAirTransportClientRequestModel();
-			model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiAirTransportClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
+			response.AirlineId.Should().Be(1);
 			response.FlightNumber.Should().Be("A");
 			response.HandlerId.Should().Be(1);
-			response.Id.Should().Be(1);
 			response.LandDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.PipelineStepId.Should().Be(1);
 			response.TakeoffDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -31,12 +31,12 @@ namespace PetShippingNS.Api.Client.Tests
 		{
 			var mapper = new ApiAirTransportModelMapper();
 			var model = new ApiAirTransportClientResponseModel();
-			model.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiAirTransportClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
+			response.AirlineId.Should().Be(1);
 			response.FlightNumber.Should().Be("A");
 			response.HandlerId.Should().Be(1);
-			response.Id.Should().Be(1);
 			response.LandDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.PipelineStepId.Should().Be(1);
 			response.TakeoffDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -45,5 +45,5 @@ namespace PetShippingNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>4360a4970302518570f487230e9c8b52</Hash>
+    <Hash>e07a76d13efd18fd5beec1cd6ec465f0</Hash>
 </Codenesium>*/

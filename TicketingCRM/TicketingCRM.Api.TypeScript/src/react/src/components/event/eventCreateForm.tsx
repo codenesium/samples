@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { CitySelectComponent } from '../shared/citySelect';
 
 interface EventCreateComponentProps {
   form: WrappedFormUtils;
@@ -232,5 +233,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>152b2140e01555bb0031dd431839041e</Hash>
+    <Hash>25f524f7dcb7e951f11d4f200df843f8</Hash>
 </Codenesium>*/

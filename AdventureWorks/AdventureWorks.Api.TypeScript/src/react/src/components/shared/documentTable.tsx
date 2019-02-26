@@ -6,11 +6,11 @@ import DocumentMapper from '../document/documentMapper';
 import DocumentViewModel from '../document/documentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface DocumentTableComponentProps {
-  rowguid: any;
-  apiRoute: string;
+  rowguid:any,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface DocumentTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<DocumentViewModel>;
+  filteredRecords : Array<DocumentViewModel>;
 }
 
-export class DocumentTableComponent extends React.Component<
-  DocumentTableComponentProps,
-  DocumentTableComponentState
+export class  DocumentTableComponent extends React.Component<
+DocumentTableComponentProps,
+DocumentTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: DocumentViewModel) {
-    this.props.history.push(ClientRoutes.Documents + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: DocumentViewModel) {
+  this.props.history.push(ClientRoutes.Documents + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: DocumentViewModel) {
-    this.props.history.push(ClientRoutes.Documents + '/' + row.id);
-  }
+handleDetailClick(e:any, row: DocumentViewModel) {
+  this.props.history.push(ClientRoutes.Documents + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.DocumentClientResponseModel>;
@@ -59,11 +61,12 @@ export class DocumentTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new DocumentMapper();
+          
+          let documents:Array<DocumentViewModel> = [];
 
-          let documents: Array<DocumentViewModel> = [];
-
-          response.forEach(x => {
-            documents.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              documents.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,130 +91,113 @@ export class DocumentTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Documents',
-                columns: [
-                  {
-                    Header: 'ChangeNumber',
-                    accessor: 'changeNumber',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Documents',
+                    columns: [
+					  {
+                      Header: 'ChangeNumber',
+                      accessor: 'changeNumber',
+                      Cell: (props) => {
                       return <span>{String(props.original.changeNumber)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Document',
-                    accessor: 'document1',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Document',
+                      accessor: 'document1',
+                      Cell: (props) => {
                       return <span>{String(props.original.document1)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'DocumentLevel',
-                    accessor: 'documentLevel',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.documentLevel)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'DocumentSummary',
-                    accessor: 'documentSummary',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.documentSummary)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'FileExtension',
-                    accessor: 'fileExtension',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.fileExtension)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'FileName',
-                    accessor: 'fileName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'DocumentLevel',
+                      accessor: 'documentLevel',
+                      Cell: (props) => {
+                      return <span>{String(props.original.documentLevel)}</span>;
+                      }           
+                    },  {
+                      Header: 'DocumentSummary',
+                      accessor: 'documentSummary',
+                      Cell: (props) => {
+                      return <span>{String(props.original.documentSummary)}</span>;
+                      }           
+                    },  {
+                      Header: 'FileExtension',
+                      accessor: 'fileExtension',
+                      Cell: (props) => {
+                      return <span>{String(props.original.fileExtension)}</span>;
+                      }           
+                    },  {
+                      Header: 'FileName',
+                      accessor: 'fileName',
+                      Cell: (props) => {
                       return <span>{String(props.original.fileName)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'FolderFlag',
-                    accessor: 'folderFlag',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'FolderFlag',
+                      accessor: 'folderFlag',
+                      Cell: (props) => {
                       return <span>{String(props.original.folderFlag)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Owner',
-                    accessor: 'owner',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Owner',
+                      accessor: 'owner',
+                      Cell: (props) => {
                       return <span>{String(props.original.owner)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Revision',
-                    accessor: 'revision',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Revision',
+                      accessor: 'revision',
+                      Cell: (props) => {
                       return <span>{String(props.original.revision)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Rowguid',
-                    accessor: 'rowguid',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Rowguid',
+                      accessor: 'rowguid',
+                      Cell: (props) => {
                       return <span>{String(props.original.rowguid)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Status',
-                    accessor: 'status',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Status',
+                      accessor: 'status',
+                      Cell: (props) => {
                       return <span>{String(props.original.status)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Title',
-                    accessor: 'title',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Title',
+                      accessor: 'title',
+                      Cell: (props) => {
                       return <span>{String(props.original.title)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as DocumentViewModel
@@ -222,8 +208,8 @@ export class DocumentTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as DocumentViewModel
@@ -232,14 +218,11 @@ export class DocumentTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -247,7 +230,6 @@ export class DocumentTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>db9009cb86f649abb9370210544b5c92</Hash>
+    <Hash>527ea199732c47b39955475a03245f0e</Hash>
 </Codenesium>*/

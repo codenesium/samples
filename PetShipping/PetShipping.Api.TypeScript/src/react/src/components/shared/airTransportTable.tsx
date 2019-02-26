@@ -9,7 +9,7 @@ import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
 
 interface AirTransportTableComponentProps {
-  airlineId: number;
+  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -214,5 +214,5 @@ export class AirTransportTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b5f80abdddbd17dde3bfd09ae6aa4f70</Hash>
+    <Hash>1e5ed1c718061af6483624f4b7d66e87</Hash>
 </Codenesium>*/

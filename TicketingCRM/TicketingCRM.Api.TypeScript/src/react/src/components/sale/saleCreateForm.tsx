@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { TransactionSelectComponent } from '../shared/transactionSelect';
 
 interface SaleCreateComponentProps {
   form: WrappedFormUtils;
@@ -172,5 +173,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>086aee1e9dbefc3746da414307e240b8</Hash>
+    <Hash>fe55c3cb36f4613745d1952c77e2a9ad</Hash>
 </Codenesium>*/

@@ -6,10 +6,7 @@ import FamilyMapper from './familyMapper';
 import FamilyViewModel from './familyViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {StudentTableComponent} from '../shared/studentTable'
-	
-
-
+import { StudentTableComponent } from '../shared/studentTable';
 
 interface FamilyDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface FamilyDetailComponentState {
 }
 
 class FamilyDetailComponent extends React.Component<
-FamilyDetailComponentProps,
-FamilyDetailComponentState
+  FamilyDetailComponentProps,
+  FamilyDetailComponentState
 > {
   state = {
     model: new FamilyViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Families + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Families + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,60 +85,64 @@ FamilyDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>notes</h3>
-							<p>{String(this.state.model!.note)}</p>
-						 </div>
-					   						 <div>
-							<h3>Primary Contact Email</h3>
-							<p>{String(this.state.model!.primaryContactEmail)}</p>
-						 </div>
-					   						 <div>
-							<h3>Primary Contact First Name</h3>
-							<p>{String(this.state.model!.primaryContactFirstName)}</p>
-						 </div>
-					   						 <div>
-							<h3>Primary Contact Last Name</h3>
-							<p>{String(this.state.model!.primaryContactLastName)}</p>
-						 </div>
-					   						 <div>
-							<h3>Primary Contact Phone</h3>
-							<p>{String(this.state.model!.primaryContactPhone)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>notes</h3>
+              <p>{String(this.state.model!.note)}</p>
+            </div>
+            <div>
+              <h3>Primary Contact Email</h3>
+              <p>{String(this.state.model!.primaryContactEmail)}</p>
+            </div>
+            <div>
+              <h3>Primary Contact First Name</h3>
+              <p>{String(this.state.model!.primaryContactFirstName)}</p>
+            </div>
+            <div>
+              <h3>Primary Contact Last Name</h3>
+              <p>{String(this.state.model!.primaryContactLastName)}</p>
+            </div>
+            <div>
+              <h3>Primary Contact Phone</h3>
+              <p>{String(this.state.model!.primaryContactPhone)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Students</h3>
-            <StudentTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Families + '/' + this.state.model!.id + '/' + ApiRoutes.Students}
-			/>
-         </div>
-	
-
+            <StudentTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Families +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Students
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -148,10 +151,11 @@ FamilyDetailComponentState
   }
 }
 
-export const WrappedFamilyDetailComponent = Form.create({ name: 'Family Detail' })(
-  FamilyDetailComponent
-);
+export const WrappedFamilyDetailComponent = Form.create({
+  name: 'Family Detail',
+})(FamilyDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>a905ce8f28756c8d6a8d811069d3390b</Hash>
+    <Hash>dc73550588e6e3c91dd487d962f5f08e</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import DepartmentMapper from '../department/departmentMapper';
 import DepartmentViewModel from '../department/departmentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface DepartmentTableComponentProps {
-  departmentID: number;
-  apiRoute: string;
+  departmentID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface DepartmentTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<DepartmentViewModel>;
+  filteredRecords : Array<DepartmentViewModel>;
 }
 
-export class DepartmentTableComponent extends React.Component<
-  DepartmentTableComponentProps,
-  DepartmentTableComponentState
+export class  DepartmentTableComponent extends React.Component<
+DepartmentTableComponentProps,
+DepartmentTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: DepartmentViewModel) {
-    this.props.history.push(ClientRoutes.Departments + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: DepartmentViewModel) {
+  this.props.history.push(ClientRoutes.Departments + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: DepartmentViewModel) {
-    this.props.history.push(ClientRoutes.Departments + '/' + row.id);
-  }
+handleDetailClick(e:any, row: DepartmentViewModel) {
+  this.props.history.push(ClientRoutes.Departments + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.DepartmentClientResponseModel>;
@@ -59,11 +61,12 @@ export class DepartmentTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new DepartmentMapper();
+          
+          let departments:Array<DepartmentViewModel> = [];
 
-          let departments: Array<DepartmentViewModel> = [];
-
-          response.forEach(x => {
-            departments.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              departments.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,61 +91,59 @@ export class DepartmentTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Departments',
-                columns: [
-                  {
-                    Header: 'DepartmentID',
-                    accessor: 'departmentID',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Departments',
+                    columns: [
+					  {
+                      Header: 'DepartmentID',
+                      accessor: 'departmentID',
+                      Cell: (props) => {
                       return <span>{String(props.original.departmentID)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'GroupName',
-                    accessor: 'groupName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'GroupName',
+                      accessor: 'groupName',
+                      Cell: (props) => {
                       return <span>{String(props.original.groupName)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as DepartmentViewModel
@@ -153,8 +154,8 @@ export class DepartmentTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as DepartmentViewModel
@@ -163,14 +164,11 @@ export class DepartmentTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -178,7 +176,6 @@ export class DepartmentTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>be48a19eefee3a6730a3df477741c147</Hash>
+    <Hash>d69523c4ae78bfde3561b700bc726763</Hash>
 </Codenesium>*/

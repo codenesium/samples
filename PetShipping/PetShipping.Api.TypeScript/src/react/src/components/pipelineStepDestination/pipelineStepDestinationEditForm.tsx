@@ -17,7 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { DestinationSelectComponent } from '../shared/destinationSelect';
+import { PipelineStepSelectComponent } from '../shared/pipelineStepSelect';
 interface PipelineStepDestinationEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -204,5 +205,5 @@ export const WrappedPipelineStepDestinationEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>38f957425b10c51adcc21a0029487c09</Hash>
+    <Hash>aa93ad27a33e17bc090ebc184cebac33</Hash>
 </Codenesium>*/

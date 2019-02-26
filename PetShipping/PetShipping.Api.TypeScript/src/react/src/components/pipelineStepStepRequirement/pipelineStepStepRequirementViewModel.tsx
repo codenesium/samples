@@ -31,11 +31,11 @@ export default class PipelineStepStepRequirementViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.detail);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>26737756d44725e041ed63df0988e2da</Hash>
+    <Hash>23fce7144172cacd4f3daeb720f42605</Hash>
 </Codenesium>*/

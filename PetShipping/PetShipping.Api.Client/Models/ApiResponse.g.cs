@@ -91,7 +91,7 @@ namespace PetShippingNS.Api.Client
 
 		public void AddAirTransport(ApiAirTransportClientResponseModel item)
 		{
-			if (!this.AirTransports.Any(x => x.AirlineId == item.AirlineId))
+			if (!this.AirTransports.Any(x => x.Id == item.Id))
 			{
 				this.AirTransports.Add(item);
 			}
@@ -260,5 +260,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>01f388136951f21e51c43411ed0a31fd</Hash>
+    <Hash>b5f2f16e585cf78139fac0469136cb60</Hash>
 </Codenesium>*/

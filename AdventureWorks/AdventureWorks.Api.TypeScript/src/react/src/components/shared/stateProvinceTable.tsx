@@ -6,11 +6,11 @@ import StateProvinceMapper from '../stateProvince/stateProvinceMapper';
 import StateProvinceViewModel from '../stateProvince/stateProvinceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface StateProvinceTableComponentProps {
-  stateProvinceID: number;
-  apiRoute: string;
+  stateProvinceID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,52 +20,53 @@ interface StateProvinceTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<StateProvinceViewModel>;
+  filteredRecords : Array<StateProvinceViewModel>;
 }
 
-export class StateProvinceTableComponent extends React.Component<
-  StateProvinceTableComponentProps,
-  StateProvinceTableComponentState
+export class  StateProvinceTableComponent extends React.Component<
+StateProvinceTableComponentProps,
+StateProvinceTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: StateProvinceViewModel) {
-    this.props.history.push(ClientRoutes.StateProvinces + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: StateProvinceViewModel) {
+  this.props.history.push(ClientRoutes.StateProvinces + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: StateProvinceViewModel) {
-    this.props.history.push(ClientRoutes.StateProvinces + '/' + row.id);
-  }
+handleDetailClick(e:any, row: StateProvinceViewModel) {
+  this.props.history.push(ClientRoutes.StateProvinces + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.StateProvinceClientResponseModel
-          >;
+          let response = resp.data as Array<Api.StateProvinceClientResponseModel>;
 
           console.log(response);
 
           let mapper = new StateProvinceMapper();
+          
+          let stateProvinces:Array<StateProvinceViewModel> = [];
 
-          let stateProvinces: Array<StateProvinceViewModel> = [];
-
-          response.forEach(x => {
-            stateProvinces.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              stateProvinces.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -90,113 +91,87 @@ export class StateProvinceTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'StateProvinces',
-                columns: [
-                  {
-                    Header: 'CountryRegionCode',
-                    accessor: 'countryRegionCode',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.CountryRegions +
-                                '/' +
-                                props.original.countryRegionCode
-                            );
-                          }}
-                        >
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'StateProvinces',
+                    columns: [
+					  {
+                      Header: 'CountryRegionCode',
+                      accessor: 'countryRegionCode',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.CountryRegions + '/' + props.original.countryRegionCode); }}>
                           {String(
                             props.original.countryRegionCodeNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'IsOnlyStateProvinceFlag',
-                    accessor: 'isOnlyStateProvinceFlag',
-                    Cell: props => {
-                      return (
-                        <span>
-                          {String(props.original.isOnlyStateProvinceFlag)}
-                        </span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'IsOnlyStateProvinceFlag',
+                      accessor: 'isOnlyStateProvinceFlag',
+                      Cell: (props) => {
+                      return <span>{String(props.original.isOnlyStateProvinceFlag)}</span>;
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Rowguid',
-                    accessor: 'rowguid',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Rowguid',
+                      accessor: 'rowguid',
+                      Cell: (props) => {
                       return <span>{String(props.original.rowguid)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'StateProvinceCode',
-                    accessor: 'stateProvinceCode',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.stateProvinceCode)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'StateProvinceID',
-                    accessor: 'stateProvinceID',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.stateProvinceID)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'TerritoryID',
-                    accessor: 'territoryID',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'StateProvinceCode',
+                      accessor: 'stateProvinceCode',
+                      Cell: (props) => {
+                      return <span>{String(props.original.stateProvinceCode)}</span>;
+                      }           
+                    },  {
+                      Header: 'StateProvinceID',
+                      accessor: 'stateProvinceID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.stateProvinceID)}</span>;
+                      }           
+                    },  {
+                      Header: 'TerritoryID',
+                      accessor: 'territoryID',
+                      Cell: (props) => {
                       return <span>{String(props.original.territoryID)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as StateProvinceViewModel
@@ -207,8 +182,8 @@ export class StateProvinceTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as StateProvinceViewModel
@@ -217,14 +192,11 @@ export class StateProvinceTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -232,7 +204,6 @@ export class StateProvinceTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>db218c99bded1c3c286ea3f67d750233</Hash>
+    <Hash>5dd40af870744b29d9a4bd7debef35aa</Hash>
 </Codenesium>*/

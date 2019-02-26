@@ -17,6 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { UserSelectComponent } from '../shared/userSelect';
+import { TweetSelectComponent } from '../shared/tweetSelect';
 
 interface QuoteTweetCreateComponentProps {
   form: WrappedFormUtils;
@@ -180,5 +182,5 @@ export const WrappedQuoteTweetCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0142b33bc9d1d0015ee2e89d216766a3</Hash>
+    <Hash>70f4743fb769ce65705877ad32b0e809</Hash>
 </Codenesium>*/

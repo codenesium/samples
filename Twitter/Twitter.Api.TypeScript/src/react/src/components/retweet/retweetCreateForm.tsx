@@ -5,13 +5,25 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RetweetMapper from './retweetMapper';
 import RetweetViewModel from './retweetViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { UserSelectComponent } from '../shared/userSelect';
+import { TweetSelectComponent } from '../shared/tweetSelect';
 
 interface RetweetCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface RetweetCreateComponentState {
@@ -20,7 +32,7 @@ interface RetweetCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class RetweetCreateComponent extends React.Component<
@@ -33,12 +45,12 @@ class RetweetCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as RetweetViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +59,9 @@ class RetweetCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:RetweetViewModel) =>
-  {  
+  submit = (model: RetweetViewModel) => {
     let mapper = new RetweetMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Retweets,
         mapper.mapViewModelToApiRequest(model),
@@ -65,96 +76,100 @@ class RetweetCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.RetweetClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="date">date</label>
+            <br />
+            {getFieldDecorator('date', {
+              rules: [],
+            })(<Input placeholder={'date'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='date'>date</label>
-              <br />             
-              {getFieldDecorator('date', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"date"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="retwitterUserId">retwitter_user_id</label>
+            <br />
+            {getFieldDecorator('retwitterUserId', {
+              rules: [],
+            })(<Input placeholder={'retwitter_user_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='retwitterUserId'>retwitter_user_id</label>
-              <br />             
-              {getFieldDecorator('retwitterUserId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"retwitter_user_id"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="time">time</label>
+            <br />
+            {getFieldDecorator('time', {
+              rules: [],
+            })(<Input placeholder={'time'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='time'>time</label>
-              <br />             
-              {getFieldDecorator('time', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"time"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="tweetTweetId">tweet_tweet_id</label>
+            <br />
+            {getFieldDecorator('tweetTweetId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'tweet_tweet_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='tweetTweetId'>tweet_tweet_id</label>
-              <br />             
-              {getFieldDecorator('tweetTweetId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"tweet_tweet_id"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedRetweetCreateComponent = Form.create({ name: 'Retweet Create' })(RetweetCreateComponent);
+export const WrappedRetweetCreateComponent = Form.create({
+  name: 'Retweet Create',
+})(RetweetCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>6aa62eecf2308158ec1d7aa2f22af22f</Hash>
+    <Hash>a4ef322f60fc8e7f8939862d2b41a54e</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { TransactionStatusSelectComponent } from '../shared/transactionStatusSelect';
 interface TransactionEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -217,5 +217,5 @@ export const WrappedTransactionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9ccb90c6cdbbe02a7ad22078eb44e4cf</Hash>
+    <Hash>1b24d4e3945dddddb953030251f2bdd9</Hash>
 </Codenesium>*/

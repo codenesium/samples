@@ -59,7 +59,7 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<AirTransportRepository>> loggerMoc = AirTransportRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
-			var records = await repository.All(1, 0, "A".ToString());
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -73,11 +73,11 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 
 			AirTransport entity = new AirTransport();
-			entity.SetProperties(default(int), "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.AirlineId);
+			var record = await repository.Get(entity.Id);
 
 			record.Should().NotBeNull();
 		}
@@ -90,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 
 			var entity = new AirTransport();
-			entity.SetProperties(default(int), "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			await repository.Create(entity);
 
 			var records = await context.Set<AirTransport>().Where(x => true).ToListAsync();
@@ -105,11 +105,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 			AirTransport entity = new AirTransport();
-			entity.SetProperties(default(int), "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.AirlineId);
+			var record = await repository.Get(entity.Id);
 
 			await repository.Update(record);
 
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 			AirTransport entity = new AirTransport();
-			entity.SetProperties(default(int), "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,11 +145,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 			AirTransport entity = new AirTransport();
-			entity.SetProperties(default(int), "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Delete(entity.AirlineId);
+			await repository.Delete(entity.Id);
 
 			var records = await context.Set<AirTransport>().Where(x => true).ToListAsync();
 
@@ -174,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8467c12c84eed34442b8f42004a1ff8b</Hash>
+    <Hash>f4fc33298172f90432ee8f5ad492c683</Hash>
 </Codenesium>*/

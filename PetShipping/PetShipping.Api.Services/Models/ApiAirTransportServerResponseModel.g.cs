@@ -9,18 +9,18 @@ namespace PetShippingNS.Api.Services
 	public partial class ApiAirTransportServerResponseModel : AbstractApiServerResponseModel
 	{
 		public virtual void SetProperties(
+			int id,
 			int airlineId,
 			string flightNumber,
 			int handlerId,
-			int id,
 			DateTime landDate,
 			int pipelineStepId,
 			DateTime takeoffDate)
 		{
+			this.Id = id;
 			this.AirlineId = airlineId;
 			this.FlightNumber = flightNumber;
 			this.HandlerId = handlerId;
-			this.Id = id;
 			this.LandDate = landDate;
 			this.PipelineStepId = pipelineStepId;
 			this.TakeoffDate = takeoffDate;
@@ -61,5 +61,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a89306369a9c124c5e73d0bc92b2b010</Hash>
+    <Hash>06bbdcbad969033f44f3da6a0c930294</Hash>
 </Codenesium>*/

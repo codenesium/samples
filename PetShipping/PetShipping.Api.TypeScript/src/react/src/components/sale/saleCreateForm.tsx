@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { PetSelectComponent } from '../shared/petSelect';
 
 interface SaleCreateComponentProps {
   form: WrappedFormUtils;
@@ -185,5 +186,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>a1778d23c6eaf3608e65c34fa32faeab</Hash>
+    <Hash>abea1c77e7d6cd312be1b618b8f98816</Hash>
 </Codenesium>*/

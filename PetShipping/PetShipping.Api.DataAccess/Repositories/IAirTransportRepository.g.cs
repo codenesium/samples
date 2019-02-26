@@ -11,9 +11,9 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task Update(AirTransport item);
 
-		Task Delete(int airlineId);
+		Task Delete(int id);
 
-		Task<AirTransport> Get(int airlineId);
+		Task<AirTransport> Get(int id);
 
 		Task<List<AirTransport>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
@@ -22,5 +22,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e08f4a88f92bb4ff75b93de92a314b75</Hash>
+    <Hash>226f4d23b61b7e48f45bd04c40652e7b</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { ChainSelectComponent } from '../shared/chainSelect';
 interface ClaspEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -201,5 +201,5 @@ export const WrappedClaspEditComponent = Form.create({ name: 'Clasp Edit' })(
 
 
 /*<Codenesium>
-    <Hash>ecb3ac2c82b84ac9b83d6f484d280e38</Hash>
+    <Hash>85900a46c4fe37c7a0bb0d4a65ca8eea</Hash>
 </Codenesium>*/

@@ -7,8 +7,9 @@ import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-interface FileEditComponentProps {
+import { BucketSelectComponent } from '../shared/bucketSelect'
+	import { FileTypeSelectComponent } from '../shared/fileTypeSelect'
+	interface FileEditComponentProps {
   form:WrappedFormUtils;
   history:any;
   match:any;
@@ -285,5 +286,5 @@ class FileEditComponent extends React.Component<
 export const WrappedFileEditComponent = Form.create({ name: 'File Edit' })(FileEditComponent);
 
 /*<Codenesium>
-    <Hash>d5535b5f2796f2f3bcc48e48ea98848b</Hash>
+    <Hash>4291093ee2159069f57029a2bd4643e9</Hash>
 </Codenesium>*/

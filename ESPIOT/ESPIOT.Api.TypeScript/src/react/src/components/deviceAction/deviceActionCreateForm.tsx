@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { DeviceSelectComponent } from '../shared/deviceSelect';
 
 interface DeviceActionCreateComponentProps {
   form: WrappedFormUtils;
@@ -131,9 +132,13 @@ class DeviceActionCreateComponent extends React.Component<
           <Form.Item>
             <label htmlFor="deviceId">Device</label>
             <br />
-            {getFieldDecorator('deviceId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Device'} />)}
+            <DeviceSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Devices}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="deviceId"
+              required={true}
+              selectedValue={this.state.model!.deviceId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -167,5 +172,5 @@ export const WrappedDeviceActionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ca53c390269bfb9f86087ac47798aa6a</Hash>
+    <Hash>3f1a42fda21063b8f4680a70fe79fbe5</Hash>
 </Codenesium>*/

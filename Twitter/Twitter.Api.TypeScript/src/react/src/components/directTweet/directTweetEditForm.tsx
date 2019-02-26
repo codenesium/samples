@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { UserSelectComponent } from '../shared/userSelect';
 interface DirectTweetEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -184,7 +184,7 @@ class DirectTweetEditComponent extends React.Component<
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'date'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'date'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -223,5 +223,5 @@ export const WrappedDirectTweetEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1cb2663bcb63074c0b82b048e371586f</Hash>
+    <Hash>5648da5afececb3c85a7f2d7971793a1</Hash>
 </Codenesium>*/

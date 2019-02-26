@@ -124,11 +124,11 @@ namespace PetShippingNS.Api.DataAccess
 			modelBuilder.Entity<AirTransport>()
 			.HasKey(c => new
 			{
-				c.AirlineId,
+				c.Id,
 			});
 
 			modelBuilder.Entity<AirTransport>()
-			.Property("AirlineId")
+			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
@@ -348,5 +348,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a9689c2f3185d5ea81235c590fe73dbc</Hash>
+    <Hash>abcfedfe668734cfca20f299330903b4</Hash>
 </Codenesium>*/

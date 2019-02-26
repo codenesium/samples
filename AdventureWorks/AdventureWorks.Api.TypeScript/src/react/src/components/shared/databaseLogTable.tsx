@@ -6,11 +6,11 @@ import DatabaseLogMapper from '../databaseLog/databaseLogMapper';
 import DatabaseLogViewModel from '../databaseLog/databaseLogViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface DatabaseLogTableComponentProps {
-  databaseLogID:number,
-  apiRoute:string;
+  databaseLogID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface DatabaseLogTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<DatabaseLogViewModel>;
+  filteredRecords: Array<DatabaseLogViewModel>;
 }
 
-export class  DatabaseLogTableComponent extends React.Component<
-DatabaseLogTableComponentProps,
-DatabaseLogTableComponentState
+export class DatabaseLogTableComponent extends React.Component<
+  DatabaseLogTableComponentProps,
+  DatabaseLogTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: DatabaseLogViewModel) {
-  this.props.history.push(ClientRoutes.DatabaseLogs + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: DatabaseLogViewModel) {
+    this.props.history.push(ClientRoutes.DatabaseLogs + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: DatabaseLogViewModel) {
-  this.props.history.push(ClientRoutes.DatabaseLogs + '/' + row.id);
-}
+  handleDetailClick(e: any, row: DatabaseLogViewModel) {
+    this.props.history.push(ClientRoutes.DatabaseLogs + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.DatabaseLogClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: DatabaseLogViewModel) {
           console.log(response);
 
           let mapper = new DatabaseLogMapper();
-          
-          let databaseLogs:Array<DatabaseLogViewModel> = [];
 
-          response.forEach(x =>
-          {
-              databaseLogs.push(mapper.mapApiResponseToViewModel(x));
+          let databaseLogs: Array<DatabaseLogViewModel> = [];
+
+          response.forEach(x => {
+            databaseLogs.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,71 +88,77 @@ handleDetailClick(e:any, row: DatabaseLogViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'DatabaseLogs',
-                    columns: [
-					  {
-                      Header: 'DatabaseLogID',
-                      accessor: 'databaseLogID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.databaseLogID)}</span>;
-                      }           
-                    },  {
-                      Header: 'DatabaseUser',
-                      accessor: 'databaseUser',
-                      Cell: (props) => {
-                      return <span>{String(props.original.databaseUser)}</span>;
-                      }           
-                    },  {
-                      Header: 'PostTime',
-                      accessor: 'postTime',
-                      Cell: (props) => {
-                      return <span>{String(props.original.postTime)}</span>;
-                      }           
-                    },  {
-                      Header: 'Schema',
-                      accessor: 'schema',
-                      Cell: (props) => {
-                      return <span>{String(props.original.schema)}</span>;
-                      }           
-                    },  {
-                      Header: 'TSQL',
-                      accessor: 'tsql',
-                      Cell: (props) => {
-                      return <span>{String(props.original.tsql)}</span>;
-                      }           
-                    },  {
-                      Header: 'XmlEvent',
-                      accessor: 'xmlEvent',
-                      Cell: (props) => {
-                      return <span>{String(props.original.xmlEvent)}</span>;
-                      }           
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'DatabaseLogs',
+                columns: [
+                  {
+                    Header: 'DatabaseLogID',
+                    accessor: 'databaseLogID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.databaseLogID)}</span>
+                      );
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'DatabaseUser',
+                    accessor: 'databaseUser',
+                    Cell: props => {
+                      return <span>{String(props.original.databaseUser)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PostTime',
+                    accessor: 'postTime',
+                    Cell: props => {
+                      return <span>{String(props.original.postTime)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Schema',
+                    accessor: 'schema',
+                    Cell: props => {
+                      return <span>{String(props.original.schema)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'TSQL',
+                    accessor: 'tsql',
+                    Cell: props => {
+                      return <span>{String(props.original.tsql)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'XmlEvent',
+                    accessor: 'xmlEvent',
+                    Cell: props => {
+                      return <span>{String(props.original.xmlEvent)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as DatabaseLogViewModel
@@ -166,8 +169,8 @@ handleDetailClick(e:any, row: DatabaseLogViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as DatabaseLogViewModel
@@ -176,11 +179,14 @@ handleDetailClick(e:any, row: DatabaseLogViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -188,6 +194,7 @@ handleDetailClick(e:any, row: DatabaseLogViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>72cbded2f29c7241624242d60ddbdf81</Hash>
+    <Hash>352ff49cb2798fb951a2a94854e36022</Hash>
 </Codenesium>*/

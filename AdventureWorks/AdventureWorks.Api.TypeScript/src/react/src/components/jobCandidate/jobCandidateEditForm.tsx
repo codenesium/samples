@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { EmployeeSelectComponent } from '../shared/employeeSelect';
 interface JobCandidateEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -219,5 +219,5 @@ export const WrappedJobCandidateEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8bf3e3fb486ed5ab662f019c3f428be0</Hash>
+    <Hash>3fd11db1d25f3674a0aee6aa4c2d92b8</Hash>
 </Codenesium>*/

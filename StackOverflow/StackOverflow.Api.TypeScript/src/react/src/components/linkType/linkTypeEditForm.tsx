@@ -17,7 +17,6 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface LinkTypeEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -199,5 +198,5 @@ export const WrappedLinkTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>df90aab7b8673af8ddc05f46756591f3</Hash>
+    <Hash>98085d07e7bb552e4818d189e05fbf58</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ import PersonTypeMapper from './personTypeMapper';
 import PersonTypeViewModel from './personTypeViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface PersonTypeEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -173,5 +172,5 @@ class PersonTypeEditComponent extends React.Component<
 export const WrappedPersonTypeEditComponent = Form.create({ name: 'PersonType Edit' })(PersonTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>7949f3fdfa1480bcec54b0515733dc57</Hash>
+    <Hash>44f4c9e00b01583abd0735adde78544a</Hash>
 </Codenesium>*/

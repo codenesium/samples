@@ -6,11 +6,11 @@ import ShiftMapper from '../shift/shiftMapper';
 import ShiftViewModel from '../shift/shiftViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface ShiftTableComponentProps {
-  shiftID: number;
-  apiRoute: string;
+  shiftID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,40 @@ interface ShiftTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<ShiftViewModel>;
+  filteredRecords : Array<ShiftViewModel>;
 }
 
-export class ShiftTableComponent extends React.Component<
-  ShiftTableComponentProps,
-  ShiftTableComponentState
+export class  ShiftTableComponent extends React.Component<
+ShiftTableComponentProps,
+ShiftTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: ShiftViewModel) {
-    this.props.history.push(ClientRoutes.Shifts + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: ShiftViewModel) {
+  this.props.history.push(ClientRoutes.Shifts + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: ShiftViewModel) {
-    this.props.history.push(ClientRoutes.Shifts + '/' + row.id);
-  }
+handleDetailClick(e:any, row: ShiftViewModel) {
+  this.props.history.push(ClientRoutes.Shifts + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.ShiftClientResponseModel>;
@@ -59,11 +61,12 @@ export class ShiftTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new ShiftMapper();
+          
+          let shifts:Array<ShiftViewModel> = [];
 
-          let shifts: Array<ShiftViewModel> = [];
-
-          response.forEach(x => {
-            shifts.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              shifts.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,68 +91,65 @@ export class ShiftTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Shifts',
-                columns: [
-                  {
-                    Header: 'EndTime',
-                    accessor: 'endTime',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Shifts',
+                    columns: [
+					  {
+                      Header: 'EndTime',
+                      accessor: 'endTime',
+                      Cell: (props) => {
                       return <span>{String(props.original.endTime)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ShiftID',
-                    accessor: 'shiftID',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ShiftID',
+                      accessor: 'shiftID',
+                      Cell: (props) => {
                       return <span>{String(props.original.shiftID)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'StartTime',
-                    accessor: 'startTime',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'StartTime',
+                      accessor: 'startTime',
+                      Cell: (props) => {
                       return <span>{String(props.original.startTime)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as ShiftViewModel
@@ -160,8 +160,8 @@ export class ShiftTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as ShiftViewModel
@@ -170,14 +170,11 @@ export class ShiftTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -185,7 +182,6 @@ export class ShiftTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>aab9491f3180505b1bae29aa72c0ef7d</Hash>
+    <Hash>1b7e8037626bfe8bc6c63df14b315e66</Hash>
 </Codenesium>*/

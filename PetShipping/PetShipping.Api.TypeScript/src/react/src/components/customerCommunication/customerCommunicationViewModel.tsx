@@ -40,11 +40,11 @@ export default class CustomerCommunicationViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.customerId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>2347d796e80002a8a4b02f4bfda64b53</Hash>
+    <Hash>90763c140305407710ba3edf9c2df41b</Hash>
 </Codenesium>*/

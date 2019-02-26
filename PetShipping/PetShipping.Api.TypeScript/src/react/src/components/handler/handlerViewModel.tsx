@@ -34,11 +34,11 @@ export default class HandlerViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.countryId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c9df38ecbd623d5a9e8c837e0fb7392c</Hash>
+    <Hash>172e381891d80e04725225862eb16796</Hash>
 </Codenesium>*/

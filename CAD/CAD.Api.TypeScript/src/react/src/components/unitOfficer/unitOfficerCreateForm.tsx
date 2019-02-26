@@ -5,13 +5,25 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UnitOfficerMapper from './unitOfficerMapper';
 import UnitOfficerViewModel from './unitOfficerViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { OfficerSelectComponent } from '../shared/officerSelect';
+import { UnitSelectComponent } from '../shared/unitSelect';
 
 interface UnitOfficerCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface UnitOfficerCreateComponentState {
@@ -20,7 +32,7 @@ interface UnitOfficerCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class UnitOfficerCreateComponent extends React.Component<
@@ -33,12 +45,12 @@ class UnitOfficerCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as UnitOfficerViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +59,9 @@ class UnitOfficerCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:UnitOfficerViewModel) =>
-  {  
+  submit = (model: UnitOfficerViewModel) => {
     let mapper = new UnitOfficerMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.UnitOfficers,
         mapper.mapViewModelToApiRequest(model),
@@ -65,77 +76,84 @@ class UnitOfficerCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.UnitOfficerClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="officerId">officerId</label>
+            <br />
+            {getFieldDecorator('officerId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'officerId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='officerId'>officerId</label>
-              <br />             
-              {getFieldDecorator('officerId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"officerId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="unitId">unitId</label>
+            <br />
+            {getFieldDecorator('unitId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'unitId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='unitId'>unitId</label>
-              <br />             
-              {getFieldDecorator('unitId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"unitId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedUnitOfficerCreateComponent = Form.create({ name: 'UnitOfficer Create' })(UnitOfficerCreateComponent);
+export const WrappedUnitOfficerCreateComponent = Form.create({
+  name: 'UnitOfficer Create',
+})(UnitOfficerCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>00e5f0f32057adb1d1994870244668d4</Hash>
+    <Hash>ff06064e2a07c81cba206890801c340b</Hash>
 </Codenesium>*/

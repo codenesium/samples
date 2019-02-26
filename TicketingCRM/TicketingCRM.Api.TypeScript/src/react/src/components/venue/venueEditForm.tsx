@@ -17,7 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { AdminSelectComponent } from '../shared/adminSelect';
+import { ProvinceSelectComponent } from '../shared/provinceSelect';
 interface VenueEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -278,5 +279,5 @@ export const WrappedVenueEditComponent = Form.create({ name: 'Venue Edit' })(
 
 
 /*<Codenesium>
-    <Hash>7c3747d38f8154b53788c79e3abd5c11</Hash>
+    <Hash>24d47b03422b1edeefb23cf29bfb3c09</Hash>
 </Codenesium>*/

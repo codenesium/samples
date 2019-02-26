@@ -17,7 +17,6 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface VendorEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -268,5 +267,5 @@ export const WrappedVendorEditComponent = Form.create({ name: 'Vendor Edit' })(
 
 
 /*<Codenesium>
-    <Hash>780424de5d23ad3a7e12a2b4b0e7a210</Hash>
+    <Hash>5e5e76a9d2ceb8fd657a8b5e2ebac432</Hash>
 </Codenesium>*/

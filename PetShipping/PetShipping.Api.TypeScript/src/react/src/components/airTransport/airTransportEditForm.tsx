@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { HandlerSelectComponent } from '../shared/handlerSelect';
 interface AirTransportEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -112,7 +112,7 @@ class AirTransportEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.AirTransports +
           '/' +
-          this.state.model!.airlineId,
+          this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -168,6 +168,14 @@ class AirTransportEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="airlineId">airlineId</label>
+            <br />
+            {getFieldDecorator('airlineId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'airlineId'} />)}
+          </Form.Item>
+
           <Form.Item>
             <label htmlFor="flightNumber">flightNumber</label>
             <br />
@@ -233,5 +241,5 @@ export const WrappedAirTransportEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>27edc4043b2f7071e4bf8685bbd7a479</Hash>
+    <Hash>e5ca1328ddf3aa51df14496966a5b383</Hash>
 </Codenesium>*/

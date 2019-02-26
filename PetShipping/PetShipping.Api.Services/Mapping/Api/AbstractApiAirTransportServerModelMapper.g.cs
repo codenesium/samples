@@ -9,14 +9,14 @@ namespace PetShippingNS.Api.Services
 	public abstract class AbstractApiAirTransportServerModelMapper
 	{
 		public virtual ApiAirTransportServerResponseModel MapServerRequestToResponse(
-			int airlineId,
+			int id,
 			ApiAirTransportServerRequestModel request)
 		{
 			var response = new ApiAirTransportServerResponseModel();
-			response.SetProperties(airlineId,
+			response.SetProperties(id,
+			                       request.AirlineId,
 			                       request.FlightNumber,
 			                       request.HandlerId,
-			                       request.Id,
 			                       request.LandDate,
 			                       request.PipelineStepId,
 			                       request.TakeoffDate);
@@ -28,9 +28,9 @@ namespace PetShippingNS.Api.Services
 		{
 			var request = new ApiAirTransportServerRequestModel();
 			request.SetProperties(
+				response.AirlineId,
 				response.FlightNumber,
 				response.HandlerId,
-				response.Id,
 				response.LandDate,
 				response.PipelineStepId,
 				response.TakeoffDate);
@@ -42,9 +42,9 @@ namespace PetShippingNS.Api.Services
 		{
 			var request = new ApiAirTransportClientRequestModel();
 			request.SetProperties(
+				response.AirlineId,
 				response.FlightNumber,
 				response.HandlerId,
-				response.Id,
 				response.LandDate,
 				response.PipelineStepId,
 				response.TakeoffDate);
@@ -54,9 +54,9 @@ namespace PetShippingNS.Api.Services
 		public JsonPatchDocument<ApiAirTransportServerRequestModel> CreatePatch(ApiAirTransportServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiAirTransportServerRequestModel>();
+			patch.Replace(x => x.AirlineId, model.AirlineId);
 			patch.Replace(x => x.FlightNumber, model.FlightNumber);
 			patch.Replace(x => x.HandlerId, model.HandlerId);
-			patch.Replace(x => x.Id, model.Id);
 			patch.Replace(x => x.LandDate, model.LandDate);
 			patch.Replace(x => x.PipelineStepId, model.PipelineStepId);
 			patch.Replace(x => x.TakeoffDate, model.TakeoffDate);
@@ -66,5 +66,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7ce4331c5816015cd698d20380ed5b93</Hash>
+    <Hash>22209da957eabbabda8e9d33e8afdb26</Hash>
 </Codenesium>*/

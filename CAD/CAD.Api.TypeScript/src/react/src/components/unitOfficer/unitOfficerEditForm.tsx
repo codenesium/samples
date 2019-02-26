@@ -17,7 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { OfficerSelectComponent } from '../shared/officerSelect';
+import { UnitSelectComponent } from '../shared/unitSelect';
 interface UnitOfficerEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -204,5 +205,5 @@ export const WrappedUnitOfficerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1840011c88f5d8468c8d349fb0ebd9e2</Hash>
+    <Hash>669bf80448fbec913231d3582cbfb068</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface PostHistoryTypeEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -199,5 +198,5 @@ export const WrappedPostHistoryTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d2f0fe05d2460cba16af198275bd390a</Hash>
+    <Hash>d88b862fd1088a7c08a4787f0c7031ca</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ import TeacherMapper from './teacherMapper';
 import TeacherViewModel from './teacherViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface TeacherEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -230,5 +229,5 @@ class TeacherEditComponent extends React.Component<
 export const WrappedTeacherEditComponent = Form.create({ name: 'Teacher Edit' })(TeacherEditComponent);
 
 /*<Codenesium>
-    <Hash>93eeb92f979f7710074240f46dd51a69</Hash>
+    <Hash>3712c7ae453633d0fabf1555fa3af291</Hash>
 </Codenesium>*/

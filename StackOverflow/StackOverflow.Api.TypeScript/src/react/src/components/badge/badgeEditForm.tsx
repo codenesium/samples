@@ -7,7 +7,6 @@ import BadgeMapper from './badgeMapper';
 import BadgeViewModel from './badgeViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface BadgeEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -195,5 +194,5 @@ class BadgeEditComponent extends React.Component<
 export const WrappedBadgeEditComponent = Form.create({ name: 'Badge Edit' })(BadgeEditComponent);
 
 /*<Codenesium>
-    <Hash>9168467f639e7bed05e651aa3db4b715</Hash>
+    <Hash>34106b3c99fab75963c410fbf32e7659</Hash>
 </Codenesium>*/

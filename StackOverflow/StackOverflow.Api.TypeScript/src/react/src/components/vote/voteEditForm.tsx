@@ -7,7 +7,6 @@ import VoteMapper from './voteMapper';
 import VoteViewModel from './voteViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface VoteEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -214,5 +213,5 @@ class VoteEditComponent extends React.Component<
 export const WrappedVoteEditComponent = Form.create({ name: 'Vote Edit' })(VoteEditComponent);
 
 /*<Codenesium>
-    <Hash>240bca28038bd2dd4bae1f99da0955e8</Hash>
+    <Hash>355f6e49f5995bb7843e689803d81e9a</Hash>
 </Codenesium>*/

@@ -6,7 +6,10 @@ import CurrencyRateMapper from './currencyRateMapper';
 import CurrencyRateViewModel from './currencyRateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { SalesOrderHeaderTableComponent } from '../shared/salesOrderHeaderTable';
+import {SalesOrderHeaderTableComponent} from '../shared/salesOrderHeaderTable'
+	
+
+
 
 interface CurrencyRateDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface CurrencyRateDetailComponentState {
 }
 
 class CurrencyRateDetailComponent extends React.Component<
-  CurrencyRateDetailComponentProps,
-  CurrencyRateDetailComponentState
+CurrencyRateDetailComponentProps,
+CurrencyRateDetailComponentState
 > {
   state = {
     model: new CurrencyRateViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.CurrencyRates + '/edit/' + this.state.model!.currencyRateID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.CurrencyRates + '/edit/' + this.state.model!.currencyRateID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,80 +86,68 @@ class CurrencyRateDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>AverageRate</h3>
-              <p>{String(this.state.model!.averageRate)}</p>
-            </div>
-            <div>
-              <h3>CurrencyRateDate</h3>
-              <p>{String(this.state.model!.currencyRateDate)}</p>
-            </div>
-            <div>
-              <h3>CurrencyRateID</h3>
-              <p>{String(this.state.model!.currencyRateID)}</p>
-            </div>
-            <div>
-              <h3>EndOfDayRate</h3>
-              <p>{String(this.state.model!.endOfDayRate)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>FromCurrencyCode</h3>
-              <p>
-                {String(
-                  this.state.model!.fromCurrencyCodeNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>ToCurrencyCode</h3>
-              <p>
-                {String(
-                  this.state.model!.toCurrencyCodeNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>AverageRate</h3>
+							<p>{String(this.state.model!.averageRate)}</p>
+						 </div>
+					   						 <div>
+							<h3>CurrencyRateDate</h3>
+							<p>{String(this.state.model!.currencyRateDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>CurrencyRateID</h3>
+							<p>{String(this.state.model!.currencyRateID)}</p>
+						 </div>
+					   						 <div>
+							<h3>EndOfDayRate</h3>
+							<p>{String(this.state.model!.endOfDayRate)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>FromCurrencyCode</h3>
+							<p>{String(this.state.model!.fromCurrencyCodeNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>ToCurrencyCode</h3>
+							<p>{String(this.state.model!.toCurrencyCodeNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>SalesOrderHeaders</h3>
-            <SalesOrderHeaderTableComponent
-              salesOrderID={this.state.model!.salesOrderID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.CurrencyRates +
-                '/' +
-                this.state.model!.currencyRateID +
-                '/' +
-                ApiRoutes.SalesOrderHeaders
-              }
-            />
-          </div>
+            <SalesOrderHeaderTableComponent 
+			salesOrderID={this.state.model!.salesOrderID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.CurrencyRates + '/' + this.state.model!.currencyRateID + '/' + ApiRoutes.SalesOrderHeaders}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -167,11 +156,10 @@ class CurrencyRateDetailComponent extends React.Component<
   }
 }
 
-export const WrappedCurrencyRateDetailComponent = Form.create({
-  name: 'CurrencyRate Detail',
-})(CurrencyRateDetailComponent);
-
+export const WrappedCurrencyRateDetailComponent = Form.create({ name: 'CurrencyRate Detail' })(
+  CurrencyRateDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>21ad55b778b43b3bd4eaefb968cc1e17</Hash>
+    <Hash>2cd70ef1253a9be780d0c3034c520406</Hash>
 </Codenesium>*/

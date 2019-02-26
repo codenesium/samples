@@ -28,11 +28,11 @@ export default class HandlerPipelineStepViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.handlerId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>954d3b473398b7b3d30081133a186ca1</Hash>
+    <Hash>f6b6cd2c772829fd7267b0e29681847e</Hash>
 </Codenesium>*/

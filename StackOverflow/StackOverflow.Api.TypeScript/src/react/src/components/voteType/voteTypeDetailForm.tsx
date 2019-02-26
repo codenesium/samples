@@ -7,6 +7,9 @@ import VoteTypeViewModel from './voteTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface VoteTypeDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface VoteTypeDetailComponentState {
 }
 
 class VoteTypeDetailComponent extends React.Component<
-  VoteTypeDetailComponentProps,
-  VoteTypeDetailComponentState
+VoteTypeDetailComponentProps,
+VoteTypeDetailComponentState
 > {
   state = {
     model: new VoteTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.VoteTypes + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.VoteTypes + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,32 +85,35 @@ class VoteTypeDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -118,11 +122,10 @@ class VoteTypeDetailComponent extends React.Component<
   }
 }
 
-export const WrappedVoteTypeDetailComponent = Form.create({
-  name: 'VoteType Detail',
-})(VoteTypeDetailComponent);
-
+export const WrappedVoteTypeDetailComponent = Form.create({ name: 'VoteType Detail' })(
+  VoteTypeDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>bd52225780ccca5d323f3d28eacd47f3</Hash>
+    <Hash>fe1caa9f139c174a9e0bdd47c25d8def</Hash>
 </Codenesium>*/

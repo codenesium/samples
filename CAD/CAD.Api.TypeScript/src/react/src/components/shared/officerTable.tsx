@@ -6,11 +6,11 @@ import OfficerMapper from '../officer/officerMapper';
 import OfficerViewModel from '../officer/officerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface OfficerTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,38 @@ interface OfficerTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<OfficerViewModel>;
+  filteredRecords: Array<OfficerViewModel>;
 }
 
-export class  OfficerTableComponent extends React.Component<
-OfficerTableComponentProps,
-OfficerTableComponentState
+export class OfficerTableComponent extends React.Component<
+  OfficerTableComponentProps,
+  OfficerTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: OfficerViewModel) {
-  this.props.history.push(ClientRoutes.Officers + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: OfficerViewModel) {
+    this.props.history.push(ClientRoutes.Officers + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: OfficerViewModel) {
-  this.props.history.push(ClientRoutes.Officers + '/' + row.id);
-}
+  handleDetailClick(e: any, row: OfficerViewModel) {
+    this.props.history.push(ClientRoutes.Officers + '/' + row.id);
+  }
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.OfficerClientResponseModel>;
@@ -61,12 +59,11 @@ handleDetailClick(e:any, row: OfficerViewModel) {
           console.log(response);
 
           let mapper = new OfficerMapper();
-          
-          let officers:Array<OfficerViewModel> = [];
 
-          response.forEach(x =>
-          {
-              officers.push(mapper.mapApiResponseToViewModel(x));
+          let officers: Array<OfficerViewModel> = [];
+
+          response.forEach(x => {
+            officers.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,65 +88,68 @@ handleDetailClick(e:any, row: OfficerViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Officers',
-                    columns: [
-					  {
-                      Header: 'Badge',
-                      accessor: 'badge',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Officers',
+                columns: [
+                  {
+                    Header: 'Badge',
+                    accessor: 'badge',
+                    Cell: props => {
                       return <span>{String(props.original.badge)}</span>;
-                      }           
-                    },  {
-                      Header: 'Email',
-                      accessor: 'email',
-                      Cell: (props) => {
-                      return <span>{String(props.original.email)}</span>;
-                      }           
-                    },  {
-                      Header: 'FirstName',
-                      accessor: 'firstName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.firstName)}</span>;
-                      }           
-                    },  {
-                      Header: 'LastName',
-                      accessor: 'lastName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.lastName)}</span>;
-                      }           
-                    },  {
-                      Header: 'Password',
-                      accessor: 'password',
-                      Cell: (props) => {
-                      return <span>{String(props.original.password)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Email',
+                    accessor: 'email',
+                    Cell: props => {
+                      return <span>{String(props.original.email)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'FirstName',
+                    accessor: 'firstName',
+                    Cell: props => {
+                      return <span>{String(props.original.firstName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'LastName',
+                    accessor: 'lastName',
+                    Cell: props => {
+                      return <span>{String(props.original.lastName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Password',
+                    accessor: 'password',
+                    Cell: props => {
+                      return <span>{String(props.original.password)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as OfficerViewModel
@@ -160,8 +160,8 @@ handleDetailClick(e:any, row: OfficerViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as OfficerViewModel
@@ -170,11 +170,14 @@ handleDetailClick(e:any, row: OfficerViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -182,6 +185,7 @@ handleDetailClick(e:any, row: OfficerViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>1ba04ed3a4eb244a2bfd883ac5dd4045</Hash>
+    <Hash>91d21480c032dc90780556ac4c6775cf</Hash>
 </Codenesium>*/

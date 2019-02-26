@@ -17,7 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { BreedSelectComponent } from '../shared/breedSelect';
+import { PenSelectComponent } from '../shared/penSelect';
 interface PetEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -223,5 +224,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>7921126e725c144a29f59e4b3d432763</Hash>
+    <Hash>55f4fa810aab93352ead7a55a7e2b0e2</Hash>
 </Codenesium>*/

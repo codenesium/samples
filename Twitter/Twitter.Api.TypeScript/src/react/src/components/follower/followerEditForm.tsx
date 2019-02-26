@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { UserSelectComponent } from '../shared/userSelect';
 interface FollowerEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -245,5 +245,5 @@ export const WrappedFollowerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7484c27bab8ca07bc45e00a288871800</Hash>
+    <Hash>34b4b4bebd57077a2bdf2c9658205eb9</Hash>
 </Codenesium>*/

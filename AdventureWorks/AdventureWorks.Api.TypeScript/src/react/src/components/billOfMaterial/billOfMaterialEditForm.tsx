@@ -7,8 +7,9 @@ import BillOfMaterialMapper from './billOfMaterialMapper';
 import BillOfMaterialViewModel from './billOfMaterialViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-interface BillOfMaterialEditComponentProps {
+import { ProductSelectComponent } from '../shared/productSelect'
+	import { UnitMeasureSelectComponent } from '../shared/unitMeasureSelect'
+	interface BillOfMaterialEditComponentProps {
   form:WrappedFormUtils;
   history:any;
   match:any;
@@ -248,5 +249,5 @@ class BillOfMaterialEditComponent extends React.Component<
 export const WrappedBillOfMaterialEditComponent = Form.create({ name: 'BillOfMaterial Edit' })(BillOfMaterialEditComponent);
 
 /*<Codenesium>
-    <Hash>b71d6793b9c8718920bae7623b04e5c6</Hash>
+    <Hash>06ce868a704f73ae3512d642032fcb7f</Hash>
 </Codenesium>*/

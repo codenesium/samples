@@ -26,6 +26,10 @@ namespace PetShippingNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
+		public virtual void AirlineIdRules()
+		{
+		}
+
 		public virtual void FlightNumberRules()
 		{
 			this.RuleFor(x => x.FlightNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
@@ -35,10 +39,6 @@ namespace PetShippingNS.Api.Services
 		public virtual void HandlerIdRules()
 		{
 			this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandlerByHandlerId).When(x => !x?.HandlerId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
-		}
-
-		public virtual void IdRules()
-		{
 		}
 
 		public virtual void LandDateRules()
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e95a4f2532acb64bc709ce72444da3bb</Hash>
+    <Hash>7b1a1b502502fd846d7ab31ecd78e95a</Hash>
 </Codenesium>*/

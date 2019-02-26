@@ -7,9 +7,6 @@ import LinkTypeViewModel from './linkTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface LinkTypeDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface LinkTypeDetailComponentState {
 }
 
 class LinkTypeDetailComponent extends React.Component<
-LinkTypeDetailComponentProps,
-LinkTypeDetailComponentState
+  LinkTypeDetailComponentProps,
+  LinkTypeDetailComponentState
 > {
   state = {
     model: new LinkTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.LinkTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.LinkTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,35 +84,32 @@ LinkTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Type</h3>
-							<p>{String(this.state.model!.rwType)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Type</h3>
+              <p>{String(this.state.model!.rwType)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -122,10 +118,11 @@ LinkTypeDetailComponentState
   }
 }
 
-export const WrappedLinkTypeDetailComponent = Form.create({ name: 'LinkType Detail' })(
-  LinkTypeDetailComponent
-);
+export const WrappedLinkTypeDetailComponent = Form.create({
+  name: 'LinkType Detail',
+})(LinkTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>3e2729d70182416f9209d9e5650b80e0</Hash>
+    <Hash>bf84f563e0cb5c0f8c9b730141af94b0</Hash>
 </Codenesium>*/

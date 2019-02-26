@@ -35,25 +35,25 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiAirTransportClientRequestModel();
-			model.SetProperties("B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			model.SetProperties(2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			var model2 = new ApiAirTransportClientRequestModel();
-			model2.SetProperties("C", 1, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, DateTime.Parse("1/1/1989 12:00:00 AM"));
+			model2.SetProperties(3, "C", 1, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, DateTime.Parse("1/1/1989 12:00:00 AM"));
 			var request = new List<ApiAirTransportClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiAirTransportClientResponseModel>> result = await client.AirTransportBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
+			context.Set<AirTransport>().ToList()[1].AirlineId.Should().Be(2);
 			context.Set<AirTransport>().ToList()[1].FlightNumber.Should().Be("B");
 			context.Set<AirTransport>().ToList()[1].HandlerId.Should().Be(1);
-			context.Set<AirTransport>().ToList()[1].Id.Should().Be(2);
 			context.Set<AirTransport>().ToList()[1].LandDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().ToList()[1].PipelineStepId.Should().Be(2);
 			context.Set<AirTransport>().ToList()[1].TakeoffDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 
+			context.Set<AirTransport>().ToList()[2].AirlineId.Should().Be(3);
 			context.Set<AirTransport>().ToList()[2].FlightNumber.Should().Be("C");
 			context.Set<AirTransport>().ToList()[2].HandlerId.Should().Be(1);
-			context.Set<AirTransport>().ToList()[2].Id.Should().Be(3);
 			context.Set<AirTransport>().ToList()[2].LandDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<AirTransport>().ToList()[2].PipelineStepId.Should().Be(3);
 			context.Set<AirTransport>().ToList()[2].TakeoffDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
@@ -70,21 +70,21 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiAirTransportClientRequestModel();
-			model.SetProperties("B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			model.SetProperties(2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			CreateResponse<ApiAirTransportClientResponseModel> result = await client.AirTransportCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
+			context.Set<AirTransport>().ToList()[1].AirlineId.Should().Be(2);
 			context.Set<AirTransport>().ToList()[1].FlightNumber.Should().Be("B");
 			context.Set<AirTransport>().ToList()[1].HandlerId.Should().Be(1);
-			context.Set<AirTransport>().ToList()[1].Id.Should().Be(2);
 			context.Set<AirTransport>().ToList()[1].LandDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().ToList()[1].PipelineStepId.Should().Be(2);
 			context.Set<AirTransport>().ToList()[1].TakeoffDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 
+			result.Record.AirlineId.Should().Be(2);
 			result.Record.FlightNumber.Should().Be("B");
 			result.Record.HandlerId.Should().Be(1);
-			result.Record.Id.Should().Be(2);
 			result.Record.LandDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.PipelineStepId.Should().Be(2);
 			result.Record.TakeoffDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -105,25 +105,25 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			ApiAirTransportServerResponseModel model = await service.Get(1);
 
 			ApiAirTransportClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			request.SetProperties(2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 
-			UpdateResponse<ApiAirTransportClientResponseModel> updateResponse = await client.AirTransportUpdateAsync(model.AirlineId, request);
+			UpdateResponse<ApiAirTransportClientResponseModel> updateResponse = await client.AirTransportUpdateAsync(model.Id, request);
 
 			context.Entry(context.Set<AirTransport>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-			updateResponse.Record.AirlineId.Should().Be(1);
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<AirTransport>().ToList()[0].AirlineId.Should().Be(2);
 			context.Set<AirTransport>().ToList()[0].FlightNumber.Should().Be("B");
 			context.Set<AirTransport>().ToList()[0].HandlerId.Should().Be(1);
-			context.Set<AirTransport>().ToList()[0].Id.Should().Be(2);
 			context.Set<AirTransport>().ToList()[0].LandDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().ToList()[0].PipelineStepId.Should().Be(2);
 			context.Set<AirTransport>().ToList()[0].TakeoffDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 
-			updateResponse.Record.AirlineId.Should().Be(1);
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.AirlineId.Should().Be(2);
 			updateResponse.Record.FlightNumber.Should().Be("B");
 			updateResponse.Record.HandlerId.Should().Be(1);
-			updateResponse.Record.Id.Should().Be(2);
 			updateResponse.Record.LandDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.PipelineStepId.Should().Be(2);
 			updateResponse.Record.TakeoffDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -141,7 +141,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			IAirTransportService service = testServer.Host.Services.GetService(typeof(IAirTransportService)) as IAirTransportService;
 			var model = new ApiAirTransportServerRequestModel();
-			model.SetProperties("B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			model.SetProperties(2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			CreateResponse<ApiAirTransportServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -236,5 +236,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>61bfa27249fb961fa82770b6ae4d0619</Hash>
+    <Hash>983d12029c538816ec15aafc4775eb19</Hash>
 </Codenesium>*/

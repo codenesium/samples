@@ -4,178 +4,223 @@ import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import PostTypeMapper from './postTypeMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 import PostTypeViewModel from './postTypeViewModel';
-import "react-table/react-table.css";
+import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-interface PostTypeSearchComponentProps
-{
-     form:WrappedFormUtils;
-	 history:any;
-	 match:any;
+interface PostTypeSearchComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-interface PostTypeSearchComponentState
-{
-    records:Array<PostTypeViewModel>;
-    filteredRecords:Array<PostTypeViewModel>;
-    loading:boolean;
-    loaded:boolean;
-    errorOccurred:boolean;
-    errorMessage:string;
-    searchValue:string;
-    deleteSubmitted:boolean;
-    deleteSuccess:boolean;
-    deleteResponse:string;
+interface PostTypeSearchComponentState {
+  records: Array<PostTypeViewModel>;
+  filteredRecords: Array<PostTypeViewModel>;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  searchValue: string;
+  deleteSubmitted: boolean;
+  deleteSuccess: boolean;
+  deleteResponse: string;
 }
 
-export default class PostTypeSearchComponent extends React.Component<PostTypeSearchComponentProps, PostTypeSearchComponentState> {
+export default class PostTypeSearchComponent extends React.Component<
+  PostTypeSearchComponentProps,
+  PostTypeSearchComponentState
+> {
+  state = {
+    deleteSubmitted: false,
+    deleteSuccess: false,
+    deleteResponse: '',
+    records: new Array<PostTypeViewModel>(),
+    filteredRecords: new Array<PostTypeViewModel>(),
+    searchValue: '',
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-    state = ({deleteSubmitted:false, deleteSuccess:false, deleteResponse:'', records:new Array<PostTypeViewModel>(), filteredRecords:new Array<PostTypeViewModel>(), searchValue:'', loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-    
-    componentDidMount () {
-        this.loadRecords();
-    }
+  componentDidMount() {
+    this.loadRecords();
+  }
 
-    handleEditClick(e:any, row:PostTypeViewModel) {
-         this.props.history.push(ClientRoutes.PostTypes + '/edit/' + row.id);
-    }
+  handleEditClick(e: any, row: PostTypeViewModel) {
+    this.props.history.push(ClientRoutes.PostTypes + '/edit/' + row.id);
+  }
 
-    handleDetailClick(e:any, row:PostTypeViewModel) {
-         this.props.history.push(ClientRoutes.PostTypes + '/' + row.id);
-    }
+  handleDetailClick(e: any, row: PostTypeViewModel) {
+    this.props.history.push(ClientRoutes.PostTypes + '/' + row.id);
+  }
 
-    handleCreateClick(e:any) {
-        this.props.history.push(ClientRoutes.PostTypes + '/create');
-    }
+  handleCreateClick(e: any) {
+    this.props.history.push(ClientRoutes.PostTypes + '/create');
+  }
 
-    handleDeleteClick(e:any, row:Api.PostTypeClientResponseModel) {
-        axios.delete(Constants.ApiEndpoint + ApiRoutes.PostTypes + '/' + row.id,
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            this.setState({...this.state, deleteResponse:'Record deleted', deleteSuccess:true, deleteSubmitted:true});
-            this.loadRecords(this.state.searchValue);
-        }, error => {
-            console.log(error);
-            this.setState({...this.state, deleteResponse:'Error deleting record', deleteSuccess:false, deleteSubmitted:true});
-        })
-    }
-
-   handleSearchChanged(e:React.FormEvent<HTMLInputElement>) {
-		this.loadRecords(e.currentTarget.value);
-   }
-   
-   loadRecords(query:string = '') {
-	   this.setState({...this.state, searchValue:query});
-	   let searchEndpoint = Constants.ApiEndpoint + ApiRoutes.PostTypes + '?limit=100';
-
-	   if(query)
-	   {
-		   searchEndpoint += '&query=' +  query;
-	   }
-
-	   axios.get(searchEndpoint,
-	   {
-		   headers: {
-			   'Content-Type': 'application/json',
-		   }
-	   })
-	   .then(resp => {
-		    let response = resp.data as Array<Api.PostTypeClientResponseModel>;
-		    let viewModels : Array<PostTypeViewModel> = [];
-			let mapper = new PostTypeMapper();
-
-			response.forEach(x =>
-			{
-				viewModels.push(mapper.mapApiResponseToViewModel(x));
-			})
-
-            this.setState({records:viewModels, filteredRecords:viewModels, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-	   }, error => {
-		   console.log(error);
-		   this.setState({records:new Array<PostTypeViewModel>(), filteredRecords:new Array<PostTypeViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
-	   })
-    }
-
-    filterGrid() {
-
-    }
-    
-    render () {
-        if(this.state.loading) {
-            return <Spin size="large" />;
-        } 
-		else if(this.state.errorOccurred) {
-            return <Alert message={this.state.errorMessage} type="error" />
+  handleDeleteClick(e: any, row: Api.PostTypeClientResponseModel) {
+    axios
+      .delete(Constants.ApiEndpoint + ApiRoutes.PostTypes + '/' + row.id, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(
+        resp => {
+          this.setState({
+            ...this.state,
+            deleteResponse: 'Record deleted',
+            deleteSuccess: true,
+            deleteSubmitted: true,
+          });
+          this.loadRecords(this.state.searchValue);
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            deleteResponse: 'Error deleting record',
+            deleteSuccess: false,
+            deleteSubmitted: true,
+          });
         }
-        else if(this.state.loaded) {
+      );
+  }
 
-            let errorResponse:JSX.Element = <span></span>;
+  handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
+    this.loadRecords(e.currentTarget.value);
+  }
 
-            if (this.state.deleteSubmitted) {
-				if (this.state.deleteSuccess) {
-				  errorResponse = (
-					<Alert message={this.state.deleteResponse} type="success" style={{marginBottom:"25px"}} />
-				  );
-				} else {
-				  errorResponse = (
-					<Alert message={this.state.deleteResponse} type="error" style={{marginBottom:"25px"}} />
-				  );
-				}
-			}
-            
-			return (
-            <div>
-            {errorResponse}
-            <Row>
-				<Col span={8}></Col>
-				<Col span={8}>   
-				   <Input 
-					placeholder={"Search"} 
-					id={"search"} 
-					onChange={(e:any) => {
-					  this.handleSearchChanged(e)
-				   }}/>
-				</Col>
-				<Col span={8}>  
-				  <Button 
-				  style={{'float':'right'}}
-				  type="primary" 
-				  onClick={(e:any) => {
-                        this.handleCreateClick(e)
-						}}
-				  >
-				  +
-				  </Button>
-				</Col>
-			</Row>
-			<br />
-			<br />
-            <ReactTable 
-                data={this.state.filteredRecords}
-                columns={[{
-                    Header: 'PostTypes',
-                    columns: [
-					  {
-                      Header: 'Type',
-                      accessor: 'rwType',
-                      Cell: (props) => {
+  loadRecords(query: string = '') {
+    this.setState({ ...this.state, searchValue: query });
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.PostTypes + '?limit=100';
+
+    if (query) {
+      searchEndpoint += '&query=' + query;
+    }
+
+    axios
+      .get(searchEndpoint, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(
+        resp => {
+          let response = resp.data as Array<Api.PostTypeClientResponseModel>;
+          let viewModels: Array<PostTypeViewModel> = [];
+          let mapper = new PostTypeMapper();
+
+          response.forEach(x => {
+            viewModels.push(mapper.mapApiResponseToViewModel(x));
+          });
+
+          this.setState({
+            records: viewModels,
+            filteredRecords: viewModels,
+            loading: false,
+            loaded: true,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        },
+        error => {
+          console.log(error);
+          this.setState({
+            records: new Array<PostTypeViewModel>(),
+            filteredRecords: new Array<PostTypeViewModel>(),
+            loading: false,
+            loaded: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  }
+
+  filterGrid() {}
+
+  render() {
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
+      let errorResponse: JSX.Element = <span />;
+
+      if (this.state.deleteSubmitted) {
+        if (this.state.deleteSuccess) {
+          errorResponse = (
+            <Alert
+              message={this.state.deleteResponse}
+              type="success"
+              style={{ marginBottom: '25px' }}
+            />
+          );
+        } else {
+          errorResponse = (
+            <Alert
+              message={this.state.deleteResponse}
+              type="error"
+              style={{ marginBottom: '25px' }}
+            />
+          );
+        }
+      }
+
+      return (
+        <div>
+          {errorResponse}
+          <Row>
+            <Col span={8} />
+            <Col span={8}>
+              <Input
+                placeholder={'Search'}
+                id={'search'}
+                onChange={(e: any) => {
+                  this.handleSearchChanged(e);
+                }}
+              />
+            </Col>
+            <Col span={8}>
+              <Button
+                style={{ float: 'right' }}
+                type="primary"
+                onClick={(e: any) => {
+                  this.handleCreateClick(e);
+                }}
+              >
+                +
+              </Button>
+            </Col>
+          </Row>
+          <br />
+          <br />
+          <ReactTable
+            data={this.state.filteredRecords}
+            columns={[
+              {
+                Header: 'PostTypes',
+                columns: [
+                  {
+                    Header: 'Type',
+                    accessor: 'rwType',
+                    Cell: props => {
                       return <span>{String(props.original.rwType)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PostTypeViewModel
@@ -186,8 +231,8 @@ export default class PostTypeSearchComponent extends React.Component<PostTypeSea
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PostTypeViewModel
@@ -198,8 +243,8 @@ export default class PostTypeSearchComponent extends React.Component<PostTypeSea
                         </Button>
                         &nbsp;
                         <Button
-                          type="danger" 
-                          onClick={(e:any) => {
+                          type="danger"
+                          onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
                               row.original as PostTypeViewModel
@@ -208,21 +253,26 @@ export default class PostTypeSearchComponent extends React.Component<PostTypeSea
                         >
                           <i className="far fa-trash-alt" />
                         </Button>
-
-                        </div>)
-                    }],
-                    
-                  }]} />
-                  </div>);
-        } 
-		else {
-		  return null;
-		}
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
-export const WrappedPostTypeSearchComponent = Form.create({ name: 'PostType Search' })(PostTypeSearchComponent);
+export const WrappedPostTypeSearchComponent = Form.create({
+  name: 'PostType Search',
+})(PostTypeSearchComponent);
+
 
 /*<Codenesium>
-    <Hash>7d8464a0d9e8c477617338735eb2c1da</Hash>
+    <Hash>76131edb6483416b5be6a441a050dae7</Hash>
 </Codenesium>*/

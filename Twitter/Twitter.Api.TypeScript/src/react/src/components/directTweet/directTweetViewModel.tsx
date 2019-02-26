@@ -28,7 +28,7 @@ export default class DirectTweetViewModel {
     tweetId: number
   ): void {
     this.content = content;
-    this.date = date;
+    this.date = moment(date, 'YYYY-MM-DD');
     this.taggedUserId = taggedUserId;
     this.time = time;
     this.tweetId = tweetId;
@@ -41,5 +41,5 @@ export default class DirectTweetViewModel {
 
 
 /*<Codenesium>
-    <Hash>bbcb51d594dcb564fbf270c214a9c1e4</Hash>
+    <Hash>c244da51de6ac3e68a250b501527f983</Hash>
 </Codenesium>*/

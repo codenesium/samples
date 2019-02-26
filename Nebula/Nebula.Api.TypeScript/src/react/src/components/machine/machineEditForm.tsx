@@ -7,7 +7,6 @@ import MachineMapper from './machineMapper';
 import MachineViewModel from './machineViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface MachineEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -219,5 +218,5 @@ class MachineEditComponent extends React.Component<
 export const WrappedMachineEditComponent = Form.create({ name: 'Machine Edit' })(MachineEditComponent);
 
 /*<Codenesium>
-    <Hash>3b39f1379572912382470f65fdf7c95f</Hash>
+    <Hash>56c9fb1ebbdd07957d147335ecebd07d</Hash>
 </Codenesium>*/

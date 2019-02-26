@@ -7,7 +7,6 @@ import EventStatuMapper from './eventStatuMapper';
 import EventStatuViewModel from './eventStatuViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface EventStatuEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -173,5 +172,5 @@ class EventStatuEditComponent extends React.Component<
 export const WrappedEventStatuEditComponent = Form.create({ name: 'EventStatu Edit' })(EventStatuEditComponent);
 
 /*<Codenesium>
-    <Hash>004e75bab62d3abfda818ccbe36d449f</Hash>
+    <Hash>e3686eb2797a6d87e42c276049c1347f</Hash>
 </Codenesium>*/

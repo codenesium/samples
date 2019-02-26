@@ -6,7 +6,10 @@ import DeviceMapper from './deviceMapper';
 import DeviceViewModel from './deviceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { DeviceActionTableComponent } from '../shared/deviceActionTable';
+import {DeviceActionTableComponent} from '../shared/deviceActionTable'
+	
+
+
 
 interface DeviceDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface DeviceDetailComponentState {
 }
 
 class DeviceDetailComponent extends React.Component<
-  DeviceDetailComponentProps,
-  DeviceDetailComponentState
+DeviceDetailComponentProps,
+DeviceDetailComponentState
 > {
   state = {
     model: new DeviceViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Devices + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Devices + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,60 +86,56 @@ class DeviceDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Date of Last Ping</h3>
-              <p>{String(this.state.model!.dateOfLastPing)}</p>
-            </div>
-            <div>
-              <h3>Active</h3>
-              <p>{String(this.state.model!.isActive)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>Public Id</h3>
-              <p>{String(this.state.model!.publicId)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Date of Last Ping</h3>
+							<p>{String(this.state.model!.dateOfLastPing)}</p>
+						 </div>
+					   						 <div>
+							<h3>Active</h3>
+							<p>{String(this.state.model!.isActive)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>Public Id</h3>
+							<p>{String(this.state.model!.publicId)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>DeviceActions</h3>
-            <DeviceActionTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Devices +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.DeviceActions
-              }
-            />
-          </div>
+            <DeviceActionTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Devices + '/' + this.state.model!.id + '/' + ApiRoutes.DeviceActions}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -147,11 +144,10 @@ class DeviceDetailComponent extends React.Component<
   }
 }
 
-export const WrappedDeviceDetailComponent = Form.create({
-  name: 'Device Detail',
-})(DeviceDetailComponent);
-
+export const WrappedDeviceDetailComponent = Form.create({ name: 'Device Detail' })(
+  DeviceDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>ece1fac45f84f03dc6cba63b1668193d</Hash>
+    <Hash>a74736494e2851841812dd67d05c8dcd</Hash>
 </Codenesium>*/

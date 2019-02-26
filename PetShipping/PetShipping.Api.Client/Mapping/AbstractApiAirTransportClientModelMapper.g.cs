@@ -7,14 +7,14 @@ namespace PetShippingNS.Api.Client
 	public abstract class AbstractApiAirTransportModelMapper
 	{
 		public virtual ApiAirTransportClientResponseModel MapClientRequestToResponse(
-			int airlineId,
+			int id,
 			ApiAirTransportClientRequestModel request)
 		{
 			var response = new ApiAirTransportClientResponseModel();
-			response.SetProperties(airlineId,
+			response.SetProperties(id,
+			                       request.AirlineId,
 			                       request.FlightNumber,
 			                       request.HandlerId,
-			                       request.Id,
 			                       request.LandDate,
 			                       request.PipelineStepId,
 			                       request.TakeoffDate);
@@ -26,9 +26,9 @@ namespace PetShippingNS.Api.Client
 		{
 			var request = new ApiAirTransportClientRequestModel();
 			request.SetProperties(
+				response.AirlineId,
 				response.FlightNumber,
 				response.HandlerId,
-				response.Id,
 				response.LandDate,
 				response.PipelineStepId,
 				response.TakeoffDate);
@@ -38,5 +38,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d331a4f1c2d4a802abd59b05856c4427</Hash>
+    <Hash>52e81149f3648428d02bd9f99cdfb6bc</Hash>
 </Codenesium>*/

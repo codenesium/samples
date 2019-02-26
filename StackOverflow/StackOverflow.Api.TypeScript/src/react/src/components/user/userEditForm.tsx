@@ -7,7 +7,6 @@ import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface UserEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -302,5 +301,5 @@ class UserEditComponent extends React.Component<
 export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(UserEditComponent);
 
 /*<Codenesium>
-    <Hash>1854628220945819646ec88ebae7e0d4</Hash>
+    <Hash>443e58c75d2e9aedbcf779e45b80c572</Hash>
 </Codenesium>*/

@@ -6,10 +6,7 @@ import CallTypeMapper from './callTypeMapper';
 import CallTypeViewModel from './callTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {CallTableComponent} from '../shared/callTable'
-	
-
-
+import { CallTableComponent } from '../shared/callTable';
 
 interface CallTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface CallTypeDetailComponentState {
 }
 
 class CallTypeDetailComponent extends React.Component<
-CallTypeDetailComponentProps,
-CallTypeDetailComponentState
+  CallTypeDetailComponentProps,
+  CallTypeDetailComponentState
 > {
   state = {
     model: new CallTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.CallTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.CallTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,48 @@ CallTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Calls</h3>
-            <CallTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.CallTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Calls}
-			/>
-         </div>
-	
-
+            <CallTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.CallTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Calls
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +135,11 @@ CallTypeDetailComponentState
   }
 }
 
-export const WrappedCallTypeDetailComponent = Form.create({ name: 'CallType Detail' })(
-  CallTypeDetailComponent
-);
+export const WrappedCallTypeDetailComponent = Form.create({
+  name: 'CallType Detail',
+})(CallTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>72fe4b49a52600537735c40d0fa41e2c</Hash>
+    <Hash>a8c51a7712e2de546963752da1ce5a73</Hash>
 </Codenesium>*/

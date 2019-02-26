@@ -1,41 +1,44 @@
-import moment from 'moment'
-
+import moment from 'moment';
 
 export default class FamilyViewModel {
-    id:number;
-note:string;
-primaryContactEmail:string;
-primaryContactFirstName:string;
-primaryContactLastName:string;
-primaryContactPhone:string;
+  id: number;
+  note: string;
+  primaryContactEmail: string;
+  primaryContactFirstName: string;
+  primaryContactLastName: string;
+  primaryContactPhone: string;
 
-    constructor() {
-		this.id = 0;
-this.note = '';
-this.primaryContactEmail = '';
-this.primaryContactFirstName = '';
-this.primaryContactLastName = '';
-this.primaryContactPhone = '';
+  constructor() {
+    this.id = 0;
+    this.note = '';
+    this.primaryContactEmail = '';
+    this.primaryContactFirstName = '';
+    this.primaryContactLastName = '';
+    this.primaryContactPhone = '';
+  }
 
-    }
+  setProperties(
+    id: number,
+    note: string,
+    primaryContactEmail: string,
+    primaryContactFirstName: string,
+    primaryContactLastName: string,
+    primaryContactPhone: string
+  ): void {
+    this.id = id;
+    this.note = note;
+    this.primaryContactEmail = primaryContactEmail;
+    this.primaryContactFirstName = primaryContactFirstName;
+    this.primaryContactLastName = primaryContactLastName;
+    this.primaryContactPhone = primaryContactPhone;
+  }
 
-	setProperties(id : number,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string) : void
-	{
-		this.id = id;
-this.note = note;
-this.primaryContactEmail = primaryContactEmail;
-this.primaryContactFirstName = primaryContactFirstName;
-this.primaryContactLastName = primaryContactLastName;
-this.primaryContactPhone = primaryContactPhone;
+  toDisplay(): string {
+    return String(this.primaryContactLastName);
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String(this.primaryContactLastName);
-	}
-};
 
 /*<Codenesium>
-    <Hash>67c0a7685f6f6e6a51c232d7a74a0749</Hash>
+    <Hash>7323485e9103a68066faaa98e8f40b43</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface AdminEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -229,5 +228,5 @@ class AdminEditComponent extends React.Component<
 export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(AdminEditComponent);
 
 /*<Codenesium>
-    <Hash>005cd709fac44593150ef2bcaf79eeee</Hash>
+    <Hash>9850dffc876b14699e40a562e8a770aa</Hash>
 </Codenesium>*/

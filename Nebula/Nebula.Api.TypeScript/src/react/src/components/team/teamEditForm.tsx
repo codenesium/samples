@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { OrganizationSelectComponent } from '../shared/organizationSelect';
 interface TeamEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -204,5 +204,5 @@ export const WrappedTeamEditComponent = Form.create({ name: 'Team Edit' })(
 
 
 /*<Codenesium>
-    <Hash>ea2650ab5b49a22b7162a3237a51cea9</Hash>
+    <Hash>0664917679af32691fbb21e53c44fe9a</Hash>
 </Codenesium>*/

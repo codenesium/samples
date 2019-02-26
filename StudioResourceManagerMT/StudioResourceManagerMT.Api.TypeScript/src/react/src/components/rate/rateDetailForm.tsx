@@ -7,9 +7,6 @@ import RateViewModel from './rateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface RateDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface RateDetailComponentState {
 }
 
 class RateDetailComponent extends React.Component<
-RateDetailComponentProps,
-RateDetailComponentState
+  RateDetailComponentProps,
+  RateDetailComponentState
 > {
   state = {
     model: new RateViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Rates + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Rates + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,47 +84,44 @@ RateDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>amountPerMinute</h3>
-							<p>{String(this.state.model!.amountPerMinute)}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>teacherId</h3>
-							<p>{String(this.state.model!.teacherId)}</p>
-						 </div>
-					   						 <div>
-							<h3>teacherSkillId</h3>
-							<p>{String(this.state.model!.teacherSkillId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>amountPerMinute</h3>
+              <p>{String(this.state.model!.amountPerMinute)}</p>
+            </div>
+            <div>
+              <h3>id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>teacherId</h3>
+              <p>{String(this.state.model!.teacherId)}</p>
+            </div>
+            <div>
+              <h3>teacherSkillId</h3>
+              <p>{String(this.state.model!.teacherSkillId)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -138,6 +134,7 @@ export const WrappedRateDetailComponent = Form.create({ name: 'Rate Detail' })(
   RateDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>03685e4964e16be97a77c27061724a0a</Hash>
+    <Hash>6fe85f2da2111f228286390430719135</Hash>
 </Codenesium>*/

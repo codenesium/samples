@@ -6,7 +6,10 @@ import StoreMapper from './storeMapper';
 import StoreViewModel from './storeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { CustomerTableComponent } from '../shared/customerTable';
+import {CustomerTableComponent} from '../shared/customerTable'
+	
+
+
 
 interface StoreDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface StoreDetailComponentState {
 }
 
 class StoreDetailComponent extends React.Component<
-  StoreDetailComponentProps,
-  StoreDetailComponentState
+StoreDetailComponentProps,
+StoreDetailComponentState
 > {
   state = {
     model: new StoreViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Stores + '/edit/' + this.state.model!.businessEntityID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Stores + '/edit/' + this.state.model!.businessEntityID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,70 +86,64 @@ class StoreDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>BusinessEntityID</h3>
-              <p>{String(this.state.model!.businessEntityID)}</p>
-            </div>
-            <div>
-              <h3>Demographics</h3>
-              <p>{String(this.state.model!.demographic)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>SalesPersonID</h3>
-              <p>
-                {String(this.state.model!.salesPersonIDNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>BusinessEntityID</h3>
+							<p>{String(this.state.model!.businessEntityID)}</p>
+						 </div>
+					   						 <div>
+							<h3>Demographics</h3>
+							<p>{String(this.state.model!.demographic)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>SalesPersonID</h3>
+							<p>{String(this.state.model!.salesPersonIDNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Customers</h3>
-            <CustomerTableComponent
-              customerID={this.state.model!.customerID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Stores +
-                '/' +
-                this.state.model!.businessEntityID +
-                '/' +
-                ApiRoutes.Customers
-              }
-            />
-          </div>
+            <CustomerTableComponent 
+			customerID={this.state.model!.customerID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Stores + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.Customers}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -157,11 +152,10 @@ class StoreDetailComponent extends React.Component<
   }
 }
 
-export const WrappedStoreDetailComponent = Form.create({
-  name: 'Store Detail',
-})(StoreDetailComponent);
-
+export const WrappedStoreDetailComponent = Form.create({ name: 'Store Detail' })(
+  StoreDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>1b325bf55c7791c6084db6e3dd2f020a</Hash>
+    <Hash>806328463757e3e49c900b34d3b70f4c</Hash>
 </Codenesium>*/

@@ -15,11 +15,11 @@ export default class SpeciesViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>b1f5616671341290e238d23f21ba2152</Hash>
+    <Hash>9f76580a35394db83544b77a307e639d</Hash>
 </Codenesium>*/

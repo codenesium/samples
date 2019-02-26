@@ -23,7 +23,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context.Airlines.Add(airlineItem1);
 
 			var airTransportItem1 = new AirTransport();
-			airTransportItem1.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			airTransportItem1.SetProperties(1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			this.Context.AirTransports.Add(airTransportItem1);
 
 			var breedItem1 = new Breed();
@@ -112,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4b3af11fe59d24e98d2edb78ffc70e3b</Hash>
+    <Hash>aba6e264797ae53ad2686ac68e5ea25b</Hash>
 </Codenesium>*/

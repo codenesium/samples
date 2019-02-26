@@ -7,7 +7,6 @@ import PostHistoryMapper from './postHistoryMapper';
 import PostHistoryViewModel from './postHistoryViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface PostHistoryEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -249,5 +248,5 @@ class PostHistoryEditComponent extends React.Component<
 export const WrappedPostHistoryEditComponent = Form.create({ name: 'PostHistory Edit' })(PostHistoryEditComponent);
 
 /*<Codenesium>
-    <Hash>fe66248ddc2d4f37ba72395eeafb9c7c</Hash>
+    <Hash>e575ffba6a88af476d52999e4029a48e</Hash>
 </Codenesium>*/

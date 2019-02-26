@@ -5,23 +5,12 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DatabaseLogMapper from './databaseLogMapper';
 import DatabaseLogViewModel from './databaseLogViewModel';
-import {
-  Form,
-  Input,
-  Button,
-  Switch,
-  InputNumber,
-  DatePicker,
-  Spin,
-  Alert,
-  TimePicker,
-} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface DatabaseLogEditComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface DatabaseLogEditComponentState {
@@ -30,7 +19,7 @@ interface DatabaseLogEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted: boolean;
+  submitted:boolean;
 }
 
 class DatabaseLogEditComponent extends React.Component<
@@ -43,10 +32,10 @@ class DatabaseLogEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    submitted: false,
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -77,9 +66,7 @@ class DatabaseLogEditComponent extends React.Component<
             errorMessage: '',
           });
 
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -92,11 +79,11 @@ class DatabaseLogEditComponent extends React.Component<
           });
         }
       );
-  }
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.props.form.validateFields((err: any, values: any) => {
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as DatabaseLogViewModel;
         console.log('Received values of form: ', model);
@@ -105,14 +92,12 @@ class DatabaseLogEditComponent extends React.Component<
     });
   };
 
-  submit = (model: DatabaseLogViewModel) => {
+  submit = (model:DatabaseLogViewModel) =>
+  {  
     let mapper = new DatabaseLogMapper();
-    axios
+     axios
       .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.DatabaseLogs +
-          '/' +
-          this.state.model!.databaseLogID,
+        Constants.ApiEndpoint + ApiRoutes.DatabaseLogs + '/' + this.state.model!.databaseLogID,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -125,113 +110,111 @@ class DatabaseLogEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.DatabaseLogClientRequestModel
           >;
-          this.setState({
-            ...this.state,
-            submitted: true,
-            model: mapper.mapApiResponseToViewModel(response.record!),
-            errorOccurred: false,
-            errorMessage: '',
-          });
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({
-            ...this.state,
-            submitted: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  };
-
+      ); 
+  }
+  
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-    } = this.props.form;
 
-    let message: JSX.Element = <div />;
-    if (this.state.submitted) {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type="error" />;
-      } else {
-        message = <Alert message="Submitted" type="success" />;
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } else if (this.state.loaded) {
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="databaseUser">DatabaseUser</label>
-            <br />
-            {getFieldDecorator('databaseUser', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 128, message: 'Exceeds max length of 128' },
-              ],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'DatabaseUser'} />
-            )}
-          </Form.Item>
+    } 
+    else if (this.state.loaded) {
 
-          <Form.Item>
-            <label htmlFor="postTime">PostTime</label>
-            <br />
-            {getFieldDecorator('postTime', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'PostTime'} />)}
-          </Form.Item>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='databaseUser'>DatabaseUser</label>
+              <br />             
+              {getFieldDecorator('databaseUser', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DatabaseUser"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="schema">Schema</label>
-            <br />
-            {getFieldDecorator('schema', {
-              rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Schema'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='postTime'>PostTime</label>
+              <br />             
+              {getFieldDecorator('postTime', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PostTime"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="tsql">TSQL</label>
-            <br />
-            {getFieldDecorator('tsql', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'TSQL'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='schema'>Schema</label>
+              <br />             
+              {getFieldDecorator('schema', {
+              rules:[{ max: 128, message: 'Exceeds max length of 128' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Schema"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="xmlEvent">XmlEvent</label>
-            <br />
-            {getFieldDecorator('xmlEvent', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'XmlEvent'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='tsql'>TSQL</label>
+              <br />             
+              {getFieldDecorator('tsql', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TSQL"} /> )}
+              </Form.Item>
 
+						<Form.Item>
+              <label htmlFor='xmlEvent'>XmlEvent</label>
+              <br />             
+              {getFieldDecorator('xmlEvent', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"XmlEvent"} /> )}
+              </Form.Item>
+
+			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          {message}
-        </Form>
-      );
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
-export const WrappedDatabaseLogEditComponent = Form.create({
-  name: 'DatabaseLog Edit',
-})(DatabaseLogEditComponent);
-
+export const WrappedDatabaseLogEditComponent = Form.create({ name: 'DatabaseLog Edit' })(DatabaseLogEditComponent);
 
 /*<Codenesium>
-    <Hash>eb042462bfe9fb148faba00ef3d583e9</Hash>
+    <Hash>fb7a85abffd2a538bb43faeb1dc15e5d</Hash>
 </Codenesium>*/

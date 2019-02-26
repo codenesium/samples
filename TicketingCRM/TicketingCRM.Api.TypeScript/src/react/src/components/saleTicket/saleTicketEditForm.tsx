@@ -17,7 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { SaleSelectComponent } from '../shared/saleSelect';
+import { TicketSelectComponent } from '../shared/ticketSelect';
 interface SaleTicketEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -204,5 +205,5 @@ export const WrappedSaleTicketEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c3d859f5f6e55a8368d548bca6e24e87</Hash>
+    <Hash>9f946632fec0ad2995e577433af20bfe</Hash>
 </Codenesium>*/

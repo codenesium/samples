@@ -16,12 +16,12 @@ namespace PetShippingNS.Api.Services.Tests
 		{
 			var mapper = new ApiAirTransportServerModelMapper();
 			var model = new ApiAirTransportServerRequestModel();
-			model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiAirTransportServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
+			response.AirlineId.Should().Be(1);
 			response.FlightNumber.Should().Be("A");
 			response.HandlerId.Should().Be(1);
-			response.Id.Should().Be(1);
 			response.LandDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.PipelineStepId.Should().Be(1);
 			response.TakeoffDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -32,12 +32,12 @@ namespace PetShippingNS.Api.Services.Tests
 		{
 			var mapper = new ApiAirTransportServerModelMapper();
 			var model = new ApiAirTransportServerResponseModel();
-			model.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiAirTransportServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
+			response.AirlineId.Should().Be(1);
 			response.FlightNumber.Should().Be("A");
 			response.HandlerId.Should().Be(1);
-			response.Id.Should().Be(1);
 			response.LandDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.PipelineStepId.Should().Be(1);
 			response.TakeoffDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,14 +48,14 @@ namespace PetShippingNS.Api.Services.Tests
 		{
 			var mapper = new ApiAirTransportServerModelMapper();
 			var model = new ApiAirTransportServerRequestModel();
-			model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			JsonPatchDocument<ApiAirTransportServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiAirTransportServerRequestModel();
 			patch.ApplyTo(response);
+			response.AirlineId.Should().Be(1);
 			response.FlightNumber.Should().Be("A");
 			response.HandlerId.Should().Be(1);
-			response.Id.Should().Be(1);
 			response.LandDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.PipelineStepId.Should().Be(1);
 			response.TakeoffDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -64,5 +64,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f4bbdab2fc9ec49c5e2b129b9f1ddc7d</Hash>
+    <Hash>10dc2f9947dd9a4e26cdda288205af26</Hash>
 </Codenesium>*/

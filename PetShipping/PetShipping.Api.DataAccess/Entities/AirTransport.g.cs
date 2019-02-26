@@ -14,24 +14,23 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int airlineId,
 			string flightNumber,
 			int handlerId,
-			int id,
 			DateTime landDate,
 			int pipelineStepId,
 			DateTime takeoffDate)
 		{
+			this.Id = id;
 			this.AirlineId = airlineId;
 			this.FlightNumber = flightNumber;
 			this.HandlerId = handlerId;
-			this.Id = id;
 			this.LandDate = landDate;
 			this.PipelineStepId = pipelineStepId;
 			this.TakeoffDate = takeoffDate;
 		}
 
-		[Key]
 		[Column("airlineId")]
 		public virtual int AirlineId { get; private set; }
 
@@ -42,6 +41,7 @@ namespace PetShippingNS.Api.DataAccess
 		[Column("handlerId")]
 		public virtual int HandlerId { get; private set; }
 
+		[Key]
 		[Column("id")]
 		public virtual int Id { get; private set; }
 
@@ -65,5 +65,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>735b6e14feffa4bc8000aab4e8dfd84b</Hash>
+    <Hash>cde001cb481917796cd7e6accfb90ea2</Hash>
 </Codenesium>*/

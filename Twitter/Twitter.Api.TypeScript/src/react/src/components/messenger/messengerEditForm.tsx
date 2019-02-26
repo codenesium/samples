@@ -17,7 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { MessageSelectComponent } from '../shared/messageSelect';
+import { UserSelectComponent } from '../shared/userSelect';
 interface MessengerEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -236,5 +237,5 @@ export const WrappedMessengerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7cb8677918d710511641fec2c10faf56</Hash>
+    <Hash>06568a9b2a9ae58843624d4553b908c4</Hash>
 </Codenesium>*/

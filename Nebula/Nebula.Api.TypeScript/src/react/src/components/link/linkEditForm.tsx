@@ -17,7 +17,9 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { MachineSelectComponent } from '../shared/machineSelect';
+import { ChainSelectComponent } from '../shared/chainSelect';
+import { LinkStatusSelectComponent } from '../shared/linkStatusSelect';
 interface LinkEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -284,5 +286,5 @@ export const WrappedLinkEditComponent = Form.create({ name: 'Link Edit' })(
 
 
 /*<Codenesium>
-    <Hash>18714aa96583cae4812d8bcb1caa1201</Hash>
+    <Hash>f80a4717fdf5d1cf9b6f75a3f320e7aa</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { CurrencySelectComponent } from '../shared/currencySelect';
 interface CurrencyRateEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -263,5 +263,5 @@ export const WrappedCurrencyRateEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e60f58dabff140e80669b5ddfd3e226f</Hash>
+    <Hash>e07a3ede69ee708d60d496787498e1fa</Hash>
 </Codenesium>*/

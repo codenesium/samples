@@ -6,7 +6,10 @@ import CountryRegionMapper from './countryRegionMapper';
 import CountryRegionViewModel from './countryRegionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { StateProvinceTableComponent } from '../shared/stateProvinceTable';
+import {StateProvinceTableComponent} from '../shared/stateProvinceTable'
+	
+
+
 
 interface CountryRegionDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,25 +26,21 @@ interface CountryRegionDetailComponentState {
 }
 
 class CountryRegionDetailComponent extends React.Component<
-  CountryRegionDetailComponentProps,
-  CountryRegionDetailComponentState
+CountryRegionDetailComponentProps,
+CountryRegionDetailComponentState
 > {
   state = {
     model: new CountryRegionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.CountryRegions +
-        '/edit/' +
-        this.state.model!.countryRegionCode
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.CountryRegions + '/edit/' + this.state.model!.countryRegionCode);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,56 +86,52 @@ class CountryRegionDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>CountryRegionCode</h3>
-              <p>{String(this.state.model!.countryRegionCode)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>CountryRegionCode</h3>
+							<p>{String(this.state.model!.countryRegionCode)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>StateProvinces</h3>
-            <StateProvinceTableComponent
-              stateProvinceID={this.state.model!.stateProvinceID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.CountryRegions +
-                '/' +
-                this.state.model!.countryRegionCode +
-                '/' +
-                ApiRoutes.StateProvinces
-              }
-            />
-          </div>
+            <StateProvinceTableComponent 
+			stateProvinceID={this.state.model!.stateProvinceID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.CountryRegions + '/' + this.state.model!.countryRegionCode + '/' + ApiRoutes.StateProvinces}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -145,11 +140,10 @@ class CountryRegionDetailComponent extends React.Component<
   }
 }
 
-export const WrappedCountryRegionDetailComponent = Form.create({
-  name: 'CountryRegion Detail',
-})(CountryRegionDetailComponent);
-
+export const WrappedCountryRegionDetailComponent = Form.create({ name: 'CountryRegion Detail' })(
+  CountryRegionDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>509ae54060f16589981a4518f4dad422</Hash>
+    <Hash>ac6e27dfff2e0d893512c5bfdeb5ea78</Hash>
 </Codenesium>*/

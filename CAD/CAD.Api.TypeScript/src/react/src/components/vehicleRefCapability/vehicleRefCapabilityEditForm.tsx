@@ -5,13 +5,24 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VehicleRefCapabilityMapper from './vehicleRefCapabilityMapper';
 import VehicleRefCapabilityViewModel from './vehicleRefCapabilityViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { VehicleCapabilitySelectComponent } from '../shared/vehicleCapabilitySelect';
+import { VehicleSelectComponent } from '../shared/vehicleSelect';
 interface VehicleRefCapabilityEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface VehicleRefCapabilityEditComponentState {
@@ -20,7 +31,7 @@ interface VehicleRefCapabilityEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class VehicleRefCapabilityEditComponent extends React.Component<
@@ -33,10 +44,10 @@ class VehicleRefCapabilityEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -67,7 +78,9 @@ class VehicleRefCapabilityEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -80,11 +93,11 @@ class VehicleRefCapabilityEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as VehicleRefCapabilityViewModel;
         console.log('Received values of form: ', model);
@@ -93,12 +106,14 @@ class VehicleRefCapabilityEditComponent extends React.Component<
     });
   };
 
-  submit = (model:VehicleRefCapabilityViewModel) =>
-  {  
+  submit = (model: VehicleRefCapabilityViewModel) => {
     let mapper = new VehicleRefCapabilityMapper();
-     axios
+    axios
       .put(
-        Constants.ApiEndpoint + ApiRoutes.VehicleRefCapabilities + '/' + this.state.model!.id,
+        Constants.ApiEndpoint +
+          ApiRoutes.VehicleRefCapabilities +
+          '/' +
+          this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -111,77 +126,84 @@ class VehicleRefCapabilityEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.VehicleRefCapabilityClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="vehicleCapabilityId">vehicleCapabilityId</label>
+            <br />
+            {getFieldDecorator('vehicleCapabilityId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'vehicleCapabilityId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='vehicleCapabilityId'>vehicleCapabilityId</label>
-              <br />             
-              {getFieldDecorator('vehicleCapabilityId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"vehicleCapabilityId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="vehicleId">vehicleId</label>
+            <br />
+            {getFieldDecorator('vehicleId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'vehicleId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='vehicleId'>vehicleId</label>
-              <br />             
-              {getFieldDecorator('vehicleId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"vehicleId"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedVehicleRefCapabilityEditComponent = Form.create({ name: 'VehicleRefCapability Edit' })(VehicleRefCapabilityEditComponent);
+export const WrappedVehicleRefCapabilityEditComponent = Form.create({
+  name: 'VehicleRefCapability Edit',
+})(VehicleRefCapabilityEditComponent);
+
 
 /*<Codenesium>
-    <Hash>ec6d27c27517e5162d24707bc34bc9b6</Hash>
+    <Hash>0b9353a36c1755362abd39e3c350968c</Hash>
 </Codenesium>*/

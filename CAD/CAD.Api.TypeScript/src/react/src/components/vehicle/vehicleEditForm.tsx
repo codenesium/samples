@@ -17,7 +17,6 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface VehicleEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -196,5 +195,5 @@ export const WrappedVehicleEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8c97724840613683aa08145473a6d302</Hash>
+    <Hash>0ccf78e2d9194e55c79f490c159ce11d</Hash>
 </Codenesium>*/

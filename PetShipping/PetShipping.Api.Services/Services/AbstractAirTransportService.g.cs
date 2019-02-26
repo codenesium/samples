@@ -42,9 +42,9 @@ namespace PetShippingNS.Api.Services
 			return this.DalAirTransportMapper.MapEntityToModel(records);
 		}
 
-		public virtual async Task<ApiAirTransportServerResponseModel> Get(int airlineId)
+		public virtual async Task<ApiAirTransportServerResponseModel> Get(int id)
 		{
-			AirTransport record = await this.AirTransportRepository.Get(airlineId);
+			AirTransport record = await this.AirTransportRepository.Get(id);
 
 			if (record == null)
 			{
@@ -74,17 +74,17 @@ namespace PetShippingNS.Api.Services
 		}
 
 		public virtual async Task<UpdateResponse<ApiAirTransportServerResponseModel>> Update(
-			int airlineId,
+			int id,
 			ApiAirTransportServerRequestModel model)
 		{
-			var validationResult = await this.AirTransportModelValidator.ValidateUpdateAsync(airlineId, model);
+			var validationResult = await this.AirTransportModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				AirTransport record = this.DalAirTransportMapper.MapModelToEntity(airlineId, model);
+				AirTransport record = this.DalAirTransportMapper.MapModelToEntity(id, model);
 				await this.AirTransportRepository.Update(record);
 
-				record = await this.AirTransportRepository.Get(airlineId);
+				record = await this.AirTransportRepository.Get(id);
 
 				ApiAirTransportServerResponseModel apiModel = this.DalAirTransportMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AirTransportUpdatedNotification(apiModel));
@@ -98,15 +98,15 @@ namespace PetShippingNS.Api.Services
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			int airlineId)
+			int id)
 		{
-			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.AirTransportModelValidator.ValidateDeleteAsync(airlineId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.AirTransportModelValidator.ValidateDeleteAsync(id));
 
 			if (response.Success)
 			{
-				await this.AirTransportRepository.Delete(airlineId);
+				await this.AirTransportRepository.Delete(id);
 
-				await this.mediator.Publish(new AirTransportDeletedNotification(airlineId));
+				await this.mediator.Publish(new AirTransportDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +115,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b34c92c858cce8bd145077e587551537</Hash>
+    <Hash>ae787c05a0311d35892fec6f5cb23a66</Hash>
 </Codenesium>*/

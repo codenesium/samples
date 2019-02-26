@@ -17,6 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ProductSelectComponent } from '../shared/productSelect';
+import { UnitMeasureSelectComponent } from '../shared/unitMeasureSelect';
 
 interface BillOfMaterialCreateComponentProps {
   form: WrappedFormUtils;
@@ -223,5 +225,5 @@ export const WrappedBillOfMaterialCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8b53aa09c71260d2960fe1665e68ba43</Hash>
+    <Hash>bf6ca7fa7b840baf5124a77bf3021c2b</Hash>
 </Codenesium>*/

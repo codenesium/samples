@@ -9,7 +9,7 @@ namespace PetShippingNS.Api.Services
 	public partial interface IApiAirTransportServerModelMapper
 	{
 		ApiAirTransportServerResponseModel MapServerRequestToResponse(
-			int airlineId,
+			int id,
 			ApiAirTransportServerRequestModel request);
 
 		ApiAirTransportServerRequestModel MapServerResponseToRequest(
@@ -23,5 +23,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e5473e0d076ccbdb2531a11c07d63e9</Hash>
+    <Hash>43a5877376cd49b683844939f99edadb</Hash>
 </Codenesium>*/

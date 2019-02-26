@@ -8,7 +8,7 @@ namespace PetShippingNS.Api.Services
 	public partial interface IDALAirTransportMapper
 	{
 		AirTransport MapModelToEntity(
-			int airlineId,
+			int id,
 			ApiAirTransportServerRequestModel model);
 
 		ApiAirTransportServerResponseModel MapEntityToModel(
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>56c0650e5addf37baff438cfb0b9340d</Hash>
+    <Hash>5b9f9d090342264e4e7e3bcb6f5bcb81</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { EventStatusSelectComponent } from '../shared/eventStatusSelect';
 interface EventEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -269,5 +269,5 @@ export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
 
 
 /*<Codenesium>
-    <Hash>6bad692b18952ddd4d50b74ba98296c9</Hash>
+    <Hash>80af32cb3c7c59137d12f5bd1a14a7f4</Hash>
 </Codenesium>*/

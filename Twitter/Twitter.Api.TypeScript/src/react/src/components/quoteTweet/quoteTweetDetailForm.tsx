@@ -7,9 +7,6 @@ import QuoteTweetViewModel from './quoteTweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface QuoteTweetDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface QuoteTweetDetailComponentState {
 }
 
 class QuoteTweetDetailComponent extends React.Component<
-QuoteTweetDetailComponentProps,
-QuoteTweetDetailComponentState
+  QuoteTweetDetailComponentProps,
+  QuoteTweetDetailComponentState
 > {
   state = {
     model: new QuoteTweetViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.QuoteTweets + '/edit/' + this.state.model!.quoteTweetId);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.QuoteTweets + '/edit/' + this.state.model!.quoteTweetId
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,51 +84,54 @@ QuoteTweetDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>content</h3>
-							<p>{String(this.state.model!.content)}</p>
-						 </div>
-					   						 <div>
-							<h3>date</h3>
-							<p>{String(this.state.model!.date)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>retweeter_user_id</h3>
-							<p>{String(this.state.model!.retweeterUserIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>source_tweet_id</h3>
-							<p>{String(this.state.model!.sourceTweetIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>time</h3>
-							<p>{String(this.state.model!.time)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>content</h3>
+              <p>{String(this.state.model!.content)}</p>
+            </div>
+            <div>
+              <h3>date</h3>
+              <p>{String(this.state.model!.date)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>retweeter_user_id</h3>
+              <p>
+                {String(
+                  this.state.model!.retweeterUserIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>source_tweet_id</h3>
+              <p>
+                {String(this.state.model!.sourceTweetIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>time</h3>
+              <p>{String(this.state.model!.time)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -138,10 +140,11 @@ QuoteTweetDetailComponentState
   }
 }
 
-export const WrappedQuoteTweetDetailComponent = Form.create({ name: 'QuoteTweet Detail' })(
-  QuoteTweetDetailComponent
-);
+export const WrappedQuoteTweetDetailComponent = Form.create({
+  name: 'QuoteTweet Detail',
+})(QuoteTweetDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>dd754979ac46b09ee1353000459454b1</Hash>
+    <Hash>c54aa7ca5e2e086300f017f0c50877e7</Hash>
 </Codenesium>*/

@@ -7,7 +7,9 @@ import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { BucketSelectComponent } from '../shared/bucketSelect'
+	import { FileTypeSelectComponent } from '../shared/fileTypeSelect'
+	
 interface FileCreateComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -239,5 +241,5 @@ class FileCreateComponent extends React.Component<
 export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(FileCreateComponent);
 
 /*<Codenesium>
-    <Hash>7617f41aa5b4f5557c20af57d002f5c7</Hash>
+    <Hash>0a6ceb898e7e7b2dfafda349b2532379</Hash>
 </Codenesium>*/

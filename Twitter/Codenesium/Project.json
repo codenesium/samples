@@ -5727,7 +5727,28 @@
         "ForeignKeyDisplayColumn": ""
       }
     ],
-    "ColumnParameterSettings": [],
+    "ColumnParameterSettings": [
+      {
+        "$id": "361",
+        "Table": "DirectTweet",
+        "Schema": "dbo",
+        "Column": "Date",
+        "AppCLRType": "DateTime",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 3,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "date",
+        "AppName": "Date",
+        "AppNamePlural": "Dates"
+      }
+    ],
     "VirtualForeignKeys": [],
     "ForeignKeyParameterSettings": [],
     "VirtualConstraints": [],

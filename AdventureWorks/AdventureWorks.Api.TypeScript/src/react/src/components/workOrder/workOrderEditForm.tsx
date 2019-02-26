@@ -17,7 +17,8 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { ProductSelectComponent } from '../shared/productSelect';
+import { ScrapReasonSelectComponent } from '../shared/scrapReasonSelect';
 interface WorkOrderEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -266,5 +267,5 @@ export const WrappedWorkOrderEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>467d5b3d6798d64eeedfda5166ea8e43</Hash>
+    <Hash>c094e37255111886a04cc03bbb84c890</Hash>
 </Codenesium>*/

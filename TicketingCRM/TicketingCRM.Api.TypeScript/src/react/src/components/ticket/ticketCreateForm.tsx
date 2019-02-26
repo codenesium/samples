@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { TicketStatusSelectComponent } from '../shared/ticketStatusSelect';
 
 interface TicketCreateComponentProps {
   form: WrappedFormUtils;
@@ -156,5 +157,5 @@ export const WrappedTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bf4a607d791e1fd8516456f12ab324a4</Hash>
+    <Hash>180077eb19949663f975faac83e66294</Hash>
 </Codenesium>*/

@@ -5,13 +5,24 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkLogMapper from './linkLogMapper';
 import LinkLogViewModel from './linkLogViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { LinkSelectComponent } from '../shared/linkSelect';
 
 interface LinkLogCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface LinkLogCreateComponentState {
@@ -20,7 +31,7 @@ interface LinkLogCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class LinkLogCreateComponent extends React.Component<
@@ -33,12 +44,12 @@ class LinkLogCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as LinkLogViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +58,9 @@ class LinkLogCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:LinkLogViewModel) =>
-  {  
+  submit = (model: LinkLogViewModel) => {
     let mapper = new LinkLogMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.LinkLogs,
         mapper.mapViewModelToApiRequest(model),
@@ -65,88 +75,92 @@ class LinkLogCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.LinkLogClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="dateEntered">DateEntered</label>
+            <br />
+            {getFieldDecorator('dateEntered', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'DateEntered'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='dateEntered'>DateEntered</label>
-              <br />             
-              {getFieldDecorator('dateEntered', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"DateEntered"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="linkId">LinkId</label>
+            <br />
+            {getFieldDecorator('linkId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'LinkId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='linkId'>LinkId</label>
-              <br />             
-              {getFieldDecorator('linkId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"LinkId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="log">Log</label>
+            <br />
+            {getFieldDecorator('log', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'Log'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='log'>Log</label>
-              <br />             
-              {getFieldDecorator('log', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"Log"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedLinkLogCreateComponent = Form.create({ name: 'LinkLog Create' })(LinkLogCreateComponent);
+export const WrappedLinkLogCreateComponent = Form.create({
+  name: 'LinkLog Create',
+})(LinkLogCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>c97c78209dd95569422cad7420c7d226</Hash>
+    <Hash>b08d81c0ae8e411a0726945be953e424</Hash>
 </Codenesium>*/

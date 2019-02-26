@@ -7,8 +7,9 @@ import ChainMapper from './chainMapper';
 import ChainViewModel from './chainViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-interface ChainEditComponentProps {
+import { ChainStatusSelectComponent } from '../shared/chainStatusSelect'
+	import { TeamSelectComponent } from '../shared/teamSelect'
+	interface ChainEditComponentProps {
   form:WrappedFormUtils;
   history:any;
   match:any;
@@ -206,5 +207,5 @@ class ChainEditComponent extends React.Component<
 export const WrappedChainEditComponent = Form.create({ name: 'Chain Edit' })(ChainEditComponent);
 
 /*<Codenesium>
-    <Hash>d11302a328eed5e565bfa3b88b67644a</Hash>
+    <Hash>05b9fbca13bd40fe7861de4eb6ee1856</Hash>
 </Codenesium>*/

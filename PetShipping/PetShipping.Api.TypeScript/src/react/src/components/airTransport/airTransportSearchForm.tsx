@@ -51,13 +51,11 @@ export default class AirTransportSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: AirTransportViewModel) {
-    this.props.history.push(
-      ClientRoutes.AirTransports + '/edit/' + row.airlineId
-    );
+    this.props.history.push(ClientRoutes.AirTransports + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: AirTransportViewModel) {
-    this.props.history.push(ClientRoutes.AirTransports + '/' + row.airlineId);
+    this.props.history.push(ClientRoutes.AirTransports + '/' + row.id);
   }
 
   handleCreateClick(e: any) {
@@ -66,14 +64,11 @@ export default class AirTransportSearchComponent extends React.Component<
 
   handleDeleteClick(e: any, row: Api.AirTransportClientResponseModel) {
     axios
-      .delete(
-        Constants.ApiEndpoint + ApiRoutes.AirTransports + '/' + row.airlineId,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .delete(Constants.ApiEndpoint + ApiRoutes.AirTransports + '/' + row.id, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           this.setState({
@@ -334,5 +329,5 @@ export const WrappedAirTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f25d6a5b6f8e4fa245951608f1f2f313</Hash>
+    <Hash>719c5d14969db6b49ff96908891eed9e</Hash>
 </Codenesium>*/

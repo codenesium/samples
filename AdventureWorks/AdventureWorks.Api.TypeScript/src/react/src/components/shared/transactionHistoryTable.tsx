@@ -6,11 +6,11 @@ import TransactionHistoryMapper from '../transactionHistory/transactionHistoryMa
 import TransactionHistoryViewModel from '../transactionHistory/transactionHistoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface TransactionHistoryTableComponentProps {
-  transactionID: number;
-  apiRoute: string;
+  transactionID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,54 +20,53 @@ interface TransactionHistoryTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<TransactionHistoryViewModel>;
+  filteredRecords : Array<TransactionHistoryViewModel>;
 }
 
-export class TransactionHistoryTableComponent extends React.Component<
-  TransactionHistoryTableComponentProps,
-  TransactionHistoryTableComponentState
+export class  TransactionHistoryTableComponent extends React.Component<
+TransactionHistoryTableComponentProps,
+TransactionHistoryTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: TransactionHistoryViewModel) {
-    this.props.history.push(
-      ClientRoutes.TransactionHistories + '/edit/' + row.id
-    );
-  }
+handleEditClick(e:any, row: TransactionHistoryViewModel) {
+  this.props.history.push(ClientRoutes.TransactionHistories + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: TransactionHistoryViewModel) {
-    this.props.history.push(ClientRoutes.TransactionHistories + '/' + row.id);
-  }
+handleDetailClick(e:any, row: TransactionHistoryViewModel) {
+  this.props.history.push(ClientRoutes.TransactionHistories + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.TransactionHistoryClientResponseModel
-          >;
+          let response = resp.data as Array<Api.TransactionHistoryClientResponseModel>;
 
           console.log(response);
 
           let mapper = new TransactionHistoryMapper();
+          
+          let transactionHistories:Array<TransactionHistoryViewModel> = [];
 
-          let transactionHistories: Array<TransactionHistoryViewModel> = [];
-
-          response.forEach(x => {
-            transactionHistories.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              transactionHistories.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,124 +91,93 @@ export class TransactionHistoryTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'TransactionHistories',
-                columns: [
-                  {
-                    Header: 'ActualCost',
-                    accessor: 'actualCost',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'TransactionHistories',
+                    columns: [
+					  {
+                      Header: 'ActualCost',
+                      accessor: 'actualCost',
+                      Cell: (props) => {
                       return <span>{String(props.original.actualCost)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ProductID',
-                    accessor: 'productID',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Products +
-                                '/' +
-                                props.original.productID
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'ProductID',
+                      accessor: 'productID',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Products + '/' + props.original.productID); }}>
                           {String(
                             props.original.productIDNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Quantity',
-                    accessor: 'quantity',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Quantity',
+                      accessor: 'quantity',
+                      Cell: (props) => {
                       return <span>{String(props.original.quantity)}</span>;
+                      }           
+                    },  {
+                      Header: 'ReferenceOrderID',
+                      accessor: 'referenceOrderID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.referenceOrderID)}</span>;
+                      }           
+                    },  {
+                      Header: 'ReferenceOrderLineID',
+                      accessor: 'referenceOrderLineID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.referenceOrderLineID)}</span>;
+                      }           
+                    },  {
+                      Header: 'TransactionDate',
+                      accessor: 'transactionDate',
+                      Cell: (props) => {
+                      return <span>{String(props.original.transactionDate)}</span>;
+                      }           
+                    },  {
+                      Header: 'TransactionID',
+                      accessor: 'transactionID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.transactionID)}</span>;
+                      }           
+                    },  {
+                      Header: 'TransactionType',
+                      accessor: 'transactionType',
+                      Cell: (props) => {
+                      return <span>{String(props.original.transactionType)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'ReferenceOrderID',
-                    accessor: 'referenceOrderID',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.referenceOrderID)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'ReferenceOrderLineID',
-                    accessor: 'referenceOrderLineID',
-                    Cell: props => {
-                      return (
-                        <span>
-                          {String(props.original.referenceOrderLineID)}
-                        </span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'TransactionDate',
-                    accessor: 'transactionDate',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.transactionDate)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'TransactionID',
-                    accessor: 'transactionID',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.transactionID)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'TransactionType',
-                    accessor: 'transactionType',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.transactionType)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TransactionHistoryViewModel
@@ -220,8 +188,8 @@ export class TransactionHistoryTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as TransactionHistoryViewModel
@@ -230,14 +198,11 @@ export class TransactionHistoryTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -245,7 +210,6 @@ export class TransactionHistoryTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>65495d37a80ee590dc0b904cd211a052</Hash>
+    <Hash>19f03b6afc14700da147aa4e2385dfc3</Hash>
 </Codenesium>*/

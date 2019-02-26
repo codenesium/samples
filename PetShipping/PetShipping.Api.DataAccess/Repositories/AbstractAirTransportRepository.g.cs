@@ -47,9 +47,9 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<AirTransport> Get(int airlineId)
+		public async virtual Task<AirTransport> Get(int id)
 		{
-			return await this.GetById(airlineId);
+			return await this.GetById(id);
 		}
 
 		public async virtual Task<AirTransport> Create(AirTransport item)
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public async virtual Task Update(AirTransport item)
 		{
-			var entity = this.Context.Set<AirTransport>().Local.FirstOrDefault(x => x.AirlineId == item.AirlineId);
+			var entity = this.Context.Set<AirTransport>().Local.FirstOrDefault(x => x.Id == item.Id);
 			if (entity == null)
 			{
 				this.Context.Set<AirTransport>().Attach(item);
@@ -77,9 +77,9 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			int airlineId)
+			int id)
 		{
-			AirTransport record = await this.GetById(airlineId);
+			AirTransport record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -107,7 +107,7 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			if (orderBy == null)
 			{
-				orderBy = x => x.AirlineId;
+				orderBy = x => x.Id;
 			}
 
 			return await this.Context.Set<AirTransport>()
@@ -116,9 +116,9 @@ namespace PetShippingNS.Api.DataAccess
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
-		private async Task<AirTransport> GetById(int airlineId)
+		private async Task<AirTransport> GetById(int id)
 		{
-			List<AirTransport> records = await this.Where(x => x.AirlineId == airlineId);
+			List<AirTransport> records = await this.Where(x => x.Id == id);
 
 			return records.FirstOrDefault();
 		}
@@ -126,5 +126,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a45185e074764a6a013e8b19bfcd4b13</Hash>
+    <Hash>eb878189ad926c66816b3e13b9e82df8</Hash>
 </Codenesium>*/

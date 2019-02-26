@@ -8,16 +8,16 @@ namespace PetShippingNS.Api.Services
 	public abstract class AbstractDALAirTransportMapper
 	{
 		public virtual AirTransport MapModelToEntity(
-			int airlineId,
+			int id,
 			ApiAirTransportServerRequestModel model
 			)
 		{
 			AirTransport item = new AirTransport();
 			item.SetProperties(
-				airlineId,
+				id,
+				model.AirlineId,
 				model.FlightNumber,
 				model.HandlerId,
-				model.Id,
 				model.LandDate,
 				model.PipelineStepId,
 				model.TakeoffDate);
@@ -29,10 +29,10 @@ namespace PetShippingNS.Api.Services
 		{
 			var model = new ApiAirTransportServerResponseModel();
 
-			model.SetProperties(item.AirlineId,
+			model.SetProperties(item.Id,
+			                    item.AirlineId,
 			                    item.FlightNumber,
 			                    item.HandlerId,
-			                    item.Id,
 			                    item.LandDate,
 			                    item.PipelineStepId,
 			                    item.TakeoffDate);
@@ -69,5 +69,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71bcacd72e8f2e782c9083bc467f366b</Hash>
+    <Hash>4a6daf4d2d65354b7f5e1436206e442a</Hash>
 </Codenesium>*/

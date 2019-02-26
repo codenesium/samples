@@ -7,7 +7,9 @@ import ChainMapper from './chainMapper';
 import ChainViewModel from './chainViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import { ChainStatusSelectComponent } from '../shared/chainStatusSelect'
+	import { TeamSelectComponent } from '../shared/teamSelect'
+	
 interface ChainCreateComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -160,5 +162,5 @@ class ChainCreateComponent extends React.Component<
 export const WrappedChainCreateComponent = Form.create({ name: 'Chain Create' })(ChainCreateComponent);
 
 /*<Codenesium>
-    <Hash>f7c63e99842e526036a4e82856f639d2</Hash>
+    <Hash>659e2152d8dc28fe87610451feb31dc1</Hash>
 </Codenesium>*/

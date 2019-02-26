@@ -7,7 +7,6 @@ import StudioMapper from './studioMapper';
 import StudioViewModel from './studioViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface StudioEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -244,5 +243,5 @@ class StudioEditComponent extends React.Component<
 export const WrappedStudioEditComponent = Form.create({ name: 'Studio Edit' })(StudioEditComponent);
 
 /*<Codenesium>
-    <Hash>73289032775d43c37792c3fa0ac56782</Hash>
+    <Hash>cd6c715c83534453ef37bba1c725017c</Hash>
 </Codenesium>*/

@@ -51,15 +51,15 @@ namespace PetShippingNS.Api.Services
 
 	public class AirTransportDeletedNotification : INotification
 	{
-		public int AirlineId { get; private set; }
+		public int Id { get; private set; }
 
-		public AirTransportDeletedNotification(int airlineId)
+		public AirTransportDeletedNotification(int id)
 		{
-			this.AirlineId = airlineId;
+			this.Id = id;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff97c459d4e8a1ce2e302871fbc74096</Hash>
+    <Hash>e1f0d57d19aa368bef2741704aafbd27</Hash>
 </Codenesium>*/

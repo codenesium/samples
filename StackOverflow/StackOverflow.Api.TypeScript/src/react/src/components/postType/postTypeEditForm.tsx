@@ -7,7 +7,6 @@ import PostTypeMapper from './postTypeMapper';
 import PostTypeViewModel from './postTypeViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface PostTypeEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -173,5 +172,5 @@ class PostTypeEditComponent extends React.Component<
 export const WrappedPostTypeEditComponent = Form.create({ name: 'PostType Edit' })(PostTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>00cda34b87e5762741cb373b0769e320</Hash>
+    <Hash>e656c8d9e68788981ca89f5253850a65</Hash>
 </Codenesium>*/

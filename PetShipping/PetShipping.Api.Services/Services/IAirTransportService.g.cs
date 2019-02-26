@@ -11,17 +11,17 @@ namespace PetShippingNS.Api.Services
 		Task<CreateResponse<ApiAirTransportServerResponseModel>> Create(
 			ApiAirTransportServerRequestModel model);
 
-		Task<UpdateResponse<ApiAirTransportServerResponseModel>> Update(int airlineId,
+		Task<UpdateResponse<ApiAirTransportServerResponseModel>> Update(int id,
 		                                                                 ApiAirTransportServerRequestModel model);
 
-		Task<ActionResponse> Delete(int airlineId);
+		Task<ActionResponse> Delete(int id);
 
-		Task<ApiAirTransportServerResponseModel> Get(int airlineId);
+		Task<ApiAirTransportServerResponseModel> Get(int id);
 
 		Task<List<ApiAirTransportServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d844c05514af173da9427fd56908fad</Hash>
+    <Hash>f7e14e22f876f5cbea15d53c1f06cdb0</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ namespace PetShippingNS.Api.Client
 	public partial interface IApiAirTransportModelMapper
 	{
 		ApiAirTransportClientResponseModel MapClientRequestToResponse(
-			int airlineId,
+			int id,
 			ApiAirTransportClientRequestModel request);
 
 		ApiAirTransportClientRequestModel MapClientResponseToRequest(
@@ -17,5 +17,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>6d38eee67a4c3850ba8a2fd0a17ff580</Hash>
+    <Hash>c7491681a26215edff12d675f29b5c6a</Hash>
 </Codenesium>*/

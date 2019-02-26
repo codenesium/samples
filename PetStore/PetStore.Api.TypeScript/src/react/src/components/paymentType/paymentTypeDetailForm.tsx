@@ -6,10 +6,7 @@ import PaymentTypeMapper from './paymentTypeMapper';
 import PaymentTypeViewModel from './paymentTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {SaleTableComponent} from '../shared/saleTable'
-	
-
-
+import { SaleTableComponent } from '../shared/saleTable';
 
 interface PaymentTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface PaymentTypeDetailComponentState {
 }
 
 class PaymentTypeDetailComponent extends React.Component<
-PaymentTypeDetailComponentProps,
-PaymentTypeDetailComponentState
+  PaymentTypeDetailComponentProps,
+  PaymentTypeDetailComponentState
 > {
   state = {
     model: new PaymentTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.PaymentTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PaymentTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,48 @@ PaymentTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Sales</h3>
-            <SaleTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.PaymentTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
-			/>
-         </div>
-	
-
+            <SaleTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.PaymentTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Sales
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +135,11 @@ PaymentTypeDetailComponentState
   }
 }
 
-export const WrappedPaymentTypeDetailComponent = Form.create({ name: 'PaymentType Detail' })(
-  PaymentTypeDetailComponent
-);
+export const WrappedPaymentTypeDetailComponent = Form.create({
+  name: 'PaymentType Detail',
+})(PaymentTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>48d39cf6ea777d8fd06978d8b9d13ccb</Hash>
+    <Hash>bd2212470047b7b9928444b2a4116c98</Hash>
 </Codenesium>*/

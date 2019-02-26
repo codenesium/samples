@@ -17,7 +17,6 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface AdminEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -251,5 +250,5 @@ export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(
 
 
 /*<Codenesium>
-    <Hash>dfd52b192083a8130420f0c48f1c21a2</Hash>
+    <Hash>4d46faaa1c05797de73a8d1d1e086bc0</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ import SpaceMapper from './spaceMapper';
 import SpaceViewModel from './spaceViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface SpaceEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -185,5 +184,5 @@ class SpaceEditComponent extends React.Component<
 export const WrappedSpaceEditComponent = Form.create({ name: 'Space Edit' })(SpaceEditComponent);
 
 /*<Codenesium>
-    <Hash>899aac3c0a763dd5933947e596a9a3fe</Hash>
+    <Hash>731c89adf478936c94a09bd93e1b77dd</Hash>
 </Codenesium>*/

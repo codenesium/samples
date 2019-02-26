@@ -126,7 +126,7 @@ namespace PetShippingNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/AirTransports/{result.Record.AirlineId}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/AirTransports/{result.Record.Id}", result);
 			}
 			else
 			{
@@ -235,5 +235,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3d316d2830e8ea97182916c3d282f55d</Hash>
+    <Hash>b0d5c0d5f585e3332f2b997c2f7202e5</Hash>
 </Codenesium>*/

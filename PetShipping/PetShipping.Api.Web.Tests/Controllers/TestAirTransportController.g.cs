@@ -194,7 +194,7 @@ namespace PetShippingNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()))
 			.Callback<int, ApiAirTransportServerRequestModel>(
-				(id, model) => model.FlightNumber.Should().Be("A")
+				(id, model) => model.AirlineId.Should().Be(1)
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiAirTransportServerResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportServerResponseModel>(new ApiAirTransportServerResponseModel()));
@@ -203,7 +203,7 @@ namespace PetShippingNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiAirTransportServerRequestModel>();
-			patch.Replace(x => x.FlightNumber, "A");
+			patch.Replace(x => x.AirlineId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -223,7 +223,7 @@ namespace PetShippingNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiAirTransportServerRequestModel>();
-			patch.Replace(x => x.FlightNumber, "A");
+			patch.Replace(x => x.AirlineId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -341,5 +341,5 @@ namespace PetShippingNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>cd822196de8a164e7a214fbc31cdf84a</Hash>
+    <Hash>cffbdd8a390303e92e7cddca033b3712</Hash>
 </Codenesium>*/

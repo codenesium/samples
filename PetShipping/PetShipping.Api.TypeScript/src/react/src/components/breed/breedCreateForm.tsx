@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { SpeciesSelectComponent } from '../shared/speciesSelect';
 
 interface BreedCreateComponentProps {
   form: WrappedFormUtils;
@@ -156,5 +157,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dc94ea3885090528cbe80d225e724bd4</Hash>
+    <Hash>fc627ad9b0743478e8ec7d90b40f87c7</Hash>
 </Codenesium>*/

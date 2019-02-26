@@ -6,10 +6,7 @@ import FileTypeMapper from './fileTypeMapper';
 import FileTypeViewModel from './fileTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {FileTableComponent} from '../shared/fileTable'
-	
-
-
+import { FileTableComponent } from '../shared/fileTable';
 
 interface FileTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface FileTypeDetailComponentState {
 }
 
 class FileTypeDetailComponent extends React.Component<
-FileTypeDetailComponentProps,
-FileTypeDetailComponentState
+  FileTypeDetailComponentProps,
+  FileTypeDetailComponentState
 > {
   state = {
     model: new FileTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.FileTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.FileTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,48 @@ FileTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Files</h3>
-            <FileTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.FileTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Files}
-			/>
-         </div>
-	
-
+            <FileTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.FileTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Files
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +135,11 @@ FileTypeDetailComponentState
   }
 }
 
-export const WrappedFileTypeDetailComponent = Form.create({ name: 'FileType Detail' })(
-  FileTypeDetailComponent
-);
+export const WrappedFileTypeDetailComponent = Form.create({
+  name: 'FileType Detail',
+})(FileTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b8b38ec755b83100b92bf06a69781e2d</Hash>
+    <Hash>d812e095948eabe8ca6da5ce323de7ca</Hash>
 </Codenesium>*/

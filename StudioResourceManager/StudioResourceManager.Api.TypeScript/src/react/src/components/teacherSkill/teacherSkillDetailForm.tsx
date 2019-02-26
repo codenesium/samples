@@ -6,10 +6,7 @@ import TeacherSkillMapper from './teacherSkillMapper';
 import TeacherSkillViewModel from './teacherSkillViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {RateTableComponent} from '../shared/rateTable'
-	
-
-
+import { RateTableComponent } from '../shared/rateTable';
 
 interface TeacherSkillDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface TeacherSkillDetailComponentState {
 }
 
 class TeacherSkillDetailComponent extends React.Component<
-TeacherSkillDetailComponentProps,
-TeacherSkillDetailComponentState
+  TeacherSkillDetailComponentProps,
+  TeacherSkillDetailComponentState
 > {
   state = {
     model: new TeacherSkillViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.TeacherSkills + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.TeacherSkills + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,48 @@ TeacherSkillDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Rates</h3>
-            <RateTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.TeacherSkills + '/' + this.state.model!.id + '/' + ApiRoutes.Rates}
-			/>
-         </div>
-	
-
+            <RateTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.TeacherSkills +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Rates
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +135,11 @@ TeacherSkillDetailComponentState
   }
 }
 
-export const WrappedTeacherSkillDetailComponent = Form.create({ name: 'TeacherSkill Detail' })(
-  TeacherSkillDetailComponent
-);
+export const WrappedTeacherSkillDetailComponent = Form.create({
+  name: 'TeacherSkill Detail',
+})(TeacherSkillDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>f76f243c84be0074a4526c455ffb2cf5</Hash>
+    <Hash>59a1f3e04dcce95b0881fed0abb08220</Hash>
 </Codenesium>*/

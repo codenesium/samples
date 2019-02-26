@@ -7,7 +7,6 @@ import BusinessEntityMapper from './businessEntityMapper';
 import BusinessEntityViewModel from './businessEntityViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface BusinessEntityEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -183,5 +182,5 @@ class BusinessEntityEditComponent extends React.Component<
 export const WrappedBusinessEntityEditComponent = Form.create({ name: 'BusinessEntity Edit' })(BusinessEntityEditComponent);
 
 /*<Codenesium>
-    <Hash>81c43b449046af2b24627f96365784dd</Hash>
+    <Hash>61a466d0f7fd2edca84f9c1ff7a435e6</Hash>
 </Codenesium>*/

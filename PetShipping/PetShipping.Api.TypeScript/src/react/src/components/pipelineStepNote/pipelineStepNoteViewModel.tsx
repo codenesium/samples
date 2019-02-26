@@ -36,11 +36,11 @@ export default class PipelineStepNoteViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.employeeId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ee77746bbe526beb458b8e7b6bf3e719</Hash>
+    <Hash>c0ac4bd43cbfc09b707cf05f5f478059</Hash>
 </Codenesium>*/

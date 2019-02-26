@@ -6,11 +6,11 @@ import AWBuildVersionMapper from '../aWBuildVersion/aWBuildVersionMapper';
 import AWBuildVersionViewModel from '../aWBuildVersion/aWBuildVersionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface AWBuildVersionTableComponentProps {
-  systemInformationID: number;
-  apiRoute: string;
+  systemInformationID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,52 +20,53 @@ interface AWBuildVersionTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<AWBuildVersionViewModel>;
+  filteredRecords : Array<AWBuildVersionViewModel>;
 }
 
-export class AWBuildVersionTableComponent extends React.Component<
-  AWBuildVersionTableComponentProps,
-  AWBuildVersionTableComponentState
+export class  AWBuildVersionTableComponent extends React.Component<
+AWBuildVersionTableComponentProps,
+AWBuildVersionTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: AWBuildVersionViewModel) {
-    this.props.history.push(ClientRoutes.AWBuildVersions + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: AWBuildVersionViewModel) {
+  this.props.history.push(ClientRoutes.AWBuildVersions + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: AWBuildVersionViewModel) {
-    this.props.history.push(ClientRoutes.AWBuildVersions + '/' + row.id);
-  }
+handleDetailClick(e:any, row: AWBuildVersionViewModel) {
+  this.props.history.push(ClientRoutes.AWBuildVersions + '/' + row.id);
+}
 
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.AWBuildVersionClientResponseModel
-          >;
+          let response = resp.data as Array<Api.AWBuildVersionClientResponseModel>;
 
           console.log(response);
 
           let mapper = new AWBuildVersionMapper();
+          
+          let aWBuildVersions:Array<AWBuildVersionViewModel> = [];
 
-          let aWBuildVersions: Array<AWBuildVersionViewModel> = [];
-
-          response.forEach(x => {
-            aWBuildVersions.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              aWBuildVersions.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -90,67 +91,59 @@ export class AWBuildVersionTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'AWBuildVersions',
-                columns: [
-                  {
-                    Header: 'Database Version',
-                    accessor: 'database_Version',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.database_Version)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'AWBuildVersions',
+                    columns: [
+					  {
+                      Header: 'Database Version',
+                      accessor: 'database_Version',
+                      Cell: (props) => {
+                      return <span>{String(props.original.database_Version)}</span>;
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'SystemInformationID',
-                    accessor: 'systemInformationID',
-                    Cell: props => {
-                      return (
-                        <span>
-                          {String(props.original.systemInformationID)}
-                        </span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'VersionDate',
-                    accessor: 'versionDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'SystemInformationID',
+                      accessor: 'systemInformationID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.systemInformationID)}</span>;
+                      }           
+                    },  {
+                      Header: 'VersionDate',
+                      accessor: 'versionDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.versionDate)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as AWBuildVersionViewModel
@@ -161,8 +154,8 @@ export class AWBuildVersionTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as AWBuildVersionViewModel
@@ -171,14 +164,11 @@ export class AWBuildVersionTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -186,7 +176,6 @@ export class AWBuildVersionTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>1f7984d7ab375d7f7c74863ae65a3aef</Hash>
+    <Hash>3b0ea3b6e8d9ac601f8f3db5987147ce</Hash>
 </Codenesium>*/

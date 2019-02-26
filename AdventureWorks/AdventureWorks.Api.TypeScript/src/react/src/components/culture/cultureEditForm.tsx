@@ -17,7 +17,6 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
 interface CultureEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -209,5 +208,5 @@ export const WrappedCultureEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ce31264c7d4871de1baa087d69769f54</Hash>
+    <Hash>b1d3dcbb4d60574b8a8702d159e3c8fc</Hash>
 </Codenesium>*/
