@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import PaymentTypeMapper from '../paymentType/paymentTypeMapper';
 import PaymentTypeViewModel from '../paymentType/paymentTypeViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PaymentTypeSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface PaymentTypeSelectComponentState {
@@ -19,30 +23,33 @@ interface PaymentTypeSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<PaymentTypeViewModel>;
+  filteredRecords : Array<PaymentTypeViewModel>;
 }
 
-export class PaymentTypeSelectComponent extends React.Component<
-  PaymentTypeSelectComponentProps,
-  PaymentTypeSelectComponentState
+export class  PaymentTypeSelectComponent extends React.Component<
+PaymentTypeSelectComponentProps,
+PaymentTypeSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.PaymentTypeClientResponseModel>;
@@ -50,11 +57,12 @@ export class PaymentTypeSelectComponent extends React.Component<
           console.log(response);
 
           let mapper = new PaymentTypeMapper();
+          
+          let devices:Array<PaymentTypeViewModel> = [];
 
-          let devices: Array<PaymentTypeViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -79,39 +87,46 @@ export class PaymentTypeSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: PaymentTypeViewModel) => {
-                return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:PaymentTypeViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>0ab03e230ba899adf7bee860f3c1d699</Hash>
+    <Hash>3da69ff95135aef23f23e788827dd414</Hash>
 </Codenesium>*/

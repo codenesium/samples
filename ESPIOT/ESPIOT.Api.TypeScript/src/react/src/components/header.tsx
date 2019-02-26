@@ -47,14 +47,14 @@ export const wrapperHeader = (
               </MenuItem>
 
               <MenuItem key="device">
-                <Icon type="pie-chart" />
-                <span>Devices</span>
+                <Icon type="edit" />
+                <span>Device</span>
                 <Link to={ClientRoutes.Devices} />
               </MenuItem>
 
               <MenuItem key="deviceAction">
-                <Icon type="rise" />
-                <span>DeviceActions</span>
+                <Icon type="delete" />
+                <span>Device Actions</span>
                 <Link to={ClientRoutes.DeviceActions} />
               </MenuItem>
             </Menu>
@@ -78,5 +78,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>e26cd48ccd9db3a1ebe09a82059acdd1</Hash>
+    <Hash>a0e7ebb5e4bd3bcbfcc7b723a7f16ce8</Hash>
 </Codenesium>*/

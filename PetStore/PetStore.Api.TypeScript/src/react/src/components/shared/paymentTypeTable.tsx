@@ -44,6 +44,10 @@ export class PaymentTypeTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,5 +163,5 @@ export class PaymentTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>fd51f4e048ced1813d51bba8428fd4b0</Hash>
+    <Hash>f1c82ae273fa4bf437dea2a4a6df4f94</Hash>
 </Codenesium>*/

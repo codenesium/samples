@@ -44,6 +44,10 @@ export class VenueTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -243,5 +247,5 @@ export class VenueTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d2b0b06dc810ed90daa715cce6d16164</Hash>
+    <Hash>9a16b6f99f0b7299d81d6f5b000e8e80</Hash>
 </Codenesium>*/

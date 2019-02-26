@@ -44,6 +44,10 @@ export class TicketStatusTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -161,5 +165,5 @@ export class TicketStatusTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>280783ceaf8e33f7e492eba7b25ede5e</Hash>
+    <Hash>cf6ad1bb0264b5d60a11be73174ed920</Hash>
 </Codenesium>*/

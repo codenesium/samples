@@ -44,6 +44,10 @@ export class BucketTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -166,5 +170,5 @@ export class BucketTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2762efd18d7e80d75cfb3e7958021281</Hash>
+    <Hash>4d45d842094996c652a02288a47db4ef</Hash>
 </Codenesium>*/

@@ -1,0 +1,944 @@
+{
+  "$id": "1",
+  "Name": "SecureVideoCRM",
+  "ProjectType": ".NET Core REST API 1.0.0",
+  "LocalDestinationDirectory": "",
+  "Database": {
+    "$id": "2",
+    "Name": "",
+    "Schemas": [
+      {
+        "$id": "3",
+        "Name": "dbo",
+        "Tables": [
+          {
+            "$id": "4",
+            "Name": "Video",
+            "Columns": [
+              {
+                "$id": "5",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "6",
+                "Name": "title",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "7",
+                "Name": "url",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "8",
+                "Name": "description",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 4000,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "9",
+                "Name": "PK_Video",
+                "TableName": "Video",
+                "IsPrimaryKey": true,
+                "ConstraintType": null,
+                "Columns": [
+                  {
+                    "$id": "10",
+                    "Name": "id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "11",
+            "Name": "User",
+            "Columns": [
+              {
+                "$id": "12",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "13",
+                "Name": "email",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "14",
+                "Name": "password",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "15",
+                "Name": "subscriptionId",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "16",
+                "Name": "PK_User",
+                "TableName": "User",
+                "IsPrimaryKey": true,
+                "ConstraintType": null,
+                "Columns": [
+                  {
+                    "$id": "17",
+                    "Name": "id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "18",
+                "Name": "IX_User_subscriptionId",
+                "TableName": "User",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "19",
+                    "Name": "subscriptionId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "20",
+            "Name": "Subscription",
+            "Columns": [
+              {
+                "$id": "21",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "22",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "23",
+                "Name": "PK_Subscription",
+                "TableName": "Subscription",
+                "IsPrimaryKey": true,
+                "ConstraintType": null,
+                "Columns": [
+                  {
+                    "$id": "24",
+                    "Name": "id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "25",
+            "Columns": [
+              {
+                "$id": "26",
+                "ForeignKeyTableName": "User",
+                "ForeignKeyColumnName": "subscriptionId",
+                "PrimaryKeyTableName": "Subscription",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 0
+              }
+            ],
+            "ForeignKeyName": "fk_user_subscriptionid_subscription_id"
+          }
+        ]
+      }
+    ],
+    "Version": "1.0",
+    "DatabaseType": "MSSQL"
+  },
+  "Project": {
+    "$id": "27",
+    "Schemas": [
+      {
+        "$id": "28",
+        "AppSchemaName": "dbo",
+        "AppSchemaId": "f9a3501e-09b1-473d-828d-d5c30a46e60f",
+        "Tables": [
+          {
+            "$id": "29",
+            "AppTableName": "Video",
+            "AppTableNamePlural": "Videos",
+            "AppDoNotProcess": false,
+            "AppTableId": "57294167-21d9-4fc3-826e-a92913ce8f54",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "30",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Description",
+                "AppNamePlural": "Descriptions",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 4000,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "29"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "description",
+                "GenerationEnabled": true,
+                "Name": "description",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 4000,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "31",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "29"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "32",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Title",
+                "AppNamePlural": "Titles",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "29"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "title",
+                "GenerationEnabled": true,
+                "Name": "title",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "33",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Url",
+                "AppNamePlural": "Urls",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "29"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "url",
+                "GenerationEnabled": true,
+                "Name": "url",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "34",
+                "Columns": [
+                  {
+                    "$id": "35",
+                    "Column": {
+                      "$ref": "31"
+                    },
+                    "Name": "Id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Video",
+                "Table": {
+                  "$ref": "29"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Video",
+                "TableName": "Video",
+                "IsPrimaryKey": true,
+                "ConstraintType": null,
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "28"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.description",
+            "GenerationEnabled": true,
+            "Name": "Video",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "36",
+            "AppTableName": "User",
+            "AppTableNamePlural": "Users",
+            "AppDoNotProcess": false,
+            "AppTableId": "d73152ad-d3a2-4c06-9e94-ae3521534079",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "37",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Email",
+                "AppNamePlural": "Emails",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "36"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "email",
+                "GenerationEnabled": true,
+                "Name": "email",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "38",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "36"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "39",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Password",
+                "AppNamePlural": "Passwords",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "36"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "password",
+                "GenerationEnabled": true,
+                "Name": "password",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "40",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "SubscriptionId",
+                "AppNamePlural": "SubscriptionIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "36"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "subscriptionId",
+                "GenerationEnabled": true,
+                "Name": "subscriptionId",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "41",
+                "Columns": [
+                  {
+                    "$id": "42",
+                    "Column": {
+                      "$ref": "38"
+                    },
+                    "Name": "Id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_User",
+                "Table": {
+                  "$ref": "36"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_User",
+                "TableName": "User",
+                "IsPrimaryKey": true,
+                "ConstraintType": null,
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "43",
+                "Columns": [
+                  {
+                    "$id": "44",
+                    "Column": {
+                      "$ref": "40"
+                    },
+                    "Name": "SubscriptionId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "BySubscriptionId",
+                "ControllerRoute": "bySubscriptionId",
+                "AppName": "IX_User_subscriptionId",
+                "Table": {
+                  "$ref": "36"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_User_subscriptionId",
+                "TableName": "User",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              }
+            ],
+            "Schema": {
+              "$ref": "28"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.email",
+            "GenerationEnabled": true,
+            "Name": "User",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "45",
+            "AppTableName": "Subscription",
+            "AppTableNamePlural": "Subscriptions",
+            "AppDoNotProcess": false,
+            "AppTableId": "8e6f5559-d4eb-4a80-89c1-0f7812c6a61b",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "46",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "45"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "47",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "45"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "name",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "48",
+                "Columns": [
+                  {
+                    "$id": "49",
+                    "Column": {
+                      "$ref": "46"
+                    },
+                    "Name": "Id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Subscription",
+                "Table": {
+                  "$ref": "45"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Subscription",
+                "TableName": "Subscription",
+                "IsPrimaryKey": true,
+                "ConstraintType": null,
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "28"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.id",
+            "GenerationEnabled": true,
+            "Name": "Subscription",
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "50",
+            "Columns": [
+              {
+                "$id": "51",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "40"
+                },
+                "PrimaryColumn": {
+                  "$ref": "46"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_User_SubscriptionId_Subscription_Id"
+          }
+        ],
+        "ReferenceForeignKeys": [],
+        "ApplicationApiContainer": {
+          "$ref": "27"
+        },
+        "Name": "dbo"
+      }
+    ],
+    "ApplicationVersion": "1.0",
+    "ApiSettings": {
+      "$id": "52",
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "Name": "",
+    "Version": "",
+    "DatabaseType": ""
+  },
+  "Settings": {
+    "$id": "53",
+    "SettingsVersion": "1.0",
+    "ApiSettings": {
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "TableParameterSettings": [
+      {
+        "$id": "54",
+        "Table": "Subscription",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Subscription",
+        "AppTableNamePlural": "Subscriptions",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.name"
+      },
+      {
+        "$id": "55",
+        "Table": "Video",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Video",
+        "AppTableNamePlural": "Videos",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.title"
+      }
+    ],
+    "ColumnParameterSettings": [
+      {
+        "$id": "56",
+        "Table": "User",
+        "Schema": "dbo",
+        "Column": "SubscriptionId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "subscriptionId",
+        "AppName": "SubscriptionId",
+        "AppNamePlural": "SubscriptionIds"
+      }
+    ],
+    "VirtualForeignKeys": [],
+    "ForeignKeyParameterSettings": [],
+    "VirtualConstraints": [],
+    "ConstraintParameterSettings": []
+  }
+}

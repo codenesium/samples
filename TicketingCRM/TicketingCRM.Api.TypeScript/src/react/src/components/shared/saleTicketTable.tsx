@@ -44,6 +44,10 @@ export class SaleTicketTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -194,5 +198,5 @@ export class SaleTicketTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>623f0525d13f362afb1c42796fed6943</Hash>
+    <Hash>0c9a4514005b2b6c0d45d18b97d53f15</Hash>
 </Codenesium>*/

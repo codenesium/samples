@@ -1,0 +1,3 @@
+SecureVideoCRM.Api.Web/Properties/launchSettings.json
+.vs
+*node_modules*

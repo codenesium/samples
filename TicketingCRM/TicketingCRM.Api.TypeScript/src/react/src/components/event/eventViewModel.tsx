@@ -52,7 +52,7 @@ export default class EventViewModel {
     this.description = description;
     this.endDate = moment(endDate, 'YYYY-MM-DD');
     this.facebook = facebook;
-    this.id = moment(id, 'YYYY-MM-DD');
+    this.id = id;
     this.name = name;
     this.startDate = moment(startDate, 'YYYY-MM-DD');
     this.website = website;
@@ -65,5 +65,5 @@ export default class EventViewModel {
 
 
 /*<Codenesium>
-    <Hash>932d5d6c0303402e6ed2999a37ac8489</Hash>
+    <Hash>52dab1ae57db3cf92ed750e6ee00626c</Hash>
 </Codenesium>*/

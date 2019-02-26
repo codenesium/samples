@@ -44,6 +44,10 @@ export class ProvinceTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -182,5 +186,5 @@ export class ProvinceTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>209bba1a249fdace1da326a4ce570a13</Hash>
+    <Hash>e31755cdf46674e474ebcec7faab58af</Hash>
 </Codenesium>*/

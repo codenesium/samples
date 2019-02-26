@@ -44,6 +44,10 @@ export class CityTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -182,5 +186,5 @@ export class CityTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6170295b0ed768171f68f7761a653c9d</Hash>
+    <Hash>f1b7ac09103122549686cb4588329877</Hash>
 </Codenesium>*/

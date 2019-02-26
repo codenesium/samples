@@ -88,7 +88,7 @@ handleDetailClick(e:any, row: DeviceActionViewModel) {
           });
         }
       );
-  }
+    }
 
   render() {
     

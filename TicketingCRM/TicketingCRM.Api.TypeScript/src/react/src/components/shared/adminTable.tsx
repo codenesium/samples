@@ -44,6 +44,10 @@ export class AdminTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -194,5 +198,5 @@ export class AdminTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8766283cb06cacb67150dd340eb865b2</Hash>
+    <Hash>def69ebd526e091cc9b52b9f7e393c40</Hash>
 </Codenesium>*/

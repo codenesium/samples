@@ -39,11 +39,15 @@ handleEditClick(e:any, row: FileViewModel) {
   this.props.history.push(ClientRoutes.Files + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: FileViewModel) {
-  this.props.history.push(ClientRoutes.Files + '/' + row.id);
-}
+ handleDetailClick(e:any, row: FileViewModel) {
+   this.props.history.push(ClientRoutes.Files + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -227,5 +231,5 @@ handleDetailClick(e:any, row: FileViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>88ea90e7e2a9cd95b032c115691d0b8d</Hash>
+    <Hash>d0b287e89ed3ecdaf7b7bc8c2d1758b9</Hash>
 </Codenesium>*/

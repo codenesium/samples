@@ -44,6 +44,10 @@ export class SpeciesTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,5 +163,5 @@ export class SpeciesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>349c86b0d4a9f0860b51722dd02bfa9d</Hash>
+    <Hash>b1b0f7177162f36d14c44ddc216950d7</Hash>
 </Codenesium>*/

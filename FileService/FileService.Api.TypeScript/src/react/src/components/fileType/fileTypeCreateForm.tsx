@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileTypeMapper from './fileTypeMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface FileTypeCreateComponentProps {
   form: WrappedFormUtils;
@@ -85,6 +86,18 @@ class FileTypeCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [ToLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  ToLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
@@ -148,5 +161,5 @@ export const WrappedFileTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c48866a1639da3ce0c083faa2ea58a83</Hash>
+    <Hash>8cf6f7f99ac79f0f8ab191a7f6e00189</Hash>
 </Codenesium>*/

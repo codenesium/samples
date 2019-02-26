@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>SecureVideoCRM.Api.Client</id>
+    <title>SecureVideoCRM.Api.Client</title>
+    <version>1.0.0</version>
+    <description>The best REST API on the planet</description>
+    <summary>A project that will change the world</summary>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <authors>An awesome developer</authors>
+    <copyright>a certified badass</copyright>
+      <dependencies>
+          <dependency id="Codenesium.DataConversionExtensions" version="2018.1.5" />
+          <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.6" />
+          <dependency id="Newtonsoft.Json" version="11.0.2" />
+      </dependencies>
+  </metadata>
+  <files>
+      <file src="bin\Release\netstandard2.0\*.dll" target="lib\Release\netstandard2.0" />
+      <file src="bin\Release\netstandard2.0\*.pdb" target="lib\Release\netstandard2.0" />
+      <file src="bin\Release\netcoreapp2.2\*.dll" target="lib\Release\netcoreapp2.2" />
+      <file src="bin\Release\netcoreapp2.2\*.pdb" target="lib\Release\netcoreapp2.2" />
+  </files>
+</package>

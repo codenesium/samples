@@ -44,6 +44,10 @@ export class EventTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -234,5 +238,5 @@ export class EventTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>da2c15722cb3822fe620d330438b071b</Hash>
+    <Hash>e16789e05359d2469496b0e61b2c2163</Hash>
 </Codenesium>*/

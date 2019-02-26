@@ -503,6 +503,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.publicId",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Device",
             "DefaultConstraints": [],
@@ -772,6 +774,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.action",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "DeviceAction",
             "DefaultConstraints": [],
@@ -824,10 +828,65 @@
       "IsMultiTenant": false,
       "UseSoftDeletes": false
     },
-    "TableParameterSettings": [],
-    "ColumnParameterSettings": [
+    "TableParameterSettings": [
       {
         "$id": "54",
+        "Table": "Device",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Device",
+        "AppTableNamePlural": "Devices",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.publicId",
+        "AppViewLabel": "Device",
+        "AppViewIcon": "edit"
+      },
+      {
+        "$id": "55",
+        "Table": "DeviceAction",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "DeviceAction",
+        "AppTableNamePlural": "DeviceActions",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.action",
+        "AppViewLabel": "Device Actions",
+        "AppViewIcon": "delete"
+      }
+    ],
+    "ColumnParameterSettings": [
+      {
+        "$id": "56",
         "Table": "Device",
         "Schema": "dbo",
         "Column": "DateOfLastPing",
@@ -847,7 +906,7 @@
         "AppNamePlural": "DateOfLastPings"
       },
       {
-        "$id": "55",
+        "$id": "57",
         "Table": "Device",
         "Schema": "dbo",
         "Column": "IsActive",
@@ -867,7 +926,7 @@
         "AppNamePlural": "IsActives"
       },
       {
-        "$id": "56",
+        "$id": "58",
         "Table": "Device",
         "Schema": "dbo",
         "Column": "Name",
@@ -887,7 +946,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "57",
+        "$id": "59",
         "Table": "Device",
         "Schema": "dbo",
         "Column": "PublicId",
@@ -907,7 +966,7 @@
         "AppNamePlural": "PublicIds"
       },
       {
-        "$id": "58",
+        "$id": "60",
         "Table": "DeviceAction",
         "Schema": "dbo",
         "Column": "Action",
@@ -927,7 +986,7 @@
         "AppNamePlural": "Actions"
       },
       {
-        "$id": "59",
+        "$id": "61",
         "Table": "DeviceAction",
         "Schema": "dbo",
         "Column": "DeviceId",
@@ -947,7 +1006,7 @@
         "AppNamePlural": "DeviceIds"
       },
       {
-        "$id": "60",
+        "$id": "62",
         "Table": "DeviceAction",
         "Schema": "dbo",
         "Column": "Name",
@@ -967,7 +1026,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "61",
+        "$id": "63",
         "Table": "DeviceAction",
         "Schema": "dbo",
         "Column": "rwValue",

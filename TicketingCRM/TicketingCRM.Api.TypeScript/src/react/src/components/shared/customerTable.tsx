@@ -44,6 +44,10 @@ export class CustomerTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -180,5 +184,5 @@ export class CustomerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2c6dca60b5cab3ce926da6ebf428af49</Hash>
+    <Hash>ae7a8f1abbef2da463308b6af2a3a43c</Hash>
 </Codenesium>*/

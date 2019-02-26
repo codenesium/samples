@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileMapper from './fileMapper';
 import FileViewModel from './fileViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { BucketSelectComponent } from '../shared/bucketSelect'
 	import { FileTypeSelectComponent } from '../shared/fileTypeSelect'
 	
@@ -72,6 +73,17 @@ class FileCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+		   let errorResponse = error.response.data as ActionResponse; 
+
+          errorResponse.validationErrors.forEach(x =>
+          {
+            this.props.form.setFields({
+             [ToLowerCaseFirstLetter(x.propertyName)]: {
+              value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+              errors: [new Error(x.errorMessage)]
+            },
+            })
+          });
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -100,15 +112,20 @@ class FileCreateComponent extends React.Component<
 
         return ( 
          <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='bucketId'>BucketId</label>
-              <br />             
-              {getFieldDecorator('bucketId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"BucketId"} /> )}
-              </Form.Item>
+            			
+                        <Form.Item>
+                        <label htmlFor='bucketId'>BucketId</label>
+                        <br />   
+                        <BucketSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Buckets}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="bucketId"
+                          required={false}
+                          selectedValue={this.state.model!.bucketId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
               <label htmlFor='dateCreated'>DateCreated</label>
@@ -177,16 +194,20 @@ class FileCreateComponent extends React.Component<
               ( <InputNumber placeholder={"FileSizeInByte"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='fileTypeId'>FileTypeId</label>
-              <br />             
-              {getFieldDecorator('fileTypeId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"FileTypeId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='fileTypeId'>FileTypeId</label>
+                        <br />   
+                        <FileTypeSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.FileTypes}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="fileTypeId"
+                          required={true}
+                          selectedValue={this.state.model!.fileTypeId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
               <label htmlFor='location'>Location</label>
@@ -241,5 +262,5 @@ class FileCreateComponent extends React.Component<
 export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(FileCreateComponent);
 
 /*<Codenesium>
-    <Hash>0a6ceb898e7e7b2dfafda349b2532379</Hash>
+    <Hash>7d85dbd835b258201e583ff9cb67c85a</Hash>
 </Codenesium>*/

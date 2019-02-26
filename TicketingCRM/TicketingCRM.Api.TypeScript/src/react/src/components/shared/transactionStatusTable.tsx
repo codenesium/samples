@@ -44,6 +44,10 @@ export class TransactionStatusTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -161,5 +165,5 @@ export class TransactionStatusTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>67b4c1004c24cb034f7e38fcb044a7e9</Hash>
+    <Hash>6bf842c8ed43d3f13261b0e18d1b0d6e</Hash>
 </Codenesium>*/

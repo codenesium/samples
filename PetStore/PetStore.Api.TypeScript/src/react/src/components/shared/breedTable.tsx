@@ -44,6 +44,10 @@ export class BreedTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -182,5 +186,5 @@ export class BreedTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ff170f3611ebf2ee9ced54148faf401d</Hash>
+    <Hash>2d1977fe864128581cce84bb614e8ea6</Hash>
 </Codenesium>*/

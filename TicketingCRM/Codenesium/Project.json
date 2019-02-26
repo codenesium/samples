@@ -1591,6 +1591,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Admin",
             "DefaultConstraints": [],
@@ -1794,6 +1796,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "City",
             "DefaultConstraints": [],
@@ -1931,6 +1935,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Country",
             "DefaultConstraints": [],
@@ -2167,6 +2173,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Customer",
             "DefaultConstraints": [],
@@ -2634,6 +2642,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Event",
             "DefaultConstraints": [],
@@ -2837,6 +2847,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Province",
             "DefaultConstraints": [],
@@ -3139,6 +3151,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Sale",
             "DefaultConstraints": [],
@@ -3342,6 +3356,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "SaleTickets",
             "DefaultConstraints": [],
@@ -3545,6 +3561,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Ticket",
             "DefaultConstraints": [],
@@ -3682,6 +3700,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "TicketStatus",
             "DefaultConstraints": [],
@@ -3918,6 +3938,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Transaction",
             "DefaultConstraints": [],
@@ -4055,6 +4077,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "TransactionStatus",
             "DefaultConstraints": [],
@@ -4522,6 +4546,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Venue",
             "DefaultConstraints": [],
@@ -4760,7 +4786,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.username"
+        "ForeignKeyDisplayColumn": "this.username",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "287",
@@ -4785,7 +4813,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "288",
@@ -4810,7 +4840,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "289",
@@ -4835,7 +4867,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.email"
+        "ForeignKeyDisplayColumn": "this.email",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "290",
@@ -4860,7 +4894,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "291",
@@ -4885,7 +4921,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "292",
@@ -4910,7 +4948,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.transactionId"
+        "ForeignKeyDisplayColumn": "this.transactionId",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "293",
@@ -4935,7 +4975,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "294",
@@ -4960,7 +5002,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "295",
@@ -4985,7 +5029,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "296",
@@ -5010,7 +5056,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "297",
@@ -5035,7 +5083,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "298",
@@ -5060,7 +5110,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       }
     ],
     "ColumnParameterSettings": [
@@ -5786,46 +5838,6 @@
       },
       {
         "$id": "335",
-        "Table": "Event",
-        "Schema": "dbo",
-        "Column": "Id",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 4,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "id",
-        "AppName": "Id",
-        "AppNamePlural": "Ids"
-      },
-      {
-        "$id": "336",
-        "Table": "TicketStatu",
-        "Schema": "dbo",
-        "Column": "Id",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 11,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "id",
-        "AppName": "Id",
-        "AppNamePlural": "Ids"
-      },
-      {
-        "$id": "337",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Id",
@@ -5845,7 +5857,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "338",
+        "$id": "336",
         "Table": "City",
         "Schema": "dbo",
         "Column": "Id",
@@ -5865,7 +5877,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "339",
+        "$id": "337",
         "Table": "Country",
         "Schema": "dbo",
         "Column": "Id",
@@ -5885,7 +5897,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "340",
+        "$id": "338",
         "Table": "Customer",
         "Schema": "dbo",
         "Column": "Id",
@@ -5905,7 +5917,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "341",
+        "$id": "339",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Date",
@@ -5925,7 +5937,7 @@
         "AppNamePlural": "Dates"
       },
       {
-        "$id": "342",
+        "$id": "340",
         "Table": "Province",
         "Schema": "dbo",
         "Column": "Id",
@@ -5945,7 +5957,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "343",
+        "$id": "341",
         "Table": "Sale",
         "Schema": "dbo",
         "Column": "Id",
@@ -5965,7 +5977,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "344",
+        "$id": "342",
         "Table": "SaleTicket",
         "Schema": "dbo",
         "Column": "Id",
@@ -5985,7 +5997,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "345",
+        "$id": "343",
         "Table": "Ticket",
         "Schema": "dbo",
         "Column": "Id",
@@ -6005,7 +6017,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "346",
+        "$id": "344",
         "Table": "TicketStatu",
         "Schema": "dbo",
         "Column": "Name",
@@ -6025,7 +6037,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "347",
+        "$id": "345",
         "Table": "Transaction",
         "Schema": "dbo",
         "Column": "Id",
@@ -6045,7 +6057,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "348",
+        "$id": "346",
         "Table": "TransactionStatu",
         "Schema": "dbo",
         "Column": "Id",
@@ -6065,7 +6077,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "349",
+        "$id": "347",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Address1",
@@ -6085,7 +6097,7 @@
         "AppNamePlural": "Address1"
       },
       {
-        "$id": "350",
+        "$id": "348",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Address2",
@@ -6105,7 +6117,7 @@
         "AppNamePlural": "Address2"
       },
       {
-        "$id": "351",
+        "$id": "349",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "AdminId",
@@ -6125,7 +6137,7 @@
         "AppNamePlural": "AdminIds"
       },
       {
-        "$id": "352",
+        "$id": "350",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Email",
@@ -6145,7 +6157,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "353",
+        "$id": "351",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Facebook",
@@ -6165,7 +6177,7 @@
         "AppNamePlural": "Facebooks"
       },
       {
-        "$id": "354",
+        "$id": "352",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Id",
@@ -6185,7 +6197,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "355",
+        "$id": "353",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Name",
@@ -6205,7 +6217,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "356",
+        "$id": "354",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Phone",
@@ -6225,7 +6237,7 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "357",
+        "$id": "355",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "ProvinceId",
@@ -6245,7 +6257,7 @@
         "AppNamePlural": "ProvinceIds"
       },
       {
-        "$id": "358",
+        "$id": "356",
         "Table": "Venue",
         "Schema": "dbo",
         "Column": "Website",
@@ -6263,6 +6275,46 @@
         "AppViewControlLabel": "website",
         "AppName": "Website",
         "AppNamePlural": "Websites"
+      },
+      {
+        "$id": "357",
+        "Table": "Event",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 7,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "358",
+        "Table": "TicketStatu",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 7,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
       }
     ],
     "VirtualForeignKeys": [],

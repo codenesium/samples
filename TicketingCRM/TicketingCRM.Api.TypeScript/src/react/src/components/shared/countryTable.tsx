@@ -44,6 +44,10 @@ export class CountryTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,5 +163,5 @@ export class CountryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2be3c790ed57b65da641458aa1bd70bf</Hash>
+    <Hash>1cb2acb782fb2c6d9f6a2a946c35a775</Hash>
 </Codenesium>*/

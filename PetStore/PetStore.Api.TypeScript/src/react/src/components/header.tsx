@@ -54,7 +54,7 @@ export const wrapperHeader = (
 
               <MenuItem key="paymentType">
                 <Icon type="rise" />
-                <span>PaymentTypes</span>
+                <span>Payment Types</span>
                 <Link to={ClientRoutes.PaymentTypes} />
               </MenuItem>
 
@@ -102,5 +102,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>746d83b4699d820c3d58077111fc7fae</Hash>
+    <Hash>4af9b1512630b624df93b75da7d2eca3</Hash>
 </Codenesium>*/

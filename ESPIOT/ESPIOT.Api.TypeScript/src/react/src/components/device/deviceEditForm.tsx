@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceMapper from './deviceMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface DeviceEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -132,6 +133,19 @@ class DeviceEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -225,5 +239,5 @@ export const WrappedDeviceEditComponent = Form.create({ name: 'Device Edit' })(
 
 
 /*<Codenesium>
-    <Hash>f131840a8bcdc201b5f59e4831b590c9</Hash>
+    <Hash>b0d0936e58f17cb3d446a17f2f5cdabe</Hash>
 </Codenesium>*/

@@ -44,6 +44,10 @@ export class PenTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,5 +163,5 @@ export class PenTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8455e1a860fc259c537637298385f8f0</Hash>
+    <Hash>f5d75eb3547b4f58badaad77f9d78870</Hash>
 </Codenesium>*/

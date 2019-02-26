@@ -44,6 +44,10 @@ export class FileTypeTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,5 +163,5 @@ export class FileTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d12f33dc197955029a8404fc2e68ae27</Hash>
+    <Hash>1482d3280303acbd9c114a7534c64b56</Hash>
 </Codenesium>*/
