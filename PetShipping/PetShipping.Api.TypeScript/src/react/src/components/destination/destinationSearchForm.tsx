@@ -246,6 +246,7 @@ export default class DestinationSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -304,5 +305,5 @@ export const WrappedDestinationSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7275e7698fe9f0456913766a58ccaba7</Hash>
+    <Hash>3ff22796a17b1a1f8690e160b6ab39a4</Hash>
 </Codenesium>*/

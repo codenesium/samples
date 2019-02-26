@@ -215,6 +215,7 @@ export default class PenSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -273,5 +274,5 @@ export const WrappedPenSearchComponent = Form.create({ name: 'Pen Search' })(
 
 
 /*<Codenesium>
-    <Hash>b284ffd72039ad7d5583f85aaea1019d</Hash>
+    <Hash>aa31bf245dcd73ac6ffd906d1f09ab2c</Hash>
 </Codenesium>*/

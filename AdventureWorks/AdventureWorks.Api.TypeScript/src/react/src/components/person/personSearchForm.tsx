@@ -248,6 +248,7 @@ export default class PersonSearchComponent extends React.Component<PersonSearchC
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -300,5 +301,5 @@ export default class PersonSearchComponent extends React.Component<PersonSearchC
 export const WrappedPersonSearchComponent = Form.create({ name: 'Person Search' })(PersonSearchComponent);
 
 /*<Codenesium>
-    <Hash>b244bd27193024e48f3b2f7a63568162</Hash>
+    <Hash>04692cc3ca80e8bf320a9825af1281b9</Hash>
 </Codenesium>*/

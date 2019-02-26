@@ -220,6 +220,7 @@ export default class ErrorLogSearchComponent extends React.Component<ErrorLogSea
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -272,5 +273,5 @@ export default class ErrorLogSearchComponent extends React.Component<ErrorLogSea
 export const WrappedErrorLogSearchComponent = Form.create({ name: 'ErrorLog Search' })(ErrorLogSearchComponent);
 
 /*<Codenesium>
-    <Hash>43f0cdf8291f9d83b5ec4d6524fce2f7</Hash>
+    <Hash>ac03849370090b0e984a8dc794a84495</Hash>
 </Codenesium>*/

@@ -155,6 +155,7 @@ export class TransactionTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -197,5 +198,5 @@ export class TransactionTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e2864ca087df820410b0958d4889f976</Hash>
+    <Hash>0b07ec3d2e1b32d29450192a77a6b87a</Hash>
 </Codenesium>*/

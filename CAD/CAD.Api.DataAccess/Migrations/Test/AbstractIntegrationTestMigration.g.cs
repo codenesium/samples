@@ -26,10 +26,6 @@ namespace CADNS.Api.DataAccess
 			callItem1.SetProperties(1, 1, 1, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			this.Context.Calls.Add(callItem1);
 
-			var callAssignmentItem1 = new CallAssignment();
-			callAssignmentItem1.SetProperties(1, 1, 1);
-			this.Context.CallAssignments.Add(callAssignmentItem1);
-
 			var callDispositionItem1 = new CallDisposition();
 			callDispositionItem1.SetProperties(1, "A");
 			this.Context.CallDispositions.Add(callDispositionItem1);
@@ -54,13 +50,9 @@ namespace CADNS.Api.DataAccess
 			officerItem1.SetProperties(1, "A", "A", "A", "A", "A");
 			this.Context.Officers.Add(officerItem1);
 
-			var officerCapabilityItem1 = new OfficerCapability();
-			officerCapabilityItem1.SetProperties(1, "A");
-			this.Context.OfficerCapabilities.Add(officerCapabilityItem1);
-
-			var officerRefCapabilityItem1 = new OfficerRefCapability();
-			officerRefCapabilityItem1.SetProperties(1, 1, 1);
-			this.Context.OfficerRefCapabilities.Add(officerRefCapabilityItem1);
+			var officerCapabilitiesItem1 = new OfficerCapabilities();
+			officerCapabilitiesItem1.SetProperties(1, 1);
+			this.Context.OfficerCapabilities.Add(officerCapabilitiesItem1);
 
 			var personItem1 = new Person();
 			personItem1.SetProperties(1, "A", "A", "A", "A");
@@ -78,25 +70,13 @@ namespace CADNS.Api.DataAccess
 			unitDispositionItem1.SetProperties(1, "A");
 			this.Context.UnitDispositions.Add(unitDispositionItem1);
 
-			var unitOfficerItem1 = new UnitOfficer();
-			unitOfficerItem1.SetProperties(1, 1, 1);
-			this.Context.UnitOfficers.Add(unitOfficerItem1);
-
 			var vehicleItem1 = new Vehicle();
 			vehicleItem1.SetProperties(1, "A");
 			this.Context.Vehicles.Add(vehicleItem1);
 
-			var vehicleCapabilityItem1 = new VehicleCapability();
-			vehicleCapabilityItem1.SetProperties(1, "A");
-			this.Context.VehicleCapabilities.Add(vehicleCapabilityItem1);
-
-			var vehicleOfficerItem1 = new VehicleOfficer();
-			vehicleOfficerItem1.SetProperties(1, 1, 1);
-			this.Context.VehicleOfficers.Add(vehicleOfficerItem1);
-
-			var vehicleRefCapabilityItem1 = new VehicleRefCapability();
-			vehicleRefCapabilityItem1.SetProperties(1, 1, 1);
-			this.Context.VehicleRefCapabilities.Add(vehicleRefCapabilityItem1);
+			var vehicleCapabilitiesItem1 = new VehicleCapabilities();
+			vehicleCapabilitiesItem1.SetProperties(1, 1);
+			this.Context.VehicleCapabilities.Add(vehicleCapabilitiesItem1);
 
 			await this.Context.SaveChangesAsync();
 		}
@@ -104,5 +84,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0d239de7f24b37ee6f944fb7f2bd6a8f</Hash>
+    <Hash>7403152ccb3bb7a3bcaa3172690b2f9d</Hash>
 </Codenesium>*/

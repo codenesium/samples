@@ -44,6 +44,10 @@ export class LocationTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -145,6 +149,7 @@ export class LocationTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -187,5 +192,5 @@ export class LocationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e4b7387a0306494fe92c6ff051695462</Hash>
+    <Hash>323b5c8390a7ca187d133afbfa79c090</Hash>
 </Codenesium>*/

@@ -39,11 +39,15 @@ handleEditClick(e:any, row: SpecialOfferViewModel) {
   this.props.history.push(ClientRoutes.SpecialOffers + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: SpecialOfferViewModel) {
-  this.props.history.push(ClientRoutes.SpecialOffers + '/' + row.id);
-}
+ handleDetailClick(e:any, row: SpecialOfferViewModel) {
+   this.props.history.push(ClientRoutes.SpecialOffers + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -176,6 +180,7 @@ handleDetailClick(e:any, row: SpecialOfferViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -213,5 +218,5 @@ handleDetailClick(e:any, row: SpecialOfferViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>4fefa3bff05dc10ad3ca03c250770d68</Hash>
+    <Hash>57dc208c851232b7f68e33c25e51eb79</Hash>
 </Codenesium>*/

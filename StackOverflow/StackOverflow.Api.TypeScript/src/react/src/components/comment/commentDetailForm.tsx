@@ -7,9 +7,6 @@ import CommentViewModel from './commentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface CommentDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface CommentDetailComponentState {
 }
 
 class CommentDetailComponent extends React.Component<
-CommentDetailComponentProps,
-CommentDetailComponentState
+  CommentDetailComponentProps,
+  CommentDetailComponentState
 > {
   state = {
     model: new CommentViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Comments + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Comments + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,51 +84,48 @@ CommentDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>CreationDate</h3>
-							<p>{String(this.state.model!.creationDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>PostId</h3>
-							<p>{String(this.state.model!.postId)}</p>
-						 </div>
-					   						 <div>
-							<h3>Score</h3>
-							<p>{String(this.state.model!.score)}</p>
-						 </div>
-					   						 <div>
-							<h3>Text</h3>
-							<p>{String(this.state.model!.text)}</p>
-						 </div>
-					   						 <div>
-							<h3>UserId</h3>
-							<p>{String(this.state.model!.userId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>CreationDate</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
+            </div>
+            <div>
+              <h3>PostId</h3>
+              <p>{String(this.state.model!.postId)}</p>
+            </div>
+            <div>
+              <h3>Score</h3>
+              <p>{String(this.state.model!.score)}</p>
+            </div>
+            <div>
+              <h3>Text</h3>
+              <p>{String(this.state.model!.text)}</p>
+            </div>
+            <div>
+              <h3>UserId</h3>
+              <p>{String(this.state.model!.userId)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -138,10 +134,11 @@ CommentDetailComponentState
   }
 }
 
-export const WrappedCommentDetailComponent = Form.create({ name: 'Comment Detail' })(
-  CommentDetailComponent
-);
+export const WrappedCommentDetailComponent = Form.create({
+  name: 'Comment Detail',
+})(CommentDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>a2d41fcde5101e1752794be60a7eaa50</Hash>
+    <Hash>9bf722f4f001ec7f1b78fa3ee56bf0e5</Hash>
 </Codenesium>*/

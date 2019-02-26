@@ -46,6 +46,10 @@ export class CustomerCommunicationTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -176,6 +180,7 @@ export class CustomerCommunicationTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -218,5 +223,5 @@ export class CustomerCommunicationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>de1516208940d2e008ccefb85158441b</Hash>
+    <Hash>39578e89cf17a713803bb74b29fcdd9b</Hash>
 </Codenesium>*/

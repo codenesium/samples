@@ -32,8 +32,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			List<ApiCallServerResponseModel> response = await service.All();
 
@@ -52,8 +51,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			ApiCallServerResponseModel response = await service.Get(default(int));
 
@@ -71,8 +69,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			ApiCallServerResponseModel response = await service.Get(default(int));
 
@@ -91,8 +88,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			CreateResponse<ApiCallServerResponseModel> response = await service.Create(model);
 
@@ -115,8 +111,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			CreateResponse<ApiCallServerResponseModel> response = await service.Create(model);
 
@@ -138,8 +133,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			UpdateResponse<ApiCallServerResponseModel> response = await service.Update(default(int), model);
 
@@ -163,8 +157,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			UpdateResponse<ApiCallServerResponseModel> response = await service.Update(default(int), model);
 
@@ -185,8 +178,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -209,8 +201,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -232,8 +223,7 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			List<ApiNoteServerResponseModel> response = await service.NotesByCallId(default(int));
 
@@ -251,57 +241,16 @@ namespace CADNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
 			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
+			                              mock.DALMapperMockFactory.DALNoteMapperMock);
 
 			List<ApiNoteServerResponseModel> response = await service.NotesByCallId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.NotesByCallId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void CallAssignmentsByCallId_Exists()
-		{
-			var mock = new ServiceMockFacade<ICallRepository>();
-			var records = new List<CallAssignment>();
-			records.Add(new CallAssignment());
-			mock.RepositoryMock.Setup(x => x.CallAssignmentsByCallId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new CallService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
-
-			List<ApiCallAssignmentServerResponseModel> response = await service.CallAssignmentsByCallId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.CallAssignmentsByCallId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void CallAssignmentsByCallId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ICallRepository>();
-			mock.RepositoryMock.Setup(x => x.CallAssignmentsByCallId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CallAssignment>>(new List<CallAssignment>()));
-			var service = new CallService(mock.LoggerMock.Object,
-			                              mock.MediatorMock.Object,
-			                              mock.RepositoryMock.Object,
-			                              mock.ModelValidatorMockFactory.CallModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALCallMapperMock,
-			                              mock.DALMapperMockFactory.DALNoteMapperMock,
-			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock);
-
-			List<ApiCallAssignmentServerResponseModel> response = await service.CallAssignmentsByCallId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.CallAssignmentsByCallId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>055995b53c9fdbdff42084dd77edaad8</Hash>
+    <Hash>bcbae91bae8731c0242e2fbfccb61915</Hash>
 </Codenesium>*/

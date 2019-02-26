@@ -44,6 +44,10 @@ export class ChainTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -173,6 +177,7 @@ export class ChainTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -215,5 +220,5 @@ export class ChainTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f308bc1f1dcea39848e5760ad8b5b3aa</Hash>
+    <Hash>5d442d78c7d09646e283be8b75b636a3</Hash>
 </Codenesium>*/

@@ -182,6 +182,7 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -234,5 +235,5 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
 export const WrappedBreedSearchComponent = Form.create({ name: 'Breed Search' })(BreedSearchComponent);
 
 /*<Codenesium>
-    <Hash>0fd1debdcebddc1e59a62a33f0cbba21</Hash>
+    <Hash>1db65916c97e6959cf81e9050611d1a8</Hash>
 </Codenesium>*/

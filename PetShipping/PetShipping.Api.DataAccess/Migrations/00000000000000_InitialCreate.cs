@@ -240,10 +240,10 @@ CREATE TABLE [dbo].[Airline](
 GO
 
 CREATE TABLE [dbo].[AirTransport](
-[airlineId] [int]   IDENTITY(1,1)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[airlineId] [int]     NOT NULL,
 [flightNumber] [varchar]  (12)   NOT NULL,
 [handlerId] [int]     NOT NULL,
-[id] [int]     NOT NULL,
 [landDate] [datetime]     NOT NULL,
 [pipelineStepId] [int]     NOT NULL,
 [takeoffDate] [datetime]     NOT NULL,
@@ -415,7 +415,7 @@ GO
 ALTER TABLE[dbo].[AirTransport]
 ADD CONSTRAINT[PK_AirTransport] PRIMARY KEY CLUSTERED
 (
-[airlineId] ASC
+[id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[Breed]

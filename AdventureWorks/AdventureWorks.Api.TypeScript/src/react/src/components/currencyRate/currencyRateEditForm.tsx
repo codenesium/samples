@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CurrencyRateMapper from './currencyRateMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { CurrencySelectComponent } from '../shared/currencySelect';
 interface CurrencyRateEditComponentProps {
   form: WrappedFormUtils;
@@ -136,6 +137,19 @@ class CurrencyRateEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -263,5 +277,5 @@ export const WrappedCurrencyRateEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e07a3ede69ee708d60d496787498e1fa</Hash>
+    <Hash>5552df3a78f2c1f5a8573609c918d325</Hash>
 </Codenesium>*/

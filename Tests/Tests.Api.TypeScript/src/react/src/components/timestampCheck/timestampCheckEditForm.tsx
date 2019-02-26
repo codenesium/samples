@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TimestampCheckMapper from './timestampCheckMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface TimestampCheckEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -135,6 +136,19 @@ class TimestampCheckEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -203,5 +217,5 @@ export const WrappedTimestampCheckEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b66f4cee4520f6edf0b12013cfc44ab6</Hash>
+    <Hash>59421d0b9a9fbe7a2c96fd0b7b31f0e9</Hash>
 </Codenesium>*/

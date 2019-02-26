@@ -44,6 +44,10 @@ export class CallPersonTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -163,6 +167,7 @@ export class CallPersonTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -205,5 +210,5 @@ export class CallPersonTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>43c8a8e4cd646855a3257ffa3d8e839c</Hash>
+    <Hash>bb7ceb7234f7577f6a0eccf1721059d1</Hash>
 </Codenesium>*/

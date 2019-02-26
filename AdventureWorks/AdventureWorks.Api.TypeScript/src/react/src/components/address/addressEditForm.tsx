@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AddressMapper from './addressMapper';
 import AddressViewModel from './addressViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { StateProvinceSelectComponent } from '../shared/stateProvinceSelect'
 	interface AddressEditComponentProps {
   form:WrappedFormUtils;
@@ -116,6 +117,19 @@ class AddressEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -241,5 +255,5 @@ class AddressEditComponent extends React.Component<
 export const WrappedAddressEditComponent = Form.create({ name: 'Address Edit' })(AddressEditComponent);
 
 /*<Codenesium>
-    <Hash>d1a01f964cc8e2ece148111f3befee66</Hash>
+    <Hash>2c610e4b82afb65057a322aec82bd517</Hash>
 </Codenesium>*/

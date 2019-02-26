@@ -33,9 +33,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			List<ApiOfficerServerResponseModel> response = await service.All();
 
@@ -55,9 +53,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			ApiOfficerServerResponseModel response = await service.Get(default(int));
 
@@ -76,9 +72,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			ApiOfficerServerResponseModel response = await service.Get(default(int));
 
@@ -98,9 +92,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			CreateResponse<ApiOfficerServerResponseModel> response = await service.Create(model);
 
@@ -124,9 +116,7 @@ namespace CADNS.Api.Services.Tests
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			CreateResponse<ApiOfficerServerResponseModel> response = await service.Create(model);
 
@@ -149,9 +139,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			UpdateResponse<ApiOfficerServerResponseModel> response = await service.Update(default(int), model);
 
@@ -176,9 +164,7 @@ namespace CADNS.Api.Services.Tests
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			UpdateResponse<ApiOfficerServerResponseModel> response = await service.Update(default(int), model);
 
@@ -200,9 +186,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -226,9 +210,7 @@ namespace CADNS.Api.Services.Tests
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -251,9 +233,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			List<ApiNoteServerResponseModel> response = await service.NotesByOfficerId(default(int));
 
@@ -272,9 +252,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
 			List<ApiNoteServerResponseModel> response = await service.NotesByOfficerId(default(int));
 
@@ -283,139 +261,47 @@ namespace CADNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void OfficerRefCapabilitiesByOfficerId_Exists()
+		public async void OfficerCapabilitiesByOfficerId_Exists()
 		{
 			var mock = new ServiceMockFacade<IOfficerRepository>();
-			var records = new List<OfficerRefCapability>();
-			records.Add(new OfficerRefCapability());
-			mock.RepositoryMock.Setup(x => x.OfficerRefCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var records = new List<OfficerCapabilities>();
+			records.Add(new OfficerCapabilities());
+			mock.RepositoryMock.Setup(x => x.OfficerCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new OfficerService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
-			List<ApiOfficerRefCapabilityServerResponseModel> response = await service.OfficerRefCapabilitiesByOfficerId(default(int));
+			List<ApiOfficerCapabilitiesServerResponseModel> response = await service.OfficerCapabilitiesByOfficerId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.OfficerRefCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.OfficerCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void OfficerRefCapabilitiesByOfficerId_Not_Exists()
+		public async void OfficerCapabilitiesByOfficerId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IOfficerRepository>();
-			mock.RepositoryMock.Setup(x => x.OfficerRefCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<OfficerRefCapability>>(new List<OfficerRefCapability>()));
+			mock.RepositoryMock.Setup(x => x.OfficerCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<OfficerCapabilities>>(new List<OfficerCapabilities>()));
 			var service = new OfficerService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
 			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
+			                                 mock.DALMapperMockFactory.DALOfficerCapabilitiesMapperMock);
 
-			List<ApiOfficerRefCapabilityServerResponseModel> response = await service.OfficerRefCapabilitiesByOfficerId(default(int));
+			List<ApiOfficerCapabilitiesServerResponseModel> response = await service.OfficerCapabilitiesByOfficerId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.OfficerRefCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void UnitOfficersByOfficerId_Exists()
-		{
-			var mock = new ServiceMockFacade<IOfficerRepository>();
-			var records = new List<UnitOfficer>();
-			records.Add(new UnitOfficer());
-			mock.RepositoryMock.Setup(x => x.UnitOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new OfficerService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
-
-			List<ApiUnitOfficerServerResponseModel> response = await service.UnitOfficersByOfficerId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.UnitOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void UnitOfficersByOfficerId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IOfficerRepository>();
-			mock.RepositoryMock.Setup(x => x.UnitOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<UnitOfficer>>(new List<UnitOfficer>()));
-			var service = new OfficerService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
-
-			List<ApiUnitOfficerServerResponseModel> response = await service.UnitOfficersByOfficerId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.UnitOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void VehicleOfficersByOfficerId_Exists()
-		{
-			var mock = new ServiceMockFacade<IOfficerRepository>();
-			var records = new List<VehicleOfficer>();
-			records.Add(new VehicleOfficer());
-			mock.RepositoryMock.Setup(x => x.VehicleOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new OfficerService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
-
-			List<ApiVehicleOfficerServerResponseModel> response = await service.VehicleOfficersByOfficerId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.VehicleOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void VehicleOfficersByOfficerId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IOfficerRepository>();
-			mock.RepositoryMock.Setup(x => x.VehicleOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<VehicleOfficer>>(new List<VehicleOfficer>()));
-			var service = new OfficerService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.OfficerModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALNoteMapperMock,
-			                                 mock.DALMapperMockFactory.DALOfficerRefCapabilityMapperMock,
-			                                 mock.DALMapperMockFactory.DALUnitOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock);
-
-			List<ApiVehicleOfficerServerResponseModel> response = await service.VehicleOfficersByOfficerId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.VehicleOfficersByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.OfficerCapabilitiesByOfficerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b85dda16f73d5a0d2936df36f7b64f40</Hash>
+    <Hash>2b62e56218170d8c92a8ebefa0473438</Hash>
 </Codenesium>*/

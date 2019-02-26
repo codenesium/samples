@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import JobCandidateMapper from './jobCandidateMapper';
 import JobCandidateViewModel from './jobCandidateViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { EmployeeSelectComponent } from '../shared/employeeSelect'
 	
 interface JobCandidateCreateComponentProps {
@@ -71,6 +72,20 @@ class JobCandidateCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -147,5 +162,5 @@ class JobCandidateCreateComponent extends React.Component<
 export const WrappedJobCandidateCreateComponent = Form.create({ name: 'JobCandidate Create' })(JobCandidateCreateComponent);
 
 /*<Codenesium>
-    <Hash>1bf72349d7b5b2f7d51b965ecfae6100</Hash>
+    <Hash>7f9aeaddf21f0261062f90bca0a701af</Hash>
 </Codenesium>*/

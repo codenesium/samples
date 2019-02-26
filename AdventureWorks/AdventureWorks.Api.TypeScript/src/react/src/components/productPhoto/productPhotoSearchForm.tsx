@@ -202,6 +202,7 @@ export default class ProductPhotoSearchComponent extends React.Component<Product
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -254,5 +255,5 @@ export default class ProductPhotoSearchComponent extends React.Component<Product
 export const WrappedProductPhotoSearchComponent = Form.create({ name: 'ProductPhoto Search' })(ProductPhotoSearchComponent);
 
 /*<Codenesium>
-    <Hash>4c92dea988e891bdf8396e47f19ab2ef</Hash>
+    <Hash>1fd7a94000ad07062489b0b15f781eda</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CountryRegionMapper from './countryRegionMapper';
 import CountryRegionViewModel from './countryRegionViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface CountryRegionCreateComponentProps {
   form:WrappedFormUtils;
@@ -70,6 +71,20 @@ class CountryRegionCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -138,5 +153,5 @@ class CountryRegionCreateComponent extends React.Component<
 export const WrappedCountryRegionCreateComponent = Form.create({ name: 'CountryRegion Create' })(CountryRegionCreateComponent);
 
 /*<Codenesium>
-    <Hash>dc5212f955a66c865b937821d16b2236</Hash>
+    <Hash>a5e926866e04ce01c49a220f9ceb83b3</Hash>
 </Codenesium>*/

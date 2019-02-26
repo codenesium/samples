@@ -44,6 +44,10 @@ export class ErrorLogTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -177,6 +181,7 @@ export class ErrorLogTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -219,5 +224,5 @@ export class ErrorLogTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>84e923d5b60208a14901cc6bdd7ddbfc</Hash>
+    <Hash>056a49553622cd7887a0312dac4e61a7</Hash>
 </Codenesium>*/

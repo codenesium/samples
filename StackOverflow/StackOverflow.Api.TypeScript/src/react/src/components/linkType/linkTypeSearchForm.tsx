@@ -216,6 +216,7 @@ export default class LinkTypeSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -274,5 +275,5 @@ export const WrappedLinkTypeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>411e1ac2389af4abd3aca521ada74fe2</Hash>
+    <Hash>fc2403bd15bc3af35273eee4cc517a5c</Hash>
 </Codenesium>*/

@@ -240,6 +240,7 @@ export default class FileSearchComponent extends React.Component<FileSearchCompo
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -292,5 +293,5 @@ export default class FileSearchComponent extends React.Component<FileSearchCompo
 export const WrappedFileSearchComponent = Form.create({ name: 'File Search' })(FileSearchComponent);
 
 /*<Codenesium>
-    <Hash>08f49735d6f839f551989d829bb12b4e</Hash>
+    <Hash>ddc35d9ede6fd73cc38ecf84c2c2e89a</Hash>
 </Codenesium>*/

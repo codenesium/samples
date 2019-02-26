@@ -128,6 +128,7 @@ export class BucketTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -170,5 +171,5 @@ export class BucketTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4d45d842094996c652a02288a47db4ef</Hash>
+    <Hash>cc43c12439b433d31cc59caab955c5f9</Hash>
 </Codenesium>*/

@@ -3,19 +3,15 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import VendorMapper from '../vendor/vendorMapper';
 import VendorViewModel from '../vendor/vendorViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface VendorSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface VendorSelectComponentState {
@@ -23,33 +19,30 @@ interface VendorSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<VendorViewModel>;
+  filteredRecords: Array<VendorViewModel>;
 }
 
-export class  VendorSelectComponent extends React.Component<
-VendorSelectComponentProps,
-VendorSelectComponentState
+export class VendorSelectComponent extends React.Component<
+  VendorSelectComponentProps,
+  VendorSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.VendorClientResponseModel>;
@@ -57,12 +50,11 @@ VendorSelectComponentState
           console.log(response);
 
           let mapper = new VendorMapper();
-          
-          let devices:Array<VendorViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<VendorViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -87,46 +79,41 @@ VendorSelectComponentState
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
         <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:VendorViewModel) =>
-            {
-                return <Select.Option value={x.businessEntityID}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue,
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map((x: VendorViewModel) => {
+                return (
+                  <Select.Option value={x.businessEntityID}>
+                    {x.toDisplay()}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </div>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>53e4eef1737463514bd62c658ac70978</Hash>
+    <Hash>55831705efb66c7b4417b052c0803b1e</Hash>
 </Codenesium>*/

@@ -103,14 +103,6 @@ namespace CADNS.Api.DataAccess
 			       .Where(x => x.CallId == callId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Note>();
 		}
 
-		// Foreign key reference to this table CallAssignment via callId.
-		public async virtual Task<List<CallAssignment>> CallAssignmentsByCallId(int callId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<CallAssignment>()
-			       .Include(x => x.CallIdNavigation)
-			       .Where(x => x.CallId == callId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CallAssignment>();
-		}
-
 		// Foreign key reference to table Address via addressId.
 		public async virtual Task<Address> AddressByAddressId(int? addressId)
 		{
@@ -137,6 +129,33 @@ namespace CADNS.Api.DataAccess
 		{
 			return await this.Context.Set<CallType>()
 			       .SingleOrDefaultAsync(x => x.Id == callTypeId);
+		}
+
+		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Call.
+		public async virtual Task<List<Call>> ByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.CallAssignments
+			              join calls in this.Context.Calls on
+			              refTable.CallId equals calls.Id
+			              where refTable.UnitId == unitId
+			              select calls).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Call.
+		public async virtual Task<CallAssignment> CreateCallAssignment(CallAssignment item)
+		{
+			this.Context.Set<CallAssignment>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Call.
+		public async virtual Task DeleteCallAssignment(CallAssignment item)
+		{
+			this.Context.Set<CallAssignment>().Remove(item);
+			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<Call>> Where(
@@ -169,5 +188,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5289d60ffc938e374e82a040676ca42f</Hash>
+    <Hash>1b0673495ea5ae458d5686d2deb7eb67</Hash>
 </Codenesium>*/

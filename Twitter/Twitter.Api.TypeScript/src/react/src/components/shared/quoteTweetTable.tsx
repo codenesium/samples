@@ -44,6 +44,10 @@ export class QuoteTweetTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -177,6 +181,7 @@ export class QuoteTweetTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -219,5 +224,5 @@ export class QuoteTweetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>dd51bab77609867b5c66bad608dded47</Hash>
+    <Hash>ca5f3018fb6d9f516330efe2dc5312de</Hash>
 </Codenesium>*/

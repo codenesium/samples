@@ -220,6 +220,7 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -272,5 +273,5 @@ export default class EventSearchComponent extends React.Component<EventSearchCom
 export const WrappedEventSearchComponent = Form.create({ name: 'Event Search' })(EventSearchComponent);
 
 /*<Codenesium>
-    <Hash>2ef5da8e7b0322c6ef863ae27d3b1adf</Hash>
+    <Hash>e9ae9393785d633af5c9717fcf568bad</Hash>
 </Codenesium>*/

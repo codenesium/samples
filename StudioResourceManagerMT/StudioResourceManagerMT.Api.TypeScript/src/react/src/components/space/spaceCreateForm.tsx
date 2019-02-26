@@ -1,17 +1,28 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SpaceMapper from './spaceMapper';
 import SpaceViewModel from './spaceViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface SpaceCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface SpaceCreateComponentState {
@@ -20,7 +31,7 @@ interface SpaceCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class SpaceCreateComponent extends React.Component<
@@ -33,12 +44,12 @@ class SpaceCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as SpaceViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +58,9 @@ class SpaceCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:SpaceViewModel) =>
-  {  
+  submit = (model: SpaceViewModel) => {
     let mapper = new SpaceMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.Spaces,
         mapper.mapViewModelToApiRequest(model),
@@ -65,79 +75,106 @@ class SpaceCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.SpaceClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+          if (error.response.data) {
+            let errorResponse = error.response.data as ActionResponse;
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="description">description</label>
+            <br />
+            {getFieldDecorator('description', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'description'} />
+            )}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='description'>description</label>
-              <br />             
-              {getFieldDecorator('description', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"description"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="name">name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'name'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='name'>name</label>
-              <br />             
-              {getFieldDecorator('name', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"name"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedSpaceCreateComponent = Form.create({ name: 'Space Create' })(SpaceCreateComponent);
+export const WrappedSpaceCreateComponent = Form.create({
+  name: 'Space Create',
+})(SpaceCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>8942267c904912acc8b9bc3a3d853ae8</Hash>
+    <Hash>85a5bd5f816daef22152aace42c3c272</Hash>
 </Codenesium>*/

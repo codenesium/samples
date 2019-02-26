@@ -7,9 +7,6 @@ import PostViewModel from './postViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface PostDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface PostDetailComponentState {
 }
 
 class PostDetailComponent extends React.Component<
-PostDetailComponentProps,
-PostDetailComponentState
+  PostDetailComponentProps,
+  PostDetailComponentState
 > {
   state = {
     model: new PostViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Posts + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Posts + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,107 +84,104 @@ PostDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>AcceptedAnswerId</h3>
-							<p>{String(this.state.model!.acceptedAnswerId)}</p>
-						 </div>
-					   						 <div>
-							<h3>AnswerCount</h3>
-							<p>{String(this.state.model!.answerCount)}</p>
-						 </div>
-					   						 <div>
-							<h3>Body</h3>
-							<p>{String(this.state.model!.body)}</p>
-						 </div>
-					   						 <div>
-							<h3>ClosedDate</h3>
-							<p>{String(this.state.model!.closedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>CommentCount</h3>
-							<p>{String(this.state.model!.commentCount)}</p>
-						 </div>
-					   						 <div>
-							<h3>CommunityOwnedDate</h3>
-							<p>{String(this.state.model!.communityOwnedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>CreationDate</h3>
-							<p>{String(this.state.model!.creationDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>FavoriteCount</h3>
-							<p>{String(this.state.model!.favoriteCount)}</p>
-						 </div>
-					   						 <div>
-							<h3>LastActivityDate</h3>
-							<p>{String(this.state.model!.lastActivityDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>LastEditDate</h3>
-							<p>{String(this.state.model!.lastEditDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>LastEditorDisplayName</h3>
-							<p>{String(this.state.model!.lastEditorDisplayName)}</p>
-						 </div>
-					   						 <div>
-							<h3>LastEditorUserId</h3>
-							<p>{String(this.state.model!.lastEditorUserId)}</p>
-						 </div>
-					   						 <div>
-							<h3>OwnerUserId</h3>
-							<p>{String(this.state.model!.ownerUserId)}</p>
-						 </div>
-					   						 <div>
-							<h3>ParentId</h3>
-							<p>{String(this.state.model!.parentId)}</p>
-						 </div>
-					   						 <div>
-							<h3>PostTypeId</h3>
-							<p>{String(this.state.model!.postTypeId)}</p>
-						 </div>
-					   						 <div>
-							<h3>Score</h3>
-							<p>{String(this.state.model!.score)}</p>
-						 </div>
-					   						 <div>
-							<h3>Tags</h3>
-							<p>{String(this.state.model!.tag)}</p>
-						 </div>
-					   						 <div>
-							<h3>Title</h3>
-							<p>{String(this.state.model!.title)}</p>
-						 </div>
-					   						 <div>
-							<h3>ViewCount</h3>
-							<p>{String(this.state.model!.viewCount)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>AcceptedAnswerId</h3>
+              <p>{String(this.state.model!.acceptedAnswerId)}</p>
+            </div>
+            <div>
+              <h3>AnswerCount</h3>
+              <p>{String(this.state.model!.answerCount)}</p>
+            </div>
+            <div>
+              <h3>Body</h3>
+              <p>{String(this.state.model!.body)}</p>
+            </div>
+            <div>
+              <h3>ClosedDate</h3>
+              <p>{String(this.state.model!.closedDate)}</p>
+            </div>
+            <div>
+              <h3>CommentCount</h3>
+              <p>{String(this.state.model!.commentCount)}</p>
+            </div>
+            <div>
+              <h3>CommunityOwnedDate</h3>
+              <p>{String(this.state.model!.communityOwnedDate)}</p>
+            </div>
+            <div>
+              <h3>CreationDate</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
+            </div>
+            <div>
+              <h3>FavoriteCount</h3>
+              <p>{String(this.state.model!.favoriteCount)}</p>
+            </div>
+            <div>
+              <h3>LastActivityDate</h3>
+              <p>{String(this.state.model!.lastActivityDate)}</p>
+            </div>
+            <div>
+              <h3>LastEditDate</h3>
+              <p>{String(this.state.model!.lastEditDate)}</p>
+            </div>
+            <div>
+              <h3>LastEditorDisplayName</h3>
+              <p>{String(this.state.model!.lastEditorDisplayName)}</p>
+            </div>
+            <div>
+              <h3>LastEditorUserId</h3>
+              <p>{String(this.state.model!.lastEditorUserId)}</p>
+            </div>
+            <div>
+              <h3>OwnerUserId</h3>
+              <p>{String(this.state.model!.ownerUserId)}</p>
+            </div>
+            <div>
+              <h3>ParentId</h3>
+              <p>{String(this.state.model!.parentId)}</p>
+            </div>
+            <div>
+              <h3>PostTypeId</h3>
+              <p>{String(this.state.model!.postTypeId)}</p>
+            </div>
+            <div>
+              <h3>Score</h3>
+              <p>{String(this.state.model!.score)}</p>
+            </div>
+            <div>
+              <h3>Tags</h3>
+              <p>{String(this.state.model!.tag)}</p>
+            </div>
+            <div>
+              <h3>Title</h3>
+              <p>{String(this.state.model!.title)}</p>
+            </div>
+            <div>
+              <h3>ViewCount</h3>
+              <p>{String(this.state.model!.viewCount)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -198,6 +194,7 @@ export const WrappedPostDetailComponent = Form.create({ name: 'Post Detail' })(
   PostDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>04ae1e76545a4766c394dd526d7319b7</Hash>
+    <Hash>24a7b16f9bcdfad5c2bb2089514fb269</Hash>
 </Codenesium>*/

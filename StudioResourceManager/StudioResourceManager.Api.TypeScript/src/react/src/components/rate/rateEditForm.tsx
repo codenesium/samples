@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RateMapper from './rateMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { TeacherSelectComponent } from '../shared/teacherSelect';
 import { TeacherSkillSelectComponent } from '../shared/teacherSkillSelect';
 interface RateEditComponentProps {
@@ -134,6 +135,19 @@ class RateEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -210,5 +224,5 @@ export const WrappedRateEditComponent = Form.create({ name: 'Rate Edit' })(
 
 
 /*<Codenesium>
-    <Hash>7ba33d0151b8c67afb3fc3e1ce6ae5d0</Hash>
+    <Hash>e6f0a31efec1ababfcb999a141e8023f</Hash>
 </Codenesium>*/

@@ -6,10 +6,7 @@ import OrganizationMapper from './organizationMapper';
 import OrganizationViewModel from './organizationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {TeamTableComponent} from '../shared/teamTable'
-	
-
-
+import { TeamTableComponent } from '../shared/teamTable';
 
 interface OrganizationDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface OrganizationDetailComponentState {
 }
 
 class OrganizationDetailComponent extends React.Component<
-OrganizationDetailComponentProps,
-OrganizationDetailComponentState
+  OrganizationDetailComponentProps,
+  OrganizationDetailComponentState
 > {
   state = {
     model: new OrganizationViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Organizations + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Organizations + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,48 +85,52 @@ OrganizationDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Teams</h3>
-            <TeamTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Organizations + '/' + this.state.model!.id + '/' + ApiRoutes.Teams}
-			/>
-         </div>
-	
-
+            <TeamTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Organizations +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Teams
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,10 +139,11 @@ OrganizationDetailComponentState
   }
 }
 
-export const WrappedOrganizationDetailComponent = Form.create({ name: 'Organization Detail' })(
-  OrganizationDetailComponent
-);
+export const WrappedOrganizationDetailComponent = Form.create({
+  name: 'Organization Detail',
+})(OrganizationDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>646dad190f1dbaef4fd52d583ee00e3c</Hash>
+    <Hash>42f06e276cb3af15bc101a889540be06</Hash>
 </Codenesium>*/

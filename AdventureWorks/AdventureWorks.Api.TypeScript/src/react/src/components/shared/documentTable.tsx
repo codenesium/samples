@@ -39,11 +39,15 @@ handleEditClick(e:any, row: DocumentViewModel) {
   this.props.history.push(ClientRoutes.Documents + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: DocumentViewModel) {
-  this.props.history.push(ClientRoutes.Documents + '/' + row.id);
-}
+ handleDetailClick(e:any, row: DocumentViewModel) {
+   this.props.history.push(ClientRoutes.Documents + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -194,6 +198,7 @@ handleDetailClick(e:any, row: DocumentViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -231,5 +236,5 @@ handleDetailClick(e:any, row: DocumentViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>527ea199732c47b39955475a03245f0e</Hash>
+    <Hash>da2923c2d80ea4d148d7aab7bb109f03</Hash>
 </Codenesium>*/

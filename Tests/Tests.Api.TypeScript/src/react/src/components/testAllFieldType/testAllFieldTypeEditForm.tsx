@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TestAllFieldTypeMapper from './testAllFieldTypeMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface TestAllFieldTypeEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -135,6 +136,19 @@ class TestAllFieldTypeEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -473,5 +487,5 @@ export const WrappedTestAllFieldTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>914e46c32dd0b351b6ea557fb3407479</Hash>
+    <Hash>dac45d6ff40988bbadb9967954b72554</Hash>
 </Codenesium>*/

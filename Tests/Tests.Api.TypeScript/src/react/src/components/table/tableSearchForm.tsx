@@ -223,6 +223,7 @@ export default class TableSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -281,5 +282,5 @@ export const WrappedTableSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6c42be932be128997b792488bc36c8fe</Hash>
+    <Hash>ebcb15c73b1416a59a0c63af7bb67aae</Hash>
 </Codenesium>*/

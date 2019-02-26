@@ -86,18 +86,20 @@ class FileTypeCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            let errorResponse = error.response.data as ActionResponse;
 
-          errorResponse.validationErrors.forEach(x => {
-            this.props.form.setFields({
-              [ToLowerCaseFirstLetter(x.propertyName)]: {
-                value: this.props.form.getFieldValue(
-                  ToLowerCaseFirstLetter(x.propertyName)
-                ),
-                errors: [new Error(x.errorMessage)],
-              },
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
             });
-          });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -161,5 +163,5 @@ export const WrappedFileTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8cf6f7f99ac79f0f8ab191a7f6e00189</Hash>
+    <Hash>517f94782c18a11147f123d8a5bac64f</Hash>
 </Codenesium>*/

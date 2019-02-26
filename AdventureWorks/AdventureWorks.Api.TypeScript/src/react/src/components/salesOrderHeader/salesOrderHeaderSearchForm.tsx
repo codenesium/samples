@@ -342,6 +342,7 @@ export default class SalesOrderHeaderSearchComponent extends React.Component<Sal
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -394,5 +395,5 @@ export default class SalesOrderHeaderSearchComponent extends React.Component<Sal
 export const WrappedSalesOrderHeaderSearchComponent = Form.create({ name: 'SalesOrderHeader Search' })(SalesOrderHeaderSearchComponent);
 
 /*<Codenesium>
-    <Hash>379b9acf33b3239fab020d7468600e4b</Hash>
+    <Hash>347c5901cdd6b7986d8812e12e2a5d24</Hash>
 </Codenesium>*/

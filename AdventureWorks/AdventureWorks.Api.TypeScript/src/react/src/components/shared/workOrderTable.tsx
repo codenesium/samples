@@ -44,6 +44,10 @@ export class WorkOrderTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -212,6 +216,7 @@ export class WorkOrderTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -254,5 +259,5 @@ export class WorkOrderTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>caa44ca1bf16692d2918018761a0b694</Hash>
+    <Hash>b82bb22d03fe253b9352c3f1931a8133</Hash>
 </Codenesium>*/

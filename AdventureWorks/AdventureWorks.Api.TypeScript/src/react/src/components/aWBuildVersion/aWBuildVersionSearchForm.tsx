@@ -190,6 +190,7 @@ export default class AWBuildVersionSearchComponent extends React.Component<AWBui
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -242,5 +243,5 @@ export default class AWBuildVersionSearchComponent extends React.Component<AWBui
 export const WrappedAWBuildVersionSearchComponent = Form.create({ name: 'AWBuildVersion Search' })(AWBuildVersionSearchComponent);
 
 /*<Codenesium>
-    <Hash>5fb5c27373e2c8be05431f36609c5d6b</Hash>
+    <Hash>a3fd065bf978c5d6e09c325bf4cce11c</Hash>
 </Codenesium>*/

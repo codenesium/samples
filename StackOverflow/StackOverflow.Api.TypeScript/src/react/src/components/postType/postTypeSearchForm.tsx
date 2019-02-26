@@ -216,6 +216,7 @@ export default class PostTypeSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -274,5 +275,5 @@ export const WrappedPostTypeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>76131edb6483416b5be6a441a050dae7</Hash>
+    <Hash>fa96ab6baa9f598e81cd0961c9ff6717</Hash>
 </Codenesium>*/

@@ -192,6 +192,7 @@ export default class ClaspSearchComponent extends React.Component<ClaspSearchCom
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -244,5 +245,5 @@ export default class ClaspSearchComponent extends React.Component<ClaspSearchCom
 export const WrappedClaspSearchComponent = Form.create({ name: 'Clasp Search' })(ClaspSearchComponent);
 
 /*<Codenesium>
-    <Hash>b99c6d91b4ab1fd19b0a5d7c2c80792e</Hash>
+    <Hash>215bb9ed6bc4fa0c4d48144116b161c0</Hash>
 </Codenesium>*/

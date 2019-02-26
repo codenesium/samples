@@ -44,6 +44,10 @@ export class LinkLogTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -150,6 +154,7 @@ export class LinkLogTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -192,5 +197,5 @@ export class LinkLogTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4b1759ddc16d101ac07f460fa228d2c7</Hash>
+    <Hash>b36d43f1cfc53dffbb6bff25fa2fc555</Hash>
 </Codenesium>*/

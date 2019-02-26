@@ -44,6 +44,10 @@ export class HandlerTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -145,6 +149,7 @@ export class HandlerTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -187,5 +192,5 @@ export class HandlerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9703d4ad60fa94fb41e3865a8e9b9206</Hash>
+    <Hash>c262b8db4fecdee66dd0dbc723d18fe8</Hash>
 </Codenesium>*/

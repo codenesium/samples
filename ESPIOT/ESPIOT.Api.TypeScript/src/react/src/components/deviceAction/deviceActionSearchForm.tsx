@@ -188,6 +188,7 @@ export default class DeviceActionSearchComponent extends React.Component<DeviceA
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -240,5 +241,5 @@ export default class DeviceActionSearchComponent extends React.Component<DeviceA
 export const WrappedDeviceActionSearchComponent = Form.create({ name: 'DeviceAction Search' })(DeviceActionSearchComponent);
 
 /*<Codenesium>
-    <Hash>45e6298a32e6a9778143dc4db965044f</Hash>
+    <Hash>c29f719d12ab5ca63e61e04271331155</Hash>
 </Codenesium>*/

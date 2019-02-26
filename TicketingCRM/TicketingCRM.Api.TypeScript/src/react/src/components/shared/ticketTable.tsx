@@ -144,6 +144,7 @@ export class TicketTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -186,5 +187,5 @@ export class TicketTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4d1e6f0472fb01933231b62221ca49eb</Hash>
+    <Hash>64db988a4b0d2ef79accc29c4d47ca7c</Hash>
 </Codenesium>*/

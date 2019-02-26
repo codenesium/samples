@@ -44,6 +44,10 @@ export class PostHistoryTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -170,6 +174,7 @@ export class PostHistoryTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -212,5 +217,5 @@ export class PostHistoryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>64fae235fe54c65ac442c25ad76a4cbd</Hash>
+    <Hash>0fa21829682255fe1ca188f2d1180d43</Hash>
 </Codenesium>*/

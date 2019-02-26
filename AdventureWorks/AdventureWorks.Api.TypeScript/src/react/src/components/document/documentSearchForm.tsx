@@ -244,6 +244,7 @@ export default class DocumentSearchComponent extends React.Component<DocumentSea
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -296,5 +297,5 @@ export default class DocumentSearchComponent extends React.Component<DocumentSea
 export const WrappedDocumentSearchComponent = Form.create({ name: 'Document Search' })(DocumentSearchComponent);
 
 /*<Codenesium>
-    <Hash>b1669823060bc2cee8b078fd40768025</Hash>
+    <Hash>208e67d379e51b026a51a14bd26cde3f</Hash>
 </Codenesium>*/

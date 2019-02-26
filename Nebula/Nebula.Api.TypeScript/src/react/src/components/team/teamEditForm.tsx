@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeamMapper from './teamMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { OrganizationSelectComponent } from '../shared/organizationSelect';
 interface TeamEditComponentProps {
   form: WrappedFormUtils;
@@ -133,6 +134,19 @@ class TeamEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -204,5 +218,5 @@ export const WrappedTeamEditComponent = Form.create({ name: 'Team Edit' })(
 
 
 /*<Codenesium>
-    <Hash>0664917679af32691fbb21e53c44fe9a</Hash>
+    <Hash>e05aa45122f8957a9827880234bcb0c2</Hash>
 </Codenesium>*/

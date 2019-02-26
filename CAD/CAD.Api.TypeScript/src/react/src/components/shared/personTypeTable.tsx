@@ -39,11 +39,15 @@ handleEditClick(e:any, row: PersonTypeViewModel) {
   this.props.history.push(ClientRoutes.PersonTypes + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: PersonTypeViewModel) {
-  this.props.history.push(ClientRoutes.PersonTypes + '/' + row.id);
-}
+ handleDetailClick(e:any, row: PersonTypeViewModel) {
+   this.props.history.push(ClientRoutes.PersonTypes + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -122,6 +126,7 @@ handleDetailClick(e:any, row: PersonTypeViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -159,5 +164,5 @@ handleDetailClick(e:any, row: PersonTypeViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>6aacc4d3ab56230eb71cd72c44182dbb</Hash>
+    <Hash>54afffb59f6380012ca37be125ca1819</Hash>
 </Codenesium>*/

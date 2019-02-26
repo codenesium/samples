@@ -260,6 +260,7 @@ export default class PipelineStepNoteSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -318,5 +319,5 @@ export const WrappedPipelineStepNoteSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>791b17e343090248742a22db8b73121a</Hash>
+    <Hash>88040a9b0deb7680c4aa39705cff293c</Hash>
 </Codenesium>*/

@@ -219,27 +219,18 @@
             "Columns": [
               {
                 "$id": "27",
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "28",
                 "Name": "callId",
                 "DataType": "int",
-                "NumericPrecision": 0,
+                "NumericPrecision": 10,
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               },
               {
-                "$id": "29",
+                "$id": "28",
                 "Name": "unitId",
                 "DataType": "int",
-                "NumericPrecision": 0,
+                "NumericPrecision": 10,
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
@@ -247,19 +238,27 @@
             ],
             "Constraints": [
               {
-                "$id": "30",
+                "$id": "29",
                 "Name": "PK_CallAssignment",
                 "TableName": "CallAssignment",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "31",
-                    "Name": "id",
+                    "$id": "30",
+                    "Name": "callId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "31",
+                    "Name": "unitId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "SchemaName": "dbo",
@@ -275,7 +274,7 @@
                   {
                     "$id": "33",
                     "Name": "callId",
-                    "Order": 0,
+                    "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
                     "IsIdentity": false
@@ -294,7 +293,7 @@
                   {
                     "$id": "35",
                     "Name": "unitId",
-                    "Order": 0,
+                    "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
                     "IsIdentity": false
@@ -672,23 +671,23 @@
           },
           {
             "$id": "75",
-            "Name": "OfficerCapability",
+            "Name": "OfficerCapabilities",
             "Columns": [
               {
                 "$id": "76",
-                "Name": "id",
+                "Name": "capabilityId",
                 "DataType": "int",
                 "NumericPrecision": 10,
                 "MaxLength": 0,
                 "IsNullable": false,
-                "DatabaseGenerated": true
+                "DatabaseGenerated": false
               },
               {
                 "$id": "77",
-                "Name": "name",
-                "DataType": "varchar",
-                "NumericPrecision": 0,
-                "MaxLength": 128,
+                "Name": "officerId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               }
@@ -696,18 +695,26 @@
             "Constraints": [
               {
                 "$id": "78",
-                "Name": "PK_OfficerCapability",
-                "TableName": "OfficerCapability",
+                "Name": "PK_OfficerCapabilities",
+                "TableName": "OfficerCapabilities",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
                     "$id": "79",
-                    "Name": "id",
+                    "Name": "capabilityId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "80",
+                    "Name": "officerId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "SchemaName": "dbo",
@@ -718,18 +725,9 @@
             "IsView": false
           },
           {
-            "$id": "80",
-            "Name": "OfficerRefCapability",
+            "$id": "81",
+            "Name": "OfficerCapability",
             "Columns": [
-              {
-                "$id": "81",
-                "Name": "capabilityId",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              },
               {
                 "$id": "82",
                 "Name": "id",
@@ -741,10 +739,10 @@
               },
               {
                 "$id": "83",
-                "Name": "officerId",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               }
@@ -752,8 +750,8 @@
             "Constraints": [
               {
                 "$id": "84",
-                "Name": "PK_OfficerRefCapability",
-                "TableName": "OfficerRefCapability",
+                "Name": "PK_OfficerCapability",
+                "TableName": "OfficerCapability",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
@@ -994,15 +992,6 @@
             "Columns": [
               {
                 "$id": "110",
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "111",
                 "Name": "officerId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -1011,7 +1000,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "112",
+                "$id": "111",
                 "Name": "unitId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -1022,19 +1011,27 @@
             ],
             "Constraints": [
               {
-                "$id": "113",
+                "$id": "112",
                 "Name": "PK_UnitOfficer",
                 "TableName": "UnitOfficer",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "114",
-                    "Name": "id",
+                    "$id": "113",
+                    "Name": "officerId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "114",
+                    "Name": "unitId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "SchemaName": "dbo",
@@ -1093,75 +1090,19 @@
           },
           {
             "$id": "120",
-            "Name": "VehicleCapability",
+            "Name": "VehicleCapabilities",
             "Columns": [
               {
                 "$id": "121",
-                "Name": "id",
+                "Name": "vehicleCapabilityId",
                 "DataType": "int",
                 "NumericPrecision": 10,
                 "MaxLength": 0,
                 "IsNullable": false,
-                "DatabaseGenerated": true
+                "DatabaseGenerated": false
               },
               {
                 "$id": "122",
-                "Name": "name",
-                "DataType": "varchar",
-                "NumericPrecision": 0,
-                "MaxLength": 128,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              }
-            ],
-            "Constraints": [
-              {
-                "$id": "123",
-                "Name": "PK_VehicleCapability",
-                "TableName": "VehicleCapability",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "Columns": [
-                  {
-                    "$id": "124",
-                    "Name": "id",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": true
-                  }
-                ],
-                "SchemaName": "dbo",
-                "IsUnique": true
-              }
-            ],
-            "DefaultConstraints": [],
-            "IsView": false
-          },
-          {
-            "$id": "125",
-            "Name": "VehicleOfficer",
-            "Columns": [
-              {
-                "$id": "126",
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "127",
-                "Name": "officerId",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              },
-              {
-                "$id": "128",
                 "Name": "vehicleId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -1172,9 +1113,64 @@
             ],
             "Constraints": [
               {
+                "$id": "123",
+                "Name": "PK_VehicleCapabilities",
+                "TableName": "VehicleCapabilities",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "124",
+                    "Name": "vehicleId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "125",
+                    "Name": "vehicleCapabilityId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "126",
+            "Name": "VehicleCapability",
+            "Columns": [
+              {
+                "$id": "127",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "128",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
                 "$id": "129",
-                "Name": "PK_VehicleOfficer",
-                "TableName": "VehicleOfficer",
+                "Name": "PK_VehicleCapability",
+                "TableName": "VehicleCapability",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
@@ -1196,20 +1192,11 @@
           },
           {
             "$id": "131",
-            "Name": "VehicleRefCapability",
+            "Name": "VehicleOfficer",
             "Columns": [
               {
                 "$id": "132",
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "133",
-                "Name": "vehicleCapabilityId",
+                "Name": "officerId",
                 "DataType": "int",
                 "NumericPrecision": 10,
                 "MaxLength": 0,
@@ -1217,7 +1204,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "134",
+                "$id": "133",
                 "Name": "vehicleId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -1228,23 +1215,50 @@
             ],
             "Constraints": [
               {
-                "$id": "135",
-                "Name": "PK_VehicleRefCapability",
-                "TableName": "VehicleRefCapability",
+                "$id": "134",
+                "Name": "PK_VehicleOfficer",
+                "TableName": "VehicleOfficer",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "136",
-                    "Name": "id",
+                    "$id": "135",
+                    "Name": "officerId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "136",
+                    "Name": "vehicleId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "SchemaName": "dbo",
                 "IsUnique": true
+              },
+              {
+                "$id": "137",
+                "Name": "IX_VehicleOfficer_officerId",
+                "TableName": "VehicleOfficer",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "138",
+                    "Name": "officerId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
               }
             ],
             "DefaultConstraints": [],
@@ -1253,58 +1267,10 @@
         ],
         "ForeignKeys": [
           {
-            "$id": "137",
-            "Columns": [
-              {
-                "$id": "138",
-                "ForeignKeyTableName": "Call",
-                "ForeignKeyColumnName": "addressId",
-                "PrimaryKeyTableName": "Address",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_Call_addressId_Address_id"
-          },
-          {
             "$id": "139",
             "Columns": [
               {
                 "$id": "140",
-                "ForeignKeyTableName": "Call",
-                "ForeignKeyColumnName": "callStatusId",
-                "PrimaryKeyTableName": "CallStatus",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_Call_callStatusId_CallStatus_id"
-          },
-          {
-            "$id": "141",
-            "Columns": [
-              {
-                "$id": "142",
-                "ForeignKeyTableName": "Call",
-                "ForeignKeyColumnName": "callTypeId",
-                "PrimaryKeyTableName": "CallType",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_Call_callTypeId_CallType_id"
-          },
-          {
-            "$id": "143",
-            "Columns": [
-              {
-                "$id": "144",
                 "ForeignKeyTableName": "Call",
                 "ForeignKeyColumnName": "callDispositionId",
                 "PrimaryKeyTableName": "CallDisposition",
@@ -1317,10 +1283,90 @@
             "ForeignKeyName": "FK_Call_callDispositionId_CallDisposition_id"
           },
           {
+            "$id": "141",
+            "Columns": [
+              {
+                "$id": "142",
+                "ForeignKeyTableName": "Call",
+                "ForeignKeyColumnName": "callStatusId",
+                "PrimaryKeyTableName": "CallStatus",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Call_callStatusId_CallStatus_id"
+          },
+          {
+            "$id": "143",
+            "Columns": [
+              {
+                "$id": "144",
+                "ForeignKeyTableName": "Call",
+                "ForeignKeyColumnName": "callTypeId",
+                "PrimaryKeyTableName": "CallType",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Call_callTypeId_CallType_id"
+          },
+          {
             "$id": "145",
             "Columns": [
               {
                 "$id": "146",
+                "ForeignKeyTableName": "Call",
+                "ForeignKeyColumnName": "addressId",
+                "PrimaryKeyTableName": "Address",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Call_addressId_Address_id"
+          },
+          {
+            "$id": "147",
+            "Columns": [
+              {
+                "$id": "148",
+                "ForeignKeyTableName": "CallAssignment",
+                "ForeignKeyColumnName": "callId",
+                "PrimaryKeyTableName": "Call",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "fk_callassignment_callid_call_id"
+          },
+          {
+            "$id": "149",
+            "Columns": [
+              {
+                "$id": "150",
+                "ForeignKeyTableName": "CallAssignment",
+                "ForeignKeyColumnName": "unitId",
+                "PrimaryKeyTableName": "Unit",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "fk_callassignment_unitid_unit_id"
+          },
+          {
+            "$id": "151",
+            "Columns": [
+              {
+                "$id": "152",
                 "ForeignKeyTableName": "CallPerson",
                 "ForeignKeyColumnName": "personId",
                 "PrimaryKeyTableName": "Person",
@@ -1333,10 +1379,10 @@
             "ForeignKeyName": "FK_CallPerson_personId_Person_id"
           },
           {
-            "$id": "147",
+            "$id": "153",
             "Columns": [
               {
-                "$id": "148",
+                "$id": "154",
                 "ForeignKeyTableName": "CallPerson",
                 "ForeignKeyColumnName": "personTypeId",
                 "PrimaryKeyTableName": "PersonType",
@@ -1349,10 +1395,10 @@
             "ForeignKeyName": "FK_CallPerson_personTypeId_PersonType_id"
           },
           {
-            "$id": "149",
+            "$id": "155",
             "Columns": [
               {
-                "$id": "150",
+                "$id": "156",
                 "ForeignKeyTableName": "Note",
                 "ForeignKeyColumnName": "callId",
                 "PrimaryKeyTableName": "Call",
@@ -1365,10 +1411,10 @@
             "ForeignKeyName": "FK_Note_callId_Call_id"
           },
           {
-            "$id": "151",
+            "$id": "157",
             "Columns": [
               {
-                "$id": "152",
+                "$id": "158",
                 "ForeignKeyTableName": "Note",
                 "ForeignKeyColumnName": "officerId",
                 "PrimaryKeyTableName": "Officer",
@@ -1381,11 +1427,11 @@
             "ForeignKeyName": "FK_Note_officerId_Officer_id"
           },
           {
-            "$id": "153",
+            "$id": "159",
             "Columns": [
               {
-                "$id": "154",
-                "ForeignKeyTableName": "OfficerRefCapability",
+                "$id": "160",
+                "ForeignKeyTableName": "OfficerCapabilities",
                 "ForeignKeyColumnName": "officerId",
                 "PrimaryKeyTableName": "Officer",
                 "PrimaryKeyColumnName": "id",
@@ -1397,11 +1443,11 @@
             "ForeignKeyName": "FK_OfficerRefCapability_officerId_Officer_id"
           },
           {
-            "$id": "155",
+            "$id": "161",
             "Columns": [
               {
-                "$id": "156",
-                "ForeignKeyTableName": "OfficerRefCapability",
+                "$id": "162",
+                "ForeignKeyTableName": "OfficerCapabilities",
                 "ForeignKeyColumnName": "capabilityId",
                 "PrimaryKeyTableName": "OfficerCapability",
                 "PrimaryKeyColumnName": "id",
@@ -1413,26 +1459,10 @@
             "ForeignKeyName": "FK_OfficerRefCapability_capabilityId_OfficerCapability_id"
           },
           {
-            "$id": "157",
+            "$id": "163",
             "Columns": [
               {
-                "$id": "158",
-                "ForeignKeyTableName": "UnitOfficer",
-                "ForeignKeyColumnName": "officerId",
-                "PrimaryKeyTableName": "Officer",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_UnitOfficer_officerId_Officer_id"
-          },
-          {
-            "$id": "159",
-            "Columns": [
-              {
-                "$id": "160",
+                "$id": "164",
                 "ForeignKeyTableName": "UnitOfficer",
                 "ForeignKeyColumnName": "unitId",
                 "PrimaryKeyTableName": "Unit",
@@ -1445,27 +1475,11 @@
             "ForeignKeyName": "FK_UnitOfficer_unitId_Unit_id"
           },
           {
-            "$id": "161",
+            "$id": "165",
             "Columns": [
               {
-                "$id": "162",
-                "ForeignKeyTableName": "VehicleOfficer",
-                "ForeignKeyColumnName": "vehicleId",
-                "PrimaryKeyTableName": "Vehicle",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_VehicleOfficer_vehicleId_Vehicle_id"
-          },
-          {
-            "$id": "163",
-            "Columns": [
-              {
-                "$id": "164",
-                "ForeignKeyTableName": "VehicleOfficer",
+                "$id": "166",
+                "ForeignKeyTableName": "UnitOfficer",
                 "ForeignKeyColumnName": "officerId",
                 "PrimaryKeyTableName": "Officer",
                 "PrimaryKeyColumnName": "id",
@@ -1474,30 +1488,14 @@
                 "Order": 1
               }
             ],
-            "ForeignKeyName": "FK_VehicleOfficer_officerId_Officer_id"
-          },
-          {
-            "$id": "165",
-            "Columns": [
-              {
-                "$id": "166",
-                "ForeignKeyTableName": "VehicleRefCapability",
-                "ForeignKeyColumnName": "vehicleCapabilityId",
-                "PrimaryKeyTableName": "VehicleCapability",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_VehicleRefCapability_vehicleCapabilityId_VehicleCapability_id"
+            "ForeignKeyName": "FK_UnitOfficer_officerId_Officer_id"
           },
           {
             "$id": "167",
             "Columns": [
               {
                 "$id": "168",
-                "ForeignKeyTableName": "VehicleRefCapability",
+                "ForeignKeyTableName": "VehicleCapabilities",
                 "ForeignKeyColumnName": "vehicleId",
                 "PrimaryKeyTableName": "Vehicle",
                 "PrimaryKeyColumnName": "id",
@@ -1513,32 +1511,48 @@
             "Columns": [
               {
                 "$id": "170",
-                "ForeignKeyTableName": "CallAssignment",
-                "ForeignKeyColumnName": "callId",
-                "PrimaryKeyTableName": "Call",
+                "ForeignKeyTableName": "VehicleCapabilities",
+                "ForeignKeyColumnName": "vehicleCapabilityId",
+                "PrimaryKeyTableName": "VehicleCapability",
                 "PrimaryKeyColumnName": "id",
                 "PrimaryKeySchemaName": "dbo",
                 "ForeignKeySchemaName": "dbo",
-                "Order": 0
+                "Order": 1
               }
             ],
-            "ForeignKeyName": "fk_callassignment_callid_call_id"
+            "ForeignKeyName": "FK_VehicleRefCapability_vehicleCapabilityId_VehicleCapability_id"
           },
           {
             "$id": "171",
             "Columns": [
               {
                 "$id": "172",
-                "ForeignKeyTableName": "CallAssignment",
-                "ForeignKeyColumnName": "unitId",
-                "PrimaryKeyTableName": "Unit",
+                "ForeignKeyTableName": "VehicleOfficer",
+                "ForeignKeyColumnName": "vehicleId",
+                "PrimaryKeyTableName": "Vehicle",
                 "PrimaryKeyColumnName": "id",
                 "PrimaryKeySchemaName": "dbo",
                 "ForeignKeySchemaName": "dbo",
-                "Order": 0
+                "Order": 1
               }
             ],
-            "ForeignKeyName": "fk_callassignment_unitid_unit_id"
+            "ForeignKeyName": "FK_VehicleOfficer_vehicleId_Vehicle_id"
+          },
+          {
+            "$id": "173",
+            "Columns": [
+              {
+                "$id": "174",
+                "ForeignKeyTableName": "VehicleOfficer",
+                "ForeignKeyColumnName": "officerId",
+                "PrimaryKeyTableName": "Officer",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_VehicleOfficer_officerId_Officer_id"
           }
         ]
       }
@@ -1547,23 +1561,23 @@
     "DatabaseType": "MSSQL"
   },
   "Project": {
-    "$id": "173",
+    "$id": "175",
     "Schemas": [
       {
-        "$id": "174",
+        "$id": "176",
         "AppSchemaName": "dbo",
-        "AppSchemaId": "2b1245bc-c1be-4eb5-8fab-f9eb1d1a82c4",
+        "AppSchemaId": "6fcaee33-4e35-490e-9b9d-29f56edcf9f1",
         "Tables": [
           {
-            "$id": "175",
+            "$id": "177",
             "AppTableName": "Address",
             "AppTableNamePlural": "Addresses",
             "AppDoNotProcess": false,
-            "AppTableId": "648856e9-5eb4-462f-a94e-5e19883d61e9",
+            "AppTableId": "e6ba441d-57fd-4ae4-b43a-6956f567aff0",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "176",
+                "$id": "178",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1580,7 +1594,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "175"
+                  "$ref": "177"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1596,7 +1610,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "177",
+                "$id": "179",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -1613,7 +1627,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "175"
+                  "$ref": "177"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1629,7 +1643,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "178",
+                "$id": "180",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1646,7 +1660,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "175"
+                  "$ref": "177"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1662,7 +1676,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "179",
+                "$id": "181",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1679,7 +1693,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "175"
+                  "$ref": "177"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1695,7 +1709,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "180",
+                "$id": "182",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1712,7 +1726,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "175"
+                  "$ref": "177"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1728,7 +1742,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "181",
+                "$id": "183",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -1745,7 +1759,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "175"
+                  "$ref": "177"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1763,12 +1777,12 @@
             ],
             "Constraints": [
               {
-                "$id": "182",
+                "$id": "184",
                 "Columns": [
                   {
-                    "$id": "183",
+                    "$id": "185",
                     "Column": {
-                      "$ref": "179"
+                      "$ref": "181"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -1785,7 +1799,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Address",
                 "Table": {
-                  "$ref": "175"
+                  "$ref": "177"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Address",
@@ -1797,7 +1811,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -1818,21 +1832,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.address1",
+            "AppViewLabel": "Address",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Address",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "184",
+            "$id": "186",
             "AppTableName": "Call",
             "AppTableNamePlural": "Calls",
             "AppDoNotProcess": false,
-            "AppTableId": "d418d799-391d-4bcf-9796-d332425cad25",
+            "AppTableId": "78fe5441-621c-4a2b-b530-51add3b5ae48",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "185",
+                "$id": "187",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -1849,7 +1865,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1865,7 +1881,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "186",
+                "$id": "188",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -1882,7 +1898,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1898,7 +1914,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "187",
+                "$id": "189",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -1915,7 +1931,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1931,7 +1947,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "188",
+                "$id": "190",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -1948,7 +1964,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1964,7 +1980,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "189",
+                "$id": "191",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -1981,7 +1997,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -1997,7 +2013,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "190",
+                "$id": "192",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -2014,7 +2030,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2030,7 +2046,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "191",
+                "$id": "193",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2047,7 +2063,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2063,7 +2079,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "192",
+                "$id": "194",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -2080,7 +2096,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2096,7 +2112,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "193",
+                "$id": "195",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2113,7 +2129,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2129,7 +2145,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "194",
+                "$id": "196",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2146,7 +2162,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2164,12 +2180,12 @@
             ],
             "Constraints": [
               {
-                "$id": "195",
+                "$id": "197",
                 "Columns": [
                   {
-                    "$id": "196",
+                    "$id": "198",
                     "Column": {
-                      "$ref": "193"
+                      "$ref": "195"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -2186,7 +2202,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Call",
                 "Table": {
-                  "$ref": "184"
+                  "$ref": "186"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Call",
@@ -2198,7 +2214,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -2219,21 +2235,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.addressId",
+            "AppViewLabel": "Call",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Call",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "197",
+            "$id": "199",
             "AppTableName": "CallAssignment",
             "AppTableNamePlural": "CallAssignments",
-            "AppDoNotProcess": false,
-            "AppTableId": "f1a0e283-fb25-40d8-b17e-243260497e5c",
+            "AppDoNotProcess": true,
+            "AppTableId": "3044eba9-5fb2-4a7f-bc49-f918ea44b595",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "198",
+                "$id": "200",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2250,7 +2268,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "197"
+                  "$ref": "199"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2260,46 +2278,13 @@
                 "GenerationEnabled": true,
                 "Name": "callId",
                 "DataType": "int",
-                "NumericPrecision": 0,
+                "NumericPrecision": 10,
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               },
               {
-                "$id": "199",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Id",
-                "AppNamePlural": "Ids",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "197"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
-                "AppViewControlLabel": "id",
-                "GenerationEnabled": true,
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "200",
+                "$id": "201",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2316,7 +2301,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "197"
+                  "$ref": "199"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2326,7 +2311,7 @@
                 "GenerationEnabled": true,
                 "Name": "unitId",
                 "DataType": "int",
-                "NumericPrecision": 0,
+                "NumericPrecision": 10,
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
@@ -2334,29 +2319,40 @@
             ],
             "Constraints": [
               {
-                "$id": "201",
+                "$id": "202",
                 "Columns": [
                   {
-                    "$id": "202",
+                    "$id": "203",
                     "Column": {
-                      "$ref": "199"
+                      "$ref": "200"
                     },
-                    "Name": "Id",
+                    "Name": "CallId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "204",
+                    "Column": {
+                      "$ref": "201"
+                    },
+                    "Name": "UnitId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "Virtual": false,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
                 "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
+                "ControllerMethodName": "ByCallIdUnitId",
+                "ControllerRoute": "byCallIdUnitId",
                 "AppName": "PK_CallAssignment",
                 "Table": {
-                  "$ref": "197"
+                  "$ref": "199"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_CallAssignment",
@@ -2367,15 +2363,15 @@
                 "IsUnique": true
               },
               {
-                "$id": "203",
+                "$id": "205",
                 "Columns": [
                   {
-                    "$id": "204",
+                    "$id": "206",
                     "Column": {
-                      "$ref": "198"
+                      "$ref": "200"
                     },
                     "Name": "CallId",
-                    "Order": 0,
+                    "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
                     "IsIdentity": false
@@ -2389,7 +2385,7 @@
                 "ControllerRoute": "byCallId",
                 "AppName": "IX_CallAssignment_callId",
                 "Table": {
-                  "$ref": "197"
+                  "$ref": "199"
                 },
                 "GenerationEnabled": true,
                 "Name": "IX_CallAssignment_callId",
@@ -2400,15 +2396,15 @@
                 "IsUnique": false
               },
               {
-                "$id": "205",
+                "$id": "207",
                 "Columns": [
                   {
-                    "$id": "206",
+                    "$id": "208",
                     "Column": {
-                      "$ref": "200"
+                      "$ref": "201"
                     },
                     "Name": "UnitId",
-                    "Order": 0,
+                    "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
                     "IsIdentity": false
@@ -2422,7 +2418,7 @@
                 "ControllerRoute": "byUnitId",
                 "AppName": "IX_CallAssignment_unitId",
                 "Table": {
-                  "$ref": "197"
+                  "$ref": "199"
                 },
                 "GenerationEnabled": true,
                 "Name": "IX_CallAssignment_unitId",
@@ -2434,10 +2430,10 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
-            "AppReferenceTable": false,
+            "AppReferenceTable": true,
             "AppIsView": false,
             "AppControllerAttribute": "",
             "AppGenerateBulkInsertMethod": true,
@@ -2455,21 +2451,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.callId",
-            "GenerationEnabled": true,
+            "AppViewLabel": "CallAssignment",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
             "Name": "CallAssignment",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "207",
+            "$id": "209",
             "AppTableName": "CallDisposition",
             "AppTableNamePlural": "CallDispositions",
             "AppDoNotProcess": false,
-            "AppTableId": "3569ce2d-50e4-436a-a456-d3c85ca81b0b",
+            "AppTableId": "08aabb81-1110-4c52-bdb7-e83357082d0e",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "208",
+                "$id": "210",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2486,7 +2484,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "207"
+                  "$ref": "209"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2502,7 +2500,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "209",
+                "$id": "211",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2519,7 +2517,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "207"
+                  "$ref": "209"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2537,12 +2535,12 @@
             ],
             "Constraints": [
               {
-                "$id": "210",
+                "$id": "212",
                 "Columns": [
                   {
-                    "$id": "211",
+                    "$id": "213",
                     "Column": {
-                      "$ref": "208"
+                      "$ref": "210"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -2559,7 +2557,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_CallDisposition",
                 "Table": {
-                  "$ref": "207"
+                  "$ref": "209"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_CallDisposition",
@@ -2571,7 +2569,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -2592,21 +2590,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "CallDisposition",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "CallDisposition",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "212",
+            "$id": "214",
             "AppTableName": "CallPerson",
             "AppTableNamePlural": "CallPersons",
             "AppDoNotProcess": false,
-            "AppTableId": "dfb66a15-4a58-4165-b45e-bc5d75929232",
+            "AppTableId": "23f80637-d3f8-46a7-aecc-0146aa52c371",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "213",
+                "$id": "215",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2623,7 +2623,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "212"
+                  "$ref": "214"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2639,7 +2639,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "214",
+                "$id": "216",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -2656,7 +2656,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "212"
+                  "$ref": "214"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2672,7 +2672,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "215",
+                "$id": "217",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2689,7 +2689,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "212"
+                  "$ref": "214"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2705,7 +2705,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "216",
+                "$id": "218",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2722,7 +2722,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "212"
+                  "$ref": "214"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2740,12 +2740,12 @@
             ],
             "Constraints": [
               {
-                "$id": "217",
+                "$id": "219",
                 "Columns": [
                   {
-                    "$id": "218",
+                    "$id": "220",
                     "Column": {
-                      "$ref": "213"
+                      "$ref": "215"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -2762,7 +2762,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_CallPerson",
                 "Table": {
-                  "$ref": "212"
+                  "$ref": "214"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_CallPerson",
@@ -2774,7 +2774,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -2795,21 +2795,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "CallPerson",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "CallPerson",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "219",
+            "$id": "221",
             "AppTableName": "CallStatu",
             "AppTableNamePlural": "CallStatus",
             "AppDoNotProcess": false,
-            "AppTableId": "edcbb837-1b85-4fe4-a6f8-313e08f817a5",
+            "AppTableId": "864f3f40-4318-434f-85cd-7d656718b7cb",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "220",
+                "$id": "222",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2826,7 +2828,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "219"
+                  "$ref": "221"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2842,7 +2844,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "221",
+                "$id": "223",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2859,7 +2861,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "219"
+                  "$ref": "221"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2877,12 +2879,12 @@
             ],
             "Constraints": [
               {
-                "$id": "222",
+                "$id": "224",
                 "Columns": [
                   {
-                    "$id": "223",
+                    "$id": "225",
                     "Column": {
-                      "$ref": "220"
+                      "$ref": "222"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -2899,7 +2901,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_CallStatus",
                 "Table": {
-                  "$ref": "219"
+                  "$ref": "221"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_CallStatus",
@@ -2911,7 +2913,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -2932,21 +2934,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "CallStatus",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "CallStatus",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "224",
+            "$id": "226",
             "AppTableName": "CallType",
             "AppTableNamePlural": "CallTypes",
             "AppDoNotProcess": false,
-            "AppTableId": "8a95479a-9e33-4759-9bac-5fab728275ac",
+            "AppTableId": "e0c32360-eda7-414a-856f-7b9cfe469c2e",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "225",
+                "$id": "227",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2963,7 +2967,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "224"
+                  "$ref": "226"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -2979,7 +2983,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "226",
+                "$id": "228",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -2996,7 +3000,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "224"
+                  "$ref": "226"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3014,12 +3018,12 @@
             ],
             "Constraints": [
               {
-                "$id": "227",
+                "$id": "229",
                 "Columns": [
                   {
-                    "$id": "228",
+                    "$id": "230",
                     "Column": {
-                      "$ref": "225"
+                      "$ref": "227"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -3036,7 +3040,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_CallType",
                 "Table": {
-                  "$ref": "224"
+                  "$ref": "226"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_CallType",
@@ -3048,7 +3052,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -3069,21 +3073,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "CallType",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "CallType",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "229",
+            "$id": "231",
             "AppTableName": "Note",
             "AppTableNamePlural": "Notes",
             "AppDoNotProcess": false,
-            "AppTableId": "b0bccff4-8583-400c-8db1-c96e7bd84cbf",
+            "AppTableId": "e81936a6-efb3-4997-8a58-98a5eca93543",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "230",
+                "$id": "232",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3100,7 +3106,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "229"
+                  "$ref": "231"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3116,7 +3122,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "231",
+                "$id": "233",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3133,7 +3139,7 @@
                 "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "229"
+                  "$ref": "231"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3149,7 +3155,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "232",
+                "$id": "234",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3166,7 +3172,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "229"
+                  "$ref": "231"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3182,7 +3188,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "233",
+                "$id": "235",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3199,7 +3205,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "229"
+                  "$ref": "231"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3215,7 +3221,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "234",
+                "$id": "236",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3232,7 +3238,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "229"
+                  "$ref": "231"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3250,12 +3256,12 @@
             ],
             "Constraints": [
               {
-                "$id": "235",
+                "$id": "237",
                 "Columns": [
                   {
-                    "$id": "236",
+                    "$id": "238",
                     "Column": {
-                      "$ref": "232"
+                      "$ref": "234"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -3272,7 +3278,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Note",
                 "Table": {
-                  "$ref": "229"
+                  "$ref": "231"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Note",
@@ -3284,7 +3290,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -3305,21 +3311,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.callId",
+            "AppViewLabel": "Note",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Note",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "237",
+            "$id": "239",
             "AppTableName": "Officer",
             "AppTableNamePlural": "Officers",
             "AppDoNotProcess": false,
-            "AppTableId": "7ab5803e-9621-4d40-b9a6-40930ccbcfe1",
+            "AppTableId": "5fe1bdd4-16b0-4356-8287-ee601968e341",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "238",
+                "$id": "240",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -3336,7 +3344,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "237"
+                  "$ref": "239"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3352,7 +3360,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "239",
+                "$id": "241",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3369,7 +3377,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "237"
+                  "$ref": "239"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3385,7 +3393,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "240",
+                "$id": "242",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3402,7 +3410,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "237"
+                  "$ref": "239"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3418,7 +3426,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "241",
+                "$id": "243",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3435,7 +3443,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "237"
+                  "$ref": "239"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3451,7 +3459,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "242",
+                "$id": "244",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3468,7 +3476,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "237"
+                  "$ref": "239"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3484,7 +3492,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "243",
+                "$id": "245",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3501,7 +3509,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "237"
+                  "$ref": "239"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3519,12 +3527,12 @@
             ],
             "Constraints": [
               {
-                "$id": "244",
+                "$id": "246",
                 "Columns": [
                   {
-                    "$id": "245",
+                    "$id": "247",
                     "Column": {
-                      "$ref": "241"
+                      "$ref": "243"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -3541,7 +3549,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Officer",
                 "Table": {
-                  "$ref": "237"
+                  "$ref": "239"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Officer",
@@ -3553,7 +3561,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -3574,158 +3582,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.badge",
+            "AppViewLabel": "Officer",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Officer",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "246",
+            "$id": "248",
             "AppTableName": "OfficerCapability",
             "AppTableNamePlural": "OfficerCapabilities",
-            "AppDoNotProcess": false,
-            "AppTableId": "2b3566f3-bf2e-4f75-9b57-3474a850ba66",
+            "AppDoNotProcess": true,
+            "AppTableId": "8bde98be-f5ac-4029-864f-125e1fb3b402",
             "AppGenerationEnabled": true,
             "Columns": [
-              {
-                "$id": "247",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Id",
-                "AppNamePlural": "Ids",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "246"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
-                "AppViewControlLabel": "id",
-                "GenerationEnabled": true,
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "248",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Name",
-                "AppNamePlural": "Names",
-                "AppFieldType": "varchar",
-                "AppFieldMaxLength": 128,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "string",
-                "AppTypescriptType": "string",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "246"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": true,
-                "AppViewControlLabel": "name",
-                "GenerationEnabled": true,
-                "Name": "name",
-                "DataType": "varchar",
-                "NumericPrecision": 0,
-                "MaxLength": 128,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              }
-            ],
-            "Constraints": [
               {
                 "$id": "249",
-                "Columns": [
-                  {
-                    "$id": "250",
-                    "Column": {
-                      "$ref": "247"
-                    },
-                    "Name": "Id",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": true
-                  }
-                ],
-                "Virtual": false,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
-                "AppName": "PK_OfficerCapability",
-                "Table": {
-                  "$ref": "246"
-                },
-                "GenerationEnabled": true,
-                "Name": "PK_OfficerCapability",
-                "TableName": "OfficerCapability",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "SchemaName": "dbo",
-                "IsUnique": true
-              }
-            ],
-            "Schema": {
-              "$ref": "174"
-            },
-            "AppParentTable": null,
-            "AppReferenceTable": false,
-            "AppIsView": false,
-            "AppControllerAttribute": "",
-            "AppGenerateBulkInsertMethod": true,
-            "AppGenerateCreateMethod": true,
-            "AppGenerateUpdateMethod": true,
-            "AppGenerateDeleteMethod": true,
-            "AppGenerateAllMethod": true,
-            "AppGenerateGetMethod": true,
-            "AppGeneratePatchMethod": true,
-            "AppBulkInsertMethodAttribute": "",
-            "AppCreateMethodAttribute": "",
-            "AppUpdateMethodAttribute": "",
-            "AppDeleteMethodAttribute": "",
-            "AppAllMethodAttribute": "",
-            "AppGetMethodAttribute": "",
-            "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
-            "GenerationEnabled": true,
-            "Name": "OfficerCapability",
-            "DefaultConstraints": [],
-            "IsView": false
-          },
-          {
-            "$id": "251",
-            "AppTableName": "OfficerRefCapability",
-            "AppTableNamePlural": "OfficerRefCapabilities",
-            "AppDoNotProcess": false,
-            "AppTableId": "3fa75814-d53c-4aa8-954c-fca3b7bcc499",
-            "AppGenerationEnabled": true,
-            "Columns": [
-              {
-                "$id": "252",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3742,7 +3615,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "251"
+                  "$ref": "248"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3758,40 +3631,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "253",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Id",
-                "AppNamePlural": "Ids",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "251"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
-                "AppViewControlLabel": "id",
-                "GenerationEnabled": true,
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "254",
+                "$id": "250",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3808,7 +3648,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "251"
+                  "$ref": "248"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3826,33 +3666,44 @@
             ],
             "Constraints": [
               {
-                "$id": "255",
+                "$id": "251",
                 "Columns": [
                   {
-                    "$id": "256",
+                    "$id": "252",
                     "Column": {
-                      "$ref": "253"
+                      "$ref": "249"
                     },
-                    "Name": "Id",
+                    "Name": "CapabilityId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "253",
+                    "Column": {
+                      "$ref": "250"
+                    },
+                    "Name": "OfficerId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "Virtual": false,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
                 "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
-                "AppName": "PK_OfficerRefCapability",
+                "ControllerMethodName": "ByCapabilityIdOfficerId",
+                "ControllerRoute": "byCapabilityIdOfficerId",
+                "AppName": "PK_OfficerCapabilities",
                 "Table": {
-                  "$ref": "251"
+                  "$ref": "248"
                 },
                 "GenerationEnabled": true,
-                "Name": "PK_OfficerRefCapability",
-                "TableName": "OfficerRefCapability",
+                "Name": "PK_OfficerCapabilities",
+                "TableName": "OfficerCapability",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "SchemaName": "dbo",
@@ -3860,10 +3711,10 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
-            "AppReferenceTable": false,
+            "AppReferenceTable": true,
             "AppIsView": false,
             "AppControllerAttribute": "",
             "AppGenerateBulkInsertMethod": true,
@@ -3881,54 +3732,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.capabilityId",
-            "GenerationEnabled": true,
-            "Name": "OfficerRefCapability",
+            "AppViewLabel": "OfficerCapabilities",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
+            "Name": "OfficerCapabilities",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "257",
-            "AppTableName": "Person",
-            "AppTableNamePlural": "People",
-            "AppDoNotProcess": false,
-            "AppTableId": "74318a19-f79d-456a-8640-9371042aa998",
+            "$id": "254",
+            "AppTableName": "OfficerCapability",
+            "AppTableNamePlural": "OfficerCapabilities",
+            "AppDoNotProcess": true,
+            "AppTableId": "71db64cc-99fc-4f72-acc9-50c4a7798f8e",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "258",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": false,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "FirstName",
-                "AppNamePlural": "FirstNames",
-                "AppFieldType": "varchar",
-                "AppFieldMaxLength": 128,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": true,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "string",
-                "AppTypescriptType": "string",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "257"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": true,
-                "AppViewControlLabel": "firstName",
-                "GenerationEnabled": true,
-                "Name": "firstName",
-                "DataType": "varchar",
-                "NumericPrecision": 0,
-                "MaxLength": 128,
-                "IsNullable": true,
-                "DatabaseGenerated": false
-              },
-              {
-                "$id": "259",
+                "$id": "255",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -3945,7 +3765,179 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "257"
+                  "$ref": "254"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "256",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "254"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "name",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "257",
+                "Columns": [
+                  {
+                    "$id": "258",
+                    "Column": {
+                      "$ref": "255"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_OfficerCapability",
+                "Table": {
+                  "$ref": "254"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_OfficerCapability",
+                "TableName": "OfficerCapability",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "176"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": true,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "OfficerCapability",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
+            "Name": "OfficerCapability",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "259",
+            "AppTableName": "Person",
+            "AppTableNamePlural": "People",
+            "AppDoNotProcess": false,
+            "AppTableId": "426725fc-0528-47e3-8db0-ec510ebf97c3",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "260",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "FirstName",
+                "AppNamePlural": "FirstNames",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "259"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "firstName",
+                "GenerationEnabled": true,
+                "Name": "firstName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "261",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "259"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3961,7 +3953,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "260",
+                "$id": "262",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -3978,7 +3970,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "257"
+                  "$ref": "259"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -3994,7 +3986,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "261",
+                "$id": "263",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -4011,7 +4003,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "257"
+                  "$ref": "259"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4027,7 +4019,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "262",
+                "$id": "264",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -4044,7 +4036,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "257"
+                  "$ref": "259"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4062,12 +4054,12 @@
             ],
             "Constraints": [
               {
-                "$id": "263",
+                "$id": "265",
                 "Columns": [
                   {
-                    "$id": "264",
+                    "$id": "266",
                     "Column": {
-                      "$ref": "259"
+                      "$ref": "261"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -4084,7 +4076,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Person",
                 "Table": {
-                  "$ref": "257"
+                  "$ref": "259"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Person",
@@ -4096,7 +4088,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -4117,21 +4109,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.firstName",
+            "AppViewLabel": "Person",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Person",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "265",
+            "$id": "267",
             "AppTableName": "PersonType",
             "AppTableNamePlural": "PersonTypes",
             "AppDoNotProcess": false,
-            "AppTableId": "f55c0de1-c841-4684-b86e-87caf77c24eb",
+            "AppTableId": "7a2e57c1-d373-4f3b-bb7b-91a97b722ca2",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "266",
+                "$id": "268",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4148,7 +4142,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "265"
+                  "$ref": "267"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4164,7 +4158,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "267",
+                "$id": "269",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4181,7 +4175,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "265"
+                  "$ref": "267"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4199,12 +4193,12 @@
             ],
             "Constraints": [
               {
-                "$id": "268",
+                "$id": "270",
                 "Columns": [
                   {
-                    "$id": "269",
+                    "$id": "271",
                     "Column": {
-                      "$ref": "266"
+                      "$ref": "268"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -4221,7 +4215,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_PersonType",
                 "Table": {
-                  "$ref": "265"
+                  "$ref": "267"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_PersonType",
@@ -4233,7 +4227,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -4254,21 +4248,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "PersonType",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "PersonType",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "270",
+            "$id": "272",
             "AppTableName": "Unit",
             "AppTableNamePlural": "Units",
             "AppDoNotProcess": false,
-            "AppTableId": "e8be508b-96be-4a58-826c-9d8eadd64427",
+            "AppTableId": "264774b0-5045-4ef5-ac03-784ae851a2d2",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "271",
+                "$id": "273",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": false,
                 "AppShowInRequestModel": true,
@@ -4285,7 +4281,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "270"
+                  "$ref": "272"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4301,7 +4297,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "272",
+                "$id": "274",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4318,7 +4314,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "270"
+                  "$ref": "272"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4336,12 +4332,12 @@
             ],
             "Constraints": [
               {
-                "$id": "273",
+                "$id": "275",
                 "Columns": [
                   {
-                    "$id": "274",
+                    "$id": "276",
                     "Column": {
-                      "$ref": "272"
+                      "$ref": "274"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -4358,7 +4354,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Unit",
                 "Table": {
-                  "$ref": "270"
+                  "$ref": "272"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Unit",
@@ -4370,7 +4366,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -4391,21 +4387,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.callSign",
+            "AppViewLabel": "Unit",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Unit",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "275",
+            "$id": "277",
             "AppTableName": "UnitDisposition",
             "AppTableNamePlural": "UnitDispositions",
             "AppDoNotProcess": false,
-            "AppTableId": "75c297f9-656d-491d-b224-80391195ca67",
+            "AppTableId": "bf69234a-a1f4-4c85-9d51-ef79926c5e46",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "276",
+                "$id": "278",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4422,7 +4420,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "275"
+                  "$ref": "277"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4438,7 +4436,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "277",
+                "$id": "279",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4455,7 +4453,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "275"
+                  "$ref": "277"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4473,12 +4471,12 @@
             ],
             "Constraints": [
               {
-                "$id": "278",
+                "$id": "280",
                 "Columns": [
                   {
-                    "$id": "279",
+                    "$id": "281",
                     "Column": {
-                      "$ref": "276"
+                      "$ref": "278"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -4495,7 +4493,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_UnitDisposition",
                 "Table": {
-                  "$ref": "275"
+                  "$ref": "277"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_UnitDisposition",
@@ -4507,7 +4505,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -4528,54 +4526,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "UnitDisposition",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "UnitDisposition",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "280",
+            "$id": "282",
             "AppTableName": "UnitOfficer",
             "AppTableNamePlural": "UnitOfficers",
-            "AppDoNotProcess": false,
-            "AppTableId": "0c76f80f-6eb4-46ca-be17-357dda914964",
+            "AppDoNotProcess": true,
+            "AppTableId": "10c4b0f1-4543-42f2-abe3-5a9500005b4b",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "281",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Id",
-                "AppNamePlural": "Ids",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "280"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
-                "AppViewControlLabel": "id",
-                "GenerationEnabled": true,
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "282",
+                "$id": "283",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4592,7 +4559,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "280"
+                  "$ref": "282"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4608,7 +4575,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "283",
+                "$id": "284",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4625,7 +4592,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "280"
+                  "$ref": "282"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4643,29 +4610,40 @@
             ],
             "Constraints": [
               {
-                "$id": "284",
+                "$id": "285",
                 "Columns": [
                   {
-                    "$id": "285",
+                    "$id": "286",
                     "Column": {
-                      "$ref": "281"
+                      "$ref": "283"
                     },
-                    "Name": "Id",
+                    "Name": "OfficerId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "287",
+                    "Column": {
+                      "$ref": "284"
+                    },
+                    "Name": "UnitId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "Virtual": false,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
                 "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
+                "ControllerMethodName": "ByOfficerIdUnitId",
+                "ControllerRoute": "byOfficerIdUnitId",
                 "AppName": "PK_UnitOfficer",
                 "Table": {
-                  "$ref": "280"
+                  "$ref": "282"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_UnitOfficer",
@@ -4677,10 +4655,10 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
-            "AppReferenceTable": false,
+            "AppReferenceTable": true,
             "AppIsView": false,
             "AppControllerAttribute": "",
             "AppGenerateBulkInsertMethod": true,
@@ -4697,22 +4675,24 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
-            "GenerationEnabled": true,
+            "ForeignKeyDisplayColumn": "this.officerId",
+            "AppViewLabel": "UnitOfficer",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
             "Name": "UnitOfficer",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "286",
+            "$id": "288",
             "AppTableName": "Vehicle",
             "AppTableNamePlural": "Vehicles",
             "AppDoNotProcess": false,
-            "AppTableId": "afd0b5be-6c8f-4b62-aedf-29dc7a132905",
+            "AppTableId": "91dc54d4-88ba-4e34-a706-a7bf50721d98",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "287",
+                "$id": "289",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4729,7 +4709,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "286"
+                  "$ref": "288"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4745,7 +4725,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "288",
+                "$id": "290",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4762,7 +4742,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "286"
+                  "$ref": "288"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4780,12 +4760,12 @@
             ],
             "Constraints": [
               {
-                "$id": "289",
+                "$id": "291",
                 "Columns": [
                   {
-                    "$id": "290",
+                    "$id": "292",
                     "Column": {
-                      "$ref": "287"
+                      "$ref": "289"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -4802,7 +4782,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Vehicle",
                 "Table": {
-                  "$ref": "286"
+                  "$ref": "288"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Vehicle",
@@ -4814,7 +4794,7 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -4835,21 +4815,173 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
+            "AppViewLabel": "Vehicle",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Vehicle",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "291",
+            "$id": "293",
             "AppTableName": "VehicleCapability",
             "AppTableNamePlural": "VehicleCapabilities",
-            "AppDoNotProcess": false,
-            "AppTableId": "dedbd5a0-3d0b-4811-b50a-2ce1fa19a90c",
+            "AppDoNotProcess": true,
+            "AppTableId": "5030c145-f5fa-4e93-983c-4435af555328",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "292",
+                "$id": "294",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "VehicleCapabilityId",
+                "AppNamePlural": "VehicleCapabilityIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "293"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "vehicleCapabilityId",
+                "GenerationEnabled": true,
+                "Name": "vehicleCapabilityId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "295",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "VehicleId",
+                "AppNamePlural": "VehicleIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "293"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "vehicleId",
+                "GenerationEnabled": true,
+                "Name": "vehicleId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "296",
+                "Columns": [
+                  {
+                    "$id": "297",
+                    "Column": {
+                      "$ref": "295"
+                    },
+                    "Name": "VehicleId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "298",
+                    "Column": {
+                      "$ref": "294"
+                    },
+                    "Name": "VehicleCapabilityId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByVehicleIdVehicleCapabilityId",
+                "ControllerRoute": "byVehicleIdVehicleCapabilityId",
+                "AppName": "PK_VehicleCapabilities",
+                "Table": {
+                  "$ref": "293"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_VehicleCapabilities",
+                "TableName": "VehicleCapability",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "176"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": true,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.vehicleCapabilityId",
+            "AppViewLabel": "VehicleCapabilities",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
+            "Name": "VehicleCapabilities",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "299",
+            "AppTableName": "VehicleCapability",
+            "AppTableNamePlural": "VehicleCapabilities",
+            "AppDoNotProcess": true,
+            "AppTableId": "20d604d2-9a7d-48f1-a5ea-9a0898be224d",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "300",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4866,12 +4998,12 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "291"
+                  "$ref": "299"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
                 "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
+                "AppDisplayInView": true,
                 "AppViewControlLabel": "id",
                 "GenerationEnabled": true,
                 "Name": "id",
@@ -4882,7 +5014,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "293",
+                "$id": "301",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -4899,7 +5031,7 @@
                 "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "291"
+                  "$ref": "299"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -4917,12 +5049,12 @@
             ],
             "Constraints": [
               {
-                "$id": "294",
+                "$id": "302",
                 "Columns": [
                   {
-                    "$id": "295",
+                    "$id": "303",
                     "Column": {
-                      "$ref": "292"
+                      "$ref": "300"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -4939,7 +5071,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_VehicleCapability",
                 "Table": {
-                  "$ref": "291"
+                  "$ref": "299"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_VehicleCapability",
@@ -4951,10 +5083,10 @@
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
-            "AppReferenceTable": false,
+            "AppReferenceTable": true,
             "AppIsView": false,
             "AppControllerAttribute": "",
             "AppGenerateBulkInsertMethod": true,
@@ -4972,54 +5104,23 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.id",
-            "GenerationEnabled": true,
+            "AppViewLabel": "VehicleCapability",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
             "Name": "VehicleCapability",
             "DefaultConstraints": [],
             "IsView": false
           },
           {
-            "$id": "296",
+            "$id": "304",
             "AppTableName": "VehicleOfficer",
             "AppTableNamePlural": "VehicleOfficers",
-            "AppDoNotProcess": false,
-            "AppTableId": "3386b7eb-98fa-4451-ba1d-be7c243f2a34",
+            "AppDoNotProcess": true,
+            "AppTableId": "4e572db1-9cd5-4da9-b7a4-7136cb28dcad",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "297",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Id",
-                "AppNamePlural": "Ids",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "296"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
-                "AppViewControlLabel": "id",
-                "GenerationEnabled": true,
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
-              },
-              {
-                "$id": "298",
+                "$id": "305",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -5036,7 +5137,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "296"
+                  "$ref": "304"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -5052,7 +5153,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "299",
+                "$id": "306",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -5069,7 +5170,7 @@
                 "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "296"
+                  "$ref": "304"
                 },
                 "AppDefaultValue": null,
                 "AppViewControlType": 11,
@@ -5087,29 +5188,40 @@
             ],
             "Constraints": [
               {
-                "$id": "300",
+                "$id": "307",
                 "Columns": [
                   {
-                    "$id": "301",
+                    "$id": "308",
                     "Column": {
-                      "$ref": "297"
+                      "$ref": "305"
                     },
-                    "Name": "Id",
+                    "Name": "OfficerId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "309",
+                    "Column": {
+                      "$ref": "306"
+                    },
+                    "Name": "VehicleId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
                   }
                 ],
                 "Virtual": false,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
                 "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
+                "ControllerMethodName": "ByOfficerIdVehicleId",
+                "ControllerRoute": "byOfficerIdVehicleId",
                 "AppName": "PK_VehicleOfficer",
                 "Table": {
-                  "$ref": "296"
+                  "$ref": "304"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_VehicleOfficer",
@@ -5118,183 +5230,46 @@
                 "ConstraintType": "CLUSTERED",
                 "SchemaName": "dbo",
                 "IsUnique": true
-              }
-            ],
-            "Schema": {
-              "$ref": "174"
-            },
-            "AppParentTable": null,
-            "AppReferenceTable": false,
-            "AppIsView": false,
-            "AppControllerAttribute": "",
-            "AppGenerateBulkInsertMethod": true,
-            "AppGenerateCreateMethod": true,
-            "AppGenerateUpdateMethod": true,
-            "AppGenerateDeleteMethod": true,
-            "AppGenerateAllMethod": true,
-            "AppGenerateGetMethod": true,
-            "AppGeneratePatchMethod": true,
-            "AppBulkInsertMethodAttribute": "",
-            "AppCreateMethodAttribute": "",
-            "AppUpdateMethodAttribute": "",
-            "AppDeleteMethodAttribute": "",
-            "AppAllMethodAttribute": "",
-            "AppGetMethodAttribute": "",
-            "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
-            "GenerationEnabled": true,
-            "Name": "VehicleOfficer",
-            "DefaultConstraints": [],
-            "IsView": false
-          },
-          {
-            "$id": "302",
-            "AppTableName": "VehicleRefCapability",
-            "AppTableNamePlural": "VehicleRefCapabilities",
-            "AppDoNotProcess": false,
-            "AppTableId": "20638cbb-dd81-4bea-b673-8d9149f3d8d4",
-            "AppGenerationEnabled": true,
-            "Columns": [
-              {
-                "$id": "303",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "Id",
-                "AppNamePlural": "Ids",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "302"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": false,
-                "AppViewControlLabel": "id",
-                "GenerationEnabled": true,
-                "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": true
               },
               {
-                "$id": "304",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "VehicleCapabilityId",
-                "AppNamePlural": "VehicleCapabilityIds",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "302"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": true,
-                "AppViewControlLabel": "vehicleCapabilityId",
-                "GenerationEnabled": true,
-                "Name": "vehicleCapabilityId",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              },
-              {
-                "$id": "305",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "VehicleId",
-                "AppNamePlural": "VehicleIds",
-                "AppFieldType": "int",
-                "AppFieldMaxLength": 0,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "int",
-                "AppTypescriptType": "number",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "302"
-                },
-                "AppDefaultValue": null,
-                "AppViewControlType": 11,
-                "AppViewDisplayOrder": 0,
-                "AppDisplayInView": true,
-                "AppViewControlLabel": "vehicleId",
-                "GenerationEnabled": true,
-                "Name": "vehicleId",
-                "DataType": "int",
-                "NumericPrecision": 10,
-                "MaxLength": 0,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              }
-            ],
-            "Constraints": [
-              {
-                "$id": "306",
+                "$id": "310",
                 "Columns": [
                   {
-                    "$id": "307",
+                    "$id": "311",
                     "Column": {
-                      "$ref": "303"
+                      "$ref": "305"
                     },
-                    "Name": "Id",
+                    "Name": "OfficerId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
                   }
                 ],
                 "Virtual": false,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
                 "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
-                "AppName": "PK_VehicleRefCapability",
+                "ControllerMethodName": "ByOfficerId",
+                "ControllerRoute": "byOfficerId",
+                "AppName": "IX_VehicleOfficer_officerId",
                 "Table": {
-                  "$ref": "302"
+                  "$ref": "304"
                 },
                 "GenerationEnabled": true,
-                "Name": "PK_VehicleRefCapability",
-                "TableName": "VehicleRefCapability",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
+                "Name": "IX_VehicleOfficer_officerId",
+                "TableName": "VehicleOfficer",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
                 "SchemaName": "dbo",
-                "IsUnique": true
+                "IsUnique": false
               }
             ],
             "Schema": {
-              "$ref": "174"
+              "$ref": "176"
             },
             "AppParentTable": null,
-            "AppReferenceTable": false,
+            "AppReferenceTable": true,
             "AppIsView": false,
             "AppControllerAttribute": "",
             "AppGenerateBulkInsertMethod": true,
@@ -5311,50 +5286,16 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
-            "GenerationEnabled": true,
-            "Name": "VehicleRefCapability",
+            "ForeignKeyDisplayColumn": "this.officerId",
+            "AppViewLabel": "VehicleOfficer",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
+            "Name": "VehicleOfficer",
             "DefaultConstraints": [],
             "IsView": false
           }
         ],
         "ForeignKeys": [
-          {
-            "$id": "308",
-            "Columns": [
-              {
-                "$id": "309",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "185"
-                },
-                "PrimaryColumn": {
-                  "$ref": "179"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Call_AddressId_Address_Id"
-          },
-          {
-            "$id": "310",
-            "Columns": [
-              {
-                "$id": "311",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "187"
-                },
-                "PrimaryColumn": {
-                  "$ref": "220"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Call_CallStatusId_CallStatu_Id"
-          },
           {
             "$id": "312",
             "Columns": [
@@ -5362,28 +5303,10 @@
                 "$id": "313",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "189"
+                  "$ref": "188"
                 },
                 "PrimaryColumn": {
-                  "$ref": "225"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Call_CallTypeId_CallType_Id"
-          },
-          {
-            "$id": "314",
-            "Columns": [
-              {
-                "$id": "315",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "186"
-                },
-                "PrimaryColumn": {
-                  "$ref": "208"
+                  "$ref": "210"
                 }
               }
             ],
@@ -5392,22 +5315,40 @@
             "ForeignKeyName": "FK_Call_CallDispositionId_CallDisposition_Id"
           },
           {
+            "$id": "314",
+            "Columns": [
+              {
+                "$id": "315",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "189"
+                },
+                "PrimaryColumn": {
+                  "$ref": "222"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Call_CallStatusId_CallStatu_Id"
+          },
+          {
             "$id": "316",
             "Columns": [
               {
                 "$id": "317",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "215"
+                  "$ref": "191"
                 },
                 "PrimaryColumn": {
-                  "$ref": "259"
+                  "$ref": "227"
                 }
               }
             ],
             "Virtual": false,
             "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_CallPerson_PersonId_Person_Id"
+            "ForeignKeyName": "FK_Call_CallTypeId_CallType_Id"
           },
           {
             "$id": "318",
@@ -5416,16 +5357,16 @@
                 "$id": "319",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "216"
+                  "$ref": "187"
                 },
                 "PrimaryColumn": {
-                  "$ref": "266"
+                  "$ref": "181"
                 }
               }
             ],
             "Virtual": false,
             "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_CallPerson_PersonTypeId_PersonType_Id"
+            "ForeignKeyName": "FK_Call_AddressId_Address_Id"
           },
           {
             "$id": "320",
@@ -5434,190 +5375,10 @@
                 "$id": "321",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "230"
+                  "$ref": "200"
                 },
                 "PrimaryColumn": {
-                  "$ref": "193"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Note_CallId_Call_Id"
-          },
-          {
-            "$id": "322",
-            "Columns": [
-              {
-                "$id": "323",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "234"
-                },
-                "PrimaryColumn": {
-                  "$ref": "241"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_Note_OfficerId_Officer_Id"
-          },
-          {
-            "$id": "324",
-            "Columns": [
-              {
-                "$id": "325",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "254"
-                },
-                "PrimaryColumn": {
-                  "$ref": "241"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_OfficerRefCapability_OfficerId_Officer_Id"
-          },
-          {
-            "$id": "326",
-            "Columns": [
-              {
-                "$id": "327",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "252"
-                },
-                "PrimaryColumn": {
-                  "$ref": "247"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_OfficerRefCapability_CapabilityId_OfficerCapability_Id"
-          },
-          {
-            "$id": "328",
-            "Columns": [
-              {
-                "$id": "329",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "282"
-                },
-                "PrimaryColumn": {
-                  "$ref": "241"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_UnitOfficer_OfficerId_Officer_Id"
-          },
-          {
-            "$id": "330",
-            "Columns": [
-              {
-                "$id": "331",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "283"
-                },
-                "PrimaryColumn": {
-                  "$ref": "272"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_UnitOfficer_UnitId_Unit_Id"
-          },
-          {
-            "$id": "332",
-            "Columns": [
-              {
-                "$id": "333",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "299"
-                },
-                "PrimaryColumn": {
-                  "$ref": "287"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_VehicleOfficer_VehicleId_Vehicle_Id"
-          },
-          {
-            "$id": "334",
-            "Columns": [
-              {
-                "$id": "335",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "298"
-                },
-                "PrimaryColumn": {
-                  "$ref": "241"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_VehicleOfficer_OfficerId_Officer_Id"
-          },
-          {
-            "$id": "336",
-            "Columns": [
-              {
-                "$id": "337",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "304"
-                },
-                "PrimaryColumn": {
-                  "$ref": "292"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_VehicleRefCapability_VehicleCapabilityId_VehicleCapability_Id"
-          },
-          {
-            "$id": "338",
-            "Columns": [
-              {
-                "$id": "339",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "305"
-                },
-                "PrimaryColumn": {
-                  "$ref": "287"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_VehicleRefCapability_VehicleId_Vehicle_Id"
-          },
-          {
-            "$id": "340",
-            "Columns": [
-              {
-                "$id": "341",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
-                  "$ref": "198"
-                },
-                "PrimaryColumn": {
-                  "$ref": "193"
+                  "$ref": "195"
                 }
               }
             ],
@@ -5626,34 +5387,314 @@
             "ForeignKeyName": "FK_CallAssignment_CallId_Call_Id"
           },
           {
-            "$id": "342",
+            "$id": "322",
             "Columns": [
               {
-                "$id": "343",
+                "$id": "323",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "200"
+                  "$ref": "201"
                 },
                 "PrimaryColumn": {
-                  "$ref": "272"
+                  "$ref": "274"
                 }
               }
             ],
             "Virtual": false,
             "AppDoNotProcess": false,
             "ForeignKeyName": "FK_CallAssignment_UnitId_Unit_Id"
+          },
+          {
+            "$id": "324",
+            "Columns": [
+              {
+                "$id": "325",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "217"
+                },
+                "PrimaryColumn": {
+                  "$ref": "261"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_CallPerson_PersonId_Person_Id"
+          },
+          {
+            "$id": "326",
+            "Columns": [
+              {
+                "$id": "327",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "218"
+                },
+                "PrimaryColumn": {
+                  "$ref": "268"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_CallPerson_PersonTypeId_PersonType_Id"
+          },
+          {
+            "$id": "328",
+            "Columns": [
+              {
+                "$id": "329",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "232"
+                },
+                "PrimaryColumn": {
+                  "$ref": "195"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Note_CallId_Call_Id"
+          },
+          {
+            "$id": "330",
+            "Columns": [
+              {
+                "$id": "331",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "236"
+                },
+                "PrimaryColumn": {
+                  "$ref": "243"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Note_OfficerId_Officer_Id"
+          },
+          {
+            "$id": "332",
+            "Columns": [
+              {
+                "$id": "333",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "250"
+                },
+                "PrimaryColumn": {
+                  "$ref": "243"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_OfficerCapability_OfficerId_Officer_Id"
+          },
+          {
+            "$id": "334",
+            "Columns": [
+              {
+                "$id": "335",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "249"
+                },
+                "PrimaryColumn": {
+                  "$ref": "255"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_OfficerCapability_CapabilityId_OfficerCapability_Id"
+          },
+          {
+            "$id": "336",
+            "Columns": [
+              {
+                "$id": "337",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "284"
+                },
+                "PrimaryColumn": {
+                  "$ref": "274"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_UnitOfficer_UnitId_Unit_Id"
+          },
+          {
+            "$id": "338",
+            "Columns": [
+              {
+                "$id": "339",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "283"
+                },
+                "PrimaryColumn": {
+                  "$ref": "243"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_UnitOfficer_OfficerId_Officer_Id"
+          },
+          {
+            "$id": "340",
+            "Columns": [
+              {
+                "$id": "341",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "295"
+                },
+                "PrimaryColumn": {
+                  "$ref": "289"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_VehicleCapability_VehicleId_Vehicle_Id"
+          },
+          {
+            "$id": "342",
+            "Columns": [
+              {
+                "$id": "343",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "294"
+                },
+                "PrimaryColumn": {
+                  "$ref": "300"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_VehicleCapability_VehicleCapabilityId_VehicleCapability_Id"
+          },
+          {
+            "$id": "344",
+            "Columns": [
+              {
+                "$id": "345",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "306"
+                },
+                "PrimaryColumn": {
+                  "$ref": "289"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_VehicleOfficer_VehicleId_Vehicle_Id"
+          },
+          {
+            "$id": "346",
+            "Columns": [
+              {
+                "$id": "347",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "305"
+                },
+                "PrimaryColumn": {
+                  "$ref": "243"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_VehicleOfficer_OfficerId_Officer_Id"
           }
         ],
-        "ReferenceForeignKeys": [],
+        "ReferenceForeignKeys": [
+          {
+            "$id": "348",
+            "Columns": [
+              {
+                "$ref": "195"
+              },
+              {
+                "$ref": "274"
+              }
+            ],
+            "ReferenceTable": {
+              "$ref": "199"
+            },
+            "FirstForeignKeyInReferenceTable": {
+              "$ref": "320"
+            },
+            "SecondForeignKeyInReferenceTable": {
+              "$ref": "322"
+            },
+            "AppDoNotProcess": false
+          },
+          {
+            "$id": "349",
+            "Columns": [
+              {
+                "$ref": "243"
+              },
+              {
+                "$ref": "255"
+              }
+            ],
+            "ReferenceTable": {
+              "$ref": "248"
+            },
+            "FirstForeignKeyInReferenceTable": {
+              "$ref": "332"
+            },
+            "SecondForeignKeyInReferenceTable": {
+              "$ref": "334"
+            },
+            "AppDoNotProcess": false
+          },
+          {
+            "$id": "350",
+            "Columns": [
+              {
+                "$ref": "289"
+              },
+              {
+                "$ref": "243"
+              }
+            ],
+            "ReferenceTable": {
+              "$ref": "304"
+            },
+            "FirstForeignKeyInReferenceTable": {
+              "$ref": "344"
+            },
+            "SecondForeignKeyInReferenceTable": {
+              "$ref": "346"
+            },
+            "AppDoNotProcess": false
+          }
+        ],
         "ApplicationApiContainer": {
-          "$ref": "173"
+          "$ref": "175"
         },
         "Name": "dbo"
       }
     ],
     "ApplicationVersion": "1.0",
     "ApiSettings": {
-      "$id": "344",
+      "$id": "351",
       "NamespacePrefix": "",
       "IsMultiTenant": false,
       "UseSoftDeletes": false
@@ -5663,14 +5704,69 @@
     "DatabaseType": ""
   },
   "Settings": {
-    "$id": "345",
+    "$id": "352",
     "SettingsVersion": "1.0",
     "ApiSettings": {
       "NamespacePrefix": "",
       "IsMultiTenant": false,
       "UseSoftDeletes": false
     },
-    "TableParameterSettings": [],
+    "TableParameterSettings": [
+      {
+        "$id": "353",
+        "Table": "OfficerCapability",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "OfficerCapabilities",
+        "AppTableNamePlural": "OfficerCapabilities",
+        "AppReferenceTable": true,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.capabilityId",
+        "AppViewLabel": "OfficerCapabilities",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "354",
+        "Table": "VehicleCapability",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "VehicleCapabilities",
+        "AppTableNamePlural": "VehicleCapabilities",
+        "AppReferenceTable": true,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.vehicleCapabilityId",
+        "AppViewLabel": "VehicleCapabilities",
+        "AppViewIcon": ""
+      }
+    ],
     "ColumnParameterSettings": [],
     "VirtualForeignKeys": [],
     "ForeignKeyParameterSettings": [],

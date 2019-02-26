@@ -1327,6 +1327,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.Date",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Badges",
             "DefaultConstraints": [],
@@ -1596,6 +1598,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.CreationDate",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Comments",
             "DefaultConstraints": [],
@@ -1733,6 +1737,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.Id",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "LinkTypes",
             "DefaultConstraints": [],
@@ -2101,6 +2107,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.Comment",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "PostHistory",
             "DefaultConstraints": [],
@@ -2238,6 +2246,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.Id",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "PostHistoryTypes",
             "DefaultConstraints": [],
@@ -2474,6 +2484,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.CreationDate",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "PostLinks",
             "DefaultConstraints": [],
@@ -3249,6 +3261,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.AcceptedAnswerId",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Posts",
             "DefaultConstraints": [],
@@ -3386,6 +3400,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.Id",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "PostTypes",
             "DefaultConstraints": [],
@@ -3622,6 +3638,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.Count",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Tags",
             "DefaultConstraints": [],
@@ -4155,6 +4173,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.AboutMe",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Users",
             "DefaultConstraints": [],
@@ -4479,6 +4499,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.BountyAmount",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Votes",
             "DefaultConstraints": [],
@@ -4616,6 +4638,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "this.Id",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "VoteTypes",
             "DefaultConstraints": [],
@@ -4673,7 +4697,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "249",
@@ -4698,7 +4724,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "250",
@@ -4723,7 +4751,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.rwType"
+        "ForeignKeyDisplayColumn": "this.rwType",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "251",
@@ -4748,7 +4778,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.title"
+        "ForeignKeyDisplayColumn": "this.title",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "252",
@@ -4773,7 +4805,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "253",
@@ -4798,7 +4832,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.rwType"
+        "ForeignKeyDisplayColumn": "this.rwType",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "254",
@@ -4823,7 +4859,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "255",
@@ -4848,7 +4886,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.rwType"
+        "ForeignKeyDisplayColumn": "this.rwType",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "256",
@@ -4873,7 +4913,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.tagName"
+        "ForeignKeyDisplayColumn": "this.tagName",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "257",
@@ -4898,7 +4940,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.displayName"
+        "ForeignKeyDisplayColumn": "this.displayName",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "258",
@@ -4923,7 +4967,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.bountyAmount"
+        "ForeignKeyDisplayColumn": "this.bountyAmount",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "259",
@@ -4948,7 +4994,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       }
     ],
     "ColumnParameterSettings": [

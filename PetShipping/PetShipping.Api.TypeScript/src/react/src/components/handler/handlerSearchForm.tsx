@@ -244,6 +244,7 @@ export default class HandlerSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -302,5 +303,5 @@ export const WrappedHandlerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>86766c9c2cf158a2ecfbfd3d16878bdd</Hash>
+    <Hash>9cb938263162fd6420a8b53f40ef24a4</Hash>
 </Codenesium>*/

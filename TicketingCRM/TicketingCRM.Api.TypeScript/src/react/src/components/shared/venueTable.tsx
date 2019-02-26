@@ -205,6 +205,7 @@ export class VenueTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -247,5 +248,5 @@ export class VenueTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9a16b6f99f0b7299d81d6f5b000e8e80</Hash>
+    <Hash>afd1d2675687fdeab28eb4f79c534846</Hash>
 </Codenesium>*/

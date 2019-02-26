@@ -48,6 +48,10 @@ export class PipelineStepStepRequirementTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,6 +163,7 @@ export class PipelineStepStepRequirementTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -201,5 +206,5 @@ export class PipelineStepStepRequirementTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>77a9d0bdaaadeb647311610e3ef265d2</Hash>
+    <Hash>1285f49ae35588a974ffc42db1175587</Hash>
 </Codenesium>*/

@@ -39,11 +39,15 @@ handleEditClick(e:any, row: CreditCardViewModel) {
   this.props.history.push(ClientRoutes.CreditCards + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: CreditCardViewModel) {
-  this.props.history.push(ClientRoutes.CreditCards + '/' + row.id);
-}
+ handleDetailClick(e:any, row: CreditCardViewModel) {
+   this.props.history.push(ClientRoutes.CreditCards + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -152,6 +156,7 @@ handleDetailClick(e:any, row: CreditCardViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -189,5 +194,5 @@ handleDetailClick(e:any, row: CreditCardViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>2ddc10f2155626f542aa24de8ee90c98</Hash>
+    <Hash>82213daf50a2956f6f69599fd7b5ea90</Hash>
 </Codenesium>*/

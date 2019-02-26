@@ -304,6 +304,7 @@ export default class SalesPersonSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -362,5 +363,5 @@ export const WrappedSalesPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ebed167066ed86f645fa3668b4269757</Hash>
+    <Hash>1d0b04ccb922a1ab1cc8b8e51d265015</Hash>
 </Codenesium>*/

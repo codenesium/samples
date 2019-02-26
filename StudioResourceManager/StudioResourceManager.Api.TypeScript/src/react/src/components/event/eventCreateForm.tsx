@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { EventStatusSelectComponent } from '../shared/eventStatusSelect';
 
 interface EventCreateComponentProps {
@@ -86,6 +87,20 @@ class EventCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if (error.response.data) {
+            let errorResponse = error.response.data as ActionResponse;
+
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -222,5 +237,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6cbee524d59595c7e930e81426df943d</Hash>
+    <Hash>b7d654f87bf85f1e15b4d629d5f678d4</Hash>
 </Codenesium>*/

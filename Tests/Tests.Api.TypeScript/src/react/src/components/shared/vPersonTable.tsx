@@ -44,6 +44,10 @@ export class VPersonTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -124,6 +128,7 @@ export class VPersonTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -166,5 +171,5 @@ export class VPersonTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a7b6ec773b28310a70ddc9636b963ec7</Hash>
+    <Hash>6599004c49f5d24dccca3f1e37ec074d</Hash>
 </Codenesium>*/

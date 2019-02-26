@@ -44,6 +44,10 @@ export class MessageTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -140,6 +144,7 @@ export class MessageTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -182,5 +187,5 @@ export class MessageTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b156d48318a4d9e5e1a021f80fc183ab</Hash>
+    <Hash>c7a0a5b14f99bed4a924a04f0a452864</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeamMapper from './teamMapper';
 import TeamViewModel from './teamViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { OrganizationSelectComponent } from '../shared/organizationSelect'
 	
 interface TeamCreateComponentProps {
@@ -71,6 +72,20 @@ class TeamCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -139,5 +154,5 @@ class TeamCreateComponent extends React.Component<
 export const WrappedTeamCreateComponent = Form.create({ name: 'Team Create' })(TeamCreateComponent);
 
 /*<Codenesium>
-    <Hash>df71d2bf37530a708bfa137a778ff4fe</Hash>
+    <Hash>2e8d56e219a6aad20badf985af1dd1c7</Hash>
 </Codenesium>*/

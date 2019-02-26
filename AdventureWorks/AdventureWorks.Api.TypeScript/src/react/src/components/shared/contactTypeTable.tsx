@@ -44,6 +44,10 @@ export class ContactTypeTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -133,6 +137,7 @@ export class ContactTypeTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -175,5 +180,5 @@ export class ContactTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a50b40b238d6301a521d3e98639c134e</Hash>
+    <Hash>204ff72b8283c59c2d6fef19e9c4b8fa</Hash>
 </Codenesium>*/

@@ -44,6 +44,10 @@ export class AdminTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,6 +163,7 @@ export class AdminTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -201,5 +206,5 @@ export class AdminTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d58d20c480a8dc21b18906b6c80d1ec2</Hash>
+    <Hash>23596fbf8fc56f74ddd6806e7b93b570</Hash>
 </Codenesium>*/

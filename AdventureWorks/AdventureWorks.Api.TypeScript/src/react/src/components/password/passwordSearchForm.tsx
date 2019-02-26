@@ -200,6 +200,7 @@ export default class PasswordSearchComponent extends React.Component<PasswordSea
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -252,5 +253,5 @@ export default class PasswordSearchComponent extends React.Component<PasswordSea
 export const WrappedPasswordSearchComponent = Form.create({ name: 'Password Search' })(PasswordSearchComponent);
 
 /*<Codenesium>
-    <Hash>f52a41f29231364a880e0416a7d3c33c</Hash>
+    <Hash>552b9c356091b42d0b9d8e150498d642</Hash>
 </Codenesium>*/

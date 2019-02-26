@@ -44,6 +44,10 @@ export class SalesTaxRateTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -165,6 +169,7 @@ export class SalesTaxRateTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -207,5 +212,5 @@ export class SalesTaxRateTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7794b578e9b576ac8ab5e83a97a2ce08</Hash>
+    <Hash>04e15b315fd4d5155a8a93b9caf225d9</Hash>
 </Codenesium>*/

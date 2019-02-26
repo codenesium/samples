@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UnitMeasureMapper from './unitMeasureMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface UnitMeasureCreateComponentProps {
   form: WrappedFormUtils;
@@ -85,6 +86,20 @@ class UnitMeasureCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if (error.response.data) {
+            let errorResponse = error.response.data as ActionResponse;
+
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -158,5 +173,5 @@ export const WrappedUnitMeasureCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>45a715e4813ecde798e672962d908d98</Hash>
+    <Hash>db61a5c4a0090d322be460c8f8949970</Hash>
 </Codenesium>*/

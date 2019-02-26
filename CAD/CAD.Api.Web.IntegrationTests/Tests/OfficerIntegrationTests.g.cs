@@ -234,7 +234,7 @@ namespace CADNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyOfficerRefCapabilitiesByOfficerIdFound()
+		public virtual async void TestForeignKeyOfficerCapabilitiesByOfficerIdFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -242,13 +242,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			List<ApiOfficerRefCapabilityClientResponseModel> response = await client.OfficerRefCapabilitiesByOfficerId(1);
+			List<ApiOfficerCapabilitiesClientResponseModel> response = await client.OfficerCapabilitiesByOfficerId(1);
 
 			response.Should().NotBeEmpty();
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyOfficerRefCapabilitiesByOfficerIdNotFound()
+		public virtual async void TestForeignKeyOfficerCapabilitiesByOfficerIdNotFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -256,63 +256,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			List<ApiOfficerRefCapabilityClientResponseModel> response = await client.OfficerRefCapabilitiesByOfficerId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyUnitOfficersByOfficerIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiUnitOfficerClientResponseModel> response = await client.UnitOfficersByOfficerId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyUnitOfficersByOfficerIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiUnitOfficerClientResponseModel> response = await client.UnitOfficersByOfficerId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyVehicleOfficersByOfficerIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiVehicleOfficerClientResponseModel> response = await client.VehicleOfficersByOfficerId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyVehicleOfficersByOfficerIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiVehicleOfficerClientResponseModel> response = await client.VehicleOfficersByOfficerId(default(int));
+			List<ApiOfficerCapabilitiesClientResponseModel> response = await client.OfficerCapabilitiesByOfficerId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -340,5 +284,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c97df13525cd6771b8a6bf0d606506ea</Hash>
+    <Hash>78e35af56649e8b2d7a862aaa32ceb30</Hash>
 </Codenesium>*/

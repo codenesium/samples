@@ -6,7 +6,10 @@ import ProductDescriptionMapper from './productDescriptionMapper';
 import ProductDescriptionViewModel from './productDescriptionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ProductModelProductDescriptionCultureTableComponent } from '../shared/productModelProductDescriptionCultureTable';
+import {ProductModelProductDescriptionCultureTableComponent} from '../shared/productModelProductDescriptionCultureTable'
+	
+
+
 
 interface ProductDescriptionDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,25 +26,21 @@ interface ProductDescriptionDetailComponentState {
 }
 
 class ProductDescriptionDetailComponent extends React.Component<
-  ProductDescriptionDetailComponentProps,
-  ProductDescriptionDetailComponentState
+ProductDescriptionDetailComponentProps,
+ProductDescriptionDetailComponentState
 > {
   state = {
     model: new ProductDescriptionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.ProductDescriptions +
-        '/edit/' +
-        this.state.model!.productDescriptionID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.ProductDescriptions + '/edit/' + this.state.model!.productDescriptionID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,60 +86,56 @@ class ProductDescriptionDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Description</h3>
-              <p>{String(this.state.model!.description)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>ProductDescriptionID</h3>
-              <p>{String(this.state.model!.productDescriptionID)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Description</h3>
+							<p>{String(this.state.model!.description)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>ProductDescriptionID</h3>
+							<p>{String(this.state.model!.productDescriptionID)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>ProductModelProductDescriptionCultures</h3>
-            <ProductModelProductDescriptionCultureTableComponent
-              productModelID={this.state.model!.productModelID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.ProductDescriptions +
-                '/' +
-                this.state.model!.productDescriptionID +
-                '/' +
-                ApiRoutes.ProductModelProductDescriptionCultures
-              }
-            />
-          </div>
+            <ProductModelProductDescriptionCultureTableComponent 
+			productModelID={this.state.model!.productModelID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.ProductDescriptions + '/' + this.state.model!.productDescriptionID + '/' + ApiRoutes.ProductModelProductDescriptionCultures}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -149,11 +144,10 @@ class ProductDescriptionDetailComponent extends React.Component<
   }
 }
 
-export const WrappedProductDescriptionDetailComponent = Form.create({
-  name: 'ProductDescription Detail',
-})(ProductDescriptionDetailComponent);
-
+export const WrappedProductDescriptionDetailComponent = Form.create({ name: 'ProductDescription Detail' })(
+  ProductDescriptionDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>9c55a743e4cfe312e100085ba5af9170</Hash>
+    <Hash>bd071e3f2f50e38dce619ca875a38beb</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PasswordMapper from './passwordMapper';
 import PasswordViewModel from './passwordViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { PersonSelectComponent } from '../shared/personSelect'
 	
 interface PasswordCreateComponentProps {
@@ -71,6 +72,20 @@ class PasswordCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -162,5 +177,5 @@ class PasswordCreateComponent extends React.Component<
 export const WrappedPasswordCreateComponent = Form.create({ name: 'Password Create' })(PasswordCreateComponent);
 
 /*<Codenesium>
-    <Hash>f6ee5f072aa6a86120e98eb2be470a15</Hash>
+    <Hash>f6d51c521ff491815c7076240c955a3f</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ColumnSameAsFKTableMapper from './columnSameAsFKTableMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { PersonSelectComponent } from '../shared/personSelect';
 interface ColumnSameAsFKTableEditComponentProps {
   form: WrappedFormUtils;
@@ -136,6 +137,19 @@ class ColumnSameAsFKTableEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -204,5 +218,5 @@ export const WrappedColumnSameAsFKTableEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6520aa6620d15911e61074a9bfb5b045</Hash>
+    <Hash>5e96bbd9e8cbc83cd728cb70b787a3f9</Hash>
 </Codenesium>*/

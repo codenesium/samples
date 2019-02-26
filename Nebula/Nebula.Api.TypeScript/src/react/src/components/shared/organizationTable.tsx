@@ -44,6 +44,10 @@ export class OrganizationTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -126,6 +130,7 @@ export class OrganizationTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -168,5 +173,5 @@ export class OrganizationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d0f57f82741f04f73d79c2ee18e1fc80</Hash>
+    <Hash>dc5119e96ca16628dd45939f4eb0424f</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SalesTaxRateMapper from './salesTaxRateMapper';
 import SalesTaxRateViewModel from './salesTaxRateViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface SalesTaxRateEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -115,6 +116,19 @@ class SalesTaxRateEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -227,5 +241,5 @@ class SalesTaxRateEditComponent extends React.Component<
 export const WrappedSalesTaxRateEditComponent = Form.create({ name: 'SalesTaxRate Edit' })(SalesTaxRateEditComponent);
 
 /*<Codenesium>
-    <Hash>4801cefa04d93ff7a5ae7685b897b1bf</Hash>
+    <Hash>eb80f9952889fc76b4ffbb5c37e03cbd</Hash>
 </Codenesium>*/

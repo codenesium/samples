@@ -44,6 +44,10 @@ export class ShipMethodTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -152,6 +156,7 @@ export class ShipMethodTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -194,5 +199,5 @@ export class ShipMethodTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3a29b64a7daa379fb8babe6d5c1fb32d</Hash>
+    <Hash>5c12d73ca935383e66366d2a9d2b9558</Hash>
 </Codenesium>*/

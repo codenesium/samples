@@ -260,6 +260,7 @@ export default class OtherTransportSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -318,5 +319,5 @@ export const WrappedOtherTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1dcfffb3de5a2efa46fac7576e0d24d4</Hash>
+    <Hash>4cf89c1464a9b8ca41ebb30ed436e71a</Hash>
 </Codenesium>*/

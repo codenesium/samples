@@ -265,6 +265,7 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -323,5 +324,5 @@ export const WrappedColumnSameAsFKTableSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e686f2c7efb86d38fdfc1b58974ca3a9</Hash>
+    <Hash>8428b0e6381b894f4e98c9a186d0db7c</Hash>
 </Codenesium>*/

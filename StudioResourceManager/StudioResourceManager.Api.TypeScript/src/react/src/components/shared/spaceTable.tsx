@@ -6,11 +6,11 @@ import SpaceMapper from '../space/spaceMapper';
 import SpaceViewModel from '../space/spaceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface SpaceTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,44 @@ interface SpaceTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<SpaceViewModel>;
+  filteredRecords : Array<SpaceViewModel>;
 }
 
-export class SpaceTableComponent extends React.Component<
-  SpaceTableComponentProps,
-  SpaceTableComponentState
+export class  SpaceTableComponent extends React.Component<
+SpaceTableComponentProps,
+SpaceTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: SpaceViewModel) {
-    this.props.history.push(ClientRoutes.Spaces + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: SpaceViewModel) {
+  this.props.history.push(ClientRoutes.Spaces + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: SpaceViewModel) {
-    this.props.history.push(ClientRoutes.Spaces + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: SpaceViewModel) {
+   this.props.history.push(ClientRoutes.Spaces + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.SpaceClientResponseModel>;
@@ -59,11 +65,12 @@ export class SpaceTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new SpaceMapper();
+          
+          let spaces:Array<SpaceViewModel> = [];
 
-          let spaces: Array<SpaceViewModel> = [];
-
-          response.forEach(x => {
-            spaces.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              spaces.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,47 +95,48 @@ export class SpaceTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Spaces',
-                columns: [
-                  {
-                    Header: 'Description',
-                    accessor: 'description',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Spaces',
+                    columns: [
+					  {
+                      Header: 'Description',
+                      accessor: 'description',
+                      Cell: (props) => {
                       return <span>{String(props.original.description)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SpaceViewModel
@@ -139,8 +147,8 @@ export class SpaceTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as SpaceViewModel
@@ -149,14 +157,11 @@ export class SpaceTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -164,7 +169,6 @@ export class SpaceTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>99cedafe1aaa7e41827458014c792cf0</Hash>
+    <Hash>9cc6f5ae952e65fb77a7239d51f0ea87</Hash>
 </Codenesium>*/

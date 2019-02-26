@@ -17,12 +17,14 @@ namespace CADNS.Api.DataAccess
 
 		Task<List<Unit>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
-		Task<List<UnitOfficer>> UnitOfficersByUnitId(int unitId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Unit>> ByCallId(int callId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<CallAssignment>> CallAssignmentsByUnitId(int unitId, int limit = int.MaxValue, int offset = 0);
+		Task<CallAssignment> CreateCallAssignment(CallAssignment item);
+
+		Task DeleteCallAssignment(CallAssignment item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>488edf8e5304de0689636a942fa28e1b</Hash>
+    <Hash>ba1201b620647aeae8356f7040094183</Hash>
 </Codenesium>*/

@@ -13,20 +13,18 @@ namespace CADNS.Api.Services
 			IVehicleRepository vehicleRepository,
 			IApiVehicleServerRequestModelValidator vehicleModelValidator,
 			IDALVehicleMapper dalVehicleMapper,
-			IDALVehicleOfficerMapper dalVehicleOfficerMapper,
-			IDALVehicleRefCapabilityMapper dalVehicleRefCapabilityMapper)
+			IDALVehicleCapabilitiesMapper dalVehicleCapabilitiesMapper)
 			: base(logger,
 			       mediator,
 			       vehicleRepository,
 			       vehicleModelValidator,
 			       dalVehicleMapper,
-			       dalVehicleOfficerMapper,
-			       dalVehicleRefCapabilityMapper)
+			       dalVehicleCapabilitiesMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2ce27eee6fbf87e6221eb2c41037eb8</Hash>
+    <Hash>13f8c02a20dc1b87cc9be8ddfc216bd1</Hash>
 </Codenesium>*/

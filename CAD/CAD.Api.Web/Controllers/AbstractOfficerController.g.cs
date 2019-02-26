@@ -234,10 +234,10 @@ namespace CADNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{officerId}/OfficerRefCapabilities")]
+		[Route("{officerId}/OfficerCapabilities")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiOfficerRefCapabilityServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> OfficerRefCapabilitiesByOfficerId(int officerId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiOfficerCapabilitiesServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> OfficerCapabilitiesByOfficerId(int officerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -245,16 +245,16 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiOfficerRefCapabilityServerResponseModel> response = await this.OfficerService.OfficerRefCapabilitiesByOfficerId(officerId, query.Limit, query.Offset);
+			List<ApiOfficerCapabilitiesServerResponseModel> response = await this.OfficerService.OfficerCapabilitiesByOfficerId(officerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{officerId}/UnitOfficers")]
+		[Route("byCapabilityId/{capabilityId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiUnitOfficerServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> UnitOfficersByOfficerId(int officerId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiOfficerServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByCapabilityId(int capabilityId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -262,24 +262,7 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiUnitOfficerServerResponseModel> response = await this.OfficerService.UnitOfficersByOfficerId(officerId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{officerId}/VehicleOfficers")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVehicleOfficerServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> VehicleOfficersByOfficerId(int officerId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiVehicleOfficerServerResponseModel> response = await this.OfficerService.VehicleOfficersByOfficerId(officerId, query.Limit, query.Offset);
+			List<ApiOfficerServerResponseModel> response = await this.OfficerService.ByCapabilityId(capabilityId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -303,5 +286,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9f45412402f3731ff486b47c5bfc1507</Hash>
+    <Hash>b47f7eecd649ec70b83223b1d0f61fd3</Hash>
 </Codenesium>*/

@@ -184,6 +184,7 @@ export class SaleTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -226,5 +227,5 @@ export class SaleTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3efa993b7f0d2b5c50b5448ea99c2d64</Hash>
+    <Hash>432c38bd6cf1d3ab2340587697d4c425</Hash>
 </Codenesium>*/

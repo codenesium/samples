@@ -216,6 +216,7 @@ export default class CallStatuSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -274,5 +275,5 @@ export const WrappedCallStatuSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>aada1eaa0c69477acde8cbd19121e8d5</Hash>
+    <Hash>de9afc3b84f35be281ca1194ccc2e836</Hash>
 </Codenesium>*/

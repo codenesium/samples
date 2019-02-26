@@ -39,11 +39,15 @@ handleEditClick(e:any, row: ShoppingCartItemViewModel) {
   this.props.history.push(ClientRoutes.ShoppingCartItems + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: ShoppingCartItemViewModel) {
-  this.props.history.push(ClientRoutes.ShoppingCartItems + '/' + row.id);
-}
+ handleDetailClick(e:any, row: ShoppingCartItemViewModel) {
+   this.props.history.push(ClientRoutes.ShoppingCartItems + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -152,6 +156,7 @@ handleDetailClick(e:any, row: ShoppingCartItemViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -189,5 +194,5 @@ handleDetailClick(e:any, row: ShoppingCartItemViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>65942f7a4af7b07250e49023ba070c35</Hash>
+    <Hash>a00a598c802d1f885cdd42e5866bec7f</Hash>
 </Codenesium>*/

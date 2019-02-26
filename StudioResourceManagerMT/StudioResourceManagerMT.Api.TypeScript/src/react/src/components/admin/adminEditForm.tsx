@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface AdminEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -115,6 +116,19 @@ class AdminEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -228,5 +242,5 @@ class AdminEditComponent extends React.Component<
 export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(AdminEditComponent);
 
 /*<Codenesium>
-    <Hash>9850dffc876b14699e40a562e8a770aa</Hash>
+    <Hash>6ae7fe7023fc62d4c4a691528994a2b1</Hash>
 </Codenesium>*/

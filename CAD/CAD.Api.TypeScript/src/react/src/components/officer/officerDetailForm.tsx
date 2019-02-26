@@ -7,7 +7,7 @@ import OfficerViewModel from './officerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { NoteTableComponent } from '../shared/noteTable';
-import { OfficerRefCapabilityTableComponent } from '../shared/officerRefCapabilityTable';
+import { OfficerCapabilitiesTableComponent } from '../shared/officerCapabilitiesTable';
 import { UnitOfficerTableComponent } from '../shared/unitOfficerTable';
 import { VehicleOfficerTableComponent } from '../shared/vehicleOfficerTable';
 
@@ -147,9 +147,9 @@ class OfficerDetailComponent extends React.Component<
             />
           </div>
           <div>
-            <h3>OfficerRefCapabilities</h3>
-            <OfficerRefCapabilityTableComponent
-              id={this.state.model!.id}
+            <h3>OfficerCapabilities</h3>
+            <OfficerCapabilitiesTableComponent
+              capabilityId={this.state.model!.capabilityId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -158,14 +158,14 @@ class OfficerDetailComponent extends React.Component<
                 '/' +
                 this.state.model!.id +
                 '/' +
-                ApiRoutes.OfficerRefCapabilities
+                ApiRoutes.OfficerCapabilities
               }
             />
           </div>
           <div>
             <h3>UnitOfficers</h3>
             <UnitOfficerTableComponent
-              id={this.state.model!.id}
+              officerId={this.state.model!.officerId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -181,7 +181,7 @@ class OfficerDetailComponent extends React.Component<
           <div>
             <h3>VehicleOfficers</h3>
             <VehicleOfficerTableComponent
-              id={this.state.model!.id}
+              officerId={this.state.model!.officerId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -208,5 +208,5 @@ export const WrappedOfficerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cec8a0886792cfcdf7d78eb3040f5aac</Hash>
+    <Hash>a5fb8914c9ee796e0710b260d41f12d0</Hash>
 </Codenesium>*/

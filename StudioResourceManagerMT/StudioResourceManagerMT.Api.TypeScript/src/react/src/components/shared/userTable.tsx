@@ -44,6 +44,10 @@ export class UserTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -131,6 +135,7 @@ export class UserTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -173,5 +178,5 @@ export class UserTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a0252f366990195fec3bbe7cdc7a09d0</Hash>
+    <Hash>87690eace859e032678327e1ccbe30cd</Hash>
 </Codenesium>*/

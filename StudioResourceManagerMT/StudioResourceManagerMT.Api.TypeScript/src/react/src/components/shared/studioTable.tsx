@@ -44,6 +44,10 @@ export class StudioTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -166,6 +170,7 @@ export class StudioTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -208,5 +213,5 @@ export class StudioTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c6ec90c6a6856aa561741d9db14975f3</Hash>
+    <Hash>006a10dc3cc9aa84680da3e9ccfde280</Hash>
 </Codenesium>*/

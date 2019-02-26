@@ -216,6 +216,7 @@ export default class VoteTypeSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -274,5 +275,5 @@ export const WrappedVoteTypeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1763b3a23d574bee78986f06faeb5c62</Hash>
+    <Hash>36001e17533331ceb63215c275dfddb1</Hash>
 </Codenesium>*/

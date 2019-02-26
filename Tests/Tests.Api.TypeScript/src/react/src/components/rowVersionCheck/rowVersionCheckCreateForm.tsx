@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RowVersionCheckMapper from './rowVersionCheckMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface RowVersionCheckCreateComponentProps {
   form: WrappedFormUtils;
@@ -85,6 +86,20 @@ class RowVersionCheckCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if (error.response.data) {
+            let errorResponse = error.response.data as ActionResponse;
+
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -156,5 +171,5 @@ export const WrappedRowVersionCheckCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f782af153040c28788bcca8ab82fe461</Hash>
+    <Hash>2241fa780efbc4d27b063108d8b61c1d</Hash>
 </Codenesium>*/

@@ -178,6 +178,7 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -230,5 +231,5 @@ export default class TeacherSkillSearchComponent extends React.Component<Teacher
 export const WrappedTeacherSkillSearchComponent = Form.create({ name: 'TeacherSkill Search' })(TeacherSkillSearchComponent);
 
 /*<Codenesium>
-    <Hash>14fcbe972d6ed00d3779cc2d03e8e067</Hash>
+    <Hash>fd78b420d79bcdc01aedad9f026138f8</Hash>
 </Codenesium>*/

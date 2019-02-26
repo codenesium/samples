@@ -44,6 +44,10 @@ export class MachineTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -154,6 +158,7 @@ export class MachineTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -196,5 +201,5 @@ export class MachineTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7eaf9da2af785568baf9212f21d23a90</Hash>
+    <Hash>1156f6520cccef2ef4e6b0860aa7c0f1</Hash>
 </Codenesium>*/

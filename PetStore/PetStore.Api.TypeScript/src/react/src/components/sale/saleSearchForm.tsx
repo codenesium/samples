@@ -210,6 +210,7 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -262,5 +263,5 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
 export const WrappedSaleSearchComponent = Form.create({ name: 'Sale Search' })(SaleSearchComponent);
 
 /*<Codenesium>
-    <Hash>aa97b8a7797b1b920a5a6dbd41469f4b</Hash>
+    <Hash>dcbf47329bccc594eff6c372f966e5d1</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ProductSubcategoryMapper from './productSubcategoryMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { ProductCategorySelectComponent } from '../shared/productCategorySelect';
 interface ProductSubcategoryEditComponentProps {
   form: WrappedFormUtils;
@@ -136,6 +137,19 @@ class ProductSubcategoryEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -230,5 +244,5 @@ export const WrappedProductSubcategoryEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d2388e0dcb41cfb5c2c5211998dfc33d</Hash>
+    <Hash>5d296f92bf3df745052fe88ded63f064</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EmployeeMapper from './employeeMapper';
 import EmployeeViewModel from './employeeViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface EmployeeEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -115,6 +116,19 @@ class EmployeeEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -318,5 +332,5 @@ class EmployeeEditComponent extends React.Component<
 export const WrappedEmployeeEditComponent = Form.create({ name: 'Employee Edit' })(EmployeeEditComponent);
 
 /*<Codenesium>
-    <Hash>04d83189d6a700baac5fc2614bd37908</Hash>
+    <Hash>e6c19cd7a4d07c8005d9336f5ab3c084</Hash>
 </Codenesium>*/

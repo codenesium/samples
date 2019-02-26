@@ -1,17 +1,28 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ShoppingCartItemMapper from './shoppingCartItemMapper';
 import ShoppingCartItemViewModel from './shoppingCartItemViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface ShoppingCartItemCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface ShoppingCartItemCreateComponentState {
@@ -20,7 +31,7 @@ interface ShoppingCartItemCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
+  submitted: boolean;
 }
 
 class ShoppingCartItemCreateComponent extends React.Component<
@@ -33,12 +44,12 @@ class ShoppingCartItemCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+    submitted: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as ShoppingCartItemViewModel;
         console.log('Received values of form: ', model);
@@ -47,10 +58,9 @@ class ShoppingCartItemCreateComponent extends React.Component<
     });
   };
 
-  submit = (model:ShoppingCartItemViewModel) =>
-  {  
+  submit = (model: ShoppingCartItemViewModel) => {
     let mapper = new ShoppingCartItemMapper();
-     axios
+    axios
       .post(
         Constants.ApiEndpoint + ApiRoutes.ShoppingCartItems,
         mapper.mapViewModelToApiRequest(model),
@@ -65,111 +75,134 @@ class ShoppingCartItemCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.ShoppingCartItemClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+          if (error.response.data) {
+            let errorResponse = error.response.data as ActionResponse;
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
+          this.setState({
+            ...this.state,
+            submitted: true,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
+        }
+      );
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="dateCreated">DateCreated</label>
+            <br />
+            {getFieldDecorator('dateCreated', {
+              rules: [{ required: true, message: 'Required' }],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateCreated'} />
+            )}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='dateCreated'>DateCreated</label>
-              <br />             
-              {getFieldDecorator('dateCreated', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DateCreated"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="modifiedDate">ModifiedDate</label>
+            <br />
+            {getFieldDecorator('modifiedDate', {
+              rules: [{ required: true, message: 'Required' }],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='modifiedDate'>ModifiedDate</label>
-              <br />             
-              {getFieldDecorator('modifiedDate', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="productID">ProductID</label>
+            <br />
+            {getFieldDecorator('productID', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'ProductID'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='productID'>ProductID</label>
-              <br />             
-              {getFieldDecorator('productID', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ProductID"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="quantity">Quantity</label>
+            <br />
+            {getFieldDecorator('quantity', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Quantity'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='quantity'>Quantity</label>
-              <br />             
-              {getFieldDecorator('quantity', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Quantity"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="shoppingCartID">ShoppingCartID</label>
+            <br />
+            {getFieldDecorator('shoppingCartID', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 50, message: 'Exceeds max length of 50' },
+              ],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'ShoppingCartID'}
+              />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='shoppingCartID'>ShoppingCartID</label>
-              <br />             
-              {getFieldDecorator('shoppingCartID', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 50, message: 'Exceeds max length of 50' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ShoppingCartID"} /> )}
-              </Form.Item>
-
-			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+              Submit
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedShoppingCartItemCreateComponent = Form.create({ name: 'ShoppingCartItem Create' })(ShoppingCartItemCreateComponent);
+export const WrappedShoppingCartItemCreateComponent = Form.create({
+  name: 'ShoppingCartItem Create',
+})(ShoppingCartItemCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>bdbd0204b335fca82a060b387799d93a</Hash>
+    <Hash>9f60eb4d68f499b5852ed760ec3ec8fc</Hash>
 </Codenesium>*/

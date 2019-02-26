@@ -44,6 +44,10 @@ export class FamilyTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -168,6 +172,7 @@ export class FamilyTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -210,5 +215,5 @@ export class FamilyTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>92e3eb59813cd944bc1242f472e8b70b</Hash>
+    <Hash>d72e1d2f256e973034c3e7e2db1da8b1</Hash>
 </Codenesium>*/

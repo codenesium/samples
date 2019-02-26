@@ -39,11 +39,15 @@ handleEditClick(e:any, row: SalesReasonViewModel) {
   this.props.history.push(ClientRoutes.SalesReasons + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: SalesReasonViewModel) {
-  this.props.history.push(ClientRoutes.SalesReasons + '/' + row.id);
-}
+ handleDetailClick(e:any, row: SalesReasonViewModel) {
+   this.props.history.push(ClientRoutes.SalesReasons + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -140,6 +144,7 @@ handleDetailClick(e:any, row: SalesReasonViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -177,5 +182,5 @@ handleDetailClick(e:any, row: SalesReasonViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>c469927d91549c88514846b66089d2a9</Hash>
+    <Hash>cef47254c34375a6a88e58b9a9dcc105</Hash>
 </Codenesium>*/

@@ -6,10 +6,7 @@ import AddressTypeMapper from './addressTypeMapper';
 import AddressTypeViewModel from './addressTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {BusinessEntityAddressTableComponent} from '../shared/businessEntityAddressTable'
-	
-
-
+import { BusinessEntityAddressTableComponent } from '../shared/businessEntityAddressTable';
 
 interface AddressTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface AddressTypeDetailComponentState {
 }
 
 class AddressTypeDetailComponent extends React.Component<
-AddressTypeDetailComponentProps,
-AddressTypeDetailComponentState
+  AddressTypeDetailComponentProps,
+  AddressTypeDetailComponentState
 > {
   state = {
     model: new AddressTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.AddressTypes + '/edit/' + this.state.model!.addressTypeID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.AddressTypes + '/edit/' + this.state.model!.addressTypeID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,56 +85,60 @@ AddressTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>AddressTypeID</h3>
-							<p>{String(this.state.model!.addressTypeID)}</p>
-						 </div>
-					   						 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div>
-							<h3>rowguid</h3>
-							<p>{String(this.state.model!.rowguid)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>AddressTypeID</h3>
+              <p>{String(this.state.model!.addressTypeID)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>BusinessEntityAddresses</h3>
-            <BusinessEntityAddressTableComponent 
-			businessEntityID={this.state.model!.businessEntityID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.AddressTypes + '/' + this.state.model!.addressTypeID + '/' + ApiRoutes.BusinessEntityAddresses}
-			/>
-         </div>
-	
-
+            <BusinessEntityAddressTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.AddressTypes +
+                '/' +
+                this.state.model!.addressTypeID +
+                '/' +
+                ApiRoutes.BusinessEntityAddresses
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -144,10 +147,11 @@ AddressTypeDetailComponentState
   }
 }
 
-export const WrappedAddressTypeDetailComponent = Form.create({ name: 'AddressType Detail' })(
-  AddressTypeDetailComponent
-);
+export const WrappedAddressTypeDetailComponent = Form.create({
+  name: 'AddressType Detail',
+})(AddressTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>2908712a45e65b90f994f7747931b62c</Hash>
+    <Hash>b4d02b18e53e4ea5bf5f353a32bd567a</Hash>
 </Codenesium>*/

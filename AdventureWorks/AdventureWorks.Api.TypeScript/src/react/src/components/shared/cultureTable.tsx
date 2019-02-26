@@ -44,6 +44,10 @@ export class CultureTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -131,6 +135,7 @@ export class CultureTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -173,5 +178,5 @@ export class CultureTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5251b28d5af6b20a44921a82f5651cc4</Hash>
+    <Hash>7b5a660090e2773a2ef705a96dd1bc64</Hash>
 </Codenesium>*/

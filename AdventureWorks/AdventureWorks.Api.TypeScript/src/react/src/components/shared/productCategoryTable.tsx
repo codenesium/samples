@@ -44,6 +44,10 @@ export class ProductCategoryTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -142,6 +146,7 @@ export class ProductCategoryTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -184,5 +189,5 @@ export class ProductCategoryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>95e1f20128d24a443a34f58b60634579</Hash>
+    <Hash>f3be23c379139a28d1a3dc64e3cdd330</Hash>
 </Codenesium>*/

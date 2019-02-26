@@ -39,11 +39,15 @@ handleEditClick(e:any, row: ClaspViewModel) {
   this.props.history.push(ClientRoutes.Clasps + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: ClaspViewModel) {
-  this.props.history.push(ClientRoutes.Clasps + '/' + row.id);
-}
+ handleDetailClick(e:any, row: ClaspViewModel) {
+   this.props.history.push(ClientRoutes.Clasps + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -142,6 +146,7 @@ handleDetailClick(e:any, row: ClaspViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -179,5 +184,5 @@ handleDetailClick(e:any, row: ClaspViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>18d2156dfeef4748801b6b196b3a4a98</Hash>
+    <Hash>cecf2481be2e5b1d59e909a9d5d28fd0</Hash>
 </Codenesium>*/

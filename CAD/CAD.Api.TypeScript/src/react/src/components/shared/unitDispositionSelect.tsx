@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import UnitDispositionMapper from '../unitDisposition/unitDispositionMapper';
 import UnitDispositionViewModel from '../unitDisposition/unitDispositionViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface UnitDispositionSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface UnitDispositionSelectComponentState {
@@ -19,44 +23,46 @@ interface UnitDispositionSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<UnitDispositionViewModel>;
+  filteredRecords : Array<UnitDispositionViewModel>;
 }
 
-export class UnitDispositionSelectComponent extends React.Component<
-  UnitDispositionSelectComponentProps,
-  UnitDispositionSelectComponentState
+export class  UnitDispositionSelectComponent extends React.Component<
+UnitDispositionSelectComponentProps,
+UnitDispositionSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.UnitDispositionClientResponseModel
-          >;
+          let response = resp.data as Array<Api.UnitDispositionClientResponseModel>;
 
           console.log(response);
 
           let mapper = new UnitDispositionMapper();
+          
+          let devices:Array<UnitDispositionViewModel> = [];
 
-          let devices: Array<UnitDispositionViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -81,39 +87,46 @@ export class UnitDispositionSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: UnitDispositionViewModel) => {
-                return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:UnitDispositionViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>6f7f471a5ac0f2845fe3b89d046f1354</Hash>
+    <Hash>d627fa28e6c5bc34703c3494aea767d5</Hash>
 </Codenesium>*/

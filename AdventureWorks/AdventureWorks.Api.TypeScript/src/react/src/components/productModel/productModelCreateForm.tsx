@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ProductModelMapper from './productModelMapper';
 import ProductModelViewModel from './productModelViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface ProductModelCreateComponentProps {
   form:WrappedFormUtils;
@@ -70,6 +71,20 @@ class ProductModelCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -169,5 +184,5 @@ class ProductModelCreateComponent extends React.Component<
 export const WrappedProductModelCreateComponent = Form.create({ name: 'ProductModel Create' })(ProductModelCreateComponent);
 
 /*<Codenesium>
-    <Hash>7bb276a11ea0d9f8d60e71ecbc5eb3f7</Hash>
+    <Hash>62992026d80f6ed20ab8352c1830e2d8</Hash>
 </Codenesium>*/

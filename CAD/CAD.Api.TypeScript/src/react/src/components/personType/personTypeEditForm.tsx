@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PersonTypeMapper from './personTypeMapper';
 import PersonTypeViewModel from './personTypeViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface PersonTypeEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -115,6 +116,19 @@ class PersonTypeEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -172,5 +186,5 @@ class PersonTypeEditComponent extends React.Component<
 export const WrappedPersonTypeEditComponent = Form.create({ name: 'PersonType Edit' })(PersonTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>44f4c9e00b01583abd0735adde78544a</Hash>
+    <Hash>1649d20e577d005268fd61f26cbc5321</Hash>
 </Codenesium>*/

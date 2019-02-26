@@ -12,14 +12,9 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>,
-  displayName: string
-) => {
-  class WrapperHeaderComponent extends React.Component<
-    WrapperHeaderProps & RouteComponentProps,
-    WrapperHeaderState
-  > {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -35,101 +30,127 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+               <MenuItem
                 key="Home"
-                onClick={() => {
-                  this.setState({ ...this.state, collapsed: true });
-                }}
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'} />
+                <Link to={'/'}></Link>
               </MenuItem>
 
-              <MenuItem key="admin">
-                <Icon type="pie-chart" />
-                <span>Admins</span>
-                <Link to={ClientRoutes.Admins} />
+			   			   <MenuItem
+                key="admin"
+              >
+			  <Icon type="pie-chart" />
+              <span>Admins</span>
+              <Link to={ClientRoutes.Admins}></Link>
               </MenuItem>
 
-              <MenuItem key="city">
-                <Icon type="rise" />
-                <span>Cities</span>
-                <Link to={ClientRoutes.Cities} />
+							   <MenuItem
+                key="city"
+              >
+			  <Icon type="rise" />
+              <span>Cities</span>
+              <Link to={ClientRoutes.Cities}></Link>
               </MenuItem>
 
-              <MenuItem key="country">
-                <Icon type="bars" />
-                <span>Countries</span>
-                <Link to={ClientRoutes.Countries} />
+							   <MenuItem
+                key="country"
+              >
+			  <Icon type="bars" />
+              <span>Countries</span>
+              <Link to={ClientRoutes.Countries}></Link>
               </MenuItem>
 
-              <MenuItem key="customer">
-                <Icon type="cloud" />
-                <span>Customers</span>
-                <Link to={ClientRoutes.Customers} />
+							   <MenuItem
+                key="customer"
+              >
+			  <Icon type="cloud" />
+              <span>Customers</span>
+              <Link to={ClientRoutes.Customers}></Link>
               </MenuItem>
 
-              <MenuItem key="event">
-                <Icon type="code" />
-                <span>Events</span>
-                <Link to={ClientRoutes.Events} />
+							   <MenuItem
+                key="event"
+              >
+			  <Icon type="code" />
+              <span>Events</span>
+              <Link to={ClientRoutes.Events}></Link>
               </MenuItem>
 
-              <MenuItem key="province">
-                <Icon type="smile" />
-                <span>Provinces</span>
-                <Link to={ClientRoutes.Provinces} />
+							   <MenuItem
+                key="province"
+              >
+			  <Icon type="smile" />
+              <span>Provinces</span>
+              <Link to={ClientRoutes.Provinces}></Link>
               </MenuItem>
 
-              <MenuItem key="sale">
-                <Icon type="laptop" />
-                <span>Sales</span>
-                <Link to={ClientRoutes.Sales} />
+							   <MenuItem
+                key="sale"
+              >
+			  <Icon type="laptop" />
+              <span>Sales</span>
+              <Link to={ClientRoutes.Sales}></Link>
               </MenuItem>
 
-              <MenuItem key="saleTicket">
-                <Icon type="mobile" />
-                <span>SaleTickets</span>
-                <Link to={ClientRoutes.SaleTickets} />
+							   <MenuItem
+                key="saleTicket"
+              >
+			  <Icon type="mobile" />
+              <span>SaleTickets</span>
+              <Link to={ClientRoutes.SaleTickets}></Link>
               </MenuItem>
 
-              <MenuItem key="ticket">
-                <Icon type="paper-clip" />
-                <span>Tickets</span>
-                <Link to={ClientRoutes.Tickets} />
+							   <MenuItem
+                key="ticket"
+              >
+			  <Icon type="paper-clip" />
+              <span>Tickets</span>
+              <Link to={ClientRoutes.Tickets}></Link>
               </MenuItem>
 
-              <MenuItem key="ticketStatus">
-                <Icon type="setting" />
-                <span>TicketStatus</span>
-                <Link to={ClientRoutes.TicketStatus} />
+							   <MenuItem
+                key="ticketStatus"
+              >
+			  <Icon type="setting" />
+              <span>TicketStatus</span>
+              <Link to={ClientRoutes.TicketStatus}></Link>
               </MenuItem>
 
-              <MenuItem key="transaction">
-                <Icon type="user" />
-                <span>Transactions</span>
-                <Link to={ClientRoutes.Transactions} />
+							   <MenuItem
+                key="transaction"
+              >
+			  <Icon type="user" />
+              <span>Transactions</span>
+              <Link to={ClientRoutes.Transactions}></Link>
               </MenuItem>
 
-              <MenuItem key="transactionStatus">
-                <Icon type="home" />
-                <span>TransactionStatus</span>
-                <Link to={ClientRoutes.TransactionStatus} />
+							   <MenuItem
+                key="transactionStatus"
+              >
+			  <Icon type="home" />
+              <span>TransactionStatus</span>
+              <Link to={ClientRoutes.TransactionStatus}></Link>
               </MenuItem>
 
-              <MenuItem key="venue">
-                <Icon type="camera" />
-                <span>Venues</span>
-                <Link to={ClientRoutes.Venues} />
+							   <MenuItem
+                key="venue"
+              >
+			  <Icon type="camera" />
+              <span>Venues</span>
+              <Link to={ClientRoutes.Venues}></Link>
               </MenuItem>
+
+				
             </Menu>
           </Sider>
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -142,7 +163,6 @@ export const wrapperHeader = (
   return WrapperHeaderComponent;
 };
 
-
 /*<Codenesium>
-    <Hash>0242f2611355ef27c374fe1768c4de84</Hash>
+    <Hash>4eca463be4984b0351141ffb9ac2b3f7</Hash>
 </Codenesium>*/

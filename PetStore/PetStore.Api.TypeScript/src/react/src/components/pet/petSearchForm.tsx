@@ -204,6 +204,7 @@ export default class PetSearchComponent extends React.Component<PetSearchCompone
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -256,5 +257,5 @@ export default class PetSearchComponent extends React.Component<PetSearchCompone
 export const WrappedPetSearchComponent = Form.create({ name: 'Pet Search' })(PetSearchComponent);
 
 /*<Codenesium>
-    <Hash>4dd21cb9c6c9599d2ae635e8b90ae048</Hash>
+    <Hash>7f0fae5c05f9abf2ba2ebf1d32c62efc</Hash>
 </Codenesium>*/

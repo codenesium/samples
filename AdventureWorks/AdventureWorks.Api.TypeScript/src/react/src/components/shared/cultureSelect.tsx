@@ -3,19 +3,15 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import CultureMapper from '../culture/cultureMapper';
 import CultureViewModel from '../culture/cultureViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CultureSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:string;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: string;
+  propertyName: string;
+  required: boolean;
 }
 
 interface CultureSelectComponentState {
@@ -23,33 +19,30 @@ interface CultureSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<CultureViewModel>;
+  filteredRecords: Array<CultureViewModel>;
 }
 
-export class  CultureSelectComponent extends React.Component<
-CultureSelectComponentProps,
-CultureSelectComponentState
+export class CultureSelectComponent extends React.Component<
+  CultureSelectComponentProps,
+  CultureSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.CultureClientResponseModel>;
@@ -57,12 +50,11 @@ CultureSelectComponentState
           console.log(response);
 
           let mapper = new CultureMapper();
-          
-          let devices:Array<CultureViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<CultureViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -87,46 +79,41 @@ CultureSelectComponentState
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
         <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:CultureViewModel) =>
-            {
-                return <Select.Option value={x.cultureID}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue,
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map((x: CultureViewModel) => {
+                return (
+                  <Select.Option value={x.cultureID}>
+                    {x.toDisplay()}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </div>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>d77c760f9d5b210a536793560970ce53</Hash>
+    <Hash>a92607ce920b1a72dc0584e5fa517334</Hash>
 </Codenesium>*/

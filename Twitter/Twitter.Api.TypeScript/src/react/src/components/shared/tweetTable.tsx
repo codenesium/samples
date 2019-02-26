@@ -6,11 +6,11 @@ import TweetMapper from '../tweet/tweetMapper';
 import TweetViewModel from '../tweet/tweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface TweetTableComponentProps {
-  tweet_id: number;
-  apiRoute: string;
+  tweet_id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,44 @@ interface TweetTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<TweetViewModel>;
+  filteredRecords : Array<TweetViewModel>;
 }
 
-export class TweetTableComponent extends React.Component<
-  TweetTableComponentProps,
-  TweetTableComponentState
+export class  TweetTableComponent extends React.Component<
+TweetTableComponentProps,
+TweetTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: TweetViewModel) {
-    this.props.history.push(ClientRoutes.Tweets + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: TweetViewModel) {
+  this.props.history.push(ClientRoutes.Tweets + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: TweetViewModel) {
-    this.props.history.push(ClientRoutes.Tweets + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: TweetViewModel) {
+   this.props.history.push(ClientRoutes.Tweets + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.TweetClientResponseModel>;
@@ -59,11 +65,12 @@ export class TweetTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new TweetMapper();
+          
+          let tweets:Array<TweetViewModel> = [];
 
-          let tweets: Array<TweetViewModel> = [];
-
-          response.forEach(x => {
-            tweets.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              tweets.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,100 +95,74 @@ export class TweetTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Tweets',
-                columns: [
-                  {
-                    Header: 'Content',
-                    accessor: 'content',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Tweets',
+                    columns: [
+					  {
+                      Header: 'Content',
+                      accessor: 'content',
+                      Cell: (props) => {
                       return <span>{String(props.original.content)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Date',
-                    accessor: 'date',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Date',
+                      accessor: 'date',
+                      Cell: (props) => {
                       return <span>{String(props.original.date)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Location_id',
-                    accessor: 'locationId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Locations +
-                                '/' +
-                                props.original.locationId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'Location_id',
+                      accessor: 'locationId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Locations + '/' + props.original.locationId); }}>
                           {String(
                             props.original.locationIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Time',
-                    accessor: 'time',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Time',
+                      accessor: 'time',
+                      Cell: (props) => {
                       return <span>{String(props.original.time)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'User_user_id',
-                    accessor: 'userUserId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Users +
-                                '/' +
-                                props.original.userUserId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'User_user_id',
+                      accessor: 'userUserId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.userUserId); }}>
                           {String(
                             props.original.userUserIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TweetViewModel
@@ -192,8 +173,8 @@ export class TweetTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as TweetViewModel
@@ -202,14 +183,11 @@ export class TweetTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -217,7 +195,6 @@ export class TweetTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>0918ee49e03cdd250b3ed66ba4b716e4</Hash>
+    <Hash>df3d2e743363998189dc0280236f8162</Hash>
 </Codenesium>*/

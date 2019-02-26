@@ -230,6 +230,7 @@ export default class SpaceSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -288,5 +289,5 @@ export const WrappedSpaceSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2c67fbb815d17f9e5ee647e0bf00570c</Hash>
+    <Hash>6a8aba3628fb255c4f00837ce77f1caa</Hash>
 </Codenesium>*/

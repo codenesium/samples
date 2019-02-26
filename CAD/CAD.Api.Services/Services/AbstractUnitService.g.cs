@@ -17,10 +17,6 @@ namespace CADNS.Api.Services
 
 		protected IDALUnitMapper DalUnitMapper { get; private set; }
 
-		protected IDALUnitOfficerMapper DalUnitOfficerMapper { get; private set; }
-
-		protected IDALCallAssignmentMapper DalCallAssignmentMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractUnitService(
@@ -28,16 +24,12 @@ namespace CADNS.Api.Services
 			MediatR.IMediator mediator,
 			IUnitRepository unitRepository,
 			IApiUnitServerRequestModelValidator unitModelValidator,
-			IDALUnitMapper dalUnitMapper,
-			IDALUnitOfficerMapper dalUnitOfficerMapper,
-			IDALCallAssignmentMapper dalCallAssignmentMapper)
+			IDALUnitMapper dalUnitMapper)
 			: base()
 		{
 			this.UnitRepository = unitRepository;
 			this.UnitModelValidator = unitModelValidator;
 			this.DalUnitMapper = dalUnitMapper;
-			this.DalUnitOfficerMapper = dalUnitOfficerMapper;
-			this.DalCallAssignmentMapper = dalCallAssignmentMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -120,22 +112,15 @@ namespace CADNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiUnitOfficerServerResponseModel>> UnitOfficersByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiUnitServerResponseModel>> ByCallId(int callId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<UnitOfficer> records = await this.UnitRepository.UnitOfficersByUnitId(unitId, limit, offset);
+			List<Unit> records = await this.UnitRepository.ByCallId(callId, limit, offset);
 
-			return this.DalUnitOfficerMapper.MapEntityToModel(records);
-		}
-
-		public async virtual Task<List<ApiCallAssignmentServerResponseModel>> CallAssignmentsByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<CallAssignment> records = await this.UnitRepository.CallAssignmentsByUnitId(unitId, limit, offset);
-
-			return this.DalCallAssignmentMapper.MapEntityToModel(records);
+			return this.DalUnitMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0d2bcd5ed295e8a59aaa356422a009b</Hash>
+    <Hash>5843dd5cb9c6167a5e0b40d8891d87b9</Hash>
 </Codenesium>*/

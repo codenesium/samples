@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ShipMethodMapper from './shipMethodMapper';
 import ShipMethodViewModel from './shipMethodViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface ShipMethodCreateComponentProps {
   form:WrappedFormUtils;
@@ -70,6 +71,20 @@ class ShipMethodCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -171,5 +186,5 @@ class ShipMethodCreateComponent extends React.Component<
 export const WrappedShipMethodCreateComponent = Form.create({ name: 'ShipMethod Create' })(ShipMethodCreateComponent);
 
 /*<Codenesium>
-    <Hash>b33c21c38909a37776b6c68611bfd710</Hash>
+    <Hash>1aebee2c6bbddf13aa09468a57492508</Hash>
 </Codenesium>*/

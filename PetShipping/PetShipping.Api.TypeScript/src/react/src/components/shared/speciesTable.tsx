@@ -6,11 +6,11 @@ import SpeciesMapper from '../species/speciesMapper';
 import SpeciesViewModel from '../species/speciesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface SpeciesTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,44 @@ interface SpeciesTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<SpeciesViewModel>;
+  filteredRecords : Array<SpeciesViewModel>;
 }
 
-export class SpeciesTableComponent extends React.Component<
-  SpeciesTableComponentProps,
-  SpeciesTableComponentState
+export class  SpeciesTableComponent extends React.Component<
+SpeciesTableComponentProps,
+SpeciesTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: SpeciesViewModel) {
-    this.props.history.push(ClientRoutes.Species + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: SpeciesViewModel) {
+  this.props.history.push(ClientRoutes.Species + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: SpeciesViewModel) {
-    this.props.history.push(ClientRoutes.Species + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: SpeciesViewModel) {
+   this.props.history.push(ClientRoutes.Species + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.SpeciesClientResponseModel>;
@@ -59,11 +65,12 @@ export class SpeciesTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new SpeciesMapper();
+          
+          let species:Array<SpeciesViewModel> = [];
 
-          let species: Array<SpeciesViewModel> = [];
-
-          response.forEach(x => {
-            species.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              species.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,40 +95,42 @@ export class SpeciesTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Species',
-                columns: [
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Species',
+                    columns: [
+					  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SpeciesViewModel
@@ -132,8 +141,8 @@ export class SpeciesTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as SpeciesViewModel
@@ -142,14 +151,11 @@ export class SpeciesTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -157,7 +163,6 @@ export class SpeciesTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>349c86b0d4a9f0860b51722dd02bfa9d</Hash>
+    <Hash>825ad9eb9a04364aa84ec9f1043b8f3f</Hash>
 </Codenesium>*/

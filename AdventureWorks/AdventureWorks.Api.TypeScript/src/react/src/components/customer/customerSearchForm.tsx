@@ -216,6 +216,7 @@ export default class CustomerSearchComponent extends React.Component<CustomerSea
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -268,5 +269,5 @@ export default class CustomerSearchComponent extends React.Component<CustomerSea
 export const WrappedCustomerSearchComponent = Form.create({ name: 'Customer Search' })(CustomerSearchComponent);
 
 /*<Codenesium>
-    <Hash>742b0369074bba379c2561d1280ae915</Hash>
+    <Hash>d94174047ad0b0ff0ec8e665c4b5080b</Hash>
 </Codenesium>*/

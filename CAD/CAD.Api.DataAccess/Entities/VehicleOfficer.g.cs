@@ -14,22 +14,18 @@ namespace CADNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int id,
 			int officerId,
 			int vehicleId)
 		{
-			this.Id = id;
 			this.OfficerId = officerId;
 			this.VehicleId = vehicleId;
 		}
 
 		[Key]
-		[Column("id")]
-		public virtual int Id { get; private set; }
-
 		[Column("officerId")]
 		public virtual int OfficerId { get; private set; }
 
+		[Key]
 		[Column("vehicleId")]
 		public virtual int VehicleId { get; private set; }
 
@@ -52,5 +48,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f696aa7e359832e235ba5b81c138c79e</Hash>
+    <Hash>43491099d14307028b00900056bb6695</Hash>
 </Codenesium>*/

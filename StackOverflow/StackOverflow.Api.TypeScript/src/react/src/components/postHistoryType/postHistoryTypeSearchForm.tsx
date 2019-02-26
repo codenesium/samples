@@ -221,6 +221,7 @@ export default class PostHistoryTypeSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -279,5 +280,5 @@ export const WrappedPostHistoryTypeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>38565106a891a2e95875b2c1be06c23e</Hash>
+    <Hash>8b1f81793ef7f5141efbb323f823f538</Hash>
 </Codenesium>*/

@@ -172,6 +172,7 @@ export default class PaymentTypeSearchComponent extends React.Component<PaymentT
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -224,5 +225,5 @@ export default class PaymentTypeSearchComponent extends React.Component<PaymentT
 export const WrappedPaymentTypeSearchComponent = Form.create({ name: 'PaymentType Search' })(PaymentTypeSearchComponent);
 
 /*<Codenesium>
-    <Hash>d41fa392ec833c68c41ef808ba4109c7</Hash>
+    <Hash>84e6f189f4e00fec5ab5faca5a81f5e1</Hash>
 </Codenesium>*/

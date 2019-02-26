@@ -44,6 +44,10 @@ export class DatabaseLogTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -154,6 +158,7 @@ export class DatabaseLogTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -196,5 +201,5 @@ export class DatabaseLogTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>352ff49cb2798fb951a2a94854e36022</Hash>
+    <Hash>1db83b76d45d870ec13298fa9171c1ef</Hash>
 </Codenesium>*/

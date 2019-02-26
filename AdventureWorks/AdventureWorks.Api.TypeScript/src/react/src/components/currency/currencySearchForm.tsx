@@ -184,6 +184,7 @@ export default class CurrencySearchComponent extends React.Component<CurrencySea
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -236,5 +237,5 @@ export default class CurrencySearchComponent extends React.Component<CurrencySea
 export const WrappedCurrencySearchComponent = Form.create({ name: 'Currency Search' })(CurrencySearchComponent);
 
 /*<Codenesium>
-    <Hash>e10d63e3d602719dfcf518fca9e0b12a</Hash>
+    <Hash>da44b320d0f9547f2a8f5e636adfcaaf</Hash>
 </Codenesium>*/

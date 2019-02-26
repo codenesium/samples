@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BusinessEntityMapper from './businessEntityMapper';
 import BusinessEntityViewModel from './businessEntityViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface BusinessEntityCreateComponentProps {
   form:WrappedFormUtils;
@@ -70,6 +71,20 @@ class BusinessEntityCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -137,5 +152,5 @@ class BusinessEntityCreateComponent extends React.Component<
 export const WrappedBusinessEntityCreateComponent = Form.create({ name: 'BusinessEntity Create' })(BusinessEntityCreateComponent);
 
 /*<Codenesium>
-    <Hash>75ea494fff1c4aa6205408cdfe777470</Hash>
+    <Hash>a8d504a2b976c22e67576a3b67fcada0</Hash>
 </Codenesium>*/

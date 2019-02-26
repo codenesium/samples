@@ -239,6 +239,7 @@ export default class PipelineSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -297,5 +298,5 @@ export const WrappedPipelineSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>93edde4de5464792c72e38b4aacf8f6b</Hash>
+    <Hash>fadb509880f90aca18a7895e3b49a0d8</Hash>
 </Codenesium>*/

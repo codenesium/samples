@@ -306,6 +306,7 @@ export default class CurrencyRateSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -364,5 +365,5 @@ export const WrappedCurrencyRateSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8e7cb66d0eac6722177efd272084bffd</Hash>
+    <Hash>b65b9cd15add9af761a4d31ba78f299c</Hash>
 </Codenesium>*/

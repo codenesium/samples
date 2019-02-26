@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PurchaseOrderHeaderMapper from './purchaseOrderHeaderMapper';
 import PurchaseOrderHeaderViewModel from './purchaseOrderHeaderViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { ShipMethodSelectComponent } from '../shared/shipMethodSelect'
 	import { VendorSelectComponent } from '../shared/vendorSelect'
 	
@@ -72,6 +73,20 @@ class PurchaseOrderHeaderCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -248,5 +263,5 @@ class PurchaseOrderHeaderCreateComponent extends React.Component<
 export const WrappedPurchaseOrderHeaderCreateComponent = Form.create({ name: 'PurchaseOrderHeader Create' })(PurchaseOrderHeaderCreateComponent);
 
 /*<Codenesium>
-    <Hash>966075b64ff4a41ffba16093b5fed7d9</Hash>
+    <Hash>9b4a3cec0f93e6efdd02b5b692482915</Hash>
 </Codenesium>*/

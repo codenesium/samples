@@ -202,6 +202,7 @@ export default class CreditCardSearchComponent extends React.Component<CreditCar
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -254,5 +255,5 @@ export default class CreditCardSearchComponent extends React.Component<CreditCar
 export const WrappedCreditCardSearchComponent = Form.create({ name: 'CreditCard Search' })(CreditCardSearchComponent);
 
 /*<Codenesium>
-    <Hash>e10e505914cd21ec083f6c51031f9315</Hash>
+    <Hash>50d1dd4c3859f86707bc9aff68eb444f</Hash>
 </Codenesium>*/

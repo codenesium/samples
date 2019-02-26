@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SalesOrderHeaderMapper from './salesOrderHeaderMapper';
 import SalesOrderHeaderViewModel from './salesOrderHeaderViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { CreditCardSelectComponent } from '../shared/creditCardSelect'
 	import { CurrencyRateSelectComponent } from '../shared/currencyRateSelect'
 	import { CustomerSelectComponent } from '../shared/customerSelect'
@@ -120,6 +121,19 @@ class SalesOrderHeaderEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -436,5 +450,5 @@ class SalesOrderHeaderEditComponent extends React.Component<
 export const WrappedSalesOrderHeaderEditComponent = Form.create({ name: 'SalesOrderHeader Edit' })(SalesOrderHeaderEditComponent);
 
 /*<Codenesium>
-    <Hash>27f6ff89424e5a16db32b896a96a48f8</Hash>
+    <Hash>2ca9b1fea44a1157ae247b90c09a155f</Hash>
 </Codenesium>*/

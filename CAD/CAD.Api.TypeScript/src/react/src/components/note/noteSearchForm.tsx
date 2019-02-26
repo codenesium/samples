@@ -264,6 +264,7 @@ export default class NoteSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -322,5 +323,5 @@ export const WrappedNoteSearchComponent = Form.create({ name: 'Note Search' })(
 
 
 /*<Codenesium>
-    <Hash>bb3d4acc31c3928bc89a0dad04f42ec0</Hash>
+    <Hash>222421e68baa67d4231f66efd1241676</Hash>
 </Codenesium>*/

@@ -216,6 +216,7 @@ export default class SpeciesSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -274,5 +275,5 @@ export const WrappedSpeciesSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b13a5406ffa20b2aaaf8550536c2e22d</Hash>
+    <Hash>2fb6d0312409513484f0658a2fbb2718</Hash>
 </Codenesium>*/

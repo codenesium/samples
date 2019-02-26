@@ -1,28 +1,19 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
-import {
-  Form,
-  Input,
-  Button,
-  Switch,
-  InputNumber,
-  DatePicker,
-  Spin,
-  Alert,
-  TimePicker,
-} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { PaymentTypeSelectComponent } from '../shared/paymentTypeSelect';
-import { PetSelectComponent } from '../shared/petSelect';
-interface SaleEditComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import { PaymentTypeSelectComponent } from '../shared/paymentTypeSelect'
+	import { PetSelectComponent } from '../shared/petSelect'
+	interface SaleEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface SaleEditComponentState {
@@ -31,7 +22,7 @@ interface SaleEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted: boolean;
+  submitted:boolean;
 }
 
 class SaleEditComponent extends React.Component<
@@ -44,10 +35,10 @@ class SaleEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    submitted: false,
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -78,9 +69,7 @@ class SaleEditComponent extends React.Component<
             errorMessage: '',
           });
 
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -93,11 +82,11 @@ class SaleEditComponent extends React.Component<
           });
         }
       );
-  }
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.props.form.validateFields((err: any, values: any) => {
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as SaleViewModel;
         console.log('Received values of form: ', model);
@@ -106,9 +95,10 @@ class SaleEditComponent extends React.Component<
     });
   };
 
-  submit = (model: SaleViewModel) => {
+  submit = (model:SaleViewModel) =>
+  {  
     let mapper = new SaleMapper();
-    axios
+     axios
       .put(
         Constants.ApiEndpoint + ApiRoutes.Sales + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -123,125 +113,137 @@ class SaleEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.SaleClientRequestModel
           >;
-          this.setState({
-            ...this.state,
-            submitted: true,
-            model: mapper.mapApiResponseToViewModel(response.record!),
-            errorOccurred: false,
-            errorMessage: '',
-          });
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          this.setState({
-            ...this.state,
-            submitted: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  };
-
+      ); 
+  }
+  
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-    } = this.props.form;
 
-    let message: JSX.Element = <div />;
-    if (this.state.submitted) {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type="error" />;
-      } else {
-        message = <Alert message="Submitted" type="success" />;
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } else if (this.state.loaded) {
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="amount">amount</label>
-            <br />
-            {getFieldDecorator('amount', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'amount'} />)}
-          </Form.Item>
+    } 
+    else if (this.state.loaded) {
 
-          <Form.Item>
-            <label htmlFor="firstName">firstName</label>
-            <br />
-            {getFieldDecorator('firstName', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 90, message: 'Exceeds max length of 90' },
-              ],
-            })(<Input placeholder={'firstName'} />)}
-          </Form.Item>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='amount'>amount</label>
+              <br />             
+              {getFieldDecorator('amount', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"amount"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="lastName">lastName</label>
-            <br />
-            {getFieldDecorator('lastName', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 90, message: 'Exceeds max length of 90' },
-              ],
-            })(<Input placeholder={'lastName'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='firstName'>firstName</label>
+              <br />             
+              {getFieldDecorator('firstName', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 90, message: 'Exceeds max length of 90' },
+],
+              
+              })
+              ( <Input placeholder={"firstName"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="paymentTypeId">paymentTypeId</label>
-            <br />
-            {getFieldDecorator('paymentTypeId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'paymentTypeId'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='lastName'>lastName</label>
+              <br />             
+              {getFieldDecorator('lastName', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 90, message: 'Exceeds max length of 90' },
+],
+              
+              })
+              ( <Input placeholder={"lastName"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="petId">petId</label>
-            <br />
-            {getFieldDecorator('petId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'petId'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='paymentTypeId'>paymentTypeId</label>
+              <br />             
+              {getFieldDecorator('paymentTypeId', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"paymentTypeId"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="phone">phone</label>
-            <br />
-            {getFieldDecorator('phone', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 10, message: 'Exceeds max length of 10' },
-              ],
-            })(<Input placeholder={'phone'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='petId'>petId</label>
+              <br />             
+              {getFieldDecorator('petId', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"petId"} /> )}
+              </Form.Item>
 
+						<Form.Item>
+              <label htmlFor='phone'>phone</label>
+              <br />             
+              {getFieldDecorator('phone', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 10, message: 'Exceeds max length of 10' },
+],
+              
+              })
+              ( <Input placeholder={"phone"} /> )}
+              </Form.Item>
+
+			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          {message}
-        </Form>
-      );
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
-export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
-  SaleEditComponent
-);
-
+export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(SaleEditComponent);
 
 /*<Codenesium>
-    <Hash>ff1b8ff6c806ec0cfdb6f4a659fcacfd</Hash>
+    <Hash>1089e75701a8f12b6f1045ecbf852927</Hash>
 </Codenesium>*/

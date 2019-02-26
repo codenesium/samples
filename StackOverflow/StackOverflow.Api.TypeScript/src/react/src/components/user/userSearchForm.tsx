@@ -301,6 +301,7 @@ export default class UserSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -359,5 +360,5 @@ export const WrappedUserSearchComponent = Form.create({ name: 'User Search' })(
 
 
 /*<Codenesium>
-    <Hash>4511349a439ca86e7ee71800d4761558</Hash>
+    <Hash>76e5d610540bc439bef25b45886f8878</Hash>
 </Codenesium>*/

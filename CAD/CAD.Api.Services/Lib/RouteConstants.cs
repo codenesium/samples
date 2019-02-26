@@ -18,7 +18,7 @@ namespace CADNS.Api.Services
 		public const string Notes = "notes";
 		public const string Officers = "officers";
 		public const string OfficerCapabilities = "officercapabilities";
-		public const string OfficerRefCapabilities = "officerrefcapabilities";
+		public const string OfficerCapabilities = "officercapabilities";
 		public const string People = "people";
 		public const string PersonTypes = "persontypes";
 		public const string Units = "units";
@@ -26,11 +26,11 @@ namespace CADNS.Api.Services
 		public const string UnitOfficers = "unitofficers";
 		public const string Vehicles = "vehicles";
 		public const string VehicleCapabilities = "vehiclecapabilities";
+		public const string VehicleCapabilities = "vehiclecapabilities";
 		public const string VehicleOfficers = "vehicleofficers";
-		public const string VehicleRefCapabilities = "vehiclerefcapabilities";
 	}
 }
 
 /*<Codenesium>
-    <Hash>95e5f730c63233230c8981ccfd6a80f1</Hash>
+    <Hash>fb742f2d376e28b11465228fa1284073</Hash>
 </Codenesium>*/

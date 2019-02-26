@@ -1452,6 +1452,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": false,
             "Name": "Chain",
             "DefaultConstraints": [],
@@ -1622,6 +1624,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "ChainStatus",
             "DefaultConstraints": [],
@@ -1792,6 +1796,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": false,
             "Name": "Clasp",
             "DefaultConstraints": [],
@@ -2358,6 +2364,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Link",
             "DefaultConstraints": [],
@@ -2561,6 +2569,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "LinkLog",
             "DefaultConstraints": [],
@@ -2731,6 +2741,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "LinkStatus",
             "DefaultConstraints": [],
@@ -3033,6 +3045,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Machine",
             "DefaultConstraints": [],
@@ -3181,6 +3195,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": false,
             "Name": "MachineRefTeam",
             "DefaultConstraints": [],
@@ -3351,6 +3367,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Organization",
             "DefaultConstraints": [],
@@ -3631,6 +3649,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "sysdiagrams",
             "DefaultConstraints": [],
@@ -3834,6 +3854,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Team",
             "DefaultConstraints": [],
@@ -4004,6 +4026,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "VersionInfo",
             "DefaultConstraints": [],
@@ -4282,7 +4306,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "266",
@@ -4307,7 +4333,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "267",
@@ -4332,7 +4360,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "268",
@@ -4357,7 +4387,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "269",
@@ -4382,7 +4414,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "270",
@@ -4407,7 +4441,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "271",
@@ -4432,7 +4468,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "272",
@@ -4457,7 +4495,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "273",
@@ -4482,7 +4522,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       }
     ],
     "ColumnParameterSettings": [],

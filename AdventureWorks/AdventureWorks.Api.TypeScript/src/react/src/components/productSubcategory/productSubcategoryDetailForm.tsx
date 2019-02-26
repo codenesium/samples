@@ -6,10 +6,7 @@ import ProductSubcategoryMapper from './productSubcategoryMapper';
 import ProductSubcategoryViewModel from './productSubcategoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {ProductTableComponent} from '../shared/productTable'
-	
-
-
+import { ProductTableComponent } from '../shared/productTable';
 
 interface ProductSubcategoryDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,25 @@ interface ProductSubcategoryDetailComponentState {
 }
 
 class ProductSubcategoryDetailComponent extends React.Component<
-ProductSubcategoryDetailComponentProps,
-ProductSubcategoryDetailComponentState
+  ProductSubcategoryDetailComponentProps,
+  ProductSubcategoryDetailComponentState
 > {
   state = {
     model: new ProductSubcategoryViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.ProductSubcategories + '/edit/' + this.state.model!.productSubcategoryID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ProductSubcategories +
+        '/edit/' +
+        this.state.model!.productSubcategoryID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,60 +87,68 @@ ProductSubcategoryDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>ProductCategoryID</h3>
-							<p>{String(this.state.model!.productCategoryIDNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>ProductSubcategoryID</h3>
-							<p>{String(this.state.model!.productSubcategoryID)}</p>
-						 </div>
-					   						 <div>
-							<h3>rowguid</h3>
-							<p>{String(this.state.model!.rowguid)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>ProductCategoryID</h3>
+              <p>
+                {String(
+                  this.state.model!.productCategoryIDNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>ProductSubcategoryID</h3>
+              <p>{String(this.state.model!.productSubcategoryID)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Products</h3>
-            <ProductTableComponent 
-			productID={this.state.model!.productID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.ProductSubcategories + '/' + this.state.model!.productSubcategoryID + '/' + ApiRoutes.Products}
-			/>
-         </div>
-	
-
+            <ProductTableComponent
+              productID={this.state.model!.productID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.ProductSubcategories +
+                '/' +
+                this.state.model!.productSubcategoryID +
+                '/' +
+                ApiRoutes.Products
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -148,10 +157,11 @@ ProductSubcategoryDetailComponentState
   }
 }
 
-export const WrappedProductSubcategoryDetailComponent = Form.create({ name: 'ProductSubcategory Detail' })(
-  ProductSubcategoryDetailComponent
-);
+export const WrappedProductSubcategoryDetailComponent = Form.create({
+  name: 'ProductSubcategory Detail',
+})(ProductSubcategoryDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>66ad3ab97e6da49bdb368e3c4db333b6</Hash>
+    <Hash>e2766aead73ada38ee728bd111629b66</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ChainStatusMapper from './chainStatusMapper';
 import ChainStatusViewModel from './chainStatusViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
 interface ChainStatusCreateComponentProps {
   form:WrappedFormUtils;
@@ -70,6 +71,20 @@ class ChainStatusCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -127,5 +142,5 @@ class ChainStatusCreateComponent extends React.Component<
 export const WrappedChainStatusCreateComponent = Form.create({ name: 'ChainStatus Create' })(ChainStatusCreateComponent);
 
 /*<Codenesium>
-    <Hash>aca115e0a283d647cd8c2a81dd5e8af6</Hash>
+    <Hash>5c464e24eea9a508708bd9a57b72f5c2</Hash>
 </Codenesium>*/

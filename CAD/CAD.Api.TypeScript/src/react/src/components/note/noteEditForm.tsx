@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import NoteMapper from './noteMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { CallSelectComponent } from '../shared/callSelect';
 import { OfficerSelectComponent } from '../shared/officerSelect';
 interface NoteEditComponentProps {
@@ -134,6 +135,19 @@ class NoteEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -221,5 +235,5 @@ export const WrappedNoteEditComponent = Form.create({ name: 'Note Edit' })(
 
 
 /*<Codenesium>
-    <Hash>d49134008db0865d8bc8bbc5b46f2145</Hash>
+    <Hash>4ef878f7bede350b22abe99a746fad62</Hash>
 </Codenesium>*/

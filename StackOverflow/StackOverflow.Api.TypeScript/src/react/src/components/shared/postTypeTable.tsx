@@ -6,11 +6,11 @@ import PostTypeMapper from '../postType/postTypeMapper';
 import PostTypeViewModel from '../postType/postTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface PostTypeTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,42 @@ interface PostTypeTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PostTypeViewModel>;
+  filteredRecords: Array<PostTypeViewModel>;
 }
 
-export class  PostTypeTableComponent extends React.Component<
-PostTypeTableComponentProps,
-PostTypeTableComponentState
+export class PostTypeTableComponent extends React.Component<
+  PostTypeTableComponentProps,
+  PostTypeTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: PostTypeViewModel) {
-  this.props.history.push(ClientRoutes.PostTypes + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: PostTypeViewModel) {
+    this.props.history.push(ClientRoutes.PostTypes + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: PostTypeViewModel) {
-  this.props.history.push(ClientRoutes.PostTypes + '/' + row.id);
-}
+  handleDetailClick(e: any, row: PostTypeViewModel) {
+    this.props.history.push(ClientRoutes.PostTypes + '/' + row.id);
+  }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.PostTypeClientResponseModel>;
@@ -61,12 +63,11 @@ handleDetailClick(e:any, row: PostTypeViewModel) {
           console.log(response);
 
           let mapper = new PostTypeMapper();
-          
-          let postTypes:Array<PostTypeViewModel> = [];
 
-          response.forEach(x =>
-          {
-              postTypes.push(mapper.mapApiResponseToViewModel(x));
+          let postTypes: Array<PostTypeViewModel> = [];
+
+          response.forEach(x => {
+            postTypes.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,41 +92,41 @@ handleDetailClick(e:any, row: PostTypeViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'PostTypes',
-                    columns: [
-					  {
-                      Header: 'Type',
-                      accessor: 'rwType',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'PostTypes',
+                columns: [
+                  {
+                    Header: 'Type',
+                    accessor: 'rwType',
+                    Cell: props => {
                       return <span>{String(props.original.rwType)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PostTypeViewModel
@@ -136,8 +137,8 @@ handleDetailClick(e:any, row: PostTypeViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PostTypeViewModel
@@ -146,11 +147,14 @@ handleDetailClick(e:any, row: PostTypeViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -158,6 +162,7 @@ handleDetailClick(e:any, row: PostTypeViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>1cdc7a834d97e8e3813600a0dc51d582</Hash>
+    <Hash>a1a05976b71e5725bb59c64d6946c9ee</Hash>
 </Codenesium>*/

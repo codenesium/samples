@@ -32,8 +32,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			List<ApiVehicleServerResponseModel> response = await service.All();
 
@@ -52,8 +51,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			ApiVehicleServerResponseModel response = await service.Get(default(int));
 
@@ -71,8 +69,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			ApiVehicleServerResponseModel response = await service.Get(default(int));
 
@@ -91,8 +88,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			CreateResponse<ApiVehicleServerResponseModel> response = await service.Create(model);
 
@@ -115,8 +111,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			CreateResponse<ApiVehicleServerResponseModel> response = await service.Create(model);
 
@@ -138,8 +133,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			UpdateResponse<ApiVehicleServerResponseModel> response = await service.Update(default(int), model);
 
@@ -163,8 +157,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			UpdateResponse<ApiVehicleServerResponseModel> response = await service.Update(default(int), model);
 
@@ -185,8 +178,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -209,8 +201,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -221,87 +212,45 @@ namespace CADNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void VehicleOfficersByVehicleId_Exists()
+		public async void VehicleCapabilitiesByVehicleId_Exists()
 		{
 			var mock = new ServiceMockFacade<IVehicleRepository>();
-			var records = new List<VehicleOfficer>();
-			records.Add(new VehicleOfficer());
-			mock.RepositoryMock.Setup(x => x.VehicleOfficersByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var records = new List<VehicleCapabilities>();
+			records.Add(new VehicleCapabilities());
+			mock.RepositoryMock.Setup(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VehicleService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
-			List<ApiVehicleOfficerServerResponseModel> response = await service.VehicleOfficersByVehicleId(default(int));
+			List<ApiVehicleCapabilitiesServerResponseModel> response = await service.VehicleCapabilitiesByVehicleId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.VehicleOfficersByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void VehicleOfficersByVehicleId_Not_Exists()
+		public async void VehicleCapabilitiesByVehicleId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IVehicleRepository>();
-			mock.RepositoryMock.Setup(x => x.VehicleOfficersByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<VehicleOfficer>>(new List<VehicleOfficer>()));
+			mock.RepositoryMock.Setup(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<VehicleCapabilities>>(new List<VehicleCapabilities>()));
 			var service = new VehicleService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
 
-			List<ApiVehicleOfficerServerResponseModel> response = await service.VehicleOfficersByVehicleId(default(int));
+			List<ApiVehicleCapabilitiesServerResponseModel> response = await service.VehicleCapabilitiesByVehicleId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.VehicleOfficersByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void VehicleRefCapabilitiesByVehicleId_Exists()
-		{
-			var mock = new ServiceMockFacade<IVehicleRepository>();
-			var records = new List<VehicleRefCapability>();
-			records.Add(new VehicleRefCapability());
-			mock.RepositoryMock.Setup(x => x.VehicleRefCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new VehicleService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
-
-			List<ApiVehicleRefCapabilityServerResponseModel> response = await service.VehicleRefCapabilitiesByVehicleId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.VehicleRefCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void VehicleRefCapabilitiesByVehicleId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IVehicleRepository>();
-			mock.RepositoryMock.Setup(x => x.VehicleRefCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<VehicleRefCapability>>(new List<VehicleRefCapability>()));
-			var service = new VehicleService(mock.LoggerMock.Object,
-			                                 mock.MediatorMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleOfficerMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleRefCapabilityMapperMock);
-
-			List<ApiVehicleRefCapabilityServerResponseModel> response = await service.VehicleRefCapabilitiesByVehicleId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.VehicleRefCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>22af8b870319ff2df1d95d778750345d</Hash>
+    <Hash>a7f361e1bc59d63f53aefc9b9a9753b7</Hash>
 </Codenesium>*/

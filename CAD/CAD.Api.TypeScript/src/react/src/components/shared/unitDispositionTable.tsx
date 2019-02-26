@@ -44,6 +44,10 @@ export class UnitDispositionTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -119,6 +123,7 @@ export class UnitDispositionTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -161,5 +166,5 @@ export class UnitDispositionTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2bd465685c642fc6d8198e4bfa893bb0</Hash>
+    <Hash>685190f632a29d01b15c1f166c2a65d5</Hash>
 </Codenesium>*/

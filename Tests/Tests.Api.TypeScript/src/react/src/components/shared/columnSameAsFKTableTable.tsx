@@ -46,6 +46,10 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -163,6 +167,7 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -205,5 +210,5 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a4de6a8a6d0097a2468a1c42502cba26</Hash>
+    <Hash>fda3fa16dee6dbfb5991df9c963dfd59</Hash>
 </Codenesium>*/

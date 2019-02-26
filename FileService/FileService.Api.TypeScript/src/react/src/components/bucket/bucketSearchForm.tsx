@@ -178,6 +178,7 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -230,5 +231,5 @@ export default class BucketSearchComponent extends React.Component<BucketSearchC
 export const WrappedBucketSearchComponent = Form.create({ name: 'Bucket Search' })(BucketSearchComponent);
 
 /*<Codenesium>
-    <Hash>cd69d8f590c122a41a1f9a9012c6672e</Hash>
+    <Hash>ca3ca8a6f593028700f35d081bd8e29e</Hash>
 </Codenesium>*/

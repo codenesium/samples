@@ -39,11 +39,15 @@ handleEditClick(e:any, row: PurchaseOrderHeaderViewModel) {
   this.props.history.push(ClientRoutes.PurchaseOrderHeaders + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: PurchaseOrderHeaderViewModel) {
-  this.props.history.push(ClientRoutes.PurchaseOrderHeaders + '/' + row.id);
-}
+ handleDetailClick(e:any, row: PurchaseOrderHeaderViewModel) {
+   this.props.history.push(ClientRoutes.PurchaseOrderHeaders + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -202,6 +206,7 @@ handleDetailClick(e:any, row: PurchaseOrderHeaderViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -239,5 +244,5 @@ handleDetailClick(e:any, row: PurchaseOrderHeaderViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>e010d47d82a2391ab8cc6b3241b4ae26</Hash>
+    <Hash>3d07383a6976fb5450d7ae70387faf67</Hash>
 </Codenesium>*/

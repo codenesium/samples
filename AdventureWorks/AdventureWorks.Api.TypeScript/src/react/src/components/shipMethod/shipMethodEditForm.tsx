@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ShipMethodMapper from './shipMethodMapper';
 import ShipMethodViewModel from './shipMethodViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 interface ShipMethodEditComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -115,6 +116,19 @@ class ShipMethodEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -216,5 +230,5 @@ class ShipMethodEditComponent extends React.Component<
 export const WrappedShipMethodEditComponent = Form.create({ name: 'ShipMethod Edit' })(ShipMethodEditComponent);
 
 /*<Codenesium>
-    <Hash>59f04d9bb88524dd7337ddfe0b574728</Hash>
+    <Hash>714f1eaa8bf2d234230d6871d7551cf3</Hash>
 </Codenesium>*/

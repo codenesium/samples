@@ -44,6 +44,10 @@ export class SalesTerritoryTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -179,6 +183,7 @@ export class SalesTerritoryTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -221,5 +226,5 @@ export class SalesTerritoryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ced1d53e1c2e5d0fa8112cdf36ef721d</Hash>
+    <Hash>b39d57cd97cf55492094b7bf1ec8fa7f</Hash>
 </Codenesium>*/

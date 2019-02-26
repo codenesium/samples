@@ -184,6 +184,7 @@ export default class CultureSearchComponent extends React.Component<CultureSearc
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -236,5 +237,5 @@ export default class CultureSearchComponent extends React.Component<CultureSearc
 export const WrappedCultureSearchComponent = Form.create({ name: 'Culture Search' })(CultureSearchComponent);
 
 /*<Codenesium>
-    <Hash>f35d94df9f8a5daee823a9b19f1d3d5b</Hash>
+    <Hash>0d7d13c25f7dfec3f224be0ead71c925</Hash>
 </Codenesium>*/

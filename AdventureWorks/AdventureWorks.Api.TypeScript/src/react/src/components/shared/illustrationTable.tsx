@@ -44,6 +44,10 @@ export class IllustrationTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -135,6 +139,7 @@ export class IllustrationTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -177,5 +182,5 @@ export class IllustrationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8e52c7a027801f7de50f2c6d1984f95e</Hash>
+    <Hash>9a3f6805112bfd59a9ead755c0b437d2</Hash>
 </Codenesium>*/

@@ -39,11 +39,15 @@ handleEditClick(e:any, row: PasswordViewModel) {
   this.props.history.push(ClientRoutes.Passwords + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: PasswordViewModel) {
-  this.props.history.push(ClientRoutes.Passwords + '/' + row.id);
-}
+ handleDetailClick(e:any, row: PasswordViewModel) {
+   this.props.history.push(ClientRoutes.Passwords + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -150,6 +154,7 @@ handleDetailClick(e:any, row: PasswordViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -187,5 +192,5 @@ handleDetailClick(e:any, row: PasswordViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>dbbee30647837ce114395dd9a5d60cc6</Hash>
+    <Hash>8d54c82ac6e149cf366b646a3b8086ed</Hash>
 </Codenesium>*/

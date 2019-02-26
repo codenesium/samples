@@ -194,6 +194,7 @@ export default class JobCandidateSearchComponent extends React.Component<JobCand
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -246,5 +247,5 @@ export default class JobCandidateSearchComponent extends React.Component<JobCand
 export const WrappedJobCandidateSearchComponent = Form.create({ name: 'JobCandidate Search' })(JobCandidateSearchComponent);
 
 /*<Codenesium>
-    <Hash>999a8ad36a9f5c0315a400fa0592ada3</Hash>
+    <Hash>e59f0d530f5c8777fb8577661e810553</Hash>
 </Codenesium>*/

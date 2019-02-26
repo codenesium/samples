@@ -50,9 +50,9 @@ namespace CADNS.Api.DataAccess
 
 		public virtual DbSet<Officer> Officers { get; set; }
 
-		public virtual DbSet<OfficerCapability> OfficerCapabilities { get; set; }
+		public virtual DbSet<OfficerCapabilities> OfficerCapabilities { get; set; }
 
-		public virtual DbSet<OfficerRefCapability> OfficerRefCapabilities { get; set; }
+		public virtual DbSet<OfficerCapability> OfficerCapabilities { get; set; }
 
 		public virtual DbSet<Person> People { get; set; }
 
@@ -66,11 +66,11 @@ namespace CADNS.Api.DataAccess
 
 		public virtual DbSet<Vehicle> Vehicles { get; set; }
 
+		public virtual DbSet<VehicleCapabilities> VehicleCapabilities { get; set; }
+
 		public virtual DbSet<VehicleCapability> VehicleCapabilities { get; set; }
 
 		public virtual DbSet<VehicleOfficer> VehicleOfficers { get; set; }
-
-		public virtual DbSet<VehicleRefCapability> VehicleRefCapabilities { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -131,13 +131,9 @@ namespace CADNS.Api.DataAccess
 			modelBuilder.Entity<CallAssignment>()
 			.HasKey(c => new
 			{
-				c.Id,
+				c.CallId,
+				c.UnitId,
 			});
-
-			modelBuilder.Entity<CallAssignment>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<CallDisposition>()
 			.HasKey(c => new
@@ -205,6 +201,13 @@ namespace CADNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
+			modelBuilder.Entity<OfficerCapabilities>()
+			.HasKey(c => new
+			{
+				c.CapabilityId,
+				c.OfficerId,
+			});
+
 			modelBuilder.Entity<OfficerCapability>()
 			.HasKey(c => new
 			{
@@ -212,17 +215,6 @@ namespace CADNS.Api.DataAccess
 			});
 
 			modelBuilder.Entity<OfficerCapability>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
-			modelBuilder.Entity<OfficerRefCapability>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<OfficerRefCapability>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -274,13 +266,9 @@ namespace CADNS.Api.DataAccess
 			modelBuilder.Entity<UnitOfficer>()
 			.HasKey(c => new
 			{
-				c.Id,
+				c.OfficerId,
+				c.UnitId,
 			});
-
-			modelBuilder.Entity<UnitOfficer>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Vehicle>()
 			.HasKey(c => new
@@ -292,6 +280,13 @@ namespace CADNS.Api.DataAccess
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<VehicleCapabilities>()
+			.HasKey(c => new
+			{
+				c.VehicleId,
+				c.VehicleCapabilityId,
+			});
 
 			modelBuilder.Entity<VehicleCapability>()
 			.HasKey(c => new
@@ -307,24 +302,9 @@ namespace CADNS.Api.DataAccess
 			modelBuilder.Entity<VehicleOfficer>()
 			.HasKey(c => new
 			{
-				c.Id,
+				c.OfficerId,
+				c.VehicleId,
 			});
-
-			modelBuilder.Entity<VehicleOfficer>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
-			modelBuilder.Entity<VehicleRefCapability>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<VehicleRefCapability>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
@@ -332,5 +312,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9f1cc187d6495e5d7f837ab879a50be0</Hash>
+    <Hash>92a8ecd836de665778f6fd56c568fcd6</Hash>
 </Codenesium>*/

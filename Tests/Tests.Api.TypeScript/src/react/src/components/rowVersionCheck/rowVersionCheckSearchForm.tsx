@@ -235,6 +235,7 @@ export default class RowVersionCheckSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -293,5 +294,5 @@ export const WrappedRowVersionCheckSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ce497cc36fb0705f69b18e7c0e9db366</Hash>
+    <Hash>359e3f122b59156533a3f8e3dff2f67f</Hash>
 </Codenesium>*/

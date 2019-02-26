@@ -239,6 +239,7 @@ export default class EmployeeSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -297,5 +298,5 @@ export const WrappedEmployeeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2e76e814d0c68388678cef5c8c1f186c</Hash>
+    <Hash>25f79a16a6d309d8634f49fa173361c4</Hash>
 </Codenesium>*/

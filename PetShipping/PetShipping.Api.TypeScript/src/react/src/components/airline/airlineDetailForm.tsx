@@ -7,6 +7,9 @@ import AirlineViewModel from './airlineViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface AirlineDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface AirlineDetailComponentState {
 }
 
 class AirlineDetailComponent extends React.Component<
-  AirlineDetailComponentProps,
-  AirlineDetailComponentState
+AirlineDetailComponentProps,
+AirlineDetailComponentState
 > {
   state = {
     model: new AirlineViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Airlines + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Airlines + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,32 +85,35 @@ class AirlineDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -118,11 +122,10 @@ class AirlineDetailComponent extends React.Component<
   }
 }
 
-export const WrappedAirlineDetailComponent = Form.create({
-  name: 'Airline Detail',
-})(AirlineDetailComponent);
-
+export const WrappedAirlineDetailComponent = Form.create({ name: 'Airline Detail' })(
+  AirlineDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>2e5561ccab31148a3e4acd3445cdc8ef</Hash>
+    <Hash>dc2ee48c446b13cd4c434eaffcb01c6b</Hash>
 </Codenesium>*/

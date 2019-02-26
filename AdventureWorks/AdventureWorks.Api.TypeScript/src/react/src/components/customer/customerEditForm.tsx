@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { StoreSelectComponent } from '../shared/storeSelect';
 import { SalesTerritorySelectComponent } from '../shared/salesTerritorySelect';
 interface CustomerEditComponentProps {
@@ -137,6 +138,19 @@ class CustomerEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -246,5 +260,5 @@ export const WrappedCustomerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fad653102b1f60ce2b5166be022df2da</Hash>
+    <Hash>bd33da6c44535b5c5f56b68a5b949590</Hash>
 </Codenesium>*/

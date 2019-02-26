@@ -340,6 +340,7 @@ export default class TestAllFieldTypesNullableSearchComponent extends React.Comp
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -392,5 +393,5 @@ export default class TestAllFieldTypesNullableSearchComponent extends React.Comp
 export const WrappedTestAllFieldTypesNullableSearchComponent = Form.create({ name: 'TestAllFieldTypesNullable Search' })(TestAllFieldTypesNullableSearchComponent);
 
 /*<Codenesium>
-    <Hash>eedd1daaa15f15363d252cd7a3120bb7</Hash>
+    <Hash>81e5ae6df0c1637c3fce49002621b212</Hash>
 </Codenesium>*/

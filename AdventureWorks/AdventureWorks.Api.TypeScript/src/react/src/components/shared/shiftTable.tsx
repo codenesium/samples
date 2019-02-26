@@ -39,11 +39,15 @@ handleEditClick(e:any, row: ShiftViewModel) {
   this.props.history.push(ClientRoutes.Shifts + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: ShiftViewModel) {
-  this.props.history.push(ClientRoutes.Shifts + '/' + row.id);
-}
+ handleDetailClick(e:any, row: ShiftViewModel) {
+   this.props.history.push(ClientRoutes.Shifts + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -146,6 +150,7 @@ handleDetailClick(e:any, row: ShiftViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -183,5 +188,5 @@ handleDetailClick(e:any, row: ShiftViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>1b7e8037626bfe8bc6c63df14b315e66</Hash>
+    <Hash>08cee99e2eb80385cb269d81a1aa5efd</Hash>
 </Codenesium>*/

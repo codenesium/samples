@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SalesPersonMapper from './salesPersonMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { SalesTerritorySelectComponent } from '../shared/salesTerritorySelect';
 interface SalesPersonEditComponentProps {
   form: WrappedFormUtils;
@@ -136,6 +137,19 @@ class SalesPersonEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -260,5 +274,5 @@ export const WrappedSalesPersonEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9493b5e5b23241e40e4a4c0c8ffc1ee8</Hash>
+    <Hash>00f2c13e61f8033f5c9e39a37fc55f62</Hash>
 </Codenesium>*/

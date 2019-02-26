@@ -202,6 +202,7 @@ export default class ProductModelSearchComponent extends React.Component<Product
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -254,5 +255,5 @@ export default class ProductModelSearchComponent extends React.Component<Product
 export const WrappedProductModelSearchComponent = Form.create({ name: 'ProductModel Search' })(ProductModelSearchComponent);
 
 /*<Codenesium>
-    <Hash>8a8470642ac67c6dbb98f993d52302b3</Hash>
+    <Hash>deea9fcdb39c904596e26fa40925bda9</Hash>
 </Codenesium>*/

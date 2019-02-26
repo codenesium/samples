@@ -39,11 +39,15 @@ handleEditClick(e:any, row: TransactionHistoryViewModel) {
   this.props.history.push(ClientRoutes.TransactionHistories + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: TransactionHistoryViewModel) {
-  this.props.history.push(ClientRoutes.TransactionHistories + '/' + row.id);
-}
+ handleDetailClick(e:any, row: TransactionHistoryViewModel) {
+   this.props.history.push(ClientRoutes.TransactionHistories + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -174,6 +178,7 @@ handleDetailClick(e:any, row: TransactionHistoryViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -211,5 +216,5 @@ handleDetailClick(e:any, row: TransactionHistoryViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>19f03b6afc14700da147aa4e2385dfc3</Hash>
+    <Hash>74856bff4c5f50e79253f001dd274cea</Hash>
 </Codenesium>*/

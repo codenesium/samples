@@ -39,11 +39,15 @@ handleEditClick(e:any, row: LinkViewModel) {
   this.props.history.push(ClientRoutes.Links + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: LinkViewModel) {
-  this.props.history.push(ClientRoutes.Links + '/' + row.id);
-}
+ handleDetailClick(e:any, row: LinkViewModel) {
+   this.props.history.push(ClientRoutes.Links + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -206,6 +210,7 @@ handleDetailClick(e:any, row: LinkViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -243,5 +248,5 @@ handleDetailClick(e:any, row: LinkViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>8641e3878b8c16581984f6efa7fe680b</Hash>
+    <Hash>c1a9da5e73e04dc18d8c26dbd99384b6</Hash>
 </Codenesium>*/

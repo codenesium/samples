@@ -44,6 +44,10 @@ export class PetTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -150,6 +154,7 @@ export class PetTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -192,5 +197,5 @@ export class PetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8b644c66dbca89d72a01f9487c73e81b</Hash>
+    <Hash>0a83bd98b42acdad64decb7c9a43017d</Hash>
 </Codenesium>*/

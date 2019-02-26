@@ -44,6 +44,10 @@ export class LinkTypeTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -117,6 +121,7 @@ export class LinkTypeTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -159,5 +164,5 @@ export class LinkTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ed3c4edf5357bc04329473af1635d39c</Hash>
+    <Hash>7c7a66b82dbe70a52965d10265b3b4e5</Hash>
 </Codenesium>*/

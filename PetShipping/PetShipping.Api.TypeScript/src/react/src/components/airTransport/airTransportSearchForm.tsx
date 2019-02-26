@@ -271,6 +271,7 @@ export default class AirTransportSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -329,5 +330,5 @@ export const WrappedAirTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>719c5d14969db6b49ff96908891eed9e</Hash>
+    <Hash>790459b57e53e3be78744ada957dc93f</Hash>
 </Codenesium>*/

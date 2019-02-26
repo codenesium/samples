@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SalesPersonMapper from './salesPersonMapper';
 import SalesPersonViewModel from './salesPersonViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { SalesTerritorySelectComponent } from '../shared/salesTerritorySelect'
 	
 interface SalesPersonCreateComponentProps {
@@ -71,6 +72,20 @@ class SalesPersonCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -202,5 +217,5 @@ class SalesPersonCreateComponent extends React.Component<
 export const WrappedSalesPersonCreateComponent = Form.create({ name: 'SalesPerson Create' })(SalesPersonCreateComponent);
 
 /*<Codenesium>
-    <Hash>32ba13d67df8e93b5fe3df2d2d406f54</Hash>
+    <Hash>7d37a262283f9b2ddbe7688d72769f59</Hash>
 </Codenesium>*/

@@ -234,10 +234,10 @@ namespace CADNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{callId}/CallAssignments")]
+		[Route("byUnitId/{unitId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCallAssignmentServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> CallAssignmentsByCallId(int callId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiCallServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByUnitId(int unitId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -245,7 +245,7 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCallAssignmentServerResponseModel> response = await this.CallService.CallAssignmentsByCallId(callId, query.Limit, query.Offset);
+			List<ApiCallServerResponseModel> response = await this.CallService.ByUnitId(unitId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -269,5 +269,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4f2c128d5651cc8d397c75df4332251a</Hash>
+    <Hash>831c48c0881873805256d5062aaa55c9</Hash>
 </Codenesium>*/

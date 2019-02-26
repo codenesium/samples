@@ -39,11 +39,15 @@ handleEditClick(e:any, row: StateProvinceViewModel) {
   this.props.history.push(ClientRoutes.StateProvinces + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: StateProvinceViewModel) {
-  this.props.history.push(ClientRoutes.StateProvinces + '/' + row.id);
-}
+ handleDetailClick(e:any, row: StateProvinceViewModel) {
+   this.props.history.push(ClientRoutes.StateProvinces + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -168,6 +172,7 @@ handleDetailClick(e:any, row: StateProvinceViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -205,5 +210,5 @@ handleDetailClick(e:any, row: StateProvinceViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>5dd40af870744b29d9a4bd7debef35aa</Hash>
+    <Hash>abe3bd35c1232bcf4979703b6bb796d4</Hash>
 </Codenesium>*/

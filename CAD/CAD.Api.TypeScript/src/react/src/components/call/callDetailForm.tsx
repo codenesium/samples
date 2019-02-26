@@ -6,8 +6,11 @@ import CallMapper from './callMapper';
 import CallViewModel from './callViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { NoteTableComponent } from '../shared/noteTable';
-import { CallAssignmentTableComponent } from '../shared/callAssignmentTable';
+import {CallAssignmentTableComponent} from '../shared/callAssignmentTable'
+	import {NoteTableComponent} from '../shared/noteTable'
+	
+
+
 
 interface CallDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +27,21 @@ interface CallDetailComponentState {
 }
 
 class CallDetailComponent extends React.Component<
-  CallDetailComponentProps,
-  CallDetailComponentState
+CallDetailComponentProps,
+CallDetailComponentState
 > {
   state = {
     model: new CallViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Calls + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Calls + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,106 +87,85 @@ class CallDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>addressId</h3>
-              <p>
-                {String(this.state.model!.addressIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>callDispositionId</h3>
-              <p>
-                {String(
-                  this.state.model!.callDispositionIdNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>callStatusId</h3>
-              <p>
-                {String(this.state.model!.callStatusIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>callString</h3>
-              <p>{String(this.state.model!.callString)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>callTypeId</h3>
-              <p>
-                {String(this.state.model!.callTypeIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>dateCleared</h3>
-              <p>{String(this.state.model!.dateCleared)}</p>
-            </div>
-            <div>
-              <h3>dateCreated</h3>
-              <p>{String(this.state.model!.dateCreated)}</p>
-            </div>
-            <div>
-              <h3>dateDispatched</h3>
-              <p>{String(this.state.model!.dateDispatched)}</p>
-            </div>
-            <div>
-              <h3>quickCallNumber</h3>
-              <p>{String(this.state.model!.quickCallNumber)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>addressId</h3>
+							<p>{String(this.state.model!.addressIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>callDispositionId</h3>
+							<p>{String(this.state.model!.callDispositionIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>callStatusId</h3>
+							<p>{String(this.state.model!.callStatusIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>callString</h3>
+							<p>{String(this.state.model!.callString)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>callTypeId</h3>
+							<p>{String(this.state.model!.callTypeIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>dateCleared</h3>
+							<p>{String(this.state.model!.dateCleared)}</p>
+						 </div>
+					   						 <div>
+							<h3>dateCreated</h3>
+							<p>{String(this.state.model!.dateCreated)}</p>
+						 </div>
+					   						 <div>
+							<h3>dateDispatched</h3>
+							<p>{String(this.state.model!.dateDispatched)}</p>
+						 </div>
+					   						 <div>
+							<h3>quickCallNumber</h3>
+							<p>{String(this.state.model!.quickCallNumber)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
-            <h3>Notes</h3>
-            <NoteTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Calls +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Notes
-              }
-            />
-          </div>
-          <div>
+		 <div>
             <h3>CallAssignments</h3>
-            <CallAssignmentTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Calls +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.CallAssignments
-              }
-            />
-          </div>
+            <CallAssignmentTableComponent 
+			callId={this.state.model!.callId} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Calls + '/' + this.state.model!.id + '/' + ApiRoutes.CallAssignments}
+			/>
+         </div>
+			 <div>
+            <h3>Notes</h3>
+            <NoteTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Calls + '/' + this.state.model!.id + '/' + ApiRoutes.Notes}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -198,7 +178,6 @@ export const WrappedCallDetailComponent = Form.create({ name: 'Call Detail' })(
   CallDetailComponent
 );
 
-
 /*<Codenesium>
-    <Hash>0ec20c9330b7056376c5281d39bf1685</Hash>
+    <Hash>c4a7bf891285fa773ca8f0c124eb7e2c</Hash>
 </Codenesium>*/

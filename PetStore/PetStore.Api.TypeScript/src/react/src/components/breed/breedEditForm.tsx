@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BreedMapper from './breedMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { SpeciesSelectComponent } from '../shared/speciesSelect';
 interface BreedEditComponentProps {
   form: WrappedFormUtils;
@@ -133,6 +134,19 @@ class BreedEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -204,5 +218,5 @@ export const WrappedBreedEditComponent = Form.create({ name: 'Breed Edit' })(
 
 
 /*<Codenesium>
-    <Hash>f2824391fb224e013411e953cb1c425e</Hash>
+    <Hash>1f2d06b58fd51e4a2e32ad49b87c46a2</Hash>
 </Codenesium>*/

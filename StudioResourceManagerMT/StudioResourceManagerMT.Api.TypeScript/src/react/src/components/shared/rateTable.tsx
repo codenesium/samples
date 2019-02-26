@@ -44,6 +44,10 @@ export class RateTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -142,6 +146,7 @@ export class RateTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -184,5 +189,5 @@ export class RateTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1a6bb37490f1b1f19dbb402f91975e0b</Hash>
+    <Hash>17419f107d3fdc5371a91d7ad85f8580</Hash>
 </Codenesium>*/

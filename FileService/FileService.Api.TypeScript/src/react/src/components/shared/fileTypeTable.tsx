@@ -121,6 +121,7 @@ export class FileTypeTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -163,5 +164,5 @@ export class FileTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1482d3280303acbd9c114a7534c64b56</Hash>
+    <Hash>35d41f702c689b85a96a08398634bb59</Hash>
 </Codenesium>*/

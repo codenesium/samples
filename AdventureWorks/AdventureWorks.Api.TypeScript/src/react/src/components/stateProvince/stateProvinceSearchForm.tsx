@@ -218,6 +218,7 @@ export default class StateProvinceSearchComponent extends React.Component<StateP
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -270,5 +271,5 @@ export default class StateProvinceSearchComponent extends React.Component<StateP
 export const WrappedStateProvinceSearchComponent = Form.create({ name: 'StateProvince Search' })(StateProvinceSearchComponent);
 
 /*<Codenesium>
-    <Hash>912e46832b84607e641609016429ae11</Hash>
+    <Hash>5076bb61e1a58113706b7a90fec3e63b</Hash>
 </Codenesium>*/

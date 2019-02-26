@@ -39,11 +39,15 @@ handleEditClick(e:any, row: DeviceActionViewModel) {
   this.props.history.push(ClientRoutes.DeviceActions + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: DeviceActionViewModel) {
-  this.props.history.push(ClientRoutes.DeviceActions + '/' + row.id);
-}
+ handleDetailClick(e:any, row: DeviceActionViewModel) {
+   this.props.history.push(ClientRoutes.DeviceActions + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -88,7 +92,7 @@ handleDetailClick(e:any, row: DeviceActionViewModel) {
           });
         }
       );
-    }
+  }
 
   render() {
     
@@ -138,6 +142,7 @@ handleDetailClick(e:any, row: DeviceActionViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -175,5 +180,5 @@ handleDetailClick(e:any, row: DeviceActionViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>0ce1a8196b47b0ea505f03477702084e</Hash>
+    <Hash>c4c869f35be30b26757bf0187ac66d99</Hash>
 </Codenesium>*/

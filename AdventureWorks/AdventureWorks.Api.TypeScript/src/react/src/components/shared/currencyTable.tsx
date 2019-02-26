@@ -44,6 +44,10 @@ export class CurrencyTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -131,6 +135,7 @@ export class CurrencyTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -173,5 +178,5 @@ export class CurrencyTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>95ec652ca216ab2fa398f118a3f6fcc6</Hash>
+    <Hash>94abe780c465d050b2626abc60be759d</Hash>
 </Codenesium>*/

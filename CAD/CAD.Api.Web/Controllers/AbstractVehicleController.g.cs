@@ -217,10 +217,10 @@ namespace CADNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{vehicleId}/VehicleOfficers")]
+		[Route("{vehicleId}/VehicleCapabilities")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVehicleOfficerServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> VehicleOfficersByVehicleId(int vehicleId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiVehicleCapabilitiesServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> VehicleCapabilitiesByVehicleId(int vehicleId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -228,16 +228,16 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVehicleOfficerServerResponseModel> response = await this.VehicleService.VehicleOfficersByVehicleId(vehicleId, query.Limit, query.Offset);
+			List<ApiVehicleCapabilitiesServerResponseModel> response = await this.VehicleService.VehicleCapabilitiesByVehicleId(vehicleId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{vehicleId}/VehicleRefCapabilities")]
+		[Route("byOfficerId/{officerId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVehicleRefCapabilityServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> VehicleRefCapabilitiesByVehicleId(int vehicleId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiVehicleServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByOfficerId(int officerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -245,7 +245,7 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVehicleRefCapabilityServerResponseModel> response = await this.VehicleService.VehicleRefCapabilitiesByVehicleId(vehicleId, query.Limit, query.Offset);
+			List<ApiVehicleServerResponseModel> response = await this.VehicleService.ByOfficerId(officerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -269,5 +269,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d4a5f5b3cdcee71b273da72c76519c79</Hash>
+    <Hash>790d904da03d9ed3ef737138e22f6979</Hash>
 </Codenesium>*/

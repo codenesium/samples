@@ -13,8 +13,6 @@ namespace CADNS.Api.Services.Tests
 
 		public Mock<IApiCallServerRequestModelValidator> CallModelValidatorMock { get; set; } = new Mock<IApiCallServerRequestModelValidator>();
 
-		public Mock<IApiCallAssignmentServerRequestModelValidator> CallAssignmentModelValidatorMock { get; set; } = new Mock<IApiCallAssignmentServerRequestModelValidator>();
-
 		public Mock<IApiCallDispositionServerRequestModelValidator> CallDispositionModelValidatorMock { get; set; } = new Mock<IApiCallDispositionServerRequestModelValidator>();
 
 		public Mock<IApiCallPersonServerRequestModelValidator> CallPersonModelValidatorMock { get; set; } = new Mock<IApiCallPersonServerRequestModelValidator>();
@@ -27,9 +25,7 @@ namespace CADNS.Api.Services.Tests
 
 		public Mock<IApiOfficerServerRequestModelValidator> OfficerModelValidatorMock { get; set; } = new Mock<IApiOfficerServerRequestModelValidator>();
 
-		public Mock<IApiOfficerCapabilityServerRequestModelValidator> OfficerCapabilityModelValidatorMock { get; set; } = new Mock<IApiOfficerCapabilityServerRequestModelValidator>();
-
-		public Mock<IApiOfficerRefCapabilityServerRequestModelValidator> OfficerRefCapabilityModelValidatorMock { get; set; } = new Mock<IApiOfficerRefCapabilityServerRequestModelValidator>();
+		public Mock<IApiOfficerCapabilitiesServerRequestModelValidator> OfficerCapabilitiesModelValidatorMock { get; set; } = new Mock<IApiOfficerCapabilitiesServerRequestModelValidator>();
 
 		public Mock<IApiPersonServerRequestModelValidator> PersonModelValidatorMock { get; set; } = new Mock<IApiPersonServerRequestModelValidator>();
 
@@ -39,15 +35,9 @@ namespace CADNS.Api.Services.Tests
 
 		public Mock<IApiUnitDispositionServerRequestModelValidator> UnitDispositionModelValidatorMock { get; set; } = new Mock<IApiUnitDispositionServerRequestModelValidator>();
 
-		public Mock<IApiUnitOfficerServerRequestModelValidator> UnitOfficerModelValidatorMock { get; set; } = new Mock<IApiUnitOfficerServerRequestModelValidator>();
-
 		public Mock<IApiVehicleServerRequestModelValidator> VehicleModelValidatorMock { get; set; } = new Mock<IApiVehicleServerRequestModelValidator>();
 
-		public Mock<IApiVehicleCapabilityServerRequestModelValidator> VehicleCapabilityModelValidatorMock { get; set; } = new Mock<IApiVehicleCapabilityServerRequestModelValidator>();
-
-		public Mock<IApiVehicleOfficerServerRequestModelValidator> VehicleOfficerModelValidatorMock { get; set; } = new Mock<IApiVehicleOfficerServerRequestModelValidator>();
-
-		public Mock<IApiVehicleRefCapabilityServerRequestModelValidator> VehicleRefCapabilityModelValidatorMock { get; set; } = new Mock<IApiVehicleRefCapabilityServerRequestModelValidator>();
+		public Mock<IApiVehicleCapabilitiesServerRequestModelValidator> VehicleCapabilitiesModelValidatorMock { get; set; } = new Mock<IApiVehicleCapabilitiesServerRequestModelValidator>();
 
 		public ModelValidatorMockFactory()
 		{
@@ -58,10 +48,6 @@ namespace CADNS.Api.Services.Tests
 			this.CallModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCallServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.CallModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCallServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.CallModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.CallAssignmentModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCallAssignmentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.CallAssignmentModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCallAssignmentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.CallAssignmentModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.CallDispositionModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCallDispositionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.CallDispositionModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCallDispositionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -87,13 +73,9 @@ namespace CADNS.Api.Services.Tests
 			this.OfficerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOfficerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.OfficerModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.OfficerCapabilityModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiOfficerCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.OfficerCapabilityModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOfficerCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.OfficerCapabilityModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.OfficerRefCapabilityModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiOfficerRefCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.OfficerRefCapabilityModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOfficerRefCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.OfficerRefCapabilityModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.OfficerCapabilitiesModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiOfficerCapabilitiesServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.OfficerCapabilitiesModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOfficerCapabilitiesServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.OfficerCapabilitiesModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.PersonModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPersonServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PersonModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -111,29 +93,17 @@ namespace CADNS.Api.Services.Tests
 			this.UnitDispositionModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUnitDispositionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UnitDispositionModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.UnitOfficerModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUnitOfficerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.UnitOfficerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUnitOfficerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.UnitOfficerModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.VehicleModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVehicleServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.VehicleModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVehicleServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.VehicleModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.VehicleCapabilityModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVehicleCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VehicleCapabilityModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVehicleCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VehicleCapabilityModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.VehicleOfficerModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVehicleOfficerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VehicleOfficerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVehicleOfficerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VehicleOfficerModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.VehicleRefCapabilityModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVehicleRefCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VehicleRefCapabilityModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVehicleRefCapabilityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VehicleRefCapabilityModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VehicleCapabilitiesModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVehicleCapabilitiesServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VehicleCapabilitiesModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVehicleCapabilitiesServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VehicleCapabilitiesModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1f1d14aa47f0846f46e4f05f041464a</Hash>
+    <Hash>5c37d9f9c9677bef71d75162d7bd78fc</Hash>
 </Codenesium>*/

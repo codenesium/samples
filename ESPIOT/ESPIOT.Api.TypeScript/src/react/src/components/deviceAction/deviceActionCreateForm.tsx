@@ -74,21 +74,19 @@ class DeviceActionCreateComponent extends React.Component<
           console.log(error);
           if(error.response.data)
           {
-            let errorResponse = error.response.data as ActionResponse; 
+			  let errorResponse = error.response.data as ActionResponse; 
 
-            errorResponse.validationErrors.forEach(x =>
-            {
-              this.props.form.setFields({
-              [ToLowerCaseFirstLetter(x.propertyName)]: {
-                value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-                errors: [new Error(x.errorMessage)]
-              },
-              })
-            });
-          }
-          
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
-          
         }
       ); 
   }
@@ -172,5 +170,5 @@ class DeviceActionCreateComponent extends React.Component<
 export const WrappedDeviceActionCreateComponent = Form.create({ name: 'DeviceAction Create' })(DeviceActionCreateComponent);
 
 /*<Codenesium>
-    <Hash>04248d465135caaf2225e87d127327cc</Hash>
+    <Hash>9d230df6b31f4823f0239ef939c89135</Hash>
 </Codenesium>*/

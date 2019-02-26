@@ -44,6 +44,10 @@ export class UnitMeasureTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -133,6 +137,7 @@ export class UnitMeasureTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -175,5 +180,5 @@ export class UnitMeasureTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2108d2428366d2df2953fc272c562698</Hash>
+    <Hash>00d317b436c3410abf5ca1ee2c12bb8a</Hash>
 </Codenesium>*/

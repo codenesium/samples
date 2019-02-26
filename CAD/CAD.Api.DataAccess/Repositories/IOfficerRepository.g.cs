@@ -19,14 +19,22 @@ namespace CADNS.Api.DataAccess
 
 		Task<List<Note>> NotesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<OfficerRefCapability>> OfficerRefCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
+		Task<List<OfficerCapabilities>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<UnitOfficer>> UnitOfficersByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Officer>> ByCapabilityId(int capabilityId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<VehicleOfficer>> VehicleOfficersByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
+		Task<OfficerCapabilities> CreateOfficerCapabilities(OfficerCapabilities item);
+
+		Task DeleteOfficerCapabilities(OfficerCapabilities item);
+
+		Task<List<Officer>> ByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
+
+		Task<VehicleOfficer> CreateVehicleOfficer(VehicleOfficer item);
+
+		Task DeleteVehicleOfficer(VehicleOfficer item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc377ecd0f9e8e3a27f48b137182ecdb</Hash>
+    <Hash>80cf02dba781237ae5f959b8fa139c0a</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import WorkOrderMapper from './workOrderMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { ProductSelectComponent } from '../shared/productSelect';
 import { ScrapReasonSelectComponent } from '../shared/scrapReasonSelect';
 interface WorkOrderEditComponentProps {
@@ -137,6 +138,19 @@ class WorkOrderEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -267,5 +281,5 @@ export const WrappedWorkOrderEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c094e37255111886a04cc03bbb84c890</Hash>
+    <Hash>18274a56f72cb5f61fbbc21341bc78fe</Hash>
 </Codenesium>*/

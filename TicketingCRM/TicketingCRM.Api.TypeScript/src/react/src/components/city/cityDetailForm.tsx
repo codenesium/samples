@@ -6,7 +6,10 @@ import CityMapper from './cityMapper';
 import CityViewModel from './cityViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { EventTableComponent } from '../shared/eventTable';
+import {EventTableComponent} from '../shared/eventTable'
+	
+
+
 
 interface CityDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface CityDetailComponentState {
 }
 
 class CityDetailComponent extends React.Component<
-  CityDetailComponentProps,
-  CityDetailComponentState
+CityDetailComponentProps,
+CityDetailComponentState
 > {
   state = {
     model: new CityViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Cities + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Cities + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,54 +86,48 @@ class CityDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>provinceId</h3>
-              <p>
-                {String(this.state.model!.provinceIdNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>provinceId</h3>
+							<p>{String(this.state.model!.provinceIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Events</h3>
-            <EventTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Cities +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Events
-              }
-            />
-          </div>
+            <EventTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Cities + '/' + this.state.model!.id + '/' + ApiRoutes.Events}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -145,7 +140,6 @@ export const WrappedCityDetailComponent = Form.create({ name: 'City Detail' })(
   CityDetailComponent
 );
 
-
 /*<Codenesium>
-    <Hash>ec9f71939e97edec08d9f0655517c408</Hash>
+    <Hash>ca49e53662a42eedf80fe9839f43db31</Hash>
 </Codenesium>*/

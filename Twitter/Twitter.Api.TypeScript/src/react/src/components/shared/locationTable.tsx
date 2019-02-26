@@ -6,11 +6,11 @@ import LocationMapper from '../location/locationMapper';
 import LocationViewModel from '../location/locationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface LocationTableComponentProps {
-  location_id: number;
-  apiRoute: string;
+  location_id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,38 +20,44 @@ interface LocationTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<LocationViewModel>;
+  filteredRecords : Array<LocationViewModel>;
 }
 
-export class LocationTableComponent extends React.Component<
-  LocationTableComponentProps,
-  LocationTableComponentState
+export class  LocationTableComponent extends React.Component<
+LocationTableComponentProps,
+LocationTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: LocationViewModel) {
-    this.props.history.push(ClientRoutes.Locations + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: LocationViewModel) {
+  this.props.history.push(ClientRoutes.Locations + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: LocationViewModel) {
-    this.props.history.push(ClientRoutes.Locations + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: LocationViewModel) {
+   this.props.history.push(ClientRoutes.Locations + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.LocationClientResponseModel>;
@@ -59,11 +65,12 @@ export class LocationTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new LocationMapper();
+          
+          let locations:Array<LocationViewModel> = [];
 
-          let locations: Array<LocationViewModel> = [];
-
-          response.forEach(x => {
-            locations.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              locations.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -88,54 +95,54 @@ export class LocationTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Locations',
-                columns: [
-                  {
-                    Header: 'Gps_lat',
-                    accessor: 'gpsLat',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Locations',
+                    columns: [
+					  {
+                      Header: 'Gps_lat',
+                      accessor: 'gpsLat',
+                      Cell: (props) => {
                       return <span>{String(props.original.gpsLat)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Gps_long',
-                    accessor: 'gpsLong',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Gps_long',
+                      accessor: 'gpsLong',
+                      Cell: (props) => {
                       return <span>{String(props.original.gpsLong)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Location_name',
-                    accessor: 'locationName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Location_name',
+                      accessor: 'locationName',
+                      Cell: (props) => {
                       return <span>{String(props.original.locationName)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as LocationViewModel
@@ -146,8 +153,8 @@ export class LocationTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as LocationViewModel
@@ -156,14 +163,11 @@ export class LocationTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -171,7 +175,6 @@ export class LocationTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>a075b8fa55d51e5208108716e08d62a7</Hash>
+    <Hash>8da99f1091684274db705fd7c2b582d3</Hash>
 </Codenesium>*/

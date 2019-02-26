@@ -39,11 +39,15 @@ handleEditClick(e:any, row: AWBuildVersionViewModel) {
   this.props.history.push(ClientRoutes.AWBuildVersions + '/edit/' + row.id);
 }
 
-handleDetailClick(e:any, row: AWBuildVersionViewModel) {
-  this.props.history.push(ClientRoutes.AWBuildVersions + '/' + row.id);
-}
+ handleDetailClick(e:any, row: AWBuildVersionViewModel) {
+   this.props.history.push(ClientRoutes.AWBuildVersions + '/' + row.id);
+ }
 
   componentDidMount() {
+	this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -140,6 +144,7 @@ handleDetailClick(e:any, row: AWBuildVersionViewModel) {
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -177,5 +182,5 @@ handleDetailClick(e:any, row: AWBuildVersionViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>3b0ea3b6e8d9ac601f8f3db5987147ce</Hash>
+    <Hash>e20b8fe767a9101e86fe050eca85a5b0</Hash>
 </Codenesium>*/

@@ -226,6 +226,7 @@ export default class SpecialOfferSearchComponent extends React.Component<Special
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -278,5 +279,5 @@ export default class SpecialOfferSearchComponent extends React.Component<Special
 export const WrappedSpecialOfferSearchComponent = Form.create({ name: 'SpecialOffer Search' })(SpecialOfferSearchComponent);
 
 /*<Codenesium>
-    <Hash>5b7e28caedd932f9cc8b76787c99bc26</Hash>
+    <Hash>b239d6dacbd1f70d5bdad1758bd3b8bb</Hash>
 </Codenesium>*/

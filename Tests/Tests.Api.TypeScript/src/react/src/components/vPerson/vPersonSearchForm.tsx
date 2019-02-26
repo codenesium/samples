@@ -223,6 +223,7 @@ export default class VPersonSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -281,5 +282,5 @@ export const WrappedVPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1acd3dc22726ff102696322fdb2cb8e1</Hash>
+    <Hash>d4a263597fdb558636906b14ebdd3ecc</Hash>
 </Codenesium>*/

@@ -44,6 +44,10 @@ export class TimestampCheckTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -133,6 +137,7 @@ export class TimestampCheckTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -175,5 +180,5 @@ export class TimestampCheckTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3730b32eb7a8020ed079b4a5dabc8b0e</Hash>
+    <Hash>40d3401604b48a2ea9ba9ec19eae6c20</Hash>
 </Codenesium>*/

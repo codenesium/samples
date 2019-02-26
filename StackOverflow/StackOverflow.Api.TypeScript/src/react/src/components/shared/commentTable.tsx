@@ -44,6 +44,10 @@ export class CommentTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -145,6 +149,7 @@ export class CommentTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -187,5 +192,5 @@ export class CommentTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>356909b7087680a94207a70f9167de87</Hash>
+    <Hash>67af2235c30935c70171500875d8d451</Hash>
 </Codenesium>*/

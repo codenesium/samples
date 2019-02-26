@@ -44,6 +44,10 @@ export class EmployeeTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -140,6 +144,7 @@ export class EmployeeTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -182,5 +187,5 @@ export class EmployeeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d5eb02472ecc9cf78ba2401d53ebccfc</Hash>
+    <Hash>3dc0449c869c7c7494cf4e89443c0a28</Hash>
 </Codenesium>*/

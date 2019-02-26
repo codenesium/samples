@@ -19,8 +19,6 @@ namespace CADNS.Api.Services
 
 		protected IDALNoteMapper DalNoteMapper { get; private set; }
 
-		protected IDALCallAssignmentMapper DalCallAssignmentMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractCallService(
@@ -29,15 +27,13 @@ namespace CADNS.Api.Services
 			ICallRepository callRepository,
 			IApiCallServerRequestModelValidator callModelValidator,
 			IDALCallMapper dalCallMapper,
-			IDALNoteMapper dalNoteMapper,
-			IDALCallAssignmentMapper dalCallAssignmentMapper)
+			IDALNoteMapper dalNoteMapper)
 			: base()
 		{
 			this.CallRepository = callRepository;
 			this.CallModelValidator = callModelValidator;
 			this.DalCallMapper = dalCallMapper;
 			this.DalNoteMapper = dalNoteMapper;
-			this.DalCallAssignmentMapper = dalCallAssignmentMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -127,15 +123,15 @@ namespace CADNS.Api.Services
 			return this.DalNoteMapper.MapEntityToModel(records);
 		}
 
-		public async virtual Task<List<ApiCallAssignmentServerResponseModel>> CallAssignmentsByCallId(int callId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiCallServerResponseModel>> ByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<CallAssignment> records = await this.CallRepository.CallAssignmentsByCallId(callId, limit, offset);
+			List<Call> records = await this.CallRepository.ByUnitId(unitId, limit, offset);
 
-			return this.DalCallAssignmentMapper.MapEntityToModel(records);
+			return this.DalCallMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce880e27429f89fdb388a6573754dcee</Hash>
+    <Hash>316d757df7c78467e860e78d082e737a</Hash>
 </Codenesium>*/

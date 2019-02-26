@@ -184,6 +184,7 @@ export default class ScrapReasonSearchComponent extends React.Component<ScrapRea
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -236,5 +237,5 @@ export default class ScrapReasonSearchComponent extends React.Component<ScrapRea
 export const WrappedScrapReasonSearchComponent = Form.create({ name: 'ScrapReason Search' })(ScrapReasonSearchComponent);
 
 /*<Codenesium>
-    <Hash>512d6a19a9beabb08c242b48ff62bb05</Hash>
+    <Hash>307fea504159fdf1e0f8253fa92d11dc</Hash>
 </Codenesium>*/

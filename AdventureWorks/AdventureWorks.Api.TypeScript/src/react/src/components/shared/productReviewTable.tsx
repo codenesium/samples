@@ -44,6 +44,10 @@ export class ProductReviewTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -186,6 +190,7 @@ export class ProductReviewTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -228,5 +233,5 @@ export class ProductReviewTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>523462bfd6e87feabec490a97072b0bd</Hash>
+    <Hash>b1a01e2c1cd0a2322521e43ad1919df8</Hash>
 </Codenesium>*/

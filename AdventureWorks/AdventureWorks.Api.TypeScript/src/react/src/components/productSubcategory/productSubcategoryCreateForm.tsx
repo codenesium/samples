@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ProductSubcategoryMapper from './productSubcategoryMapper';
 import ProductSubcategoryViewModel from './productSubcategoryViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { ProductCategorySelectComponent } from '../shared/productCategorySelect'
 	
 interface ProductSubcategoryCreateComponentProps {
@@ -71,6 +72,20 @@ class ProductSubcategoryCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -161,5 +176,5 @@ class ProductSubcategoryCreateComponent extends React.Component<
 export const WrappedProductSubcategoryCreateComponent = Form.create({ name: 'ProductSubcategory Create' })(ProductSubcategoryCreateComponent);
 
 /*<Codenesium>
-    <Hash>6282b499876257731375aad5a7cfec9e</Hash>
+    <Hash>d0b714638c6bcf018da6df5de827a4b2</Hash>
 </Codenesium>*/

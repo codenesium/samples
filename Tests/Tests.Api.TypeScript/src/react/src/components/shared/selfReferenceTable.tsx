@@ -44,6 +44,10 @@ export class SelfReferenceTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -165,6 +169,7 @@ export class SelfReferenceTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -207,5 +212,5 @@ export class SelfReferenceTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>15d325c56f2a6ac3652fae92b2c30cd9</Hash>
+    <Hash>20b16d17e635d4d5b78e60b3b1eb5f28</Hash>
 </Codenesium>*/

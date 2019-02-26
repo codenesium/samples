@@ -196,6 +196,7 @@ export default class LocationSearchComponent extends React.Component<LocationSea
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -248,5 +249,5 @@ export default class LocationSearchComponent extends React.Component<LocationSea
 export const WrappedLocationSearchComponent = Form.create({ name: 'Location Search' })(LocationSearchComponent);
 
 /*<Codenesium>
-    <Hash>f2831bd27ff5cef86ea60b6498613128</Hash>
+    <Hash>e2a8896c1fd15cf0308576520f69110f</Hash>
 </Codenesium>*/

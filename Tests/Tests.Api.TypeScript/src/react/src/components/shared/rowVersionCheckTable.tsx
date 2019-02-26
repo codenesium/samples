@@ -44,6 +44,10 @@ export class RowVersionCheckTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -133,6 +137,7 @@ export class RowVersionCheckTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -175,5 +180,5 @@ export class RowVersionCheckTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>98268491495a2813b4e6406cef2688dc</Hash>
+    <Hash>7e709ac6b867d8bcf51bbad37fa5f97b</Hash>
 </Codenesium>*/

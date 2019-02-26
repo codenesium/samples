@@ -44,6 +44,10 @@ export class SpaceTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -131,6 +135,7 @@ export class SpaceTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -173,5 +178,5 @@ export class SpaceTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>429344f8ddb80cc57aa885f28f3ac861</Hash>
+    <Hash>50941296bf92ffb7624986c5809480c5</Hash>
 </Codenesium>*/

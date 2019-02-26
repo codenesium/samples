@@ -121,6 +121,7 @@ export class SpeciesTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -163,5 +164,5 @@ export class SpeciesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b1b0f7177162f36d14c44ddc216950d7</Hash>
+    <Hash>693bcecdc79f2bef255253ff9fb49abf</Hash>
 </Codenesium>*/

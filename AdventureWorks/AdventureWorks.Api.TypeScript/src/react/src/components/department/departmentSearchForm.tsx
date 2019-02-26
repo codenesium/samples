@@ -190,6 +190,7 @@ export default class DepartmentSearchComponent extends React.Component<Departmen
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -242,5 +243,5 @@ export default class DepartmentSearchComponent extends React.Component<Departmen
 export const WrappedDepartmentSearchComponent = Form.create({ name: 'Department Search' })(DepartmentSearchComponent);
 
 /*<Codenesium>
-    <Hash>c3bb6a2108ab22bdad7b5cedd4764788</Hash>
+    <Hash>c5859d019c9e48f32685b7465f1ecec3</Hash>
 </Codenesium>*/

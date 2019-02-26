@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CallPersonMapper from './callPersonMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { PersonSelectComponent } from '../shared/personSelect';
 import { PersonTypeSelectComponent } from '../shared/personTypeSelect';
 interface CallPersonEditComponentProps {
@@ -137,6 +138,19 @@ class CallPersonEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -213,5 +227,5 @@ export const WrappedCallPersonEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f64d00f8ad14296abdbf22cf0f7978a1</Hash>
+    <Hash>24f69fea995b2814f0f546e37b07b22f</Hash>
 </Codenesium>*/

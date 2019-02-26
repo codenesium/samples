@@ -176,65 +176,6 @@ this.quickCallNumber = quickCallNumber;
 
 				}
 			}
-			export class CallAssignmentClientRequestModel {
-				callId:number;
-callIdEntity : string;
-callIdNavigation? : CallClientResponseModel;
-id:number;
-unitId:number;
-unitIdEntity : string;
-unitIdNavigation? : UnitClientResponseModel;
-
-	
-				constructor() {
-					this.callId = 0;
-this.callIdEntity = '';
-this.callIdNavigation = undefined;
-this.id = 0;
-this.unitId = 0;
-this.unitIdEntity = '';
-this.unitIdNavigation = undefined;
-
-				}
-
-				setProperties(callId : number,id : number,unitId : number) : void
-				{
-					this.callId = callId;
-this.id = id;
-this.unitId = unitId;
-
-				}
-			}
-
-			export class CallAssignmentClientResponseModel {
-				callId:number;
-callIdEntity : string;
-callIdNavigation? : CallClientResponseModel;
-id:number;
-unitId:number;
-unitIdEntity : string;
-unitIdNavigation? : UnitClientResponseModel;
-
-	
-				constructor() {
-					this.callId = 0;
-this.callIdEntity = '';
-this.callIdNavigation = undefined;
-this.id = 0;
-this.unitId = 0;
-this.unitIdEntity = '';
-this.unitIdNavigation = undefined;
-
-				}
-
-				setProperties(callId : number,id : number,unitId : number) : void
-				{
-					this.callId = callId;
-this.id = id;
-this.unitId = unitId;
-
-				}
-			}
 			export class CallDispositionClientRequestModel {
 				id:number;
 name:string;
@@ -543,48 +484,10 @@ this.password = password;
 
 				}
 			}
-			export class OfficerCapabilityClientRequestModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-				}
-
-				setProperties(id : number,name : string) : void
-				{
-					this.id = id;
-this.name = name;
-
-				}
-			}
-
-			export class OfficerCapabilityClientResponseModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-				}
-
-				setProperties(id : number,name : string) : void
-				{
-					this.id = id;
-this.name = name;
-
-				}
-			}
-			export class OfficerRefCapabilityClientRequestModel {
+			export class OfficerCapabilitiesClientRequestModel {
 				capabilityId:number;
 capabilityIdEntity : string;
 capabilityIdNavigation? : OfficerCapabilityClientResponseModel;
-id:number;
 officerId:number;
 officerIdEntity : string;
 officerIdNavigation? : OfficerClientResponseModel;
@@ -594,27 +497,24 @@ officerIdNavigation? : OfficerClientResponseModel;
 					this.capabilityId = 0;
 this.capabilityIdEntity = '';
 this.capabilityIdNavigation = undefined;
-this.id = 0;
 this.officerId = 0;
 this.officerIdEntity = '';
 this.officerIdNavigation = undefined;
 
 				}
 
-				setProperties(capabilityId : number,id : number,officerId : number) : void
+				setProperties(capabilityId : number,officerId : number) : void
 				{
 					this.capabilityId = capabilityId;
-this.id = id;
 this.officerId = officerId;
 
 				}
 			}
 
-			export class OfficerRefCapabilityClientResponseModel {
+			export class OfficerCapabilitiesClientResponseModel {
 				capabilityId:number;
 capabilityIdEntity : string;
 capabilityIdNavigation? : OfficerCapabilityClientResponseModel;
-id:number;
 officerId:number;
 officerIdEntity : string;
 officerIdNavigation? : OfficerClientResponseModel;
@@ -624,17 +524,15 @@ officerIdNavigation? : OfficerClientResponseModel;
 					this.capabilityId = 0;
 this.capabilityIdEntity = '';
 this.capabilityIdNavigation = undefined;
-this.id = 0;
 this.officerId = 0;
 this.officerIdEntity = '';
 this.officerIdNavigation = undefined;
 
 				}
 
-				setProperties(capabilityId : number,id : number,officerId : number) : void
+				setProperties(capabilityId : number,officerId : number) : void
 				{
 					this.capabilityId = capabilityId;
-this.id = id;
 this.officerId = officerId;
 
 				}
@@ -805,65 +703,6 @@ this.name = name;
 
 				}
 			}
-			export class UnitOfficerClientRequestModel {
-				id:number;
-officerId:number;
-officerIdEntity : string;
-officerIdNavigation? : OfficerClientResponseModel;
-unitId:number;
-unitIdEntity : string;
-unitIdNavigation? : UnitClientResponseModel;
-
-	
-				constructor() {
-					this.id = 0;
-this.officerId = 0;
-this.officerIdEntity = '';
-this.officerIdNavigation = undefined;
-this.unitId = 0;
-this.unitIdEntity = '';
-this.unitIdNavigation = undefined;
-
-				}
-
-				setProperties(id : number,officerId : number,unitId : number) : void
-				{
-					this.id = id;
-this.officerId = officerId;
-this.unitId = unitId;
-
-				}
-			}
-
-			export class UnitOfficerClientResponseModel {
-				id:number;
-officerId:number;
-officerIdEntity : string;
-officerIdNavigation? : OfficerClientResponseModel;
-unitId:number;
-unitIdEntity : string;
-unitIdNavigation? : UnitClientResponseModel;
-
-	
-				constructor() {
-					this.id = 0;
-this.officerId = 0;
-this.officerIdEntity = '';
-this.officerIdNavigation = undefined;
-this.unitId = 0;
-this.unitIdEntity = '';
-this.unitIdNavigation = undefined;
-
-				}
-
-				setProperties(id : number,officerId : number,unitId : number) : void
-				{
-					this.id = id;
-this.officerId = officerId;
-this.unitId = unitId;
-
-				}
-			}
 			export class VehicleClientRequestModel {
 				id:number;
 name:string;
@@ -901,105 +740,8 @@ this.name = name;
 
 				}
 			}
-			export class VehicleCapabilityClientRequestModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-				}
-
-				setProperties(id : number,name : string) : void
-				{
-					this.id = id;
-this.name = name;
-
-				}
-			}
-
-			export class VehicleCapabilityClientResponseModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-				}
-
-				setProperties(id : number,name : string) : void
-				{
-					this.id = id;
-this.name = name;
-
-				}
-			}
-			export class VehicleOfficerClientRequestModel {
-				id:number;
-officerId:number;
-officerIdEntity : string;
-officerIdNavigation? : OfficerClientResponseModel;
-vehicleId:number;
-vehicleIdEntity : string;
-vehicleIdNavigation? : VehicleClientResponseModel;
-
-	
-				constructor() {
-					this.id = 0;
-this.officerId = 0;
-this.officerIdEntity = '';
-this.officerIdNavigation = undefined;
-this.vehicleId = 0;
-this.vehicleIdEntity = '';
-this.vehicleIdNavigation = undefined;
-
-				}
-
-				setProperties(id : number,officerId : number,vehicleId : number) : void
-				{
-					this.id = id;
-this.officerId = officerId;
-this.vehicleId = vehicleId;
-
-				}
-			}
-
-			export class VehicleOfficerClientResponseModel {
-				id:number;
-officerId:number;
-officerIdEntity : string;
-officerIdNavigation? : OfficerClientResponseModel;
-vehicleId:number;
-vehicleIdEntity : string;
-vehicleIdNavigation? : VehicleClientResponseModel;
-
-	
-				constructor() {
-					this.id = 0;
-this.officerId = 0;
-this.officerIdEntity = '';
-this.officerIdNavigation = undefined;
-this.vehicleId = 0;
-this.vehicleIdEntity = '';
-this.vehicleIdNavigation = undefined;
-
-				}
-
-				setProperties(id : number,officerId : number,vehicleId : number) : void
-				{
-					this.id = id;
-this.officerId = officerId;
-this.vehicleId = vehicleId;
-
-				}
-			}
-			export class VehicleRefCapabilityClientRequestModel {
-				id:number;
-vehicleCapabilityId:number;
+			export class VehicleCapabilitiesClientRequestModel {
+				vehicleCapabilityId:number;
 vehicleCapabilityIdEntity : string;
 vehicleCapabilityIdNavigation? : VehicleCapabilityClientResponseModel;
 vehicleId:number;
@@ -1008,8 +750,7 @@ vehicleIdNavigation? : VehicleClientResponseModel;
 
 	
 				constructor() {
-					this.id = 0;
-this.vehicleCapabilityId = 0;
+					this.vehicleCapabilityId = 0;
 this.vehicleCapabilityIdEntity = '';
 this.vehicleCapabilityIdNavigation = undefined;
 this.vehicleId = 0;
@@ -1018,18 +759,16 @@ this.vehicleIdNavigation = undefined;
 
 				}
 
-				setProperties(id : number,vehicleCapabilityId : number,vehicleId : number) : void
+				setProperties(vehicleCapabilityId : number,vehicleId : number) : void
 				{
-					this.id = id;
-this.vehicleCapabilityId = vehicleCapabilityId;
+					this.vehicleCapabilityId = vehicleCapabilityId;
 this.vehicleId = vehicleId;
 
 				}
 			}
 
-			export class VehicleRefCapabilityClientResponseModel {
-				id:number;
-vehicleCapabilityId:number;
+			export class VehicleCapabilitiesClientResponseModel {
+				vehicleCapabilityId:number;
 vehicleCapabilityIdEntity : string;
 vehicleCapabilityIdNavigation? : VehicleCapabilityClientResponseModel;
 vehicleId:number;
@@ -1038,8 +777,7 @@ vehicleIdNavigation? : VehicleClientResponseModel;
 
 	
 				constructor() {
-					this.id = 0;
-this.vehicleCapabilityId = 0;
+					this.vehicleCapabilityId = 0;
 this.vehicleCapabilityIdEntity = '';
 this.vehicleCapabilityIdNavigation = undefined;
 this.vehicleId = 0;
@@ -1048,15 +786,14 @@ this.vehicleIdNavigation = undefined;
 
 				}
 
-				setProperties(id : number,vehicleCapabilityId : number,vehicleId : number) : void
+				setProperties(vehicleCapabilityId : number,vehicleId : number) : void
 				{
-					this.id = id;
-this.vehicleCapabilityId = vehicleCapabilityId;
+					this.vehicleCapabilityId = vehicleCapabilityId;
 this.vehicleId = vehicleId;
 
 				}
 			}
 
 /*<Codenesium>
-    <Hash>4fac6c766a7606fa4a8348090acc62b8</Hash>
+    <Hash>8eefd1832cbb51930e864d63376be932</Hash>
 </Codenesium>*/

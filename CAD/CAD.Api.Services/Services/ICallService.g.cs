@@ -22,10 +22,10 @@ namespace CADNS.Api.Services
 
 		Task<List<ApiNoteServerResponseModel>> NotesByCallId(int callId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCallAssignmentServerResponseModel>> CallAssignmentsByCallId(int callId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCallServerResponseModel>> ByUnitId(int callId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa13285904c30be91ff35f9e765dc369</Hash>
+    <Hash>45d07c082e74ab0d766e0348b270c5ed</Hash>
 </Codenesium>*/

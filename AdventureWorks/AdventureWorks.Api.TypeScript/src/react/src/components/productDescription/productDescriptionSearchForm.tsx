@@ -190,6 +190,7 @@ export default class ProductDescriptionSearchComponent extends React.Component<P
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -242,5 +243,5 @@ export default class ProductDescriptionSearchComponent extends React.Component<P
 export const WrappedProductDescriptionSearchComponent = Form.create({ name: 'ProductDescription Search' })(ProductDescriptionSearchComponent);
 
 /*<Codenesium>
-    <Hash>87b69000cf0c0e68433b832e44a30723</Hash>
+    <Hash>04acb79c3e3b0400baa288d408f27791</Hash>
 </Codenesium>*/

@@ -19,8 +19,6 @@ namespace CADNS.Api.DataAccess
 
 		Task<List<Note>> NotesByCallId(int callId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<CallAssignment>> CallAssignmentsByCallId(int callId, int limit = int.MaxValue, int offset = 0);
-
 		Task<Address> AddressByAddressId(int? addressId);
 
 		Task<CallDisposition> CallDispositionByCallDispositionId(int? callDispositionId);
@@ -28,9 +26,15 @@ namespace CADNS.Api.DataAccess
 		Task<CallStatu> CallStatuByCallStatusId(int? callStatusId);
 
 		Task<CallType> CallTypeByCallTypeId(int? callTypeId);
+
+		Task<List<Call>> ByUnitId(int unitId, int limit = int.MaxValue, int offset = 0);
+
+		Task<CallAssignment> CreateCallAssignment(CallAssignment item);
+
+		Task DeleteCallAssignment(CallAssignment item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e8ce8da915f3a4d33ec04422a8fb4339</Hash>
+    <Hash>51be950b5558109c59cb308e175db780</Hash>
 </Codenesium>*/

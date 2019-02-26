@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { BreedSelectComponent } from '../shared/breedSelect'
 	import { PenSelectComponent } from '../shared/penSelect'
 	
@@ -72,6 +73,20 @@ class PetCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -172,5 +187,5 @@ class PetCreateComponent extends React.Component<
 export const WrappedPetCreateComponent = Form.create({ name: 'Pet Create' })(PetCreateComponent);
 
 /*<Codenesium>
-    <Hash>5ae0f60d2cc4b74bfe0e7cb302cac0ad</Hash>
+    <Hash>f1a12430747e12632c8b9ba978f6a581</Hash>
 </Codenesium>*/

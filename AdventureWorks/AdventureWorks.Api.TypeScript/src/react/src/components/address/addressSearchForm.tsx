@@ -218,6 +218,7 @@ export default class AddressSearchComponent extends React.Component<AddressSearc
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -270,5 +271,5 @@ export default class AddressSearchComponent extends React.Component<AddressSearc
 export const WrappedAddressSearchComponent = Form.create({ name: 'Address Search' })(AddressSearchComponent);
 
 /*<Codenesium>
-    <Hash>0d754e2d9dbbe9cbce1889e0d7d614a2</Hash>
+    <Hash>c83f8b018726908e0caf59dd6bf81ea7</Hash>
 </Codenesium>*/

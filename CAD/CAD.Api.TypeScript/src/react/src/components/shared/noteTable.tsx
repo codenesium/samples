@@ -44,6 +44,10 @@ export class NoteTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -166,6 +170,7 @@ export class NoteTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -208,5 +213,5 @@ export class NoteTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0b1af3b22dee30325f28ec8f642bd52c</Hash>
+    <Hash>32ab6ff3e1596cb6e44856c37f1bcc72</Hash>
 </Codenesium>*/

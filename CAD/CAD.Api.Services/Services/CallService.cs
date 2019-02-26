@@ -13,20 +13,18 @@ namespace CADNS.Api.Services
 			ICallRepository callRepository,
 			IApiCallServerRequestModelValidator callModelValidator,
 			IDALCallMapper dalCallMapper,
-			IDALNoteMapper dalNoteMapper,
-			IDALCallAssignmentMapper dalCallAssignmentMapper)
+			IDALNoteMapper dalNoteMapper)
 			: base(logger,
 			       mediator,
 			       callRepository,
 			       callModelValidator,
 			       dalCallMapper,
-			       dalNoteMapper,
-			       dalCallAssignmentMapper)
+			       dalNoteMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a7264e8e58e4f51e509708bab35c7b4</Hash>
+    <Hash>ff104cbb34988730cdeb872a96efaf82</Hash>
 </Codenesium>*/

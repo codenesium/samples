@@ -73,17 +73,20 @@ class FileCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
-		   let errorResponse = error.response.data as ActionResponse; 
-
-          errorResponse.validationErrors.forEach(x =>
+          if(error.response.data)
           {
-            this.props.form.setFields({
-             [ToLowerCaseFirstLetter(x.propertyName)]: {
-              value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-              errors: [new Error(x.errorMessage)]
-            },
-            })
-          });
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -262,5 +265,5 @@ class FileCreateComponent extends React.Component<
 export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(FileCreateComponent);
 
 /*<Codenesium>
-    <Hash>7d85dbd835b258201e583ff9cb67c85a</Hash>
+    <Hash>d446cf79489bf2fc95307e70bc541153</Hash>
 </Codenesium>*/

@@ -3,19 +3,15 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import WorkOrderMapper from '../workOrder/workOrderMapper';
 import WorkOrderViewModel from '../workOrder/workOrderViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface WorkOrderSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface WorkOrderSelectComponentState {
@@ -23,33 +19,30 @@ interface WorkOrderSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<WorkOrderViewModel>;
+  filteredRecords: Array<WorkOrderViewModel>;
 }
 
-export class  WorkOrderSelectComponent extends React.Component<
-WorkOrderSelectComponentProps,
-WorkOrderSelectComponentState
+export class WorkOrderSelectComponent extends React.Component<
+  WorkOrderSelectComponentProps,
+  WorkOrderSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.WorkOrderClientResponseModel>;
@@ -57,12 +50,11 @@ WorkOrderSelectComponentState
           console.log(response);
 
           let mapper = new WorkOrderMapper();
-          
-          let devices:Array<WorkOrderViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<WorkOrderViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -87,46 +79,41 @@ WorkOrderSelectComponentState
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
         <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:WorkOrderViewModel) =>
-            {
-                return <Select.Option value={x.workOrderID}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue,
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map((x: WorkOrderViewModel) => {
+                return (
+                  <Select.Option value={x.workOrderID}>
+                    {x.toDisplay()}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </div>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>36074a977432892ba91258906ac891d7</Hash>
+    <Hash>75aa2b37c7aed6f1cf43f728be3f6e4d</Hash>
 </Codenesium>*/

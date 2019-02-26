@@ -44,6 +44,10 @@ export class BadgeTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -131,6 +135,7 @@ export class BadgeTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -173,5 +178,5 @@ export class BadgeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>935318ab840316af2e12b87e8e96c3ed</Hash>
+    <Hash>7219d115c9c481b3de9af3c94a454f31</Hash>
 </Codenesium>*/

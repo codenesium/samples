@@ -196,6 +196,7 @@ export default class ShiftSearchComponent extends React.Component<ShiftSearchCom
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -248,5 +249,5 @@ export default class ShiftSearchComponent extends React.Component<ShiftSearchCom
 export const WrappedShiftSearchComponent = Form.create({ name: 'Shift Search' })(ShiftSearchComponent);
 
 /*<Codenesium>
-    <Hash>544bf2bc536101ab581b12a0b1ccf655</Hash>
+    <Hash>8dd99a308da0b71d9ee2485cce7649ba</Hash>
 </Codenesium>*/

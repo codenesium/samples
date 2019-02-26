@@ -264,6 +264,7 @@ export default class SelfReferenceSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -322,5 +323,5 @@ export const WrappedSelfReferenceSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8b8ae46adaef50f1f9f8166e4d84d9d3</Hash>
+    <Hash>d673a12a33ae1de60a3398d092455fe8</Hash>
 </Codenesium>*/

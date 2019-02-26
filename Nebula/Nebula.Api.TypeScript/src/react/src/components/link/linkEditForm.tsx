@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkMapper from './linkMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { MachineSelectComponent } from '../shared/machineSelect';
 import { ChainSelectComponent } from '../shared/chainSelect';
 import { LinkStatusSelectComponent } from '../shared/linkStatusSelect';
@@ -135,6 +136,19 @@ class LinkEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -286,5 +300,5 @@ export const WrappedLinkEditComponent = Form.create({ name: 'Link Edit' })(
 
 
 /*<Codenesium>
-    <Hash>f80a4717fdf5d1cf9b6f75a3f320e7aa</Hash>
+    <Hash>efcbe9d69265fbfb0176e3bcc3167560</Hash>
 </Codenesium>*/

@@ -121,6 +121,7 @@ export class PenTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -163,5 +164,5 @@ export class PenTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f5d75eb3547b4f58badaad77f9d78870</Hash>
+    <Hash>bc605cd1e98b4f09c203dfe897a976ee</Hash>
 </Codenesium>*/

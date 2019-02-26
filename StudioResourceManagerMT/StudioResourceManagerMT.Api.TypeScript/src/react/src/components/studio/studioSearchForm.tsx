@@ -265,6 +265,7 @@ export default class StudioSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -323,5 +324,5 @@ export const WrappedStudioSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6de50bb2eeae7a81cbe54980de2edf60</Hash>
+    <Hash>e2fa7e12a05d3d5fa48fc9b60e7dfc56</Hash>
 </Codenesium>*/

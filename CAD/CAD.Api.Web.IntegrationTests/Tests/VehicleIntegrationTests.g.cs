@@ -174,7 +174,7 @@ namespace CADNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyVehicleOfficersByVehicleIdFound()
+		public virtual async void TestForeignKeyVehicleCapabilitiesByVehicleIdFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -182,13 +182,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			List<ApiVehicleOfficerClientResponseModel> response = await client.VehicleOfficersByVehicleId(1);
+			List<ApiVehicleCapabilitiesClientResponseModel> response = await client.VehicleCapabilitiesByVehicleId(1);
 
 			response.Should().NotBeEmpty();
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyVehicleOfficersByVehicleIdNotFound()
+		public virtual async void TestForeignKeyVehicleCapabilitiesByVehicleIdNotFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -196,35 +196,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			List<ApiVehicleOfficerClientResponseModel> response = await client.VehicleOfficersByVehicleId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyVehicleRefCapabilitiesByVehicleIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiVehicleRefCapabilityClientResponseModel> response = await client.VehicleRefCapabilitiesByVehicleId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyVehicleRefCapabilitiesByVehicleIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiVehicleRefCapabilityClientResponseModel> response = await client.VehicleRefCapabilitiesByVehicleId(default(int));
+			List<ApiVehicleCapabilitiesClientResponseModel> response = await client.VehicleCapabilitiesByVehicleId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -252,5 +224,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3d8cbfb8ae73798a3c96176779916bbc</Hash>
+    <Hash>e161fa01b0f171703e83d7595fb6a0a1</Hash>
 </Codenesium>*/

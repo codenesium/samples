@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import HandlerPipelineStepMapper from './handlerPipelineStepMapper';
@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { HandlerSelectComponent } from '../shared/handlerSelect';
 import { PipelineStepSelectComponent } from '../shared/pipelineStepSelect';
 interface HandlerPipelineStepEditComponentProps {
@@ -137,6 +138,19 @@ class HandlerPipelineStepEditComponent extends React.Component<
         },
         error => {
           console.log(error);
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -205,5 +219,5 @@ export const WrappedHandlerPipelineStepEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>54d64ea4ca421aa1ac8c69ccecc38626</Hash>
+    <Hash>f699684d7eb930b4479f982855583ede</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse, ActionResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceMapper from './deviceMapper';
@@ -33,7 +33,6 @@ interface DeviceCreateComponentState {
   errorMessage: string;
   submitted: boolean;
 }
-
 
 class DeviceCreateComponent extends React.Component<
   DeviceCreateComponentProps,
@@ -87,18 +86,20 @@ class DeviceCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
-          let errorResponse = error.response.data as ActionResponse; 
+          if (error.response.data) {
+            let errorResponse = error.response.data as ActionResponse;
 
-          errorResponse.validationErrors.forEach(x =>
-          {
-            this.props.form.setFields({
-             [ToLowerCaseFirstLetter(x.propertyName)]: {
-              value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-              errors: [new Error(x.errorMessage)]
-            },
-            })
-          });
-
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
           this.setState({
             ...this.state,
             submitted: true,
@@ -192,5 +193,5 @@ export const WrappedDeviceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>61b1ac4f97fda1e0e1835abc08f62618</Hash>
+    <Hash>b2c4a9897f42eca2a014f1db9cc18510</Hash>
 </Codenesium>*/

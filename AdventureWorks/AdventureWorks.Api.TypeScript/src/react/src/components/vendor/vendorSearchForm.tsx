@@ -282,6 +282,7 @@ export default class VendorSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -340,5 +341,5 @@ export const WrappedVendorSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5ca6be55f9ece1020e050428d00308ff</Hash>
+    <Hash>63ba03054757172cf94e290f012390ca</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
 import CustomerViewModel from './customerViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { StoreSelectComponent } from '../shared/storeSelect'
 	import { SalesTerritorySelectComponent } from '../shared/salesTerritorySelect'
 	
@@ -72,6 +73,20 @@ class CustomerCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -181,5 +196,5 @@ class CustomerCreateComponent extends React.Component<
 export const WrappedCustomerCreateComponent = Form.create({ name: 'Customer Create' })(CustomerCreateComponent);
 
 /*<Codenesium>
-    <Hash>65facd01d12708f0565b9944ed2ef78f</Hash>
+    <Hash>3b4212cf7bdd335f0301a4d852be0084</Hash>
 </Codenesium>*/

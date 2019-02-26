@@ -8,7 +8,6 @@ export class Constants {
 export class ClientRoutes {
   static readonly Addresses = '/addresses';
   static readonly Calls = '/calls';
-  static readonly CallAssignments = '/callassignments';
   static readonly CallDispositions = '/calldispositions';
   static readonly CallPersons = '/callpersons';
   static readonly CallStatus = '/callstatus';
@@ -16,22 +15,17 @@ export class ClientRoutes {
   static readonly Notes = '/notes';
   static readonly Officers = '/officers';
   static readonly OfficerCapabilities = '/officercapabilities';
-  static readonly OfficerRefCapabilities = '/officerrefcapabilities';
   static readonly People = '/people';
   static readonly PersonTypes = '/persontypes';
   static readonly Units = '/units';
   static readonly UnitDispositions = '/unitdispositions';
-  static readonly UnitOfficers = '/unitofficers';
   static readonly Vehicles = '/vehicles';
   static readonly VehicleCapabilities = '/vehiclecapabilities';
-  static readonly VehicleOfficers = '/vehicleofficers';
-  static readonly VehicleRefCapabilities = '/vehiclerefcapabilities';
 }
 
 export class ApiRoutes {
   static readonly Addresses = 'addresses';
   static readonly Calls = 'calls';
-  static readonly CallAssignments = 'callassignments';
   static readonly CallDispositions = 'calldispositions';
   static readonly CallPersons = 'callpersons';
   static readonly CallStatus = 'callstatus';
@@ -39,19 +33,15 @@ export class ApiRoutes {
   static readonly Notes = 'notes';
   static readonly Officers = 'officers';
   static readonly OfficerCapabilities = 'officercapabilities';
-  static readonly OfficerRefCapabilities = 'officerrefcapabilities';
   static readonly People = 'people';
   static readonly PersonTypes = 'persontypes';
   static readonly Units = 'units';
   static readonly UnitDispositions = 'unitdispositions';
-  static readonly UnitOfficers = 'unitofficers';
   static readonly Vehicles = 'vehicles';
   static readonly VehicleCapabilities = 'vehiclecapabilities';
-  static readonly VehicleOfficers = 'vehicleofficers';
-  static readonly VehicleRefCapabilities = 'vehiclerefcapabilities';
 }
 
 
 /*<Codenesium>
-    <Hash>e1f8dae977242a30f2d22106ab0e2244</Hash>
+    <Hash>00e454cae5083af2045bfd27f48a767b</Hash>
 </Codenesium>*/

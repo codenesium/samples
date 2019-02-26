@@ -44,6 +44,10 @@ export class BillOfMaterialTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -227,6 +231,7 @@ export class BillOfMaterialTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -269,5 +274,5 @@ export class BillOfMaterialTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>05e9dd1f4a8a1fbe0693c1733a49c747</Hash>
+    <Hash>60d7a35ac8204b775911dabe3f9e4912</Hash>
 </Codenesium>*/

@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
 import axios from 'axios';
-import { CreateResponse } from '../../api/apiObjects';
+import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StateProvinceMapper from './stateProvinceMapper';
 import StateProvinceViewModel from './stateProvinceViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 import { CountryRegionSelectComponent } from '../shared/countryRegionSelect'
 	
 interface StateProvinceCreateComponentProps {
@@ -71,6 +72,20 @@ class StateProvinceCreateComponent extends React.Component<
         },
         error => {
           console.log(error);
+          if(error.response.data)
+          {
+			  let errorResponse = error.response.data as ActionResponse; 
+
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
           this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
@@ -196,5 +211,5 @@ class StateProvinceCreateComponent extends React.Component<
 export const WrappedStateProvinceCreateComponent = Form.create({ name: 'StateProvince Create' })(StateProvinceCreateComponent);
 
 /*<Codenesium>
-    <Hash>80a82b3ce6edd1b6dbd5e80e886eff98</Hash>
+    <Hash>180b742e46947584ab8985fe6afff730</Hash>
 </Codenesium>*/

@@ -6,8 +6,11 @@ import CurrencyMapper from './currencyMapper';
 import CurrencyViewModel from './currencyViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { CountryRegionCurrencyTableComponent } from '../shared/countryRegionCurrencyTable';
-import { CurrencyRateTableComponent } from '../shared/currencyRateTable';
+import {CountryRegionCurrencyTableComponent} from '../shared/countryRegionCurrencyTable'
+	import {CurrencyRateTableComponent} from '../shared/currencyRateTable'
+	
+
+
 
 interface CurrencyDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +27,21 @@ interface CurrencyDetailComponentState {
 }
 
 class CurrencyDetailComponent extends React.Component<
-  CurrencyDetailComponentProps,
-  CurrencyDetailComponentState
+CurrencyDetailComponentProps,
+CurrencyDetailComponentState
 > {
   state = {
     model: new CurrencyViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Currencies + '/edit/' + this.state.model!.currencyCode
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Currencies + '/edit/' + this.state.model!.currencyCode);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,72 +87,61 @@ class CurrencyDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>CurrencyCode</h3>
-              <p>{String(this.state.model!.currencyCode)}</p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>CurrencyCode</h3>
+							<p>{String(this.state.model!.currencyCode)}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>CountryRegionCurrencies</h3>
-            <CountryRegionCurrencyTableComponent
-              countryRegionCode={this.state.model!.countryRegionCode}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Currencies +
-                '/' +
-                this.state.model!.currencyCode +
-                '/' +
-                ApiRoutes.CountryRegionCurrencies
-              }
-            />
-          </div>
-          <div>
+            <CountryRegionCurrencyTableComponent 
+			countryRegionCode={this.state.model!.countryRegionCode} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Currencies + '/' + this.state.model!.currencyCode + '/' + ApiRoutes.CountryRegionCurrencies}
+			/>
+         </div>
+			 <div>
             <h3>CurrencyRates</h3>
-            <CurrencyRateTableComponent
-              currencyRateID={this.state.model!.currencyRateID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Currencies +
-                '/' +
-                this.state.model!.currencyCode +
-                '/' +
-                ApiRoutes.CurrencyRates
-              }
-            />
-          </div>
+            <CurrencyRateTableComponent 
+			currencyRateID={this.state.model!.currencyRateID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Currencies + '/' + this.state.model!.currencyCode + '/' + ApiRoutes.CurrencyRates}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -160,11 +150,10 @@ class CurrencyDetailComponent extends React.Component<
   }
 }
 
-export const WrappedCurrencyDetailComponent = Form.create({
-  name: 'Currency Detail',
-})(CurrencyDetailComponent);
-
+export const WrappedCurrencyDetailComponent = Form.create({ name: 'Currency Detail' })(
+  CurrencyDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>926a583a5ef42d16aa9c81686755cbd3</Hash>
+    <Hash>542e36528f310015a76af0d89df4c898</Hash>
 </Codenesium>*/

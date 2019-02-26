@@ -2203,6 +2203,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Admin",
             "DefaultConstraints": [],
@@ -2637,6 +2639,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Event",
             "DefaultConstraints": [],
@@ -2807,6 +2811,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "EventStatus",
             "DefaultConstraints": [],
@@ -3054,6 +3060,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": false,
             "Name": "EventStudent",
             "DefaultConstraints": [],
@@ -3301,6 +3309,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": false,
             "Name": "EventTeacher",
             "DefaultConstraints": [],
@@ -3603,6 +3613,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Family",
             "DefaultConstraints": [],
@@ -3905,6 +3917,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Rate",
             "DefaultConstraints": [],
@@ -4108,6 +4122,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Space",
             "DefaultConstraints": [],
@@ -4278,6 +4294,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "SpaceFeature",
             "DefaultConstraints": [],
@@ -4525,6 +4543,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": false,
             "Name": "SpaceSpaceFeature",
             "DefaultConstraints": [],
@@ -5058,6 +5078,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Student",
             "DefaultConstraints": [],
@@ -5426,6 +5448,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Studio",
             "DefaultConstraints": [],
@@ -5794,6 +5818,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "Teacher",
             "DefaultConstraints": [],
@@ -5964,6 +5990,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "TeacherSkill",
             "DefaultConstraints": [],
@@ -6211,6 +6239,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": false,
             "Name": "TeacherTeacherSkill",
             "DefaultConstraints": [],
@@ -6414,6 +6444,8 @@
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
             "ForeignKeyDisplayColumn": "",
+            "AppViewLabel": "",
+            "AppViewIcon": "",
             "GenerationEnabled": true,
             "Name": "User",
             "DefaultConstraints": [],
@@ -6742,7 +6774,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "409",
@@ -6767,7 +6801,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": ""
+        "ForeignKeyDisplayColumn": "",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "410",
@@ -6792,7 +6828,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "411",
@@ -6817,7 +6855,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.studentId"
+        "ForeignKeyDisplayColumn": "this.studentId",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "412",
@@ -6842,7 +6882,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.eventId"
+        "ForeignKeyDisplayColumn": "this.eventId",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "413",
@@ -6867,7 +6909,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.primaryContactLastName"
+        "ForeignKeyDisplayColumn": "this.primaryContactLastName",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "414",
@@ -6892,7 +6936,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id"
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "415",
@@ -6917,7 +6963,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "416",
@@ -6942,7 +6990,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "417",
@@ -6967,7 +7017,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.spaceFeatureId"
+        "ForeignKeyDisplayColumn": "this.spaceFeatureId",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "418",
@@ -6992,7 +7044,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "419",
@@ -7017,7 +7071,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "420",
@@ -7042,7 +7098,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.teacherId"
+        "ForeignKeyDisplayColumn": "this.teacherId",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "421",
@@ -7067,7 +7125,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.username"
+        "ForeignKeyDisplayColumn": "this.username",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "422",
@@ -7092,7 +7152,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.lastName"
+        "ForeignKeyDisplayColumn": "this.lastName",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "423",
@@ -7117,7 +7179,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.lastName"
+        "ForeignKeyDisplayColumn": "this.lastName",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "424",
@@ -7142,7 +7206,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.lastName"
+        "ForeignKeyDisplayColumn": "this.lastName",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       },
       {
         "$id": "425",
@@ -7167,7 +7233,9 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
+        "ForeignKeyDisplayColumn": "this.name",
+        "AppViewLabel": "",
+        "AppViewIcon": ""
       }
     ],
     "ColumnParameterSettings": [

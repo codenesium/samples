@@ -6,11 +6,11 @@ import PostLinkMapper from '../postLink/postLinkMapper';
 import PostLinkViewModel from '../postLink/postLinkViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface PostLinkTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,40 +20,42 @@ interface PostLinkTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PostLinkViewModel>;
+  filteredRecords: Array<PostLinkViewModel>;
 }
 
-export class  PostLinkTableComponent extends React.Component<
-PostLinkTableComponentProps,
-PostLinkTableComponentState
+export class PostLinkTableComponent extends React.Component<
+  PostLinkTableComponentProps,
+  PostLinkTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: PostLinkViewModel) {
-  this.props.history.push(ClientRoutes.PostLinks + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: PostLinkViewModel) {
+    this.props.history.push(ClientRoutes.PostLinks + '/edit/' + row.id);
+  }
 
-handleDetailClick(e:any, row: PostLinkViewModel) {
-  this.props.history.push(ClientRoutes.PostLinks + '/' + row.id);
-}
+  handleDetailClick(e: any, row: PostLinkViewModel) {
+    this.props.history.push(ClientRoutes.PostLinks + '/' + row.id);
+  }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.PostLinkClientResponseModel>;
@@ -61,12 +63,11 @@ handleDetailClick(e:any, row: PostLinkViewModel) {
           console.log(response);
 
           let mapper = new PostLinkMapper();
-          
-          let postLinks:Array<PostLinkViewModel> = [];
 
-          response.forEach(x =>
-          {
-              postLinks.push(mapper.mapApiResponseToViewModel(x));
+          let postLinks: Array<PostLinkViewModel> = [];
+
+          response.forEach(x => {
+            postLinks.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -91,59 +92,64 @@ handleDetailClick(e:any, row: PostLinkViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'PostLinks',
-                    columns: [
-					  {
-                      Header: 'CreationDate',
-                      accessor: 'creationDate',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'PostLinks',
+                columns: [
+                  {
+                    Header: 'CreationDate',
+                    accessor: 'creationDate',
+                    Cell: props => {
                       return <span>{String(props.original.creationDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'LinkTypeId',
-                      accessor: 'linkTypeId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.linkTypeId)}</span>;
-                      }           
-                    },  {
-                      Header: 'PostId',
-                      accessor: 'postId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.postId)}</span>;
-                      }           
-                    },  {
-                      Header: 'RelatedPostId',
-                      accessor: 'relatedPostId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.relatedPostId)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'LinkTypeId',
+                    accessor: 'linkTypeId',
+                    Cell: props => {
+                      return <span>{String(props.original.linkTypeId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PostId',
+                    accessor: 'postId',
+                    Cell: props => {
+                      return <span>{String(props.original.postId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'RelatedPostId',
+                    accessor: 'relatedPostId',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.relatedPostId)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PostLinkViewModel
@@ -154,8 +160,8 @@ handleDetailClick(e:any, row: PostLinkViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PostLinkViewModel
@@ -164,11 +170,14 @@ handleDetailClick(e:any, row: PostLinkViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -176,6 +185,7 @@ handleDetailClick(e:any, row: PostLinkViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>47595fdd1141e3b2dec2331f1e6157f4</Hash>
+    <Hash>e8ce7744866b16e2e1adb00834ddf2a8</Hash>
 </Codenesium>*/

@@ -202,6 +202,7 @@ export default class ShoppingCartItemSearchComponent extends React.Component<Sho
                     },
                     {
                         Header: 'Actions',
+					    minWidth:150,
                         Cell: row => (<div>
 					    <Button
                           type="primary" 
@@ -254,5 +255,5 @@ export default class ShoppingCartItemSearchComponent extends React.Component<Sho
 export const WrappedShoppingCartItemSearchComponent = Form.create({ name: 'ShoppingCartItem Search' })(ShoppingCartItemSearchComponent);
 
 /*<Codenesium>
-    <Hash>54b8f96d9632f59a4eb1c5a2287ca844</Hash>
+    <Hash>bc9ee6262dea0a3ae7fefdee92576de3</Hash>
 </Codenesium>*/

@@ -44,6 +44,10 @@ export class AddressTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -145,6 +149,7 @@ export class AddressTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -187,5 +192,5 @@ export class AddressTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ca6cc4bb2d18b2313e1be3eca35b6176</Hash>
+    <Hash>1144feedb72d38e759455930122b8a71</Hash>
 </Codenesium>*/

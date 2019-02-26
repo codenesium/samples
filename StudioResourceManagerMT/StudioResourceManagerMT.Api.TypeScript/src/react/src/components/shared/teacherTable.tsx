@@ -44,6 +44,10 @@ export class TeacherTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -159,6 +163,7 @@ export class TeacherTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -201,5 +206,5 @@ export class TeacherTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>47ee35ff42297faa9353a8f6944c6cf2</Hash>
+    <Hash>369c45a49d15b8cd0d580e71b7d9a964</Hash>
 </Codenesium>*/

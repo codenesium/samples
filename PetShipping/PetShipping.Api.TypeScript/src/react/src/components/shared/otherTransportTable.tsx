@@ -44,6 +44,10 @@ export class OtherTransportTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -158,6 +162,7 @@ export class OtherTransportTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -200,5 +205,5 @@ export class OtherTransportTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>40a7e23d0ef013c67ba1788f6c26433c</Hash>
+    <Hash>50c1d16810f0779c32291df2066b317e</Hash>
 </Codenesium>*/

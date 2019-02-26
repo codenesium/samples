@@ -87,20 +87,31 @@ namespace CADNS.Api.DataAccess
 			}
 		}
 
-		// Foreign key reference to this table UnitOfficer via unitId.
-		public async virtual Task<List<UnitOfficer>> UnitOfficersByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Unit.
+		public async virtual Task<List<Unit>> ByCallId(int callId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<UnitOfficer>()
-			       .Include(x => x.UnitIdNavigation)
-			       .Where(x => x.UnitId == unitId).AsQueryable().Skip(offset).Take(limit).ToListAsync<UnitOfficer>();
+			return await (from refTable in this.Context.CallAssignments
+			              join units in this.Context.Units on
+			              refTable.UnitId equals units.Id
+			              where refTable.CallId == callId
+			              select units).Skip(offset).Take(limit).ToListAsync();
 		}
 
-		// Foreign key reference to this table CallAssignment via unitId.
-		public async virtual Task<List<CallAssignment>> CallAssignmentsByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Unit.
+		public async virtual Task<CallAssignment> CreateCallAssignment(CallAssignment item)
 		{
-			return await this.Context.Set<CallAssignment>()
-			       .Include(x => x.UnitIdNavigation)
-			       .Where(x => x.UnitId == unitId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CallAssignment>();
+			this.Context.Set<CallAssignment>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Unit.
+		public async virtual Task DeleteCallAssignment(CallAssignment item)
+		{
+			this.Context.Set<CallAssignment>().Remove(item);
+			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<Unit>> Where(
@@ -129,5 +140,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8cfc26281e151fa4cd335808d9d26e3</Hash>
+    <Hash>f4775f9b81078947bfbb194ac716b882</Hash>
 </Codenesium>*/

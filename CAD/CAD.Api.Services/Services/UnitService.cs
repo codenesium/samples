@@ -12,21 +12,17 @@ namespace CADNS.Api.Services
 			IMediator mediator,
 			IUnitRepository unitRepository,
 			IApiUnitServerRequestModelValidator unitModelValidator,
-			IDALUnitMapper dalUnitMapper,
-			IDALUnitOfficerMapper dalUnitOfficerMapper,
-			IDALCallAssignmentMapper dalCallAssignmentMapper)
+			IDALUnitMapper dalUnitMapper)
 			: base(logger,
 			       mediator,
 			       unitRepository,
 			       unitModelValidator,
-			       dalUnitMapper,
-			       dalUnitOfficerMapper,
-			       dalCallAssignmentMapper)
+			       dalUnitMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7817eff6cffac883a83439d3d6a1fdfb</Hash>
+    <Hash>436564eb1c4796124616b4e5993741fe</Hash>
 </Codenesium>*/

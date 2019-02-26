@@ -44,6 +44,10 @@ export class TestAllFieldTypeTableComponent extends React.Component<
   }
 
   componentDidMount() {
+    this.loadRecords();
+  }
+
+  loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -373,6 +377,7 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                   },
                   {
                     Header: 'Actions',
+                    minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
@@ -415,5 +420,5 @@ export class TestAllFieldTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1a243fdc221de2cc988940a0c587bd40</Hash>
+    <Hash>19102c91e8795c60592979052734bd45</Hash>
 </Codenesium>*/
