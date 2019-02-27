@@ -147,9 +147,13 @@ class BreedCreateComponent extends React.Component<
           <Form.Item>
             <label htmlFor="speciesId">speciesId</label>
             <br />
-            {getFieldDecorator('speciesId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'speciesId'} />)}
+            <SpeciesSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Species}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="speciesId"
+              required={true}
+              selectedValue={this.state.model!.speciesId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -172,5 +176,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>923d51dc0a59a7cb733aadd25f99a9ef</Hash>
+    <Hash>a88d8939e4b160eb901fe2c2b259a3d5</Hash>
 </Codenesium>*/

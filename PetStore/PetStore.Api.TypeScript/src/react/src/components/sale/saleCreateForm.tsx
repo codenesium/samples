@@ -167,17 +167,25 @@ class SaleCreateComponent extends React.Component<
           <Form.Item>
             <label htmlFor="paymentTypeId">paymentTypeId</label>
             <br />
-            {getFieldDecorator('paymentTypeId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'paymentTypeId'} />)}
+            <PaymentTypeSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.PaymentTypes}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="paymentTypeId"
+              required={true}
+              selectedValue={this.state.model!.paymentTypeId}
+            />
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="petId">petId</label>
             <br />
-            {getFieldDecorator('petId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'petId'} />)}
+            <PetSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Pets}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="petId"
+              required={true}
+              selectedValue={this.state.model!.petId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -211,5 +219,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>10fc07f2706fc59a64a640f2a423c190</Hash>
+    <Hash>c01e506fc7e49a581c6b4ae9043f34e7</Hash>
 </Codenesium>*/

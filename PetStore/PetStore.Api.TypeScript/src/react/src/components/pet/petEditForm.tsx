@@ -189,9 +189,13 @@ class PetEditComponent extends React.Component<
           <Form.Item>
             <label htmlFor="breedId">breedId</label>
             <br />
-            {getFieldDecorator('breedId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'breedId'} />)}
+            <BreedSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Breeds}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="breedId"
+              required={true}
+              selectedValue={this.state.model!.breedId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -205,9 +209,13 @@ class PetEditComponent extends React.Component<
           <Form.Item>
             <label htmlFor="penId">penId</label>
             <br />
-            {getFieldDecorator('penId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'penId'} />)}
+            <PenSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Pens}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="penId"
+              required={true}
+              selectedValue={this.state.model!.penId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -238,5 +246,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>4d27bad8e29dbc340cc9a3c0ef92e0c3</Hash>
+    <Hash>94c63205ef71a0610065a4fe71349085</Hash>
 </Codenesium>*/
