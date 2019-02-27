@@ -7,9 +7,6 @@ import FollowerViewModel from './followerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface FollowerDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface FollowerDetailComponentState {
 }
 
 class FollowerDetailComponent extends React.Component<
-FollowerDetailComponentProps,
-FollowerDetailComponentState
+  FollowerDetailComponentProps,
+  FollowerDetailComponentState
 > {
   state = {
     model: new FollowerViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Followers + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Followers + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,55 +84,60 @@ FollowerDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>blocked</h3>
-							<p>{String(this.state.model!.blocked)}</p>
-						 </div>
-					   						 <div>
-							<h3>date_followed</h3>
-							<p>{String(this.state.model!.dateFollowed)}</p>
-						 </div>
-					   						 <div>
-							<h3>follow_request_status</h3>
-							<p>{String(this.state.model!.followRequestStatu)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>followed_user_id</h3>
-							<p>{String(this.state.model!.followedUserIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>following_user_id</h3>
-							<p>{String(this.state.model!.followingUserIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>muted</h3>
-							<p>{String(this.state.model!.muted)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>blocked</h3>
+              <p>{String(this.state.model!.blocked)}</p>
+            </div>
+            <div>
+              <h3>date_followed</h3>
+              <p>{String(this.state.model!.dateFollowed)}</p>
+            </div>
+            <div>
+              <h3>follow_request_status</h3>
+              <p>{String(this.state.model!.followRequestStatu)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>followed_user_id</h3>
+              <p>
+                {String(
+                  this.state.model!.followedUserIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>following_user_id</h3>
+              <p>
+                {String(
+                  this.state.model!.followingUserIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>muted</h3>
+              <p>{String(this.state.model!.muted)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -142,10 +146,11 @@ FollowerDetailComponentState
   }
 }
 
-export const WrappedFollowerDetailComponent = Form.create({ name: 'Follower Detail' })(
-  FollowerDetailComponent
-);
+export const WrappedFollowerDetailComponent = Form.create({
+  name: 'Follower Detail',
+})(FollowerDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b90cad318e32c0701067a3ccda58b700</Hash>
+    <Hash>6a5c913c56fec2f19f6d0602b0f3734c</Hash>
 </Codenesium>*/

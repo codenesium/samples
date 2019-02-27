@@ -6,10 +6,7 @@ import MessageMapper from './messageMapper';
 import MessageViewModel from './messageViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {MessengerTableComponent} from '../shared/messengerTable'
-	
-
-
+import { MessengerTableComponent } from '../shared/messengerTable';
 
 interface MessageDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface MessageDetailComponentState {
 }
 
 class MessageDetailComponent extends React.Component<
-MessageDetailComponentProps,
-MessageDetailComponentState
+  MessageDetailComponentProps,
+  MessageDetailComponentState
 > {
   state = {
     model: new MessageViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Messages + '/edit/' + this.state.model!.messageId);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Messages + '/edit/' + this.state.model!.messageId
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,48 +85,54 @@ MessageDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>content</h3>
-							<p>{String(this.state.model!.content)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>sender_user_id</h3>
-							<p>{String(this.state.model!.senderUserIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>content</h3>
+              <p>{String(this.state.model!.content)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>sender_user_id</h3>
+              <p>
+                {String(this.state.model!.senderUserIdNavigation!.toDisplay())}
+              </p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Messengers</h3>
-            <MessengerTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Messages + '/' + this.state.model!.messageId + '/' + ApiRoutes.Messengers}
-			/>
-         </div>
-	
-
+            <MessengerTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Messages +
+                '/' +
+                this.state.model!.messageId +
+                '/' +
+                ApiRoutes.Messengers
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,10 +141,11 @@ MessageDetailComponentState
   }
 }
 
-export const WrappedMessageDetailComponent = Form.create({ name: 'Message Detail' })(
-  MessageDetailComponent
-);
+export const WrappedMessageDetailComponent = Form.create({
+  name: 'Message Detail',
+})(MessageDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>58406f6710046bb7c9e22dc52773e153</Hash>
+    <Hash>ad3cf47954f0dee87704adcd290a588f</Hash>
 </Codenesium>*/

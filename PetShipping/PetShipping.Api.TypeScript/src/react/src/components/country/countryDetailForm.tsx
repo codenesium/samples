@@ -6,11 +6,8 @@ import CountryMapper from './countryMapper';
 import CountryViewModel from './countryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {CountryRequirementTableComponent} from '../shared/countryRequirementTable'
-	import {DestinationTableComponent} from '../shared/destinationTable'
-	
-
-
+import { CountryRequirementTableComponent } from '../shared/countryRequirementTable';
+import { DestinationTableComponent } from '../shared/destinationTable';
 
 interface CountryDetailComponentProps {
   form: WrappedFormUtils;
@@ -27,21 +24,23 @@ interface CountryDetailComponentState {
 }
 
 class CountryDetailComponent extends React.Component<
-CountryDetailComponentProps,
-CountryDetailComponentState
+  CountryDetailComponentProps,
+  CountryDetailComponentState
 > {
   state = {
     model: new CountryViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Countries + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Countries + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,53 +86,64 @@ CountryDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>CountryRequirements</h3>
-            <CountryRequirementTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries + '/' + this.state.model!.id + '/' + ApiRoutes.CountryRequirements}
-			/>
-         </div>
-			 <div>
+            <CountryRequirementTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Countries +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.CountryRequirements
+              }
+            />
+          </div>
+          <div>
             <h3>Destinations</h3>
-            <DestinationTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries + '/' + this.state.model!.id + '/' + ApiRoutes.Destinations}
-			/>
-         </div>
-	
-
+            <DestinationTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Countries +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Destinations
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -142,10 +152,11 @@ CountryDetailComponentState
   }
 }
 
-export const WrappedCountryDetailComponent = Form.create({ name: 'Country Detail' })(
-  CountryDetailComponent
-);
+export const WrappedCountryDetailComponent = Form.create({
+  name: 'Country Detail',
+})(CountryDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>053c3a0c9d697ff82833d6f3f6888d4d</Hash>
+    <Hash>e633ba8cbef35f2919e273f4d4d7b8f3</Hash>
 </Codenesium>*/

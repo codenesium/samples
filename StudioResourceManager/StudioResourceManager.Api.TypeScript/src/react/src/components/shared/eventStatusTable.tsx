@@ -6,11 +6,11 @@ import EventStatusMapper from '../eventStatus/eventStatusMapper';
 import EventStatusViewModel from '../eventStatus/eventStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface EventStatusTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface EventStatusTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<EventStatusViewModel>;
+  filteredRecords: Array<EventStatusViewModel>;
 }
 
-export class  EventStatusTableComponent extends React.Component<
-EventStatusTableComponentProps,
-EventStatusTableComponentState
+export class EventStatusTableComponent extends React.Component<
+  EventStatusTableComponentProps,
+  EventStatusTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: EventStatusViewModel) {
-  this.props.history.push(ClientRoutes.EventStatus + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: EventStatusViewModel) {
+    this.props.history.push(ClientRoutes.EventStatus + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: EventStatusViewModel) {
-   this.props.history.push(ClientRoutes.EventStatus + '/' + row.id);
- }
+  handleDetailClick(e: any, row: EventStatusViewModel) {
+    this.props.history.push(ClientRoutes.EventStatus + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.EventStatusClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: EventStatusViewModel) {
           console.log(response);
 
           let mapper = new EventStatusMapper();
-          
-          let eventStatus:Array<EventStatusViewModel> = [];
 
-          response.forEach(x =>
-          {
-              eventStatus.push(mapper.mapApiResponseToViewModel(x));
+          let eventStatus: Array<EventStatusViewModel> = [];
+
+          response.forEach(x => {
+            eventStatus.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,42 +92,41 @@ handleEditClick(e:any, row: EventStatusViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'EventStatus',
-                    columns: [
-					  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'EventStatus',
+                columns: [
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as EventStatusViewModel
@@ -141,8 +137,8 @@ handleEditClick(e:any, row: EventStatusViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as EventStatusViewModel
@@ -151,11 +147,14 @@ handleEditClick(e:any, row: EventStatusViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -163,6 +162,7 @@ handleEditClick(e:any, row: EventStatusViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>f7f47fc77452ca7208d2259954fa9de3</Hash>
+    <Hash>16485c4a23e9c00547e1c9ea518bbe44</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import UnitMapper from '../unit/unitMapper';
 import UnitViewModel from '../unit/unitViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface UnitTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface UnitTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<UnitViewModel>;
+  filteredRecords : Array<UnitViewModel>;
 }
 
-export class UnitTableComponent extends React.Component<
-  UnitTableComponentProps,
-  UnitTableComponentState
+export class  UnitTableComponent extends React.Component<
+UnitTableComponentProps,
+UnitTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: UnitViewModel) {
-    this.props.history.push(ClientRoutes.Units + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: UnitViewModel) {
+  this.props.history.push(ClientRoutes.Units + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: UnitViewModel) {
-    this.props.history.push(ClientRoutes.Units + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: UnitViewModel) {
+   this.props.history.push(ClientRoutes.Units + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.UnitClientResponseModel>;
@@ -63,11 +65,12 @@ export class UnitTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new UnitMapper();
+          
+          let units:Array<UnitViewModel> = [];
 
-          let units: Array<UnitViewModel> = [];
-
-          response.forEach(x => {
-            units.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              units.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,41 +95,42 @@ export class UnitTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Units',
-                columns: [
-                  {
-                    Header: 'CallSign',
-                    accessor: 'callSign',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Units',
+                    columns: [
+					  {
+                      Header: 'CallSign',
+                      accessor: 'callSign',
+                      Cell: (props) => {
                       return <span>{String(props.original.callSign)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as UnitViewModel
@@ -137,8 +141,8 @@ export class UnitTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as UnitViewModel
@@ -147,14 +151,11 @@ export class UnitTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -162,7 +163,6 @@ export class UnitTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>bcf5852cd903449af20bd8a6ec3b8df0</Hash>
+    <Hash>beac45d402e643e7b3fe4cb40d8ce205</Hash>
 </Codenesium>*/

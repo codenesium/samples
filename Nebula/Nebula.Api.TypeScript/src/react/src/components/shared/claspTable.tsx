@@ -6,11 +6,11 @@ import ClaspMapper from '../clasp/claspMapper';
 import ClaspViewModel from '../clasp/claspViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface ClaspTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface ClaspTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<ClaspViewModel>;
+  filteredRecords: Array<ClaspViewModel>;
 }
 
-export class  ClaspTableComponent extends React.Component<
-ClaspTableComponentProps,
-ClaspTableComponentState
+export class ClaspTableComponent extends React.Component<
+  ClaspTableComponentProps,
+  ClaspTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: ClaspViewModel) {
-  this.props.history.push(ClientRoutes.Clasps + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: ClaspViewModel) {
+    this.props.history.push(ClientRoutes.Clasps + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: ClaspViewModel) {
-   this.props.history.push(ClientRoutes.Clasps + '/' + row.id);
- }
+  handleDetailClick(e: any, row: ClaspViewModel) {
+    this.props.history.push(ClientRoutes.Clasps + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.ClaspClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: ClaspViewModel) {
           console.log(response);
 
           let mapper = new ClaspMapper();
-          
-          let clasps:Array<ClaspViewModel> = [];
 
-          response.forEach(x =>
-          {
-              clasps.push(mapper.mapApiResponseToViewModel(x));
+          let clasps: Array<ClaspViewModel> = [];
+
+          response.forEach(x => {
+            clasps.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,62 +92,87 @@ handleEditClick(e:any, row: ClaspViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Clasps',
-                    columns: [
-					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Clasps',
+                columns: [
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
                       return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'NextChainId',
-                      accessor: 'nextChainId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Chains + '/' + props.original.nextChainId); }}>
+                    },
+                  },
+                  {
+                    Header: 'NextChainId',
+                    accessor: 'nextChainId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Chains +
+                                '/' +
+                                props.original.nextChainId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.nextChainIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'PreviousChainId',
-                      accessor: 'previousChainId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Chains + '/' + props.original.previousChainId); }}>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'PreviousChainId',
+                    accessor: 'previousChainId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Chains +
+                                '/' +
+                                props.original.previousChainId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.previousChainIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as ClaspViewModel
@@ -161,8 +183,8 @@ handleEditClick(e:any, row: ClaspViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as ClaspViewModel
@@ -171,11 +193,14 @@ handleEditClick(e:any, row: ClaspViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -183,6 +208,7 @@ handleEditClick(e:any, row: ClaspViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>cecf2481be2e5b1d59e909a9d5d28fd0</Hash>
+    <Hash>321c70d420947f962dfe00651f4f43c7</Hash>
 </Codenesium>*/

@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import HandlerPipelineStepMapper from '../handlerPipelineStep/handlerPipelineStepMapper';
 import HandlerPipelineStepViewModel from '../handlerPipelineStep/handlerPipelineStepViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface HandlerPipelineStepSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface HandlerPipelineStepSelectComponentState {
@@ -19,44 +23,46 @@ interface HandlerPipelineStepSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<HandlerPipelineStepViewModel>;
+  filteredRecords : Array<HandlerPipelineStepViewModel>;
 }
 
-export class HandlerPipelineStepSelectComponent extends React.Component<
-  HandlerPipelineStepSelectComponentProps,
-  HandlerPipelineStepSelectComponentState
+export class  HandlerPipelineStepSelectComponent extends React.Component<
+HandlerPipelineStepSelectComponentProps,
+HandlerPipelineStepSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.HandlerPipelineStepClientResponseModel
-          >;
+          let response = resp.data as Array<Api.HandlerPipelineStepClientResponseModel>;
 
           console.log(response);
 
           let mapper = new HandlerPipelineStepMapper();
+          
+          let devices:Array<HandlerPipelineStepViewModel> = [];
 
-          let devices: Array<HandlerPipelineStepViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -81,41 +87,46 @@ export class HandlerPipelineStepSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map(
-                (x: HandlerPipelineStepViewModel) => {
-                  return (
-                    <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                  );
-                }
-              )}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:HandlerPipelineStepViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>4b0e3f7d75ad2de03f2fa1b25214ad49</Hash>
+    <Hash>5abb3bb4bae59b0952a5fb1d38cfd5a5</Hash>
 </Codenesium>*/

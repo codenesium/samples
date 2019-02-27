@@ -6,11 +6,11 @@ import EventMapper from '../event/eventMapper';
 import EventViewModel from '../event/eventViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface EventTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface EventTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<EventViewModel>;
+  filteredRecords: Array<EventViewModel>;
 }
 
-export class  EventTableComponent extends React.Component<
-EventTableComponentProps,
-EventTableComponentState
+export class EventTableComponent extends React.Component<
+  EventTableComponentProps,
+  EventTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: EventViewModel) {
-  this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: EventViewModel) {
+    this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: EventViewModel) {
-   this.props.history.push(ClientRoutes.Events + '/' + row.id);
- }
+  handleDetailClick(e: any, row: EventViewModel) {
+    this.props.history.push(ClientRoutes.Events + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.EventClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: EventViewModel) {
           console.log(response);
 
           let mapper = new EventMapper();
-          
-          let events:Array<EventViewModel> = [];
 
-          response.forEach(x =>
-          {
-              events.push(mapper.mapApiResponseToViewModel(x));
+          let events: Array<EventViewModel> = [];
+
+          response.forEach(x => {
+            events.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,100 +92,116 @@ handleEditClick(e:any, row: EventViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Events',
-                    columns: [
-					  {
-                      Header: 'Address1',
-                      accessor: 'address1',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Events',
+                columns: [
+                  {
+                    Header: 'Address1',
+                    accessor: 'address1',
+                    Cell: props => {
                       return <span>{String(props.original.address1)}</span>;
-                      }           
-                    },  {
-                      Header: 'Address2',
-                      accessor: 'address2',
-                      Cell: (props) => {
-                      return <span>{String(props.original.address2)}</span>;
-                      }           
-                    },  {
-                      Header: 'CityId',
-                      accessor: 'cityId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Cities + '/' + props.original.cityId); }}>
-                          {String(
-                            props.original.cityIdNavigation.toDisplay()
-                          )}
-                        </a>
-                      }           
-                    },  {
-                      Header: 'Date',
-                      accessor: 'date',
-                      Cell: (props) => {
-                      return <span>{String(props.original.date)}</span>;
-                      }           
-                    },  {
-                      Header: 'Description',
-                      accessor: 'description',
-                      Cell: (props) => {
-                      return <span>{String(props.original.description)}</span>;
-                      }           
-                    },  {
-                      Header: 'EndDate',
-                      accessor: 'endDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.endDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Facebook',
-                      accessor: 'facebook',
-                      Cell: (props) => {
-                      return <span>{String(props.original.facebook)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'StartDate',
-                      accessor: 'startDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.startDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Website',
-                      accessor: 'website',
-                      Cell: (props) => {
-                      return <span>{String(props.original.website)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Address2',
+                    accessor: 'address2',
+                    Cell: props => {
+                      return <span>{String(props.original.address2)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'CityId',
+                    accessor: 'cityId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Cities + '/' + props.original.cityId
+                            );
+                          }}
+                        >
+                          {String(props.original.cityIdNavigation.toDisplay())}
+                        </a>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Date',
+                    accessor: 'date',
+                    Cell: props => {
+                      return <span>{String(props.original.date)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Description',
+                    accessor: 'description',
+                    Cell: props => {
+                      return <span>{String(props.original.description)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'EndDate',
+                    accessor: 'endDate',
+                    Cell: props => {
+                      return <span>{String(props.original.endDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Facebook',
+                    accessor: 'facebook',
+                    Cell: props => {
+                      return <span>{String(props.original.facebook)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'StartDate',
+                    accessor: 'startDate',
+                    Cell: props => {
+                      return <span>{String(props.original.startDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Website',
+                    accessor: 'website',
+                    Cell: props => {
+                      return <span>{String(props.original.website)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as EventViewModel
@@ -199,8 +212,8 @@ handleEditClick(e:any, row: EventViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as EventViewModel
@@ -209,11 +222,14 @@ handleEditClick(e:any, row: EventViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -221,6 +237,7 @@ handleEditClick(e:any, row: EventViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>6d613a50c49a4608b72930e57a800c8d</Hash>
+    <Hash>27f176b39a980013e16beb84789dbb2d</Hash>
 </Codenesium>*/

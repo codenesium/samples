@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import DirectTweetMapper from '../directTweet/directTweetMapper';
 import DirectTweetViewModel from '../directTweet/directTweetViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface DirectTweetSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface DirectTweetSelectComponentState {
@@ -19,30 +23,33 @@ interface DirectTweetSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<DirectTweetViewModel>;
+  filteredRecords : Array<DirectTweetViewModel>;
 }
 
-export class DirectTweetSelectComponent extends React.Component<
-  DirectTweetSelectComponentProps,
-  DirectTweetSelectComponentState
+export class  DirectTweetSelectComponent extends React.Component<
+DirectTweetSelectComponentProps,
+DirectTweetSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.DirectTweetClientResponseModel>;
@@ -50,11 +57,12 @@ export class DirectTweetSelectComponent extends React.Component<
           console.log(response);
 
           let mapper = new DirectTweetMapper();
+          
+          let devices:Array<DirectTweetViewModel> = [];
 
-          let devices: Array<DirectTweetViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -79,41 +87,46 @@ export class DirectTweetSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: DirectTweetViewModel) => {
-                return (
-                  <Select.Option value={x.tweetId}>
-                    {x.toDisplay()}
-                  </Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:DirectTweetViewModel) =>
+            {
+                return <Select.Option value={x.tweetId}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>600335880e50e72ac03fd9962ebc0d08</Hash>
+    <Hash>40905d2f1a58d7ee394c571861cfbe3f</Hash>
 </Codenesium>*/

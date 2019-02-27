@@ -7,6 +7,9 @@ import FileViewModel from './fileViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface FileDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface FileDetailComponentState {
 }
 
 class FileDetailComponent extends React.Component<
-  FileDetailComponentProps,
-  FileDetailComponentState
+FileDetailComponentProps,
+FileDetailComponentState
 > {
   state = {
     model: new FileViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Files + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Files + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,74 +85,75 @@ class FileDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>BucketId</h3>
-              <p>{String(this.state.model!.bucketIdNavigation!.toDisplay())}</p>
-            </div>
-            <div>
-              <h3>DateCreated</h3>
-              <p>{String(this.state.model!.dateCreated)}</p>
-            </div>
-            <div>
-              <h3>Description</h3>
-              <p>{String(this.state.model!.description)}</p>
-            </div>
-            <div>
-              <h3>Expiration</h3>
-              <p>{String(this.state.model!.expiration)}</p>
-            </div>
-            <div>
-              <h3>Extension</h3>
-              <p>{String(this.state.model!.extension)}</p>
-            </div>
-            <div>
-              <h3>ExternalId</h3>
-              <p>{String(this.state.model!.externalId)}</p>
-            </div>
-            <div>
-              <h3>FileSizeInByte</h3>
-              <p>{String(this.state.model!.fileSizeInByte)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>FileTypeId</h3>
-              <p>
-                {String(this.state.model!.fileTypeIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>Location</h3>
-              <p>{String(this.state.model!.location)}</p>
-            </div>
-            <div>
-              <h3>PrivateKey</h3>
-              <p>{String(this.state.model!.privateKey)}</p>
-            </div>
-            <div>
-              <h3>PublicKey</h3>
-              <p>{String(this.state.model!.publicKey)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>BucketId</h3>
+							<p>{String(this.state.model!.bucketIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>DateCreated</h3>
+							<p>{String(this.state.model!.dateCreated)}</p>
+						 </div>
+					   						 <div>
+							<h3>Description</h3>
+							<p>{String(this.state.model!.description)}</p>
+						 </div>
+					   						 <div>
+							<h3>Expiration</h3>
+							<p>{String(this.state.model!.expiration)}</p>
+						 </div>
+					   						 <div>
+							<h3>Extension</h3>
+							<p>{String(this.state.model!.extension)}</p>
+						 </div>
+					   						 <div>
+							<h3>ExternalId</h3>
+							<p>{String(this.state.model!.externalId)}</p>
+						 </div>
+					   						 <div>
+							<h3>FileSizeInByte</h3>
+							<p>{String(this.state.model!.fileSizeInByte)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>FileTypeId</h3>
+							<p>{String(this.state.model!.fileTypeIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>Location</h3>
+							<p>{String(this.state.model!.location)}</p>
+						 </div>
+					   						 <div>
+							<h3>PrivateKey</h3>
+							<p>{String(this.state.model!.privateKey)}</p>
+						 </div>
+					   						 <div>
+							<h3>PublicKey</h3>
+							<p>{String(this.state.model!.publicKey)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -164,7 +166,6 @@ export const WrappedFileDetailComponent = Form.create({ name: 'File Detail' })(
   FileDetailComponent
 );
 
-
 /*<Codenesium>
-    <Hash>8a1bff5cb5dfe0eaba9d68f7b8d47021</Hash>
+    <Hash>8f109acbcc2804b671d4067ed854b31d</Hash>
 </Codenesium>*/

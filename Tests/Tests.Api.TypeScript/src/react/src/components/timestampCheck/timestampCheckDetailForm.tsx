@@ -7,6 +7,9 @@ import TimestampCheckViewModel from './timestampCheckViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface TimestampCheckDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface TimestampCheckDetailComponentState {
 }
 
 class TimestampCheckDetailComponent extends React.Component<
-  TimestampCheckDetailComponentProps,
-  TimestampCheckDetailComponentState
+TimestampCheckDetailComponentProps,
+TimestampCheckDetailComponentState
 > {
   state = {
     model: new TimestampCheckViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.TimestampChecks + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.TimestampChecks + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,40 +85,43 @@ class TimestampCheckDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>Timestamp</h3>
-              <p>{String(this.state.model!.timestamp)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>Timestamp</h3>
+							<p>{String(this.state.model!.timestamp)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -126,11 +130,10 @@ class TimestampCheckDetailComponent extends React.Component<
   }
 }
 
-export const WrappedTimestampCheckDetailComponent = Form.create({
-  name: 'TimestampCheck Detail',
-})(TimestampCheckDetailComponent);
-
+export const WrappedTimestampCheckDetailComponent = Form.create({ name: 'TimestampCheck Detail' })(
+  TimestampCheckDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>cfa60de1bce36d864bca12890c8848da</Hash>
+    <Hash>027ae2d782cf91d18331f6c2dc94c375</Hash>
 </Codenesium>*/

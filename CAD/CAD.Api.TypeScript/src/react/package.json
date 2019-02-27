@@ -26,8 +26,10 @@
     "build": "REACT_APP_API_URL=http://localhost/ react-scripts build",
 	"start-win": "set REACT_APP_API_URL=http://localhost/&& react-scripts start",
     "build-win": "set REACT_APP_API_URL=http://localhost/&& react-scripts build",
-    "start-playground": "set REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feCAD/&& react-scripts start",
-    "build-playground": "set REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feCAD/&& react-scripts build",
+    "start-win-playground": "set REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feCAD/&& react-scripts start",
+    "build-win-playground": "set REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feCAD/&& react-scripts build",
+	"start-nix-playground": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feCAD/ react-scripts start",
+    "build-nix-playground": "REACT_APP_API_URL=https://codenesium.ngrok.io/user7303b0f5161f4149bf2959a488d359feCAD/ react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
