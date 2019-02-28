@@ -6,7 +6,10 @@ import LinkStatusMapper from './linkStatusMapper';
 import LinkStatusViewModel from './linkStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { LinkTableComponent } from '../shared/linkTable';
+import {LinkTableComponent} from '../shared/linkTable'
+	
+
+
 
 interface LinkStatusDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface LinkStatusDetailComponentState {
 }
 
 class LinkStatusDetailComponent extends React.Component<
-  LinkStatusDetailComponentProps,
-  LinkStatusDetailComponentState
+LinkStatusDetailComponentProps,
+LinkStatusDetailComponentState
 > {
   state = {
     model: new LinkStatusViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.LinkStatuses + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.LinkStatuses + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,52 +86,48 @@ class LinkStatusDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Links</h3>
-            <LinkTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.LinkStatuses +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Links
-              }
-            />
-          </div>
+            <LinkTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.LinkStatuses + '/' + this.state.model!.id + '/' + ApiRoutes.Links}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -139,11 +136,10 @@ class LinkStatusDetailComponent extends React.Component<
   }
 }
 
-export const WrappedLinkStatusDetailComponent = Form.create({
-  name: 'LinkStatus Detail',
-})(LinkStatusDetailComponent);
-
+export const WrappedLinkStatusDetailComponent = Form.create({ name: 'LinkStatus Detail' })(
+  LinkStatusDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>aa62fceae8fd95848855213a177d14b8</Hash>
+    <Hash>c55752a1e825e7197b8e2b5e84cdf1c8</Hash>
 </Codenesium>*/

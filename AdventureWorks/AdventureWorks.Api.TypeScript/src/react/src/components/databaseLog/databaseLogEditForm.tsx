@@ -31,6 +31,7 @@ interface DatabaseLogEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class DatabaseLogEditComponent extends React.Component<
@@ -44,6 +45,7 @@ class DatabaseLogEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -96,11 +98,14 @@ class DatabaseLogEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as DatabaseLogViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -128,6 +133,7 @@ class DatabaseLogEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -152,6 +158,7 @@ class DatabaseLogEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -227,8 +234,12 @@ class DatabaseLogEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -246,5 +257,5 @@ export const WrappedDatabaseLogEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e7887085651f3ba3d3c7d8d6ee80811c</Hash>
+    <Hash>35d5f48938a313cb445b448eba7ea1f3</Hash>
 </Codenesium>*/

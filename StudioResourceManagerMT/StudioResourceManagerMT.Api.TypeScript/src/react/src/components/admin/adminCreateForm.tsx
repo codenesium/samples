@@ -22,6 +22,7 @@ interface AdminCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class AdminCreateComponent extends React.Component<
@@ -34,17 +35,22 @@ class AdminCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as AdminViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -66,7 +72,7 @@ class AdminCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.AdminClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -85,7 +91,7 @@ class AdminCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -182,9 +188,9 @@ class AdminCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -198,5 +204,5 @@ class AdminCreateComponent extends React.Component<
 export const WrappedAdminCreateComponent = Form.create({ name: 'Admin Create' })(AdminCreateComponent);
 
 /*<Codenesium>
-    <Hash>cb9f988ea4496f23b37d01d0bcee5146</Hash>
+    <Hash>1ef59c23e4ba125ae1a2ddf184de0b8f</Hash>
 </Codenesium>*/

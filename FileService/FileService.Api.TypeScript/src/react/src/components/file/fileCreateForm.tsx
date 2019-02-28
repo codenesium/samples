@@ -24,6 +24,7 @@ interface FileCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class FileCreateComponent extends React.Component<
@@ -36,17 +37,22 @@ class FileCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as FileViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -68,7 +74,7 @@ class FileCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.FileClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -87,7 +93,7 @@ class FileCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -249,9 +255,9 @@ class FileCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -265,5 +271,5 @@ class FileCreateComponent extends React.Component<
 export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(FileCreateComponent);
 
 /*<Codenesium>
-    <Hash>d446cf79489bf2fc95307e70bc541153</Hash>
+    <Hash>328013bb0064b39cad1d8be04dad6b55</Hash>
 </Codenesium>*/

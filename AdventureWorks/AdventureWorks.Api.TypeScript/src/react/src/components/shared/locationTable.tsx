@@ -6,11 +6,11 @@ import LocationMapper from '../location/locationMapper';
 import LocationViewModel from '../location/locationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface LocationTableComponentProps {
-  locationID:number,
-  apiRoute:string;
+  locationID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface LocationTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<LocationViewModel>;
+  filteredRecords: Array<LocationViewModel>;
 }
 
-export class  LocationTableComponent extends React.Component<
-LocationTableComponentProps,
-LocationTableComponentState
+export class LocationTableComponent extends React.Component<
+  LocationTableComponentProps,
+  LocationTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: LocationViewModel) {
-  this.props.history.push(ClientRoutes.Locations + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: LocationViewModel) {
+    this.props.history.push(ClientRoutes.Locations + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: LocationViewModel) {
-   this.props.history.push(ClientRoutes.Locations + '/' + row.id);
- }
+  handleDetailClick(e: any, row: LocationViewModel) {
+    this.props.history.push(ClientRoutes.Locations + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.LocationClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: LocationViewModel) {
           console.log(response);
 
           let mapper = new LocationMapper();
-          
-          let locations:Array<LocationViewModel> = [];
 
-          response.forEach(x =>
-          {
-              locations.push(mapper.mapApiResponseToViewModel(x));
+          let locations: Array<LocationViewModel> = [];
+
+          response.forEach(x => {
+            locations.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,66 +92,69 @@ handleEditClick(e:any, row: LocationViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Locations',
-                    columns: [
-					  {
-                      Header: 'Availability',
-                      accessor: 'availability',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Locations',
+                columns: [
+                  {
+                    Header: 'Availability',
+                    accessor: 'availability',
+                    Cell: props => {
                       return <span>{String(props.original.availability)}</span>;
-                      }           
-                    },  {
-                      Header: 'CostRate',
-                      accessor: 'costRate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.costRate)}</span>;
-                      }           
-                    },  {
-                      Header: 'LocationID',
-                      accessor: 'locationID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.locationID)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'CostRate',
+                    accessor: 'costRate',
+                    Cell: props => {
+                      return <span>{String(props.original.costRate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'LocationID',
+                    accessor: 'locationID',
+                    Cell: props => {
+                      return <span>{String(props.original.locationID)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
+                      return <span>{String(props.original.modifiedDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as LocationViewModel
@@ -165,8 +165,8 @@ handleEditClick(e:any, row: LocationViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as LocationViewModel
@@ -175,11 +175,14 @@ handleEditClick(e:any, row: LocationViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -187,6 +190,7 @@ handleEditClick(e:any, row: LocationViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>7987c8482dad0d707d8fb76867d9f82c</Hash>
+    <Hash>323b5c8390a7ca187d133afbfa79c090</Hash>
 </Codenesium>*/

@@ -31,6 +31,7 @@ interface OfficerEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class OfficerEditComponent extends React.Component<
@@ -44,6 +45,7 @@ class OfficerEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -96,11 +98,14 @@ class OfficerEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as OfficerViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -125,6 +130,7 @@ class OfficerEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -149,6 +155,7 @@ class OfficerEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -231,8 +238,12 @@ class OfficerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -250,5 +261,5 @@ export const WrappedOfficerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>76576cf5a2fe2269279cd08e8e55985b</Hash>
+    <Hash>f2c3ed0ae340592882ef0dd6563d4cef</Hash>
 </Codenesium>*/

@@ -1,32 +1,32 @@
-import moment from 'moment'
-
+import moment from 'moment';
 
 export default class IllustrationViewModel {
-    diagram:string;
-illustrationID:number;
-modifiedDate:any;
+  diagram: string;
+  illustrationID: number;
+  modifiedDate: any;
 
-    constructor() {
-		this.diagram = '';
-this.illustrationID = 0;
-this.modifiedDate = undefined;
+  constructor() {
+    this.diagram = '';
+    this.illustrationID = 0;
+    this.modifiedDate = undefined;
+  }
 
-    }
+  setProperties(
+    diagram: string,
+    illustrationID: number,
+    modifiedDate: any
+  ): void {
+    this.diagram = moment(diagram, 'YYYY-MM-DD');
+    this.illustrationID = moment(illustrationID, 'YYYY-MM-DD');
+    this.modifiedDate = moment(modifiedDate, 'YYYY-MM-DD');
+  }
 
-	setProperties(diagram : string,illustrationID : number,modifiedDate : any) : void
-	{
-		this.diagram = moment(diagram,'YYYY-MM-DD');
-this.illustrationID = moment(illustrationID,'YYYY-MM-DD');
-this.modifiedDate = moment(modifiedDate,'YYYY-MM-DD');
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>8b6155ce2da155fd825a7c035397ff7a</Hash>
+    <Hash>98f3038183537c35fadc6f387437c179</Hash>
 </Codenesium>*/

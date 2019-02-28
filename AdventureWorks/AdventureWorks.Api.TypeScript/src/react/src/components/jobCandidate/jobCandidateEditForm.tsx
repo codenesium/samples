@@ -32,6 +32,7 @@ interface JobCandidateEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class JobCandidateEditComponent extends React.Component<
@@ -45,6 +46,7 @@ class JobCandidateEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -97,11 +99,14 @@ class JobCandidateEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as JobCandidateViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -129,6 +134,7 @@ class JobCandidateEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -153,6 +159,7 @@ class JobCandidateEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -214,8 +221,12 @@ class JobCandidateEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -233,5 +244,5 @@ export const WrappedJobCandidateEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b17fcd8d447bb11fde7bca1793bf0302</Hash>
+    <Hash>ae7d0b7fe0e9185768e54078d6b3bbb5</Hash>
 </Codenesium>*/

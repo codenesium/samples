@@ -7,6 +7,9 @@ import OfficerCapabilitiesViewModel from './officerCapabilitiesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface OfficerCapabilitiesDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,25 +25,21 @@ interface OfficerCapabilitiesDetailComponentState {
 }
 
 class OfficerCapabilitiesDetailComponent extends React.Component<
-  OfficerCapabilitiesDetailComponentProps,
-  OfficerCapabilitiesDetailComponentState
+OfficerCapabilitiesDetailComponentProps,
+OfficerCapabilitiesDetailComponentState
 > {
   state = {
     model: new OfficerCapabilitiesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.OfficerCapabilities +
-        '/edit/' +
-        this.state.model!.capabilityId
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.OfficerCapabilities + '/edit/' + this.state.model!.capabilityId);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,40 +85,39 @@ class OfficerCapabilitiesDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>capabilityId</h3>
-              <p>
-                {String(this.state.model!.capabilityIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>officerId</h3>
-              <p>
-                {String(this.state.model!.officerIdNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>capabilityId</h3>
+							<p>{String(this.state.model!.capabilityIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>officerId</h3>
+							<p>{String(this.state.model!.officerIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -128,11 +126,10 @@ class OfficerCapabilitiesDetailComponent extends React.Component<
   }
 }
 
-export const WrappedOfficerCapabilitiesDetailComponent = Form.create({
-  name: 'OfficerCapabilities Detail',
-})(OfficerCapabilitiesDetailComponent);
-
+export const WrappedOfficerCapabilitiesDetailComponent = Form.create({ name: 'OfficerCapabilities Detail' })(
+  OfficerCapabilitiesDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>6abadc37ac34249c11535d03c0c8f37e</Hash>
+    <Hash>5f0a9638f2a3705b173612690171a60f</Hash>
 </Codenesium>*/

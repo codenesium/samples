@@ -31,6 +31,7 @@ interface CountryRegionEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class CountryRegionEditComponent extends React.Component<
@@ -44,6 +45,7 @@ class CountryRegionEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -96,11 +98,14 @@ class CountryRegionEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as CountryRegionViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -128,6 +133,7 @@ class CountryRegionEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -152,6 +158,7 @@ class CountryRegionEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -203,8 +210,12 @@ class CountryRegionEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -222,5 +233,5 @@ export const WrappedCountryRegionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4a8c59110c7fdcf282a21c9bf3e421bf</Hash>
+    <Hash>85f607c73517935014d08bc28c39f99e</Hash>
 </Codenesium>*/

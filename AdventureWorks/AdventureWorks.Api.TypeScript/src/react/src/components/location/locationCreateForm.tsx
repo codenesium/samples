@@ -32,6 +32,7 @@ interface LocationCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class LocationCreateComponent extends React.Component<
@@ -45,15 +46,19 @@ class LocationCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as LocationViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -78,6 +83,7 @@ class LocationCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -103,6 +109,7 @@ class LocationCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -172,8 +179,12 @@ class LocationCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -191,5 +202,5 @@ export const WrappedLocationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>efffcaa9e60dd7b60c9db11d2d63ccbb</Hash>
+    <Hash>1bf08ba60a0d5e2a15ea4524a511e2c0</Hash>
 </Codenesium>*/

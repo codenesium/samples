@@ -34,6 +34,7 @@ interface CustomerCommunicationCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class CustomerCommunicationCreateComponent extends React.Component<
@@ -47,15 +48,19 @@ class CustomerCommunicationCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as CustomerCommunicationViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -80,6 +85,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -105,6 +111,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -169,8 +176,12 @@ class CustomerCommunicationCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -188,5 +199,5 @@ export const WrappedCustomerCommunicationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>df87eb8e76b9b84753400c1111e3de03</Hash>
+    <Hash>c5db2d33fe7ff04f4b00091864e1e5eb</Hash>
 </Codenesium>*/

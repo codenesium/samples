@@ -21,6 +21,7 @@ interface PaymentTypeEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class PaymentTypeEditComponent extends React.Component<
@@ -33,7 +34,8 @@ class PaymentTypeEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
     componentDidMount() {
@@ -84,12 +86,16 @@ class PaymentTypeEditComponent extends React.Component<
  
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
-      if (!err) {
+     if (!err) {
         let model = values as PaymentTypeViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -111,7 +117,7 @@ class PaymentTypeEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.PaymentTypeClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -129,7 +135,7 @@ class PaymentTypeEditComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -170,9 +176,9 @@ class PaymentTypeEditComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -186,5 +192,5 @@ class PaymentTypeEditComponent extends React.Component<
 export const WrappedPaymentTypeEditComponent = Form.create({ name: 'PaymentType Edit' })(PaymentTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>843359d9c64de7c66c547a803e4543e7</Hash>
+    <Hash>8ea609f3af39e08a7a6a17a73b5ef060</Hash>
 </Codenesium>*/

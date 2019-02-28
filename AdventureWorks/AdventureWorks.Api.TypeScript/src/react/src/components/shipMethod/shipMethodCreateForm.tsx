@@ -32,6 +32,7 @@ interface ShipMethodCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class ShipMethodCreateComponent extends React.Component<
@@ -45,15 +46,19 @@ class ShipMethodCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as ShipMethodViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -78,6 +83,7 @@ class ShipMethodCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -103,6 +109,7 @@ class ShipMethodCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -178,8 +185,12 @@ class ShipMethodCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -197,5 +208,5 @@ export const WrappedShipMethodCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dccec69111887f8928f4aef558dfe33f</Hash>
+    <Hash>79c6115221c19115b8f87299dd1442c2</Hash>
 </Codenesium>*/

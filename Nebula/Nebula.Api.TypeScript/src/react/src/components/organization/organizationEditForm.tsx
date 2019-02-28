@@ -31,6 +31,7 @@ interface OrganizationEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class OrganizationEditComponent extends React.Component<
@@ -44,6 +45,7 @@ class OrganizationEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -96,11 +98,14 @@ class OrganizationEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as OrganizationViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -128,6 +133,7 @@ class OrganizationEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -152,6 +158,7 @@ class OrganizationEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -193,8 +200,12 @@ class OrganizationEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -212,5 +223,5 @@ export const WrappedOrganizationEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fdd3d940d354d26d5b2c78cf1a4ac2f2</Hash>
+    <Hash>79dc288071a6c2066d52ef5fe3ea0f1e</Hash>
 </Codenesium>*/

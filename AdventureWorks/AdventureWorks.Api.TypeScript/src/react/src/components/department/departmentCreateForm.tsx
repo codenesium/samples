@@ -22,6 +22,7 @@ interface DepartmentCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class DepartmentCreateComponent extends React.Component<
@@ -34,17 +35,22 @@ class DepartmentCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as DepartmentViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -66,7 +72,7 @@ class DepartmentCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.DepartmentClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -85,7 +91,7 @@ class DepartmentCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -149,9 +155,9 @@ class DepartmentCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -165,5 +171,5 @@ class DepartmentCreateComponent extends React.Component<
 export const WrappedDepartmentCreateComponent = Form.create({ name: 'Department Create' })(DepartmentCreateComponent);
 
 /*<Codenesium>
-    <Hash>a6ae53e95e1b49be9bc54ca35da18ed8</Hash>
+    <Hash>a13eb5d7137ebda5721c08cb3d77a88d</Hash>
 </Codenesium>*/

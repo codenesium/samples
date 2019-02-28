@@ -1,25 +1,27 @@
 import * as Api from '../../api/models';
-import PipelineStatusViewModel from './pipelineStatusViewModel';
+import PipelineStatusViewModel from  './pipelineStatusViewModel';
 export default class PipelineStatusMapper {
-  mapApiResponseToViewModel(
-    dto: Api.PipelineStatusClientResponseModel
-  ): PipelineStatusViewModel {
-    let response = new PipelineStatusViewModel();
-    response.setProperties(dto.id, dto.name);
+    
+	mapApiResponseToViewModel(dto: Api.PipelineStatusClientResponseModel) : PipelineStatusViewModel 
+	{
+		let response = new PipelineStatusViewModel();
+		response.setProperties(dto.id,dto.name);
+		
+				
 
-    return response;
-  }
+		
+		
+		return response;
+	}
 
-  mapViewModelToApiRequest(
-    model: PipelineStatusViewModel
-  ): Api.PipelineStatusClientRequestModel {
-    let response = new Api.PipelineStatusClientRequestModel();
-    response.setProperties(model.id, model.name);
-    return response;
-  }
-}
-
+	mapViewModelToApiRequest(model: PipelineStatusViewModel) : Api.PipelineStatusClientRequestModel
+	{
+		let response = new Api.PipelineStatusClientRequestModel();
+		response.setProperties(model.id,model.name);
+		return response;
+	}
+};
 
 /*<Codenesium>
-    <Hash>4f7690ab4f6cbd86d9bc3f83a93d31c6</Hash>
+    <Hash>938acb8fc99e9960cd3c24064ab4cc12</Hash>
 </Codenesium>*/

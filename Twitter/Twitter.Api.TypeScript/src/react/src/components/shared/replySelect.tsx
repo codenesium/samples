@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import ReplyMapper from '../reply/replyMapper';
 import ReplyViewModel from '../reply/replyViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ReplySelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface ReplySelectComponentState {
@@ -19,30 +23,33 @@ interface ReplySelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<ReplyViewModel>;
+  filteredRecords : Array<ReplyViewModel>;
 }
 
-export class ReplySelectComponent extends React.Component<
-  ReplySelectComponentProps,
-  ReplySelectComponentState
+export class  ReplySelectComponent extends React.Component<
+ReplySelectComponentProps,
+ReplySelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.ReplyClientResponseModel>;
@@ -50,11 +57,12 @@ export class ReplySelectComponent extends React.Component<
           console.log(response);
 
           let mapper = new ReplyMapper();
+          
+          let devices:Array<ReplyViewModel> = [];
 
-          let devices: Array<ReplyViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -79,41 +87,46 @@ export class ReplySelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: ReplyViewModel) => {
-                return (
-                  <Select.Option value={x.replyId}>
-                    {x.toDisplay()}
-                  </Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:ReplyViewModel) =>
+            {
+                return <Select.Option value={x.replyId}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>78159a7f04f9d7f7ae8ccb2931a66c2e</Hash>
+    <Hash>b1360d642a32e2164efdbb770d0ef314</Hash>
 </Codenesium>*/

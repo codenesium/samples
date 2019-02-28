@@ -33,6 +33,7 @@ interface SalesPersonCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class SalesPersonCreateComponent extends React.Component<
@@ -46,15 +47,19 @@ class SalesPersonCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as SalesPersonViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -79,6 +84,7 @@ class SalesPersonCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -104,6 +110,7 @@ class SalesPersonCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -206,8 +213,12 @@ class SalesPersonCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -225,5 +236,5 @@ export const WrappedSalesPersonCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9fe7ac529c3e021a93c45bace8df6dfc</Hash>
+    <Hash>041cda403db72840c573b0c457bbe2b4</Hash>
 </Codenesium>*/

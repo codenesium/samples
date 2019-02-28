@@ -33,6 +33,7 @@ interface SaleTicketEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class SaleTicketEditComponent extends React.Component<
@@ -46,6 +47,7 @@ class SaleTicketEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -98,11 +100,14 @@ class SaleTicketEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as SaleTicketViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -130,6 +135,7 @@ class SaleTicketEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -154,6 +160,7 @@ class SaleTicketEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -200,8 +207,12 @@ class SaleTicketEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -219,5 +230,5 @@ export const WrappedSaleTicketEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c1f5cf309e08f856f64d5195b29adb60</Hash>
+    <Hash>7fe4c87bbc8de07fb7cd35669fab25c2</Hash>
 </Codenesium>*/

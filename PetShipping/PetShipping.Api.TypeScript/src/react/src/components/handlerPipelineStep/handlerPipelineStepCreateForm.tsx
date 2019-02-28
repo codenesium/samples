@@ -34,6 +34,7 @@ interface HandlerPipelineStepCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class HandlerPipelineStepCreateComponent extends React.Component<
@@ -47,15 +48,19 @@ class HandlerPipelineStepCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as HandlerPipelineStepViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -80,6 +85,7 @@ class HandlerPipelineStepCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -105,6 +111,7 @@ class HandlerPipelineStepCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -151,8 +158,12 @@ class HandlerPipelineStepCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -170,5 +181,5 @@ export const WrappedHandlerPipelineStepCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>279ba42bcdc1c649c0f1112d8e656822</Hash>
+    <Hash>70a95aa59fa99e053d13241b428b8fa5</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import PipelineStatusMapper from '../pipelineStatus/pipelineStatusMapper';
 import PipelineStatusViewModel from '../pipelineStatus/pipelineStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface PipelineStatusTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,56 @@ interface PipelineStatusTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PipelineStatusViewModel>;
+  filteredRecords: Array<PipelineStatusViewModel>;
 }
 
-export class  PipelineStatusTableComponent extends React.Component<
-PipelineStatusTableComponentProps,
-PipelineStatusTableComponentState
+export class PipelineStatusTableComponent extends React.Component<
+  PipelineStatusTableComponentProps,
+  PipelineStatusTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: PipelineStatusViewModel) {
-  this.props.history.push(ClientRoutes.PipelineStatus + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: PipelineStatusViewModel) {
+    this.props.history.push(ClientRoutes.PipelineStatus + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: PipelineStatusViewModel) {
-   this.props.history.push(ClientRoutes.PipelineStatus + '/' + row.id);
- }
+  handleDetailClick(e: any, row: PipelineStatusViewModel) {
+    this.props.history.push(ClientRoutes.PipelineStatus + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.PipelineStatusClientResponseModel>;
+          let response = resp.data as Array<
+            Api.PipelineStatusClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new PipelineStatusMapper();
-          
-          let pipelineStatus:Array<PipelineStatusViewModel> = [];
 
-          response.forEach(x =>
-          {
-              pipelineStatus.push(mapper.mapApiResponseToViewModel(x));
+          let pipelineStatus: Array<PipelineStatusViewModel> = [];
+
+          response.forEach(x => {
+            pipelineStatus.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,42 +94,41 @@ handleEditClick(e:any, row: PipelineStatusViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'PipelineStatus',
-                    columns: [
-					  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'PipelineStatus',
+                columns: [
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PipelineStatusViewModel
@@ -141,8 +139,8 @@ handleEditClick(e:any, row: PipelineStatusViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PipelineStatusViewModel
@@ -151,11 +149,14 @@ handleEditClick(e:any, row: PipelineStatusViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -163,6 +164,7 @@ handleEditClick(e:any, row: PipelineStatusViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>7adb8741d303db14269325af14f34376</Hash>
+    <Hash>718c3bfe40ddc1318a7f1d71048d3bb7</Hash>
 </Codenesium>*/

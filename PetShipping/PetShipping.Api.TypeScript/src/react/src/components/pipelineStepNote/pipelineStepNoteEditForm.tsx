@@ -33,6 +33,7 @@ interface PipelineStepNoteEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class PipelineStepNoteEditComponent extends React.Component<
@@ -46,6 +47,7 @@ class PipelineStepNoteEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -98,11 +100,14 @@ class PipelineStepNoteEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as PipelineStepNoteViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -130,6 +135,7 @@ class PipelineStepNoteEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -154,6 +160,7 @@ class PipelineStepNoteEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -200,8 +207,12 @@ class PipelineStepNoteEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -219,5 +230,5 @@ export const WrappedPipelineStepNoteEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>08244b1b1483273957f425a557e3323f</Hash>
+    <Hash>2518bf39bbe7fb0de204e7e08fd758b4</Hash>
 </Codenesium>*/

@@ -23,6 +23,7 @@ interface LinkLogCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class LinkLogCreateComponent extends React.Component<
@@ -35,17 +36,22 @@ class LinkLogCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as LinkLogViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -67,7 +73,7 @@ class LinkLogCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.LinkLogClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -86,7 +92,7 @@ class LinkLogCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -148,9 +154,9 @@ class LinkLogCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -164,5 +170,5 @@ class LinkLogCreateComponent extends React.Component<
 export const WrappedLinkLogCreateComponent = Form.create({ name: 'LinkLog Create' })(LinkLogCreateComponent);
 
 /*<Codenesium>
-    <Hash>6de73eb5f99fc6dae831a272a999e179</Hash>
+    <Hash>5344495afc6928a573865f63a0919a29</Hash>
 </Codenesium>*/

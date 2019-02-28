@@ -33,6 +33,7 @@ interface WorkOrderEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class WorkOrderEditComponent extends React.Component<
@@ -46,6 +47,7 @@ class WorkOrderEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -98,11 +100,14 @@ class WorkOrderEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as WorkOrderViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -130,6 +135,7 @@ class WorkOrderEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -154,6 +160,7 @@ class WorkOrderEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -262,8 +269,12 @@ class WorkOrderEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -281,5 +292,5 @@ export const WrappedWorkOrderEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>18274a56f72cb5f61fbbc21341bc78fe</Hash>
+    <Hash>2f53a9e2f6abd1dc93b7cee5dadf4e41</Hash>
 </Codenesium>*/

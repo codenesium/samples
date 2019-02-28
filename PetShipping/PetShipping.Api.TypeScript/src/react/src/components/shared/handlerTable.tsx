@@ -6,11 +6,11 @@ import HandlerMapper from '../handler/handlerMapper';
 import HandlerViewModel from '../handler/handlerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface HandlerTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface HandlerTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<HandlerViewModel>;
+  filteredRecords: Array<HandlerViewModel>;
 }
 
-export class  HandlerTableComponent extends React.Component<
-HandlerTableComponentProps,
-HandlerTableComponentState
+export class HandlerTableComponent extends React.Component<
+  HandlerTableComponentProps,
+  HandlerTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: HandlerViewModel) {
-  this.props.history.push(ClientRoutes.Handlers + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: HandlerViewModel) {
+    this.props.history.push(ClientRoutes.Handlers + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: HandlerViewModel) {
-   this.props.history.push(ClientRoutes.Handlers + '/' + row.id);
- }
+  handleDetailClick(e: any, row: HandlerViewModel) {
+    this.props.history.push(ClientRoutes.Handlers + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.HandlerClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: HandlerViewModel) {
           console.log(response);
 
           let mapper = new HandlerMapper();
-          
-          let handlers:Array<HandlerViewModel> = [];
 
-          response.forEach(x =>
-          {
-              handlers.push(mapper.mapApiResponseToViewModel(x));
+          let handlers: Array<HandlerViewModel> = [];
+
+          response.forEach(x => {
+            handlers.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,66 +92,69 @@ handleEditClick(e:any, row: HandlerViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Handlers',
-                    columns: [
-					  {
-                      Header: 'CountryId',
-                      accessor: 'countryId',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Handlers',
+                columns: [
+                  {
+                    Header: 'CountryId',
+                    accessor: 'countryId',
+                    Cell: props => {
                       return <span>{String(props.original.countryId)}</span>;
-                      }           
-                    },  {
-                      Header: 'Email',
-                      accessor: 'email',
-                      Cell: (props) => {
-                      return <span>{String(props.original.email)}</span>;
-                      }           
-                    },  {
-                      Header: 'FirstName',
-                      accessor: 'firstName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.firstName)}</span>;
-                      }           
-                    },  {
-                      Header: 'LastName',
-                      accessor: 'lastName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.lastName)}</span>;
-                      }           
-                    },  {
-                      Header: 'Phone',
-                      accessor: 'phone',
-                      Cell: (props) => {
-                      return <span>{String(props.original.phone)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Email',
+                    accessor: 'email',
+                    Cell: props => {
+                      return <span>{String(props.original.email)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'FirstName',
+                    accessor: 'firstName',
+                    Cell: props => {
+                      return <span>{String(props.original.firstName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'LastName',
+                    accessor: 'lastName',
+                    Cell: props => {
+                      return <span>{String(props.original.lastName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Phone',
+                    accessor: 'phone',
+                    Cell: props => {
+                      return <span>{String(props.original.phone)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as HandlerViewModel
@@ -165,8 +165,8 @@ handleEditClick(e:any, row: HandlerViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as HandlerViewModel
@@ -175,11 +175,14 @@ handleEditClick(e:any, row: HandlerViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -187,6 +190,7 @@ handleEditClick(e:any, row: HandlerViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>aff50188f99f2149e91be471766acf79</Hash>
+    <Hash>c262b8db4fecdee66dd0dbc723d18fe8</Hash>
 </Codenesium>*/

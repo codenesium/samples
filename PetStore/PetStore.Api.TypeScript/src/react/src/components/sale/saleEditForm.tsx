@@ -23,6 +23,7 @@ interface SaleEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class SaleEditComponent extends React.Component<
@@ -35,7 +36,8 @@ class SaleEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
     componentDidMount() {
@@ -86,12 +88,16 @@ class SaleEditComponent extends React.Component<
  
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
-      if (!err) {
+     if (!err) {
         let model = values as SaleViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -113,7 +119,7 @@ class SaleEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.SaleClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -131,7 +137,7 @@ class SaleEditComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -237,9 +243,9 @@ class SaleEditComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -253,5 +259,5 @@ class SaleEditComponent extends React.Component<
 export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(SaleEditComponent);
 
 /*<Codenesium>
-    <Hash>30eebe339c378ca88072cbe58bb593c7</Hash>
+    <Hash>9bdc720f42ad9886f882de090c692369</Hash>
 </Codenesium>*/

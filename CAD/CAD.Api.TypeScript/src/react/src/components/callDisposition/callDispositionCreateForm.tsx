@@ -22,6 +22,7 @@ interface CallDispositionCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class CallDispositionCreateComponent extends React.Component<
@@ -34,17 +35,22 @@ class CallDispositionCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as CallDispositionViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -66,7 +72,7 @@ class CallDispositionCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.CallDispositionClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -85,7 +91,7 @@ class CallDispositionCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -126,9 +132,9 @@ class CallDispositionCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -142,5 +148,5 @@ class CallDispositionCreateComponent extends React.Component<
 export const WrappedCallDispositionCreateComponent = Form.create({ name: 'CallDisposition Create' })(CallDispositionCreateComponent);
 
 /*<Codenesium>
-    <Hash>366d7cb49acce0de080f0b6f9e2def7b</Hash>
+    <Hash>75901a94c2834474f0260a8ab1e9007c</Hash>
 </Codenesium>*/

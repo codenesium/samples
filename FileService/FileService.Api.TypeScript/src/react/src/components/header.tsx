@@ -12,9 +12,14 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
-displayName:string) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -30,46 +35,40 @@ displayName:string) => {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
+              <MenuItem
                 key="Home"
-				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}></Link>
+                <Link to={'/'} />
               </MenuItem>
 
-			   			   <MenuItem
-                key="bucket"
-              >
-			  <Icon type="pie-chart" />
-              <span>Buckets</span>
-              <Link to={ClientRoutes.Buckets}></Link>
+              <MenuItem key="bucket">
+                <Icon type="pie-chart" />
+                <span>Buckets</span>
+                <Link to={ClientRoutes.Buckets} />
               </MenuItem>
 
-							   <MenuItem
-                key="file"
-              >
-			  <Icon type="rise" />
-              <span>Files</span>
-              <Link to={ClientRoutes.Files}></Link>
+              <MenuItem key="file">
+                <Icon type="rise" />
+                <span>Files</span>
+                <Link to={ClientRoutes.Files} />
               </MenuItem>
 
-							   <MenuItem
-                key="fileType"
-              >
-			  <Icon type="bars" />
-              <span>File Types</span>
-              <Link to={ClientRoutes.FileTypes}></Link>
+              <MenuItem key="fileType">
+                <Icon type="bars" />
+                <span>File Types</span>
+                <Link to={ClientRoutes.FileTypes} />
               </MenuItem>
-
-				
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-            <h2>{displayName}</h2>
-			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+              <h2>{displayName}</h2>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -82,6 +81,7 @@ displayName:string) => {
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>152c968840a6f5f108c2e2794336899e</Hash>
+    <Hash>434dc12e7d72adff2c6fbc039f95180e</Hash>
 </Codenesium>*/

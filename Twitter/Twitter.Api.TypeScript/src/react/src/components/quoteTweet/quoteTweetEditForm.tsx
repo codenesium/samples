@@ -33,6 +33,7 @@ interface QuoteTweetEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class QuoteTweetEditComponent extends React.Component<
@@ -46,6 +47,7 @@ class QuoteTweetEditComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   componentDidMount() {
@@ -98,11 +100,14 @@ class QuoteTweetEditComponent extends React.Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as QuoteTweetViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -130,6 +135,7 @@ class QuoteTweetEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -154,6 +160,7 @@ class QuoteTweetEditComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -227,8 +234,12 @@ class QuoteTweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -246,5 +257,5 @@ export const WrappedQuoteTweetEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8536d8cba5255187f306de2a93dfcf43</Hash>
+    <Hash>df73c6f493e65a580020a056d70aad95</Hash>
 </Codenesium>*/

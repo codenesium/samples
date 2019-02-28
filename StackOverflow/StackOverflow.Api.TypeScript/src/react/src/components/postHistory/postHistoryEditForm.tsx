@@ -21,6 +21,7 @@ interface PostHistoryEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class PostHistoryEditComponent extends React.Component<
@@ -33,7 +34,8 @@ class PostHistoryEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
     componentDidMount() {
@@ -84,12 +86,16 @@ class PostHistoryEditComponent extends React.Component<
  
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
-      if (!err) {
+     if (!err) {
         let model = values as PostHistoryViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -111,7 +117,7 @@ class PostHistoryEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.PostHistoryClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -129,7 +135,7 @@ class PostHistoryEditComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -246,9 +252,9 @@ class PostHistoryEditComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -262,5 +268,5 @@ class PostHistoryEditComponent extends React.Component<
 export const WrappedPostHistoryEditComponent = Form.create({ name: 'PostHistory Edit' })(PostHistoryEditComponent);
 
 /*<Codenesium>
-    <Hash>a1f5c9b313cb846e8cdecc5a87b457a8</Hash>
+    <Hash>4e840cf66601286a47110e946a86bd41</Hash>
 </Codenesium>*/

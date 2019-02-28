@@ -3,19 +3,15 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import StateProvinceMapper from '../stateProvince/stateProvinceMapper';
 import StateProvinceViewModel from '../stateProvince/stateProvinceViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface StateProvinceSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface StateProvinceSelectComponentState {
@@ -23,46 +19,44 @@ interface StateProvinceSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<StateProvinceViewModel>;
+  filteredRecords: Array<StateProvinceViewModel>;
 }
 
-export class  StateProvinceSelectComponent extends React.Component<
-StateProvinceSelectComponentProps,
-StateProvinceSelectComponentState
+export class StateProvinceSelectComponent extends React.Component<
+  StateProvinceSelectComponentProps,
+  StateProvinceSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.StateProvinceClientResponseModel>;
+          let response = resp.data as Array<
+            Api.StateProvinceClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new StateProvinceMapper();
-          
-          let devices:Array<StateProvinceViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<StateProvinceViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -87,46 +81,41 @@ StateProvinceSelectComponentState
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
         <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:StateProvinceViewModel) =>
-            {
-                return <Select.Option value={x.stateProvinceID}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue,
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map((x: StateProvinceViewModel) => {
+                return (
+                  <Select.Option value={x.stateProvinceID}>
+                    {x.toDisplay()}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </div>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>3a6d65c32b1de20f6e7362ee6d1877e8</Hash>
+    <Hash>03c830d37994f03fca4c237dc6de371c</Hash>
 </Codenesium>*/

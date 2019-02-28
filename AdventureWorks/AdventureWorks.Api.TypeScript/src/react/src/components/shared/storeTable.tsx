@@ -6,11 +6,11 @@ import StoreMapper from '../store/storeMapper';
 import StoreViewModel from '../store/storeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface StoreTableComponentProps {
-  businessEntityID:number,
-  apiRoute:string;
+  businessEntityID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface StoreTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<StoreViewModel>;
+  filteredRecords: Array<StoreViewModel>;
 }
 
-export class  StoreTableComponent extends React.Component<
-StoreTableComponentProps,
-StoreTableComponentState
+export class StoreTableComponent extends React.Component<
+  StoreTableComponentProps,
+  StoreTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: StoreViewModel) {
-  this.props.history.push(ClientRoutes.Stores + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: StoreViewModel) {
+    this.props.history.push(ClientRoutes.Stores + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: StoreViewModel) {
-   this.props.history.push(ClientRoutes.Stores + '/' + row.id);
- }
+  handleDetailClick(e: any, row: StoreViewModel) {
+    this.props.history.push(ClientRoutes.Stores + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.StoreClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: StoreViewModel) {
           console.log(response);
 
           let mapper = new StoreMapper();
-          
-          let stores:Array<StoreViewModel> = [];
 
-          response.forEach(x =>
-          {
-              stores.push(mapper.mapApiResponseToViewModel(x));
+          let stores: Array<StoreViewModel> = [];
+
+          response.forEach(x => {
+            stores.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,76 +92,94 @@ handleEditClick(e:any, row: StoreViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Stores',
-                    columns: [
-					  {
-                      Header: 'BusinessEntityID',
-                      accessor: 'businessEntityID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.businessEntityID)}</span>;
-                      }           
-                    },  {
-                      Header: 'Demographics',
-                      accessor: 'demographic',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Stores',
+                columns: [
+                  {
+                    Header: 'BusinessEntityID',
+                    accessor: 'businessEntityID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.businessEntityID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Demographics',
+                    accessor: 'demographic',
+                    Cell: props => {
                       return <span>{String(props.original.demographic)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'Rowguid',
-                      accessor: 'rowguid',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'Rowguid',
+                    accessor: 'rowguid',
+                    Cell: props => {
                       return <span>{String(props.original.rowguid)}</span>;
-                      }           
-                    },  {
-                      Header: 'SalesPersonID',
-                      accessor: 'salesPersonID',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.SalesPersons + '/' + props.original.salesPersonID); }}>
+                    },
+                  },
+                  {
+                    Header: 'SalesPersonID',
+                    accessor: 'salesPersonID',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.SalesPersons +
+                                '/' +
+                                props.original.salesPersonID
+                            );
+                          }}
+                        >
                           {String(
                             props.original.salesPersonIDNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as StoreViewModel
@@ -175,8 +190,8 @@ handleEditClick(e:any, row: StoreViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as StoreViewModel
@@ -185,11 +200,14 @@ handleEditClick(e:any, row: StoreViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -197,6 +215,7 @@ handleEditClick(e:any, row: StoreViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>8c4ea0925ee25322996913019f14034e</Hash>
+    <Hash>8ddc964b933df351f94e1d25d22cf363</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import VoteMapper from '../vote/voteMapper';
 import VoteViewModel from '../vote/voteViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface VoteTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface VoteTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<VoteViewModel>;
+  filteredRecords: Array<VoteViewModel>;
 }
 
-export class  VoteTableComponent extends React.Component<
-VoteTableComponentProps,
-VoteTableComponentState
+export class VoteTableComponent extends React.Component<
+  VoteTableComponentProps,
+  VoteTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: VoteViewModel) {
-  this.props.history.push(ClientRoutes.Votes + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: VoteViewModel) {
+    this.props.history.push(ClientRoutes.Votes + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: VoteViewModel) {
-   this.props.history.push(ClientRoutes.Votes + '/' + row.id);
- }
+  handleDetailClick(e: any, row: VoteViewModel) {
+    this.props.history.push(ClientRoutes.Votes + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.VoteClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: VoteViewModel) {
           console.log(response);
 
           let mapper = new VoteMapper();
-          
-          let votes:Array<VoteViewModel> = [];
 
-          response.forEach(x =>
-          {
-              votes.push(mapper.mapApiResponseToViewModel(x));
+          let votes: Array<VoteViewModel> = [];
+
+          response.forEach(x => {
+            votes.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,66 +92,69 @@ handleEditClick(e:any, row: VoteViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Votes',
-                    columns: [
-					  {
-                      Header: 'BountyAmount',
-                      accessor: 'bountyAmount',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Votes',
+                columns: [
+                  {
+                    Header: 'BountyAmount',
+                    accessor: 'bountyAmount',
+                    Cell: props => {
                       return <span>{String(props.original.bountyAmount)}</span>;
-                      }           
-                    },  {
-                      Header: 'CreationDate',
-                      accessor: 'creationDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.creationDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'PostId',
-                      accessor: 'postId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.postId)}</span>;
-                      }           
-                    },  {
-                      Header: 'UserId',
-                      accessor: 'userId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.userId)}</span>;
-                      }           
-                    },  {
-                      Header: 'VoteTypeId',
-                      accessor: 'voteTypeId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.voteTypeId)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'CreationDate',
+                    accessor: 'creationDate',
+                    Cell: props => {
+                      return <span>{String(props.original.creationDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PostId',
+                    accessor: 'postId',
+                    Cell: props => {
+                      return <span>{String(props.original.postId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'UserId',
+                    accessor: 'userId',
+                    Cell: props => {
+                      return <span>{String(props.original.userId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'VoteTypeId',
+                    accessor: 'voteTypeId',
+                    Cell: props => {
+                      return <span>{String(props.original.voteTypeId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as VoteViewModel
@@ -165,8 +165,8 @@ handleEditClick(e:any, row: VoteViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as VoteViewModel
@@ -175,11 +175,14 @@ handleEditClick(e:any, row: VoteViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -187,6 +190,7 @@ handleEditClick(e:any, row: VoteViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>5c39379dfdae9c5e3b7c7b8c3b3190cc</Hash>
+    <Hash>3657f8309e04ae3f8aee47bb9c84b4b7</Hash>
 </Codenesium>*/

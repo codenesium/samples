@@ -12,14 +12,9 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>,
-  displayName: string
-) => {
-  class WrapperHeaderComponent extends React.Component<
-    WrapperHeaderProps & RouteComponentProps,
-    WrapperHeaderState
-  > {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -35,76 +30,94 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+               <MenuItem
                 key="Home"
-                onClick={() => {
-                  this.setState({ ...this.state, collapsed: true });
-                }}
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'} />
+                <Link to={'/'}></Link>
               </MenuItem>
 
-              <MenuItem key="chain">
-                <Icon type="pie-chart" />
-                <span>Chains</span>
-                <Link to={ClientRoutes.Chains} />
+			   			   <MenuItem
+                key="chain"
+              >
+			  <Icon type="pie-chart" />
+              <span>Chains</span>
+              <Link to={ClientRoutes.Chains}></Link>
               </MenuItem>
 
-              <MenuItem key="chainStatus">
-                <Icon type="rise" />
-                <span>ChainStatuses</span>
-                <Link to={ClientRoutes.ChainStatuses} />
+							   <MenuItem
+                key="chainStatus"
+              >
+			  <Icon type="rise" />
+              <span>ChainStatuses</span>
+              <Link to={ClientRoutes.ChainStatuses}></Link>
               </MenuItem>
 
-              <MenuItem key="clasp">
-                <Icon type="bars" />
-                <span>Clasps</span>
-                <Link to={ClientRoutes.Clasps} />
+							   <MenuItem
+                key="clasp"
+              >
+			  <Icon type="bars" />
+              <span>Clasps</span>
+              <Link to={ClientRoutes.Clasps}></Link>
               </MenuItem>
 
-              <MenuItem key="link">
-                <Icon type="cloud" />
-                <span>Links</span>
-                <Link to={ClientRoutes.Links} />
+							   <MenuItem
+                key="link"
+              >
+			  <Icon type="cloud" />
+              <span>Links</span>
+              <Link to={ClientRoutes.Links}></Link>
               </MenuItem>
 
-              <MenuItem key="linkLog">
-                <Icon type="code" />
-                <span>LinkLogs</span>
-                <Link to={ClientRoutes.LinkLogs} />
+							   <MenuItem
+                key="linkLog"
+              >
+			  <Icon type="code" />
+              <span>LinkLogs</span>
+              <Link to={ClientRoutes.LinkLogs}></Link>
               </MenuItem>
 
-              <MenuItem key="linkStatus">
-                <Icon type="smile" />
-                <span>LinkStatuses</span>
-                <Link to={ClientRoutes.LinkStatuses} />
+							   <MenuItem
+                key="linkStatus"
+              >
+			  <Icon type="smile" />
+              <span>LinkStatuses</span>
+              <Link to={ClientRoutes.LinkStatuses}></Link>
               </MenuItem>
 
-              <MenuItem key="machine">
-                <Icon type="laptop" />
-                <span>Machines</span>
-                <Link to={ClientRoutes.Machines} />
+							   <MenuItem
+                key="machine"
+              >
+			  <Icon type="laptop" />
+              <span>Machines</span>
+              <Link to={ClientRoutes.Machines}></Link>
               </MenuItem>
 
-              <MenuItem key="organization">
-                <Icon type="mobile" />
-                <span>Organizations</span>
-                <Link to={ClientRoutes.Organizations} />
+							   <MenuItem
+                key="organization"
+              >
+			  <Icon type="mobile" />
+              <span>Organizations</span>
+              <Link to={ClientRoutes.Organizations}></Link>
               </MenuItem>
 
-              <MenuItem key="team">
-                <Icon type="paper-clip" />
-                <span>Teams</span>
-                <Link to={ClientRoutes.Teams} />
+							   <MenuItem
+                key="team"
+              >
+			  <Icon type="paper-clip" />
+              <span>Teams</span>
+              <Link to={ClientRoutes.Teams}></Link>
               </MenuItem>
+
+				
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-              <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -117,7 +130,6 @@ export const wrapperHeader = (
   return WrapperHeaderComponent;
 };
 
-
 /*<Codenesium>
-    <Hash>b64854754bf6d4055a375e6c60554e79</Hash>
+    <Hash>7f39b0b7020549b5f62f42d6260b8f59</Hash>
 </Codenesium>*/

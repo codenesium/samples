@@ -24,6 +24,7 @@ interface BillOfMaterialCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class BillOfMaterialCreateComponent extends React.Component<
@@ -36,17 +37,22 @@ class BillOfMaterialCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as BillOfMaterialViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -68,7 +74,7 @@ class BillOfMaterialCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.BillOfMaterialClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -87,7 +93,7 @@ class BillOfMaterialCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -203,9 +209,9 @@ class BillOfMaterialCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -219,5 +225,5 @@ class BillOfMaterialCreateComponent extends React.Component<
 export const WrappedBillOfMaterialCreateComponent = Form.create({ name: 'BillOfMaterial Create' })(BillOfMaterialCreateComponent);
 
 /*<Codenesium>
-    <Hash>e2632a51bfa612904c8b2bf255ed899f</Hash>
+    <Hash>32bf2e841a3913ebcfc7f922973552e6</Hash>
 </Codenesium>*/

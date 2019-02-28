@@ -22,6 +22,7 @@ interface ShoppingCartItemCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class ShoppingCartItemCreateComponent extends React.Component<
@@ -34,17 +35,22 @@ class ShoppingCartItemCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as ShoppingCartItemViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -66,7 +72,7 @@ class ShoppingCartItemCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.ShoppingCartItemClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -85,7 +91,7 @@ class ShoppingCartItemCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -170,9 +176,9 @@ class ShoppingCartItemCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -186,5 +192,5 @@ class ShoppingCartItemCreateComponent extends React.Component<
 export const WrappedShoppingCartItemCreateComponent = Form.create({ name: 'ShoppingCartItem Create' })(ShoppingCartItemCreateComponent);
 
 /*<Codenesium>
-    <Hash>b548c27d78012b71c5bb6cac093d24c3</Hash>
+    <Hash>d0927ca0656f22c96d2269446adf8f51</Hash>
 </Codenesium>*/

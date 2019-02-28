@@ -21,6 +21,7 @@ interface AWBuildVersionEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class AWBuildVersionEditComponent extends React.Component<
@@ -33,7 +34,8 @@ class AWBuildVersionEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
     componentDidMount() {
@@ -84,12 +86,16 @@ class AWBuildVersionEditComponent extends React.Component<
  
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
-      if (!err) {
+     if (!err) {
         let model = values as AWBuildVersionViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -111,7 +117,7 @@ class AWBuildVersionEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.AWBuildVersionClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -129,7 +135,7 @@ class AWBuildVersionEditComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -192,9 +198,9 @@ class AWBuildVersionEditComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -208,5 +214,5 @@ class AWBuildVersionEditComponent extends React.Component<
 export const WrappedAWBuildVersionEditComponent = Form.create({ name: 'AWBuildVersion Edit' })(AWBuildVersionEditComponent);
 
 /*<Codenesium>
-    <Hash>1ecdf5cb3058dd9edc84d839795b23f6</Hash>
+    <Hash>1509c9ca75fedda8e5b3890dc3ade542</Hash>
 </Codenesium>*/

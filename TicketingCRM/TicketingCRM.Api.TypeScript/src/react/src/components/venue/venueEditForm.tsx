@@ -23,6 +23,7 @@ interface VenueEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class VenueEditComponent extends React.Component<
@@ -35,7 +36,8 @@ class VenueEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
     componentDidMount() {
@@ -86,12 +88,16 @@ class VenueEditComponent extends React.Component<
  
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
-      if (!err) {
+     if (!err) {
         let model = values as VenueViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -113,7 +119,7 @@ class VenueEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.VenueClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -131,7 +137,7 @@ class VenueEditComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -266,9 +272,9 @@ class VenueEditComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -282,5 +288,5 @@ class VenueEditComponent extends React.Component<
 export const WrappedVenueEditComponent = Form.create({ name: 'Venue Edit' })(VenueEditComponent);
 
 /*<Codenesium>
-    <Hash>24010619772a0571032a6d83f259a943</Hash>
+    <Hash>6fdd01245bfc9ba0a3b0488222d1ca50</Hash>
 </Codenesium>*/

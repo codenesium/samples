@@ -6,11 +6,11 @@ import UnitDispositionMapper from '../unitDisposition/unitDispositionMapper';
 import UnitDispositionViewModel from '../unitDisposition/unitDispositionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface UnitDispositionTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,56 +20,57 @@ interface UnitDispositionTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<UnitDispositionViewModel>;
+  filteredRecords : Array<UnitDispositionViewModel>;
 }
 
-export class UnitDispositionTableComponent extends React.Component<
-  UnitDispositionTableComponentProps,
-  UnitDispositionTableComponentState
+export class  UnitDispositionTableComponent extends React.Component<
+UnitDispositionTableComponentProps,
+UnitDispositionTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: UnitDispositionViewModel) {
-    this.props.history.push(ClientRoutes.UnitDispositions + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: UnitDispositionViewModel) {
+  this.props.history.push(ClientRoutes.UnitDispositions + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: UnitDispositionViewModel) {
-    this.props.history.push(ClientRoutes.UnitDispositions + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: UnitDispositionViewModel) {
+   this.props.history.push(ClientRoutes.UnitDispositions + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.UnitDispositionClientResponseModel
-          >;
+          let response = resp.data as Array<Api.UnitDispositionClientResponseModel>;
 
           console.log(response);
 
           let mapper = new UnitDispositionMapper();
+          
+          let unitDispositions:Array<UnitDispositionViewModel> = [];
 
-          let unitDispositions: Array<UnitDispositionViewModel> = [];
-
-          response.forEach(x => {
-            unitDispositions.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              unitDispositions.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -94,41 +95,42 @@ export class UnitDispositionTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'UnitDispositions',
-                columns: [
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'UnitDispositions',
+                    columns: [
+					  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as UnitDispositionViewModel
@@ -139,8 +141,8 @@ export class UnitDispositionTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as UnitDispositionViewModel
@@ -149,14 +151,11 @@ export class UnitDispositionTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -164,7 +163,6 @@ export class UnitDispositionTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>685190f632a29d01b15c1f166c2a65d5</Hash>
+    <Hash>0a2714832d5f1b64a334679f7c0488f8</Hash>
 </Codenesium>*/

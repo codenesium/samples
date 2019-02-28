@@ -6,11 +6,11 @@ import SaleTicketMapper from '../saleTicket/saleTicketMapper';
 import SaleTicketViewModel from '../saleTicket/saleTicketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface SaleTicketTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface SaleTicketTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<SaleTicketViewModel>;
+  filteredRecords: Array<SaleTicketViewModel>;
 }
 
-export class  SaleTicketTableComponent extends React.Component<
-SaleTicketTableComponentProps,
-SaleTicketTableComponentState
+export class SaleTicketTableComponent extends React.Component<
+  SaleTicketTableComponentProps,
+  SaleTicketTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: SaleTicketViewModel) {
-  this.props.history.push(ClientRoutes.SaleTickets + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: SaleTicketViewModel) {
+    this.props.history.push(ClientRoutes.SaleTickets + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: SaleTicketViewModel) {
-   this.props.history.push(ClientRoutes.SaleTickets + '/' + row.id);
- }
+  handleDetailClick(e: any, row: SaleTicketViewModel) {
+    this.props.history.push(ClientRoutes.SaleTickets + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.SaleTicketClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: SaleTicketViewModel) {
           console.log(response);
 
           let mapper = new SaleTicketMapper();
-          
-          let saleTickets:Array<SaleTicketViewModel> = [];
 
-          response.forEach(x =>
-          {
-              saleTickets.push(mapper.mapApiResponseToViewModel(x));
+          let saleTickets: Array<SaleTicketViewModel> = [];
+
+          response.forEach(x => {
+            saleTickets.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,56 +92,76 @@ handleEditClick(e:any, row: SaleTicketViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'SaleTickets',
-                    columns: [
-					  {
-                      Header: 'SaleId',
-                      accessor: 'saleId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Sales + '/' + props.original.saleId); }}>
-                          {String(
-                            props.original.saleIdNavigation.toDisplay()
-                          )}
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'SaleTickets',
+                columns: [
+                  {
+                    Header: 'SaleId',
+                    accessor: 'saleId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Sales + '/' + props.original.saleId
+                            );
+                          }}
+                        >
+                          {String(props.original.saleIdNavigation.toDisplay())}
                         </a>
-                      }           
-                    },  {
-                      Header: 'TicketId',
-                      accessor: 'ticketId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Tickets + '/' + props.original.ticketId); }}>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'TicketId',
+                    accessor: 'ticketId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Tickets +
+                                '/' +
+                                props.original.ticketId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.ticketIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SaleTicketViewModel
@@ -155,8 +172,8 @@ handleEditClick(e:any, row: SaleTicketViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as SaleTicketViewModel
@@ -165,11 +182,14 @@ handleEditClick(e:any, row: SaleTicketViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -177,6 +197,7 @@ handleEditClick(e:any, row: SaleTicketViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>643f0b17603ece78668d957ac0297175</Hash>
+    <Hash>e0e5e018805db00852cd9fb9124d48d4</Hash>
 </Codenesium>*/

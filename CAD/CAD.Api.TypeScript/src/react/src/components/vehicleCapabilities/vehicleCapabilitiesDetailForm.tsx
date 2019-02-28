@@ -7,6 +7,9 @@ import VehicleCapabilitiesViewModel from './vehicleCapabilitiesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface VehicleCapabilitiesDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface VehicleCapabilitiesDetailComponentState {
 }
 
 class VehicleCapabilitiesDetailComponent extends React.Component<
-  VehicleCapabilitiesDetailComponentProps,
-  VehicleCapabilitiesDetailComponentState
+VehicleCapabilitiesDetailComponentProps,
+VehicleCapabilitiesDetailComponentState
 > {
   state = {
     model: new VehicleCapabilitiesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.VehicleCapabilities + '/edit/' + this.state.model!.vehicleId
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.VehicleCapabilities + '/edit/' + this.state.model!.vehicleId);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,42 +85,39 @@ class VehicleCapabilitiesDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>vehicleCapabilityId</h3>
-              <p>
-                {String(
-                  this.state.model!.vehicleCapabilityIdNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>vehicleId</h3>
-              <p>
-                {String(this.state.model!.vehicleIdNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>vehicleCapabilityId</h3>
+							<p>{String(this.state.model!.vehicleCapabilityIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>vehicleId</h3>
+							<p>{String(this.state.model!.vehicleIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -128,11 +126,10 @@ class VehicleCapabilitiesDetailComponent extends React.Component<
   }
 }
 
-export const WrappedVehicleCapabilitiesDetailComponent = Form.create({
-  name: 'VehicleCapabilities Detail',
-})(VehicleCapabilitiesDetailComponent);
-
+export const WrappedVehicleCapabilitiesDetailComponent = Form.create({ name: 'VehicleCapabilities Detail' })(
+  VehicleCapabilitiesDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>2f8dcdc31c4e503c18a7791129a46dbe</Hash>
+    <Hash>1c4b79e68825f221caf5cf98dec11886</Hash>
 </Codenesium>*/

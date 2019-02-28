@@ -33,6 +33,7 @@ interface PipelineStepStepRequirementCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class PipelineStepStepRequirementCreateComponent extends React.Component<
@@ -46,15 +47,19 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as PipelineStepStepRequirementViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -79,6 +84,7 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -104,6 +110,7 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -158,8 +165,12 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -177,5 +188,5 @@ export const WrappedPipelineStepStepRequirementCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>380069c2211b3af6b4876f66c01c2555</Hash>
+    <Hash>9877ef03caf5e1a3ef2bf3dc8dcb5ee6</Hash>
 </Codenesium>*/

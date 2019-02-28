@@ -6,7 +6,10 @@ import ChainStatusMapper from './chainStatusMapper';
 import ChainStatusViewModel from './chainStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ChainTableComponent } from '../shared/chainTable';
+import {ChainTableComponent} from '../shared/chainTable'
+	
+
+
 
 interface ChainStatusDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface ChainStatusDetailComponentState {
 }
 
 class ChainStatusDetailComponent extends React.Component<
-  ChainStatusDetailComponentProps,
-  ChainStatusDetailComponentState
+ChainStatusDetailComponentProps,
+ChainStatusDetailComponentState
 > {
   state = {
     model: new ChainStatusViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.ChainStatuses + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.ChainStatuses + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,52 +86,48 @@ class ChainStatusDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Chains</h3>
-            <ChainTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.ChainStatuses +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Chains
-              }
-            />
-          </div>
+            <ChainTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.ChainStatuses + '/' + this.state.model!.id + '/' + ApiRoutes.Chains}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -139,11 +136,10 @@ class ChainStatusDetailComponent extends React.Component<
   }
 }
 
-export const WrappedChainStatusDetailComponent = Form.create({
-  name: 'ChainStatus Detail',
-})(ChainStatusDetailComponent);
-
+export const WrappedChainStatusDetailComponent = Form.create({ name: 'ChainStatus Detail' })(
+  ChainStatusDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>bd4578e833cef4d7c1b103d1416eb205</Hash>
+    <Hash>be12f84ce15733ff8c5e87e60d83c911</Hash>
 </Codenesium>*/

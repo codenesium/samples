@@ -7,6 +7,9 @@ import MessengerViewModel from './messengerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface MessengerDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface MessengerDetailComponentState {
 }
 
 class MessengerDetailComponent extends React.Component<
-  MessengerDetailComponentProps,
-  MessengerDetailComponentState
+MessengerDetailComponentProps,
+MessengerDetailComponentState
 > {
   state = {
     model: new MessengerViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Messengers + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Messengers + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,54 +85,55 @@ class MessengerDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>date</h3>
-              <p>{String(this.state.model!.date)}</p>
-            </div>
-            <div>
-              <h3>from_user_id</h3>
-              <p>{String(this.state.model!.fromUserId)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>message_id</h3>
-              <p>
-                {String(this.state.model!.messageIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>time</h3>
-              <p>{String(this.state.model!.time)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>to_user_id</h3>
-              <p>{String(this.state.model!.toUserIdNavigation!.toDisplay())}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>user_id</h3>
-              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>date</h3>
+							<p>{String(this.state.model!.date)}</p>
+						 </div>
+					   						 <div>
+							<h3>from_user_id</h3>
+							<p>{String(this.state.model!.fromUserId)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>message_id</h3>
+							<p>{String(this.state.model!.messageIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>time</h3>
+							<p>{String(this.state.model!.time)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>to_user_id</h3>
+							<p>{String(this.state.model!.toUserIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>user_id</h3>
+							<p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -140,11 +142,10 @@ class MessengerDetailComponent extends React.Component<
   }
 }
 
-export const WrappedMessengerDetailComponent = Form.create({
-  name: 'Messenger Detail',
-})(MessengerDetailComponent);
-
+export const WrappedMessengerDetailComponent = Form.create({ name: 'Messenger Detail' })(
+  MessengerDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>706f54fc1256050f398cbe4d46200f06</Hash>
+    <Hash>2529fccfa63012d7b95cb6fd7e3f2c20</Hash>
 </Codenesium>*/

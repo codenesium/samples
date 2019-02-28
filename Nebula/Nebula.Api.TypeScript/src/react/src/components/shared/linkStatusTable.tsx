@@ -6,11 +6,11 @@ import LinkStatusMapper from '../linkStatus/linkStatusMapper';
 import LinkStatusViewModel from '../linkStatus/linkStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface LinkStatusTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface LinkStatusTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<LinkStatusViewModel>;
+  filteredRecords : Array<LinkStatusViewModel>;
 }
 
-export class LinkStatusTableComponent extends React.Component<
-  LinkStatusTableComponentProps,
-  LinkStatusTableComponentState
+export class  LinkStatusTableComponent extends React.Component<
+LinkStatusTableComponentProps,
+LinkStatusTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: LinkStatusViewModel) {
-    this.props.history.push(ClientRoutes.LinkStatuses + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: LinkStatusViewModel) {
+  this.props.history.push(ClientRoutes.LinkStatuses + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: LinkStatusViewModel) {
-    this.props.history.push(ClientRoutes.LinkStatuses + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: LinkStatusViewModel) {
+   this.props.history.push(ClientRoutes.LinkStatuses + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.LinkStatusClientResponseModel>;
@@ -63,11 +65,12 @@ export class LinkStatusTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new LinkStatusMapper();
+          
+          let linkStatuses:Array<LinkStatusViewModel> = [];
 
-          let linkStatuses: Array<LinkStatusViewModel> = [];
-
-          response.forEach(x => {
-            linkStatuses.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              linkStatuses.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,48 +95,48 @@ export class LinkStatusTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'LinkStatuses',
-                columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'LinkStatuses',
+                    columns: [
+					  {
+                      Header: 'Id',
+                      accessor: 'id',
+                      Cell: (props) => {
                       return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as LinkStatusViewModel
@@ -144,8 +147,8 @@ export class LinkStatusTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as LinkStatusViewModel
@@ -154,14 +157,11 @@ export class LinkStatusTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -169,7 +169,6 @@ export class LinkStatusTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>9b4567a3c6a1805c37e5ac4acdd6f24d</Hash>
+    <Hash>e05ec5c12145bcef05cd877afc55ba61</Hash>
 </Codenesium>*/

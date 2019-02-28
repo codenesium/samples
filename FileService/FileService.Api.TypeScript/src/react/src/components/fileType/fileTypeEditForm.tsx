@@ -21,6 +21,7 @@ interface FileTypeEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class FileTypeEditComponent extends React.Component<
@@ -33,7 +34,8 @@ class FileTypeEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
     componentDidMount() {
@@ -84,12 +86,16 @@ class FileTypeEditComponent extends React.Component<
  
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
-      if (!err) {
+     if (!err) {
         let model = values as FileTypeViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -111,7 +117,7 @@ class FileTypeEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.FileTypeClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -129,7 +135,7 @@ class FileTypeEditComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -170,9 +176,9 @@ class FileTypeEditComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -186,5 +192,5 @@ class FileTypeEditComponent extends React.Component<
 export const WrappedFileTypeEditComponent = Form.create({ name: 'FileType Edit' })(FileTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>5b23ad235b2629f8abae3f14567bdb46</Hash>
+    <Hash>3a7997202a6a1e95b8f320a80b03d199</Hash>
 </Codenesium>*/

@@ -22,6 +22,7 @@ interface SpecialOfferCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class SpecialOfferCreateComponent extends React.Component<
@@ -34,17 +35,22 @@ class SpecialOfferCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as SpecialOfferViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       }
+	  else {
+	      this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -66,7 +72,7 @@ class SpecialOfferCreateComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.SpecialOfferClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -85,7 +91,7 @@ class SpecialOfferCreateComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -214,9 +220,9 @@ class SpecialOfferCreateComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+           <Form.Item>
+            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -230,5 +236,5 @@ class SpecialOfferCreateComponent extends React.Component<
 export const WrappedSpecialOfferCreateComponent = Form.create({ name: 'SpecialOffer Create' })(SpecialOfferCreateComponent);
 
 /*<Codenesium>
-    <Hash>3cdc501bd30e5d2e8a7f5b65845cd981</Hash>
+    <Hash>ab216bdd0a7295ea1234b61c69bf3ead</Hash>
 </Codenesium>*/

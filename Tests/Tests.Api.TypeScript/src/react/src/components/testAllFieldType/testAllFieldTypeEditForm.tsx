@@ -21,6 +21,7 @@ interface TestAllFieldTypeEditComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted:boolean;
+  submitting:boolean;
 }
 
 class TestAllFieldTypeEditComponent extends React.Component<
@@ -33,7 +34,8 @@ class TestAllFieldTypeEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false
+	submitted:false,
+	submitting:false
   };
 
     componentDidMount() {
@@ -84,12 +86,16 @@ class TestAllFieldTypeEditComponent extends React.Component<
  
  handleSubmit = (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
      this.props.form.validateFields((err:any, values:any) => {
-      if (!err) {
+     if (!err) {
         let model = values as TestAllFieldTypeViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
@@ -111,7 +117,7 @@ class TestAllFieldTypeEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.TestAllFieldTypeClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
@@ -129,7 +135,7 @@ class TestAllFieldTypeEditComponent extends React.Component<
 				})
 			  });
 		  }
-          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
       ); 
   }
@@ -518,9 +524,9 @@ class TestAllFieldTypeEditComponent extends React.Component<
               </Form.Item>
 
 			
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Submit
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
               </Button>
             </Form.Item>
 			{message}
@@ -534,5 +540,5 @@ class TestAllFieldTypeEditComponent extends React.Component<
 export const WrappedTestAllFieldTypeEditComponent = Form.create({ name: 'TestAllFieldType Edit' })(TestAllFieldTypeEditComponent);
 
 /*<Codenesium>
-    <Hash>e3b17b36d4e795a27638a87d2bdbc5c2</Hash>
+    <Hash>ef526e0eeef9c797b85f0bf9cbead9ad</Hash>
 </Codenesium>*/

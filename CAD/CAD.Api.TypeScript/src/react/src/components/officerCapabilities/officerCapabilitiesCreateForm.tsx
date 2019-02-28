@@ -34,6 +34,7 @@ interface OfficerCapabilitiesCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class OfficerCapabilitiesCreateComponent extends React.Component<
@@ -47,15 +48,19 @@ class OfficerCapabilitiesCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as OfficerCapabilitiesViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -80,6 +85,7 @@ class OfficerCapabilitiesCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -105,6 +111,7 @@ class OfficerCapabilitiesCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -143,8 +150,12 @@ class OfficerCapabilitiesCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -162,5 +173,5 @@ export const WrappedOfficerCapabilitiesCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6b5e6cd956973b4a8e2ff7c83771b203</Hash>
+    <Hash>10bcbaa6e66cbd92e83519f90c66d1fd</Hash>
 </Codenesium>*/

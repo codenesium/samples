@@ -6,10 +6,7 @@ import TicketMapper from './ticketMapper';
 import TicketViewModel from './ticketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {SaleTicketTableComponent} from '../shared/saleTicketTable'
-	
-
-
+import { SaleTicketTableComponent } from '../shared/saleTicketTable';
 
 interface TicketDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface TicketDetailComponentState {
 }
 
 class TicketDetailComponent extends React.Component<
-TicketDetailComponentProps,
-TicketDetailComponentState
+  TicketDetailComponentProps,
+  TicketDetailComponentState
 > {
   state = {
     model: new TicketViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Tickets + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Tickets + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,48 +85,56 @@ TicketDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>publicId</h3>
-							<p>{String(this.state.model!.publicId)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>ticketStatusId</h3>
-							<p>{String(this.state.model!.ticketStatusIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>publicId</h3>
+              <p>{String(this.state.model!.publicId)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>ticketStatusId</h3>
+              <p>
+                {String(
+                  this.state.model!.ticketStatusIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>SaleTickets</h3>
-            <SaleTicketTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Tickets + '/' + this.state.model!.id + '/' + ApiRoutes.SaleTickets}
-			/>
-         </div>
-	
-
+            <SaleTicketTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Tickets +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.SaleTickets
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,10 +143,11 @@ TicketDetailComponentState
   }
 }
 
-export const WrappedTicketDetailComponent = Form.create({ name: 'Ticket Detail' })(
-  TicketDetailComponent
-);
+export const WrappedTicketDetailComponent = Form.create({
+  name: 'Ticket Detail',
+})(TicketDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>4d4b9b185a81e04695b600795319ec31</Hash>
+    <Hash>8daed24f73d44d036e1e6f419dbf56a1</Hash>
 </Codenesium>*/

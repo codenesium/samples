@@ -32,6 +32,7 @@ interface TestAllFieldTypesNullableCreateComponentState {
   errorOccurred: boolean;
   errorMessage: string;
   submitted: boolean;
+  submitting: boolean;
 }
 
 class TestAllFieldTypesNullableCreateComponent extends React.Component<
@@ -45,15 +46,19 @@ class TestAllFieldTypesNullableCreateComponent extends React.Component<
     errorOccurred: false,
     errorMessage: '',
     submitted: false,
+    submitting: false,
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as TestAllFieldTypesNullableViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
     });
   };
@@ -78,6 +83,7 @@ class TestAllFieldTypesNullableCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
@@ -103,6 +109,7 @@ class TestAllFieldTypesNullableCreateComponent extends React.Component<
           this.setState({
             ...this.state,
             submitted: true,
+            submitting: false,
             errorOccurred: true,
             errorMessage: 'Error from API',
           });
@@ -362,8 +369,12 @@ class TestAllFieldTypesNullableCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </Form.Item>
           {message}
@@ -381,5 +392,5 @@ export const WrappedTestAllFieldTypesNullableCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>395fb4f7cb29ab207115c9f37322c618</Hash>
+    <Hash>cce508032194f65d30c5783cd35b4000</Hash>
 </Codenesium>*/
