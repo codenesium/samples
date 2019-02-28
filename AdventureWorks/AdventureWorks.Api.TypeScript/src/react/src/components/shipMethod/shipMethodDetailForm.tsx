@@ -6,7 +6,10 @@ import ShipMethodMapper from './shipMethodMapper';
 import ShipMethodViewModel from './shipMethodViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { PurchaseOrderHeaderTableComponent } from '../shared/purchaseOrderHeaderTable';
+import {PurchaseOrderHeaderTableComponent} from '../shared/purchaseOrderHeaderTable'
+	
+
+
 
 interface ShipMethodDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface ShipMethodDetailComponentState {
 }
 
 class ShipMethodDetailComponent extends React.Component<
-  ShipMethodDetailComponentProps,
-  ShipMethodDetailComponentState
+ShipMethodDetailComponentProps,
+ShipMethodDetailComponentState
 > {
   state = {
     model: new ShipMethodViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.ShipMethods + '/edit/' + this.state.model!.shipMethodID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.ShipMethods + '/edit/' + this.state.model!.shipMethodID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,68 +86,64 @@ class ShipMethodDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-            <div>
-              <h3>ShipBase</h3>
-              <p>{String(this.state.model!.shipBase)}</p>
-            </div>
-            <div>
-              <h3>ShipMethodID</h3>
-              <p>{String(this.state.model!.shipMethodID)}</p>
-            </div>
-            <div>
-              <h3>ShipRate</h3>
-              <p>{String(this.state.model!.shipRate)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   						 <div>
+							<h3>ShipBase</h3>
+							<p>{String(this.state.model!.shipBase)}</p>
+						 </div>
+					   						 <div>
+							<h3>ShipMethodID</h3>
+							<p>{String(this.state.model!.shipMethodID)}</p>
+						 </div>
+					   						 <div>
+							<h3>ShipRate</h3>
+							<p>{String(this.state.model!.shipRate)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>PurchaseOrderHeaders</h3>
-            <PurchaseOrderHeaderTableComponent
-              purchaseOrderID={this.state.model!.purchaseOrderID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.ShipMethods +
-                '/' +
-                this.state.model!.shipMethodID +
-                '/' +
-                ApiRoutes.PurchaseOrderHeaders
-              }
-            />
-          </div>
+            <PurchaseOrderHeaderTableComponent 
+			purchaseOrderID={this.state.model!.purchaseOrderID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.ShipMethods + '/' + this.state.model!.shipMethodID + '/' + ApiRoutes.PurchaseOrderHeaders}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -155,11 +152,10 @@ class ShipMethodDetailComponent extends React.Component<
   }
 }
 
-export const WrappedShipMethodDetailComponent = Form.create({
-  name: 'ShipMethod Detail',
-})(ShipMethodDetailComponent);
-
+export const WrappedShipMethodDetailComponent = Form.create({ name: 'ShipMethod Detail' })(
+  ShipMethodDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>fc184043594c48a180303fbe8ca9e7f0</Hash>
+    <Hash>bf0d66ce55b04570d28d279722ec9b55</Hash>
 </Codenesium>*/

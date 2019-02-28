@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import PetMapper from '../pet/petMapper';
 import PetViewModel from '../pet/petViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PetSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface PetSelectComponentState {
@@ -19,30 +23,33 @@ interface PetSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<PetViewModel>;
+  filteredRecords : Array<PetViewModel>;
 }
 
-export class PetSelectComponent extends React.Component<
-  PetSelectComponentProps,
-  PetSelectComponentState
+export class  PetSelectComponent extends React.Component<
+PetSelectComponentProps,
+PetSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.PetClientResponseModel>;
@@ -50,11 +57,12 @@ export class PetSelectComponent extends React.Component<
           console.log(response);
 
           let mapper = new PetMapper();
+          
+          let devices:Array<PetViewModel> = [];
 
-          let devices: Array<PetViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -79,39 +87,46 @@ export class PetSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: PetViewModel) => {
-                return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:PetViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>03d8be0f813a676ac9e5997ca96f8ab1</Hash>
+    <Hash>2881188eea1654fbebcb898ab1377de0</Hash>
 </Codenesium>*/

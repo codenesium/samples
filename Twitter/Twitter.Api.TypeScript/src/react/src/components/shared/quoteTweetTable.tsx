@@ -6,11 +6,11 @@ import QuoteTweetMapper from '../quoteTweet/quoteTweetMapper';
 import QuoteTweetViewModel from '../quoteTweet/quoteTweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface QuoteTweetTableComponentProps {
-  quote_tweet_id: number;
-  apiRoute: string;
+  quote_tweet_id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface QuoteTweetTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<QuoteTweetViewModel>;
+  filteredRecords : Array<QuoteTweetViewModel>;
 }
 
-export class QuoteTweetTableComponent extends React.Component<
-  QuoteTweetTableComponentProps,
-  QuoteTweetTableComponentState
+export class  QuoteTweetTableComponent extends React.Component<
+QuoteTweetTableComponentProps,
+QuoteTweetTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: QuoteTweetViewModel) {
-    this.props.history.push(ClientRoutes.QuoteTweets + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: QuoteTweetViewModel) {
+  this.props.history.push(ClientRoutes.QuoteTweets + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: QuoteTweetViewModel) {
-    this.props.history.push(ClientRoutes.QuoteTweets + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: QuoteTweetViewModel) {
+   this.props.history.push(ClientRoutes.QuoteTweets + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.QuoteTweetClientResponseModel>;
@@ -63,11 +65,12 @@ export class QuoteTweetTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new QuoteTweetMapper();
+          
+          let quoteTweets:Array<QuoteTweetViewModel> = [];
 
-          let quoteTweets: Array<QuoteTweetViewModel> = [];
-
-          response.forEach(x => {
-            quoteTweets.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              quoteTweets.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,101 +95,74 @@ export class QuoteTweetTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'QuoteTweets',
-                columns: [
-                  {
-                    Header: 'Content',
-                    accessor: 'content',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'QuoteTweets',
+                    columns: [
+					  {
+                      Header: 'Content',
+                      accessor: 'content',
+                      Cell: (props) => {
                       return <span>{String(props.original.content)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Date',
-                    accessor: 'date',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Date',
+                      accessor: 'date',
+                      Cell: (props) => {
                       return <span>{String(props.original.date)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Retweeter_user_id',
-                    accessor: 'retweeterUserId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Users +
-                                '/' +
-                                props.original.retweeterUserId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'Retweeter_user_id',
+                      accessor: 'retweeterUserId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.retweeterUserId); }}>
                           {String(
                             props.original.retweeterUserIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Source_tweet_id',
-                    accessor: 'sourceTweetId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Tweets +
-                                '/' +
-                                props.original.sourceTweetId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'Source_tweet_id',
+                      accessor: 'sourceTweetId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Tweets + '/' + props.original.sourceTweetId); }}>
                           {String(
                             props.original.sourceTweetIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Time',
-                    accessor: 'time',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Time',
+                      accessor: 'time',
+                      Cell: (props) => {
                       return <span>{String(props.original.time)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as QuoteTweetViewModel
@@ -197,8 +173,8 @@ export class QuoteTweetTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as QuoteTweetViewModel
@@ -207,14 +183,11 @@ export class QuoteTweetTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -222,7 +195,6 @@ export class QuoteTweetTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>ca5f3018fb6d9f516330efe2dc5312de</Hash>
+    <Hash>ef28c60deeea0535a57ad83401e9f47c</Hash>
 </Codenesium>*/

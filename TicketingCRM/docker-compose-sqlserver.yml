@@ -1,9 +1,25 @@
 version: '2'
 
 services:
-
-  web:
+  app:
     container_name: 'ticketingcrm-app'
+    image: 'ticketingcrm-app'
+    build:
+      context: .
+      dockerfile: DockerFileReact
+      args
+      - REACT_APP_API_URL=http://192.168.99.100:81/
+    environment:
+       - REACT_APP_API_URL=http://192.168.99.100:81/
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "80:80"
+    networks:
+      - ticketingcrm-network
+
+  api:
+    container_name: 'ticketingcrm-api'
     image: 'ticketingcrm'
     build:
       context: .
@@ -14,9 +30,9 @@ services:
        - DatabaseProvider=MSSQL
        - MigrateDatabase=true
     volumes:
-      - .:/var/www/app
+      - .:/var/www/api
     ports:
-     - "80:80"
+     - "81:80"
     depends_on:
      - "db"
     networks:

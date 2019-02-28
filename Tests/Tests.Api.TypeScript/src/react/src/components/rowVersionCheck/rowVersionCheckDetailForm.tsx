@@ -7,6 +7,9 @@ import RowVersionCheckViewModel from './rowVersionCheckViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface RowVersionCheckDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface RowVersionCheckDetailComponentState {
 }
 
 class RowVersionCheckDetailComponent extends React.Component<
-  RowVersionCheckDetailComponentProps,
-  RowVersionCheckDetailComponentState
+RowVersionCheckDetailComponentProps,
+RowVersionCheckDetailComponentState
 > {
   state = {
     model: new RowVersionCheckViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.RowVersionChecks + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.RowVersionChecks + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,40 +85,43 @@ class RowVersionCheckDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>RowVersion</h3>
-              <p>{String(this.state.model!.rowVersion)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>RowVersion</h3>
+							<p>{String(this.state.model!.rowVersion)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -126,11 +130,10 @@ class RowVersionCheckDetailComponent extends React.Component<
   }
 }
 
-export const WrappedRowVersionCheckDetailComponent = Form.create({
-  name: 'RowVersionCheck Detail',
-})(RowVersionCheckDetailComponent);
-
+export const WrappedRowVersionCheckDetailComponent = Form.create({ name: 'RowVersionCheck Detail' })(
+  RowVersionCheckDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>74d22b9d0273fc536b57a95b6531a90f</Hash>
+    <Hash>a9eece4717640defc22aab3ff1f912d1</Hash>
 </Codenesium>*/

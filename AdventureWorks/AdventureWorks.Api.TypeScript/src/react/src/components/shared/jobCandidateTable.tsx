@@ -6,11 +6,11 @@ import JobCandidateMapper from '../jobCandidate/jobCandidateMapper';
 import JobCandidateViewModel from '../jobCandidate/jobCandidateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface JobCandidateTableComponentProps {
-  jobCandidateID: number;
-  apiRoute: string;
+  jobCandidateID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,56 +20,57 @@ interface JobCandidateTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<JobCandidateViewModel>;
+  filteredRecords : Array<JobCandidateViewModel>;
 }
 
-export class JobCandidateTableComponent extends React.Component<
-  JobCandidateTableComponentProps,
-  JobCandidateTableComponentState
+export class  JobCandidateTableComponent extends React.Component<
+JobCandidateTableComponentProps,
+JobCandidateTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: JobCandidateViewModel) {
-    this.props.history.push(ClientRoutes.JobCandidates + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: JobCandidateViewModel) {
+  this.props.history.push(ClientRoutes.JobCandidates + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: JobCandidateViewModel) {
-    this.props.history.push(ClientRoutes.JobCandidates + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: JobCandidateViewModel) {
+   this.props.history.push(ClientRoutes.JobCandidates + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.JobCandidateClientResponseModel
-          >;
+          let response = resp.data as Array<Api.JobCandidateClientResponseModel>;
 
           console.log(response);
 
           let mapper = new JobCandidateMapper();
+          
+          let jobCandidates:Array<JobCandidateViewModel> = [];
 
-          let jobCandidates: Array<JobCandidateViewModel> = [];
-
-          response.forEach(x => {
-            jobCandidates.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              jobCandidates.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -94,80 +95,64 @@ export class JobCandidateTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'JobCandidates',
-                columns: [
-                  {
-                    Header: 'BusinessEntityID',
-                    accessor: 'businessEntityID',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Employees +
-                                '/' +
-                                props.original.businessEntityID
-                            );
-                          }}
-                        >
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'JobCandidates',
+                    columns: [
+					  {
+                      Header: 'BusinessEntityID',
+                      accessor: 'businessEntityID',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Employees + '/' + props.original.businessEntityID); }}>
                           {String(
                             props.original.businessEntityIDNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'JobCandidateID',
-                    accessor: 'jobCandidateID',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.jobCandidateID)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'JobCandidateID',
+                      accessor: 'jobCandidateID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.jobCandidateID)}</span>;
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Resume',
-                    accessor: 'resume',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Resume',
+                      accessor: 'resume',
+                      Cell: (props) => {
                       return <span>{String(props.original.resume)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as JobCandidateViewModel
@@ -178,8 +163,8 @@ export class JobCandidateTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as JobCandidateViewModel
@@ -188,14 +173,11 @@ export class JobCandidateTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -203,7 +185,6 @@ export class JobCandidateTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>a4e49f7f64c9d786d88e4aa7056e4fe7</Hash>
+    <Hash>5d1850a0906495c7bef7cc10532bec30</Hash>
 </Codenesium>*/

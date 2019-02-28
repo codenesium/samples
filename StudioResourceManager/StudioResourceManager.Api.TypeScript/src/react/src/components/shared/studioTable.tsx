@@ -6,11 +6,11 @@ import StudioMapper from '../studio/studioMapper';
 import StudioViewModel from '../studio/studioViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface StudioTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface StudioTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<StudioViewModel>;
+  filteredRecords : Array<StudioViewModel>;
 }
 
-export class StudioTableComponent extends React.Component<
-  StudioTableComponentProps,
-  StudioTableComponentState
+export class  StudioTableComponent extends React.Component<
+StudioTableComponentProps,
+StudioTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: StudioViewModel) {
-    this.props.history.push(ClientRoutes.Studios + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: StudioViewModel) {
+  this.props.history.push(ClientRoutes.Studios + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: StudioViewModel) {
-    this.props.history.push(ClientRoutes.Studios + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: StudioViewModel) {
+   this.props.history.push(ClientRoutes.Studios + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.StudioClientResponseModel>;
@@ -63,11 +65,12 @@ export class StudioTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new StudioMapper();
+          
+          let studios:Array<StudioViewModel> = [];
 
-          let studios: Array<StudioViewModel> = [];
-
-          response.forEach(x => {
-            studios.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              studios.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,83 +95,78 @@ export class StudioTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Studios',
-                columns: [
-                  {
-                    Header: 'Address1',
-                    accessor: 'address1',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Studios',
+                    columns: [
+					  {
+                      Header: 'Address1',
+                      accessor: 'address1',
+                      Cell: (props) => {
                       return <span>{String(props.original.address1)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Address2',
-                    accessor: 'address2',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Address2',
+                      accessor: 'address2',
+                      Cell: (props) => {
                       return <span>{String(props.original.address2)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'City',
-                    accessor: 'city',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'City',
+                      accessor: 'city',
+                      Cell: (props) => {
                       return <span>{String(props.original.city)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Province',
-                    accessor: 'province',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Province',
+                      accessor: 'province',
+                      Cell: (props) => {
                       return <span>{String(props.original.province)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Website',
-                    accessor: 'website',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Website',
+                      accessor: 'website',
+                      Cell: (props) => {
                       return <span>{String(props.original.website)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Zip',
-                    accessor: 'zip',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Zip',
+                      accessor: 'zip',
+                      Cell: (props) => {
                       return <span>{String(props.original.zip)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as StudioViewModel
@@ -179,8 +177,8 @@ export class StudioTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as StudioViewModel
@@ -189,14 +187,11 @@ export class StudioTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -204,7 +199,6 @@ export class StudioTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>978f783bf466badee40f4d7e31aef537</Hash>
+    <Hash>870842a0d385d16360db7f2fae5f725d</Hash>
 </Codenesium>*/

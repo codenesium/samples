@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import TestAllFieldTypesNullableMapper from '../testAllFieldTypesNullable/testAllFieldTypesNullableMapper';
 import TestAllFieldTypesNullableViewModel from '../testAllFieldTypesNullable/testAllFieldTypesNullableViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface TestAllFieldTypesNullableSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface TestAllFieldTypesNullableSelectComponentState {
@@ -19,44 +23,46 @@ interface TestAllFieldTypesNullableSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<TestAllFieldTypesNullableViewModel>;
+  filteredRecords : Array<TestAllFieldTypesNullableViewModel>;
 }
 
-export class TestAllFieldTypesNullableSelectComponent extends React.Component<
-  TestAllFieldTypesNullableSelectComponentProps,
-  TestAllFieldTypesNullableSelectComponentState
+export class  TestAllFieldTypesNullableSelectComponent extends React.Component<
+TestAllFieldTypesNullableSelectComponentProps,
+TestAllFieldTypesNullableSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.TestAllFieldTypesNullableClientResponseModel
-          >;
+          let response = resp.data as Array<Api.TestAllFieldTypesNullableClientResponseModel>;
 
           console.log(response);
 
           let mapper = new TestAllFieldTypesNullableMapper();
+          
+          let devices:Array<TestAllFieldTypesNullableViewModel> = [];
 
-          let devices: Array<TestAllFieldTypesNullableViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -81,41 +87,46 @@ export class TestAllFieldTypesNullableSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map(
-                (x: TestAllFieldTypesNullableViewModel) => {
-                  return (
-                    <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                  );
-                }
-              )}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:TestAllFieldTypesNullableViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>b6325fdcbf7ee4667df483ff80d3bb96</Hash>
+    <Hash>7ff82c9ec29b01ef7b56bbe35f24f0fe</Hash>
 </Codenesium>*/

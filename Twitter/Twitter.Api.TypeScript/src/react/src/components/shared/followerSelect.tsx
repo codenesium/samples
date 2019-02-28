@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import FollowerMapper from '../follower/followerMapper';
 import FollowerViewModel from '../follower/followerViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface FollowerSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface FollowerSelectComponentState {
@@ -19,30 +23,33 @@ interface FollowerSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<FollowerViewModel>;
+  filteredRecords : Array<FollowerViewModel>;
 }
 
-export class FollowerSelectComponent extends React.Component<
-  FollowerSelectComponentProps,
-  FollowerSelectComponentState
+export class  FollowerSelectComponent extends React.Component<
+FollowerSelectComponentProps,
+FollowerSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.FollowerClientResponseModel>;
@@ -50,11 +57,12 @@ export class FollowerSelectComponent extends React.Component<
           console.log(response);
 
           let mapper = new FollowerMapper();
+          
+          let devices:Array<FollowerViewModel> = [];
 
-          let devices: Array<FollowerViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -79,39 +87,46 @@ export class FollowerSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: FollowerViewModel) => {
-                return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:FollowerViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>42ab7d72308a00fcfb12b2e7d912b257</Hash>
+    <Hash>5026349bd52e6a17c00945e7c0fd7aba</Hash>
 </Codenesium>*/

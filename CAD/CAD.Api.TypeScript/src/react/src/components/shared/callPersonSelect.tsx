@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import CallPersonMapper from '../callPerson/callPersonMapper';
 import CallPersonViewModel from '../callPerson/callPersonViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface CallPersonSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface CallPersonSelectComponentState {
@@ -19,30 +23,33 @@ interface CallPersonSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<CallPersonViewModel>;
+  filteredRecords : Array<CallPersonViewModel>;
 }
 
-export class CallPersonSelectComponent extends React.Component<
-  CallPersonSelectComponentProps,
-  CallPersonSelectComponentState
+export class  CallPersonSelectComponent extends React.Component<
+CallPersonSelectComponentProps,
+CallPersonSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.CallPersonClientResponseModel>;
@@ -50,11 +57,12 @@ export class CallPersonSelectComponent extends React.Component<
           console.log(response);
 
           let mapper = new CallPersonMapper();
+          
+          let devices:Array<CallPersonViewModel> = [];
 
-          let devices: Array<CallPersonViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -79,39 +87,46 @@ export class CallPersonSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: CallPersonViewModel) => {
-                return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:CallPersonViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>ef99bf870070aeaada38eb14d34200bd</Hash>
+    <Hash>ff9f2d9590b7b80410b98693edd312d5</Hash>
 </Codenesium>*/

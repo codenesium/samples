@@ -15,7 +15,7 @@
 
 FROM microsoft/dotnet:2.2-sdk-alpine AS build
 WORKDIR /app
-EXPOSE 80
+EXPOSE 81
 
 # copy csproj and restore as distinct layers
 COPY . ./

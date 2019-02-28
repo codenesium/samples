@@ -6,11 +6,8 @@ import VehicleMapper from './vehicleMapper';
 import VehicleViewModel from './vehicleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {VehicleCapabilitiesTableComponent} from '../shared/vehicleCapabilitiesTable'
-	import {VehicleOfficerTableComponent} from '../shared/vehicleOfficerTable'
-	
-
-
+import { VehicleCapabilitiesTableComponent } from '../shared/vehicleCapabilitiesTable';
+import { VehicleOfficerTableComponent } from '../shared/vehicleOfficerTable';
 
 interface VehicleDetailComponentProps {
   form: WrappedFormUtils;
@@ -27,21 +24,23 @@ interface VehicleDetailComponentState {
 }
 
 class VehicleDetailComponent extends React.Component<
-VehicleDetailComponentProps,
-VehicleDetailComponentState
+  VehicleDetailComponentProps,
+  VehicleDetailComponentState
 > {
   state = {
     model: new VehicleViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Vehicles + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Vehicles + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,53 +86,64 @@ VehicleDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>VehicleCapabilities</h3>
-            <VehicleCapabilitiesTableComponent 
-			vehicleId={this.state.model!.vehicleId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Vehicles + '/' + this.state.model!.id + '/' + ApiRoutes.VehicleCapabilities}
-			/>
-         </div>
-			 <div>
+            <VehicleCapabilitiesTableComponent
+              vehicleId={this.state.model!.vehicleId}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Vehicles +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.VehicleCapabilities
+              }
+            />
+          </div>
+          <div>
             <h3>VehicleOfficers</h3>
-            <VehicleOfficerTableComponent 
-			officerId={this.state.model!.officerId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Vehicles + '/' + this.state.model!.id + '/' + ApiRoutes.VehicleOfficers}
-			/>
-         </div>
-	
-
+            <VehicleOfficerTableComponent
+              officerId={this.state.model!.officerId}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Vehicles +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.VehicleOfficers
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -142,10 +152,11 @@ VehicleDetailComponentState
   }
 }
 
-export const WrappedVehicleDetailComponent = Form.create({ name: 'Vehicle Detail' })(
-  VehicleDetailComponent
-);
+export const WrappedVehicleDetailComponent = Form.create({
+  name: 'Vehicle Detail',
+})(VehicleDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>e9f32c92af482bcebd6f849c2913b3bc</Hash>
+    <Hash>34ec551f634c41bb62f80914718fdfbb</Hash>
 </Codenesium>*/

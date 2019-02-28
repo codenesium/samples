@@ -6,11 +6,11 @@ import PhoneNumberTypeMapper from '../phoneNumberType/phoneNumberTypeMapper';
 import PhoneNumberTypeViewModel from '../phoneNumberType/phoneNumberTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface PhoneNumberTypeTableComponentProps {
-  phoneNumberTypeID:number,
-  apiRoute:string;
+  phoneNumberTypeID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,56 @@ interface PhoneNumberTypeTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PhoneNumberTypeViewModel>;
+  filteredRecords: Array<PhoneNumberTypeViewModel>;
 }
 
-export class  PhoneNumberTypeTableComponent extends React.Component<
-PhoneNumberTypeTableComponentProps,
-PhoneNumberTypeTableComponentState
+export class PhoneNumberTypeTableComponent extends React.Component<
+  PhoneNumberTypeTableComponentProps,
+  PhoneNumberTypeTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: PhoneNumberTypeViewModel) {
-  this.props.history.push(ClientRoutes.PhoneNumberTypes + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: PhoneNumberTypeViewModel) {
+    this.props.history.push(ClientRoutes.PhoneNumberTypes + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: PhoneNumberTypeViewModel) {
-   this.props.history.push(ClientRoutes.PhoneNumberTypes + '/' + row.id);
- }
+  handleDetailClick(e: any, row: PhoneNumberTypeViewModel) {
+    this.props.history.push(ClientRoutes.PhoneNumberTypes + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.PhoneNumberTypeClientResponseModel>;
+          let response = resp.data as Array<
+            Api.PhoneNumberTypeClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new PhoneNumberTypeMapper();
-          
-          let phoneNumberTypes:Array<PhoneNumberTypeViewModel> = [];
 
-          response.forEach(x =>
-          {
-              phoneNumberTypes.push(mapper.mapApiResponseToViewModel(x));
+          let phoneNumberTypes: Array<PhoneNumberTypeViewModel> = [];
+
+          response.forEach(x => {
+            phoneNumberTypes.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,54 +94,57 @@ handleEditClick(e:any, row: PhoneNumberTypeViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'PhoneNumberTypes',
-                    columns: [
-					  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'PhoneNumberTypes',
+                columns: [
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'PhoneNumberTypeID',
-                      accessor: 'phoneNumberTypeID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.phoneNumberTypeID)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PhoneNumberTypeID',
+                    accessor: 'phoneNumberTypeID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.phoneNumberTypeID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PhoneNumberTypeViewModel
@@ -153,8 +155,8 @@ handleEditClick(e:any, row: PhoneNumberTypeViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PhoneNumberTypeViewModel
@@ -163,11 +165,14 @@ handleEditClick(e:any, row: PhoneNumberTypeViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -175,6 +180,7 @@ handleEditClick(e:any, row: PhoneNumberTypeViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>6675442a0235430b36c4006773c63e45</Hash>
+    <Hash>c21d3f7b0c4c84f45ac4c255f1a30205</Hash>
 </Codenesium>*/

@@ -6,7 +6,10 @@ import PersonMapper from './personMapper';
 import PersonViewModel from './personViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ColumnSameAsFKTableTableComponent } from '../shared/columnSameAsFKTableTable';
+import {ColumnSameAsFKTableTableComponent} from '../shared/columnSameAsFKTableTable'
+	
+
+
 
 interface PersonDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface PersonDetailComponentState {
 }
 
 class PersonDetailComponent extends React.Component<
-  PersonDetailComponentProps,
-  PersonDetailComponentState
+PersonDetailComponentProps,
+PersonDetailComponentState
 > {
   state = {
     model: new PersonViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.People + '/edit/' + this.state.model!.personId
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.People + '/edit/' + this.state.model!.personId);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,52 +86,48 @@ class PersonDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>PersonId</h3>
-              <p>{String(this.state.model!.personId)}</p>
-            </div>
-            <div>
-              <h3>PersonName</h3>
-              <p>{String(this.state.model!.personName)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>PersonId</h3>
+							<p>{String(this.state.model!.personId)}</p>
+						 </div>
+					   						 <div>
+							<h3>PersonName</h3>
+							<p>{String(this.state.model!.personName)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>ColumnSameAsFKTables</h3>
-            <ColumnSameAsFKTableTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.People +
-                '/' +
-                this.state.model!.personId +
-                '/' +
-                ApiRoutes.ColumnSameAsFKTables
-              }
-            />
-          </div>
+            <ColumnSameAsFKTableTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.People + '/' + this.state.model!.personId + '/' + ApiRoutes.ColumnSameAsFKTables}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -139,11 +136,10 @@ class PersonDetailComponent extends React.Component<
   }
 }
 
-export const WrappedPersonDetailComponent = Form.create({
-  name: 'Person Detail',
-})(PersonDetailComponent);
-
+export const WrappedPersonDetailComponent = Form.create({ name: 'Person Detail' })(
+  PersonDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>d54c03312b6831f9b9a8bd30da2645b0</Hash>
+    <Hash>fda6537cc4c424bafd6536c39bdf0b87</Hash>
 </Codenesium>*/

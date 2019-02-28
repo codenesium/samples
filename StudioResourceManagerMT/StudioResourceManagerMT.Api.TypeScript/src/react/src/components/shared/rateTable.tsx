@@ -6,11 +6,11 @@ import RateMapper from '../rate/rateMapper';
 import RateViewModel from '../rate/rateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface RateTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface RateTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<RateViewModel>;
+  filteredRecords : Array<RateViewModel>;
 }
 
-export class RateTableComponent extends React.Component<
-  RateTableComponentProps,
-  RateTableComponentState
+export class  RateTableComponent extends React.Component<
+RateTableComponentProps,
+RateTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: RateViewModel) {
-    this.props.history.push(ClientRoutes.Rates + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: RateViewModel) {
+  this.props.history.push(ClientRoutes.Rates + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: RateViewModel) {
-    this.props.history.push(ClientRoutes.Rates + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: RateViewModel) {
+   this.props.history.push(ClientRoutes.Rates + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.RateClientResponseModel>;
@@ -63,11 +65,12 @@ export class RateTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new RateMapper();
+          
+          let rates:Array<RateViewModel> = [];
 
-          let rates: Array<RateViewModel> = [];
-
-          response.forEach(x => {
-            rates.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              rates.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,66 +95,60 @@ export class RateTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Rates',
-                columns: [
-                  {
-                    Header: 'AmountPerMinute',
-                    accessor: 'amountPerMinute',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.amountPerMinute)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Rates',
+                    columns: [
+					  {
+                      Header: 'AmountPerMinute',
+                      accessor: 'amountPerMinute',
+                      Cell: (props) => {
+                      return <span>{String(props.original.amountPerMinute)}</span>;
+                      }           
+                    },  {
+                      Header: 'Id',
+                      accessor: 'id',
+                      Cell: (props) => {
                       return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'TeacherId',
-                    accessor: 'teacherId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'TeacherId',
+                      accessor: 'teacherId',
+                      Cell: (props) => {
                       return <span>{String(props.original.teacherId)}</span>;
+                      }           
+                    },  {
+                      Header: 'TeacherSkillId',
+                      accessor: 'teacherSkillId',
+                      Cell: (props) => {
+                      return <span>{String(props.original.teacherSkillId)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'TeacherSkillId',
-                    accessor: 'teacherSkillId',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.teacherSkillId)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as RateViewModel
@@ -162,8 +159,8 @@ export class RateTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as RateViewModel
@@ -172,14 +169,11 @@ export class RateTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -187,7 +181,6 @@ export class RateTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>17419f107d3fdc5371a91d7ad85f8580</Hash>
+    <Hash>38420a37ae4710cc7704234e167f826e</Hash>
 </Codenesium>*/

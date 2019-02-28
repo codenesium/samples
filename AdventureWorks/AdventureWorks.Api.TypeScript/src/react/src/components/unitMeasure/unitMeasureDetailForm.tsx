@@ -6,8 +6,11 @@ import UnitMeasureMapper from './unitMeasureMapper';
 import UnitMeasureViewModel from './unitMeasureViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { BillOfMaterialTableComponent } from '../shared/billOfMaterialTable';
-import { ProductTableComponent } from '../shared/productTable';
+import {BillOfMaterialTableComponent} from '../shared/billOfMaterialTable'
+	import {ProductTableComponent} from '../shared/productTable'
+	
+
+
 
 interface UnitMeasureDetailComponentProps {
   form: WrappedFormUtils;
@@ -24,23 +27,21 @@ interface UnitMeasureDetailComponentState {
 }
 
 class UnitMeasureDetailComponent extends React.Component<
-  UnitMeasureDetailComponentProps,
-  UnitMeasureDetailComponentState
+UnitMeasureDetailComponentProps,
+UnitMeasureDetailComponentState
 > {
   state = {
     model: new UnitMeasureViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.UnitMeasures + '/edit/' + this.state.model!.unitMeasureCode
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.UnitMeasures + '/edit/' + this.state.model!.unitMeasureCode);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,72 +87,61 @@ class UnitMeasureDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>UnitMeasureCode</h3>
-              <p>{String(this.state.model!.unitMeasureCode)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>UnitMeasureCode</h3>
+							<p>{String(this.state.model!.unitMeasureCode)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>BillOfMaterials</h3>
-            <BillOfMaterialTableComponent
-              billOfMaterialsID={this.state.model!.billOfMaterialsID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.UnitMeasures +
-                '/' +
-                this.state.model!.unitMeasureCode +
-                '/' +
-                ApiRoutes.BillOfMaterials
-              }
-            />
-          </div>
-          <div>
+            <BillOfMaterialTableComponent 
+			billOfMaterialsID={this.state.model!.billOfMaterialsID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.UnitMeasures + '/' + this.state.model!.unitMeasureCode + '/' + ApiRoutes.BillOfMaterials}
+			/>
+         </div>
+			 <div>
             <h3>Products</h3>
-            <ProductTableComponent
-              productID={this.state.model!.productID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.UnitMeasures +
-                '/' +
-                this.state.model!.unitMeasureCode +
-                '/' +
-                ApiRoutes.Products
-              }
-            />
-          </div>
+            <ProductTableComponent 
+			productID={this.state.model!.productID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.UnitMeasures + '/' + this.state.model!.unitMeasureCode + '/' + ApiRoutes.Products}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -160,11 +150,10 @@ class UnitMeasureDetailComponent extends React.Component<
   }
 }
 
-export const WrappedUnitMeasureDetailComponent = Form.create({
-  name: 'UnitMeasure Detail',
-})(UnitMeasureDetailComponent);
-
+export const WrappedUnitMeasureDetailComponent = Form.create({ name: 'UnitMeasure Detail' })(
+  UnitMeasureDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>c7a17e36dea6f009ca95839bef60b841</Hash>
+    <Hash>455e03a17ebc708b65b0c114655d7361</Hash>
 </Codenesium>*/

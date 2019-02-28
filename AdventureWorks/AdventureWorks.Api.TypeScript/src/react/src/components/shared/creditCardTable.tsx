@@ -6,11 +6,11 @@ import CreditCardMapper from '../creditCard/creditCardMapper';
 import CreditCardViewModel from '../creditCard/creditCardViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface CreditCardTableComponentProps {
-  creditCardID:number,
-  apiRoute:string;
+  creditCardID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface CreditCardTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<CreditCardViewModel>;
+  filteredRecords: Array<CreditCardViewModel>;
 }
 
-export class  CreditCardTableComponent extends React.Component<
-CreditCardTableComponentProps,
-CreditCardTableComponentState
+export class CreditCardTableComponent extends React.Component<
+  CreditCardTableComponentProps,
+  CreditCardTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: CreditCardViewModel) {
-  this.props.history.push(ClientRoutes.CreditCards + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: CreditCardViewModel) {
+    this.props.history.push(ClientRoutes.CreditCards + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: CreditCardViewModel) {
-   this.props.history.push(ClientRoutes.CreditCards + '/' + row.id);
- }
+  handleDetailClick(e: any, row: CreditCardViewModel) {
+    this.props.history.push(ClientRoutes.CreditCards + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.CreditCardClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: CreditCardViewModel) {
           console.log(response);
 
           let mapper = new CreditCardMapper();
-          
-          let creditCards:Array<CreditCardViewModel> = [];
 
-          response.forEach(x =>
-          {
-              creditCards.push(mapper.mapApiResponseToViewModel(x));
+          let creditCards: Array<CreditCardViewModel> = [];
+
+          response.forEach(x => {
+            creditCards.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,72 +92,76 @@ handleEditClick(e:any, row: CreditCardViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'CreditCards',
-                    columns: [
-					  {
-                      Header: 'CardNumber',
-                      accessor: 'cardNumber',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'CreditCards',
+                columns: [
+                  {
+                    Header: 'CardNumber',
+                    accessor: 'cardNumber',
+                    Cell: props => {
                       return <span>{String(props.original.cardNumber)}</span>;
-                      }           
-                    },  {
-                      Header: 'CardType',
-                      accessor: 'cardType',
-                      Cell: (props) => {
-                      return <span>{String(props.original.cardType)}</span>;
-                      }           
-                    },  {
-                      Header: 'CreditCardID',
-                      accessor: 'creditCardID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.creditCardID)}</span>;
-                      }           
-                    },  {
-                      Header: 'ExpMonth',
-                      accessor: 'expMonth',
-                      Cell: (props) => {
-                      return <span>{String(props.original.expMonth)}</span>;
-                      }           
-                    },  {
-                      Header: 'ExpYear',
-                      accessor: 'expYear',
-                      Cell: (props) => {
-                      return <span>{String(props.original.expYear)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'CardType',
+                    accessor: 'cardType',
+                    Cell: props => {
+                      return <span>{String(props.original.cardType)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'CreditCardID',
+                    accessor: 'creditCardID',
+                    Cell: props => {
+                      return <span>{String(props.original.creditCardID)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ExpMonth',
+                    accessor: 'expMonth',
+                    Cell: props => {
+                      return <span>{String(props.original.expMonth)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ExpYear',
+                    accessor: 'expYear',
+                    Cell: props => {
+                      return <span>{String(props.original.expYear)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
+                      return <span>{String(props.original.modifiedDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as CreditCardViewModel
@@ -171,8 +172,8 @@ handleEditClick(e:any, row: CreditCardViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as CreditCardViewModel
@@ -181,11 +182,14 @@ handleEditClick(e:any, row: CreditCardViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -193,6 +197,7 @@ handleEditClick(e:any, row: CreditCardViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>82213daf50a2956f6f69599fd7b5ea90</Hash>
+    <Hash>f86947c7ef8bd6c7cddf57863ed5ab5e</Hash>
 </Codenesium>*/

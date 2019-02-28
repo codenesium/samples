@@ -6,11 +6,14 @@ import PipelineStepMapper from './pipelineStepMapper';
 import PipelineStepViewModel from './pipelineStepViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { HandlerPipelineStepTableComponent } from '../shared/handlerPipelineStepTable';
-import { OtherTransportTableComponent } from '../shared/otherTransportTable';
-import { PipelineStepDestinationTableComponent } from '../shared/pipelineStepDestinationTable';
-import { PipelineStepNoteTableComponent } from '../shared/pipelineStepNoteTable';
-import { PipelineStepStepRequirementTableComponent } from '../shared/pipelineStepStepRequirementTable';
+import {HandlerPipelineStepTableComponent} from '../shared/handlerPipelineStepTable'
+	import {OtherTransportTableComponent} from '../shared/otherTransportTable'
+	import {PipelineStepDestinationTableComponent} from '../shared/pipelineStepDestinationTable'
+	import {PipelineStepNoteTableComponent} from '../shared/pipelineStepNoteTable'
+	import {PipelineStepStepRequirementTableComponent} from '../shared/pipelineStepStepRequirementTable'
+	
+
+
 
 interface PipelineStepDetailComponentProps {
   form: WrappedFormUtils;
@@ -27,23 +30,21 @@ interface PipelineStepDetailComponentState {
 }
 
 class PipelineStepDetailComponent extends React.Component<
-  PipelineStepDetailComponentProps,
-  PipelineStepDetailComponentState
+PipelineStepDetailComponentProps,
+PipelineStepDetailComponentState
 > {
   state = {
     model: new PipelineStepViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.PipelineSteps + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.PipelineSteps + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -89,126 +90,88 @@ class PipelineStepDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>pipelineStepStatusId</h3>
-              <p>
-                {String(
-                  this.state.model!.pipelineStepStatusIdNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>shipperId</h3>
-              <p>
-                {String(this.state.model!.shipperIdNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>pipelineStepStatusId</h3>
+							<p>{String(this.state.model!.pipelineStepStatusIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>shipperId</h3>
+							<p>{String(this.state.model!.shipperIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>HandlerPipelineSteps</h3>
-            <HandlerPipelineStepTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.PipelineSteps +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.HandlerPipelineSteps
-              }
-            />
-          </div>
-          <div>
+            <HandlerPipelineStepTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.HandlerPipelineSteps}
+			/>
+         </div>
+			 <div>
             <h3>OtherTransports</h3>
-            <OtherTransportTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.PipelineSteps +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.OtherTransports
-              }
-            />
-          </div>
-          <div>
+            <OtherTransportTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.OtherTransports}
+			/>
+         </div>
+			 <div>
             <h3>PipelineStepDestinations</h3>
-            <PipelineStepDestinationTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.PipelineSteps +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.PipelineStepDestinations
-              }
-            />
-          </div>
-          <div>
+            <PipelineStepDestinationTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepDestinations}
+			/>
+         </div>
+			 <div>
             <h3>PipelineStepNotes</h3>
-            <PipelineStepNoteTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.PipelineSteps +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.PipelineStepNotes
-              }
-            />
-          </div>
-          <div>
+            <PipelineStepNoteTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepNotes}
+			/>
+         </div>
+			 <div>
             <h3>PipelineStepStepRequirements</h3>
-            <PipelineStepStepRequirementTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.PipelineSteps +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.PipelineStepStepRequirements
-              }
-            />
-          </div>
+            <PipelineStepStepRequirementTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id + '/' + ApiRoutes.PipelineStepStepRequirements}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -217,11 +180,10 @@ class PipelineStepDetailComponent extends React.Component<
   }
 }
 
-export const WrappedPipelineStepDetailComponent = Form.create({
-  name: 'PipelineStep Detail',
-})(PipelineStepDetailComponent);
-
+export const WrappedPipelineStepDetailComponent = Form.create({ name: 'PipelineStep Detail' })(
+  PipelineStepDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>d13bf519a8e724ba83449e0c4d8f1d53</Hash>
+    <Hash>98eb68f82421aec8b18223cfd0f7cae5</Hash>
 </Codenesium>*/
