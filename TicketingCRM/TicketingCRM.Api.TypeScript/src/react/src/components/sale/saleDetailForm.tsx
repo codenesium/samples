@@ -6,7 +6,10 @@ import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { SaleTicketTableComponent } from '../shared/saleTicketTable';
+import {SaleTicketTableComponent} from '../shared/saleTicketTable'
+	
+
+
 
 interface SaleDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface SaleDetailComponentState {
 }
 
 class SaleDetailComponent extends React.Component<
-  SaleDetailComponentProps,
-  SaleDetailComponentState
+SaleDetailComponentProps,
+SaleDetailComponentState
 > {
   state = {
     model: new SaleViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Sales + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Sales + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,62 +86,56 @@ class SaleDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>ipAddress</h3>
-              <p>{String(this.state.model!.ipAddress)}</p>
-            </div>
-            <div>
-              <h3>notes</h3>
-              <p>{String(this.state.model!.note)}</p>
-            </div>
-            <div>
-              <h3>saleDate</h3>
-              <p>{String(this.state.model!.saleDate)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>transactionId</h3>
-              <p>
-                {String(this.state.model!.transactionIdNavigation!.toDisplay())}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ipAddress</h3>
+							<p>{String(this.state.model!.ipAddress)}</p>
+						 </div>
+					   						 <div>
+							<h3>notes</h3>
+							<p>{String(this.state.model!.note)}</p>
+						 </div>
+					   						 <div>
+							<h3>saleDate</h3>
+							<p>{String(this.state.model!.saleDate)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>transactionId</h3>
+							<p>{String(this.state.model!.transactionIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>SaleTickets</h3>
-            <SaleTicketTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Sales +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.SaleTickets
-              }
-            />
-          </div>
+            <SaleTicketTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Sales + '/' + this.state.model!.id + '/' + ApiRoutes.SaleTickets}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -153,7 +148,6 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
   SaleDetailComponent
 );
 
-
 /*<Codenesium>
-    <Hash>cb980b2101fce41d6774aa92d0df6f09</Hash>
+    <Hash>e54bed576a62b215e2d0ee35e3c5f6d5</Hash>
 </Codenesium>*/

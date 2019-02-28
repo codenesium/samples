@@ -1,29 +1,25 @@
-import moment from 'moment'
-
+import moment from 'moment';
 
 export default class TableViewModel {
-    id:number;
-name:string;
+  id: number;
+  name: string;
 
-    constructor() {
-		this.id = 0;
-this.name = '';
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
 
-    }
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
 
-	setProperties(id : number,name : string) : void
-	{
-		this.id = id;
-this.name = name;
+  toDisplay(): string {
+    return String();
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String();
-	}
-};
 
 /*<Codenesium>
-    <Hash>59db80d59c3c0ab02f71eac71788ad0e</Hash>
+    <Hash>50bd95d929a1f749f02aaba0137efa3d</Hash>
 </Codenesium>*/

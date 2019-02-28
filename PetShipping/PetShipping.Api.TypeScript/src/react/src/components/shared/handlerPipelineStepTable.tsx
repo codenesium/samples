@@ -6,11 +6,11 @@ import HandlerPipelineStepMapper from '../handlerPipelineStep/handlerPipelineSte
 import HandlerPipelineStepViewModel from '../handlerPipelineStep/handlerPipelineStepViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface HandlerPipelineStepTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,58 @@ interface HandlerPipelineStepTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<HandlerPipelineStepViewModel>;
+  filteredRecords: Array<HandlerPipelineStepViewModel>;
 }
 
-export class  HandlerPipelineStepTableComponent extends React.Component<
-HandlerPipelineStepTableComponentProps,
-HandlerPipelineStepTableComponentState
+export class HandlerPipelineStepTableComponent extends React.Component<
+  HandlerPipelineStepTableComponentProps,
+  HandlerPipelineStepTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: HandlerPipelineStepViewModel) {
-  this.props.history.push(ClientRoutes.HandlerPipelineSteps + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: HandlerPipelineStepViewModel) {
+    this.props.history.push(
+      ClientRoutes.HandlerPipelineSteps + '/edit/' + row.id
+    );
+  }
 
- handleDetailClick(e:any, row: HandlerPipelineStepViewModel) {
-   this.props.history.push(ClientRoutes.HandlerPipelineSteps + '/' + row.id);
- }
+  handleDetailClick(e: any, row: HandlerPipelineStepViewModel) {
+    this.props.history.push(ClientRoutes.HandlerPipelineSteps + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.HandlerPipelineStepClientResponseModel>;
+          let response = resp.data as Array<
+            Api.HandlerPipelineStepClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new HandlerPipelineStepMapper();
-          
-          let handlerPipelineSteps:Array<HandlerPipelineStepViewModel> = [];
 
-          response.forEach(x =>
-          {
-              handlerPipelineSteps.push(mapper.mapApiResponseToViewModel(x));
+          let handlerPipelineSteps: Array<HandlerPipelineStepViewModel> = [];
+
+          response.forEach(x => {
+            handlerPipelineSteps.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,56 +96,80 @@ handleEditClick(e:any, row: HandlerPipelineStepViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'HandlerPipelineSteps',
-                    columns: [
-					  {
-                      Header: 'HandlerId',
-                      accessor: 'handlerId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Handlers + '/' + props.original.handlerId); }}>
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'HandlerPipelineSteps',
+                columns: [
+                  {
+                    Header: 'HandlerId',
+                    accessor: 'handlerId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Handlers +
+                                '/' +
+                                props.original.handlerId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.handlerIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'PipelineStepId',
-                      accessor: 'pipelineStepId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.PipelineSteps + '/' + props.original.pipelineStepId); }}>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'PipelineStepId',
+                    accessor: 'pipelineStepId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.PipelineSteps +
+                                '/' +
+                                props.original.pipelineStepId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.pipelineStepIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as HandlerPipelineStepViewModel
@@ -155,8 +180,8 @@ handleEditClick(e:any, row: HandlerPipelineStepViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as HandlerPipelineStepViewModel
@@ -165,11 +190,14 @@ handleEditClick(e:any, row: HandlerPipelineStepViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -177,6 +205,7 @@ handleEditClick(e:any, row: HandlerPipelineStepViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>15ca3a431302ca0ee57593f103185b9d</Hash>
+    <Hash>80000fee93aa5ee6c31306b100cd704f</Hash>
 </Codenesium>*/

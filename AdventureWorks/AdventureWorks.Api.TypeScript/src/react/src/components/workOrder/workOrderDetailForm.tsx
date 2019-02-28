@@ -6,10 +6,7 @@ import WorkOrderMapper from './workOrderMapper';
 import WorkOrderViewModel from './workOrderViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {WorkOrderRoutingTableComponent} from '../shared/workOrderRoutingTable'
-	
-
-
+import { WorkOrderRoutingTableComponent } from '../shared/workOrderRoutingTable';
 
 interface WorkOrderDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface WorkOrderDetailComponentState {
 }
 
 class WorkOrderDetailComponent extends React.Component<
-WorkOrderDetailComponentProps,
-WorkOrderDetailComponentState
+  WorkOrderDetailComponentProps,
+  WorkOrderDetailComponentState
 > {
   state = {
     model: new WorkOrderViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.WorkOrders + '/edit/' + this.state.model!.workOrderID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.WorkOrders + '/edit/' + this.state.model!.workOrderID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,80 +85,88 @@ WorkOrderDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>DueDate</h3>
-							<p>{String(this.state.model!.dueDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>EndDate</h3>
-							<p>{String(this.state.model!.endDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>OrderQty</h3>
-							<p>{String(this.state.model!.orderQty)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>ProductID</h3>
-							<p>{String(this.state.model!.productIDNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>ScrappedQty</h3>
-							<p>{String(this.state.model!.scrappedQty)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>ScrapReasonID</h3>
-							<p>{String(this.state.model!.scrapReasonIDNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>StartDate</h3>
-							<p>{String(this.state.model!.startDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>StockedQty</h3>
-							<p>{String(this.state.model!.stockedQty)}</p>
-						 </div>
-					   						 <div>
-							<h3>WorkOrderID</h3>
-							<p>{String(this.state.model!.workOrderID)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>DueDate</h3>
+              <p>{String(this.state.model!.dueDate)}</p>
+            </div>
+            <div>
+              <h3>EndDate</h3>
+              <p>{String(this.state.model!.endDate)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>OrderQty</h3>
+              <p>{String(this.state.model!.orderQty)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>ProductID</h3>
+              <p>
+                {String(this.state.model!.productIDNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>ScrappedQty</h3>
+              <p>{String(this.state.model!.scrappedQty)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>ScrapReasonID</h3>
+              <p>
+                {String(this.state.model!.scrapReasonIDNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>StartDate</h3>
+              <p>{String(this.state.model!.startDate)}</p>
+            </div>
+            <div>
+              <h3>StockedQty</h3>
+              <p>{String(this.state.model!.stockedQty)}</p>
+            </div>
+            <div>
+              <h3>WorkOrderID</h3>
+              <p>{String(this.state.model!.workOrderID)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>WorkOrderRoutings</h3>
-            <WorkOrderRoutingTableComponent 
-			workOrderID={this.state.model!.workOrderID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.WorkOrders + '/' + this.state.model!.workOrderID + '/' + ApiRoutes.WorkOrderRoutings}
-			/>
-         </div>
-	
-
+            <WorkOrderRoutingTableComponent
+              workOrderID={this.state.model!.workOrderID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.WorkOrders +
+                '/' +
+                this.state.model!.workOrderID +
+                '/' +
+                ApiRoutes.WorkOrderRoutings
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -168,10 +175,11 @@ WorkOrderDetailComponentState
   }
 }
 
-export const WrappedWorkOrderDetailComponent = Form.create({ name: 'WorkOrder Detail' })(
-  WorkOrderDetailComponent
-);
+export const WrappedWorkOrderDetailComponent = Form.create({
+  name: 'WorkOrder Detail',
+})(WorkOrderDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>22ca6510a12f981f148aa2e7d0bba1c6</Hash>
+    <Hash>af763ecc42dcecffa36b2acbba0b5ef6</Hash>
 </Codenesium>*/

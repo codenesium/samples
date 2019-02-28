@@ -6,10 +6,7 @@ import ShiftMapper from './shiftMapper';
 import ShiftViewModel from './shiftViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {EmployeeDepartmentHistoryTableComponent} from '../shared/employeeDepartmentHistoryTable'
-	
-
-
+import { EmployeeDepartmentHistoryTableComponent } from '../shared/employeeDepartmentHistoryTable';
 
 interface ShiftDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface ShiftDetailComponentState {
 }
 
 class ShiftDetailComponent extends React.Component<
-ShiftDetailComponentProps,
-ShiftDetailComponentState
+  ShiftDetailComponentProps,
+  ShiftDetailComponentState
 > {
   state = {
     model: new ShiftViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Shifts + '/edit/' + this.state.model!.shiftID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Shifts + '/edit/' + this.state.model!.shiftID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,60 +85,64 @@ ShiftDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>EndTime</h3>
-							<p>{String(this.state.model!.endTime)}</p>
-						 </div>
-					   						 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div>
-							<h3>ShiftID</h3>
-							<p>{String(this.state.model!.shiftID)}</p>
-						 </div>
-					   						 <div>
-							<h3>StartTime</h3>
-							<p>{String(this.state.model!.startTime)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>EndTime</h3>
+              <p>{String(this.state.model!.endTime)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>ShiftID</h3>
+              <p>{String(this.state.model!.shiftID)}</p>
+            </div>
+            <div>
+              <h3>StartTime</h3>
+              <p>{String(this.state.model!.startTime)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>EmployeeDepartmentHistories</h3>
-            <EmployeeDepartmentHistoryTableComponent 
-			businessEntityID={this.state.model!.businessEntityID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Shifts + '/' + this.state.model!.shiftID + '/' + ApiRoutes.EmployeeDepartmentHistories}
-			/>
-         </div>
-	
-
+            <EmployeeDepartmentHistoryTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Shifts +
+                '/' +
+                this.state.model!.shiftID +
+                '/' +
+                ApiRoutes.EmployeeDepartmentHistories
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -148,10 +151,11 @@ ShiftDetailComponentState
   }
 }
 
-export const WrappedShiftDetailComponent = Form.create({ name: 'Shift Detail' })(
-  ShiftDetailComponent
-);
+export const WrappedShiftDetailComponent = Form.create({
+  name: 'Shift Detail',
+})(ShiftDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>c2b6bd52d7b28533f263faaff7a25dfb</Hash>
+    <Hash>e0ba301f71817a7d922a3b622d153b28</Hash>
 </Codenesium>*/

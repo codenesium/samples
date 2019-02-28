@@ -6,13 +6,10 @@ import PersonMapper from './personMapper';
 import PersonViewModel from './personViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {BusinessEntityContactTableComponent} from '../shared/businessEntityContactTable'
-	import {EmailAddressTableComponent} from '../shared/emailAddressTable'
-	import {PasswordTableComponent} from '../shared/passwordTable'
-	import {PersonPhoneTableComponent} from '../shared/personPhoneTable'
-	
-
-
+import { BusinessEntityContactTableComponent } from '../shared/businessEntityContactTable';
+import { EmailAddressTableComponent } from '../shared/emailAddressTable';
+import { PasswordTableComponent } from '../shared/passwordTable';
+import { PersonPhoneTableComponent } from '../shared/personPhoneTable';
 
 interface PersonDetailComponentProps {
   form: WrappedFormUtils;
@@ -29,21 +26,23 @@ interface PersonDetailComponentState {
 }
 
 class PersonDetailComponent extends React.Component<
-PersonDetailComponentProps,
-PersonDetailComponentState
+  PersonDetailComponentProps,
+  PersonDetailComponentState
 > {
   state = {
     model: new PersonViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.People + '/edit/' + this.state.model!.businessEntityID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.People + '/edit/' + this.state.model!.businessEntityID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -89,119 +88,148 @@ PersonDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>AdditionalContactInfo</h3>
-							<p>{String(this.state.model!.additionalContactInfo)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>BusinessEntityID</h3>
-							<p>{String(this.state.model!.businessEntityIDNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>Demographics</h3>
-							<p>{String(this.state.model!.demographic)}</p>
-						 </div>
-					   						 <div>
-							<h3>EmailPromotion</h3>
-							<p>{String(this.state.model!.emailPromotion)}</p>
-						 </div>
-					   						 <div>
-							<h3>FirstName</h3>
-							<p>{String(this.state.model!.firstName)}</p>
-						 </div>
-					   						 <div>
-							<h3>LastName</h3>
-							<p>{String(this.state.model!.lastName)}</p>
-						 </div>
-					   						 <div>
-							<h3>MiddleName</h3>
-							<p>{String(this.state.model!.middleName)}</p>
-						 </div>
-					   						 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>NameStyle</h3>
-							<p>{String(this.state.model!.nameStyle)}</p>
-						 </div>
-					   						 <div>
-							<h3>PersonType</h3>
-							<p>{String(this.state.model!.personType)}</p>
-						 </div>
-					   						 <div>
-							<h3>rowguid</h3>
-							<p>{String(this.state.model!.rowguid)}</p>
-						 </div>
-					   						 <div>
-							<h3>Suffix</h3>
-							<p>{String(this.state.model!.suffix)}</p>
-						 </div>
-					   						 <div>
-							<h3>Title</h3>
-							<p>{String(this.state.model!.title)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>AdditionalContactInfo</h3>
+              <p>{String(this.state.model!.additionalContactInfo)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>BusinessEntityID</h3>
+              <p>
+                {String(
+                  this.state.model!.businessEntityIDNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>Demographics</h3>
+              <p>{String(this.state.model!.demographic)}</p>
+            </div>
+            <div>
+              <h3>EmailPromotion</h3>
+              <p>{String(this.state.model!.emailPromotion)}</p>
+            </div>
+            <div>
+              <h3>FirstName</h3>
+              <p>{String(this.state.model!.firstName)}</p>
+            </div>
+            <div>
+              <h3>LastName</h3>
+              <p>{String(this.state.model!.lastName)}</p>
+            </div>
+            <div>
+              <h3>MiddleName</h3>
+              <p>{String(this.state.model!.middleName)}</p>
+            </div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>NameStyle</h3>
+              <p>{String(this.state.model!.nameStyle)}</p>
+            </div>
+            <div>
+              <h3>PersonType</h3>
+              <p>{String(this.state.model!.personType)}</p>
+            </div>
+            <div>
+              <h3>rowguid</h3>
+              <p>{String(this.state.model!.rowguid)}</p>
+            </div>
+            <div>
+              <h3>Suffix</h3>
+              <p>{String(this.state.model!.suffix)}</p>
+            </div>
+            <div>
+              <h3>Title</h3>
+              <p>{String(this.state.model!.title)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>BusinessEntityContacts</h3>
-            <BusinessEntityContactTableComponent 
-			businessEntityID={this.state.model!.businessEntityID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.People + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.BusinessEntityContacts}
-			/>
-         </div>
-			 <div>
+            <BusinessEntityContactTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.BusinessEntityContacts
+              }
+            />
+          </div>
+          <div>
             <h3>EmailAddresses</h3>
-            <EmailAddressTableComponent 
-			businessEntityID={this.state.model!.businessEntityID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.People + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.EmailAddresses}
-			/>
-         </div>
-			 <div>
+            <EmailAddressTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.EmailAddresses
+              }
+            />
+          </div>
+          <div>
             <h3>Passwords</h3>
-            <PasswordTableComponent 
-			businessEntityID={this.state.model!.businessEntityID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.People + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.Passwords}
-			/>
-         </div>
-			 <div>
+            <PasswordTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.Passwords
+              }
+            />
+          </div>
+          <div>
             <h3>PersonPhones</h3>
-            <PersonPhoneTableComponent 
-			businessEntityID={this.state.model!.businessEntityID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.People + '/' + this.state.model!.businessEntityID + '/' + ApiRoutes.PersonPhones}
-			/>
-         </div>
-	
-
+            <PersonPhoneTableComponent
+              businessEntityID={this.state.model!.businessEntityID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.People +
+                '/' +
+                this.state.model!.businessEntityID +
+                '/' +
+                ApiRoutes.PersonPhones
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -210,10 +238,11 @@ PersonDetailComponentState
   }
 }
 
-export const WrappedPersonDetailComponent = Form.create({ name: 'Person Detail' })(
-  PersonDetailComponent
-);
+export const WrappedPersonDetailComponent = Form.create({
+  name: 'Person Detail',
+})(PersonDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>420ded93d1e5b8349a38dd55458768f6</Hash>
+    <Hash>921714b9eb7d3a0c5b7df0fb6307596b</Hash>
 </Codenesium>*/

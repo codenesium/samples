@@ -6,11 +6,11 @@ import PurchaseOrderHeaderMapper from '../purchaseOrderHeader/purchaseOrderHeade
 import PurchaseOrderHeaderViewModel from '../purchaseOrderHeader/purchaseOrderHeaderViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface PurchaseOrderHeaderTableComponentProps {
-  purchaseOrderID:number,
-  apiRoute:string;
+  purchaseOrderID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,58 @@ interface PurchaseOrderHeaderTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PurchaseOrderHeaderViewModel>;
+  filteredRecords: Array<PurchaseOrderHeaderViewModel>;
 }
 
-export class  PurchaseOrderHeaderTableComponent extends React.Component<
-PurchaseOrderHeaderTableComponentProps,
-PurchaseOrderHeaderTableComponentState
+export class PurchaseOrderHeaderTableComponent extends React.Component<
+  PurchaseOrderHeaderTableComponentProps,
+  PurchaseOrderHeaderTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: PurchaseOrderHeaderViewModel) {
-  this.props.history.push(ClientRoutes.PurchaseOrderHeaders + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: PurchaseOrderHeaderViewModel) {
+    this.props.history.push(
+      ClientRoutes.PurchaseOrderHeaders + '/edit/' + row.id
+    );
+  }
 
- handleDetailClick(e:any, row: PurchaseOrderHeaderViewModel) {
-   this.props.history.push(ClientRoutes.PurchaseOrderHeaders + '/' + row.id);
- }
+  handleDetailClick(e: any, row: PurchaseOrderHeaderViewModel) {
+    this.props.history.push(ClientRoutes.PurchaseOrderHeaders + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.PurchaseOrderHeaderClientResponseModel>;
+          let response = resp.data as Array<
+            Api.PurchaseOrderHeaderClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new PurchaseOrderHeaderMapper();
-          
-          let purchaseOrderHeaders:Array<PurchaseOrderHeaderViewModel> = [];
 
-          response.forEach(x =>
-          {
-              purchaseOrderHeaders.push(mapper.mapApiResponseToViewModel(x));
+          let purchaseOrderHeaders: Array<PurchaseOrderHeaderViewModel> = [];
+
+          response.forEach(x => {
+            purchaseOrderHeaders.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,122 +96,161 @@ handleEditClick(e:any, row: PurchaseOrderHeaderViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'PurchaseOrderHeaders',
-                    columns: [
-					  {
-                      Header: 'EmployeeID',
-                      accessor: 'employeeID',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'PurchaseOrderHeaders',
+                columns: [
+                  {
+                    Header: 'EmployeeID',
+                    accessor: 'employeeID',
+                    Cell: props => {
                       return <span>{String(props.original.employeeID)}</span>;
-                      }           
-                    },  {
-                      Header: 'Freight',
-                      accessor: 'freight',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'Freight',
+                    accessor: 'freight',
+                    Cell: props => {
                       return <span>{String(props.original.freight)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'OrderDate',
-                      accessor: 'orderDate',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'OrderDate',
+                    accessor: 'orderDate',
+                    Cell: props => {
                       return <span>{String(props.original.orderDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'PurchaseOrderID',
-                      accessor: 'purchaseOrderID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.purchaseOrderID)}</span>;
-                      }           
-                    },  {
-                      Header: 'RevisionNumber',
-                      accessor: 'revisionNumber',
-                      Cell: (props) => {
-                      return <span>{String(props.original.revisionNumber)}</span>;
-                      }           
-                    },  {
-                      Header: 'ShipDate',
-                      accessor: 'shipDate',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'PurchaseOrderID',
+                    accessor: 'purchaseOrderID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.purchaseOrderID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'RevisionNumber',
+                    accessor: 'revisionNumber',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.revisionNumber)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'ShipDate',
+                    accessor: 'shipDate',
+                    Cell: props => {
                       return <span>{String(props.original.shipDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'ShipMethodID',
-                      accessor: 'shipMethodID',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.ShipMethods + '/' + props.original.shipMethodID); }}>
+                    },
+                  },
+                  {
+                    Header: 'ShipMethodID',
+                    accessor: 'shipMethodID',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.ShipMethods +
+                                '/' +
+                                props.original.shipMethodID
+                            );
+                          }}
+                        >
                           {String(
                             props.original.shipMethodIDNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'Status',
-                      accessor: 'status',
-                      Cell: (props) => {
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Status',
+                    accessor: 'status',
+                    Cell: props => {
                       return <span>{String(props.original.status)}</span>;
-                      }           
-                    },  {
-                      Header: 'SubTotal',
-                      accessor: 'subTotal',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'SubTotal',
+                    accessor: 'subTotal',
+                    Cell: props => {
                       return <span>{String(props.original.subTotal)}</span>;
-                      }           
-                    },  {
-                      Header: 'TaxAmt',
-                      accessor: 'taxAmt',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'TaxAmt',
+                    accessor: 'taxAmt',
+                    Cell: props => {
                       return <span>{String(props.original.taxAmt)}</span>;
-                      }           
-                    },  {
-                      Header: 'TotalDue',
-                      accessor: 'totalDue',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'TotalDue',
+                    accessor: 'totalDue',
+                    Cell: props => {
                       return <span>{String(props.original.totalDue)}</span>;
-                      }           
-                    },  {
-                      Header: 'VendorID',
-                      accessor: 'vendorID',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Vendors + '/' + props.original.vendorID); }}>
+                    },
+                  },
+                  {
+                    Header: 'VendorID',
+                    accessor: 'vendorID',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Vendors +
+                                '/' +
+                                props.original.vendorID
+                            );
+                          }}
+                        >
                           {String(
                             props.original.vendorIDNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PurchaseOrderHeaderViewModel
@@ -221,8 +261,8 @@ handleEditClick(e:any, row: PurchaseOrderHeaderViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PurchaseOrderHeaderViewModel
@@ -231,11 +271,14 @@ handleEditClick(e:any, row: PurchaseOrderHeaderViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -243,6 +286,7 @@ handleEditClick(e:any, row: PurchaseOrderHeaderViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>3d07383a6976fb5450d7ae70387faf67</Hash>
+    <Hash>2f07fb229963da1e16bc064ac73b51cd</Hash>
 </Codenesium>*/

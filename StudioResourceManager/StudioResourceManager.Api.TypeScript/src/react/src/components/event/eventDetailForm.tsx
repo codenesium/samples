@@ -7,6 +7,9 @@ import EventViewModel from './eventViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface EventDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface EventDetailComponentState {
 }
 
 class EventDetailComponent extends React.Component<
-  EventDetailComponentProps,
-  EventDetailComponentState
+EventDetailComponentProps,
+EventDetailComponentState
 > {
   state = {
     model: new EventViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Events + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Events + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,62 +85,63 @@ class EventDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Actual End Date</h3>
-              <p>{String(this.state.model!.actualEndDate)}</p>
-            </div>
-            <div>
-              <h3>Actual Start Date</h3>
-              <p>{String(this.state.model!.actualStartDate)}</p>
-            </div>
-            <div>
-              <h3>Bill Amount</h3>
-              <p>{String(this.state.model!.billAmount)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>status</h3>
-              <p>
-                {String(this.state.model!.eventStatusIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>Scheduled End Date</h3>
-              <p>{String(this.state.model!.scheduledEndDate)}</p>
-            </div>
-            <div>
-              <h3>Scheduled Start Date</h3>
-              <p>{String(this.state.model!.scheduledStartDate)}</p>
-            </div>
-            <div>
-              <h3>Student Notes</h3>
-              <p>{String(this.state.model!.studentNote)}</p>
-            </div>
-            <div>
-              <h3>Teacher notes</h3>
-              <p>{String(this.state.model!.teacherNote)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Actual End Date</h3>
+							<p>{String(this.state.model!.actualEndDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Actual Start Date</h3>
+							<p>{String(this.state.model!.actualStartDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Bill Amount</h3>
+							<p>{String(this.state.model!.billAmount)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>status</h3>
+							<p>{String(this.state.model!.eventStatusIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>Scheduled End Date</h3>
+							<p>{String(this.state.model!.scheduledEndDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Scheduled Start Date</h3>
+							<p>{String(this.state.model!.scheduledStartDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Student Notes</h3>
+							<p>{String(this.state.model!.studentNote)}</p>
+						 </div>
+					   						 <div>
+							<h3>Teacher notes</h3>
+							<p>{String(this.state.model!.teacherNote)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -148,11 +150,10 @@ class EventDetailComponent extends React.Component<
   }
 }
 
-export const WrappedEventDetailComponent = Form.create({
-  name: 'Event Detail',
-})(EventDetailComponent);
-
+export const WrappedEventDetailComponent = Form.create({ name: 'Event Detail' })(
+  EventDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>c3ed95b69da4d5c03de15d4982e6c851</Hash>
+    <Hash>9b5cfd882207c8acce27f8d52d32da4f</Hash>
 </Codenesium>*/

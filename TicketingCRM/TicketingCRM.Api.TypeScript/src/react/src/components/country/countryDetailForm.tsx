@@ -6,7 +6,10 @@ import CountryMapper from './countryMapper';
 import CountryViewModel from './countryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ProvinceTableComponent } from '../shared/provinceTable';
+import {ProvinceTableComponent} from '../shared/provinceTable'
+	
+
+
 
 interface CountryDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface CountryDetailComponentState {
 }
 
 class CountryDetailComponent extends React.Component<
-  CountryDetailComponentProps,
-  CountryDetailComponentState
+CountryDetailComponentProps,
+CountryDetailComponentState
 > {
   state = {
     model: new CountryViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Countries + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Countries + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,48 +86,44 @@ class CountryDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Provinces</h3>
-            <ProvinceTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Countries +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Provinces
-              }
-            />
-          </div>
+            <ProvinceTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries + '/' + this.state.model!.id + '/' + ApiRoutes.Provinces}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -135,11 +132,10 @@ class CountryDetailComponent extends React.Component<
   }
 }
 
-export const WrappedCountryDetailComponent = Form.create({
-  name: 'Country Detail',
-})(CountryDetailComponent);
-
+export const WrappedCountryDetailComponent = Form.create({ name: 'Country Detail' })(
+  CountryDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>a523db8eecbafb516eb517fc252577a2</Hash>
+    <Hash>4958f410d28d723d4ed8e04e62d1a947</Hash>
 </Codenesium>*/

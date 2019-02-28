@@ -6,10 +6,7 @@ import ScrapReasonMapper from './scrapReasonMapper';
 import ScrapReasonViewModel from './scrapReasonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {WorkOrderTableComponent} from '../shared/workOrderTable'
-	
-
-
+import { WorkOrderTableComponent } from '../shared/workOrderTable';
 
 interface ScrapReasonDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface ScrapReasonDetailComponentState {
 }
 
 class ScrapReasonDetailComponent extends React.Component<
-ScrapReasonDetailComponentProps,
-ScrapReasonDetailComponentState
+  ScrapReasonDetailComponentProps,
+  ScrapReasonDetailComponentState
 > {
   state = {
     model: new ScrapReasonViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.ScrapReasons + '/edit/' + this.state.model!.scrapReasonID);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ScrapReasons + '/edit/' + this.state.model!.scrapReasonID
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,52 +85,56 @@ ScrapReasonDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>ModifiedDate</h3>
-							<p>{String(this.state.model!.modifiedDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div>
-							<h3>ScrapReasonID</h3>
-							<p>{String(this.state.model!.scrapReasonID)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>ModifiedDate</h3>
+              <p>{String(this.state.model!.modifiedDate)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>ScrapReasonID</h3>
+              <p>{String(this.state.model!.scrapReasonID)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>WorkOrders</h3>
-            <WorkOrderTableComponent 
-			workOrderID={this.state.model!.workOrderID} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.ScrapReasons + '/' + this.state.model!.scrapReasonID + '/' + ApiRoutes.WorkOrders}
-			/>
-         </div>
-	
-
+            <WorkOrderTableComponent
+              workOrderID={this.state.model!.workOrderID}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.ScrapReasons +
+                '/' +
+                this.state.model!.scrapReasonID +
+                '/' +
+                ApiRoutes.WorkOrders
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -140,10 +143,11 @@ ScrapReasonDetailComponentState
   }
 }
 
-export const WrappedScrapReasonDetailComponent = Form.create({ name: 'ScrapReason Detail' })(
-  ScrapReasonDetailComponent
-);
+export const WrappedScrapReasonDetailComponent = Form.create({
+  name: 'ScrapReason Detail',
+})(ScrapReasonDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>edb3936f070c2ab08ab7a3cf78bea015</Hash>
+    <Hash>e616c73fd77455a3060091df3345f948</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import TransactionMapper from '../transaction/transactionMapper';
 import TransactionViewModel from '../transaction/transactionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface TransactionTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface TransactionTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<TransactionViewModel>;
+  filteredRecords: Array<TransactionViewModel>;
 }
 
-export class  TransactionTableComponent extends React.Component<
-TransactionTableComponentProps,
-TransactionTableComponentState
+export class TransactionTableComponent extends React.Component<
+  TransactionTableComponentProps,
+  TransactionTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: TransactionViewModel) {
-  this.props.history.push(ClientRoutes.Transactions + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: TransactionViewModel) {
+    this.props.history.push(ClientRoutes.Transactions + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: TransactionViewModel) {
-   this.props.history.push(ClientRoutes.Transactions + '/' + row.id);
- }
+  handleDetailClick(e: any, row: TransactionViewModel) {
+    this.props.history.push(ClientRoutes.Transactions + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.TransactionClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: TransactionViewModel) {
           console.log(response);
 
           let mapper = new TransactionMapper();
-          
-          let transactions:Array<TransactionViewModel> = [];
 
-          response.forEach(x =>
-          {
-              transactions.push(mapper.mapApiResponseToViewModel(x));
+          let transactions: Array<TransactionViewModel> = [];
+
+          response.forEach(x => {
+            transactions.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,58 +92,75 @@ handleEditClick(e:any, row: TransactionViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Transactions',
-                    columns: [
-					  {
-                      Header: 'Amount',
-                      accessor: 'amount',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Transactions',
+                columns: [
+                  {
+                    Header: 'Amount',
+                    accessor: 'amount',
+                    Cell: props => {
                       return <span>{String(props.original.amount)}</span>;
-                      }           
-                    },  {
-                      Header: 'GatewayConfirmationNumber',
-                      accessor: 'gatewayConfirmationNumber',
-                      Cell: (props) => {
-                      return <span>{String(props.original.gatewayConfirmationNumber)}</span>;
-                      }           
-                    },  {
-                      Header: 'TransactionStatusId',
-                      accessor: 'transactionStatusId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.TransactionStatus + '/' + props.original.transactionStatusId); }}>
+                    },
+                  },
+                  {
+                    Header: 'GatewayConfirmationNumber',
+                    accessor: 'gatewayConfirmationNumber',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.gatewayConfirmationNumber)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'TransactionStatusId',
+                    accessor: 'transactionStatusId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.TransactionStatus +
+                                '/' +
+                                props.original.transactionStatusId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.transactionStatusIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TransactionViewModel
@@ -157,8 +171,8 @@ handleEditClick(e:any, row: TransactionViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as TransactionViewModel
@@ -167,11 +181,14 @@ handleEditClick(e:any, row: TransactionViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -179,6 +196,7 @@ handleEditClick(e:any, row: TransactionViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>4d329529c5fe7277f1cf2a9676e6ad65</Hash>
+    <Hash>0b07ec3d2e1b32d29450192a77a6b87a</Hash>
 </Codenesium>*/

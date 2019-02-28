@@ -7,6 +7,9 @@ import LinkLogViewModel from './linkLogViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface LinkLogDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface LinkLogDetailComponentState {
 }
 
 class LinkLogDetailComponent extends React.Component<
-  LinkLogDetailComponentProps,
-  LinkLogDetailComponentState
+LinkLogDetailComponentProps,
+LinkLogDetailComponentState
 > {
   state = {
     model: new LinkLogViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.LinkLogs + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.LinkLogs + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,44 +85,47 @@ class LinkLogDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>DateEntered</h3>
-              <p>{String(this.state.model!.dateEntered)}</p>
-            </div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>LinkId</h3>
-              <p>{String(this.state.model!.linkIdNavigation!.toDisplay())}</p>
-            </div>
-            <div>
-              <h3>Log</h3>
-              <p>{String(this.state.model!.log)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>DateEntered</h3>
+							<p>{String(this.state.model!.dateEntered)}</p>
+						 </div>
+					   						 <div>
+							<h3>Id</h3>
+							<p>{String(this.state.model!.id)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>LinkId</h3>
+							<p>{String(this.state.model!.linkIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>Log</h3>
+							<p>{String(this.state.model!.log)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -130,11 +134,10 @@ class LinkLogDetailComponent extends React.Component<
   }
 }
 
-export const WrappedLinkLogDetailComponent = Form.create({
-  name: 'LinkLog Detail',
-})(LinkLogDetailComponent);
-
+export const WrappedLinkLogDetailComponent = Form.create({ name: 'LinkLog Detail' })(
+  LinkLogDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>a5a9f376efa99dd6ebaa2f95c88745e2</Hash>
+    <Hash>15662a2d8b76c97da2baa717837cb35b</Hash>
 </Codenesium>*/

@@ -27,8 +27,6 @@ const config = {
 };
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
-  const query = new URLSearchParams(location.search);
-
   return (
     <BrowserRouter>
       <Security
@@ -135,5 +133,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>8ae353ee04807ac4c99a584f59004087</Hash>
+    <Hash>80d86be552e7426e42123ff75dfd56e4</Hash>
 </Codenesium>*/

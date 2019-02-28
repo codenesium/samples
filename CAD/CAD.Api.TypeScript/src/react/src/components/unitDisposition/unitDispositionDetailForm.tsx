@@ -7,6 +7,9 @@ import UnitDispositionViewModel from './unitDispositionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface UnitDispositionDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface UnitDispositionDetailComponentState {
 }
 
 class UnitDispositionDetailComponent extends React.Component<
-  UnitDispositionDetailComponentProps,
-  UnitDispositionDetailComponentState
+UnitDispositionDetailComponentProps,
+UnitDispositionDetailComponentState
 > {
   state = {
     model: new UnitDispositionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.UnitDispositions + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.UnitDispositions + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,32 +85,35 @@ class UnitDispositionDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -118,11 +122,10 @@ class UnitDispositionDetailComponent extends React.Component<
   }
 }
 
-export const WrappedUnitDispositionDetailComponent = Form.create({
-  name: 'UnitDisposition Detail',
-})(UnitDispositionDetailComponent);
-
+export const WrappedUnitDispositionDetailComponent = Form.create({ name: 'UnitDisposition Detail' })(
+  UnitDispositionDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>2ee0bcd805055b43b2f500ed8d780803</Hash>
+    <Hash>2d4a1ee3abe575898f0c9eb579609165</Hash>
 </Codenesium>*/

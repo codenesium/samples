@@ -6,7 +6,10 @@ import EventStatusMapper from './eventStatusMapper';
 import EventStatusViewModel from './eventStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { EventTableComponent } from '../shared/eventTable';
+import {EventTableComponent} from '../shared/eventTable'
+	
+
+
 
 interface EventStatusDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface EventStatusDetailComponentState {
 }
 
 class EventStatusDetailComponent extends React.Component<
-  EventStatusDetailComponentProps,
-  EventStatusDetailComponentState
+EventStatusDetailComponentProps,
+EventStatusDetailComponentState
 > {
   state = {
     model: new EventStatusViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.EventStatus + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.EventStatus + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,48 +86,44 @@ class EventStatusDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Events</h3>
-            <EventTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.EventStatus +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Events
-              }
-            />
-          </div>
+            <EventTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.EventStatus + '/' + this.state.model!.id + '/' + ApiRoutes.Events}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -135,11 +132,10 @@ class EventStatusDetailComponent extends React.Component<
   }
 }
 
-export const WrappedEventStatusDetailComponent = Form.create({
-  name: 'EventStatus Detail',
-})(EventStatusDetailComponent);
-
+export const WrappedEventStatusDetailComponent = Form.create({ name: 'EventStatus Detail' })(
+  EventStatusDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>390623b62204827c3e26b771776b8363</Hash>
+    <Hash>86c3c8039b8e4e1973970ad7a77e25a8</Hash>
 </Codenesium>*/

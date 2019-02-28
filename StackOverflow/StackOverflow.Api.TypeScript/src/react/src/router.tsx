@@ -3,7 +3,7 @@ import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
 import { wrapperHeader } from './components/header';
-import { ClientRoutes, Constants } from './constants';
+import { ClientRoutes, Constants } from './constants'; 
 import { WrappedBadgeCreateComponent } from './components/badge/badgeCreateForm';
 import { WrappedBadgeDetailComponent } from './components/badge/badgeDetailForm';
 import { WrappedBadgeEditComponent } from './components/badge/badgeEditForm';
@@ -63,7 +63,6 @@ const config = {
 }
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
-  const query = new URLSearchParams(location.search)
 
   return (
     <BrowserRouter>   
@@ -128,5 +127,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>44bb905279572c40e3016ffe2373d1ec</Hash>
+    <Hash>9a609020ed24909e3b45e0d907db8f5c</Hash>
 </Codenesium>*/

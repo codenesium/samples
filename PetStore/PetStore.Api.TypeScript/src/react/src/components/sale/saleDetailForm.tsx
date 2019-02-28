@@ -7,9 +7,6 @@ import SaleViewModel from './saleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface SaleDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface SaleDetailComponentState {
 }
 
 class SaleDetailComponent extends React.Component<
-SaleDetailComponentProps,
-SaleDetailComponentState
+  SaleDetailComponentProps,
+  SaleDetailComponentState
 > {
   state = {
     model: new SaleViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Sales + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Sales + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,55 +84,54 @@ SaleDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>amount</h3>
-							<p>{String(this.state.model!.amount)}</p>
-						 </div>
-					   						 <div>
-							<h3>firstName</h3>
-							<p>{String(this.state.model!.firstName)}</p>
-						 </div>
-					   						 <div>
-							<h3>lastName</h3>
-							<p>{String(this.state.model!.lastName)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>paymentTypeId</h3>
-							<p>{String(this.state.model!.paymentTypeIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>petId</h3>
-							<p>{String(this.state.model!.petIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>phone</h3>
-							<p>{String(this.state.model!.phone)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>amount</h3>
+              <p>{String(this.state.model!.amount)}</p>
+            </div>
+            <div>
+              <h3>firstName</h3>
+              <p>{String(this.state.model!.firstName)}</p>
+            </div>
+            <div>
+              <h3>lastName</h3>
+              <p>{String(this.state.model!.lastName)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>paymentTypeId</h3>
+              <p>
+                {String(this.state.model!.paymentTypeIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>petId</h3>
+              <p>{String(this.state.model!.petIdNavigation!.toDisplay())}</p>
+            </div>
+            <div>
+              <h3>phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -146,6 +144,7 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
   SaleDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>c721f59fb6a315fa03e4607d4f1473ff</Hash>
+    <Hash>55bfc136fa0d5692eade8b7125d290cf</Hash>
 </Codenesium>*/

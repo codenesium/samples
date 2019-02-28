@@ -6,11 +6,11 @@ import CountryMapper from '../country/countryMapper';
 import CountryViewModel from '../country/countryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface CountryTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface CountryTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<CountryViewModel>;
+  filteredRecords : Array<CountryViewModel>;
 }
 
-export class CountryTableComponent extends React.Component<
-  CountryTableComponentProps,
-  CountryTableComponentState
+export class  CountryTableComponent extends React.Component<
+CountryTableComponentProps,
+CountryTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: CountryViewModel) {
-    this.props.history.push(ClientRoutes.Countries + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: CountryViewModel) {
+  this.props.history.push(ClientRoutes.Countries + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: CountryViewModel) {
-    this.props.history.push(ClientRoutes.Countries + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: CountryViewModel) {
+   this.props.history.push(ClientRoutes.Countries + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.CountryClientResponseModel>;
@@ -63,11 +65,12 @@ export class CountryTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new CountryMapper();
+          
+          let countries:Array<CountryViewModel> = [];
 
-          let countries: Array<CountryViewModel> = [];
-
-          response.forEach(x => {
-            countries.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              countries.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,41 +95,42 @@ export class CountryTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Countries',
-                columns: [
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Countries',
+                    columns: [
+					  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as CountryViewModel
@@ -137,8 +141,8 @@ export class CountryTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as CountryViewModel
@@ -147,14 +151,11 @@ export class CountryTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -162,7 +163,6 @@ export class CountryTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>17849c6595da242b35a5e25069f749c9</Hash>
+    <Hash>48eeebdfae6fd2b9203f2fbc4a3fb43a</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import ProductSubcategoryMapper from '../productSubcategory/productSubcategoryMa
 import ProductSubcategoryViewModel from '../productSubcategory/productSubcategoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface ProductSubcategoryTableComponentProps {
-  productSubcategoryID:number,
-  apiRoute:string;
+  productSubcategoryID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,58 @@ interface ProductSubcategoryTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<ProductSubcategoryViewModel>;
+  filteredRecords: Array<ProductSubcategoryViewModel>;
 }
 
-export class  ProductSubcategoryTableComponent extends React.Component<
-ProductSubcategoryTableComponentProps,
-ProductSubcategoryTableComponentState
+export class ProductSubcategoryTableComponent extends React.Component<
+  ProductSubcategoryTableComponentProps,
+  ProductSubcategoryTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: ProductSubcategoryViewModel) {
-  this.props.history.push(ClientRoutes.ProductSubcategories + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: ProductSubcategoryViewModel) {
+    this.props.history.push(
+      ClientRoutes.ProductSubcategories + '/edit/' + row.id
+    );
+  }
 
- handleDetailClick(e:any, row: ProductSubcategoryViewModel) {
-   this.props.history.push(ClientRoutes.ProductSubcategories + '/' + row.id);
- }
+  handleDetailClick(e: any, row: ProductSubcategoryViewModel) {
+    this.props.history.push(ClientRoutes.ProductSubcategories + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.ProductSubcategoryClientResponseModel>;
+          let response = resp.data as Array<
+            Api.ProductSubcategoryClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new ProductSubcategoryMapper();
-          
-          let productSubcategories:Array<ProductSubcategoryViewModel> = [];
 
-          response.forEach(x =>
-          {
-              productSubcategories.push(mapper.mapApiResponseToViewModel(x));
+          let productSubcategories: Array<ProductSubcategoryViewModel> = [];
+
+          response.forEach(x => {
+            productSubcategories.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,70 +96,89 @@ handleEditClick(e:any, row: ProductSubcategoryViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'ProductSubcategories',
-                    columns: [
-					  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'ProductSubcategories',
+                columns: [
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'ProductCategoryID',
-                      accessor: 'productCategoryID',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.ProductCategories + '/' + props.original.productCategoryID); }}>
+                    },
+                  },
+                  {
+                    Header: 'ProductCategoryID',
+                    accessor: 'productCategoryID',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.ProductCategories +
+                                '/' +
+                                props.original.productCategoryID
+                            );
+                          }}
+                        >
                           {String(
                             props.original.productCategoryIDNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'ProductSubcategoryID',
-                      accessor: 'productSubcategoryID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.productSubcategoryID)}</span>;
-                      }           
-                    },  {
-                      Header: 'Rowguid',
-                      accessor: 'rowguid',
-                      Cell: (props) => {
-                      return <span>{String(props.original.rowguid)}</span>;
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'ProductSubcategoryID',
+                    accessor: 'productSubcategoryID',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.productSubcategoryID)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Rowguid',
+                    accessor: 'rowguid',
+                    Cell: props => {
+                      return <span>{String(props.original.rowguid)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as ProductSubcategoryViewModel
@@ -169,8 +189,8 @@ handleEditClick(e:any, row: ProductSubcategoryViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as ProductSubcategoryViewModel
@@ -179,11 +199,14 @@ handleEditClick(e:any, row: ProductSubcategoryViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -191,6 +214,7 @@ handleEditClick(e:any, row: ProductSubcategoryViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>3cf3fa570eee3511a762a2bf300bfdb4</Hash>
+    <Hash>573d0694e5024b165b56628cb1e5af46</Hash>
 </Codenesium>*/

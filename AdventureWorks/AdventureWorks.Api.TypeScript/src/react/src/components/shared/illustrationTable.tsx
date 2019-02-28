@@ -6,11 +6,11 @@ import IllustrationMapper from '../illustration/illustrationMapper';
 import IllustrationViewModel from '../illustration/illustrationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface IllustrationTableComponentProps {
-  illustrationID:number,
-  apiRoute:string;
+  illustrationID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,56 @@ interface IllustrationTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<IllustrationViewModel>;
+  filteredRecords: Array<IllustrationViewModel>;
 }
 
-export class  IllustrationTableComponent extends React.Component<
-IllustrationTableComponentProps,
-IllustrationTableComponentState
+export class IllustrationTableComponent extends React.Component<
+  IllustrationTableComponentProps,
+  IllustrationTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: IllustrationViewModel) {
-  this.props.history.push(ClientRoutes.Illustrations + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: IllustrationViewModel) {
+    this.props.history.push(ClientRoutes.Illustrations + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: IllustrationViewModel) {
-   this.props.history.push(ClientRoutes.Illustrations + '/' + row.id);
- }
+  handleDetailClick(e: any, row: IllustrationViewModel) {
+    this.props.history.push(ClientRoutes.Illustrations + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.IllustrationClientResponseModel>;
+          let response = resp.data as Array<
+            Api.IllustrationClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new IllustrationMapper();
-          
-          let illustrations:Array<IllustrationViewModel> = [];
 
-          response.forEach(x =>
-          {
-              illustrations.push(mapper.mapApiResponseToViewModel(x));
+          let illustrations: Array<IllustrationViewModel> = [];
+
+          response.forEach(x => {
+            illustrations.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,54 +94,57 @@ handleEditClick(e:any, row: IllustrationViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Illustrations',
-                    columns: [
-					  {
-                      Header: 'Diagram',
-                      accessor: 'diagram',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Illustrations',
+                columns: [
+                  {
+                    Header: 'Diagram',
+                    accessor: 'diagram',
+                    Cell: props => {
                       return <span>{String(props.original.diagram)}</span>;
-                      }           
-                    },  {
-                      Header: 'IllustrationID',
-                      accessor: 'illustrationID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.illustrationID)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'IllustrationID',
+                    accessor: 'illustrationID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.illustrationID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
+                      return <span>{String(props.original.modifiedDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as IllustrationViewModel
@@ -153,8 +155,8 @@ handleEditClick(e:any, row: IllustrationViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as IllustrationViewModel
@@ -163,11 +165,14 @@ handleEditClick(e:any, row: IllustrationViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -175,6 +180,7 @@ handleEditClick(e:any, row: IllustrationViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>0e331a85aa5b47f0485fd96b3c860e57</Hash>
+    <Hash>9a3f6805112bfd59a9ead755c0b437d2</Hash>
 </Codenesium>*/

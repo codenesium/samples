@@ -3,7 +3,7 @@ import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
 import { wrapperHeader } from './components/header';
-import { ClientRoutes, Constants } from './constants';
+import { ClientRoutes, Constants } from './constants'; 
 import { WrappedAdminCreateComponent } from './components/admin/adminCreateForm';
 import { WrappedAdminDetailComponent } from './components/admin/adminDetailForm';
 import { WrappedAdminEditComponent } from './components/admin/adminEditForm';
@@ -63,7 +63,6 @@ const config = {
 }
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
-  const query = new URLSearchParams(location.search)
 
   return (
     <BrowserRouter>   
@@ -128,5 +127,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>3b326db0ddee95b79c5240ccf663e7be</Hash>
+    <Hash>adfbbf120a51fb11eaad3fd7d700aaa6</Hash>
 </Codenesium>*/

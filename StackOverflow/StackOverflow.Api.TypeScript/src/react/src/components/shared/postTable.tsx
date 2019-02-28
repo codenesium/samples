@@ -6,11 +6,11 @@ import PostMapper from '../post/postMapper';
 import PostViewModel from '../post/postViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface PostTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface PostTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<PostViewModel>;
+  filteredRecords : Array<PostViewModel>;
 }
 
-export class PostTableComponent extends React.Component<
-  PostTableComponentProps,
-  PostTableComponentState
+export class  PostTableComponent extends React.Component<
+PostTableComponentProps,
+PostTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: PostViewModel) {
-    this.props.history.push(ClientRoutes.Posts + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: PostViewModel) {
+  this.props.history.push(ClientRoutes.Posts + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: PostViewModel) {
-    this.props.history.push(ClientRoutes.Posts + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: PostViewModel) {
+   this.props.history.push(ClientRoutes.Posts + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.PostClientResponseModel>;
@@ -63,11 +65,12 @@ export class PostTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new PostMapper();
+          
+          let posts:Array<PostViewModel> = [];
 
-          let posts: Array<PostViewModel> = [];
-
-          response.forEach(x => {
-            posts.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              posts.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,181 +95,150 @@ export class PostTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Posts',
-                columns: [
-                  {
-                    Header: 'AcceptedAnswerId',
-                    accessor: 'acceptedAnswerId',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.acceptedAnswerId)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'AnswerCount',
-                    accessor: 'answerCount',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Posts',
+                    columns: [
+					  {
+                      Header: 'AcceptedAnswerId',
+                      accessor: 'acceptedAnswerId',
+                      Cell: (props) => {
+                      return <span>{String(props.original.acceptedAnswerId)}</span>;
+                      }           
+                    },  {
+                      Header: 'AnswerCount',
+                      accessor: 'answerCount',
+                      Cell: (props) => {
                       return <span>{String(props.original.answerCount)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Body',
-                    accessor: 'body',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Body',
+                      accessor: 'body',
+                      Cell: (props) => {
                       return <span>{String(props.original.body)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ClosedDate',
-                    accessor: 'closedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ClosedDate',
+                      accessor: 'closedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.closedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'CommentCount',
-                    accessor: 'commentCount',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'CommentCount',
+                      accessor: 'commentCount',
+                      Cell: (props) => {
                       return <span>{String(props.original.commentCount)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'CommunityOwnedDate',
-                    accessor: 'communityOwnedDate',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.communityOwnedDate)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'CreationDate',
-                    accessor: 'creationDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'CommunityOwnedDate',
+                      accessor: 'communityOwnedDate',
+                      Cell: (props) => {
+                      return <span>{String(props.original.communityOwnedDate)}</span>;
+                      }           
+                    },  {
+                      Header: 'CreationDate',
+                      accessor: 'creationDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.creationDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'FavoriteCount',
-                    accessor: 'favoriteCount',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.favoriteCount)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'LastActivityDate',
-                    accessor: 'lastActivityDate',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.lastActivityDate)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'LastEditDate',
-                    accessor: 'lastEditDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'FavoriteCount',
+                      accessor: 'favoriteCount',
+                      Cell: (props) => {
+                      return <span>{String(props.original.favoriteCount)}</span>;
+                      }           
+                    },  {
+                      Header: 'LastActivityDate',
+                      accessor: 'lastActivityDate',
+                      Cell: (props) => {
+                      return <span>{String(props.original.lastActivityDate)}</span>;
+                      }           
+                    },  {
+                      Header: 'LastEditDate',
+                      accessor: 'lastEditDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.lastEditDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LastEditorDisplayName',
-                    accessor: 'lastEditorDisplayName',
-                    Cell: props => {
-                      return (
-                        <span>
-                          {String(props.original.lastEditorDisplayName)}
-                        </span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'LastEditorUserId',
-                    accessor: 'lastEditorUserId',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.lastEditorUserId)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'OwnerUserId',
-                    accessor: 'ownerUserId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'LastEditorDisplayName',
+                      accessor: 'lastEditorDisplayName',
+                      Cell: (props) => {
+                      return <span>{String(props.original.lastEditorDisplayName)}</span>;
+                      }           
+                    },  {
+                      Header: 'LastEditorUserId',
+                      accessor: 'lastEditorUserId',
+                      Cell: (props) => {
+                      return <span>{String(props.original.lastEditorUserId)}</span>;
+                      }           
+                    },  {
+                      Header: 'OwnerUserId',
+                      accessor: 'ownerUserId',
+                      Cell: (props) => {
                       return <span>{String(props.original.ownerUserId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ParentId',
-                    accessor: 'parentId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ParentId',
+                      accessor: 'parentId',
+                      Cell: (props) => {
                       return <span>{String(props.original.parentId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PostTypeId',
-                    accessor: 'postTypeId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'PostTypeId',
+                      accessor: 'postTypeId',
+                      Cell: (props) => {
                       return <span>{String(props.original.postTypeId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Score',
-                    accessor: 'score',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Score',
+                      accessor: 'score',
+                      Cell: (props) => {
                       return <span>{String(props.original.score)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Tags',
-                    accessor: 'tag',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Tags',
+                      accessor: 'tag',
+                      Cell: (props) => {
                       return <span>{String(props.original.tag)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Title',
-                    accessor: 'title',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Title',
+                      accessor: 'title',
+                      Cell: (props) => {
                       return <span>{String(props.original.title)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ViewCount',
-                    accessor: 'viewCount',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ViewCount',
+                      accessor: 'viewCount',
+                      Cell: (props) => {
                       return <span>{String(props.original.viewCount)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PostViewModel
@@ -277,8 +249,8 @@ export class PostTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as PostViewModel
@@ -287,14 +259,11 @@ export class PostTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -302,7 +271,6 @@ export class PostTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>7c0bf6f00e6b93bb8a0bd7764595cf46</Hash>
+    <Hash>d41a0e81719e5517e61ff2e2786800e2</Hash>
 </Codenesium>*/

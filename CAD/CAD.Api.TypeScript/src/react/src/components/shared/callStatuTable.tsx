@@ -6,11 +6,11 @@ import CallStatuMapper from '../callStatu/callStatuMapper';
 import CallStatuViewModel from '../callStatu/callStatuViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface CallStatuTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface CallStatuTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<CallStatuViewModel>;
+  filteredRecords: Array<CallStatuViewModel>;
 }
 
-export class  CallStatuTableComponent extends React.Component<
-CallStatuTableComponentProps,
-CallStatuTableComponentState
+export class CallStatuTableComponent extends React.Component<
+  CallStatuTableComponentProps,
+  CallStatuTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: CallStatuViewModel) {
-  this.props.history.push(ClientRoutes.CallStatus + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: CallStatuViewModel) {
+    this.props.history.push(ClientRoutes.CallStatus + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: CallStatuViewModel) {
-   this.props.history.push(ClientRoutes.CallStatus + '/' + row.id);
- }
+  handleDetailClick(e: any, row: CallStatuViewModel) {
+    this.props.history.push(ClientRoutes.CallStatus + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.CallStatuClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: CallStatuViewModel) {
           console.log(response);
 
           let mapper = new CallStatuMapper();
-          
-          let callStatus:Array<CallStatuViewModel> = [];
 
-          response.forEach(x =>
-          {
-              callStatus.push(mapper.mapApiResponseToViewModel(x));
+          let callStatus: Array<CallStatuViewModel> = [];
+
+          response.forEach(x => {
+            callStatus.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,42 +92,41 @@ handleEditClick(e:any, row: CallStatuViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'CallStatus',
-                    columns: [
-					  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'CallStatus',
+                columns: [
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as CallStatuViewModel
@@ -141,8 +137,8 @@ handleEditClick(e:any, row: CallStatuViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as CallStatuViewModel
@@ -151,11 +147,14 @@ handleEditClick(e:any, row: CallStatuViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -163,6 +162,7 @@ handleEditClick(e:any, row: CallStatuViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>7f1345536f3b3ea5deb5bd5094929f95</Hash>
+    <Hash>9b119d073cfaf4656e1d9198ded0dc53</Hash>
 </Codenesium>*/

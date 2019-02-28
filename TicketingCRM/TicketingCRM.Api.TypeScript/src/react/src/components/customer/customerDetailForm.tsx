@@ -7,6 +7,9 @@ import CustomerViewModel from './customerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface CustomerDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface CustomerDetailComponentState {
 }
 
 class CustomerDetailComponent extends React.Component<
-  CustomerDetailComponentProps,
-  CustomerDetailComponentState
+CustomerDetailComponentProps,
+CustomerDetailComponentState
 > {
   state = {
     model: new CustomerViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Customers + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Customers + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,44 +85,47 @@ class CustomerDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>email</h3>
-              <p>{String(this.state.model!.email)}</p>
-            </div>
-            <div>
-              <h3>firstName</h3>
-              <p>{String(this.state.model!.firstName)}</p>
-            </div>
-            <div>
-              <h3>lastName</h3>
-              <p>{String(this.state.model!.lastName)}</p>
-            </div>
-            <div>
-              <h3>phone</h3>
-              <p>{String(this.state.model!.phone)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>email</h3>
+							<p>{String(this.state.model!.email)}</p>
+						 </div>
+					   						 <div>
+							<h3>firstName</h3>
+							<p>{String(this.state.model!.firstName)}</p>
+						 </div>
+					   						 <div>
+							<h3>lastName</h3>
+							<p>{String(this.state.model!.lastName)}</p>
+						 </div>
+					   						 <div>
+							<h3>phone</h3>
+							<p>{String(this.state.model!.phone)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -130,11 +134,10 @@ class CustomerDetailComponent extends React.Component<
   }
 }
 
-export const WrappedCustomerDetailComponent = Form.create({
-  name: 'Customer Detail',
-})(CustomerDetailComponent);
-
+export const WrappedCustomerDetailComponent = Form.create({ name: 'Customer Detail' })(
+  CustomerDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>1eda30a79658e8ef654a7a62f185a655</Hash>
+    <Hash>400c97ba399edf74d2040d6ee21e1586</Hash>
 </Codenesium>*/

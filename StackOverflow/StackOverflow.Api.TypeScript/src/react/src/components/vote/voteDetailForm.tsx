@@ -7,9 +7,6 @@ import VoteViewModel from './voteViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface VoteDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface VoteDetailComponentState {
 }
 
 class VoteDetailComponent extends React.Component<
-VoteDetailComponentProps,
-VoteDetailComponentState
+  VoteDetailComponentProps,
+  VoteDetailComponentState
 > {
   state = {
     model: new VoteViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Votes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Votes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,51 +84,48 @@ VoteDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>BountyAmount</h3>
-							<p>{String(this.state.model!.bountyAmount)}</p>
-						 </div>
-					   						 <div>
-							<h3>CreationDate</h3>
-							<p>{String(this.state.model!.creationDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>PostId</h3>
-							<p>{String(this.state.model!.postId)}</p>
-						 </div>
-					   						 <div>
-							<h3>UserId</h3>
-							<p>{String(this.state.model!.userId)}</p>
-						 </div>
-					   						 <div>
-							<h3>VoteTypeId</h3>
-							<p>{String(this.state.model!.voteTypeId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>BountyAmount</h3>
+              <p>{String(this.state.model!.bountyAmount)}</p>
+            </div>
+            <div>
+              <h3>CreationDate</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
+            </div>
+            <div>
+              <h3>PostId</h3>
+              <p>{String(this.state.model!.postId)}</p>
+            </div>
+            <div>
+              <h3>UserId</h3>
+              <p>{String(this.state.model!.userId)}</p>
+            </div>
+            <div>
+              <h3>VoteTypeId</h3>
+              <p>{String(this.state.model!.voteTypeId)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -142,6 +138,7 @@ export const WrappedVoteDetailComponent = Form.create({ name: 'Vote Detail' })(
   VoteDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>a51b4ffea08ed96ec6b72ae2e12c700d</Hash>
+    <Hash>abeb905780a9bdeffd344fbb12da6b12</Hash>
 </Codenesium>*/

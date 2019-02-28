@@ -7,6 +7,9 @@ import PostLinkViewModel from './postLinkViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface PostLinkDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface PostLinkDetailComponentState {
 }
 
 class PostLinkDetailComponent extends React.Component<
-  PostLinkDetailComponentProps,
-  PostLinkDetailComponentState
+PostLinkDetailComponentProps,
+PostLinkDetailComponentState
 > {
   state = {
     model: new PostLinkViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.PostLinks + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.PostLinks + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,44 +85,47 @@ class PostLinkDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>CreationDate</h3>
-              <p>{String(this.state.model!.creationDate)}</p>
-            </div>
-            <div>
-              <h3>LinkTypeId</h3>
-              <p>{String(this.state.model!.linkTypeId)}</p>
-            </div>
-            <div>
-              <h3>PostId</h3>
-              <p>{String(this.state.model!.postId)}</p>
-            </div>
-            <div>
-              <h3>RelatedPostId</h3>
-              <p>{String(this.state.model!.relatedPostId)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>CreationDate</h3>
+							<p>{String(this.state.model!.creationDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>LinkTypeId</h3>
+							<p>{String(this.state.model!.linkTypeId)}</p>
+						 </div>
+					   						 <div>
+							<h3>PostId</h3>
+							<p>{String(this.state.model!.postId)}</p>
+						 </div>
+					   						 <div>
+							<h3>RelatedPostId</h3>
+							<p>{String(this.state.model!.relatedPostId)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -130,11 +134,10 @@ class PostLinkDetailComponent extends React.Component<
   }
 }
 
-export const WrappedPostLinkDetailComponent = Form.create({
-  name: 'PostLink Detail',
-})(PostLinkDetailComponent);
-
+export const WrappedPostLinkDetailComponent = Form.create({ name: 'PostLink Detail' })(
+  PostLinkDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>5280fcde235b222621208059e9e35174</Hash>
+    <Hash>9eec50a15c3b2c154838f8d2b12e7593</Hash>
 </Codenesium>*/

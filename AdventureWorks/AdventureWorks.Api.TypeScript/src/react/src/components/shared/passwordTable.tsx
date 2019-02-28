@@ -6,11 +6,11 @@ import PasswordMapper from '../password/passwordMapper';
 import PasswordViewModel from '../password/passwordViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface PasswordTableComponentProps {
-  businessEntityID:number,
-  apiRoute:string;
+  businessEntityID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface PasswordTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PasswordViewModel>;
+  filteredRecords: Array<PasswordViewModel>;
 }
 
-export class  PasswordTableComponent extends React.Component<
-PasswordTableComponentProps,
-PasswordTableComponentState
+export class PasswordTableComponent extends React.Component<
+  PasswordTableComponentProps,
+  PasswordTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: PasswordViewModel) {
-  this.props.history.push(ClientRoutes.Passwords + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: PasswordViewModel) {
+    this.props.history.push(ClientRoutes.Passwords + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: PasswordViewModel) {
-   this.props.history.push(ClientRoutes.Passwords + '/' + row.id);
- }
+  handleDetailClick(e: any, row: PasswordViewModel) {
+    this.props.history.push(ClientRoutes.Passwords + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.PasswordClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: PasswordViewModel) {
           console.log(response);
 
           let mapper = new PasswordMapper();
-          
-          let passwords:Array<PasswordViewModel> = [];
 
-          response.forEach(x =>
-          {
-              passwords.push(mapper.mapApiResponseToViewModel(x));
+          let passwords: Array<PasswordViewModel> = [];
+
+          response.forEach(x => {
+            passwords.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,70 +92,85 @@ handleEditClick(e:any, row: PasswordViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Passwords',
-                    columns: [
-					  {
-                      Header: 'BusinessEntityID',
-                      accessor: 'businessEntityID',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.People + '/' + props.original.businessEntityID); }}>
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Passwords',
+                columns: [
+                  {
+                    Header: 'BusinessEntityID',
+                    accessor: 'businessEntityID',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.People +
+                                '/' +
+                                props.original.businessEntityID
+                            );
+                          }}
+                        >
                           {String(
                             props.original.businessEntityIDNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'PasswordHash',
-                      accessor: 'passwordHash',
-                      Cell: (props) => {
-                      return <span>{String(props.original.passwordHash)}</span>;
-                      }           
-                    },  {
-                      Header: 'PasswordSalt',
-                      accessor: 'passwordSalt',
-                      Cell: (props) => {
-                      return <span>{String(props.original.passwordSalt)}</span>;
-                      }           
-                    },  {
-                      Header: 'Rowguid',
-                      accessor: 'rowguid',
-                      Cell: (props) => {
-                      return <span>{String(props.original.rowguid)}</span>;
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
+                      return <span>{String(props.original.modifiedDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PasswordHash',
+                    accessor: 'passwordHash',
+                    Cell: props => {
+                      return <span>{String(props.original.passwordHash)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PasswordSalt',
+                    accessor: 'passwordSalt',
+                    Cell: props => {
+                      return <span>{String(props.original.passwordSalt)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Rowguid',
+                    accessor: 'rowguid',
+                    Cell: props => {
+                      return <span>{String(props.original.rowguid)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PasswordViewModel
@@ -169,8 +181,8 @@ handleEditClick(e:any, row: PasswordViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as PasswordViewModel
@@ -179,11 +191,14 @@ handleEditClick(e:any, row: PasswordViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -191,6 +206,7 @@ handleEditClick(e:any, row: PasswordViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>8d54c82ac6e149cf366b646a3b8086ed</Hash>
+    <Hash>2e925472f5b3459ad05d760c33116526</Hash>
 </Codenesium>*/

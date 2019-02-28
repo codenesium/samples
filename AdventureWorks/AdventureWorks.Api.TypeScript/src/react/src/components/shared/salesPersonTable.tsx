@@ -6,11 +6,11 @@ import SalesPersonMapper from '../salesPerson/salesPersonMapper';
 import SalesPersonViewModel from '../salesPerson/salesPersonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface SalesPersonTableComponentProps {
-  businessEntityID:number,
-  apiRoute:string;
+  businessEntityID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface SalesPersonTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<SalesPersonViewModel>;
+  filteredRecords: Array<SalesPersonViewModel>;
 }
 
-export class  SalesPersonTableComponent extends React.Component<
-SalesPersonTableComponentProps,
-SalesPersonTableComponentState
+export class SalesPersonTableComponent extends React.Component<
+  SalesPersonTableComponentProps,
+  SalesPersonTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: SalesPersonViewModel) {
-  this.props.history.push(ClientRoutes.SalesPersons + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: SalesPersonViewModel) {
+    this.props.history.push(ClientRoutes.SalesPersons + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: SalesPersonViewModel) {
-   this.props.history.push(ClientRoutes.SalesPersons + '/' + row.id);
- }
+  handleDetailClick(e: any, row: SalesPersonViewModel) {
+    this.props.history.push(ClientRoutes.SalesPersons + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.SalesPersonClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: SalesPersonViewModel) {
           console.log(response);
 
           let mapper = new SalesPersonMapper();
-          
-          let salesPersons:Array<SalesPersonViewModel> = [];
 
-          response.forEach(x =>
-          {
-              salesPersons.push(mapper.mapApiResponseToViewModel(x));
+          let salesPersons: Array<SalesPersonViewModel> = [];
+
+          response.forEach(x => {
+            salesPersons.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,94 +92,119 @@ handleEditClick(e:any, row: SalesPersonViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'SalesPersons',
-                    columns: [
-					  {
-                      Header: 'Bonus',
-                      accessor: 'bonus',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'SalesPersons',
+                columns: [
+                  {
+                    Header: 'Bonus',
+                    accessor: 'bonus',
+                    Cell: props => {
                       return <span>{String(props.original.bonus)}</span>;
-                      }           
-                    },  {
-                      Header: 'BusinessEntityID',
-                      accessor: 'businessEntityID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.businessEntityID)}</span>;
-                      }           
-                    },  {
-                      Header: 'CommissionPct',
-                      accessor: 'commissionPct',
-                      Cell: (props) => {
-                      return <span>{String(props.original.commissionPct)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'BusinessEntityID',
+                    accessor: 'businessEntityID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.businessEntityID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'CommissionPct',
+                    accessor: 'commissionPct',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.commissionPct)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Rowguid',
-                      accessor: 'rowguid',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'Rowguid',
+                    accessor: 'rowguid',
+                    Cell: props => {
                       return <span>{String(props.original.rowguid)}</span>;
-                      }           
-                    },  {
-                      Header: 'SalesLastYear',
-                      accessor: 'salesLastYear',
-                      Cell: (props) => {
-                      return <span>{String(props.original.salesLastYear)}</span>;
-                      }           
-                    },  {
-                      Header: 'SalesQuota',
-                      accessor: 'salesQuota',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'SalesLastYear',
+                    accessor: 'salesLastYear',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.salesLastYear)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'SalesQuota',
+                    accessor: 'salesQuota',
+                    Cell: props => {
                       return <span>{String(props.original.salesQuota)}</span>;
-                      }           
-                    },  {
-                      Header: 'SalesYTD',
-                      accessor: 'salesYTD',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'SalesYTD',
+                    accessor: 'salesYTD',
+                    Cell: props => {
                       return <span>{String(props.original.salesYTD)}</span>;
-                      }           
-                    },  {
-                      Header: 'TerritoryID',
-                      accessor: 'territoryID',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.SalesTerritories + '/' + props.original.territoryID); }}>
+                    },
+                  },
+                  {
+                    Header: 'TerritoryID',
+                    accessor: 'territoryID',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.SalesTerritories +
+                                '/' +
+                                props.original.territoryID
+                            );
+                          }}
+                        >
                           {String(
                             props.original.territoryIDNavigation.toDisplay()
                           )}
                         </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SalesPersonViewModel
@@ -193,8 +215,8 @@ handleEditClick(e:any, row: SalesPersonViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as SalesPersonViewModel
@@ -203,11 +225,14 @@ handleEditClick(e:any, row: SalesPersonViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -215,6 +240,7 @@ handleEditClick(e:any, row: SalesPersonViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>5a862ba35500c3b6f83f9832342ce603</Hash>
+    <Hash>994f1b31ea86a3f00d9e3b5078ff23ce</Hash>
 </Codenesium>*/

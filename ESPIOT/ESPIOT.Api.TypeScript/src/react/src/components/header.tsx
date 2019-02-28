@@ -12,14 +12,9 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>,
-  displayName: string
-) => {
-  class WrapperHeaderComponent extends React.Component<
-    WrapperHeaderProps & RouteComponentProps,
-    WrapperHeaderState
-  > {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -35,35 +30,39 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+               <MenuItem
                 key="Home"
-                onClick={() => {
-                  this.setState({ ...this.state, collapsed: true });
-                }}
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'} />
+                <Link to={'/'}></Link>
               </MenuItem>
 
-              <MenuItem key="device">
-                <Icon type="edit" />
-                <span>Device</span>
-                <Link to={ClientRoutes.Devices} />
+			   			   <MenuItem
+                key="device"
+              >
+			  <Icon type="edit" />
+              <span>Device</span>
+              <Link to={ClientRoutes.Devices}></Link>
               </MenuItem>
 
-              <MenuItem key="deviceAction">
-                <Icon type="delete" />
-                <span>Device Actions</span>
-                <Link to={ClientRoutes.DeviceActions} />
+							   <MenuItem
+                key="deviceAction"
+              >
+			  <Icon type="delete" />
+              <span>Device Actions</span>
+              <Link to={ClientRoutes.DeviceActions}></Link>
               </MenuItem>
+
+				
             </Menu>
           </Sider>
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -76,7 +75,6 @@ export const wrapperHeader = (
   return WrapperHeaderComponent;
 };
 
-
 /*<Codenesium>
-    <Hash>a0e7ebb5e4bd3bcbfcc7b723a7f16ce8</Hash>
+    <Hash>d0c4f65aed5049adbd97b327103184f5</Hash>
 </Codenesium>*/

@@ -6,10 +6,13 @@ import OfficerMapper from './officerMapper';
 import OfficerViewModel from './officerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { NoteTableComponent } from '../shared/noteTable';
-import { OfficerCapabilitiesTableComponent } from '../shared/officerCapabilitiesTable';
-import { UnitOfficerTableComponent } from '../shared/unitOfficerTable';
-import { VehicleOfficerTableComponent } from '../shared/vehicleOfficerTable';
+import {NoteTableComponent} from '../shared/noteTable'
+	import {OfficerCapabilitiesTableComponent} from '../shared/officerCapabilitiesTable'
+	import {UnitOfficerTableComponent} from '../shared/unitOfficerTable'
+	import {VehicleOfficerTableComponent} from '../shared/vehicleOfficerTable'
+	
+
+
 
 interface OfficerDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,23 +29,21 @@ interface OfficerDetailComponentState {
 }
 
 class OfficerDetailComponent extends React.Component<
-  OfficerDetailComponentProps,
-  OfficerDetailComponentState
+OfficerDetailComponentProps,
+OfficerDetailComponentState
 > {
   state = {
     model: new OfficerViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Officers + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Officers + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -88,112 +89,87 @@ class OfficerDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>badge</h3>
-              <p>{String(this.state.model!.badge)}</p>
-            </div>
-            <div>
-              <h3>email</h3>
-              <p>{String(this.state.model!.email)}</p>
-            </div>
-            <div>
-              <h3>firstName</h3>
-              <p>{String(this.state.model!.firstName)}</p>
-            </div>
-            <div>
-              <h3>lastName</h3>
-              <p>{String(this.state.model!.lastName)}</p>
-            </div>
-            <div>
-              <h3>password</h3>
-              <p>{String(this.state.model!.password)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>badge</h3>
+							<p>{String(this.state.model!.badge)}</p>
+						 </div>
+					   						 <div>
+							<h3>email</h3>
+							<p>{String(this.state.model!.email)}</p>
+						 </div>
+					   						 <div>
+							<h3>firstName</h3>
+							<p>{String(this.state.model!.firstName)}</p>
+						 </div>
+					   						 <div>
+							<h3>lastName</h3>
+							<p>{String(this.state.model!.lastName)}</p>
+						 </div>
+					   						 <div>
+							<h3>password</h3>
+							<p>{String(this.state.model!.password)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Notes</h3>
-            <NoteTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Officers +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Notes
-              }
-            />
-          </div>
-          <div>
+            <NoteTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Officers + '/' + this.state.model!.id + '/' + ApiRoutes.Notes}
+			/>
+         </div>
+			 <div>
             <h3>OfficerCapabilities</h3>
-            <OfficerCapabilitiesTableComponent
-              capabilityId={this.state.model!.capabilityId}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Officers +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.OfficerCapabilities
-              }
-            />
-          </div>
-          <div>
+            <OfficerCapabilitiesTableComponent 
+			capabilityId={this.state.model!.capabilityId} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Officers + '/' + this.state.model!.id + '/' + ApiRoutes.OfficerCapabilities}
+			/>
+         </div>
+			 <div>
             <h3>UnitOfficers</h3>
-            <UnitOfficerTableComponent
-              officerId={this.state.model!.officerId}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Officers +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.UnitOfficers
-              }
-            />
-          </div>
-          <div>
+            <UnitOfficerTableComponent 
+			officerId={this.state.model!.officerId} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Officers + '/' + this.state.model!.id + '/' + ApiRoutes.UnitOfficers}
+			/>
+         </div>
+			 <div>
             <h3>VehicleOfficers</h3>
-            <VehicleOfficerTableComponent
-              officerId={this.state.model!.officerId}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Officers +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.VehicleOfficers
-              }
-            />
-          </div>
+            <VehicleOfficerTableComponent 
+			officerId={this.state.model!.officerId} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Officers + '/' + this.state.model!.id + '/' + ApiRoutes.VehicleOfficers}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -202,11 +178,10 @@ class OfficerDetailComponent extends React.Component<
   }
 }
 
-export const WrappedOfficerDetailComponent = Form.create({
-  name: 'Officer Detail',
-})(OfficerDetailComponent);
-
+export const WrappedOfficerDetailComponent = Form.create({ name: 'Officer Detail' })(
+  OfficerDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>a5fb8914c9ee796e0710b260d41f12d0</Hash>
+    <Hash>1c0650521e507722c8d3adae89fbe9cd</Hash>
 </Codenesium>*/

@@ -6,11 +6,11 @@ import SalesReasonMapper from '../salesReason/salesReasonMapper';
 import SalesReasonViewModel from '../salesReason/salesReasonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface SalesReasonTableComponentProps {
-  salesReasonID:number,
-  apiRoute:string;
+  salesReasonID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface SalesReasonTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<SalesReasonViewModel>;
+  filteredRecords: Array<SalesReasonViewModel>;
 }
 
-export class  SalesReasonTableComponent extends React.Component<
-SalesReasonTableComponentProps,
-SalesReasonTableComponentState
+export class SalesReasonTableComponent extends React.Component<
+  SalesReasonTableComponentProps,
+  SalesReasonTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: SalesReasonViewModel) {
-  this.props.history.push(ClientRoutes.SalesReasons + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: SalesReasonViewModel) {
+    this.props.history.push(ClientRoutes.SalesReasons + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: SalesReasonViewModel) {
-   this.props.history.push(ClientRoutes.SalesReasons + '/' + row.id);
- }
+  handleDetailClick(e: any, row: SalesReasonViewModel) {
+    this.props.history.push(ClientRoutes.SalesReasons + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.SalesReasonClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: SalesReasonViewModel) {
           console.log(response);
 
           let mapper = new SalesReasonMapper();
-          
-          let salesReasons:Array<SalesReasonViewModel> = [];
 
-          response.forEach(x =>
-          {
-              salesReasons.push(mapper.mapApiResponseToViewModel(x));
+          let salesReasons: Array<SalesReasonViewModel> = [];
+
+          response.forEach(x => {
+            salesReasons.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,60 +92,64 @@ handleEditClick(e:any, row: SalesReasonViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'SalesReasons',
-                    columns: [
-					  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'SalesReasons',
+                columns: [
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'ReasonType',
-                      accessor: 'reasonType',
-                      Cell: (props) => {
-                      return <span>{String(props.original.reasonType)}</span>;
-                      }           
-                    },  {
-                      Header: 'SalesReasonID',
-                      accessor: 'salesReasonID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.salesReasonID)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ReasonType',
+                    accessor: 'reasonType',
+                    Cell: props => {
+                      return <span>{String(props.original.reasonType)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'SalesReasonID',
+                    accessor: 'salesReasonID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.salesReasonID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SalesReasonViewModel
@@ -159,8 +160,8 @@ handleEditClick(e:any, row: SalesReasonViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as SalesReasonViewModel
@@ -169,11 +170,14 @@ handleEditClick(e:any, row: SalesReasonViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -181,6 +185,7 @@ handleEditClick(e:any, row: SalesReasonViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>cef47254c34375a6a88e58b9a9dcc105</Hash>
+    <Hash>eb6d1f3da889eb07ef24054673edd0c5</Hash>
 </Codenesium>*/

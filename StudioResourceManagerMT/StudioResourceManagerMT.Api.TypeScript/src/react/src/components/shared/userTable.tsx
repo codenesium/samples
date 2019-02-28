@@ -6,11 +6,11 @@ import UserMapper from '../user/userMapper';
 import UserViewModel from '../user/userViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface UserTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface UserTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<UserViewModel>;
+  filteredRecords: Array<UserViewModel>;
 }
 
-export class  UserTableComponent extends React.Component<
-UserTableComponentProps,
-UserTableComponentState
+export class UserTableComponent extends React.Component<
+  UserTableComponentProps,
+  UserTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: UserViewModel) {
-  this.props.history.push(ClientRoutes.Users + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: UserViewModel) {
+    this.props.history.push(ClientRoutes.Users + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: UserViewModel) {
-   this.props.history.push(ClientRoutes.Users + '/' + row.id);
- }
+  handleDetailClick(e: any, row: UserViewModel) {
+    this.props.history.push(ClientRoutes.Users + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.UserClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: UserViewModel) {
           console.log(response);
 
           let mapper = new UserMapper();
-          
-          let users:Array<UserViewModel> = [];
 
-          response.forEach(x =>
-          {
-              users.push(mapper.mapApiResponseToViewModel(x));
+          let users: Array<UserViewModel> = [];
+
+          response.forEach(x => {
+            users.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,54 +92,55 @@ handleEditClick(e:any, row: UserViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Users',
-                    columns: [
-					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Users',
+                columns: [
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
                       return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'Password',
-                      accessor: 'password',
-                      Cell: (props) => {
-                      return <span>{String(props.original.password)}</span>;
-                      }           
-                    },  {
-                      Header: 'Username',
-                      accessor: 'username',
-                      Cell: (props) => {
-                      return <span>{String(props.original.username)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Password',
+                    accessor: 'password',
+                    Cell: props => {
+                      return <span>{String(props.original.password)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Username',
+                    accessor: 'username',
+                    Cell: props => {
+                      return <span>{String(props.original.username)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as UserViewModel
@@ -153,8 +151,8 @@ handleEditClick(e:any, row: UserViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as UserViewModel
@@ -163,11 +161,14 @@ handleEditClick(e:any, row: UserViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -175,6 +176,7 @@ handleEditClick(e:any, row: UserViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>6f67ce89e0ca767695a8b17e8b769017</Hash>
+    <Hash>87690eace859e032678327e1ccbe30cd</Hash>
 </Codenesium>*/

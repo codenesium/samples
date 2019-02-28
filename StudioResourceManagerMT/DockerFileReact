@@ -13,7 +13,7 @@ WORKDIR /react
 RUN apk update
 RUN apk add --update nodejs nodejs-npm
 RUN npm install
-RUN npm run build
+RUN npm run build-docker
 
 
 FROM alpine:3.7 AS runtime

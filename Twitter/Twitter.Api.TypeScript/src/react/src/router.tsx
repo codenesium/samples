@@ -3,7 +3,7 @@ import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
 import { wrapperHeader } from './components/header';
-import { ClientRoutes, Constants } from './constants';
+import { ClientRoutes, Constants } from './constants'; 
 import { WrappedDirectTweetCreateComponent } from './components/directTweet/directTweetCreateForm';
 import { WrappedDirectTweetDetailComponent } from './components/directTweet/directTweetDetailForm';
 import { WrappedDirectTweetEditComponent } from './components/directTweet/directTweetEditForm';
@@ -59,7 +59,6 @@ const config = {
 }
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
-  const query = new URLSearchParams(location.search)
 
   return (
     <BrowserRouter>   
@@ -120,5 +119,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>3f0f3775800794287f756a23f16ca840</Hash>
+    <Hash>2bce83a106819b2831b2519ffe86e3f5</Hash>
 </Codenesium>*/

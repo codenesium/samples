@@ -5,24 +5,14 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeamMapper from './teamMapper';
 import TeamViewModel from './teamViewModel';
-import {
-  Form,
-  Input,
-  Button,
-  Switch,
-  InputNumber,
-  DatePicker,
-  Spin,
-  Alert,
-  TimePicker,
-} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { OrganizationSelectComponent } from '../shared/organizationSelect';
-interface TeamEditComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+import { OrganizationSelectComponent } from '../shared/organizationSelect'
+	interface TeamEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface TeamEditComponentState {
@@ -31,7 +21,7 @@ interface TeamEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted: boolean;
+  submitted:boolean;
 }
 
 class TeamEditComponent extends React.Component<
@@ -44,10 +34,10 @@ class TeamEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    submitted: false,
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -78,9 +68,7 @@ class TeamEditComponent extends React.Component<
             errorMessage: '',
           });
 
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -93,11 +81,11 @@ class TeamEditComponent extends React.Component<
           });
         }
       );
-  }
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.props.form.validateFields((err: any, values: any) => {
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as TeamViewModel;
         console.log('Received values of form: ', model);
@@ -106,9 +94,10 @@ class TeamEditComponent extends React.Component<
     });
   };
 
-  submit = (model: TeamViewModel) => {
+  submit = (model:TeamViewModel) =>
+  {  
     let mapper = new TeamMapper();
-    axios
+     axios
       .put(
         Constants.ApiEndpoint + ApiRoutes.Teams + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -123,100 +112,91 @@ class TeamEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.TeamClientRequestModel
           >;
-          this.setState({
-            ...this.state,
-            submitted: true,
-            model: mapper.mapApiResponseToViewModel(response.record!),
-            errorOccurred: false,
-            errorMessage: '',
-          });
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
-          this.setState({
-            ...this.state,
-            submitted: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  };
-
+      ); 
+  }
+  
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-    } = this.props.form;
 
-    let message: JSX.Element = <div />;
-    if (this.state.submitted) {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type="error" />;
-      } else {
-        message = <Alert message="Submitted" type="success" />;
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } else if (this.state.loaded) {
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="name">Name</label>
-            <br />
-            {getFieldDecorator('name', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 128, message: 'Exceeds max length of 128' },
-              ],
-            })(<Input placeholder={'Name'} />)}
-          </Form.Item>
+    } 
+    else if (this.state.loaded) {
 
-          <Form.Item>
-            <label htmlFor="organizationId">OrganizationId</label>
-            <br />
-            {getFieldDecorator('organizationId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'OrganizationId'} />)}
-          </Form.Item>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 128, message: 'Exceeds max length of 128' },
+],
+              
+              })
+              ( <Input placeholder={"Name"} /> )}
+              </Form.Item>
 
+						<Form.Item>
+              <label htmlFor='organizationId'>OrganizationId</label>
+              <br />             
+              {getFieldDecorator('organizationId', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"OrganizationId"} /> )}
+              </Form.Item>
+
+			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          {message}
-        </Form>
-      );
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
-export const WrappedTeamEditComponent = Form.create({ name: 'Team Edit' })(
-  TeamEditComponent
-);
-
+export const WrappedTeamEditComponent = Form.create({ name: 'Team Edit' })(TeamEditComponent);
 
 /*<Codenesium>
-    <Hash>e05aa45122f8957a9827880234bcb0c2</Hash>
+    <Hash>a83cf3ef2c09d781eacee7b71e90e5b5</Hash>
 </Codenesium>*/

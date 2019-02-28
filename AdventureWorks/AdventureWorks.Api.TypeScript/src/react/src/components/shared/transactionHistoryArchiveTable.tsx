@@ -6,11 +6,11 @@ import TransactionHistoryArchiveMapper from '../transactionHistoryArchive/transa
 import TransactionHistoryArchiveViewModel from '../transactionHistoryArchive/transactionHistoryArchiveViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface TransactionHistoryArchiveTableComponentProps {
-  transactionID:number,
-  apiRoute:string;
+  transactionID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,64 @@ interface TransactionHistoryArchiveTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<TransactionHistoryArchiveViewModel>;
+  filteredRecords: Array<TransactionHistoryArchiveViewModel>;
 }
 
-export class  TransactionHistoryArchiveTableComponent extends React.Component<
-TransactionHistoryArchiveTableComponentProps,
-TransactionHistoryArchiveTableComponentState
+export class TransactionHistoryArchiveTableComponent extends React.Component<
+  TransactionHistoryArchiveTableComponentProps,
+  TransactionHistoryArchiveTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: TransactionHistoryArchiveViewModel) {
-  this.props.history.push(ClientRoutes.TransactionHistoryArchives + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: TransactionHistoryArchiveViewModel) {
+    this.props.history.push(
+      ClientRoutes.TransactionHistoryArchives + '/edit/' + row.id
+    );
+  }
 
- handleDetailClick(e:any, row: TransactionHistoryArchiveViewModel) {
-   this.props.history.push(ClientRoutes.TransactionHistoryArchives + '/' + row.id);
- }
+  handleDetailClick(e: any, row: TransactionHistoryArchiveViewModel) {
+    this.props.history.push(
+      ClientRoutes.TransactionHistoryArchives + '/' + row.id
+    );
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.TransactionHistoryArchiveClientResponseModel>;
+          let response = resp.data as Array<
+            Api.TransactionHistoryArchiveClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new TransactionHistoryArchiveMapper();
-          
-          let transactionHistoryArchives:Array<TransactionHistoryArchiveViewModel> = [];
 
-          response.forEach(x =>
-          {
-              transactionHistoryArchives.push(mapper.mapApiResponseToViewModel(x));
+          let transactionHistoryArchives: Array<
+            TransactionHistoryArchiveViewModel
+          > = [];
+
+          response.forEach(x => {
+            transactionHistoryArchives.push(
+              mapper.mapApiResponseToViewModel(x)
+            );
           });
           this.setState({
             ...this.state,
@@ -95,90 +102,109 @@ handleEditClick(e:any, row: TransactionHistoryArchiveViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'TransactionHistoryArchives',
-                    columns: [
-					  {
-                      Header: 'ActualCost',
-                      accessor: 'actualCost',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'TransactionHistoryArchives',
+                columns: [
+                  {
+                    Header: 'ActualCost',
+                    accessor: 'actualCost',
+                    Cell: props => {
                       return <span>{String(props.original.actualCost)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'ProductID',
-                      accessor: 'productID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.productID)}</span>;
-                      }           
-                    },  {
-                      Header: 'Quantity',
-                      accessor: 'quantity',
-                      Cell: (props) => {
-                      return <span>{String(props.original.quantity)}</span>;
-                      }           
-                    },  {
-                      Header: 'ReferenceOrderID',
-                      accessor: 'referenceOrderID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.referenceOrderID)}</span>;
-                      }           
-                    },  {
-                      Header: 'ReferenceOrderLineID',
-                      accessor: 'referenceOrderLineID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.referenceOrderLineID)}</span>;
-                      }           
-                    },  {
-                      Header: 'TransactionDate',
-                      accessor: 'transactionDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.transactionDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'TransactionID',
-                      accessor: 'transactionID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.transactionID)}</span>;
-                      }           
-                    },  {
-                      Header: 'TransactionType',
-                      accessor: 'transactionType',
-                      Cell: (props) => {
-                      return <span>{String(props.original.transactionType)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
+                      return <span>{String(props.original.modifiedDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ProductID',
+                    accessor: 'productID',
+                    Cell: props => {
+                      return <span>{String(props.original.productID)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Quantity',
+                    accessor: 'quantity',
+                    Cell: props => {
+                      return <span>{String(props.original.quantity)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ReferenceOrderID',
+                    accessor: 'referenceOrderID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.referenceOrderID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'ReferenceOrderLineID',
+                    accessor: 'referenceOrderLineID',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.referenceOrderLineID)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'TransactionDate',
+                    accessor: 'transactionDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.transactionDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'TransactionID',
+                    accessor: 'transactionID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.transactionID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'TransactionType',
+                    accessor: 'transactionType',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.transactionType)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TransactionHistoryArchiveViewModel
@@ -189,8 +215,8 @@ handleEditClick(e:any, row: TransactionHistoryArchiveViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as TransactionHistoryArchiveViewModel
@@ -199,11 +225,14 @@ handleEditClick(e:any, row: TransactionHistoryArchiveViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -211,6 +240,7 @@ handleEditClick(e:any, row: TransactionHistoryArchiveViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>85daf9db311ca93282a166cbd0e4b40f</Hash>
+    <Hash>0b1edd0d1680742935ec786b2c238717</Hash>
 </Codenesium>*/

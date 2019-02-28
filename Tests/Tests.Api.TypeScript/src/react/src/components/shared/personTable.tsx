@@ -6,11 +6,11 @@ import PersonMapper from '../person/personMapper';
 import PersonViewModel from '../person/personViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface PersonTableComponentProps {
-  pERSON_ID: number;
-  apiRoute: string;
+  pERSON_ID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface PersonTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<PersonViewModel>;
+  filteredRecords : Array<PersonViewModel>;
 }
 
-export class PersonTableComponent extends React.Component<
-  PersonTableComponentProps,
-  PersonTableComponentState
+export class  PersonTableComponent extends React.Component<
+PersonTableComponentProps,
+PersonTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: PersonViewModel) {
-    this.props.history.push(ClientRoutes.People + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: PersonViewModel) {
+  this.props.history.push(ClientRoutes.People + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: PersonViewModel) {
-    this.props.history.push(ClientRoutes.People + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: PersonViewModel) {
+   this.props.history.push(ClientRoutes.People + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.PersonClientResponseModel>;
@@ -63,11 +65,12 @@ export class PersonTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new PersonMapper();
+          
+          let people:Array<PersonViewModel> = [];
 
-          let people: Array<PersonViewModel> = [];
-
-          response.forEach(x => {
-            people.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              people.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,48 +95,48 @@ export class PersonTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'People',
-                columns: [
-                  {
-                    Header: 'PersonId',
-                    accessor: 'personId',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'People',
+                    columns: [
+					  {
+                      Header: 'PersonId',
+                      accessor: 'personId',
+                      Cell: (props) => {
                       return <span>{String(props.original.personId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PersonName',
-                    accessor: 'personName',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'PersonName',
+                      accessor: 'personName',
+                      Cell: (props) => {
                       return <span>{String(props.original.personName)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PersonViewModel
@@ -144,8 +147,8 @@ export class PersonTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as PersonViewModel
@@ -154,14 +157,11 @@ export class PersonTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -169,7 +169,6 @@ export class PersonTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>4b8f5e7498cfdf593e2f61ffd826dc96</Hash>
+    <Hash>e31b29f60b69f08af5dd5e78da75e383</Hash>
 </Codenesium>*/
