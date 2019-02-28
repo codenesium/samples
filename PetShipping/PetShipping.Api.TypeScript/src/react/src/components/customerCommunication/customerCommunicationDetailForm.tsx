@@ -7,9 +7,6 @@ import CustomerCommunicationViewModel from './customerCommunicationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface CustomerCommunicationDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface CustomerCommunicationDetailComponentState {
 }
 
 class CustomerCommunicationDetailComponent extends React.Component<
-CustomerCommunicationDetailComponentProps,
-CustomerCommunicationDetailComponentState
+  CustomerCommunicationDetailComponentProps,
+  CustomerCommunicationDetailComponentState
 > {
   state = {
     model: new CustomerCommunicationViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.CustomerCommunications + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.CustomerCommunications + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,47 +84,48 @@ CustomerCommunicationDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div style={{"marginBottom":"10px"}}>
-							<h3>customerId</h3>
-							<p>{String(this.state.model!.customerIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>dateCreated</h3>
-							<p>{String(this.state.model!.dateCreated)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>employeeId</h3>
-							<p>{String(this.state.model!.employeeIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>notes</h3>
-							<p>{String(this.state.model!.note)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>customerId</h3>
+              <p>
+                {String(this.state.model!.customerIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>dateCreated</h3>
+              <p>{String(this.state.model!.dateCreated)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>employeeId</h3>
+              <p>
+                {String(this.state.model!.employeeIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>notes</h3>
+              <p>{String(this.state.model!.note)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -134,10 +134,11 @@ CustomerCommunicationDetailComponentState
   }
 }
 
-export const WrappedCustomerCommunicationDetailComponent = Form.create({ name: 'CustomerCommunication Detail' })(
-  CustomerCommunicationDetailComponent
-);
+export const WrappedCustomerCommunicationDetailComponent = Form.create({
+  name: 'CustomerCommunication Detail',
+})(CustomerCommunicationDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>492959ad0b8302c2a1b6eb74eee44233</Hash>
+    <Hash>5a7a55cba073279e79daf9ef71942aa8</Hash>
 </Codenesium>*/

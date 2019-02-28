@@ -6,11 +6,11 @@ import SelfReferenceMapper from '../selfReference/selfReferenceMapper';
 import SelfReferenceViewModel from '../selfReference/selfReferenceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface SelfReferenceTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,56 +20,57 @@ interface SelfReferenceTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<SelfReferenceViewModel>;
+  filteredRecords : Array<SelfReferenceViewModel>;
 }
 
-export class SelfReferenceTableComponent extends React.Component<
-  SelfReferenceTableComponentProps,
-  SelfReferenceTableComponentState
+export class  SelfReferenceTableComponent extends React.Component<
+SelfReferenceTableComponentProps,
+SelfReferenceTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: SelfReferenceViewModel) {
-    this.props.history.push(ClientRoutes.SelfReferences + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: SelfReferenceViewModel) {
+  this.props.history.push(ClientRoutes.SelfReferences + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: SelfReferenceViewModel) {
-    this.props.history.push(ClientRoutes.SelfReferences + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: SelfReferenceViewModel) {
+   this.props.history.push(ClientRoutes.SelfReferences + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.SelfReferenceClientResponseModel
-          >;
+          let response = resp.data as Array<Api.SelfReferenceClientResponseModel>;
 
           console.log(response);
 
           let mapper = new SelfReferenceMapper();
+          
+          let selfReferences:Array<SelfReferenceViewModel> = [];
 
-          let selfReferences: Array<SelfReferenceViewModel> = [];
-
-          response.forEach(x => {
-            selfReferences.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              selfReferences.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -94,87 +95,62 @@ export class SelfReferenceTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'SelfReferences',
-                columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'SelfReferences',
+                    columns: [
+					  {
+                      Header: 'Id',
+                      accessor: 'id',
+                      Cell: (props) => {
                       return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'SelfReferenceId',
-                    accessor: 'selfReferenceId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.SelfReferences +
-                                '/' +
-                                props.original.selfReferenceId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'SelfReferenceId',
+                      accessor: 'selfReferenceId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.SelfReferences + '/' + props.original.selfReferenceId); }}>
                           {String(
                             props.original.selfReferenceIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'SelfReferenceId2',
-                    accessor: 'selfReferenceId2',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.SelfReferences +
-                                '/' +
-                                props.original.selfReferenceId2
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'SelfReferenceId2',
+                      accessor: 'selfReferenceId2',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.SelfReferences + '/' + props.original.selfReferenceId2); }}>
                           {String(
                             props.original.selfReferenceId2Navigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SelfReferenceViewModel
@@ -185,8 +161,8 @@ export class SelfReferenceTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as SelfReferenceViewModel
@@ -195,14 +171,11 @@ export class SelfReferenceTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -210,7 +183,6 @@ export class SelfReferenceTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>20b16d17e635d4d5b78e60b3b1eb5f28</Hash>
+    <Hash>f7b1b3dc49ce152713acb25ead002a90</Hash>
 </Codenesium>*/

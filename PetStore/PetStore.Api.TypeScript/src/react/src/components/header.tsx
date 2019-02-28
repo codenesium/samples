@@ -84,7 +84,6 @@ export const wrapperHeader = (
             </Menu>
           </Sider>
           <Layout>
-            <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
               <h2>{displayName}</h2>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
@@ -102,5 +101,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>4af9b1512630b624df93b75da7d2eca3</Hash>
+    <Hash>2b39d1610dae003d2ddca5af493baf71</Hash>
 </Codenesium>*/

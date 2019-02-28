@@ -6,7 +6,10 @@ import ProductCategoryMapper from './productCategoryMapper';
 import ProductCategoryViewModel from './productCategoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ProductSubcategoryTableComponent } from '../shared/productSubcategoryTable';
+import {ProductSubcategoryTableComponent} from '../shared/productSubcategoryTable'
+	
+
+
 
 interface ProductCategoryDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,25 +26,21 @@ interface ProductCategoryDetailComponentState {
 }
 
 class ProductCategoryDetailComponent extends React.Component<
-  ProductCategoryDetailComponentProps,
-  ProductCategoryDetailComponentState
+ProductCategoryDetailComponentProps,
+ProductCategoryDetailComponentState
 > {
   state = {
     model: new ProductCategoryViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.ProductCategories +
-        '/edit/' +
-        this.state.model!.productCategoryID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.ProductCategories + '/edit/' + this.state.model!.productCategoryID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,60 +86,56 @@ class ProductCategoryDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>ProductCategoryID</h3>
-              <p>{String(this.state.model!.productCategoryID)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>ProductCategoryID</h3>
+							<p>{String(this.state.model!.productCategoryID)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>ProductSubcategories</h3>
-            <ProductSubcategoryTableComponent
-              productSubcategoryID={this.state.model!.productSubcategoryID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.ProductCategories +
-                '/' +
-                this.state.model!.productCategoryID +
-                '/' +
-                ApiRoutes.ProductSubcategories
-              }
-            />
-          </div>
+            <ProductSubcategoryTableComponent 
+			productSubcategoryID={this.state.model!.productSubcategoryID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.ProductCategories + '/' + this.state.model!.productCategoryID + '/' + ApiRoutes.ProductSubcategories}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -149,11 +144,10 @@ class ProductCategoryDetailComponent extends React.Component<
   }
 }
 
-export const WrappedProductCategoryDetailComponent = Form.create({
-  name: 'ProductCategory Detail',
-})(ProductCategoryDetailComponent);
-
+export const WrappedProductCategoryDetailComponent = Form.create({ name: 'ProductCategory Detail' })(
+  ProductCategoryDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>1f61789821818ca9b6fe4ac43e98f935</Hash>
+    <Hash>39abd6ed5d06b124c547753c37a2fb8c</Hash>
 </Codenesium>*/

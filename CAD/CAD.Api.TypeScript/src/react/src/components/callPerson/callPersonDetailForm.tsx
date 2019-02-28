@@ -7,9 +7,6 @@ import CallPersonViewModel from './callPersonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface CallPersonDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface CallPersonDetailComponentState {
 }
 
 class CallPersonDetailComponent extends React.Component<
-CallPersonDetailComponentProps,
-CallPersonDetailComponentState
+  CallPersonDetailComponentProps,
+  CallPersonDetailComponentState
 > {
   state = {
     model: new CallPersonViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.CallPersons + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.CallPersons + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,43 +84,42 @@ CallPersonDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>note</h3>
-							<p>{String(this.state.model!.note)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>personId</h3>
-							<p>{String(this.state.model!.personIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>personTypeId</h3>
-							<p>{String(this.state.model!.personTypeIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>note</h3>
+              <p>{String(this.state.model!.note)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>personId</h3>
+              <p>{String(this.state.model!.personIdNavigation!.toDisplay())}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>personTypeId</h3>
+              <p>
+                {String(this.state.model!.personTypeIdNavigation!.toDisplay())}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +128,11 @@ CallPersonDetailComponentState
   }
 }
 
-export const WrappedCallPersonDetailComponent = Form.create({ name: 'CallPerson Detail' })(
-  CallPersonDetailComponent
-);
+export const WrappedCallPersonDetailComponent = Form.create({
+  name: 'CallPerson Detail',
+})(CallPersonDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>312c829841db2f822f4645cffb587679</Hash>
+    <Hash>f91ebb14432f4cd93e1641d4147ccca8</Hash>
 </Codenesium>*/

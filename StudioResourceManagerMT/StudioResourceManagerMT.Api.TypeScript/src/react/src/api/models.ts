@@ -1,711 +1,688 @@
 export class AdminClientRequestModel {
-  birthday: any;
-  email: string;
-  firstName: string;
-  id: number;
-  lastName: string;
-  phone: string;
-  userId: number;
+				birthday:any;
+email:string;
+firstName:string;
+id:number;
+lastName:string;
+phone:string;
+userId:number;
 
-  constructor() {
-    this.birthday = undefined;
-    this.email = '';
-    this.firstName = '';
-    this.id = 0;
-    this.lastName = '';
-    this.phone = '';
-    this.userId = 0;
-  }
+	
+				constructor() {
+					this.birthday = undefined;
+this.email = '';
+this.firstName = '';
+this.id = 0;
+this.lastName = '';
+this.phone = '';
+this.userId = 0;
 
-  setProperties(
-    birthday: any,
-    email: string,
-    firstName: string,
-    id: number,
-    lastName: string,
-    phone: string,
-    userId: number
-  ): void {
-    this.birthday = birthday;
-    this.email = email;
-    this.firstName = firstName;
-    this.id = id;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.userId = userId;
-  }
-}
+				}
 
-export class AdminClientResponseModel {
-  birthday: any;
-  email: string;
-  firstName: string;
-  id: number;
-  lastName: string;
-  phone: string;
-  userId: number;
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
+				{
+					this.birthday = birthday;
+this.email = email;
+this.firstName = firstName;
+this.id = id;
+this.lastName = lastName;
+this.phone = phone;
+this.userId = userId;
 
-  constructor() {
-    this.birthday = undefined;
-    this.email = '';
-    this.firstName = '';
-    this.id = 0;
-    this.lastName = '';
-    this.phone = '';
-    this.userId = 0;
-  }
+				}
+			}
 
-  setProperties(
-    birthday: any,
-    email: string,
-    firstName: string,
-    id: number,
-    lastName: string,
-    phone: string,
-    userId: number
-  ): void {
-    this.birthday = birthday;
-    this.email = email;
-    this.firstName = firstName;
-    this.id = id;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.userId = userId;
-  }
-}
-export class EventClientRequestModel {
-  actualEndDate: any;
-  actualStartDate: any;
-  billAmount: any;
-  eventStatusId: number;
-  id: number;
-  scheduledEndDate: any;
-  scheduledStartDate: any;
-  studentNote: string;
-  teacherNote: string;
+			export class AdminClientResponseModel {
+				birthday:any;
+email:string;
+firstName:string;
+id:number;
+lastName:string;
+phone:string;
+userId:number;
 
-  constructor() {
-    this.actualEndDate = undefined;
-    this.actualStartDate = undefined;
-    this.billAmount = undefined;
-    this.eventStatusId = 0;
-    this.id = 0;
-    this.scheduledEndDate = undefined;
-    this.scheduledStartDate = undefined;
-    this.studentNote = '';
-    this.teacherNote = '';
-  }
+	
+				constructor() {
+					this.birthday = undefined;
+this.email = '';
+this.firstName = '';
+this.id = 0;
+this.lastName = '';
+this.phone = '';
+this.userId = 0;
 
-  setProperties(
-    actualEndDate: any,
-    actualStartDate: any,
-    billAmount: any,
-    eventStatusId: number,
-    id: number,
-    scheduledEndDate: any,
-    scheduledStartDate: any,
-    studentNote: string,
-    teacherNote: string
-  ): void {
-    this.actualEndDate = actualEndDate;
-    this.actualStartDate = actualStartDate;
-    this.billAmount = billAmount;
-    this.eventStatusId = eventStatusId;
-    this.id = id;
-    this.scheduledEndDate = scheduledEndDate;
-    this.scheduledStartDate = scheduledStartDate;
-    this.studentNote = studentNote;
-    this.teacherNote = teacherNote;
-  }
-}
+				}
 
-export class EventClientResponseModel {
-  actualEndDate: any;
-  actualStartDate: any;
-  billAmount: any;
-  eventStatusId: number;
-  id: number;
-  scheduledEndDate: any;
-  scheduledStartDate: any;
-  studentNote: string;
-  teacherNote: string;
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
+				{
+					this.birthday = birthday;
+this.email = email;
+this.firstName = firstName;
+this.id = id;
+this.lastName = lastName;
+this.phone = phone;
+this.userId = userId;
 
-  constructor() {
-    this.actualEndDate = undefined;
-    this.actualStartDate = undefined;
-    this.billAmount = undefined;
-    this.eventStatusId = 0;
-    this.id = 0;
-    this.scheduledEndDate = undefined;
-    this.scheduledStartDate = undefined;
-    this.studentNote = '';
-    this.teacherNote = '';
-  }
+				}
+			}
+			export class EventClientRequestModel {
+				actualEndDate:any;
+actualStartDate:any;
+billAmount:any;
+eventStatusId:number;
+id:number;
+scheduledEndDate:any;
+scheduledStartDate:any;
+studentNote:string;
+teacherNote:string;
 
-  setProperties(
-    actualEndDate: any,
-    actualStartDate: any,
-    billAmount: any,
-    eventStatusId: number,
-    id: number,
-    scheduledEndDate: any,
-    scheduledStartDate: any,
-    studentNote: string,
-    teacherNote: string
-  ): void {
-    this.actualEndDate = actualEndDate;
-    this.actualStartDate = actualStartDate;
-    this.billAmount = billAmount;
-    this.eventStatusId = eventStatusId;
-    this.id = id;
-    this.scheduledEndDate = scheduledEndDate;
-    this.scheduledStartDate = scheduledStartDate;
-    this.studentNote = studentNote;
-    this.teacherNote = teacherNote;
-  }
-}
-export class EventStatuClientRequestModel {
-  id: number;
-  name: string;
+	
+				constructor() {
+					this.actualEndDate = undefined;
+this.actualStartDate = undefined;
+this.billAmount = undefined;
+this.eventStatusId = 0;
+this.id = 0;
+this.scheduledEndDate = undefined;
+this.scheduledStartDate = undefined;
+this.studentNote = '';
+this.teacherNote = '';
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-  }
+				}
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
-  }
-}
+				setProperties(actualEndDate : any,actualStartDate : any,billAmount : any,eventStatusId : number,id : number,scheduledEndDate : any,scheduledStartDate : any,studentNote : string,teacherNote : string) : void
+				{
+					this.actualEndDate = actualEndDate;
+this.actualStartDate = actualStartDate;
+this.billAmount = billAmount;
+this.eventStatusId = eventStatusId;
+this.id = id;
+this.scheduledEndDate = scheduledEndDate;
+this.scheduledStartDate = scheduledStartDate;
+this.studentNote = studentNote;
+this.teacherNote = teacherNote;
 
-export class EventStatuClientResponseModel {
-  id: number;
-  name: string;
+				}
+			}
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-  }
+			export class EventClientResponseModel {
+				actualEndDate:any;
+actualStartDate:any;
+billAmount:any;
+eventStatusId:number;
+id:number;
+scheduledEndDate:any;
+scheduledStartDate:any;
+studentNote:string;
+teacherNote:string;
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
-  }
-}
-export class FamilyClientRequestModel {
-  id: number;
-  note: string;
-  primaryContactEmail: string;
-  primaryContactFirstName: string;
-  primaryContactLastName: string;
-  primaryContactPhone: string;
+	
+				constructor() {
+					this.actualEndDate = undefined;
+this.actualStartDate = undefined;
+this.billAmount = undefined;
+this.eventStatusId = 0;
+this.id = 0;
+this.scheduledEndDate = undefined;
+this.scheduledStartDate = undefined;
+this.studentNote = '';
+this.teacherNote = '';
 
-  constructor() {
-    this.id = 0;
-    this.note = '';
-    this.primaryContactEmail = '';
-    this.primaryContactFirstName = '';
-    this.primaryContactLastName = '';
-    this.primaryContactPhone = '';
-  }
+				}
 
-  setProperties(
-    id: number,
-    note: string,
-    primaryContactEmail: string,
-    primaryContactFirstName: string,
-    primaryContactLastName: string,
-    primaryContactPhone: string
-  ): void {
-    this.id = id;
-    this.note = note;
-    this.primaryContactEmail = primaryContactEmail;
-    this.primaryContactFirstName = primaryContactFirstName;
-    this.primaryContactLastName = primaryContactLastName;
-    this.primaryContactPhone = primaryContactPhone;
-  }
-}
+				setProperties(actualEndDate : any,actualStartDate : any,billAmount : any,eventStatusId : number,id : number,scheduledEndDate : any,scheduledStartDate : any,studentNote : string,teacherNote : string) : void
+				{
+					this.actualEndDate = actualEndDate;
+this.actualStartDate = actualStartDate;
+this.billAmount = billAmount;
+this.eventStatusId = eventStatusId;
+this.id = id;
+this.scheduledEndDate = scheduledEndDate;
+this.scheduledStartDate = scheduledStartDate;
+this.studentNote = studentNote;
+this.teacherNote = teacherNote;
 
-export class FamilyClientResponseModel {
-  id: number;
-  note: string;
-  primaryContactEmail: string;
-  primaryContactFirstName: string;
-  primaryContactLastName: string;
-  primaryContactPhone: string;
+				}
+			}
+			export class EventStatuClientRequestModel {
+				id:number;
+name:string;
 
-  constructor() {
-    this.id = 0;
-    this.note = '';
-    this.primaryContactEmail = '';
-    this.primaryContactFirstName = '';
-    this.primaryContactLastName = '';
-    this.primaryContactPhone = '';
-  }
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
 
-  setProperties(
-    id: number,
-    note: string,
-    primaryContactEmail: string,
-    primaryContactFirstName: string,
-    primaryContactLastName: string,
-    primaryContactPhone: string
-  ): void {
-    this.id = id;
-    this.note = note;
-    this.primaryContactEmail = primaryContactEmail;
-    this.primaryContactFirstName = primaryContactFirstName;
-    this.primaryContactLastName = primaryContactLastName;
-    this.primaryContactPhone = primaryContactPhone;
-  }
-}
-export class RateClientRequestModel {
-  amountPerMinute: number;
-  id: number;
-  teacherId: number;
-  teacherSkillId: number;
+				}
 
-  constructor() {
-    this.amountPerMinute = 0;
-    this.id = 0;
-    this.teacherId = 0;
-    this.teacherSkillId = 0;
-  }
+				setProperties(id : number,name : string) : void
+				{
+					this.id = id;
+this.name = name;
 
-  setProperties(
-    amountPerMinute: number,
-    id: number,
-    teacherId: number,
-    teacherSkillId: number
-  ): void {
-    this.amountPerMinute = amountPerMinute;
-    this.id = id;
-    this.teacherId = teacherId;
-    this.teacherSkillId = teacherSkillId;
-  }
-}
+				}
+			}
 
-export class RateClientResponseModel {
-  amountPerMinute: number;
-  id: number;
-  teacherId: number;
-  teacherSkillId: number;
+			export class EventStatuClientResponseModel {
+				id:number;
+name:string;
 
-  constructor() {
-    this.amountPerMinute = 0;
-    this.id = 0;
-    this.teacherId = 0;
-    this.teacherSkillId = 0;
-  }
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
 
-  setProperties(
-    amountPerMinute: number,
-    id: number,
-    teacherId: number,
-    teacherSkillId: number
-  ): void {
-    this.amountPerMinute = amountPerMinute;
-    this.id = id;
-    this.teacherId = teacherId;
-    this.teacherSkillId = teacherSkillId;
-  }
-}
-export class SpaceClientRequestModel {
-  description: string;
-  id: number;
-  name: string;
+				}
 
-  constructor() {
-    this.description = '';
-    this.id = 0;
-    this.name = '';
-  }
+				setProperties(id : number,name : string) : void
+				{
+					this.id = id;
+this.name = name;
 
-  setProperties(description: string, id: number, name: string): void {
-    this.description = description;
-    this.id = id;
-    this.name = name;
-  }
-}
+				}
+			}
+			export class FamilyClientRequestModel {
+				id:number;
+note:string;
+primaryContactEmail:string;
+primaryContactFirstName:string;
+primaryContactLastName:string;
+primaryContactPhone:string;
 
-export class SpaceClientResponseModel {
-  description: string;
-  id: number;
-  name: string;
+	
+				constructor() {
+					this.id = 0;
+this.note = '';
+this.primaryContactEmail = '';
+this.primaryContactFirstName = '';
+this.primaryContactLastName = '';
+this.primaryContactPhone = '';
 
-  constructor() {
-    this.description = '';
-    this.id = 0;
-    this.name = '';
-  }
+				}
 
-  setProperties(description: string, id: number, name: string): void {
-    this.description = description;
-    this.id = id;
-    this.name = name;
-  }
-}
-export class SpaceFeatureClientRequestModel {
-  id: number;
-  name: string;
+				setProperties(id : number,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string) : void
+				{
+					this.id = id;
+this.note = note;
+this.primaryContactEmail = primaryContactEmail;
+this.primaryContactFirstName = primaryContactFirstName;
+this.primaryContactLastName = primaryContactLastName;
+this.primaryContactPhone = primaryContactPhone;
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-  }
+				}
+			}
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
-  }
-}
+			export class FamilyClientResponseModel {
+				id:number;
+note:string;
+primaryContactEmail:string;
+primaryContactFirstName:string;
+primaryContactLastName:string;
+primaryContactPhone:string;
 
-export class SpaceFeatureClientResponseModel {
-  id: number;
-  name: string;
+	
+				constructor() {
+					this.id = 0;
+this.note = '';
+this.primaryContactEmail = '';
+this.primaryContactFirstName = '';
+this.primaryContactLastName = '';
+this.primaryContactPhone = '';
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-  }
+				}
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
-  }
-}
-export class StudentClientRequestModel {
-  birthday: any;
-  email: string;
-  emailRemindersEnabled: boolean;
-  familyId: number;
-  firstName: string;
-  id: number;
-  isAdult: boolean;
-  lastName: string;
-  phone: string;
-  smsRemindersEnabled: boolean;
-  userId: number;
+				setProperties(id : number,note : string,primaryContactEmail : string,primaryContactFirstName : string,primaryContactLastName : string,primaryContactPhone : string) : void
+				{
+					this.id = id;
+this.note = note;
+this.primaryContactEmail = primaryContactEmail;
+this.primaryContactFirstName = primaryContactFirstName;
+this.primaryContactLastName = primaryContactLastName;
+this.primaryContactPhone = primaryContactPhone;
 
-  constructor() {
-    this.birthday = undefined;
-    this.email = '';
-    this.emailRemindersEnabled = false;
-    this.familyId = 0;
-    this.firstName = '';
-    this.id = 0;
-    this.isAdult = false;
-    this.lastName = '';
-    this.phone = '';
-    this.smsRemindersEnabled = false;
-    this.userId = 0;
-  }
+				}
+			}
+			export class RateClientRequestModel {
+				amountPerMinute:number;
+id:number;
+teacherId:number;
+teacherSkillId:number;
 
-  setProperties(
-    birthday: any,
-    email: string,
-    emailRemindersEnabled: boolean,
-    familyId: number,
-    firstName: string,
-    id: number,
-    isAdult: boolean,
-    lastName: string,
-    phone: string,
-    smsRemindersEnabled: boolean,
-    userId: number
-  ): void {
-    this.birthday = birthday;
-    this.email = email;
-    this.emailRemindersEnabled = emailRemindersEnabled;
-    this.familyId = familyId;
-    this.firstName = firstName;
-    this.id = id;
-    this.isAdult = isAdult;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.smsRemindersEnabled = smsRemindersEnabled;
-    this.userId = userId;
-  }
-}
+	
+				constructor() {
+					this.amountPerMinute = 0;
+this.id = 0;
+this.teacherId = 0;
+this.teacherSkillId = 0;
 
-export class StudentClientResponseModel {
-  birthday: any;
-  email: string;
-  emailRemindersEnabled: boolean;
-  familyId: number;
-  firstName: string;
-  id: number;
-  isAdult: boolean;
-  lastName: string;
-  phone: string;
-  smsRemindersEnabled: boolean;
-  userId: number;
+				}
 
-  constructor() {
-    this.birthday = undefined;
-    this.email = '';
-    this.emailRemindersEnabled = false;
-    this.familyId = 0;
-    this.firstName = '';
-    this.id = 0;
-    this.isAdult = false;
-    this.lastName = '';
-    this.phone = '';
-    this.smsRemindersEnabled = false;
-    this.userId = 0;
-  }
+				setProperties(amountPerMinute : number,id : number,teacherId : number,teacherSkillId : number) : void
+				{
+					this.amountPerMinute = amountPerMinute;
+this.id = id;
+this.teacherId = teacherId;
+this.teacherSkillId = teacherSkillId;
 
-  setProperties(
-    birthday: any,
-    email: string,
-    emailRemindersEnabled: boolean,
-    familyId: number,
-    firstName: string,
-    id: number,
-    isAdult: boolean,
-    lastName: string,
-    phone: string,
-    smsRemindersEnabled: boolean,
-    userId: number
-  ): void {
-    this.birthday = birthday;
-    this.email = email;
-    this.emailRemindersEnabled = emailRemindersEnabled;
-    this.familyId = familyId;
-    this.firstName = firstName;
-    this.id = id;
-    this.isAdult = isAdult;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.smsRemindersEnabled = smsRemindersEnabled;
-    this.userId = userId;
-  }
-}
-export class StudioClientRequestModel {
-  address1: string;
-  address2: string;
-  city: string;
-  id: number;
-  name: string;
-  province: string;
-  website: string;
-  zip: string;
+				}
+			}
 
-  constructor() {
-    this.address1 = '';
-    this.address2 = '';
-    this.city = '';
-    this.id = 0;
-    this.name = '';
-    this.province = '';
-    this.website = '';
-    this.zip = '';
-  }
+			export class RateClientResponseModel {
+				amountPerMinute:number;
+id:number;
+teacherId:number;
+teacherSkillId:number;
 
-  setProperties(
-    address1: string,
-    address2: string,
-    city: string,
-    id: number,
-    name: string,
-    province: string,
-    website: string,
-    zip: string
-  ): void {
-    this.address1 = address1;
-    this.address2 = address2;
-    this.city = city;
-    this.id = id;
-    this.name = name;
-    this.province = province;
-    this.website = website;
-    this.zip = zip;
-  }
-}
+	
+				constructor() {
+					this.amountPerMinute = 0;
+this.id = 0;
+this.teacherId = 0;
+this.teacherSkillId = 0;
 
-export class StudioClientResponseModel {
-  address1: string;
-  address2: string;
-  city: string;
-  id: number;
-  name: string;
-  province: string;
-  website: string;
-  zip: string;
+				}
 
-  constructor() {
-    this.address1 = '';
-    this.address2 = '';
-    this.city = '';
-    this.id = 0;
-    this.name = '';
-    this.province = '';
-    this.website = '';
-    this.zip = '';
-  }
+				setProperties(amountPerMinute : number,id : number,teacherId : number,teacherSkillId : number) : void
+				{
+					this.amountPerMinute = amountPerMinute;
+this.id = id;
+this.teacherId = teacherId;
+this.teacherSkillId = teacherSkillId;
 
-  setProperties(
-    address1: string,
-    address2: string,
-    city: string,
-    id: number,
-    name: string,
-    province: string,
-    website: string,
-    zip: string
-  ): void {
-    this.address1 = address1;
-    this.address2 = address2;
-    this.city = city;
-    this.id = id;
-    this.name = name;
-    this.province = province;
-    this.website = website;
-    this.zip = zip;
-  }
-}
-export class TeacherClientRequestModel {
-  birthday: any;
-  email: string;
-  firstName: string;
-  id: number;
-  lastName: string;
-  phone: string;
-  userId: number;
+				}
+			}
+			export class SpaceClientRequestModel {
+				description:string;
+id:number;
+name:string;
 
-  constructor() {
-    this.birthday = undefined;
-    this.email = '';
-    this.firstName = '';
-    this.id = 0;
-    this.lastName = '';
-    this.phone = '';
-    this.userId = 0;
-  }
+	
+				constructor() {
+					this.description = '';
+this.id = 0;
+this.name = '';
 
-  setProperties(
-    birthday: any,
-    email: string,
-    firstName: string,
-    id: number,
-    lastName: string,
-    phone: string,
-    userId: number
-  ): void {
-    this.birthday = birthday;
-    this.email = email;
-    this.firstName = firstName;
-    this.id = id;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.userId = userId;
-  }
-}
+				}
 
-export class TeacherClientResponseModel {
-  birthday: any;
-  email: string;
-  firstName: string;
-  id: number;
-  lastName: string;
-  phone: string;
-  userId: number;
+				setProperties(description : string,id : number,name : string) : void
+				{
+					this.description = description;
+this.id = id;
+this.name = name;
 
-  constructor() {
-    this.birthday = undefined;
-    this.email = '';
-    this.firstName = '';
-    this.id = 0;
-    this.lastName = '';
-    this.phone = '';
-    this.userId = 0;
-  }
+				}
+			}
 
-  setProperties(
-    birthday: any,
-    email: string,
-    firstName: string,
-    id: number,
-    lastName: string,
-    phone: string,
-    userId: number
-  ): void {
-    this.birthday = birthday;
-    this.email = email;
-    this.firstName = firstName;
-    this.id = id;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.userId = userId;
-  }
-}
-export class TeacherSkillClientRequestModel {
-  id: number;
-  name: string;
+			export class SpaceClientResponseModel {
+				description:string;
+id:number;
+name:string;
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-  }
+	
+				constructor() {
+					this.description = '';
+this.id = 0;
+this.name = '';
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
-  }
-}
+				}
 
-export class TeacherSkillClientResponseModel {
-  id: number;
-  name: string;
+				setProperties(description : string,id : number,name : string) : void
+				{
+					this.description = description;
+this.id = id;
+this.name = name;
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-  }
+				}
+			}
+			export class SpaceFeatureClientRequestModel {
+				id:number;
+name:string;
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
-    this.name = name;
-  }
-}
-export class UserClientRequestModel {
-  id: number;
-  password: string;
-  username: string;
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
 
-  constructor() {
-    this.id = 0;
-    this.password = '';
-    this.username = '';
-  }
+				}
 
-  setProperties(id: number, password: string, username: string): void {
-    this.id = id;
-    this.password = password;
-    this.username = username;
-  }
-}
+				setProperties(id : number,name : string) : void
+				{
+					this.id = id;
+this.name = name;
 
-export class UserClientResponseModel {
-  id: number;
-  password: string;
-  username: string;
+				}
+			}
 
-  constructor() {
-    this.id = 0;
-    this.password = '';
-    this.username = '';
-  }
+			export class SpaceFeatureClientResponseModel {
+				id:number;
+name:string;
 
-  setProperties(id: number, password: string, username: string): void {
-    this.id = id;
-    this.password = password;
-    this.username = username;
-  }
-}
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
 
+				}
+
+				setProperties(id : number,name : string) : void
+				{
+					this.id = id;
+this.name = name;
+
+				}
+			}
+			export class StudentClientRequestModel {
+				birthday:any;
+email:string;
+emailRemindersEnabled:boolean;
+familyId:number;
+firstName:string;
+id:number;
+isAdult:boolean;
+lastName:string;
+phone:string;
+smsRemindersEnabled:boolean;
+userId:number;
+
+	
+				constructor() {
+					this.birthday = undefined;
+this.email = '';
+this.emailRemindersEnabled = false;
+this.familyId = 0;
+this.firstName = '';
+this.id = 0;
+this.isAdult = false;
+this.lastName = '';
+this.phone = '';
+this.smsRemindersEnabled = false;
+this.userId = 0;
+
+				}
+
+				setProperties(birthday : any,email : string,emailRemindersEnabled : boolean,familyId : number,firstName : string,id : number,isAdult : boolean,lastName : string,phone : string,smsRemindersEnabled : boolean,userId : number) : void
+				{
+					this.birthday = birthday;
+this.email = email;
+this.emailRemindersEnabled = emailRemindersEnabled;
+this.familyId = familyId;
+this.firstName = firstName;
+this.id = id;
+this.isAdult = isAdult;
+this.lastName = lastName;
+this.phone = phone;
+this.smsRemindersEnabled = smsRemindersEnabled;
+this.userId = userId;
+
+				}
+			}
+
+			export class StudentClientResponseModel {
+				birthday:any;
+email:string;
+emailRemindersEnabled:boolean;
+familyId:number;
+firstName:string;
+id:number;
+isAdult:boolean;
+lastName:string;
+phone:string;
+smsRemindersEnabled:boolean;
+userId:number;
+
+	
+				constructor() {
+					this.birthday = undefined;
+this.email = '';
+this.emailRemindersEnabled = false;
+this.familyId = 0;
+this.firstName = '';
+this.id = 0;
+this.isAdult = false;
+this.lastName = '';
+this.phone = '';
+this.smsRemindersEnabled = false;
+this.userId = 0;
+
+				}
+
+				setProperties(birthday : any,email : string,emailRemindersEnabled : boolean,familyId : number,firstName : string,id : number,isAdult : boolean,lastName : string,phone : string,smsRemindersEnabled : boolean,userId : number) : void
+				{
+					this.birthday = birthday;
+this.email = email;
+this.emailRemindersEnabled = emailRemindersEnabled;
+this.familyId = familyId;
+this.firstName = firstName;
+this.id = id;
+this.isAdult = isAdult;
+this.lastName = lastName;
+this.phone = phone;
+this.smsRemindersEnabled = smsRemindersEnabled;
+this.userId = userId;
+
+				}
+			}
+			export class StudioClientRequestModel {
+				address1:string;
+address2:string;
+city:string;
+id:number;
+name:string;
+province:string;
+website:string;
+zip:string;
+
+	
+				constructor() {
+					this.address1 = '';
+this.address2 = '';
+this.city = '';
+this.id = 0;
+this.name = '';
+this.province = '';
+this.website = '';
+this.zip = '';
+
+				}
+
+				setProperties(address1 : string,address2 : string,city : string,id : number,name : string,province : string,website : string,zip : string) : void
+				{
+					this.address1 = address1;
+this.address2 = address2;
+this.city = city;
+this.id = id;
+this.name = name;
+this.province = province;
+this.website = website;
+this.zip = zip;
+
+				}
+			}
+
+			export class StudioClientResponseModel {
+				address1:string;
+address2:string;
+city:string;
+id:number;
+name:string;
+province:string;
+website:string;
+zip:string;
+
+	
+				constructor() {
+					this.address1 = '';
+this.address2 = '';
+this.city = '';
+this.id = 0;
+this.name = '';
+this.province = '';
+this.website = '';
+this.zip = '';
+
+				}
+
+				setProperties(address1 : string,address2 : string,city : string,id : number,name : string,province : string,website : string,zip : string) : void
+				{
+					this.address1 = address1;
+this.address2 = address2;
+this.city = city;
+this.id = id;
+this.name = name;
+this.province = province;
+this.website = website;
+this.zip = zip;
+
+				}
+			}
+			export class TeacherClientRequestModel {
+				birthday:any;
+email:string;
+firstName:string;
+id:number;
+lastName:string;
+phone:string;
+userId:number;
+
+	
+				constructor() {
+					this.birthday = undefined;
+this.email = '';
+this.firstName = '';
+this.id = 0;
+this.lastName = '';
+this.phone = '';
+this.userId = 0;
+
+				}
+
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
+				{
+					this.birthday = birthday;
+this.email = email;
+this.firstName = firstName;
+this.id = id;
+this.lastName = lastName;
+this.phone = phone;
+this.userId = userId;
+
+				}
+			}
+
+			export class TeacherClientResponseModel {
+				birthday:any;
+email:string;
+firstName:string;
+id:number;
+lastName:string;
+phone:string;
+userId:number;
+
+	
+				constructor() {
+					this.birthday = undefined;
+this.email = '';
+this.firstName = '';
+this.id = 0;
+this.lastName = '';
+this.phone = '';
+this.userId = 0;
+
+				}
+
+				setProperties(birthday : any,email : string,firstName : string,id : number,lastName : string,phone : string,userId : number) : void
+				{
+					this.birthday = birthday;
+this.email = email;
+this.firstName = firstName;
+this.id = id;
+this.lastName = lastName;
+this.phone = phone;
+this.userId = userId;
+
+				}
+			}
+			export class TeacherSkillClientRequestModel {
+				id:number;
+name:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
+
+				}
+
+				setProperties(id : number,name : string) : void
+				{
+					this.id = id;
+this.name = name;
+
+				}
+			}
+
+			export class TeacherSkillClientResponseModel {
+				id:number;
+name:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
+
+				}
+
+				setProperties(id : number,name : string) : void
+				{
+					this.id = id;
+this.name = name;
+
+				}
+			}
+			export class UserClientRequestModel {
+				id:number;
+password:string;
+username:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.password = '';
+this.username = '';
+
+				}
+
+				setProperties(id : number,password : string,username : string) : void
+				{
+					this.id = id;
+this.password = password;
+this.username = username;
+
+				}
+			}
+
+			export class UserClientResponseModel {
+				id:number;
+password:string;
+username:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.password = '';
+this.username = '';
+
+				}
+
+				setProperties(id : number,password : string,username : string) : void
+				{
+					this.id = id;
+this.password = password;
+this.username = username;
+
+				}
+			}
 
 /*<Codenesium>
-    <Hash>12bef94f674b9e0145d8073e454df241</Hash>
+    <Hash>291dfbd2bc34cdf5b75d9ee1af7e7db1</Hash>
 </Codenesium>*/

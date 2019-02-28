@@ -7,9 +7,6 @@ import AirTransportViewModel from './airTransportViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface AirTransportDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface AirTransportDetailComponentState {
 }
 
 class AirTransportDetailComponent extends React.Component<
-AirTransportDetailComponentProps,
-AirTransportDetailComponentState
+  AirTransportDetailComponentProps,
+  AirTransportDetailComponentState
 > {
   state = {
     model: new AirTransportViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.AirTransports + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.AirTransports + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,55 +84,54 @@ AirTransportDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>airlineId</h3>
-							<p>{String(this.state.model!.airlineId)}</p>
-						 </div>
-					   						 <div>
-							<h3>flightNumber</h3>
-							<p>{String(this.state.model!.flightNumber)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>handlerId</h3>
-							<p>{String(this.state.model!.handlerIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>landDate</h3>
-							<p>{String(this.state.model!.landDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>pipelineStepId</h3>
-							<p>{String(this.state.model!.pipelineStepId)}</p>
-						 </div>
-					   						 <div>
-							<h3>takeoffDate</h3>
-							<p>{String(this.state.model!.takeoffDate)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>airlineId</h3>
+              <p>{String(this.state.model!.airlineId)}</p>
+            </div>
+            <div>
+              <h3>flightNumber</h3>
+              <p>{String(this.state.model!.flightNumber)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>handlerId</h3>
+              <p>
+                {String(this.state.model!.handlerIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>landDate</h3>
+              <p>{String(this.state.model!.landDate)}</p>
+            </div>
+            <div>
+              <h3>pipelineStepId</h3>
+              <p>{String(this.state.model!.pipelineStepId)}</p>
+            </div>
+            <div>
+              <h3>takeoffDate</h3>
+              <p>{String(this.state.model!.takeoffDate)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -142,10 +140,11 @@ AirTransportDetailComponentState
   }
 }
 
-export const WrappedAirTransportDetailComponent = Form.create({ name: 'AirTransport Detail' })(
-  AirTransportDetailComponent
-);
+export const WrappedAirTransportDetailComponent = Form.create({
+  name: 'AirTransport Detail',
+})(AirTransportDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>a8770324bf0c2bb582f0abd1cd0351a6</Hash>
+    <Hash>a63dc3d5cb2f1fa0829eba4364a21c2b</Hash>
 </Codenesium>*/

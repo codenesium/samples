@@ -7,9 +7,6 @@ import BadgeViewModel from './badgeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface BadgeDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface BadgeDetailComponentState {
 }
 
 class BadgeDetailComponent extends React.Component<
-BadgeDetailComponentProps,
-BadgeDetailComponentState
+  BadgeDetailComponentProps,
+  BadgeDetailComponentState
 > {
   state = {
     model: new BadgeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Badges + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Badges + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,43 +84,40 @@ BadgeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Date</h3>
-							<p>{String(this.state.model!.date)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div>
-							<h3>UserId</h3>
-							<p>{String(this.state.model!.userId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Date</h3>
+              <p>{String(this.state.model!.date)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>UserId</h3>
+              <p>{String(this.state.model!.userId)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +126,11 @@ BadgeDetailComponentState
   }
 }
 
-export const WrappedBadgeDetailComponent = Form.create({ name: 'Badge Detail' })(
-  BadgeDetailComponent
-);
+export const WrappedBadgeDetailComponent = Form.create({
+  name: 'Badge Detail',
+})(BadgeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b0d1e79ee4e95b0f09b652aed7f8582e</Hash>
+    <Hash>574413eeead5d0288cb9a5d409cc6a1d</Hash>
 </Codenesium>*/

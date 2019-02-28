@@ -6,11 +6,11 @@ import OrganizationMapper from '../organization/organizationMapper';
 import OrganizationViewModel from '../organization/organizationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface OrganizationTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,56 @@ interface OrganizationTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<OrganizationViewModel>;
+  filteredRecords: Array<OrganizationViewModel>;
 }
 
-export class  OrganizationTableComponent extends React.Component<
-OrganizationTableComponentProps,
-OrganizationTableComponentState
+export class OrganizationTableComponent extends React.Component<
+  OrganizationTableComponentProps,
+  OrganizationTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: OrganizationViewModel) {
-  this.props.history.push(ClientRoutes.Organizations + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: OrganizationViewModel) {
+    this.props.history.push(ClientRoutes.Organizations + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: OrganizationViewModel) {
-   this.props.history.push(ClientRoutes.Organizations + '/' + row.id);
- }
+  handleDetailClick(e: any, row: OrganizationViewModel) {
+    this.props.history.push(ClientRoutes.Organizations + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.OrganizationClientResponseModel>;
+          let response = resp.data as Array<
+            Api.OrganizationClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new OrganizationMapper();
-          
-          let organizations:Array<OrganizationViewModel> = [];
 
-          response.forEach(x =>
-          {
-              organizations.push(mapper.mapApiResponseToViewModel(x));
+          let organizations: Array<OrganizationViewModel> = [];
+
+          response.forEach(x => {
+            organizations.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,48 +94,48 @@ handleEditClick(e:any, row: OrganizationViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Organizations',
-                    columns: [
-					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Organizations',
+                columns: [
+                  {
+                    Header: 'Id',
+                    accessor: 'id',
+                    Cell: props => {
                       return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as OrganizationViewModel
@@ -147,8 +146,8 @@ handleEditClick(e:any, row: OrganizationViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as OrganizationViewModel
@@ -157,11 +156,14 @@ handleEditClick(e:any, row: OrganizationViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -169,6 +171,7 @@ handleEditClick(e:any, row: OrganizationViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>5b92370fc0da73957939e772b5ebae8f</Hash>
+    <Hash>dc5119e96ca16628dd45939f4eb0424f</Hash>
 </Codenesium>*/

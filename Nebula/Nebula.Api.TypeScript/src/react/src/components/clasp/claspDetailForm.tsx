@@ -7,9 +7,6 @@ import ClaspViewModel from './claspViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface ClaspDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface ClaspDetailComponentState {
 }
 
 class ClaspDetailComponent extends React.Component<
-ClaspDetailComponentProps,
-ClaspDetailComponentState
+  ClaspDetailComponentProps,
+  ClaspDetailComponentState
 > {
   state = {
     model: new ClaspViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Clasps + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Clasps + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,43 +84,46 @@ ClaspDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>NextChainId</h3>
-							<p>{String(this.state.model!.nextChainIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>PreviousChainId</h3>
-							<p>{String(this.state.model!.previousChainIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>NextChainId</h3>
+              <p>
+                {String(this.state.model!.nextChainIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>PreviousChainId</h3>
+              <p>
+                {String(
+                  this.state.model!.previousChainIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +132,11 @@ ClaspDetailComponentState
   }
 }
 
-export const WrappedClaspDetailComponent = Form.create({ name: 'Clasp Detail' })(
-  ClaspDetailComponent
-);
+export const WrappedClaspDetailComponent = Form.create({
+  name: 'Clasp Detail',
+})(ClaspDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b0b8469a5d21c7e860f9801aaa59e0d5</Hash>
+    <Hash>9db99c9c5f06a9dfecea6dd4a500d418</Hash>
 </Codenesium>*/

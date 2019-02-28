@@ -2078,6 +2078,26 @@
         "AppViewControlLabel": "petId",
         "AppName": "PetId",
         "AppNamePlural": "PetIds"
+      },
+      {
+        "$id": "123",
+        "Table": "Pet",
+        "Schema": "dbo",
+        "Column": "AcquiredDate",
+        "AppCLRType": "DateTime",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 3,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "acquiredDate",
+        "AppName": "AcquiredDate",
+        "AppNamePlural": "AcquiredDates"
       }
     ],
     "VirtualForeignKeys": [],

@@ -6,11 +6,11 @@ import ShipMethodMapper from '../shipMethod/shipMethodMapper';
 import ShipMethodViewModel from '../shipMethod/shipMethodViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface ShipMethodTableComponentProps {
-  shipMethodID: number;
-  apiRoute: string;
+  shipMethodID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface ShipMethodTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<ShipMethodViewModel>;
+  filteredRecords : Array<ShipMethodViewModel>;
 }
 
-export class ShipMethodTableComponent extends React.Component<
-  ShipMethodTableComponentProps,
-  ShipMethodTableComponentState
+export class  ShipMethodTableComponent extends React.Component<
+ShipMethodTableComponentProps,
+ShipMethodTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: ShipMethodViewModel) {
-    this.props.history.push(ClientRoutes.ShipMethods + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: ShipMethodViewModel) {
+  this.props.history.push(ClientRoutes.ShipMethods + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: ShipMethodViewModel) {
-    this.props.history.push(ClientRoutes.ShipMethods + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: ShipMethodViewModel) {
+   this.props.history.push(ClientRoutes.ShipMethods + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.ShipMethodClientResponseModel>;
@@ -63,11 +65,12 @@ export class ShipMethodTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new ShipMethodMapper();
+          
+          let shipMethods:Array<ShipMethodViewModel> = [];
 
-          let shipMethods: Array<ShipMethodViewModel> = [];
-
-          response.forEach(x => {
-            shipMethods.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              shipMethods.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,76 +95,72 @@ export class ShipMethodTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'ShipMethods',
-                columns: [
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'ShipMethods',
+                    columns: [
+					  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Rowguid',
-                    accessor: 'rowguid',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Rowguid',
+                      accessor: 'rowguid',
+                      Cell: (props) => {
                       return <span>{String(props.original.rowguid)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ShipBase',
-                    accessor: 'shipBase',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ShipBase',
+                      accessor: 'shipBase',
+                      Cell: (props) => {
                       return <span>{String(props.original.shipBase)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ShipMethodID',
-                    accessor: 'shipMethodID',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ShipMethodID',
+                      accessor: 'shipMethodID',
+                      Cell: (props) => {
                       return <span>{String(props.original.shipMethodID)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ShipRate',
-                    accessor: 'shipRate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ShipRate',
+                      accessor: 'shipRate',
+                      Cell: (props) => {
                       return <span>{String(props.original.shipRate)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as ShipMethodViewModel
@@ -172,8 +171,8 @@ export class ShipMethodTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as ShipMethodViewModel
@@ -182,14 +181,11 @@ export class ShipMethodTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -197,7 +193,6 @@ export class ShipMethodTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>5c12d73ca935383e66366d2a9d2b9558</Hash>
+    <Hash>c4ca01b0c8f5c97c3405afb47834b3e9</Hash>
 </Codenesium>*/

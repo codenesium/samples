@@ -193,6 +193,79 @@ GO
 ALTER TABLE[dbo].[Breed] CHECK CONSTRAINT[fk_breed_speciesid_species_id]
 GO
 
+SET IDENTITY_INSERT [dbo].[Species] ON 
+
+GO
+INSERT [dbo].[Species] ([id], [name]) VALUES (1, N'Bird')
+GO
+INSERT [dbo].[Species] ([id], [name]) VALUES (2, N'Dog')
+GO
+INSERT [dbo].[Species] ([id], [name]) VALUES (3, N'Cat')
+GO
+SET IDENTITY_INSERT [dbo].[Species] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Breed] ON 
+
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (1, N'Dove', 1)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (2, N'Attack Ostrich', 1)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (3, N'Cassowary', 1)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (4, N'Pug', 2)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (5, N'Collie', 2)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (6, N'Pit Bull', 2)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (7, N'Maine Coon', 3)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (8, N'Toyger', 3)
+GO
+INSERT [dbo].[Breed] ([id], [name], [speciesId]) VALUES (9, N'Siberian', 3)
+GO
+SET IDENTITY_INSERT [dbo].[Breed] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Pen] ON 
+
+GO
+INSERT [dbo].[Pen] ([id], [name]) VALUES (1, N'A')
+GO
+INSERT [dbo].[Pen] ([id], [name]) VALUES (2, N'B')
+GO
+INSERT [dbo].[Pen] ([id], [name]) VALUES (3, N'C')
+GO
+SET IDENTITY_INSERT [dbo].[Pen] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Pet] ON 
+
+GO
+INSERT [dbo].[Pet] ([id], [acquiredDate], [breedId], [description], [penId], [price]) VALUES (3, CAST(N'2019-01-01' AS Date), 3, N'a scary bird', 1, 100.0000)
+GO
+INSERT [dbo].[Pet] ([id], [acquiredDate], [breedId], [description], [penId], [price]) VALUES (5, CAST(N'2019-01-07' AS Date), 4, N'cutest dog', 2, 450.0000)
+GO
+SET IDENTITY_INSERT [dbo].[Pet] OFF
+GO
+SET IDENTITY_INSERT [dbo].[PaymentType] ON 
+
+GO
+INSERT [dbo].[PaymentType] ([id], [name]) VALUES (1, N'Check')
+GO
+INSERT [dbo].[PaymentType] ([id], [name]) VALUES (2, N'Cash')
+GO
+INSERT [dbo].[PaymentType] ([id], [name]) VALUES (3, N'Card')
+GO
+SET IDENTITY_INSERT [dbo].[PaymentType] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Sale] ON 
+
+GO
+INSERT [dbo].[Sale] ([id], [amount], [firstName], [lastName], [paymentTypeId], [petId], [phone]) VALUES (6, 1000.0000, N'Bugs ', N'Bunny', 1, 3, N'5555555555')
+GO
+SET IDENTITY_INSERT [dbo].[Sale] OFF
+GO
+
 ");
 		}
 

@@ -7,9 +7,6 @@ import StudioViewModel from './studioViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface StudioDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface StudioDetailComponentState {
 }
 
 class StudioDetailComponent extends React.Component<
-StudioDetailComponentProps,
-StudioDetailComponentState
+  StudioDetailComponentProps,
+  StudioDetailComponentState
 > {
   state = {
     model: new StudioViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Studios + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Studios + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,59 +84,56 @@ StudioDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>address1</h3>
-							<p>{String(this.state.model!.address1)}</p>
-						 </div>
-					   						 <div>
-							<h3>address2</h3>
-							<p>{String(this.state.model!.address2)}</p>
-						 </div>
-					   						 <div>
-							<h3>city</h3>
-							<p>{String(this.state.model!.city)}</p>
-						 </div>
-					   						 <div>
-							<h3>name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div>
-							<h3>province</h3>
-							<p>{String(this.state.model!.province)}</p>
-						 </div>
-					   						 <div>
-							<h3>website</h3>
-							<p>{String(this.state.model!.website)}</p>
-						 </div>
-					   						 <div>
-							<h3>zip</h3>
-							<p>{String(this.state.model!.zip)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>address1</h3>
+              <p>{String(this.state.model!.address1)}</p>
+            </div>
+            <div>
+              <h3>address2</h3>
+              <p>{String(this.state.model!.address2)}</p>
+            </div>
+            <div>
+              <h3>city</h3>
+              <p>{String(this.state.model!.city)}</p>
+            </div>
+            <div>
+              <h3>name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div>
+              <h3>province</h3>
+              <p>{String(this.state.model!.province)}</p>
+            </div>
+            <div>
+              <h3>website</h3>
+              <p>{String(this.state.model!.website)}</p>
+            </div>
+            <div>
+              <h3>zip</h3>
+              <p>{String(this.state.model!.zip)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -146,10 +142,11 @@ StudioDetailComponentState
   }
 }
 
-export const WrappedStudioDetailComponent = Form.create({ name: 'Studio Detail' })(
-  StudioDetailComponent
-);
+export const WrappedStudioDetailComponent = Form.create({
+  name: 'Studio Detail',
+})(StudioDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>097ed7810305b4b2a10dd34f4110fcb0</Hash>
+    <Hash>615671295ee53c32ed9a1ef3b07f21b3</Hash>
 </Codenesium>*/

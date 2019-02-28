@@ -6,11 +6,11 @@ import SpecialOfferMapper from '../specialOffer/specialOfferMapper';
 import SpecialOfferViewModel from '../specialOffer/specialOfferViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface SpecialOfferTableComponentProps {
-  specialOfferID: number;
-  apiRoute: string;
+  specialOfferID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,56 +20,57 @@ interface SpecialOfferTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<SpecialOfferViewModel>;
+  filteredRecords : Array<SpecialOfferViewModel>;
 }
 
-export class SpecialOfferTableComponent extends React.Component<
-  SpecialOfferTableComponentProps,
-  SpecialOfferTableComponentState
+export class  SpecialOfferTableComponent extends React.Component<
+SpecialOfferTableComponentProps,
+SpecialOfferTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: SpecialOfferViewModel) {
-    this.props.history.push(ClientRoutes.SpecialOffers + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: SpecialOfferViewModel) {
+  this.props.history.push(ClientRoutes.SpecialOffers + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: SpecialOfferViewModel) {
-    this.props.history.push(ClientRoutes.SpecialOffers + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: SpecialOfferViewModel) {
+   this.props.history.push(ClientRoutes.SpecialOffers + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.SpecialOfferClientResponseModel
-          >;
+          let response = resp.data as Array<Api.SpecialOfferClientResponseModel>;
 
           console.log(response);
 
           let mapper = new SpecialOfferMapper();
+          
+          let specialOffers:Array<SpecialOfferViewModel> = [];
 
-          let specialOffers: Array<SpecialOfferViewModel> = [];
-
-          response.forEach(x => {
-            specialOffers.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              specialOffers.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -94,106 +95,96 @@ export class SpecialOfferTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'SpecialOffers',
-                columns: [
-                  {
-                    Header: 'Category',
-                    accessor: 'category',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'SpecialOffers',
+                    columns: [
+					  {
+                      Header: 'Category',
+                      accessor: 'category',
+                      Cell: (props) => {
                       return <span>{String(props.original.category)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Description',
-                    accessor: 'description',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Description',
+                      accessor: 'description',
+                      Cell: (props) => {
                       return <span>{String(props.original.description)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'DiscountPct',
-                    accessor: 'discountPct',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'DiscountPct',
+                      accessor: 'discountPct',
+                      Cell: (props) => {
                       return <span>{String(props.original.discountPct)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'EndDate',
-                    accessor: 'endDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'EndDate',
+                      accessor: 'endDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.endDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'MaxQty',
-                    accessor: 'maxQty',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'MaxQty',
+                      accessor: 'maxQty',
+                      Cell: (props) => {
                       return <span>{String(props.original.maxQty)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'MinQty',
-                    accessor: 'minQty',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'MinQty',
+                      accessor: 'minQty',
+                      Cell: (props) => {
                       return <span>{String(props.original.minQty)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Rowguid',
-                    accessor: 'rowguid',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Rowguid',
+                      accessor: 'rowguid',
+                      Cell: (props) => {
                       return <span>{String(props.original.rowguid)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'SpecialOfferID',
-                    accessor: 'specialOfferID',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.specialOfferID)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'StartDate',
-                    accessor: 'startDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'SpecialOfferID',
+                      accessor: 'specialOfferID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.specialOfferID)}</span>;
+                      }           
+                    },  {
+                      Header: 'StartDate',
+                      accessor: 'startDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.startDate)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SpecialOfferViewModel
@@ -204,8 +195,8 @@ export class SpecialOfferTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as SpecialOfferViewModel
@@ -214,14 +205,11 @@ export class SpecialOfferTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -229,7 +217,6 @@ export class SpecialOfferTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>ba5acfd165d4062bd524e91ee878d3c3</Hash>
+    <Hash>57dc208c851232b7f68e33c25e51eb79</Hash>
 </Codenesium>*/

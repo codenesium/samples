@@ -7,9 +7,6 @@ import PostTypeViewModel from './postTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface PostTypeDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface PostTypeDetailComponentState {
 }
 
 class PostTypeDetailComponent extends React.Component<
-PostTypeDetailComponentProps,
-PostTypeDetailComponentState
+  PostTypeDetailComponentProps,
+  PostTypeDetailComponentState
 > {
   state = {
     model: new PostTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.PostTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PostTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,35 +84,32 @@ PostTypeDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Type</h3>
-							<p>{String(this.state.model!.rwType)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Type</h3>
+              <p>{String(this.state.model!.rwType)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -122,10 +118,11 @@ PostTypeDetailComponentState
   }
 }
 
-export const WrappedPostTypeDetailComponent = Form.create({ name: 'PostType Detail' })(
-  PostTypeDetailComponent
-);
+export const WrappedPostTypeDetailComponent = Form.create({
+  name: 'PostType Detail',
+})(PostTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>9654de66b1fd1837f380b7c0bf093121</Hash>
+    <Hash>d1af9d08436ba6f1894ca4d8f77fecc4</Hash>
 </Codenesium>*/

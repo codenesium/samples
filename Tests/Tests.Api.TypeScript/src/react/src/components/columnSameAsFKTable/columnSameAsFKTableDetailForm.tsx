@@ -7,9 +7,6 @@ import ColumnSameAsFKTableViewModel from './columnSameAsFKTableViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface ColumnSameAsFKTableDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface ColumnSameAsFKTableDetailComponentState {
 }
 
 class ColumnSameAsFKTableDetailComponent extends React.Component<
-ColumnSameAsFKTableDetailComponentProps,
-ColumnSameAsFKTableDetailComponentState
+  ColumnSameAsFKTableDetailComponentProps,
+  ColumnSameAsFKTableDetailComponentState
 > {
   state = {
     model: new ColumnSameAsFKTableViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.ColumnSameAsFKTables + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ColumnSameAsFKTables + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,43 +84,40 @@ ColumnSameAsFKTableDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Person</h3>
-							<p>{String(this.state.model!.personNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>PersonId</h3>
-							<p>{String(this.state.model!.personIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Person</h3>
+              <p>{String(this.state.model!.personNavigation!.toDisplay())}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>PersonId</h3>
+              <p>{String(this.state.model!.personIdNavigation!.toDisplay())}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +126,11 @@ ColumnSameAsFKTableDetailComponentState
   }
 }
 
-export const WrappedColumnSameAsFKTableDetailComponent = Form.create({ name: 'ColumnSameAsFKTable Detail' })(
-  ColumnSameAsFKTableDetailComponent
-);
+export const WrappedColumnSameAsFKTableDetailComponent = Form.create({
+  name: 'ColumnSameAsFKTable Detail',
+})(ColumnSameAsFKTableDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>e5c2d440f3a860385ad338e8938b9c1a</Hash>
+    <Hash>ea4c2c3f84a0f9ae46bc802f03142982</Hash>
 </Codenesium>*/

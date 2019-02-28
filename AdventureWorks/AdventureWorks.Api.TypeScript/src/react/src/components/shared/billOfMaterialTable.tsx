@@ -6,11 +6,11 @@ import BillOfMaterialMapper from '../billOfMaterial/billOfMaterialMapper';
 import BillOfMaterialViewModel from '../billOfMaterial/billOfMaterialViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface BillOfMaterialTableComponentProps {
-  billOfMaterialsID: number;
-  apiRoute: string;
+  billOfMaterialsID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,56 +20,57 @@ interface BillOfMaterialTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<BillOfMaterialViewModel>;
+  filteredRecords : Array<BillOfMaterialViewModel>;
 }
 
-export class BillOfMaterialTableComponent extends React.Component<
-  BillOfMaterialTableComponentProps,
-  BillOfMaterialTableComponentState
+export class  BillOfMaterialTableComponent extends React.Component<
+BillOfMaterialTableComponentProps,
+BillOfMaterialTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: BillOfMaterialViewModel) {
-    this.props.history.push(ClientRoutes.BillOfMaterials + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: BillOfMaterialViewModel) {
+  this.props.history.push(ClientRoutes.BillOfMaterials + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: BillOfMaterialViewModel) {
-    this.props.history.push(ClientRoutes.BillOfMaterials + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: BillOfMaterialViewModel) {
+   this.props.history.push(ClientRoutes.BillOfMaterials + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.BillOfMaterialClientResponseModel
-          >;
+          let response = resp.data as Array<Api.BillOfMaterialClientResponseModel>;
 
           console.log(response);
 
           let mapper = new BillOfMaterialMapper();
+          
+          let billOfMaterials:Array<BillOfMaterialViewModel> = [];
 
-          let billOfMaterials: Array<BillOfMaterialViewModel> = [];
-
-          response.forEach(x => {
-            billOfMaterials.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              billOfMaterials.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -94,149 +95,102 @@ export class BillOfMaterialTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'BillOfMaterials',
-                columns: [
-                  {
-                    Header: 'BillOfMaterialsID',
-                    accessor: 'billOfMaterialsID',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.billOfMaterialsID)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'BOMLevel',
-                    accessor: 'bOMLevel',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'BillOfMaterials',
+                    columns: [
+					  {
+                      Header: 'BillOfMaterialsID',
+                      accessor: 'billOfMaterialsID',
+                      Cell: (props) => {
+                      return <span>{String(props.original.billOfMaterialsID)}</span>;
+                      }           
+                    },  {
+                      Header: 'BOMLevel',
+                      accessor: 'bOMLevel',
+                      Cell: (props) => {
                       return <span>{String(props.original.bOMLevel)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ComponentID',
-                    accessor: 'componentID',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Products +
-                                '/' +
-                                props.original.componentID
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'ComponentID',
+                      accessor: 'componentID',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Products + '/' + props.original.componentID); }}>
                           {String(
                             props.original.componentIDNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'EndDate',
-                    accessor: 'endDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'EndDate',
+                      accessor: 'endDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.endDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PerAssemblyQty',
-                    accessor: 'perAssemblyQty',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.perAssemblyQty)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'ProductAssemblyID',
-                    accessor: 'productAssemblyID',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Products +
-                                '/' +
-                                props.original.productAssemblyID
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'PerAssemblyQty',
+                      accessor: 'perAssemblyQty',
+                      Cell: (props) => {
+                      return <span>{String(props.original.perAssemblyQty)}</span>;
+                      }           
+                    },  {
+                      Header: 'ProductAssemblyID',
+                      accessor: 'productAssemblyID',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Products + '/' + props.original.productAssemblyID); }}>
                           {String(
                             props.original.productAssemblyIDNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'StartDate',
-                    accessor: 'startDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'StartDate',
+                      accessor: 'startDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.startDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'UnitMeasureCode',
-                    accessor: 'unitMeasureCode',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.UnitMeasures +
-                                '/' +
-                                props.original.unitMeasureCode
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'UnitMeasureCode',
+                      accessor: 'unitMeasureCode',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.UnitMeasures + '/' + props.original.unitMeasureCode); }}>
                           {String(
                             props.original.unitMeasureCodeNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as BillOfMaterialViewModel
@@ -247,8 +201,8 @@ export class BillOfMaterialTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as BillOfMaterialViewModel
@@ -257,14 +211,11 @@ export class BillOfMaterialTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -272,7 +223,6 @@ export class BillOfMaterialTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>60d7a35ac8204b775911dabe3f9e4912</Hash>
+    <Hash>f7cb7fc1632d50e3215174460707ba16</Hash>
 </Codenesium>*/

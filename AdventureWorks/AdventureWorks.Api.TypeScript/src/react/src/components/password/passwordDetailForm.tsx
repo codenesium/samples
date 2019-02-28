@@ -7,6 +7,9 @@ import PasswordViewModel from './passwordViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface PasswordDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface PasswordDetailComponentState {
 }
 
 class PasswordDetailComponent extends React.Component<
-  PasswordDetailComponentProps,
-  PasswordDetailComponentState
+PasswordDetailComponentProps,
+PasswordDetailComponentState
 > {
   state = {
     model: new PasswordViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Passwords + '/edit/' + this.state.model!.businessEntityID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Passwords + '/edit/' + this.state.model!.businessEntityID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,52 +85,51 @@ class PasswordDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>BusinessEntityID</h3>
-              <p>
-                {String(
-                  this.state.model!.businessEntityIDNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>PasswordHash</h3>
-              <p>{String(this.state.model!.passwordHash)}</p>
-            </div>
-            <div>
-              <h3>PasswordSalt</h3>
-              <p>{String(this.state.model!.passwordSalt)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div style={{"marginBottom":"10px"}}>
+							<h3>BusinessEntityID</h3>
+							<p>{String(this.state.model!.businessEntityIDNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>PasswordHash</h3>
+							<p>{String(this.state.model!.passwordHash)}</p>
+						 </div>
+					   						 <div>
+							<h3>PasswordSalt</h3>
+							<p>{String(this.state.model!.passwordSalt)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -138,11 +138,10 @@ class PasswordDetailComponent extends React.Component<
   }
 }
 
-export const WrappedPasswordDetailComponent = Form.create({
-  name: 'Password Detail',
-})(PasswordDetailComponent);
-
+export const WrappedPasswordDetailComponent = Form.create({ name: 'Password Detail' })(
+  PasswordDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>c9c67c27d5f18cd11a24405e86a83c15</Hash>
+    <Hash>67abe6fc42d2fd646dd2cf3b57748ad8</Hash>
 </Codenesium>*/

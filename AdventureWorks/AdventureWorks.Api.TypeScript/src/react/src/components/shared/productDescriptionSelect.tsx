@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import ProductDescriptionMapper from '../productDescription/productDescriptionMapper';
 import ProductDescriptionViewModel from '../productDescription/productDescriptionViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface ProductDescriptionSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface ProductDescriptionSelectComponentState {
@@ -19,44 +23,46 @@ interface ProductDescriptionSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<ProductDescriptionViewModel>;
+  filteredRecords : Array<ProductDescriptionViewModel>;
 }
 
-export class ProductDescriptionSelectComponent extends React.Component<
-  ProductDescriptionSelectComponentProps,
-  ProductDescriptionSelectComponentState
+export class  ProductDescriptionSelectComponent extends React.Component<
+ProductDescriptionSelectComponentProps,
+ProductDescriptionSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.ProductDescriptionClientResponseModel
-          >;
+          let response = resp.data as Array<Api.ProductDescriptionClientResponseModel>;
 
           console.log(response);
 
           let mapper = new ProductDescriptionMapper();
+          
+          let devices:Array<ProductDescriptionViewModel> = [];
 
-          let devices: Array<ProductDescriptionViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -81,43 +87,46 @@ export class ProductDescriptionSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map(
-                (x: ProductDescriptionViewModel) => {
-                  return (
-                    <Select.Option value={x.productDescriptionID}>
-                      {x.toDisplay()}
-                    </Select.Option>
-                  );
-                }
-              )}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:ProductDescriptionViewModel) =>
+            {
+                return <Select.Option value={x.productDescriptionID}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>e84dcd8fb3acecc0a53e9278d80fce91</Hash>
+    <Hash>f1aa571eb0dfa281bab424a6cd38a6f4</Hash>
 </Codenesium>*/

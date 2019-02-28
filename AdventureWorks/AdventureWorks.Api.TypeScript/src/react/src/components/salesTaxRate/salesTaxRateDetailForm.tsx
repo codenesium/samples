@@ -7,6 +7,9 @@ import SalesTaxRateViewModel from './salesTaxRateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface SalesTaxRateDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface SalesTaxRateDetailComponentState {
 }
 
 class SalesTaxRateDetailComponent extends React.Component<
-  SalesTaxRateDetailComponentProps,
-  SalesTaxRateDetailComponentState
+SalesTaxRateDetailComponentProps,
+SalesTaxRateDetailComponentState
 > {
   state = {
     model: new SalesTaxRateViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.SalesTaxRates + '/edit/' + this.state.model!.salesTaxRateID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.SalesTaxRates + '/edit/' + this.state.model!.salesTaxRateID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,56 +85,59 @@ class SalesTaxRateDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>rowguid</h3>
-              <p>{String(this.state.model!.rowguid)}</p>
-            </div>
-            <div>
-              <h3>SalesTaxRateID</h3>
-              <p>{String(this.state.model!.salesTaxRateID)}</p>
-            </div>
-            <div>
-              <h3>StateProvinceID</h3>
-              <p>{String(this.state.model!.stateProvinceID)}</p>
-            </div>
-            <div>
-              <h3>TaxRate</h3>
-              <p>{String(this.state.model!.taxRate)}</p>
-            </div>
-            <div>
-              <h3>TaxType</h3>
-              <p>{String(this.state.model!.taxType)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>rowguid</h3>
+							<p>{String(this.state.model!.rowguid)}</p>
+						 </div>
+					   						 <div>
+							<h3>SalesTaxRateID</h3>
+							<p>{String(this.state.model!.salesTaxRateID)}</p>
+						 </div>
+					   						 <div>
+							<h3>StateProvinceID</h3>
+							<p>{String(this.state.model!.stateProvinceID)}</p>
+						 </div>
+					   						 <div>
+							<h3>TaxRate</h3>
+							<p>{String(this.state.model!.taxRate)}</p>
+						 </div>
+					   						 <div>
+							<h3>TaxType</h3>
+							<p>{String(this.state.model!.taxType)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -142,11 +146,10 @@ class SalesTaxRateDetailComponent extends React.Component<
   }
 }
 
-export const WrappedSalesTaxRateDetailComponent = Form.create({
-  name: 'SalesTaxRate Detail',
-})(SalesTaxRateDetailComponent);
-
+export const WrappedSalesTaxRateDetailComponent = Form.create({ name: 'SalesTaxRate Detail' })(
+  SalesTaxRateDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>d910e541c780147c064e7598219eef10</Hash>
+    <Hash>fb5f94b8951faa18379b3a0347f4b9d7</Hash>
 </Codenesium>*/

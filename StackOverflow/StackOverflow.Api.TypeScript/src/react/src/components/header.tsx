@@ -139,7 +139,6 @@ displayName:string) => {
             </Menu>
           </Sider>
           <Layout>
-            <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
             <h2>{displayName}</h2>
 			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
@@ -156,5 +155,5 @@ displayName:string) => {
 };
 
 /*<Codenesium>
-    <Hash>905040eb9050deffe110cb11f8e32c17</Hash>
+    <Hash>8d0e9e9d4b738932f0308930567d1cee</Hash>
 </Codenesium>*/

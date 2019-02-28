@@ -3,19 +3,15 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import PipelineStepStepRequirementMapper from '../pipelineStepStepRequirement/pipelineStepStepRequirementMapper';
 import PipelineStepStepRequirementViewModel from '../pipelineStepStepRequirement/pipelineStepStepRequirementViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PipelineStepStepRequirementSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface PipelineStepStepRequirementSelectComponentState {
@@ -23,46 +19,44 @@ interface PipelineStepStepRequirementSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PipelineStepStepRequirementViewModel>;
+  filteredRecords: Array<PipelineStepStepRequirementViewModel>;
 }
 
-export class  PipelineStepStepRequirementSelectComponent extends React.Component<
-PipelineStepStepRequirementSelectComponentProps,
-PipelineStepStepRequirementSelectComponentState
+export class PipelineStepStepRequirementSelectComponent extends React.Component<
+  PipelineStepStepRequirementSelectComponentProps,
+  PipelineStepStepRequirementSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.PipelineStepStepRequirementClientResponseModel>;
+          let response = resp.data as Array<
+            Api.PipelineStepStepRequirementClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new PipelineStepStepRequirementMapper();
-          
-          let devices:Array<PipelineStepStepRequirementViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<PipelineStepStepRequirementViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -87,46 +81,41 @@ PipelineStepStepRequirementSelectComponentState
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
         <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:PipelineStepStepRequirementViewModel) =>
-            {
-                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue,
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map(
+                (x: PipelineStepStepRequirementViewModel) => {
+                  return (
+                    <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
+                  );
+                }
+              )}
+            </Select>
+          )}
+        </div>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>7a0568f9965ed06e422d86d6a3199713</Hash>
+    <Hash>8933cb480d05d5fe84ad60e770ce7e1c</Hash>
 </Codenesium>*/

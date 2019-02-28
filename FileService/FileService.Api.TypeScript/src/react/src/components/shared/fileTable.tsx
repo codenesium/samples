@@ -6,11 +6,11 @@ import FileMapper from '../file/fileMapper';
 import FileViewModel from '../file/fileViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface FileTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface FileTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<FileViewModel>;
+  filteredRecords : Array<FileViewModel>;
 }
 
-export class FileTableComponent extends React.Component<
-  FileTableComponentProps,
-  FileTableComponentState
+export class  FileTableComponent extends React.Component<
+FileTableComponentProps,
+FileTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: FileViewModel) {
-    this.props.history.push(ClientRoutes.Files + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: FileViewModel) {
+  this.props.history.push(ClientRoutes.Files + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: FileViewModel) {
-    this.props.history.push(ClientRoutes.Files + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: FileViewModel) {
+   this.props.history.push(ClientRoutes.Files + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.FileClientResponseModel>;
@@ -63,11 +65,12 @@ export class FileTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new FileMapper();
+          
+          let files:Array<FileViewModel> = [];
 
-          let files: Array<FileViewModel> = [];
-
-          response.forEach(x => {
-            files.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              files.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,145 +95,110 @@ export class FileTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Files',
-                columns: [
-                  {
-                    Header: 'BucketId',
-                    accessor: 'bucketId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Buckets +
-                                '/' +
-                                props.original.bucketId
-                            );
-                          }}
-                        >
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Files',
+                    columns: [
+					  {
+                      Header: 'BucketId',
+                      accessor: 'bucketId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Buckets + '/' + props.original.bucketId); }}>
                           {String(
                             props.original.bucketIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'DateCreated',
-                    accessor: 'dateCreated',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'DateCreated',
+                      accessor: 'dateCreated',
+                      Cell: (props) => {
                       return <span>{String(props.original.dateCreated)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Description',
-                    accessor: 'description',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Description',
+                      accessor: 'description',
+                      Cell: (props) => {
                       return <span>{String(props.original.description)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Expiration',
-                    accessor: 'expiration',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Expiration',
+                      accessor: 'expiration',
+                      Cell: (props) => {
                       return <span>{String(props.original.expiration)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Extension',
-                    accessor: 'extension',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Extension',
+                      accessor: 'extension',
+                      Cell: (props) => {
                       return <span>{String(props.original.extension)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ExternalId',
-                    accessor: 'externalId',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ExternalId',
+                      accessor: 'externalId',
+                      Cell: (props) => {
                       return <span>{String(props.original.externalId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'FileSizeInByte',
-                    accessor: 'fileSizeInByte',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.fileSizeInByte)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'FileTypeId',
-                    accessor: 'fileTypeId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.FileTypes +
-                                '/' +
-                                props.original.fileTypeId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'FileSizeInByte',
+                      accessor: 'fileSizeInByte',
+                      Cell: (props) => {
+                      return <span>{String(props.original.fileSizeInByte)}</span>;
+                      }           
+                    },  {
+                      Header: 'FileTypeId',
+                      accessor: 'fileTypeId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.FileTypes + '/' + props.original.fileTypeId); }}>
                           {String(
                             props.original.fileTypeIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Location',
-                    accessor: 'location',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Location',
+                      accessor: 'location',
+                      Cell: (props) => {
                       return <span>{String(props.original.location)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PrivateKey',
-                    accessor: 'privateKey',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'PrivateKey',
+                      accessor: 'privateKey',
+                      Cell: (props) => {
                       return <span>{String(props.original.privateKey)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PublicKey',
-                    accessor: 'publicKey',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'PublicKey',
+                      accessor: 'publicKey',
+                      Cell: (props) => {
                       return <span>{String(props.original.publicKey)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as FileViewModel
@@ -241,8 +209,8 @@ export class FileTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as FileViewModel
@@ -251,14 +219,11 @@ export class FileTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -266,7 +231,6 @@ export class FileTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>cfc37d71a794d128f84958f0785b40fc</Hash>
+    <Hash>33c9a365f63776f05decb2b5228075fb</Hash>
 </Codenesium>*/

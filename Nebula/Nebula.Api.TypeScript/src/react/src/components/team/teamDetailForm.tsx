@@ -6,10 +6,7 @@ import TeamMapper from './teamMapper';
 import TeamViewModel from './teamViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {ChainTableComponent} from '../shared/chainTable'
-	
-
-
+import { ChainTableComponent } from '../shared/chainTable';
 
 interface TeamDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface TeamDetailComponentState {
 }
 
 class TeamDetailComponent extends React.Component<
-TeamDetailComponentProps,
-TeamDetailComponentState
+  TeamDetailComponentProps,
+  TeamDetailComponentState
 > {
   state = {
     model: new TeamViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Teams + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Teams + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,52 +85,60 @@ TeamDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>OrganizationId</h3>
-							<p>{String(this.state.model!.organizationIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>OrganizationId</h3>
+              <p>
+                {String(
+                  this.state.model!.organizationIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Chains</h3>
-            <ChainTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Teams + '/' + this.state.model!.id + '/' + ApiRoutes.Chains}
-			/>
-         </div>
-	
-
+            <ChainTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Teams +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Chains
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -144,6 +151,7 @@ export const WrappedTeamDetailComponent = Form.create({ name: 'Team Detail' })(
   TeamDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>5a1319c503225f4b374d0770258e642f</Hash>
+    <Hash>cc54296b2c339ca09e55621df783cdad</Hash>
 </Codenesium>*/

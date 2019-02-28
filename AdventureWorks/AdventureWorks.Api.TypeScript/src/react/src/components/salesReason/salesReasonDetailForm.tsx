@@ -6,7 +6,10 @@ import SalesReasonMapper from './salesReasonMapper';
 import SalesReasonViewModel from './salesReasonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { SalesOrderHeaderSalesReasonTableComponent } from '../shared/salesOrderHeaderSalesReasonTable';
+import {SalesOrderHeaderSalesReasonTableComponent} from '../shared/salesOrderHeaderSalesReasonTable'
+	
+
+
 
 interface SalesReasonDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface SalesReasonDetailComponentState {
 }
 
 class SalesReasonDetailComponent extends React.Component<
-  SalesReasonDetailComponentProps,
-  SalesReasonDetailComponentState
+SalesReasonDetailComponentProps,
+SalesReasonDetailComponentState
 > {
   state = {
     model: new SalesReasonViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.SalesReasons + '/edit/' + this.state.model!.salesReasonID
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.SalesReasons + '/edit/' + this.state.model!.salesReasonID);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,60 +86,56 @@ class SalesReasonDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>ModifiedDate</h3>
-              <p>{String(this.state.model!.modifiedDate)}</p>
-            </div>
-            <div>
-              <h3>Name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>ReasonType</h3>
-              <p>{String(this.state.model!.reasonType)}</p>
-            </div>
-            <div>
-              <h3>SalesReasonID</h3>
-              <p>{String(this.state.model!.salesReasonID)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>ModifiedDate</h3>
+							<p>{String(this.state.model!.modifiedDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>ReasonType</h3>
+							<p>{String(this.state.model!.reasonType)}</p>
+						 </div>
+					   						 <div>
+							<h3>SalesReasonID</h3>
+							<p>{String(this.state.model!.salesReasonID)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>SalesOrderHeaderSalesReasons</h3>
-            <SalesOrderHeaderSalesReasonTableComponent
-              salesOrderID={this.state.model!.salesOrderID}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.SalesReasons +
-                '/' +
-                this.state.model!.salesReasonID +
-                '/' +
-                ApiRoutes.SalesOrderHeaderSalesReasons
-              }
-            />
-          </div>
+            <SalesOrderHeaderSalesReasonTableComponent 
+			salesOrderID={this.state.model!.salesOrderID} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.SalesReasons + '/' + this.state.model!.salesReasonID + '/' + ApiRoutes.SalesOrderHeaderSalesReasons}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -147,11 +144,10 @@ class SalesReasonDetailComponent extends React.Component<
   }
 }
 
-export const WrappedSalesReasonDetailComponent = Form.create({
-  name: 'SalesReason Detail',
-})(SalesReasonDetailComponent);
-
+export const WrappedSalesReasonDetailComponent = Form.create({ name: 'SalesReason Detail' })(
+  SalesReasonDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>fb60b40143008286e91d22ff7c478480</Hash>
+    <Hash>6088750103fa38a2f6b9508d1e3bee06</Hash>
 </Codenesium>*/

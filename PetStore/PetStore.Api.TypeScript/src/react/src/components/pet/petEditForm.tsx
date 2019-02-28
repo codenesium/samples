@@ -167,7 +167,7 @@ class PetEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"acquiredDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"acquiredDate"} /> )}
               </Form.Item>
 
 						
@@ -239,5 +239,5 @@ class PetEditComponent extends React.Component<
 export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(PetEditComponent);
 
 /*<Codenesium>
-    <Hash>f34869d3da65fb6828c4ce06d36fcb75</Hash>
+    <Hash>12de1c35e26c2e08bc52e77c93ce95c7</Hash>
 </Codenesium>*/

@@ -7,9 +7,6 @@ import VPersonViewModel from './vPersonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface VPersonDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface VPersonDetailComponentState {
 }
 
 class VPersonDetailComponent extends React.Component<
-VPersonDetailComponentProps,
-VPersonDetailComponentState
+  VPersonDetailComponentProps,
+  VPersonDetailComponentState
 > {
   state = {
     model: new VPersonViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.VPersons + '/edit/' + this.state.model!.personId);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.VPersons + '/edit/' + this.state.model!.personId
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,39 +84,36 @@ VPersonDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>PersonId</h3>
-							<p>{String(this.state.model!.personId)}</p>
-						 </div>
-					   						 <div>
-							<h3>PersonName</h3>
-							<p>{String(this.state.model!.personName)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>PersonId</h3>
+              <p>{String(this.state.model!.personId)}</p>
+            </div>
+            <div>
+              <h3>PersonName</h3>
+              <p>{String(this.state.model!.personName)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -126,10 +122,11 @@ VPersonDetailComponentState
   }
 }
 
-export const WrappedVPersonDetailComponent = Form.create({ name: 'VPerson Detail' })(
-  VPersonDetailComponent
-);
+export const WrappedVPersonDetailComponent = Form.create({
+  name: 'VPerson Detail',
+})(VPersonDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>4bcc2989d8f065d600e14fa59b674ac0</Hash>
+    <Hash>c8cda40113bf0631cffc5c171350b8e8</Hash>
 </Codenesium>*/

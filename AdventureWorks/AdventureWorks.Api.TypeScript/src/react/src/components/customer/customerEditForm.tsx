@@ -5,25 +5,15 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
 import CustomerViewModel from './customerViewModel';
-import {
-  Form,
-  Input,
-  Button,
-  Switch,
-  InputNumber,
-  DatePicker,
-  Spin,
-  Alert,
-  TimePicker,
-} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { StoreSelectComponent } from '../shared/storeSelect';
-import { SalesTerritorySelectComponent } from '../shared/salesTerritorySelect';
-interface CustomerEditComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+import { StoreSelectComponent } from '../shared/storeSelect'
+	import { SalesTerritorySelectComponent } from '../shared/salesTerritorySelect'
+	interface CustomerEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface CustomerEditComponentState {
@@ -32,7 +22,7 @@ interface CustomerEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted: boolean;
+  submitted:boolean;
 }
 
 class CustomerEditComponent extends React.Component<
@@ -45,10 +35,10 @@ class CustomerEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    submitted: false,
+	submitted:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -79,9 +69,7 @@ class CustomerEditComponent extends React.Component<
             errorMessage: '',
           });
 
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -94,11 +82,11 @@ class CustomerEditComponent extends React.Component<
           });
         }
       );
-  }
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.props.form.validateFields((err: any, values: any) => {
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         let model = values as CustomerViewModel;
         console.log('Received values of form: ', model);
@@ -107,14 +95,12 @@ class CustomerEditComponent extends React.Component<
     });
   };
 
-  submit = (model: CustomerViewModel) => {
+  submit = (model:CustomerViewModel) =>
+  {  
     let mapper = new CustomerMapper();
-    axios
+     axios
       .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.Customers +
-          '/' +
-          this.state.model!.customerID,
+        Constants.ApiEndpoint + ApiRoutes.Customers + '/' + this.state.model!.customerID,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -127,138 +113,132 @@ class CustomerEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.CustomerClientRequestModel
           >;
-          this.setState({
-            ...this.state,
-            submitted: true,
-            model: mapper.mapApiResponseToViewModel(response.record!),
-            errorOccurred: false,
-            errorMessage: '',
-          });
+          this.setState({...this.state, submitted:true, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
-          this.setState({
-            ...this.state,
-            submitted: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
+          this.setState({...this.state, submitted:true, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  };
-
+      ); 
+  }
+  
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-    } = this.props.form;
 
-    let message: JSX.Element = <div />;
-    if (this.state.submitted) {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type="error" />;
-      } else {
-        message = <Alert message="Submitted" type="success" />;
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } else if (this.state.loaded) {
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="accountNumber">AccountNumber</label>
-            <br />
-            {getFieldDecorator('accountNumber', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 10, message: 'Exceeds max length of 10' },
-              ],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'AccountNumber'} />
-            )}
-          </Form.Item>
+    } 
+    else if (this.state.loaded) {
 
-          <Form.Item>
-            <label htmlFor="modifiedDate">ModifiedDate</label>
-            <br />
-            {getFieldDecorator('modifiedDate', {
-              rules: [{ required: true, message: 'Required' }],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'ModifiedDate'} />
-            )}
-          </Form.Item>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='accountNumber'>AccountNumber</label>
+              <br />             
+              {getFieldDecorator('accountNumber', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 10, message: 'Exceeds max length of 10' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"AccountNumber"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="personID">PersonID</label>
-            <br />
-            {getFieldDecorator('personID', {
-              rules: [],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'PersonID'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='modifiedDate'>ModifiedDate</label>
+              <br />             
+              {getFieldDecorator('modifiedDate', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"ModifiedDate"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="rowguid">rowguid</label>
-            <br />
-            {getFieldDecorator('rowguid', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'rowguid'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='personID'>PersonID</label>
+              <br />             
+              {getFieldDecorator('personID', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"PersonID"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="storeID">StoreID</label>
-            <br />
-            {getFieldDecorator('storeID', {
-              rules: [],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'StoreID'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='rowguid'>rowguid</label>
+              <br />             
+              {getFieldDecorator('rowguid', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"rowguid"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="territoryID">TerritoryID</label>
-            <br />
-            {getFieldDecorator('territoryID', {
-              rules: [],
-            })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'TerritoryID'} />
-            )}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='storeID'>StoreID</label>
+              <br />             
+              {getFieldDecorator('storeID', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"StoreID"} /> )}
+              </Form.Item>
 
+						<Form.Item>
+              <label htmlFor='territoryID'>TerritoryID</label>
+              <br />             
+              {getFieldDecorator('territoryID', {
+              rules:[],
+              
+              })
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"TerritoryID"} /> )}
+              </Form.Item>
+
+			
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          {message}
-        </Form>
-      );
+                Submit
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
-export const WrappedCustomerEditComponent = Form.create({
-  name: 'Customer Edit',
-})(CustomerEditComponent);
-
+export const WrappedCustomerEditComponent = Form.create({ name: 'Customer Edit' })(CustomerEditComponent);
 
 /*<Codenesium>
-    <Hash>bd33da6c44535b5c5f56b68a5b949590</Hash>
+    <Hash>3f3cf7142d2c16f316f466f3f802d37c</Hash>
 </Codenesium>*/

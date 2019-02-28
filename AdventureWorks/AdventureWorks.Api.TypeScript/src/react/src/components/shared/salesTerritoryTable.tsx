@@ -6,11 +6,11 @@ import SalesTerritoryMapper from '../salesTerritory/salesTerritoryMapper';
 import SalesTerritoryViewModel from '../salesTerritory/salesTerritoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface SalesTerritoryTableComponentProps {
-  territoryID: number;
-  apiRoute: string;
+  territoryID:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,56 +20,57 @@ interface SalesTerritoryTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<SalesTerritoryViewModel>;
+  filteredRecords : Array<SalesTerritoryViewModel>;
 }
 
-export class SalesTerritoryTableComponent extends React.Component<
-  SalesTerritoryTableComponentProps,
-  SalesTerritoryTableComponentState
+export class  SalesTerritoryTableComponent extends React.Component<
+SalesTerritoryTableComponentProps,
+SalesTerritoryTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: SalesTerritoryViewModel) {
-    this.props.history.push(ClientRoutes.SalesTerritories + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: SalesTerritoryViewModel) {
+  this.props.history.push(ClientRoutes.SalesTerritories + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: SalesTerritoryViewModel) {
-    this.props.history.push(ClientRoutes.SalesTerritories + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: SalesTerritoryViewModel) {
+   this.props.history.push(ClientRoutes.SalesTerritories + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.SalesTerritoryClientResponseModel
-          >;
+          let response = resp.data as Array<Api.SalesTerritoryClientResponseModel>;
 
           console.log(response);
 
           let mapper = new SalesTerritoryMapper();
+          
+          let salesTerritories:Array<SalesTerritoryViewModel> = [];
 
-          let salesTerritories: Array<SalesTerritoryViewModel> = [];
-
-          response.forEach(x => {
-            salesTerritories.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              salesTerritories.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -94,101 +95,90 @@ export class SalesTerritoryTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'SalesTerritories',
-                columns: [
-                  {
-                    Header: 'CostLastYear',
-                    accessor: 'costLastYear',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'SalesTerritories',
+                    columns: [
+					  {
+                      Header: 'CostLastYear',
+                      accessor: 'costLastYear',
+                      Cell: (props) => {
                       return <span>{String(props.original.costLastYear)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'CostYTD',
-                    accessor: 'costYTD',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'CostYTD',
+                      accessor: 'costYTD',
+                      Cell: (props) => {
                       return <span>{String(props.original.costYTD)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'CountryRegionCode',
-                    accessor: 'countryRegionCode',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.countryRegionCode)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'CountryRegionCode',
+                      accessor: 'countryRegionCode',
+                      Cell: (props) => {
+                      return <span>{String(props.original.countryRegionCode)}</span>;
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Rowguid',
-                    accessor: 'rowguid',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Rowguid',
+                      accessor: 'rowguid',
+                      Cell: (props) => {
                       return <span>{String(props.original.rowguid)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'SalesLastYear',
-                    accessor: 'salesLastYear',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.salesLastYear)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'SalesYTD',
-                    accessor: 'salesYTD',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'SalesLastYear',
+                      accessor: 'salesLastYear',
+                      Cell: (props) => {
+                      return <span>{String(props.original.salesLastYear)}</span>;
+                      }           
+                    },  {
+                      Header: 'SalesYTD',
+                      accessor: 'salesYTD',
+                      Cell: (props) => {
                       return <span>{String(props.original.salesYTD)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'TerritoryID',
-                    accessor: 'territoryID',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'TerritoryID',
+                      accessor: 'territoryID',
+                      Cell: (props) => {
                       return <span>{String(props.original.territoryID)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as SalesTerritoryViewModel
@@ -199,8 +189,8 @@ export class SalesTerritoryTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as SalesTerritoryViewModel
@@ -209,14 +199,11 @@ export class SalesTerritoryTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -224,7 +211,6 @@ export class SalesTerritoryTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>b39d57cd97cf55492094b7bf1ec8fa7f</Hash>
+    <Hash>da4c923094dd4234bc2b50dbbb1c6a17</Hash>
 </Codenesium>*/

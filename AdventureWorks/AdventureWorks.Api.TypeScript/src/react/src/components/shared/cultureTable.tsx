@@ -6,11 +6,11 @@ import CultureMapper from '../culture/cultureMapper';
 import CultureViewModel from '../culture/cultureViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface CultureTableComponentProps {
-  cultureID: string;
-  apiRoute: string;
+  cultureID:string,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface CultureTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<CultureViewModel>;
+  filteredRecords : Array<CultureViewModel>;
 }
 
-export class CultureTableComponent extends React.Component<
-  CultureTableComponentProps,
-  CultureTableComponentState
+export class  CultureTableComponent extends React.Component<
+CultureTableComponentProps,
+CultureTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: CultureViewModel) {
-    this.props.history.push(ClientRoutes.Cultures + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: CultureViewModel) {
+  this.props.history.push(ClientRoutes.Cultures + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: CultureViewModel) {
-    this.props.history.push(ClientRoutes.Cultures + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: CultureViewModel) {
+   this.props.history.push(ClientRoutes.Cultures + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.CultureClientResponseModel>;
@@ -63,11 +65,12 @@ export class CultureTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new CultureMapper();
+          
+          let cultures:Array<CultureViewModel> = [];
 
-          let cultures: Array<CultureViewModel> = [];
-
-          response.forEach(x => {
-            cultures.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              cultures.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,55 +95,54 @@ export class CultureTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Cultures',
-                columns: [
-                  {
-                    Header: 'CultureID',
-                    accessor: 'cultureID',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Cultures',
+                    columns: [
+					  {
+                      Header: 'CultureID',
+                      accessor: 'cultureID',
+                      Cell: (props) => {
                       return <span>{String(props.original.cultureID)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ModifiedDate',
-                    accessor: 'modifiedDate',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'ModifiedDate',
+                      accessor: 'modifiedDate',
+                      Cell: (props) => {
                       return <span>{String(props.original.modifiedDate)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as CultureViewModel
@@ -151,8 +153,8 @@ export class CultureTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as CultureViewModel
@@ -161,14 +163,11 @@ export class CultureTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -176,7 +175,6 @@ export class CultureTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>7b5a660090e2773a2ef705a96dd1bc64</Hash>
+    <Hash>2f2cab4b1b6ea3d8b4acb48c8a9a06e3</Hash>
 </Codenesium>*/
