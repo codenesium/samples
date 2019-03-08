@@ -8,9 +8,9 @@ export default class CommentsViewModel {
   postId: number;
   postIdEntity: string;
   postIdNavigation?: PostsViewModel;
-  score: any;
+  score: number;
   text: string;
-  userId: any;
+  userId: number;
   userIdEntity: string;
   userIdNavigation?: UsersViewModel;
 
@@ -20,9 +20,9 @@ export default class CommentsViewModel {
     this.postId = 0;
     this.postIdEntity = '';
     this.postIdNavigation = new PostsViewModel();
-    this.score = undefined;
+    this.score = 0;
     this.text = '';
-    this.userId = undefined;
+    this.userId = 0;
     this.userIdEntity = '';
     this.userIdNavigation = new UsersViewModel();
   }
@@ -31,9 +31,9 @@ export default class CommentsViewModel {
     creationDate: any,
     id: number,
     postId: number,
-    score: any,
+    score: number,
     text: string,
-    userId: any
+    userId: number
   ): void {
     this.creationDate = moment(creationDate, 'YYYY-MM-DD');
     this.id = id;
@@ -50,5 +50,5 @@ export default class CommentsViewModel {
 
 
 /*<Codenesium>
-    <Hash>1904f38674beb0f8bb2d60d0cca2e4d9</Hash>
+    <Hash>88c937b22ce8d0a5cfaf2afccf2678c5</Hash>
 </Codenesium>*/

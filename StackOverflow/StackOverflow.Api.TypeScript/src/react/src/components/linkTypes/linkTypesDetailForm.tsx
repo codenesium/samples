@@ -6,7 +6,10 @@ import LinkTypesMapper from './linkTypesMapper';
 import LinkTypesViewModel from './linkTypesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { PostLinksTableComponent } from '../shared/postLinksTable';
+import {PostLinksTableComponent} from '../shared/postLinksTable'
+	
+
+
 
 interface LinkTypesDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface LinkTypesDetailComponentState {
 }
 
 class LinkTypesDetailComponent extends React.Component<
-  LinkTypesDetailComponentProps,
-  LinkTypesDetailComponentState
+LinkTypesDetailComponentProps,
+LinkTypesDetailComponentState
 > {
   state = {
     model: new LinkTypesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.LinkTypes + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.LinkTypes + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,48 +86,44 @@ class LinkTypesDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>Rw Type</h3>
-              <p>{String(this.state.model!.rwType)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Rw Type</h3>
+							<p>{String(this.state.model!.rwType)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>PostLinks</h3>
-            <PostLinksTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.LinkTypes +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.PostLinks
-              }
-            />
-          </div>
+            <PostLinksTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.LinkTypes + '/' + this.state.model!.id + '/' + ApiRoutes.PostLinks}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -135,11 +132,10 @@ class LinkTypesDetailComponent extends React.Component<
   }
 }
 
-export const WrappedLinkTypesDetailComponent = Form.create({
-  name: 'LinkTypes Detail',
-})(LinkTypesDetailComponent);
-
+export const WrappedLinkTypesDetailComponent = Form.create({ name: 'LinkTypes Detail' })(
+  LinkTypesDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>e683be054a4c62d960af50c7bd40c84c</Hash>
+    <Hash>ee51af2eb1da27accaa3cdba05c94a2c</Hash>
 </Codenesium>*/

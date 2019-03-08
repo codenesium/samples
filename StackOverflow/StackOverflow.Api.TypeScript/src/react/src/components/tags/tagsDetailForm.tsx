@@ -7,9 +7,6 @@ import TagsViewModel from './tagsViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface TagsDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface TagsDetailComponentState {
 }
 
 class TagsDetailComponent extends React.Component<
-TagsDetailComponentProps,
-TagsDetailComponentState
+  TagsDetailComponentProps,
+  TagsDetailComponentState
 > {
   state = {
     model: new TagsViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Tags + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Tags + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,47 +84,48 @@ TagsDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Count</h3>
-							<p>{String(this.state.model!.count)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Excerpt Post</h3>
-							<p>{String(this.state.model!.excerptPostIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>Tag Name</h3>
-							<p>{String(this.state.model!.tagName)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Wiki Post</h3>
-							<p>{String(this.state.model!.wikiPostIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Count</h3>
+              <p>{String(this.state.model!.count)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Excerpt Post</h3>
+              <p>
+                {String(this.state.model!.excerptPostIdNavigation!.toDisplay())}
+              </p>
+            </div>
+            <div>
+              <h3>Tag Name</h3>
+              <p>{String(this.state.model!.tagName)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Wiki Post</h3>
+              <p>
+                {String(this.state.model!.wikiPostIdNavigation!.toDisplay())}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -138,6 +138,7 @@ export const WrappedTagsDetailComponent = Form.create({ name: 'Tags Detail' })(
   TagsDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>02f09ad0bc69c554cf50f1ae9b0c1952</Hash>
+    <Hash>ab097e1ae47ef227efd0a05171b8cbbd</Hash>
 </Codenesium>*/

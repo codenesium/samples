@@ -6,10 +6,7 @@ import VoteTypesMapper from './voteTypesMapper';
 import VoteTypesViewModel from './voteTypesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {VotesTableComponent} from '../shared/votesTable'
-	
-
-
+import { VotesTableComponent } from '../shared/votesTable';
 
 interface VoteTypesDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,21 +23,23 @@ interface VoteTypesDetailComponentState {
 }
 
 class VoteTypesDetailComponent extends React.Component<
-VoteTypesDetailComponentProps,
-VoteTypesDetailComponentState
+  VoteTypesDetailComponentProps,
+  VoteTypesDetailComponentState
 > {
   state = {
     model: new VoteTypesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.VoteTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.VoteTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -86,44 +85,48 @@ VoteTypesDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Votes</h3>
-            <VotesTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.VoteTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Votes}
-			/>
-         </div>
-	
-
+            <VotesTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.VoteTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Votes
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +135,11 @@ VoteTypesDetailComponentState
   }
 }
 
-export const WrappedVoteTypesDetailComponent = Form.create({ name: 'VoteTypes Detail' })(
-  VoteTypesDetailComponent
-);
+export const WrappedVoteTypesDetailComponent = Form.create({
+  name: 'VoteTypes Detail',
+})(VoteTypesDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>31073ffcbfcd1688390932887f571b53</Hash>
+    <Hash>28e8ee5b7d4e86cd0690e08d5434a863</Hash>
 </Codenesium>*/

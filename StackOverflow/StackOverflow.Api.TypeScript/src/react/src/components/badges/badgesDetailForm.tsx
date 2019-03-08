@@ -7,9 +7,6 @@ import BadgesViewModel from './badgesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface BadgesDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,21 +22,23 @@ interface BadgesDetailComponentState {
 }
 
 class BadgesDetailComponent extends React.Component<
-BadgesDetailComponentProps,
-BadgesDetailComponentState
+  BadgesDetailComponentProps,
+  BadgesDetailComponentState
 > {
   state = {
     model: new BadgesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Badges + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Badges + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,43 +84,40 @@ BadgesDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Date</h3>
-							<p>{String(this.state.model!.date)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>User</h3>
-							<p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Date</h3>
+              <p>{String(this.state.model!.date)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>User</h3>
+              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +126,11 @@ BadgesDetailComponentState
   }
 }
 
-export const WrappedBadgesDetailComponent = Form.create({ name: 'Badges Detail' })(
-  BadgesDetailComponent
-);
+export const WrappedBadgesDetailComponent = Form.create({
+  name: 'Badges Detail',
+})(BadgesDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>4eb750d714fc17fe3f503e0bcf95d961</Hash>
+    <Hash>ca8788fd9f76fa38a146a925a31450be</Hash>
 </Codenesium>*/

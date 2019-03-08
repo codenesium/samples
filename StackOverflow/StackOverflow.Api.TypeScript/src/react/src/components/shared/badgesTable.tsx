@@ -6,11 +6,11 @@ import BadgesMapper from '../badges/badgesMapper';
 import BadgesViewModel from '../badges/badgesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface BadgesTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface BadgesTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<BadgesViewModel>;
+  filteredRecords: Array<BadgesViewModel>;
 }
 
-export class  BadgesTableComponent extends React.Component<
-BadgesTableComponentProps,
-BadgesTableComponentState
+export class BadgesTableComponent extends React.Component<
+  BadgesTableComponentProps,
+  BadgesTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: BadgesViewModel) {
-  this.props.history.push(ClientRoutes.Badges + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: BadgesViewModel) {
+    this.props.history.push(ClientRoutes.Badges + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: BadgesViewModel) {
-   this.props.history.push(ClientRoutes.Badges + '/' + row.id);
- }
+  handleDetailClick(e: any, row: BadgesViewModel) {
+    this.props.history.push(ClientRoutes.Badges + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.BadgesClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: BadgesViewModel) {
           console.log(response);
 
           let mapper = new BadgesMapper();
-          
-          let badges:Array<BadgesViewModel> = [];
 
-          response.forEach(x =>
-          {
-              badges.push(mapper.mapApiResponseToViewModel(x));
+          let badges: Array<BadgesViewModel> = [];
+
+          response.forEach(x => {
+            badges.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,58 +92,67 @@ handleEditClick(e:any, row: BadgesViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Badges',
-                    columns: [
-					  {
-                      Header: 'Date',
-                      accessor: 'date',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Badges',
+                columns: [
+                  {
+                    Header: 'Date',
+                    accessor: 'date',
+                    Cell: props => {
                       return <span>{String(props.original.date)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'User',
-                      accessor: 'userId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.userId); }}>
-                          {String(
-                            props.original.userIdNavigation.toDisplay()
-                          )}
-                        </a>
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'User',
+                    accessor: 'userId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Users + '/' + props.original.userId
+                            );
+                          }}
+                        >
+                          {String(props.original.userIdNavigation.toDisplay())}
+                        </a>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as BadgesViewModel
@@ -157,8 +163,8 @@ handleEditClick(e:any, row: BadgesViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as BadgesViewModel
@@ -167,11 +173,14 @@ handleEditClick(e:any, row: BadgesViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -179,6 +188,7 @@ handleEditClick(e:any, row: BadgesViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>533aa21efb7bdcd9b7642283ac1d53c2</Hash>
+    <Hash>f05ca9e5cb02657ae83713287bbb049c</Hash>
 </Codenesium>*/

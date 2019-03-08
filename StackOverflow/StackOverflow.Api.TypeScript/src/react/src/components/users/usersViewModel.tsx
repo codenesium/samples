@@ -2,8 +2,8 @@ import moment from 'moment';
 
 export default class UsersViewModel {
   aboutMe: string;
-  accountId: any;
-  age: any;
+  accountId: number;
+  age: number;
   creationDate: any;
   displayName: string;
   downVote: number;
@@ -18,8 +18,8 @@ export default class UsersViewModel {
 
   constructor() {
     this.aboutMe = '';
-    this.accountId = undefined;
-    this.age = undefined;
+    this.accountId = 0;
+    this.age = 0;
     this.creationDate = undefined;
     this.displayName = '';
     this.downVote = 0;
@@ -35,8 +35,8 @@ export default class UsersViewModel {
 
   setProperties(
     aboutMe: string,
-    accountId: any,
-    age: any,
+    accountId: number,
+    age: number,
     creationDate: any,
     displayName: string,
     downVote: number,
@@ -72,5 +72,5 @@ export default class UsersViewModel {
 
 
 /*<Codenesium>
-    <Hash>4666c6da01e64aa02800cc320f60997f</Hash>
+    <Hash>e06db7b3d682c7904fdc4a549a96a832</Hash>
 </Codenesium>*/

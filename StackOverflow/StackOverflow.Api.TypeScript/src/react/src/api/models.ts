@@ -61,9 +61,9 @@ id:number;
 postId:number;
 postIdEntity : string;
 postIdNavigation? : PostsClientResponseModel;
-score:any;
+score:number;
 text:string;
-userId:any;
+userId:number;
 userIdEntity : string;
 userIdNavigation? : UsersClientResponseModel;
 
@@ -74,15 +74,15 @@ this.id = 0;
 this.postId = 0;
 this.postIdEntity = '';
 this.postIdNavigation = undefined;
-this.score = undefined;
+this.score = 0;
 this.text = '';
-this.userId = undefined;
+this.userId = 0;
 this.userIdEntity = '';
 this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(creationDate : any,id : number,postId : number,score : any,text : string,userId : any) : void
+				setProperties(creationDate : any,id : number,postId : number,score : number,text : string,userId : number) : void
 				{
 					this.creationDate = creationDate;
 this.id = id;
@@ -100,9 +100,9 @@ id:number;
 postId:number;
 postIdEntity : string;
 postIdNavigation? : PostsClientResponseModel;
-score:any;
+score:number;
 text:string;
-userId:any;
+userId:number;
 userIdEntity : string;
 userIdNavigation? : UsersClientResponseModel;
 
@@ -113,15 +113,15 @@ this.id = 0;
 this.postId = 0;
 this.postIdEntity = '';
 this.postIdNavigation = undefined;
-this.score = undefined;
+this.score = 0;
 this.text = '';
-this.userId = undefined;
+this.userId = 0;
 this.userIdEntity = '';
 this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(creationDate : any,id : number,postId : number,score : any,text : string,userId : any) : void
+				setProperties(creationDate : any,id : number,postId : number,score : number,text : string,userId : number) : void
 				{
 					this.creationDate = creationDate;
 this.id = id;
@@ -182,7 +182,7 @@ postIdNavigation? : PostsClientResponseModel;
 revisionGUID:string;
 text:string;
 userDisplayName:string;
-userId:any;
+userId:number;
 userIdEntity : string;
 userIdNavigation? : UsersClientResponseModel;
 
@@ -200,13 +200,13 @@ this.postIdNavigation = undefined;
 this.revisionGUID = '';
 this.text = '';
 this.userDisplayName = '';
-this.userId = undefined;
+this.userId = 0;
 this.userIdEntity = '';
 this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(comment : string,creationDate : any,id : number,postHistoryTypeId : number,postId : number,revisionGUID : string,text : string,userDisplayName : string,userId : any) : void
+				setProperties(comment : string,creationDate : any,id : number,postHistoryTypeId : number,postId : number,revisionGUID : string,text : string,userDisplayName : string,userId : number) : void
 				{
 					this.comment = comment;
 this.creationDate = creationDate;
@@ -234,7 +234,7 @@ postIdNavigation? : PostsClientResponseModel;
 revisionGUID:string;
 text:string;
 userDisplayName:string;
-userId:any;
+userId:number;
 userIdEntity : string;
 userIdNavigation? : UsersClientResponseModel;
 
@@ -252,13 +252,13 @@ this.postIdNavigation = undefined;
 this.revisionGUID = '';
 this.text = '';
 this.userDisplayName = '';
-this.userId = undefined;
+this.userId = 0;
 this.userIdEntity = '';
 this.userIdNavigation = undefined;
 
 				}
 
-				setProperties(comment : string,creationDate : any,id : number,postHistoryTypeId : number,postId : number,revisionGUID : string,text : string,userDisplayName : string,userId : any) : void
+				setProperties(comment : string,creationDate : any,id : number,postHistoryTypeId : number,postId : number,revisionGUID : string,text : string,userDisplayName : string,userId : number) : void
 				{
 					this.comment = comment;
 this.creationDate = creationDate;
@@ -389,25 +389,25 @@ this.relatedPostId = relatedPostId;
 				}
 			}
 			export class PostsClientRequestModel {
-				acceptedAnswerId:any;
-answerCount:any;
+				acceptedAnswerId:number;
+answerCount:number;
 body:string;
 closedDate:any;
-commentCount:any;
+commentCount:number;
 communityOwnedDate:any;
 creationDate:any;
-favoriteCount:any;
+favoriteCount:number;
 id:number;
 lastActivityDate:any;
 lastEditDate:any;
 lastEditorDisplayName:string;
-lastEditorUserId:any;
+lastEditorUserId:number;
 lastEditorUserIdEntity : string;
 lastEditorUserIdNavigation? : UsersClientResponseModel;
-ownerUserId:any;
+ownerUserId:number;
 ownerUserIdEntity : string;
 ownerUserIdNavigation? : UsersClientResponseModel;
-parentId:any;
+parentId:number;
 parentIdEntity : string;
 parentIdNavigation? : PostsClientResponseModel;
 postTypeId:number;
@@ -420,25 +420,25 @@ viewCount:number;
 
 	
 				constructor() {
-					this.acceptedAnswerId = undefined;
-this.answerCount = undefined;
+					this.acceptedAnswerId = 0;
+this.answerCount = 0;
 this.body = '';
 this.closedDate = undefined;
-this.commentCount = undefined;
+this.commentCount = 0;
 this.communityOwnedDate = undefined;
 this.creationDate = undefined;
-this.favoriteCount = undefined;
+this.favoriteCount = 0;
 this.id = 0;
 this.lastActivityDate = undefined;
 this.lastEditDate = undefined;
 this.lastEditorDisplayName = '';
-this.lastEditorUserId = undefined;
+this.lastEditorUserId = 0;
 this.lastEditorUserIdEntity = '';
 this.lastEditorUserIdNavigation = undefined;
-this.ownerUserId = undefined;
+this.ownerUserId = 0;
 this.ownerUserIdEntity = '';
 this.ownerUserIdNavigation = undefined;
-this.parentId = undefined;
+this.parentId = 0;
 this.parentIdEntity = '';
 this.parentIdNavigation = undefined;
 this.postTypeId = 0;
@@ -451,7 +451,7 @@ this.viewCount = 0;
 
 				}
 
-				setProperties(acceptedAnswerId : any,answerCount : any,body : string,closedDate : any,commentCount : any,communityOwnedDate : any,creationDate : any,favoriteCount : any,id : number,lastActivityDate : any,lastEditDate : any,lastEditorDisplayName : string,lastEditorUserId : any,ownerUserId : any,parentId : any,postTypeId : number,score : number,tag : string,title : string,viewCount : number) : void
+				setProperties(acceptedAnswerId : number,answerCount : number,body : string,closedDate : any,commentCount : number,communityOwnedDate : any,creationDate : any,favoriteCount : number,id : number,lastActivityDate : any,lastEditDate : any,lastEditorDisplayName : string,lastEditorUserId : number,ownerUserId : number,parentId : number,postTypeId : number,score : number,tag : string,title : string,viewCount : number) : void
 				{
 					this.acceptedAnswerId = acceptedAnswerId;
 this.answerCount = answerCount;
@@ -478,25 +478,25 @@ this.viewCount = viewCount;
 			}
 
 			export class PostsClientResponseModel {
-				acceptedAnswerId:any;
-answerCount:any;
+				acceptedAnswerId:number;
+answerCount:number;
 body:string;
 closedDate:any;
-commentCount:any;
+commentCount:number;
 communityOwnedDate:any;
 creationDate:any;
-favoriteCount:any;
+favoriteCount:number;
 id:number;
 lastActivityDate:any;
 lastEditDate:any;
 lastEditorDisplayName:string;
-lastEditorUserId:any;
+lastEditorUserId:number;
 lastEditorUserIdEntity : string;
 lastEditorUserIdNavigation? : UsersClientResponseModel;
-ownerUserId:any;
+ownerUserId:number;
 ownerUserIdEntity : string;
 ownerUserIdNavigation? : UsersClientResponseModel;
-parentId:any;
+parentId:number;
 parentIdEntity : string;
 parentIdNavigation? : PostsClientResponseModel;
 postTypeId:number;
@@ -509,25 +509,25 @@ viewCount:number;
 
 	
 				constructor() {
-					this.acceptedAnswerId = undefined;
-this.answerCount = undefined;
+					this.acceptedAnswerId = 0;
+this.answerCount = 0;
 this.body = '';
 this.closedDate = undefined;
-this.commentCount = undefined;
+this.commentCount = 0;
 this.communityOwnedDate = undefined;
 this.creationDate = undefined;
-this.favoriteCount = undefined;
+this.favoriteCount = 0;
 this.id = 0;
 this.lastActivityDate = undefined;
 this.lastEditDate = undefined;
 this.lastEditorDisplayName = '';
-this.lastEditorUserId = undefined;
+this.lastEditorUserId = 0;
 this.lastEditorUserIdEntity = '';
 this.lastEditorUserIdNavigation = undefined;
-this.ownerUserId = undefined;
+this.ownerUserId = 0;
 this.ownerUserIdEntity = '';
 this.ownerUserIdNavigation = undefined;
-this.parentId = undefined;
+this.parentId = 0;
 this.parentIdEntity = '';
 this.parentIdNavigation = undefined;
 this.postTypeId = 0;
@@ -540,7 +540,7 @@ this.viewCount = 0;
 
 				}
 
-				setProperties(acceptedAnswerId : any,answerCount : any,body : string,closedDate : any,commentCount : any,communityOwnedDate : any,creationDate : any,favoriteCount : any,id : number,lastActivityDate : any,lastEditDate : any,lastEditorDisplayName : string,lastEditorUserId : any,ownerUserId : any,parentId : any,postTypeId : number,score : number,tag : string,title : string,viewCount : number) : void
+				setProperties(acceptedAnswerId : number,answerCount : number,body : string,closedDate : any,commentCount : number,communityOwnedDate : any,creationDate : any,favoriteCount : number,id : number,lastActivityDate : any,lastEditDate : any,lastEditorDisplayName : string,lastEditorUserId : number,ownerUserId : number,parentId : number,postTypeId : number,score : number,tag : string,title : string,viewCount : number) : void
 				{
 					this.acceptedAnswerId = acceptedAnswerId;
 this.answerCount = answerCount;
@@ -675,8 +675,8 @@ this.wikiPostId = wikiPostId;
 			}
 			export class UsersClientRequestModel {
 				aboutMe:string;
-accountId:any;
-age:any;
+accountId:number;
+age:number;
 creationDate:any;
 displayName:string;
 downVote:number;
@@ -692,8 +692,8 @@ websiteUrl:string;
 	
 				constructor() {
 					this.aboutMe = '';
-this.accountId = undefined;
-this.age = undefined;
+this.accountId = 0;
+this.age = 0;
 this.creationDate = undefined;
 this.displayName = '';
 this.downVote = 0;
@@ -708,7 +708,7 @@ this.websiteUrl = '';
 
 				}
 
-				setProperties(aboutMe : string,accountId : any,age : any,creationDate : any,displayName : string,downVote : number,emailHash : string,id : number,lastAccessDate : any,location : string,reputation : number,upVote : number,view : number,websiteUrl : string) : void
+				setProperties(aboutMe : string,accountId : number,age : number,creationDate : any,displayName : string,downVote : number,emailHash : string,id : number,lastAccessDate : any,location : string,reputation : number,upVote : number,view : number,websiteUrl : string) : void
 				{
 					this.aboutMe = aboutMe;
 this.accountId = accountId;
@@ -730,8 +730,8 @@ this.websiteUrl = websiteUrl;
 
 			export class UsersClientResponseModel {
 				aboutMe:string;
-accountId:any;
-age:any;
+accountId:number;
+age:number;
 creationDate:any;
 displayName:string;
 downVote:number;
@@ -747,8 +747,8 @@ websiteUrl:string;
 	
 				constructor() {
 					this.aboutMe = '';
-this.accountId = undefined;
-this.age = undefined;
+this.accountId = 0;
+this.age = 0;
 this.creationDate = undefined;
 this.displayName = '';
 this.downVote = 0;
@@ -763,7 +763,7 @@ this.websiteUrl = '';
 
 				}
 
-				setProperties(aboutMe : string,accountId : any,age : any,creationDate : any,displayName : string,downVote : number,emailHash : string,id : number,lastAccessDate : any,location : string,reputation : number,upVote : number,view : number,websiteUrl : string) : void
+				setProperties(aboutMe : string,accountId : number,age : number,creationDate : any,displayName : string,downVote : number,emailHash : string,id : number,lastAccessDate : any,location : string,reputation : number,upVote : number,view : number,websiteUrl : string) : void
 				{
 					this.aboutMe = aboutMe;
 this.accountId = accountId;
@@ -783,13 +783,13 @@ this.websiteUrl = websiteUrl;
 				}
 			}
 			export class VotesClientRequestModel {
-				bountyAmount:any;
+				bountyAmount:number;
 creationDate:any;
 id:number;
 postId:number;
 postIdEntity : string;
 postIdNavigation? : PostsClientResponseModel;
-userId:any;
+userId:number;
 userIdEntity : string;
 userIdNavigation? : UsersClientResponseModel;
 voteTypeId:number;
@@ -798,13 +798,13 @@ voteTypeIdNavigation? : VoteTypesClientResponseModel;
 
 	
 				constructor() {
-					this.bountyAmount = undefined;
+					this.bountyAmount = 0;
 this.creationDate = undefined;
 this.id = 0;
 this.postId = 0;
 this.postIdEntity = '';
 this.postIdNavigation = undefined;
-this.userId = undefined;
+this.userId = 0;
 this.userIdEntity = '';
 this.userIdNavigation = undefined;
 this.voteTypeId = 0;
@@ -813,7 +813,7 @@ this.voteTypeIdNavigation = undefined;
 
 				}
 
-				setProperties(bountyAmount : any,creationDate : any,id : number,postId : number,userId : any,voteTypeId : number) : void
+				setProperties(bountyAmount : number,creationDate : any,id : number,postId : number,userId : number,voteTypeId : number) : void
 				{
 					this.bountyAmount = bountyAmount;
 this.creationDate = creationDate;
@@ -826,13 +826,13 @@ this.voteTypeId = voteTypeId;
 			}
 
 			export class VotesClientResponseModel {
-				bountyAmount:any;
+				bountyAmount:number;
 creationDate:any;
 id:number;
 postId:number;
 postIdEntity : string;
 postIdNavigation? : PostsClientResponseModel;
-userId:any;
+userId:number;
 userIdEntity : string;
 userIdNavigation? : UsersClientResponseModel;
 voteTypeId:number;
@@ -841,13 +841,13 @@ voteTypeIdNavigation? : VoteTypesClientResponseModel;
 
 	
 				constructor() {
-					this.bountyAmount = undefined;
+					this.bountyAmount = 0;
 this.creationDate = undefined;
 this.id = 0;
 this.postId = 0;
 this.postIdEntity = '';
 this.postIdNavigation = undefined;
-this.userId = undefined;
+this.userId = 0;
 this.userIdEntity = '';
 this.userIdNavigation = undefined;
 this.voteTypeId = 0;
@@ -856,7 +856,7 @@ this.voteTypeIdNavigation = undefined;
 
 				}
 
-				setProperties(bountyAmount : any,creationDate : any,id : number,postId : number,userId : any,voteTypeId : number) : void
+				setProperties(bountyAmount : number,creationDate : any,id : number,postId : number,userId : number,voteTypeId : number) : void
 				{
 					this.bountyAmount = bountyAmount;
 this.creationDate = creationDate;
@@ -906,5 +906,5 @@ this.name = name;
 			}
 
 /*<Codenesium>
-    <Hash>a553614461eb79d33cb8202659122d50</Hash>
+    <Hash>f6b3c3088eb6e38cfd0ed9af65d74931</Hash>
 </Codenesium>*/

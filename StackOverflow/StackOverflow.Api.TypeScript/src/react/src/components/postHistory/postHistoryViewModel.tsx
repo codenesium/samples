@@ -16,7 +16,7 @@ export default class PostHistoryViewModel {
   revisionGUID: string;
   text: string;
   userDisplayName: string;
-  userId: any;
+  userId: number;
   userIdEntity: string;
   userIdNavigation?: UsersViewModel;
 
@@ -33,7 +33,7 @@ export default class PostHistoryViewModel {
     this.revisionGUID = '';
     this.text = '';
     this.userDisplayName = '';
-    this.userId = undefined;
+    this.userId = 0;
     this.userIdEntity = '';
     this.userIdNavigation = new UsersViewModel();
   }
@@ -47,7 +47,7 @@ export default class PostHistoryViewModel {
     revisionGUID: string,
     text: string,
     userDisplayName: string,
-    userId: any
+    userId: number
   ): void {
     this.comment = comment;
     this.creationDate = moment(creationDate, 'YYYY-MM-DD');
@@ -67,5 +67,5 @@ export default class PostHistoryViewModel {
 
 
 /*<Codenesium>
-    <Hash>f6b5ee377f66c5666bc2b7d22814c605</Hash>
+    <Hash>2ccc0608fbe3a777b80d89a1b045d658</Hash>
 </Codenesium>*/
