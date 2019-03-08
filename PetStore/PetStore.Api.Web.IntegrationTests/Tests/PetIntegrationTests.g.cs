@@ -165,6 +165,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.BreedId.Should().Be(1);
 			response.Description.Should().Be("A");
+			response.Id.Should().Be(1);
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
 		}
@@ -199,8 +200,37 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response[0].AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].BreedId.Should().Be(1);
 			response[0].Description.Should().Be("A");
+			response[0].Id.Should().Be(1);
 			response[0].PenId.Should().Be(1);
 			response[0].Price.Should().Be(1m);
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeySalesByPetIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiSaleClientResponseModel> response = await client.SalesByPetId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeySalesByPetIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiSaleClientResponseModel> response = await client.SalesByPetId(default(int));
+
+			response.Should().BeEmpty();
 		}
 
 		[Fact]
@@ -226,5 +256,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a0999ffd5a67499ebba4322cfa72d0c1</Hash>
+    <Hash>efb3d9b8648c321c538533bb58b82bd9</Hash>
 </Codenesium>*/

@@ -31,7 +31,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiBreedServerResponseModel> response = await service.All();
 
@@ -49,7 +50,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ApiBreedServerResponseModel response = await service.Get(default(int));
 
@@ -66,7 +68,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ApiBreedServerResponseModel response = await service.Get(default(int));
 
@@ -84,7 +87,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			CreateResponse<ApiBreedServerResponseModel> response = await service.Create(model);
 
@@ -106,7 +110,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			CreateResponse<ApiBreedServerResponseModel> response = await service.Create(model);
 
@@ -127,7 +132,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			UpdateResponse<ApiBreedServerResponseModel> response = await service.Update(default(int), model);
 
@@ -150,7 +156,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			UpdateResponse<ApiBreedServerResponseModel> response = await service.Update(default(int), model);
 
@@ -170,7 +177,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -192,7 +200,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -213,7 +222,8 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiBreedServerResponseModel> response = await service.BySpeciesId(default(int));
 
@@ -230,16 +240,55 @@ namespace PetStoreNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALBreedMapperMock);
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiBreedServerResponseModel> response = await service.BySpeciesId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.BySpeciesId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void PetsByBreedId_Exists()
+		{
+			var mock = new ServiceMockFacade<IBreedRepository>();
+			var records = new List<Pet>();
+			records.Add(new Pet());
+			mock.RepositoryMock.Setup(x => x.PetsByBreedId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
+
+			List<ApiPetServerResponseModel> response = await service.PetsByBreedId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.PetsByBreedId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void PetsByBreedId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IBreedRepository>();
+			mock.RepositoryMock.Setup(x => x.PetsByBreedId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
+			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALBreedMapperMock,
+			                               mock.DALMapperMockFactory.DALPetMapperMock);
+
+			List<ApiPetServerResponseModel> response = await service.PetsByBreedId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.PetsByBreedId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0a1a95db233209cfce382b8f16af029d</Hash>
+    <Hash>6e024fa4ff008ee58ac79740b37173f0</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace PetStoreNS.Api.Services
 
 		protected IDALPetMapper DalPetMapper { get; private set; }
 
+		protected IDALSaleMapper DalSaleMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractPetService(
@@ -24,12 +26,14 @@ namespace PetStoreNS.Api.Services
 			MediatR.IMediator mediator,
 			IPetRepository petRepository,
 			IApiPetServerRequestModelValidator petModelValidator,
-			IDALPetMapper dalPetMapper)
+			IDALPetMapper dalPetMapper,
+			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
 			this.PetRepository = petRepository;
 			this.PetModelValidator = petModelValidator;
 			this.DalPetMapper = dalPetMapper;
+			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -111,9 +115,16 @@ namespace PetStoreNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiSaleServerResponseModel>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Sale> records = await this.PetRepository.SalesByPetId(petId, limit, offset);
+
+			return this.DalSaleMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3524b6fdacab1a370735c9b5dde51acd</Hash>
+    <Hash>250b0248e668641e92732cc35b0b0f45</Hash>
 </Codenesium>*/

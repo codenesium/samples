@@ -6,9 +6,7 @@ import PenMapper from './penMapper';
 import PenViewModel from './penViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import { PetTableComponent } from '../shared/petTable';
 
 interface PenDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,21 +23,23 @@ interface PenDetailComponentState {
 }
 
 class PenDetailComponent extends React.Component<
-PenDetailComponentProps,
-PenDetailComponentState
+  PenDetailComponentProps,
+  PenDetailComponentState
 > {
   state = {
     model: new PenViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Pens + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Pens + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,35 +85,48 @@ PenDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-
-
+          <div>
+            <h3>Pets</h3>
+            <PetTableComponent
+              id={this.state.model!.id}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Pens +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Pets
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -126,6 +139,7 @@ export const WrappedPenDetailComponent = Form.create({ name: 'Pen Detail' })(
   PenDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>b51e012b96d43863f1be005649b507f8</Hash>
+    <Hash>9c71cf10577fdcbfedc223c70e611f9e</Hash>
 </Codenesium>*/

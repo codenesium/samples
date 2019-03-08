@@ -6,7 +6,8 @@ import SpeciesMapper from './speciesMapper';
 import SpeciesViewModel from './speciesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import {BreedTableComponent} from '../shared/breedTable'
+	
 
 
 
@@ -112,7 +113,16 @@ SpeciesDetailComponentState
 						 </div>
 					   		  </div>
           {message}
-
+		 <div>
+            <h3>Breeds</h3>
+            <BreedTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Species + '/' + this.state.model!.id + '/' + ApiRoutes.Breeds}
+			/>
+         </div>
+	
 
         </div>
       );
@@ -127,5 +137,5 @@ export const WrappedSpeciesDetailComponent = Form.create({ name: 'Species Detail
 );
 
 /*<Codenesium>
-    <Hash>80348061c0fbebfc594975cb4205c0ab</Hash>
+    <Hash>b816527f2c192f68ea3fb8b12bcc4127</Hash>
 </Codenesium>*/

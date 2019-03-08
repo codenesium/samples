@@ -6,11 +6,8 @@ import LocationMapper from './locationMapper';
 import LocationViewModel from './locationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {TweetTableComponent} from '../shared/tweetTable'
-	import {UserTableComponent} from '../shared/userTable'
-	
-
-
+import { TweetTableComponent } from '../shared/tweetTable';
+import { UserTableComponent } from '../shared/userTable';
 
 interface LocationDetailComponentProps {
   form: WrappedFormUtils;
@@ -27,21 +24,23 @@ interface LocationDetailComponentState {
 }
 
 class LocationDetailComponent extends React.Component<
-LocationDetailComponentProps,
-LocationDetailComponentState
+  LocationDetailComponentProps,
+  LocationDetailComponentState
 > {
   state = {
     model: new LocationViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Locations + '/edit/' + this.state.model!.locationId);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Locations + '/edit/' + this.state.model!.locationId
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,61 +86,72 @@ LocationDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>gps_lat</h3>
-							<p>{String(this.state.model!.gpsLat)}</p>
-						 </div>
-					   						 <div>
-							<h3>gps_long</h3>
-							<p>{String(this.state.model!.gpsLong)}</p>
-						 </div>
-					   						 <div>
-							<h3>location_name</h3>
-							<p>{String(this.state.model!.locationName)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>gps_lat</h3>
+              <p>{String(this.state.model!.gpsLat)}</p>
+            </div>
+            <div>
+              <h3>gps_long</h3>
+              <p>{String(this.state.model!.gpsLong)}</p>
+            </div>
+            <div>
+              <h3>location_name</h3>
+              <p>{String(this.state.model!.locationName)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Tweets</h3>
-            <TweetTableComponent 
-			tweetId={this.state.model!.tweetId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Locations + '/' + this.state.model!.locationId + '/' + ApiRoutes.Tweets}
-			/>
-         </div>
-			 <div>
+            <TweetTableComponent
+              tweetId={this.state.model!.tweetId}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Locations +
+                '/' +
+                this.state.model!.locationId +
+                '/' +
+                ApiRoutes.Tweets
+              }
+            />
+          </div>
+          <div>
             <h3>Users</h3>
-            <UserTableComponent 
-			userId={this.state.model!.userId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Locations + '/' + this.state.model!.locationId + '/' + ApiRoutes.Users}
-			/>
-         </div>
-	
-
+            <UserTableComponent
+              userId={this.state.model!.userId}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Locations +
+                '/' +
+                this.state.model!.locationId +
+                '/' +
+                ApiRoutes.Users
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -150,10 +160,11 @@ LocationDetailComponentState
   }
 }
 
-export const WrappedLocationDetailComponent = Form.create({ name: 'Location Detail' })(
-  LocationDetailComponent
-);
+export const WrappedLocationDetailComponent = Form.create({
+  name: 'Location Detail',
+})(LocationDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>fc31e1744874900dff7b09d0d422f6bc</Hash>
+    <Hash>7cef6b59a23736fcfae7c40f461217f8</Hash>
 </Codenesium>*/

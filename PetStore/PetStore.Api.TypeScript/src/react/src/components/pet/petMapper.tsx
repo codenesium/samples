@@ -9,6 +9,7 @@ export default class PetMapper {
       dto.acquiredDate,
       dto.breedId,
       dto.description,
+      dto.id,
       dto.penId,
       dto.price
     );
@@ -16,13 +17,17 @@ export default class PetMapper {
     if (dto.breedIdNavigation != null) {
       response.breedIdNavigation = new BreedViewModel();
       response.breedIdNavigation.setProperties(
+        dto.breedIdNavigation.id,
         dto.breedIdNavigation.name,
         dto.breedIdNavigation.speciesId
       );
     }
     if (dto.penIdNavigation != null) {
       response.penIdNavigation = new PenViewModel();
-      response.penIdNavigation.setProperties(dto.penIdNavigation.name);
+      response.penIdNavigation.setProperties(
+        dto.penIdNavigation.id,
+        dto.penIdNavigation.name
+      );
     }
 
     return response;
@@ -34,6 +39,7 @@ export default class PetMapper {
       model.acquiredDate,
       model.breedId,
       model.description,
+      model.id,
       model.penId,
       model.price
     );
@@ -43,5 +49,5 @@ export default class PetMapper {
 
 
 /*<Codenesium>
-    <Hash>063db8dd59d739d376699ce39151ebcb</Hash>
+    <Hash>8a2f7af4fa42bfe89cfe8fcedecfe642</Hash>
 </Codenesium>*/

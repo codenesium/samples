@@ -35,6 +35,7 @@ namespace PetStoreNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -86,6 +87,14 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Breed via speciesId.
+		public async virtual Task<List<Breed>> BreedsBySpeciesId(int speciesId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Breed>()
+			       .Include(x => x.SpeciesIdNavigation)
+			       .Where(x => x.SpeciesId == speciesId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Breed>();
+		}
+
 		protected async Task<List<Species>> Where(
 			Expression<Func<Species, bool>> predicate,
 			int limit = int.MaxValue,
@@ -112,5 +121,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b05559d4eef2c6789a9884211b7ef47</Hash>
+    <Hash>04f5fa7113d3799c4a1deb1aa0869519</Hash>
 </Codenesium>*/

@@ -233,6 +233,23 @@ namespace PetStoreNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("{breedId}/Pets")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPetServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> PetsByBreedId(int breedId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPetServerResponseModel> response = await this.BreedService.PetsByBreedId(breedId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiBreedServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiBreedServerRequestModel> patch)
 		{
 			var record = await this.BreedService.Get(id);
@@ -252,5 +269,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>71d29f7c95cd12075eaa44f6542c9f9b</Hash>
+    <Hash>cb306aa69a08cacc45a9ac76666b3964</Hash>
 </Codenesium>*/

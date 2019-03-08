@@ -28,6 +28,9 @@ namespace PetStoreNS.Api.Client
 		}
 
 		[JsonProperty]
+		public int Id { get; private set; }
+
+		[JsonProperty]
 		public string Name { get; private set; }
 
 		[JsonProperty]
@@ -39,5 +42,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d02363fa22796ae3f8aef3bb0a7c197a</Hash>
+    <Hash>fdbf1650cadbe0fde7b05ceea901ae3a</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace PetStoreNS.Api.Services
 
 		protected IDALPenMapper DalPenMapper { get; private set; }
 
+		protected IDALPetMapper DalPetMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractPenService(
@@ -24,12 +26,14 @@ namespace PetStoreNS.Api.Services
 			MediatR.IMediator mediator,
 			IPenRepository penRepository,
 			IApiPenServerRequestModelValidator penModelValidator,
-			IDALPenMapper dalPenMapper)
+			IDALPenMapper dalPenMapper,
+			IDALPetMapper dalPetMapper)
 			: base()
 		{
 			this.PenRepository = penRepository;
 			this.PenModelValidator = penModelValidator;
 			this.DalPenMapper = dalPenMapper;
+			this.DalPetMapper = dalPetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -111,9 +115,16 @@ namespace PetStoreNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiPetServerResponseModel>> PetsByPenId(int penId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Pet> records = await this.PenRepository.PetsByPenId(penId, limit, offset);
+
+			return this.DalPetMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3670255dd7c3244c7540f2a89530864f</Hash>
+    <Hash>3b60b0e548eb8a50e8a5380380dd2a63</Hash>
 </Codenesium>*/

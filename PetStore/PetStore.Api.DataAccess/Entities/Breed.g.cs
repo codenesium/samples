@@ -23,6 +23,10 @@ namespace PetStoreNS.Api.DataAccess
 			this.SpeciesId = speciesId;
 		}
 
+		[Key]
+		[Column("id")]
+		public virtual int Id { get; private set; }
+
 		[MaxLength(128)]
 		[Column("name")]
 		public virtual string Name { get; private set; }
@@ -41,5 +45,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b1b44c57db3f732cf06e854bdb69d4b</Hash>
+    <Hash>61e9cd7268dcf307abde27fe655a5997</Hash>
 </Codenesium>*/

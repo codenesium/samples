@@ -144,6 +144,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApiBreedClientResponseModel response = await client.BreedGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.SpeciesId.Should().Be(1);
 		}
@@ -175,6 +176,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			List<ApiBreedClientResponseModel> response = await client.BreedAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
 			response[0].Name.Should().Be("A");
 			response[0].SpeciesId.Should().Be(1);
 		}
@@ -191,6 +193,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			List<ApiBreedClientResponseModel> response = await client.ByBreedBySpeciesId(1);
 
 			response.Should().NotBeEmpty();
+			response[0].Id.Should().Be(1);
 			response[0].Name.Should().Be("A");
 			response[0].SpeciesId.Should().Be(1);
 		}
@@ -205,6 +208,34 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 			List<ApiBreedClientResponseModel> response = await client.ByBreedBySpeciesId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyPetsByBreedIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiPetClientResponseModel> response = await client.PetsByBreedId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyPetsByBreedIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiPetClientResponseModel> response = await client.PetsByBreedId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -232,5 +263,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d32f470c7693b6e63681d1585cdb3b46</Hash>
+    <Hash>6789c501d3663941b97ebe3496b373c5</Hash>
 </Codenesium>*/

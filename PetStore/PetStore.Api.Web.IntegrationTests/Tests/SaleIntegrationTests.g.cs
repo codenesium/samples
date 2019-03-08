@@ -170,6 +170,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response.Should().NotBeNull();
 			response.Amount.Should().Be(1m);
 			response.FirstName.Should().Be("A");
+			response.Id.Should().Be(1);
 			response.LastName.Should().Be("A");
 			response.PaymentTypeId.Should().Be(1);
 			response.PetId.Should().Be(1);
@@ -205,6 +206,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			response.Count.Should().BeGreaterThan(0);
 			response[0].Amount.Should().Be(1m);
 			response[0].FirstName.Should().Be("A");
+			response[0].Id.Should().Be(1);
 			response[0].LastName.Should().Be("A");
 			response[0].PaymentTypeId.Should().Be(1);
 			response[0].PetId.Should().Be(1);
@@ -234,5 +236,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d052fe16a20412886deca7fdad60ed05</Hash>
+    <Hash>a93f4ec5fa14203fce60c2ffa9692fb6</Hash>
 </Codenesium>*/

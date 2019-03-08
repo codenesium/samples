@@ -38,6 +38,7 @@ namespace PetStoreNS.Api.DataAccess
 				                  x.AcquiredDate == query.ToDateTime() ||
 				                  x.BreedId == query.ToInt() ||
 				                  x.Description.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
 				                  x.PenId == query.ToInt() ||
 				                  x.Price.ToDecimal() == query.ToDecimal(),
 				                  limit,
@@ -90,6 +91,14 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Sale via petId.
+		public async virtual Task<List<Sale>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Sale>()
+			       .Include(x => x.PetIdNavigation)
+			       .Where(x => x.PetId == petId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
+		}
+
 		// Foreign key reference to table Breed via breedId.
 		public async virtual Task<Breed> BreedByBreedId(int breedId)
 		{
@@ -132,5 +141,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8aa53f443e43d18da04576015d7d4fb4</Hash>
+    <Hash>679746296df94bff778817ac95670286</Hash>
 </Codenesium>*/

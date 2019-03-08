@@ -5,7 +5,7 @@ export default class SpeciesMapper {
     dto: Api.SpeciesClientResponseModel
   ): SpeciesViewModel {
     let response = new SpeciesViewModel();
-    response.setProperties(dto.name);
+    response.setProperties(dto.id, dto.name);
 
     return response;
   }
@@ -14,12 +14,12 @@ export default class SpeciesMapper {
     model: SpeciesViewModel
   ): Api.SpeciesClientRequestModel {
     let response = new Api.SpeciesClientRequestModel();
-    response.setProperties(model.name);
+    response.setProperties(model.id, model.name);
     return response;
   }
 }
 
 
 /*<Codenesium>
-    <Hash>8005e2c6cd1c2ed0be792c2150c98cf0</Hash>
+    <Hash>c3eadfbe65e07a5a3b70af9eed03110a</Hash>
 </Codenesium>*/

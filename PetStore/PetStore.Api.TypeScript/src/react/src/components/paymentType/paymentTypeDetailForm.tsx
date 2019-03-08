@@ -6,7 +6,8 @@ import PaymentTypeMapper from './paymentTypeMapper';
 import PaymentTypeViewModel from './paymentTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
+import {SaleTableComponent} from '../shared/saleTable'
+	
 
 
 
@@ -112,7 +113,16 @@ PaymentTypeDetailComponentState
 						 </div>
 					   		  </div>
           {message}
-
+		 <div>
+            <h3>Sales</h3>
+            <SaleTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.PaymentTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
+			/>
+         </div>
+	
 
         </div>
       );
@@ -127,5 +137,5 @@ export const WrappedPaymentTypeDetailComponent = Form.create({ name: 'PaymentTyp
 );
 
 /*<Codenesium>
-    <Hash>2fd8eba401899aef7d850589041d2de8</Hash>
+    <Hash>0fc567eac9eb1401741bb61f9af2a7f8</Hash>
 </Codenesium>*/

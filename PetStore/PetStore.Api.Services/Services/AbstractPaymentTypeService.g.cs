@@ -17,6 +17,8 @@ namespace PetStoreNS.Api.Services
 
 		protected IDALPaymentTypeMapper DalPaymentTypeMapper { get; private set; }
 
+		protected IDALSaleMapper DalSaleMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractPaymentTypeService(
@@ -24,12 +26,14 @@ namespace PetStoreNS.Api.Services
 			MediatR.IMediator mediator,
 			IPaymentTypeRepository paymentTypeRepository,
 			IApiPaymentTypeServerRequestModelValidator paymentTypeModelValidator,
-			IDALPaymentTypeMapper dalPaymentTypeMapper)
+			IDALPaymentTypeMapper dalPaymentTypeMapper,
+			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
 			this.PaymentTypeRepository = paymentTypeRepository;
 			this.PaymentTypeModelValidator = paymentTypeModelValidator;
 			this.DalPaymentTypeMapper = dalPaymentTypeMapper;
+			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -111,9 +115,16 @@ namespace PetStoreNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiSaleServerResponseModel>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Sale> records = await this.PaymentTypeRepository.SalesByPaymentTypeId(paymentTypeId, limit, offset);
+
+			return this.DalSaleMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>253587b3629241a8936c4076822fd399</Hash>
+    <Hash>49247152d99e9ad7c8067a827ca0bb0a</Hash>
 </Codenesium>*/

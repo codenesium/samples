@@ -81,32 +81,68 @@ namespace PetStoreNS.Api.DataAccess
 			modelBuilder.Entity<Breed>()
 			.HasKey(c => new
 			{
+				c.Id,
 			});
+
+			modelBuilder.Entity<Breed>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<PaymentType>()
 			.HasKey(c => new
 			{
+				c.Id,
 			});
+
+			modelBuilder.Entity<PaymentType>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Pen>()
 			.HasKey(c => new
 			{
+				c.Id,
 			});
+
+			modelBuilder.Entity<Pen>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Pet>()
 			.HasKey(c => new
 			{
+				c.Id,
 			});
+
+			modelBuilder.Entity<Pet>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Sale>()
 			.HasKey(c => new
 			{
+				c.Id,
 			});
+
+			modelBuilder.Entity<Sale>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Species>()
 			.HasKey(c => new
 			{
+				c.Id,
 			});
+
+			modelBuilder.Entity<Species>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
@@ -114,5 +150,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>788e759740696fa6b78bdbcd1b5d9e26</Hash>
+    <Hash>1cd10d2a40fff4fb2363eae266041659</Hash>
 </Codenesium>*/

@@ -5,6 +5,7 @@ import PetViewModel from '../pet/petViewModel';
 export default class SaleViewModel {
   amount: number;
   firstName: string;
+  id: number;
   lastName: string;
   paymentTypeId: number;
   paymentTypeIdEntity: string;
@@ -17,6 +18,7 @@ export default class SaleViewModel {
   constructor() {
     this.amount = 0;
     this.firstName = '';
+    this.id = 0;
     this.lastName = '';
     this.paymentTypeId = 0;
     this.paymentTypeIdEntity = '';
@@ -30,6 +32,7 @@ export default class SaleViewModel {
   setProperties(
     amount: number,
     firstName: string,
+    id: number,
     lastName: string,
     paymentTypeId: number,
     petId: number,
@@ -37,6 +40,7 @@ export default class SaleViewModel {
   ): void {
     this.amount = amount;
     this.firstName = firstName;
+    this.id = id;
     this.lastName = lastName;
     this.paymentTypeId = paymentTypeId;
     this.petId = petId;
@@ -50,5 +54,5 @@ export default class SaleViewModel {
 
 
 /*<Codenesium>
-    <Hash>542501754ef816e8f3c32ece61c17cfb</Hash>
+    <Hash>9b45cc7a861a8d75fddae87a11b3ade9</Hash>
 </Codenesium>*/

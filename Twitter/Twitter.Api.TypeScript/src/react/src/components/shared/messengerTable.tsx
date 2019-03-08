@@ -6,11 +6,11 @@ import MessengerMapper from '../messenger/messengerMapper';
 import MessengerViewModel from '../messenger/messengerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface MessengerTableComponentProps {
-  id:number,
-  apiRoute:string;
+  id: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,44 +20,42 @@ interface MessengerTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<MessengerViewModel>;
+  filteredRecords: Array<MessengerViewModel>;
 }
 
-export class  MessengerTableComponent extends React.Component<
-MessengerTableComponentProps,
-MessengerTableComponentState
+export class MessengerTableComponent extends React.Component<
+  MessengerTableComponentProps,
+  MessengerTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: MessengerViewModel) {
-  this.props.history.push(ClientRoutes.Messengers + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: MessengerViewModel) {
+    this.props.history.push(ClientRoutes.Messengers + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: MessengerViewModel) {
-   this.props.history.push(ClientRoutes.Messengers + '/' + row.id);
- }
+  handleDetailClick(e: any, row: MessengerViewModel) {
+    this.props.history.push(ClientRoutes.Messengers + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.MessengerClientResponseModel>;
@@ -65,12 +63,11 @@ handleEditClick(e:any, row: MessengerViewModel) {
           console.log(response);
 
           let mapper = new MessengerMapper();
-          
-          let messengers:Array<MessengerViewModel> = [];
 
-          response.forEach(x =>
-          {
-              messengers.push(mapper.mapApiResponseToViewModel(x));
+          let messengers: Array<MessengerViewModel> = [];
+
+          response.forEach(x => {
+            messengers.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,84 +92,118 @@ handleEditClick(e:any, row: MessengerViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Messengers',
-                    columns: [
-					  {
-                      Header: 'Date',
-                      accessor: 'date',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Messengers',
+                columns: [
+                  {
+                    Header: 'Date',
+                    accessor: 'date',
+                    Cell: props => {
                       return <span>{String(props.original.date)}</span>;
-                      }           
-                    },  {
-                      Header: 'From_user_id',
-                      accessor: 'fromUserId',
-                      Cell: (props) => {
+                    },
+                  },
+                  {
+                    Header: 'From_user_id',
+                    accessor: 'fromUserId',
+                    Cell: props => {
                       return <span>{String(props.original.fromUserId)}</span>;
-                      }           
-                    },  {
-                      Header: 'Message_id',
-                      accessor: 'messageId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Messages + '/' + props.original.messageId); }}>
+                    },
+                  },
+                  {
+                    Header: 'Message_id',
+                    accessor: 'messageId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Messages +
+                                '/' +
+                                props.original.messageId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.messageIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'Time',
-                      accessor: 'time',
-                      Cell: (props) => {
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Time',
+                    accessor: 'time',
+                    Cell: props => {
                       return <span>{String(props.original.time)}</span>;
-                      }           
-                    },  {
-                      Header: 'To_user_id',
-                      accessor: 'toUserId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.toUserId); }}>
+                    },
+                  },
+                  {
+                    Header: 'To_user_id',
+                    accessor: 'toUserId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Users + '/' + props.original.toUserId
+                            );
+                          }}
+                        >
                           {String(
                             props.original.toUserIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'User_id',
-                      accessor: 'userId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.userId); }}>
-                          {String(
-                            props.original.userIdNavigation.toDisplay()
-                          )}
-                        </a>
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'User_id',
+                    accessor: 'userId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Users + '/' + props.original.userId
+                            );
+                          }}
+                        >
+                          {String(props.original.userIdNavigation.toDisplay())}
+                        </a>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as MessengerViewModel
@@ -183,8 +214,8 @@ handleEditClick(e:any, row: MessengerViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as MessengerViewModel
@@ -193,11 +224,14 @@ handleEditClick(e:any, row: MessengerViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -205,6 +239,7 @@ handleEditClick(e:any, row: MessengerViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>b1ff533918af1d015b0896ce3cc0bca2</Hash>
+    <Hash>80586805418e914e8aa5705b29944db6</Hash>
 </Codenesium>*/

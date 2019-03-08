@@ -8,6 +8,7 @@ export default class PetViewModel {
   breedIdEntity: string;
   breedIdNavigation?: BreedViewModel;
   description: string;
+  id: number;
   penId: number;
   penIdEntity: string;
   penIdNavigation?: PenViewModel;
@@ -19,6 +20,7 @@ export default class PetViewModel {
     this.breedIdEntity = '';
     this.breedIdNavigation = new BreedViewModel();
     this.description = '';
+    this.id = 0;
     this.penId = 0;
     this.penIdEntity = '';
     this.penIdNavigation = new PenViewModel();
@@ -29,12 +31,14 @@ export default class PetViewModel {
     acquiredDate: any,
     breedId: number,
     description: string,
+    id: number,
     penId: number,
     price: number
   ): void {
     this.acquiredDate = moment(acquiredDate, 'YYYY-MM-DD');
     this.breedId = breedId;
     this.description = description;
+    this.id = id;
     this.penId = penId;
     this.price = price;
   }
@@ -46,5 +50,5 @@ export default class PetViewModel {
 
 
 /*<Codenesium>
-    <Hash>7107936f62370315547ffd5089689a2b</Hash>
+    <Hash>7e2a16175af9a6064594880b8ee523be</Hash>
 </Codenesium>*/

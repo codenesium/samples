@@ -3,19 +3,19 @@ import PenViewModel from './penViewModel';
 export default class PenMapper {
   mapApiResponseToViewModel(dto: Api.PenClientResponseModel): PenViewModel {
     let response = new PenViewModel();
-    response.setProperties(dto.name);
+    response.setProperties(dto.id, dto.name);
 
     return response;
   }
 
   mapViewModelToApiRequest(model: PenViewModel): Api.PenClientRequestModel {
     let response = new Api.PenClientRequestModel();
-    response.setProperties(model.name);
+    response.setProperties(model.id, model.name);
     return response;
   }
 }
 
 
 /*<Codenesium>
-    <Hash>da3773a6ac0cf64e6df45f83e1c559fe</Hash>
+    <Hash>fc10bee8d2577922bf788109c8258552</Hash>
 </Codenesium>*/

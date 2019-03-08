@@ -16,10 +16,13 @@ namespace PetStoreNS.Api.Client
 		}
 
 		[JsonProperty]
+		public int Id { get; private set; }
+
+		[JsonProperty]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>277137788b53888978866263c42fa46c</Hash>
+    <Hash>bb28169681e3bf4e70a59bb9f1d4b62b</Hash>
 </Codenesium>*/

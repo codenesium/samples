@@ -38,6 +38,7 @@ namespace PetStoreNS.Api.Services
 
 			response.Amount.Should().Be(1m);
 			response.FirstName.Should().Be("A");
+			response.Id.Should().Be(1);
 			response.LastName.Should().Be("A");
 			response.PaymentTypeId.Should().Be(1);
 			response.PetId.Should().Be(1);
@@ -58,5 +59,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9553c46a60ea5cdd5a06040f6d39bd9c</Hash>
+    <Hash>7b49e2877a7bea42cd8e075c2fb66e73</Hash>
 </Codenesium>*/

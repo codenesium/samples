@@ -31,6 +31,7 @@ namespace PetStoreNS.Api.Services
 			item.SetProperties(1, "A");
 			ApiPaymentTypeServerResponseModel response = mapper.MapEntityToModel(item);
 
+			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
 
@@ -48,5 +49,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>345416decde333cc0e9fd9a26a386dba</Hash>
+    <Hash>e1ae6ad71f5805e5b8317971f11610a3</Hash>
 </Codenesium>*/

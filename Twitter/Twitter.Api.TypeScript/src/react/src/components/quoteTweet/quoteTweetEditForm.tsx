@@ -5,15 +5,25 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import QuoteTweetMapper from './quoteTweetMapper';
 import QuoteTweetViewModel from './quoteTweetViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { UserSelectComponent } from '../shared/userSelect'
-	import { TweetSelectComponent } from '../shared/tweetSelect'
-	interface QuoteTweetEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+import { UserSelectComponent } from '../shared/userSelect';
+import { TweetSelectComponent } from '../shared/tweetSelect';
+interface QuoteTweetEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface QuoteTweetEditComponentState {
@@ -22,8 +32,8 @@ interface QuoteTweetEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class QuoteTweetEditComponent extends React.Component<
@@ -36,11 +46,11 @@ class QuoteTweetEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -71,7 +81,9 @@ class QuoteTweetEditComponent extends React.Component<
             errorMessage: '',
           });
 
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
+          this.props.form.setFieldsValue(
+            mapper.mapApiResponseToViewModel(response)
+          );
         },
         error => {
           console.log(error);
@@ -84,29 +96,30 @@ class QuoteTweetEditComponent extends React.Component<
           });
         }
       );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
-     if (!err) {
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
         let model = values as QuoteTweetViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      } 
-	  else {
-		  this.setState({...this.state, submitting:false, submitted:false});
-	  }
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
+      }
     });
   };
 
-  submit = (model:QuoteTweetViewModel) =>
-  {  
+  submit = (model: QuoteTweetViewModel) => {
     let mapper = new QuoteTweetMapper();
-     axios
+    axios
       .put(
-        Constants.ApiEndpoint + ApiRoutes.QuoteTweets + '/' + this.state.model!.quoteTweetId,
+        Constants.ApiEndpoint +
+          ApiRoutes.QuoteTweets +
+          '/' +
+          this.state.model!.quoteTweetId,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -119,124 +132,130 @@ class QuoteTweetEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.QuoteTweetClientRequestModel
           >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            model: mapper.mapApiResponseToViewModel(response.record!),
+            errorOccurred: false,
+            errorMessage: '',
+          });
           console.log(response);
         },
         error => {
           console.log(error);
-		  let errorResponse = error.response.data as ActionResponse; 
-		  if(error.response.data)
-          {
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
+          let errorResponse = error.response.data as ActionResponse;
+          if (error.response.data) {
+            errorResponse.validationErrors.forEach(x => {
+              this.props.form.setFields({
+                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                  value: this.props.form.getFieldValue(
+                    ToLowerCaseFirstLetter(x.propertyName)
+                  ),
+                  errors: [new Error(x.errorMessage)],
+                },
+              });
+            });
+          }
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error from API',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      );
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="content">content</label>
+            <br />
+            {getFieldDecorator('content', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 140, message: 'Exceeds max length of 140' },
+              ],
+            })(<Input placeholder={'content'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='content'>content</label>
-              <br />             
-              {getFieldDecorator('content', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 140, message: 'Exceeds max length of 140' },
-],
-              
-              })
-              ( <Input placeholder={"content"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="date">date</label>
+            <br />
+            {getFieldDecorator('date', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'date'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='date'>date</label>
-              <br />             
-              {getFieldDecorator('date', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"date"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="retweeterUserId">retweeter_user_id</label>
+            <br />
+            {getFieldDecorator('retweeterUserId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'retweeter_user_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='retweeterUserId'>retweeter_user_id</label>
-              <br />             
-              {getFieldDecorator('retweeterUserId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"retweeter_user_id"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="sourceTweetId">source_tweet_id</label>
+            <br />
+            {getFieldDecorator('sourceTweetId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'source_tweet_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='sourceTweetId'>source_tweet_id</label>
-              <br />             
-              {getFieldDecorator('sourceTweetId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"source_tweet_id"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="time">time</label>
+            <br />
+            {getFieldDecorator('time', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'time'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='time'>time</label>
-              <br />             
-              {getFieldDecorator('time', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"time"} /> )}
-              </Form.Item>
-
-			
-            <Form.Item>
-             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedQuoteTweetEditComponent = Form.create({ name: 'QuoteTweet Edit' })(QuoteTweetEditComponent);
+export const WrappedQuoteTweetEditComponent = Form.create({
+  name: 'QuoteTweet Edit',
+})(QuoteTweetEditComponent);
+
 
 /*<Codenesium>
-    <Hash>f707be4590d0e2dc39f47855483348a0</Hash>
+    <Hash>df73c6f493e65a580020a056d70aad95</Hash>
 </Codenesium>*/
