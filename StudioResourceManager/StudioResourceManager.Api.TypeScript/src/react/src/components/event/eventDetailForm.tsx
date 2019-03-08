@@ -117,7 +117,7 @@ class EventDetailComponent extends React.Component<
               <p>{String(this.state.model!.billAmount)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>status</h3>
+              <h3>Event Status</h3>
               <p>
                 {String(this.state.model!.eventStatusIdNavigation!.toDisplay())}
               </p>
@@ -131,11 +131,11 @@ class EventDetailComponent extends React.Component<
               <p>{String(this.state.model!.scheduledStartDate)}</p>
             </div>
             <div>
-              <h3>Student Notes</h3>
+              <h3>Student Note</h3>
               <p>{String(this.state.model!.studentNote)}</p>
             </div>
             <div>
-              <h3>Teacher notes</h3>
+              <h3>Teacher Note</h3>
               <p>{String(this.state.model!.teacherNote)}</p>
             </div>
           </div>
@@ -154,5 +154,5 @@ export const WrappedEventDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c3ed95b69da4d5c03de15d4982e6c851</Hash>
+    <Hash>19a5bae8c1e89dd38d2eb720a4efdc81</Hash>
 </Codenesium>*/

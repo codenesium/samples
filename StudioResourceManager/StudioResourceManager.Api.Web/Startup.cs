@@ -21,6 +21,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
@@ -384,6 +385,14 @@ namespace StudioResourceManagerNS.Api.Web
             app.UseCors("AllowAll");
 
             app.UseMvc();
+
+		    app.UseStaticFiles(new StaticFileOptions
+			{
+				FileProvider = new PhysicalFileProvider(
+				Path.Combine(Directory.GetCurrentDirectory(), "app")),
+				RequestPath = string.Empty
+			});
+
 
             // If you want to dispose of resources that have been resolved in the
             // application container, register for the "ApplicationStopped" event.

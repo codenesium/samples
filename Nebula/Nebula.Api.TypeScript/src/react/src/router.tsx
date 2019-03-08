@@ -52,7 +52,7 @@ const config = {
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={Constants.HostedSubDirectory}>
       <Security
         issuer={config.oidc.issuer}
         client_id={config.oidc.clientId}
@@ -97,28 +97,28 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             path={ClientRoutes.ChainStatuses + '/create'}
             component={wrapperHeader(
               WrappedChainStatusCreateComponent,
-              'ChainStatuses Create'
+              'Chain Status Create'
             )}
           />
           <Route
             path={ClientRoutes.ChainStatuses + '/edit/:id'}
             component={wrapperHeader(
               WrappedChainStatusEditComponent,
-              'ChainStatuses Edit'
+              'Chain Status Edit'
             )}
           />
           <Route
             path={ClientRoutes.ChainStatuses + '/:id'}
             component={wrapperHeader(
               WrappedChainStatusDetailComponent,
-              'ChainStatuses Detail'
+              'Chain Status Detail'
             )}
           />
           <Route
             path={ClientRoutes.ChainStatuses}
             component={wrapperHeader(
               WrappedChainStatusSearchComponent,
-              'ChainStatuses Search'
+              'Chain Status Search'
             )}
           />
           <Route
@@ -175,56 +175,56 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             path={ClientRoutes.LinkLogs + '/create'}
             component={wrapperHeader(
               WrappedLinkLogCreateComponent,
-              'LinkLogs Create'
+              'Link Log Create'
             )}
           />
           <Route
             path={ClientRoutes.LinkLogs + '/edit/:id'}
             component={wrapperHeader(
               WrappedLinkLogEditComponent,
-              'LinkLogs Edit'
+              'Link Log Edit'
             )}
           />
           <Route
             path={ClientRoutes.LinkLogs + '/:id'}
             component={wrapperHeader(
               WrappedLinkLogDetailComponent,
-              'LinkLogs Detail'
+              'Link Log Detail'
             )}
           />
           <Route
             path={ClientRoutes.LinkLogs}
             component={wrapperHeader(
               WrappedLinkLogSearchComponent,
-              'LinkLogs Search'
+              'Link Log Search'
             )}
           />
           <Route
             path={ClientRoutes.LinkStatuses + '/create'}
             component={wrapperHeader(
               WrappedLinkStatusCreateComponent,
-              'LinkStatuses Create'
+              'Link Status Create'
             )}
           />
           <Route
             path={ClientRoutes.LinkStatuses + '/edit/:id'}
             component={wrapperHeader(
               WrappedLinkStatusEditComponent,
-              'LinkStatuses Edit'
+              'Link Status Edit'
             )}
           />
           <Route
             path={ClientRoutes.LinkStatuses + '/:id'}
             component={wrapperHeader(
               WrappedLinkStatusDetailComponent,
-              'LinkStatuses Detail'
+              'Link Status Detail'
             )}
           />
           <Route
             path={ClientRoutes.LinkStatuses}
             component={wrapperHeader(
               WrappedLinkStatusSearchComponent,
-              'LinkStatuses Search'
+              'Link Status Search'
             )}
           />
           <Route
@@ -316,5 +316,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>76721e1860de9d28e8e5af6bd06640b5</Hash>
+    <Hash>5eeae0042d6b245ac75f08dd1d741661</Hash>
 </Codenesium>*/

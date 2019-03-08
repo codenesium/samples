@@ -12,14 +12,9 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (
-  Component: React.ComponentClass<any> | React.SFC<any>,
-  displayName: string
-) => {
-  class WrapperHeaderComponent extends React.Component<
-    WrapperHeaderProps & RouteComponentProps,
-    WrapperHeaderState
-  > {
+export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
+displayName:string) => {
+  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -35,88 +30,110 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+               <MenuItem
                 key="Home"
-                onClick={() => {
-                  this.setState({ ...this.state, collapsed: true });
-                }}
+				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'} />
+                <Link to={'/'}></Link>
               </MenuItem>
 
-              <MenuItem key="directTweet">
-                <Icon type="pie-chart" />
-                <span>DirectTweets</span>
-                <Link to={ClientRoutes.DirectTweets} />
+			   			   <MenuItem
+                key="directTweet"
+              >
+			  <Icon type="pie-chart" />
+              <span>DirectTweets</span>
+              <Link to={ClientRoutes.DirectTweets}></Link>
               </MenuItem>
 
-              <MenuItem key="follower">
-                <Icon type="rise" />
-                <span>Followers</span>
-                <Link to={ClientRoutes.Followers} />
+							   <MenuItem
+                key="follower"
+              >
+			  <Icon type="rise" />
+              <span>Followers</span>
+              <Link to={ClientRoutes.Followers}></Link>
               </MenuItem>
 
-              <MenuItem key="following">
-                <Icon type="bars" />
-                <span>Followings</span>
-                <Link to={ClientRoutes.Followings} />
+							   <MenuItem
+                key="following"
+              >
+			  <Icon type="bars" />
+              <span>Followings</span>
+              <Link to={ClientRoutes.Followings}></Link>
               </MenuItem>
 
-              <MenuItem key="location">
-                <Icon type="cloud" />
-                <span>Locations</span>
-                <Link to={ClientRoutes.Locations} />
+							   <MenuItem
+                key="location"
+              >
+			  <Icon type="cloud" />
+              <span>Locations</span>
+              <Link to={ClientRoutes.Locations}></Link>
               </MenuItem>
 
-              <MenuItem key="message">
-                <Icon type="code" />
-                <span>Messages</span>
-                <Link to={ClientRoutes.Messages} />
+							   <MenuItem
+                key="message"
+              >
+			  <Icon type="code" />
+              <span>Messages</span>
+              <Link to={ClientRoutes.Messages}></Link>
               </MenuItem>
 
-              <MenuItem key="messenger">
-                <Icon type="smile" />
-                <span>Messengers</span>
-                <Link to={ClientRoutes.Messengers} />
+							   <MenuItem
+                key="messenger"
+              >
+			  <Icon type="smile" />
+              <span>Messengers</span>
+              <Link to={ClientRoutes.Messengers}></Link>
               </MenuItem>
 
-              <MenuItem key="quoteTweet">
-                <Icon type="laptop" />
-                <span>QuoteTweets</span>
-                <Link to={ClientRoutes.QuoteTweets} />
+							   <MenuItem
+                key="quoteTweet"
+              >
+			  <Icon type="laptop" />
+              <span>QuoteTweets</span>
+              <Link to={ClientRoutes.QuoteTweets}></Link>
               </MenuItem>
 
-              <MenuItem key="reply">
-                <Icon type="mobile" />
-                <span>Replies</span>
-                <Link to={ClientRoutes.Replies} />
+							   <MenuItem
+                key="reply"
+              >
+			  <Icon type="mobile" />
+              <span>Replies</span>
+              <Link to={ClientRoutes.Replies}></Link>
               </MenuItem>
 
-              <MenuItem key="retweet">
-                <Icon type="paper-clip" />
-                <span>Retweets</span>
-                <Link to={ClientRoutes.Retweets} />
+							   <MenuItem
+                key="retweet"
+              >
+			  <Icon type="paper-clip" />
+              <span>Retweets</span>
+              <Link to={ClientRoutes.Retweets}></Link>
               </MenuItem>
 
-              <MenuItem key="tweet">
-                <Icon type="setting" />
-                <span>Tweets</span>
-                <Link to={ClientRoutes.Tweets} />
+							   <MenuItem
+                key="tweet"
+              >
+			  <Icon type="setting" />
+              <span>Tweets</span>
+              <Link to={ClientRoutes.Tweets}></Link>
               </MenuItem>
 
-              <MenuItem key="user">
-                <Icon type="user" />
-                <span>Users</span>
-                <Link to={ClientRoutes.Users} />
+							   <MenuItem
+                key="user"
+              >
+			  <Icon type="user" />
+              <span>Users</span>
+              <Link to={ClientRoutes.Users}></Link>
               </MenuItem>
+
+				
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-              <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+            <h2>{displayName}</h2>
+			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -129,7 +146,6 @@ export const wrapperHeader = (
   return WrapperHeaderComponent;
 };
 
-
 /*<Codenesium>
-    <Hash>1ffb732b418ae25b48518693a7549d11</Hash>
+    <Hash>c57dc61dffed8248d7e7643fbc941b5d</Hash>
 </Codenesium>*/

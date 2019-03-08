@@ -107,27 +107,27 @@ SaleDetailComponentState
 		  </Button>
 		  <div>
 									 <div>
-							<h3>amount</h3>
+							<h3>Amount</h3>
 							<p>{String(this.state.model!.amount)}</p>
 						 </div>
 					   						 <div>
-							<h3>firstName</h3>
+							<h3>First Name</h3>
 							<p>{String(this.state.model!.firstName)}</p>
 						 </div>
 					   						 <div>
-							<h3>lastName</h3>
+							<h3>Last Name</h3>
 							<p>{String(this.state.model!.lastName)}</p>
 						 </div>
 					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>paymentTypeId</h3>
+							<h3>Payment Type</h3>
 							<p>{String(this.state.model!.paymentTypeIdNavigation!.toDisplay())}</p>
 						 </div>
 					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>petId</h3>
+							<h3>Pet</h3>
 							<p>{String(this.state.model!.petIdNavigation!.toDisplay())}</p>
 						 </div>
 					   						 <div>
-							<h3>phone</h3>
+							<h3>Phone</h3>
 							<p>{String(this.state.model!.phone)}</p>
 						 </div>
 					   		  </div>
@@ -147,5 +147,5 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 );
 
 /*<Codenesium>
-    <Hash>c721f59fb6a315fa03e4607d4f1473ff</Hash>
+    <Hash>614ba0db4835a7ad6f7683dfae630a84</Hash>
 </Codenesium>*/

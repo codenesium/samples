@@ -1,0 +1,723 @@
+{
+  "$id": "1",
+  "Name": "ESPIOTPostgres",
+  "ProjectType": ".NET Core REST API 1.0.0",
+  "LocalDestinationDirectory": "C:\\Users\\Administrator\\Documents\\Mercurial\\Samples\\ESPIOTPostgres",
+  "Database": {
+    "$id": "2",
+    "Name": "espiot2",
+    "Schemas": [
+      {
+        "$id": "3",
+        "Name": "dbo",
+        "Tables": [
+          {
+            "$id": "4",
+            "Name": "Device",
+            "Columns": [
+              {
+                "$id": "5",
+                "Name": "id",
+                "DataType": "integer",
+                "NumericPrecision": 32,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "6",
+                "Name": "publicId",
+                "DataType": "uuid",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "7",
+                "Name": "name",
+                "DataType": "character varying",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "8",
+                "Name": "IX_Device",
+                "TableName": "Device",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "9",
+                    "Name": "publicId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "10",
+                "Name": "PK_Device",
+                "TableName": "Device",
+                "IsPrimaryKey": true,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "11",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "12",
+            "Name": "DeviceAction",
+            "Columns": [
+              {
+                "$id": "13",
+                "Name": "id",
+                "DataType": "integer",
+                "NumericPrecision": 32,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "14",
+                "Name": "deviceId",
+                "DataType": "integer",
+                "NumericPrecision": 32,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "15",
+                "Name": "name",
+                "DataType": "character varying",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "16",
+                "Name": "action",
+                "DataType": "character varying",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "17",
+                "Name": "IX_DeviceAction_DeviceId",
+                "TableName": "DeviceAction",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "18",
+                    "Name": "deviceId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "19",
+                "Name": "PK_Action",
+                "TableName": "DeviceAction",
+                "IsPrimaryKey": true,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "20",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "21",
+            "Columns": [
+              {
+                "$id": "22",
+                "ForeignKeyTableName": "DeviceAction",
+                "ForeignKeyColumnName": "deviceId",
+                "PrimaryKeyTableName": "Device",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_DeviceAction_Device"
+          }
+        ]
+      }
+    ],
+    "Version": "1.0",
+    "DatabaseType": "POSTGRESQL"
+  },
+  "Project": {
+    "$id": "23",
+    "Schemas": [
+      {
+        "$id": "24",
+        "AppSchemaName": "dbo",
+        "AppSchemaId": "c3c62774-8424-4532-b689-7e5cca7c4a34",
+        "Tables": [
+          {
+            "$id": "25",
+            "AppTableName": "Device",
+            "AppTableNamePlural": "Devices",
+            "AppDoNotProcess": false,
+            "AppTableId": "fb360fd8-b70b-449f-98c7-491357877137",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "26",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "integer",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "25"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "integer",
+                "NumericPrecision": 32,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "27",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "character varying",
+                "AppFieldMaxLength": 90,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "25"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "name",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "character varying",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "28",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PublicId",
+                "AppNamePlural": "PublicIds",
+                "AppFieldType": "uuid",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "Guid",
+                "AppTypescriptType": "any",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "25"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "publicId",
+                "GenerationEnabled": true,
+                "Name": "publicId",
+                "DataType": "uuid",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "29",
+                "Columns": [
+                  {
+                    "$id": "30",
+                    "Column": {
+                      "$ref": "28"
+                    },
+                    "Name": "PublicId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByPublicId",
+                "ControllerRoute": "byPublicId",
+                "AppName": "IX_Device",
+                "Table": {
+                  "$ref": "25"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_Device",
+                "TableName": "Device",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "31",
+                "Columns": [
+                  {
+                    "$id": "32",
+                    "Column": {
+                      "$ref": "26"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Device",
+                "Table": {
+                  "$ref": "25"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Device",
+                "TableName": "Device",
+                "IsPrimaryKey": true,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "24"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.publicId",
+            "AppViewLabel": "Device",
+            "AppViewIcon": "",
+            "GenerationEnabled": true,
+            "Name": "Device",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "33",
+            "AppTableName": "DeviceAction",
+            "AppTableNamePlural": "DeviceActions",
+            "AppDoNotProcess": false,
+            "AppTableId": "bf734d9c-c4b2-4f5d-ae98-c8f785041459",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "34",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Action",
+                "AppNamePlural": "Actions",
+                "AppFieldType": "character varying",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "33"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "action",
+                "GenerationEnabled": true,
+                "Name": "action",
+                "DataType": "character varying",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "35",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "DeviceId",
+                "AppNamePlural": "DeviceIds",
+                "AppFieldType": "integer",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "33"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "deviceId",
+                "GenerationEnabled": true,
+                "Name": "deviceId",
+                "DataType": "integer",
+                "NumericPrecision": 32,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "36",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "integer",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "33"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "integer",
+                "NumericPrecision": 32,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "37",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "character varying",
+                "AppFieldMaxLength": 90,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "33"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "name",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "character varying",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "38",
+                "Columns": [
+                  {
+                    "$id": "39",
+                    "Column": {
+                      "$ref": "35"
+                    },
+                    "Name": "DeviceId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByDeviceId",
+                "ControllerRoute": "byDeviceId",
+                "AppName": "IX_DeviceAction_DeviceId",
+                "Table": {
+                  "$ref": "33"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_DeviceAction_DeviceId",
+                "TableName": "DeviceAction",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "40",
+                "Columns": [
+                  {
+                    "$id": "41",
+                    "Column": {
+                      "$ref": "36"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Action",
+                "Table": {
+                  "$ref": "33"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Action",
+                "TableName": "DeviceAction",
+                "IsPrimaryKey": true,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "24"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.action",
+            "AppViewLabel": "DeviceAction",
+            "AppViewIcon": "",
+            "GenerationEnabled": true,
+            "Name": "DeviceAction",
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "42",
+            "Columns": [
+              {
+                "$id": "43",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "35"
+                },
+                "PrimaryColumn": {
+                  "$ref": "26"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_DeviceAction_DeviceId_Device_Id"
+          }
+        ],
+        "ReferenceForeignKeys": [],
+        "ApplicationApiContainer": {
+          "$ref": "23"
+        },
+        "Name": "dbo"
+      }
+    ],
+    "ApplicationVersion": "1.0",
+    "ApiSettings": {
+      "$id": "44",
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "Name": "",
+    "Version": "",
+    "DatabaseType": ""
+  },
+  "Settings": {
+    "$id": "45",
+    "SettingsVersion": "1.0",
+    "ApiSettings": {
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "TableParameterSettings": [],
+    "ColumnParameterSettings": [
+      {
+        "$id": "46",
+        "Table": "DeviceAction",
+        "Schema": "dbo",
+        "Column": "DeviceId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Device",
+        "AppName": "DeviceId",
+        "AppNamePlural": "DeviceIds"
+      }
+    ],
+    "VirtualForeignKeys": [],
+    "ForeignKeyParameterSettings": [],
+    "VirtualConstraints": [],
+    "ConstraintParameterSettings": []
+  }
+}

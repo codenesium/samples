@@ -150,19 +150,19 @@ class RateCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherId">teacherId</label>
+            <label htmlFor="teacherId">Teacher</label>
             <br />
             {getFieldDecorator('teacherId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'teacherId'} />)}
+            })(<InputNumber placeholder={'Teacher'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherSkillId">teacherSkillId</label>
+            <label htmlFor="teacherSkillId">Teacher Skill</label>
             <br />
             {getFieldDecorator('teacherSkillId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'teacherSkillId'} />)}
+            })(<InputNumber placeholder={'Teacher Skill'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -189,5 +189,5 @@ export const WrappedRateCreateComponent = Form.create({ name: 'Rate Create' })(
 
 
 /*<Codenesium>
-    <Hash>d1494ac7a12d54fde27cc3f769688cae</Hash>
+    <Hash>9314f2327329c1a91fde3d18f726d044</Hash>
 </Codenesium>*/

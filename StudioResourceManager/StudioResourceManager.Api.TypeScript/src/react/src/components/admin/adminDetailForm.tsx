@@ -105,11 +105,11 @@ class AdminDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>birthday</h3>
+              <h3>Birthday</h3>
               <p>{String(this.state.model!.birthday)}</p>
             </div>
             <div>
-              <h3>email</h3>
+              <h3>Email</h3>
               <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
@@ -121,11 +121,11 @@ class AdminDetailComponent extends React.Component<
               <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <h3>phone</h3>
+              <h3>Phone</h3>
               <p>{String(this.state.model!.phone)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>userId</h3>
+              <h3>User</h3>
               <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
             </div>
           </div>
@@ -144,5 +144,5 @@ export const WrappedAdminDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>02d7479e309fa56b1bfd654530ea1426</Hash>
+    <Hash>5d78267ab6076fe0ff20bf5fe50be52b</Hash>
 </Codenesium>*/

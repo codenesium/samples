@@ -120,7 +120,7 @@ class CustomerCreateComponent extends React.Component<
         return ( 
          <Form onSubmit={this.handleSubmit}>
             			<Form.Item>
-              <label htmlFor='email'>email</label>
+              <label htmlFor='email'>Email</label>
               <br />             
               {getFieldDecorator('email', {
               rules:[{ required: true, message: 'Required' },
@@ -128,11 +128,11 @@ class CustomerCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"email"} /> )}
+              ( <Input placeholder={"Email"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='firstName'>firstName</label>
+              <label htmlFor='firstName'>First Name</label>
               <br />             
               {getFieldDecorator('firstName', {
               rules:[{ required: true, message: 'Required' },
@@ -140,11 +140,11 @@ class CustomerCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"firstName"} /> )}
+              ( <Input placeholder={"First Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='lastName'>lastName</label>
+              <label htmlFor='lastName'>Last Name</label>
               <br />             
               {getFieldDecorator('lastName', {
               rules:[{ required: true, message: 'Required' },
@@ -152,11 +152,11 @@ class CustomerCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"lastName"} /> )}
+              ( <Input placeholder={"Last Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='phone'>phone</label>
+              <label htmlFor='phone'>Phone</label>
               <br />             
               {getFieldDecorator('phone', {
               rules:[{ required: true, message: 'Required' },
@@ -164,7 +164,7 @@ class CustomerCreateComponent extends React.Component<
 ],
               
               })
-              ( <InputNumber placeholder={"phone"} /> )}
+              ( <InputNumber placeholder={"Phone"} /> )}
               </Form.Item>
 
 			
@@ -184,5 +184,5 @@ class CustomerCreateComponent extends React.Component<
 export const WrappedCustomerCreateComponent = Form.create({ name: 'Customer Create' })(CustomerCreateComponent);
 
 /*<Codenesium>
-    <Hash>058f448e87bae88a19c42357588645be</Hash>
+    <Hash>9f382d87798be2aa8d205baf4d853634</Hash>
 </Codenesium>*/

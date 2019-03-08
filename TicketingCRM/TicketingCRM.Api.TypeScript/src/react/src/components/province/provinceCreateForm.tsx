@@ -141,22 +141,26 @@ class ProvinceCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="countryId">countryId</label>
+            <label htmlFor="countryId">Country</label>
             <br />
-            {getFieldDecorator('countryId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'countryId'} />)}
+            <CountrySelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="countryId"
+              required={true}
+              selectedValue={this.state.model!.countryId}
+            />
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -183,5 +187,5 @@ export const WrappedProvinceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cf698aa64eaa15e37b32296ded53c16d</Hash>
+    <Hash>c31716bd79e7ae7b51d6a5e8efa9fff4</Hash>
 </Codenesium>*/

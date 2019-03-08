@@ -161,7 +161,7 @@ export default class DeviceActionSearchComponent extends React.Component<DeviceA
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'DeviceActions',
+                    Header: 'Device Actions',
                     columns: [
 					  {
                       Header: 'Action',
@@ -241,5 +241,5 @@ export default class DeviceActionSearchComponent extends React.Component<DeviceA
 export const WrappedDeviceActionSearchComponent = Form.create({ name: 'DeviceAction Search' })(DeviceActionSearchComponent);
 
 /*<Codenesium>
-    <Hash>c29f719d12ab5ca63e61e04271331155</Hash>
+    <Hash>3325d6ceb0c9eff9598ad3577ef30dbc</Hash>
 </Codenesium>*/

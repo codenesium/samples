@@ -127,7 +127,7 @@ export class EventTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'CityId',
+                    Header: 'City',
                     accessor: 'cityId',
                     Cell: props => {
                       return (
@@ -160,7 +160,7 @@ export class EventTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'EndDate',
+                    Header: 'End Date',
                     accessor: 'endDate',
                     Cell: props => {
                       return <span>{String(props.original.endDate)}</span>;
@@ -181,7 +181,7 @@ export class EventTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'StartDate',
+                    Header: 'Start Date',
                     accessor: 'startDate',
                     Cell: props => {
                       return <span>{String(props.original.startDate)}</span>;
@@ -239,5 +239,5 @@ export class EventTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>27f176b39a980013e16beb84789dbb2d</Hash>
+    <Hash>9e983c862af1c9d9e15f6a15450afa1d</Hash>
 </Codenesium>*/

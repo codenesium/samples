@@ -31,8 +31,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			List<ApiPaymentTypeServerResponseModel> response = await service.All();
 
@@ -50,8 +49,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			ApiPaymentTypeServerResponseModel response = await service.Get(default(int));
 
@@ -68,8 +66,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			ApiPaymentTypeServerResponseModel response = await service.Get(default(int));
 
@@ -87,8 +84,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			CreateResponse<ApiPaymentTypeServerResponseModel> response = await service.Create(model);
 
@@ -110,8 +106,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			CreateResponse<ApiPaymentTypeServerResponseModel> response = await service.Create(model);
 
@@ -132,8 +127,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			UpdateResponse<ApiPaymentTypeServerResponseModel> response = await service.Update(default(int), model);
 
@@ -156,8 +150,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			UpdateResponse<ApiPaymentTypeServerResponseModel> response = await service.Update(default(int), model);
 
@@ -177,8 +170,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -200,8 +192,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
+			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -210,47 +201,9 @@ namespace PetStoreNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PaymentTypeDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void SalesByPaymentTypeId_Exists()
-		{
-			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
-			var records = new List<Sale>();
-			records.Add(new Sale());
-			mock.RepositoryMock.Setup(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PaymentTypeService(mock.LoggerMock.Object,
-			                                     mock.MediatorMock.Object,
-			                                     mock.RepositoryMock.Object,
-			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
-
-			List<ApiSaleServerResponseModel> response = await service.SalesByPaymentTypeId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SalesByPaymentTypeId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
-			var service = new PaymentTypeService(mock.LoggerMock.Object,
-			                                     mock.MediatorMock.Object,
-			                                     mock.RepositoryMock.Object,
-			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
-
-			List<ApiSaleServerResponseModel> response = await service.SalesByPaymentTypeId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca23ec35e596754738de5834a1c2e41b</Hash>
+    <Hash>e9fa16e967e9ad84f8fe5a13b17e9d0f</Hash>
 </Codenesium>*/

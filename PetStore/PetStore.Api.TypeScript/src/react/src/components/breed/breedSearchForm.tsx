@@ -170,7 +170,7 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
                       return <span>{String(props.original.name)}</span>;
                       }           
                     },  {
-                      Header: 'SpeciesId',
+                      Header: 'Species',
                       accessor: 'speciesId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Species + '/' + props.original.speciesId); }}>
@@ -235,5 +235,5 @@ export default class BreedSearchComponent extends React.Component<BreedSearchCom
 export const WrappedBreedSearchComponent = Form.create({ name: 'Breed Search' })(BreedSearchComponent);
 
 /*<Codenesium>
-    <Hash>1db65916c97e6959cf81e9050611d1a8</Hash>
+    <Hash>9c8894b1df74058b45583a7d6c5e392c</Hash>
 </Codenesium>*/

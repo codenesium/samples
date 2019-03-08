@@ -106,19 +106,19 @@ class SaleDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>ipAddress</h3>
+              <h3>Ip Address</h3>
               <p>{String(this.state.model!.ipAddress)}</p>
             </div>
             <div>
-              <h3>notes</h3>
+              <h3>Note</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
             <div>
-              <h3>saleDate</h3>
+              <h3>Sale Date</h3>
               <p>{String(this.state.model!.saleDate)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>transactionId</h3>
+              <h3>Transaction</h3>
               <p>
                 {String(this.state.model!.transactionIdNavigation!.toDisplay())}
               </p>
@@ -155,5 +155,5 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 
 
 /*<Codenesium>
-    <Hash>cb980b2101fce41d6774aa92d0df6f09</Hash>
+    <Hash>4b8ae5c3a2bda238af6078d768c01d94</Hash>
 </Codenesium>*/

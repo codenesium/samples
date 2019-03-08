@@ -6,11 +6,11 @@ import PipelineStepDestinationMapper from '../pipelineStepDestination/pipelineSt
 import PipelineStepDestinationViewModel from '../pipelineStepDestination/pipelineStepDestinationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface PipelineStepDestinationTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,62 +20,57 @@ interface PipelineStepDestinationTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<PipelineStepDestinationViewModel>;
+  filteredRecords : Array<PipelineStepDestinationViewModel>;
 }
 
-export class PipelineStepDestinationTableComponent extends React.Component<
-  PipelineStepDestinationTableComponentProps,
-  PipelineStepDestinationTableComponentState
+export class  PipelineStepDestinationTableComponent extends React.Component<
+PipelineStepDestinationTableComponentProps,
+PipelineStepDestinationTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: PipelineStepDestinationViewModel) {
-    this.props.history.push(
-      ClientRoutes.PipelineStepDestinations + '/edit/' + row.id
-    );
-  }
+handleEditClick(e:any, row: PipelineStepDestinationViewModel) {
+  this.props.history.push(ClientRoutes.PipelineStepDestinations + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: PipelineStepDestinationViewModel) {
-    this.props.history.push(
-      ClientRoutes.PipelineStepDestinations + '/' + row.id
-    );
-  }
+ handleDetailClick(e:any, row: PipelineStepDestinationViewModel) {
+   this.props.history.push(ClientRoutes.PipelineStepDestinations + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
-          let response = resp.data as Array<
-            Api.PipelineStepDestinationClientResponseModel
-          >;
+          let response = resp.data as Array<Api.PipelineStepDestinationClientResponseModel>;
 
           console.log(response);
 
           let mapper = new PipelineStepDestinationMapper();
+          
+          let pipelineStepDestinations:Array<PipelineStepDestinationViewModel> = [];
 
-          let pipelineStepDestinations: Array<
-            PipelineStepDestinationViewModel
-          > = [];
-
-          response.forEach(x => {
-            pipelineStepDestinations.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              pipelineStepDestinations.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -100,80 +95,56 @@ export class PipelineStepDestinationTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'PipelineStepDestinations',
-                columns: [
-                  {
-                    Header: 'DestinationId',
-                    accessor: 'destinationId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Destinations +
-                                '/' +
-                                props.original.destinationId
-                            );
-                          }}
-                        >
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'PipelineStepDestinations',
+                    columns: [
+					  {
+                      Header: 'DestinationId',
+                      accessor: 'destinationId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Destinations + '/' + props.original.destinationId); }}>
                           {String(
                             props.original.destinationIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'PipelineStepId',
-                    accessor: 'pipelineStepId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.PipelineSteps +
-                                '/' +
-                                props.original.pipelineStepId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'PipelineStepId',
+                      accessor: 'pipelineStepId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.PipelineSteps + '/' + props.original.pipelineStepId); }}>
                           {String(
                             props.original.pipelineStepIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as PipelineStepDestinationViewModel
@@ -184,8 +155,8 @@ export class PipelineStepDestinationTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as PipelineStepDestinationViewModel
@@ -194,14 +165,11 @@ export class PipelineStepDestinationTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -209,7 +177,6 @@ export class PipelineStepDestinationTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>bd3b4489aa21955cfac70cac263ffa20</Hash>
+    <Hash>7f4e8f4b731b84be82cb59401b14cf5c</Hash>
 </Codenesium>*/

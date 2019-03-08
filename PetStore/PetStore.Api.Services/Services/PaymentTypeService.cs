@@ -12,19 +12,17 @@ namespace PetStoreNS.Api.Services
 			IMediator mediator,
 			IPaymentTypeRepository paymentTypeRepository,
 			IApiPaymentTypeServerRequestModelValidator paymentTypeModelValidator,
-			IDALPaymentTypeMapper dalPaymentTypeMapper,
-			IDALSaleMapper dalSaleMapper)
+			IDALPaymentTypeMapper dalPaymentTypeMapper)
 			: base(logger,
 			       mediator,
 			       paymentTypeRepository,
 			       paymentTypeModelValidator,
-			       dalPaymentTypeMapper,
-			       dalSaleMapper)
+			       dalPaymentTypeMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0e42d62ee35e29387d1de56da076118</Hash>
+    <Hash>e6043a85598a40978e7e5e22c5f4e4d1</Hash>
 </Codenesium>*/

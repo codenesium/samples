@@ -105,19 +105,19 @@ class CustomerDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>email</h3>
+              <h3>Email</h3>
               <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <h3>firstName</h3>
+              <h3>First Name</h3>
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>lastName</h3>
+              <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <h3>phone</h3>
+              <h3>Phone</h3>
               <p>{String(this.state.model!.phone)}</p>
             </div>
           </div>
@@ -136,5 +136,5 @@ export const WrappedCustomerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1eda30a79658e8ef654a7a62f185a655</Hash>
+    <Hash>e27dbb4ba58565085b6bad70b77ae123</Hash>
 </Codenesium>*/

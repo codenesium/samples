@@ -188,22 +188,22 @@ class StudentEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="birthday">birthday</label>
+            <label htmlFor="birthday">Birthday</label>
             <br />
             {getFieldDecorator('birthday', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'birthday'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Birthday'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">Email</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'email'} />)}
+            })(<Input placeholder={'Email'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -218,11 +218,11 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="familyId">familyId</label>
+            <label htmlFor="familyId">Family</label>
             <br />
             {getFieldDecorator('familyId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'familyId'} />)}
+            })(<InputNumber placeholder={'Family'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -257,18 +257,18 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">phone</label>
+            <label htmlFor="phone">Phone</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<InputNumber placeholder={'phone'} />)}
+            })(<InputNumber placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="smsRemindersEnabled">SMS Reminders Enabled</label>
+            <label htmlFor="smsRemindersEnabled">Sms Reminders Enabled</label>
             <br />
             {getFieldDecorator('smsRemindersEnabled', {
               rules: [{ required: true, message: 'Required' }],
@@ -277,11 +277,15 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userId">userId</label>
+            <label htmlFor="userId">User</label>
             <br />
-            {getFieldDecorator('userId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'userId'} />)}
+            <UserSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Users}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="userId"
+              required={true}
+              selectedValue={this.state.model!.userId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -308,5 +312,5 @@ export const WrappedStudentEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1e28592164a256dd0574c77dc8b0e9c9</Hash>
+    <Hash>8c52dc5cd38d78ad614607cef0ffc929</Hash>
 </Codenesium>*/

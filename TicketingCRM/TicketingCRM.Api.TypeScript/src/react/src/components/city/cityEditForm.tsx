@@ -187,22 +187,26 @@ class CityEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="provinceId">provinceId</label>
+            <label htmlFor="provinceId">Province</label>
             <br />
-            {getFieldDecorator('provinceId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'provinceId'} />)}
+            <ProvinceSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Provinces}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="provinceId"
+              required={true}
+              selectedValue={this.state.model!.provinceId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -229,5 +233,5 @@ export const WrappedCityEditComponent = Form.create({ name: 'City Edit' })(
 
 
 /*<Codenesium>
-    <Hash>9a4db84dc9a6890e56944080590f123c</Hash>
+    <Hash>2cbcf2c78498a4dd0c04628fece49202</Hash>
 </Codenesium>*/

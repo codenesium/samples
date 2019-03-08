@@ -205,7 +205,7 @@ export default class LinkLogSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'LinkLogs',
+                Header: 'Link Log',
                 columns: [
                   {
                     Header: 'DateEntered',
@@ -308,5 +308,5 @@ export const WrappedLinkLogSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>46891f032a8030bb36fc3ebd5408f85a</Hash>
+    <Hash>3bbf53844ad8e4634b7704dc54682344</Hash>
 </Codenesium>*/

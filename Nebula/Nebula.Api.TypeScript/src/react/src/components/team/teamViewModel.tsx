@@ -23,11 +23,11 @@ export default class TeamViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c8ec0abe39e36c9da5a74387c44efe4c</Hash>
+    <Hash>3602caad57ca37c75e46b486bc21bf4f</Hash>
 </Codenesium>*/

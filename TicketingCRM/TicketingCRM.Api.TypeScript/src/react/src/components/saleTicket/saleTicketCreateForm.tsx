@@ -142,19 +142,27 @@ class SaleTicketCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="saleId">saleId</label>
+            <label htmlFor="saleId">Sale</label>
             <br />
-            {getFieldDecorator('saleId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'saleId'} />)}
+            <SaleSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Sales}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="saleId"
+              required={true}
+              selectedValue={this.state.model!.saleId}
+            />
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="ticketId">ticketId</label>
+            <label htmlFor="ticketId">Ticket</label>
             <br />
-            {getFieldDecorator('ticketId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'ticketId'} />)}
+            <TicketSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Tickets}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="ticketId"
+              required={true}
+              selectedValue={this.state.model!.ticketId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -181,5 +189,5 @@ export const WrappedSaleTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b73710198186377ca239b42795040fd4</Hash>
+    <Hash>5751c6da1ad7090663514d8afa9cc38c</Hash>
 </Codenesium>*/

@@ -120,14 +120,14 @@ export class CustomerTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -185,5 +185,5 @@ export class CustomerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>abd087fa7069854a825b92a8d92ca767</Hash>
+    <Hash>7ca57b999ce16cf2b311f8a6adb429c7</Hash>
 </Codenesium>*/

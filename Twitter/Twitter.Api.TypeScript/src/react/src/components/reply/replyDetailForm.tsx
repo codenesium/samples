@@ -7,6 +7,9 @@ import ReplyViewModel from './replyViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface ReplyDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface ReplyDetailComponentState {
 }
 
 class ReplyDetailComponent extends React.Component<
-  ReplyDetailComponentProps,
-  ReplyDetailComponentState
+ReplyDetailComponentProps,
+ReplyDetailComponentState
 > {
   state = {
     model: new ReplyViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Replies + '/edit/' + this.state.model!.replyId
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Replies + '/edit/' + this.state.model!.replyId);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,46 +85,47 @@ class ReplyDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>content</h3>
-              <p>{String(this.state.model!.content)}</p>
-            </div>
-            <div>
-              <h3>date</h3>
-              <p>{String(this.state.model!.date)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>replier_user_id</h3>
-              <p>
-                {String(this.state.model!.replierUserIdNavigation!.toDisplay())}
-              </p>
-            </div>
-            <div>
-              <h3>time</h3>
-              <p>{String(this.state.model!.time)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>content</h3>
+							<p>{String(this.state.model!.content)}</p>
+						 </div>
+					   						 <div>
+							<h3>date</h3>
+							<p>{String(this.state.model!.date)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>replier_user_id</h3>
+							<p>{String(this.state.model!.replierUserIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>time</h3>
+							<p>{String(this.state.model!.time)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -132,11 +134,10 @@ class ReplyDetailComponent extends React.Component<
   }
 }
 
-export const WrappedReplyDetailComponent = Form.create({
-  name: 'Reply Detail',
-})(ReplyDetailComponent);
-
+export const WrappedReplyDetailComponent = Form.create({ name: 'Reply Detail' })(
+  ReplyDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>a7768e7560c63fb4263807b6afe923b8</Hash>
+    <Hash>e9ceab9cb91f38dc4e4285bdcfcbcdaa</Hash>
 </Codenesium>*/

@@ -3,15 +3,19 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import EventStatuMapper from '../eventStatu/eventStatuMapper';
 import EventStatuViewModel from '../eventStatu/eventStatuViewModel';
-import { Spin, Alert, Select } from 'antd';
+import {
+  Spin,
+  Alert,
+  Select
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface EventStatuSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute: string;
-  selectedValue: number;
-  propertyName: string;
-  required: boolean;
+  apiRoute:string;
+  selectedValue:number;
+  propertyName:string;
+  required:boolean;
 }
 
 interface EventStatuSelectComponentState {
@@ -19,30 +23,33 @@ interface EventStatuSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<EventStatuViewModel>;
+  filteredRecords : Array<EventStatuViewModel>;
 }
 
-export class EventStatuSelectComponent extends React.Component<
-  EventStatuSelectComponentProps,
-  EventStatuSelectComponentState
+export class  EventStatuSelectComponent extends React.Component<
+EventStatuSelectComponentProps,
+EventStatuSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
   componentDidMount() {
+   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.EventStatuClientResponseModel>;
@@ -50,11 +57,12 @@ export class EventStatuSelectComponent extends React.Component<
           console.log(response);
 
           let mapper = new EventStatuMapper();
+          
+          let devices:Array<EventStatuViewModel> = [];
 
-          let devices: Array<EventStatuViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -79,39 +87,46 @@ export class EventStatuSelectComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+    else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type='error' />;
+    }
+	  else if (this.state.loaded) {
       return (
         <div>
-          {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
-            rules: [{ required: this.props.required, message: 'Required' }],
-          })(
-            <Select>
-              {this.state.filteredRecords.map((x: EventStatuViewModel) => {
-                return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </div>
-      );
+        {
+          this.props.getFieldDecorator(this.props.propertyName, {
+          initialValue: this.props.selectedValue,
+          rules: [{ required: this.props.required, message: 'Required' }],
+        })(
+          <Select>
+          {
+            this.state.filteredRecords.map((x:EventStatuViewModel) =>
+            {
+                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
+            })
+          }
+          </Select>
+        )
+      }
+      </div>
+    );
     } else {
       return null;
     }
   }
 }
 
-
 /*<Codenesium>
-    <Hash>15d3bc4430e4a2af5c974c721449faf8</Hash>
+    <Hash>537b3a6b4d9b33df1f531d0c927c71a7</Hash>
 </Codenesium>*/

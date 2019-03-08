@@ -140,14 +140,14 @@ class EventStatusCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -174,5 +174,5 @@ export const WrappedEventStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d6533758ff9121fa7313578939dd30ce</Hash>
+    <Hash>7e20b11b965fc973b1a9362622e1cddf</Hash>
 </Codenesium>*/

@@ -207,7 +207,7 @@ export default class SpaceFeatureSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'SpaceFeatures',
+                Header: 'Space Feature',
                 columns: [
                   {
                     Header: 'Name',
@@ -277,5 +277,5 @@ export const WrappedSpaceFeatureSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d31e159e058bda4d184ac433738a45bc</Hash>
+    <Hash>96711440458d02f7394e5e9b12221d8c</Hash>
 </Codenesium>*/

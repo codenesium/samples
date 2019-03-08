@@ -161,7 +161,7 @@ export default class PaymentTypeSearchComponent extends React.Component<PaymentT
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'PaymentTypes',
+                    Header: 'Payment Types',
                     columns: [
 					  {
                       Header: 'Name',
@@ -225,5 +225,5 @@ export default class PaymentTypeSearchComponent extends React.Component<PaymentT
 export const WrappedPaymentTypeSearchComponent = Form.create({ name: 'PaymentType Search' })(PaymentTypeSearchComponent);
 
 /*<Codenesium>
-    <Hash>84e6f189f4e00fec5ab5faca5a81f5e1</Hash>
+    <Hash>031ea7e73384fb3da7ab2acdbbbef86e</Hash>
 </Codenesium>*/

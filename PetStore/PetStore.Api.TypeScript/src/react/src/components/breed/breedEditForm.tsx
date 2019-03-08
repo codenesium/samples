@@ -165,7 +165,7 @@ class BreedEditComponent extends React.Component<
         return ( 
          <Form onSubmit={this.handleSubmit}>
             			<Form.Item>
-              <label htmlFor='name'>name</label>
+              <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
@@ -173,12 +173,12 @@ class BreedEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 						
                         <Form.Item>
-                        <label htmlFor='speciesId'>speciesId</label>
+                        <label htmlFor='speciesId'>Species</label>
                         <br />   
                         <SpeciesSelectComponent   
                           apiRoute={
@@ -208,5 +208,5 @@ class BreedEditComponent extends React.Component<
 export const WrappedBreedEditComponent = Form.create({ name: 'Breed Edit' })(BreedEditComponent);
 
 /*<Codenesium>
-    <Hash>673a2d27c8f94ed0360a2be2e7bdf6e6</Hash>
+    <Hash>37293112671c8b26dd099ffee4a48190</Hash>
 </Codenesium>*/

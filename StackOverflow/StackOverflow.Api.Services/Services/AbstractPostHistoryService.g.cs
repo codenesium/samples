@@ -111,9 +111,30 @@ namespace StackOverflowNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiPostHistoryServerResponseModel>> ByPostHistoryTypeId(int postHistoryTypeId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<PostHistory> records = await this.PostHistoryRepository.ByPostHistoryTypeId(postHistoryTypeId, limit, offset);
+
+			return this.DalPostHistoryMapper.MapEntityToModel(records);
+		}
+
+		public async virtual Task<List<ApiPostHistoryServerResponseModel>> ByPostId(int postId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<PostHistory> records = await this.PostHistoryRepository.ByPostId(postId, limit, offset);
+
+			return this.DalPostHistoryMapper.MapEntityToModel(records);
+		}
+
+		public async virtual Task<List<ApiPostHistoryServerResponseModel>> ByUserId(int? userId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<PostHistory> records = await this.PostHistoryRepository.ByUserId(userId, limit, offset);
+
+			return this.DalPostHistoryMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a1b0660710da3dd767030c82f72bc38f</Hash>
+    <Hash>380d987e77d7abbbca331995a90af1df</Hash>
 </Codenesium>*/

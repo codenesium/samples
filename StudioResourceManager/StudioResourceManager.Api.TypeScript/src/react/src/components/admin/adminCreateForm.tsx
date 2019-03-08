@@ -141,22 +141,22 @@ class AdminCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="birthday">birthday</label>
+            <label htmlFor="birthday">Birthday</label>
             <br />
             {getFieldDecorator('birthday', {
               rules: [],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'birthday'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Birthday'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">Email</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'email'} />)}
+            })(<Input placeholder={'Email'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -182,19 +182,19 @@ class AdminCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">phone</label>
+            <label htmlFor="phone">Phone</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<InputNumber placeholder={'phone'} />)}
+            })(<InputNumber placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userId">userId</label>
+            <label htmlFor="userId">User</label>
             <br />
             {getFieldDecorator('userId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'userId'} />)}
+            })(<InputNumber placeholder={'User'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -221,5 +221,5 @@ export const WrappedAdminCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3ed625b96c81ebb709edd8486376cfe7</Hash>
+    <Hash>d780b88ee9deb40dd5b56fc07cb6c318</Hash>
 </Codenesium>*/

@@ -6,11 +6,8 @@ import UnitMapper from './unitMapper';
 import UnitViewModel from './unitViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {CallAssignmentTableComponent} from '../shared/callAssignmentTable'
-	import {UnitOfficerTableComponent} from '../shared/unitOfficerTable'
-	
-
-
+import { CallAssignmentTableComponent } from '../shared/callAssignmentTable';
+import { UnitOfficerTableComponent } from '../shared/unitOfficerTable';
 
 interface UnitDetailComponentProps {
   form: WrappedFormUtils;
@@ -27,21 +24,23 @@ interface UnitDetailComponentState {
 }
 
 class UnitDetailComponent extends React.Component<
-UnitDetailComponentProps,
-UnitDetailComponentState
+  UnitDetailComponentProps,
+  UnitDetailComponentState
 > {
   state = {
     model: new UnitViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Units + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Units + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -87,53 +86,64 @@ UnitDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>callSign</h3>
-							<p>{String(this.state.model!.callSign)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>callSign</h3>
+              <p>{String(this.state.model!.callSign)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>CallAssignments</h3>
-            <CallAssignmentTableComponent 
-			callId={this.state.model!.callId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Units + '/' + this.state.model!.id + '/' + ApiRoutes.CallAssignments}
-			/>
-         </div>
-			 <div>
+            <CallAssignmentTableComponent
+              callId={this.state.model!.callId}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Units +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.CallAssignments
+              }
+            />
+          </div>
+          <div>
             <h3>UnitOfficers</h3>
-            <UnitOfficerTableComponent 
-			officerId={this.state.model!.officerId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Units + '/' + this.state.model!.id + '/' + ApiRoutes.UnitOfficers}
-			/>
-         </div>
-	
-
+            <UnitOfficerTableComponent
+              officerId={this.state.model!.officerId}
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Units +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.UnitOfficers
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -146,6 +156,7 @@ export const WrappedUnitDetailComponent = Form.create({ name: 'Unit Detail' })(
   UnitDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>7b7e38b03ef9a5132f47ad52bb683528</Hash>
+    <Hash>5970adf746ca74839456fc56cb4e028d</Hash>
 </Codenesium>*/

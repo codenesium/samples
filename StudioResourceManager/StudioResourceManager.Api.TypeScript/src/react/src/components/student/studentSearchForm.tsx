@@ -233,7 +233,7 @@ export default class StudentSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FamilyId',
+                    Header: 'Family',
                     accessor: 'familyId',
                     Cell: props => {
                       return (
@@ -284,7 +284,7 @@ export default class StudentSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SMS Reminders Enabled',
+                    Header: 'Sms Reminders Enabled',
                     accessor: 'smsRemindersEnabled',
                     Cell: props => {
                       return (
@@ -295,7 +295,7 @@ export default class StudentSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'UserId',
+                    Header: 'User',
                     accessor: 'userId',
                     Cell: props => {
                       return (
@@ -374,5 +374,5 @@ export const WrappedStudentSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d14054c1c2c4d7e1fc7cb7fb5a5bdf77</Hash>
+    <Hash>a7ecb805235dd3cffa88ddf199407d38</Hash>
 </Codenesium>*/

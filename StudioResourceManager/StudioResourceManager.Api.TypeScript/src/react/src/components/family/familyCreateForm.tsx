@@ -140,11 +140,11 @@ class FamilyCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="note">notes</label>
+            <label htmlFor="note">Note</label>
             <br />
             {getFieldDecorator('note', {
               rules: [],
-            })(<Input placeholder={'notes'} />)}
+            })(<Input placeholder={'Note'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -210,5 +210,5 @@ export const WrappedFamilyCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1be55add92e7377e4f3ba9261bd9ed98</Hash>
+    <Hash>3f92722136567f187077a4825cdf2b18</Hash>
 </Codenesium>*/

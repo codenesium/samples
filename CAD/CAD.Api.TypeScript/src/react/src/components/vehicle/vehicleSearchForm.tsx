@@ -161,7 +161,7 @@ export default class VehicleSearchComponent extends React.Component<VehicleSearc
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Vehicles',
+                    Header: 'Vehicle',
                     columns: [
 					  {
                       Header: 'Name',
@@ -225,5 +225,5 @@ export default class VehicleSearchComponent extends React.Component<VehicleSearc
 export const WrappedVehicleSearchComponent = Form.create({ name: 'Vehicle Search' })(VehicleSearchComponent);
 
 /*<Codenesium>
-    <Hash>c7a1ea4d6a711cad6644891e80c7eac1</Hash>
+    <Hash>e50746bf67ee20198ca3819c2b85b232</Hash>
 </Codenesium>*/

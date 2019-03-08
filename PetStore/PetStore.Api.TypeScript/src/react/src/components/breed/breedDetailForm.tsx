@@ -6,7 +6,6 @@ import BreedMapper from './breedMapper';
 import BreedViewModel from './breedViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { PetTableComponent } from '../shared/petTable';
 
 interface BreedDetailComponentProps {
   form: WrappedFormUtils;
@@ -106,33 +105,17 @@ class BreedDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>speciesId</h3>
+              <h3>Species</h3>
               <p>
                 {String(this.state.model!.speciesIdNavigation!.toDisplay())}
               </p>
             </div>
           </div>
           {message}
-          <div>
-            <h3>Pets</h3>
-            <PetTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Breeds +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Pets
-              }
-            />
-          </div>
         </div>
       );
     } else {
@@ -147,5 +130,5 @@ export const WrappedBreedDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f7ebd8ca56e7f2481dd0458214d9baf8</Hash>
+    <Hash>197418badd2639d4267d822df8df6275</Hash>
 </Codenesium>*/

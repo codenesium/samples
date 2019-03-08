@@ -6,11 +6,11 @@ import ProductPhotoMapper from '../productPhoto/productPhotoMapper';
 import ProductPhotoViewModel from '../productPhoto/productPhotoViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 
 interface ProductPhotoTableComponentProps {
-  productPhotoID:number,
-  apiRoute:string;
+  productPhotoID: number;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,56 @@ interface ProductPhotoTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<ProductPhotoViewModel>;
+  filteredRecords: Array<ProductPhotoViewModel>;
 }
 
-export class  ProductPhotoTableComponent extends React.Component<
-ProductPhotoTableComponentProps,
-ProductPhotoTableComponentState
+export class ProductPhotoTableComponent extends React.Component<
+  ProductPhotoTableComponentProps,
+  ProductPhotoTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: ProductPhotoViewModel) {
-  this.props.history.push(ClientRoutes.ProductPhotoes + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: ProductPhotoViewModel) {
+    this.props.history.push(ClientRoutes.ProductPhotoes + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: ProductPhotoViewModel) {
-   this.props.history.push(ClientRoutes.ProductPhotoes + '/' + row.id);
- }
+  handleDetailClick(e: any, row: ProductPhotoViewModel) {
+    this.props.history.push(ClientRoutes.ProductPhotoes + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.ProductPhotoClientResponseModel>;
+          let response = resp.data as Array<
+            Api.ProductPhotoClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new ProductPhotoMapper();
-          
-          let productPhotoes:Array<ProductPhotoViewModel> = [];
 
-          response.forEach(x =>
-          {
-              productPhotoes.push(mapper.mapApiResponseToViewModel(x));
+          let productPhotoes: Array<ProductPhotoViewModel> = [];
+
+          response.forEach(x => {
+            productPhotoes.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -95,72 +94,86 @@ handleEditClick(e:any, row: ProductPhotoViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'ProductPhotoes',
-                    columns: [
-					  {
-                      Header: 'LargePhoto',
-                      accessor: 'largePhoto',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'ProductPhotoes',
+                columns: [
+                  {
+                    Header: 'LargePhoto',
+                    accessor: 'largePhoto',
+                    Cell: props => {
                       return <span>{String(props.original.largePhoto)}</span>;
-                      }           
-                    },  {
-                      Header: 'LargePhotoFileName',
-                      accessor: 'largePhotoFileName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.largePhotoFileName)}</span>;
-                      }           
-                    },  {
-                      Header: 'ModifiedDate',
-                      accessor: 'modifiedDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.modifiedDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'ProductPhotoID',
-                      accessor: 'productPhotoID',
-                      Cell: (props) => {
-                      return <span>{String(props.original.productPhotoID)}</span>;
-                      }           
-                    },  {
-                      Header: 'ThumbNailPhoto',
-                      accessor: 'thumbNailPhoto',
-                      Cell: (props) => {
-                      return <span>{String(props.original.thumbNailPhoto)}</span>;
-                      }           
-                    },  {
-                      Header: 'ThumbnailPhotoFileName',
-                      accessor: 'thumbnailPhotoFileName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.thumbnailPhotoFileName)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'LargePhotoFileName',
+                    accessor: 'largePhotoFileName',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.largePhotoFileName)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'ModifiedDate',
+                    accessor: 'modifiedDate',
+                    Cell: props => {
+                      return <span>{String(props.original.modifiedDate)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'ProductPhotoID',
+                    accessor: 'productPhotoID',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.productPhotoID)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'ThumbNailPhoto',
+                    accessor: 'thumbNailPhoto',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.thumbNailPhoto)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'ThumbnailPhotoFileName',
+                    accessor: 'thumbnailPhotoFileName',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.thumbnailPhotoFileName)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as ProductPhotoViewModel
@@ -171,8 +184,8 @@ handleEditClick(e:any, row: ProductPhotoViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as ProductPhotoViewModel
@@ -181,11 +194,14 @@ handleEditClick(e:any, row: ProductPhotoViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -193,6 +209,7 @@ handleEditClick(e:any, row: ProductPhotoViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>fdc73c6f73296a1f91b99c2f1c5d876a</Hash>
+    <Hash>7ae24c9a92e12b37c3195aca5591283b</Hash>
 </Codenesium>*/

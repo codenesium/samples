@@ -65,7 +65,7 @@ const config = {
 export const AppRouter: React.StatelessComponent<{}> = () => {
 
   return (
-    <BrowserRouter>   
+    <BrowserRouter basename={Constants.HostedSubDirectory}>   
 	<Security issuer={config.oidc.issuer}
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}>
@@ -80,14 +80,14 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
                       <Route path={ClientRoutes.Events + "/edit/:id"} component={wrapperHeader(WrappedEventEditComponent, "Events Edit")} />
                       <Route path={ClientRoutes.Events + "/:id"} component={wrapperHeader(WrappedEventDetailComponent , "Events Detail")} />
                       <Route path={ClientRoutes.Events} component={wrapperHeader(WrappedEventSearchComponent, "Events Search")} />
-					<Route path={ClientRoutes.EventStatus + "/create"} component={wrapperHeader(WrappedEventStatusCreateComponent, "EventStatus Create")} />
-                      <Route path={ClientRoutes.EventStatus + "/edit/:id"} component={wrapperHeader(WrappedEventStatusEditComponent, "EventStatus Edit")} />
-                      <Route path={ClientRoutes.EventStatus + "/:id"} component={wrapperHeader(WrappedEventStatusDetailComponent , "EventStatus Detail")} />
-                      <Route path={ClientRoutes.EventStatus} component={wrapperHeader(WrappedEventStatusSearchComponent, "EventStatus Search")} />
-					<Route path={ClientRoutes.Families + "/create"} component={wrapperHeader(WrappedFamilyCreateComponent, "Families Create")} />
-                      <Route path={ClientRoutes.Families + "/edit/:id"} component={wrapperHeader(WrappedFamilyEditComponent, "Families Edit")} />
-                      <Route path={ClientRoutes.Families + "/:id"} component={wrapperHeader(WrappedFamilyDetailComponent , "Families Detail")} />
-                      <Route path={ClientRoutes.Families} component={wrapperHeader(WrappedFamilySearchComponent, "Families Search")} />
+					<Route path={ClientRoutes.EventStatus + "/create"} component={wrapperHeader(WrappedEventStatusCreateComponent, "Event Status Create")} />
+                      <Route path={ClientRoutes.EventStatus + "/edit/:id"} component={wrapperHeader(WrappedEventStatusEditComponent, "Event Status Edit")} />
+                      <Route path={ClientRoutes.EventStatus + "/:id"} component={wrapperHeader(WrappedEventStatusDetailComponent , "Event Status Detail")} />
+                      <Route path={ClientRoutes.EventStatus} component={wrapperHeader(WrappedEventStatusSearchComponent, "Event Status Search")} />
+					<Route path={ClientRoutes.Families + "/create"} component={wrapperHeader(WrappedFamilyCreateComponent, "Familes Create")} />
+                      <Route path={ClientRoutes.Families + "/edit/:id"} component={wrapperHeader(WrappedFamilyEditComponent, "Familes Edit")} />
+                      <Route path={ClientRoutes.Families + "/:id"} component={wrapperHeader(WrappedFamilyDetailComponent , "Familes Detail")} />
+                      <Route path={ClientRoutes.Families} component={wrapperHeader(WrappedFamilySearchComponent, "Familes Search")} />
 					<Route path={ClientRoutes.Rates + "/create"} component={wrapperHeader(WrappedRateCreateComponent, "Rates Create")} />
                       <Route path={ClientRoutes.Rates + "/edit/:id"} component={wrapperHeader(WrappedRateEditComponent, "Rates Edit")} />
                       <Route path={ClientRoutes.Rates + "/:id"} component={wrapperHeader(WrappedRateDetailComponent , "Rates Detail")} />
@@ -96,10 +96,10 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
                       <Route path={ClientRoutes.Spaces + "/edit/:id"} component={wrapperHeader(WrappedSpaceEditComponent, "Spaces Edit")} />
                       <Route path={ClientRoutes.Spaces + "/:id"} component={wrapperHeader(WrappedSpaceDetailComponent , "Spaces Detail")} />
                       <Route path={ClientRoutes.Spaces} component={wrapperHeader(WrappedSpaceSearchComponent, "Spaces Search")} />
-					<Route path={ClientRoutes.SpaceFeatures + "/create"} component={wrapperHeader(WrappedSpaceFeatureCreateComponent, "SpaceFeatures Create")} />
-                      <Route path={ClientRoutes.SpaceFeatures + "/edit/:id"} component={wrapperHeader(WrappedSpaceFeatureEditComponent, "SpaceFeatures Edit")} />
-                      <Route path={ClientRoutes.SpaceFeatures + "/:id"} component={wrapperHeader(WrappedSpaceFeatureDetailComponent , "SpaceFeatures Detail")} />
-                      <Route path={ClientRoutes.SpaceFeatures} component={wrapperHeader(WrappedSpaceFeatureSearchComponent, "SpaceFeatures Search")} />
+					<Route path={ClientRoutes.SpaceFeatures + "/create"} component={wrapperHeader(WrappedSpaceFeatureCreateComponent, "Space Feature Create")} />
+                      <Route path={ClientRoutes.SpaceFeatures + "/edit/:id"} component={wrapperHeader(WrappedSpaceFeatureEditComponent, "Space Feature Edit")} />
+                      <Route path={ClientRoutes.SpaceFeatures + "/:id"} component={wrapperHeader(WrappedSpaceFeatureDetailComponent , "Space Feature Detail")} />
+                      <Route path={ClientRoutes.SpaceFeatures} component={wrapperHeader(WrappedSpaceFeatureSearchComponent, "Space Feature Search")} />
 					<Route path={ClientRoutes.Students + "/create"} component={wrapperHeader(WrappedStudentCreateComponent, "Students Create")} />
                       <Route path={ClientRoutes.Students + "/edit/:id"} component={wrapperHeader(WrappedStudentEditComponent, "Students Edit")} />
                       <Route path={ClientRoutes.Students + "/:id"} component={wrapperHeader(WrappedStudentDetailComponent , "Students Detail")} />
@@ -112,10 +112,10 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
                       <Route path={ClientRoutes.Teachers + "/edit/:id"} component={wrapperHeader(WrappedTeacherEditComponent, "Teachers Edit")} />
                       <Route path={ClientRoutes.Teachers + "/:id"} component={wrapperHeader(WrappedTeacherDetailComponent , "Teachers Detail")} />
                       <Route path={ClientRoutes.Teachers} component={wrapperHeader(WrappedTeacherSearchComponent, "Teachers Search")} />
-					<Route path={ClientRoutes.TeacherSkills + "/create"} component={wrapperHeader(WrappedTeacherSkillCreateComponent, "TeacherSkills Create")} />
-                      <Route path={ClientRoutes.TeacherSkills + "/edit/:id"} component={wrapperHeader(WrappedTeacherSkillEditComponent, "TeacherSkills Edit")} />
-                      <Route path={ClientRoutes.TeacherSkills + "/:id"} component={wrapperHeader(WrappedTeacherSkillDetailComponent , "TeacherSkills Detail")} />
-                      <Route path={ClientRoutes.TeacherSkills} component={wrapperHeader(WrappedTeacherSkillSearchComponent, "TeacherSkills Search")} />
+					<Route path={ClientRoutes.TeacherSkills + "/create"} component={wrapperHeader(WrappedTeacherSkillCreateComponent, "Teacher Skills Create")} />
+                      <Route path={ClientRoutes.TeacherSkills + "/edit/:id"} component={wrapperHeader(WrappedTeacherSkillEditComponent, "Teacher Skills Edit")} />
+                      <Route path={ClientRoutes.TeacherSkills + "/:id"} component={wrapperHeader(WrappedTeacherSkillDetailComponent , "Teacher Skills Detail")} />
+                      <Route path={ClientRoutes.TeacherSkills} component={wrapperHeader(WrappedTeacherSkillSearchComponent, "Teacher Skills Search")} />
 					<Route path={ClientRoutes.Users + "/create"} component={wrapperHeader(WrappedUserCreateComponent, "Users Create")} />
                       <Route path={ClientRoutes.Users + "/edit/:id"} component={wrapperHeader(WrappedUserEditComponent, "Users Edit")} />
                       <Route path={ClientRoutes.Users + "/:id"} component={wrapperHeader(WrappedUserDetailComponent , "Users Detail")} />
@@ -127,5 +127,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>adfbbf120a51fb11eaad3fd7d700aaa6</Hash>
+    <Hash>db4a8aac93537a5513cc4cb33f58d5d7</Hash>
 </Codenesium>*/

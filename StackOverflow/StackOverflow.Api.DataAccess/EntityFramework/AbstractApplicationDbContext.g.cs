@@ -32,29 +32,29 @@ namespace StackOverflowNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Badge> Badges { get; set; }
+		public virtual DbSet<Badges> Badges { get; set; }
 
-		public virtual DbSet<Comment> Comments { get; set; }
+		public virtual DbSet<Comments> Comments { get; set; }
 
-		public virtual DbSet<LinkType> LinkTypes { get; set; }
+		public virtual DbSet<LinkTypes> LinkTypes { get; set; }
 
-		public virtual DbSet<PostHistory> PostHistories { get; set; }
+		public virtual DbSet<PostHistory> PostHistory { get; set; }
 
-		public virtual DbSet<PostHistoryType> PostHistoryTypes { get; set; }
+		public virtual DbSet<PostHistoryTypes> PostHistoryTypes { get; set; }
 
-		public virtual DbSet<PostLink> PostLinks { get; set; }
+		public virtual DbSet<PostLinks> PostLinks { get; set; }
 
-		public virtual DbSet<Post> Posts { get; set; }
+		public virtual DbSet<Posts> Posts { get; set; }
 
-		public virtual DbSet<PostType> PostTypes { get; set; }
+		public virtual DbSet<PostTypes> PostTypes { get; set; }
 
-		public virtual DbSet<Tag> Tags { get; set; }
+		public virtual DbSet<Tags> Tags { get; set; }
 
-		public virtual DbSet<User> Users { get; set; }
+		public virtual DbSet<Users> Users { get; set; }
 
-		public virtual DbSet<Vote> Votes { get; set; }
+		public virtual DbSet<Votes> Votes { get; set; }
 
-		public virtual DbSet<VoteType> VoteTypes { get; set; }
+		public virtual DbSet<VoteTypes> VoteTypes { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -90,35 +90,35 @@ namespace StackOverflowNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Badge>()
+			modelBuilder.Entity<Badges>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<Badge>()
+			modelBuilder.Entity<Badges>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<Comment>()
+			modelBuilder.Entity<Comments>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<Comment>()
+			modelBuilder.Entity<Comments>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<LinkType>()
+			modelBuilder.Entity<LinkTypes>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<LinkType>()
+			modelBuilder.Entity<LinkTypes>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -134,90 +134,90 @@ namespace StackOverflowNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<PostHistoryType>()
+			modelBuilder.Entity<PostHistoryTypes>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<PostHistoryType>()
+			modelBuilder.Entity<PostHistoryTypes>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<PostLink>()
+			modelBuilder.Entity<PostLinks>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<PostLink>()
+			modelBuilder.Entity<PostLinks>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<Post>()
+			modelBuilder.Entity<Posts>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<Post>()
+			modelBuilder.Entity<Posts>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<PostType>()
+			modelBuilder.Entity<PostTypes>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<PostType>()
+			modelBuilder.Entity<PostTypes>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<Tag>()
+			modelBuilder.Entity<Tags>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<Tag>()
+			modelBuilder.Entity<Tags>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<User>()
+			modelBuilder.Entity<Users>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<User>()
+			modelBuilder.Entity<Users>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<Vote>()
+			modelBuilder.Entity<Votes>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<Vote>()
+			modelBuilder.Entity<Votes>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<VoteType>()
+			modelBuilder.Entity<VoteTypes>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<VoteType>()
+			modelBuilder.Entity<VoteTypes>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -228,5 +228,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f08ef26155192b16265d4feea90a0e38</Hash>
+    <Hash>8f448c259a2a56052330c37ee4818ca2</Hash>
 </Codenesium>*/

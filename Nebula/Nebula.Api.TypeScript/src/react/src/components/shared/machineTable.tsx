@@ -6,11 +6,11 @@ import MachineMapper from '../machine/machineMapper';
 import MachineViewModel from '../machine/machineViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface MachineTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface MachineTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<MachineViewModel>;
+  filteredRecords : Array<MachineViewModel>;
 }
 
-export class MachineTableComponent extends React.Component<
-  MachineTableComponentProps,
-  MachineTableComponentState
+export class  MachineTableComponent extends React.Component<
+MachineTableComponentProps,
+MachineTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: MachineViewModel) {
-    this.props.history.push(ClientRoutes.Machines + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: MachineViewModel) {
+  this.props.history.push(ClientRoutes.Machines + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: MachineViewModel) {
-    this.props.history.push(ClientRoutes.Machines + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: MachineViewModel) {
+   this.props.history.push(ClientRoutes.Machines + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.MachineClientResponseModel>;
@@ -63,11 +65,12 @@ export class MachineTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new MachineMapper();
+          
+          let machines:Array<MachineViewModel> = [];
 
-          let machines: Array<MachineViewModel> = [];
-
-          response.forEach(x => {
-            machines.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              machines.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,78 +95,72 @@ export class MachineTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Machines',
-                columns: [
-                  {
-                    Header: 'Description',
-                    accessor: 'description',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Machines',
+                    columns: [
+					  {
+                      Header: 'Description',
+                      accessor: 'description',
+                      Cell: (props) => {
                       return <span>{String(props.original.description)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Id',
+                      accessor: 'id',
+                      Cell: (props) => {
                       return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'JwtKey',
-                    accessor: 'jwtKey',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'JwtKey',
+                      accessor: 'jwtKey',
+                      Cell: (props) => {
                       return <span>{String(props.original.jwtKey)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LastIpAddress',
-                    accessor: 'lastIpAddress',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.lastIpAddress)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'MachineGuid',
-                    accessor: 'machineGuid',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'LastIpAddress',
+                      accessor: 'lastIpAddress',
+                      Cell: (props) => {
+                      return <span>{String(props.original.lastIpAddress)}</span>;
+                      }           
+                    },  {
+                      Header: 'MachineGuid',
+                      accessor: 'machineGuid',
+                      Cell: (props) => {
                       return <span>{String(props.original.machineGuid)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Name',
+                      accessor: 'name',
+                      Cell: (props) => {
                       return <span>{String(props.original.name)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as MachineViewModel
@@ -174,8 +171,8 @@ export class MachineTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as MachineViewModel
@@ -184,14 +181,11 @@ export class MachineTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -199,7 +193,6 @@ export class MachineTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>1156f6520cccef2ef4e6b0860aa7c0f1</Hash>
+    <Hash>09852bcb4eecd182895ab40c3d3d2adb</Hash>
 </Codenesium>*/

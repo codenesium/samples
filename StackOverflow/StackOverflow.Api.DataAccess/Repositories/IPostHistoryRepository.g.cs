@@ -16,9 +16,21 @@ namespace StackOverflowNS.Api.DataAccess
 		Task<PostHistory> Get(int id);
 
 		Task<List<PostHistory>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<PostHistory>> ByPostHistoryTypeId(int postHistoryTypeId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<PostHistory>> ByPostId(int postId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<PostHistory>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0);
+
+		Task<PostHistoryTypes> PostHistoryTypesByPostHistoryTypeId(int postHistoryTypeId);
+
+		Task<Posts> PostsByPostId(int postId);
+
+		Task<Users> UsersByUserId(int? userId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>807ba9899f03594bbcdce9a00141b1cf</Hash>
+    <Hash>6d416dc5bf88d5ff5892d0d5529c5caf</Hash>
 </Codenesium>*/

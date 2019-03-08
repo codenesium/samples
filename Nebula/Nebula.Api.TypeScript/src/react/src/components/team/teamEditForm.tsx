@@ -176,16 +176,20 @@ class TeamEditComponent extends React.Component<
               ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='organizationId'>OrganizationId</label>
-              <br />             
-              {getFieldDecorator('organizationId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"OrganizationId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='organizationId'>OrganizationId</label>
+                        <br />   
+                        <OrganizationSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Organizations}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="organizationId"
+                          required={true}
+                          selectedValue={this.state.model!.organizationId}
+                         />
+                        </Form.Item>
 
 			
             <Form.Item>
@@ -204,5 +208,5 @@ class TeamEditComponent extends React.Component<
 export const WrappedTeamEditComponent = Form.create({ name: 'Team Edit' })(TeamEditComponent);
 
 /*<Codenesium>
-    <Hash>96ee2a8d1e38847961d5ce8470bb12cf</Hash>
+    <Hash>9a5e772fe29c07b35e3dc134053bc124</Hash>
 </Codenesium>*/

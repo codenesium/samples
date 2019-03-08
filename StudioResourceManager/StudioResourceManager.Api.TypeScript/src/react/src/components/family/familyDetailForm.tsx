@@ -106,7 +106,7 @@ class FamilyDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>notes</h3>
+              <h3>Note</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
             <div>
@@ -157,5 +157,5 @@ export const WrappedFamilyDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dc73550588e6e3c91dd487d962f5f08e</Hash>
+    <Hash>f671e4f1409a20d62bc930d3c23f2c45</Hash>
 </Codenesium>*/

@@ -138,7 +138,6 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApiPenClientResponseModel response = await client.PenGetAsync(1);
 
 			response.Should().NotBeNull();
-			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
 
@@ -169,36 +168,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			List<ApiPenClientResponseModel> response = await client.PenAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
-			response[0].Id.Should().Be(1);
 			response[0].Name.Should().Be("A");
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyPetsByPenIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiPetClientResponseModel> response = await client.PetsByPenId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyPetsByPenIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiPetClientResponseModel> response = await client.PetsByPenId(default(int));
-
-			response.Should().BeEmpty();
 		}
 
 		[Fact]
@@ -224,5 +194,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c81a88fe9b7af5b5566646d36aff8876</Hash>
+    <Hash>36dd0215a93e9a151d72e417fad921ea</Hash>
 </Codenesium>*/

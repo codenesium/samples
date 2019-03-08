@@ -187,38 +187,42 @@ class SaleEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="ipAddress">ipAddress</label>
+            <label htmlFor="ipAddress">Ip Address</label>
             <br />
             {getFieldDecorator('ipAddress', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'ipAddress'} />)}
+            })(<Input placeholder={'Ip Address'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="note">notes</label>
+            <label htmlFor="note">Note</label>
             <br />
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'notes'} />)}
+            })(<Input placeholder={'Note'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="saleDate">saleDate</label>
+            <label htmlFor="saleDate">Sale Date</label>
             <br />
             {getFieldDecorator('saleDate', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'saleDate'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Sale Date'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="transactionId">transactionId</label>
+            <label htmlFor="transactionId">Transaction</label>
             <br />
-            {getFieldDecorator('transactionId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'transactionId'} />)}
+            <TransactionSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Transactions}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="transactionId"
+              required={true}
+              selectedValue={this.state.model!.transactionId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -245,5 +249,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>8a6611ba00009e61b6f2879234517a9a</Hash>
+    <Hash>d85a6f110d400e63419fba1ee4a40f5d</Hash>
 </Codenesium>*/

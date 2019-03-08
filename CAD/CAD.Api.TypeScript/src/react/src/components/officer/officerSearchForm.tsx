@@ -205,7 +205,7 @@ export default class OfficerSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Officers',
+                Header: 'Officer',
                 columns: [
                   {
                     Header: 'Badge',
@@ -303,5 +303,5 @@ export const WrappedOfficerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d3ad9ee9491065f09e7fe2b286661f8b</Hash>
+    <Hash>81b66d8b6e0244d456bd21a2a4e743b7</Hash>
 </Codenesium>*/

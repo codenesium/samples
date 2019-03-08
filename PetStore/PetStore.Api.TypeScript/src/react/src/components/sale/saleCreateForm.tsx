@@ -122,18 +122,18 @@ class SaleCreateComponent extends React.Component<
         return ( 
          <Form onSubmit={this.handleSubmit}>
             			<Form.Item>
-              <label htmlFor='amount'>amount</label>
+              <label htmlFor='amount'>Amount</label>
               <br />             
               {getFieldDecorator('amount', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <Input placeholder={"amount"} /> )}
+              ( <InputNumber placeholder={"Amount"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='firstName'>firstName</label>
+              <label htmlFor='firstName'>First Name</label>
               <br />             
               {getFieldDecorator('firstName', {
               rules:[{ required: true, message: 'Required' },
@@ -141,11 +141,11 @@ class SaleCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"firstName"} /> )}
+              ( <Input placeholder={"First Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='lastName'>lastName</label>
+              <label htmlFor='lastName'>Last Name</label>
               <br />             
               {getFieldDecorator('lastName', {
               rules:[{ required: true, message: 'Required' },
@@ -153,12 +153,12 @@ class SaleCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"lastName"} /> )}
+              ( <Input placeholder={"Last Name"} /> )}
               </Form.Item>
 
 						
                         <Form.Item>
-                        <label htmlFor='paymentTypeId'>paymentTypeId</label>
+                        <label htmlFor='paymentTypeId'>Payment Type</label>
                         <br />   
                         <PaymentTypeSelectComponent   
                           apiRoute={
@@ -173,7 +173,7 @@ class SaleCreateComponent extends React.Component<
 
 						
                         <Form.Item>
-                        <label htmlFor='petId'>petId</label>
+                        <label htmlFor='petId'>Pet</label>
                         <br />   
                         <PetSelectComponent   
                           apiRoute={
@@ -187,7 +187,7 @@ class SaleCreateComponent extends React.Component<
                         </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='phone'>phone</label>
+              <label htmlFor='phone'>Phone</label>
               <br />             
               {getFieldDecorator('phone', {
               rules:[{ required: true, message: 'Required' },
@@ -195,7 +195,7 @@ class SaleCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"phone"} /> )}
+              ( <Input placeholder={"Phone"} /> )}
               </Form.Item>
 
 			
@@ -215,5 +215,5 @@ class SaleCreateComponent extends React.Component<
 export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(SaleCreateComponent);
 
 /*<Codenesium>
-    <Hash>73187324842ee326890509631148dcee</Hash>
+    <Hash>0f9aad646250cee952d67f279ea49816</Hash>
 </Codenesium>*/

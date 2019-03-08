@@ -106,27 +106,27 @@ class AdminDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>email</h3>
+              <h3>Email</h3>
               <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <h3>firstName</h3>
+              <h3>First Name</h3>
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>lastName</h3>
+              <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <h3>password</h3>
+              <h3>Password</h3>
               <p>{String(this.state.model!.password)}</p>
             </div>
             <div>
-              <h3>phone</h3>
+              <h3>Phone</h3>
               <p>{String(this.state.model!.phone)}</p>
             </div>
             <div>
-              <h3>username</h3>
+              <h3>Username</h3>
               <p>{String(this.state.model!.username)}</p>
             </div>
           </div>
@@ -161,5 +161,5 @@ export const WrappedAdminDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>18eb49c58e6a4f975524aeab89d27ed6</Hash>
+    <Hash>8f440a3ed4b0c01d6146182f59f83abb</Hash>
 </Codenesium>*/

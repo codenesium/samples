@@ -6,11 +6,11 @@ import TicketMapper from '../ticket/ticketMapper';
 import TicketViewModel from '../ticket/ticketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface TicketTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface TicketTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<TicketViewModel>;
+  filteredRecords : Array<TicketViewModel>;
 }
 
-export class TicketTableComponent extends React.Component<
-  TicketTableComponentProps,
-  TicketTableComponentState
+export class  TicketTableComponent extends React.Component<
+TicketTableComponentProps,
+TicketTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: TicketViewModel) {
-    this.props.history.push(ClientRoutes.Tickets + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: TicketViewModel) {
+  this.props.history.push(ClientRoutes.Tickets + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: TicketViewModel) {
-    this.props.history.push(ClientRoutes.Tickets + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: TicketViewModel) {
+   this.props.history.push(ClientRoutes.Tickets + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.TicketClientResponseModel>;
@@ -63,11 +65,12 @@ export class TicketTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new TicketMapper();
+          
+          let tickets:Array<TicketViewModel> = [];
 
-          let tickets: Array<TicketViewModel> = [];
-
-          response.forEach(x => {
-            tickets.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              tickets.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,64 +95,52 @@ export class TicketTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Tickets',
-                columns: [
-                  {
-                    Header: 'PublicId',
-                    accessor: 'publicId',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Tickets',
+                    columns: [
+					  {
+                      Header: 'Public',
+                      accessor: 'publicId',
+                      Cell: (props) => {
                       return <span>{String(props.original.publicId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'TicketStatusId',
-                    accessor: 'ticketStatusId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.TicketStatus +
-                                '/' +
-                                props.original.ticketStatusId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'Ticket Status',
+                      accessor: 'ticketStatusId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.TicketStatus + '/' + props.original.ticketStatusId); }}>
                           {String(
                             props.original.ticketStatusIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TicketViewModel
@@ -160,8 +151,8 @@ export class TicketTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as TicketViewModel
@@ -170,14 +161,11 @@ export class TicketTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -185,7 +173,6 @@ export class TicketTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>64db988a4b0d2ef79accc29c4d47ca7c</Hash>
+    <Hash>90ca821f5aa30a4d3d3c8bf8a2805d1c</Hash>
 </Codenesium>*/

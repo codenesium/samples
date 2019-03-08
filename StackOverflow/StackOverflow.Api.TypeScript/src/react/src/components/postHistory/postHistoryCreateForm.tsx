@@ -8,7 +8,10 @@ import PostHistoryViewModel from './postHistoryViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-
+import { PostHistoryTypesSelectComponent } from '../shared/postHistoryTypesSelect'
+	import { PostsSelectComponent } from '../shared/postsSelect'
+	import { UsersSelectComponent } from '../shared/usersSelect'
+	
 interface PostHistoryCreateComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -59,7 +62,7 @@ class PostHistoryCreateComponent extends React.Component<
     let mapper = new PostHistoryMapper();
      axios
       .post(
-        Constants.ApiEndpoint + ApiRoutes.PostHistories,
+        Constants.ApiEndpoint + ApiRoutes.PostHistory,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -131,40 +134,48 @@ class PostHistoryCreateComponent extends React.Component<
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='creationDate'>CreationDate</label>
+              <label htmlFor='creationDate'>Creation Date</label>
               <br />             
               {getFieldDecorator('creationDate', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <Input placeholder={"CreationDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Creation Date"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='postHistoryTypeId'>PostHistoryTypeId</label>
-              <br />             
-              {getFieldDecorator('postHistoryTypeId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"PostHistoryTypeId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='postHistoryTypeId'>Post History Type</label>
+                        <br />   
+                        <PostHistoryTypesSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.PostHistoryTypes}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="postHistoryTypeId"
+                          required={true}
+                          selectedValue={this.state.model!.postHistoryTypeId}
+                         />
+                        </Form.Item>
+
+						
+                        <Form.Item>
+                        <label htmlFor='postId'>Post</label>
+                        <br />   
+                        <PostsSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Posts}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="postId"
+                          required={true}
+                          selectedValue={this.state.model!.postId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='postId'>PostId</label>
-              <br />             
-              {getFieldDecorator('postId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"PostId"} /> )}
-              </Form.Item>
-
-						<Form.Item>
-              <label htmlFor='revisionGUID'>RevisionGUID</label>
+              <label htmlFor='revisionGUID'>Revision GUID</label>
               <br />             
               {getFieldDecorator('revisionGUID', {
               rules:[{ required: true, message: 'Required' },
@@ -172,7 +183,7 @@ class PostHistoryCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"RevisionGUID"} /> )}
+              ( <Input placeholder={"Revision GUID"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -187,25 +198,30 @@ class PostHistoryCreateComponent extends React.Component<
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='userDisplayName'>UserDisplayName</label>
+              <label htmlFor='userDisplayName'>User Display Name</label>
               <br />             
               {getFieldDecorator('userDisplayName', {
               rules:[{ max: 40, message: 'Exceeds max length of 40' },
 ],
               
               })
-              ( <Input placeholder={"UserDisplayName"} /> )}
+              ( <Input placeholder={"User Display Name"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='userId'>UserId</label>
-              <br />             
-              {getFieldDecorator('userId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"UserId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='userId'>User</label>
+                        <br />   
+                        <UsersSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Users}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="userId"
+                          required={false}
+                          selectedValue={this.state.model!.userId}
+                         />
+                        </Form.Item>
 
 			
            <Form.Item>
@@ -224,5 +240,5 @@ class PostHistoryCreateComponent extends React.Component<
 export const WrappedPostHistoryCreateComponent = Form.create({ name: 'PostHistory Create' })(PostHistoryCreateComponent);
 
 /*<Codenesium>
-    <Hash>42154aef29dda5ad9eced26afc34c712</Hash>
+    <Hash>6b388602f851d5f70759e2a074427eb0</Hash>
 </Codenesium>*/

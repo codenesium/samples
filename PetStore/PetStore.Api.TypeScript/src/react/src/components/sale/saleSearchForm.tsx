@@ -170,19 +170,19 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
                       return <span>{String(props.original.amount)}</span>;
                       }           
                     },  {
-                      Header: 'FirstName',
+                      Header: 'First Name',
                       accessor: 'firstName',
                       Cell: (props) => {
                       return <span>{String(props.original.firstName)}</span>;
                       }           
                     },  {
-                      Header: 'LastName',
+                      Header: 'Last Name',
                       accessor: 'lastName',
                       Cell: (props) => {
                       return <span>{String(props.original.lastName)}</span>;
                       }           
                     },  {
-                      Header: 'PaymentTypeId',
+                      Header: 'Payment Type',
                       accessor: 'paymentTypeId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.PaymentTypes + '/' + props.original.paymentTypeId); }}>
@@ -192,7 +192,7 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
                         </a>
                       }           
                     },  {
-                      Header: 'PetId',
+                      Header: 'Pet',
                       accessor: 'petId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Pets + '/' + props.original.petId); }}>
@@ -263,5 +263,5 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
 export const WrappedSaleSearchComponent = Form.create({ name: 'Sale Search' })(SaleSearchComponent);
 
 /*<Codenesium>
-    <Hash>dcbf47329bccc594eff6c372f966e5d1</Hash>
+    <Hash>19846a7b579d304f10f2bce41a5d377a</Hash>
 </Codenesium>*/

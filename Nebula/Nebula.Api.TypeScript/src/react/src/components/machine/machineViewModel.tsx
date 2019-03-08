@@ -34,11 +34,11 @@ export default class MachineViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>2c4e50cfb11e77e595b0215ff117ec96</Hash>
+    <Hash>af3aa2b199974cc2b99ebd097b55ae65</Hash>
 </Codenesium>*/

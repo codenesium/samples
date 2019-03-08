@@ -128,19 +128,23 @@ class LinkLogCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"DateEntered"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DateEntered"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='linkId'>LinkId</label>
-              <br />             
-              {getFieldDecorator('linkId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"LinkId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='linkId'>LinkId</label>
+                        <br />   
+                        <LinkSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Links}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="linkId"
+                          required={true}
+                          selectedValue={this.state.model!.linkId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
               <label htmlFor='log'>Log</label>
@@ -150,7 +154,7 @@ class LinkLogCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"Log"} /> )}
+              ( <Input.TextArea placeholder={"Log"} /> )}
               </Form.Item>
 
 			
@@ -170,5 +174,5 @@ class LinkLogCreateComponent extends React.Component<
 export const WrappedLinkLogCreateComponent = Form.create({ name: 'LinkLog Create' })(LinkLogCreateComponent);
 
 /*<Codenesium>
-    <Hash>5344495afc6928a573865f63a0919a29</Hash>
+    <Hash>63665002214de5d921edf6d6fbcf9562</Hash>
 </Codenesium>*/

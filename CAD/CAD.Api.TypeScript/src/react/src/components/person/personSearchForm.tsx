@@ -161,7 +161,7 @@ export default class PersonSearchComponent extends React.Component<PersonSearchC
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'People',
+                    Header: 'Person',
                     columns: [
 					  {
                       Header: 'FirstName',
@@ -243,5 +243,5 @@ export default class PersonSearchComponent extends React.Component<PersonSearchC
 export const WrappedPersonSearchComponent = Form.create({ name: 'Person Search' })(PersonSearchComponent);
 
 /*<Codenesium>
-    <Hash>df83cae84b4134942f535a5633213981</Hash>
+    <Hash>15926ad90f58a9e217bda5f13dd62285</Hash>
 </Codenesium>*/

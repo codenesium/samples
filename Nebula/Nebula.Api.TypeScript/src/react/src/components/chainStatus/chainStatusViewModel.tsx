@@ -15,11 +15,11 @@ export default class ChainStatusViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>37890fe0347dd9e73fa0fe172fcf960c</Hash>
+    <Hash>5adee926b1b4d2fe7f092ecb3ed9df03</Hash>
 </Codenesium>*/

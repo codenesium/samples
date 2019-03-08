@@ -191,17 +191,25 @@ class LinkEditComponent extends React.Component<
           <Form.Item>
             <label htmlFor="assignedMachineId">AssignedMachineId</label>
             <br />
-            {getFieldDecorator('assignedMachineId', {
-              rules: [],
-            })(<Input placeholder={'AssignedMachineId'} />)}
+            <MachineSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Machines}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="assignedMachineId"
+              required={false}
+              selectedValue={this.state.model!.assignedMachineId}
+            />
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="chainId">ChainId</label>
             <br />
-            {getFieldDecorator('chainId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'ChainId'} />)}
+            <ChainSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="chainId"
+              required={true}
+              selectedValue={this.state.model!.chainId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -209,7 +217,9 @@ class LinkEditComponent extends React.Component<
             <br />
             {getFieldDecorator('dateCompleted', {
               rules: [],
-            })(<Input placeholder={'DateCompleted'} />)}
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateCompleted'} />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -217,7 +227,9 @@ class LinkEditComponent extends React.Component<
             <br />
             {getFieldDecorator('dateStarted', {
               rules: [],
-            })(<Input placeholder={'DateStarted'} />)}
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateStarted'} />
+            )}
           </Form.Item>
 
           <Form.Item>
@@ -260,7 +272,7 @@ class LinkEditComponent extends React.Component<
             <br />
             {getFieldDecorator('order', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Order'} />)}
+            })(<InputNumber placeholder={'Order'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -276,7 +288,7 @@ class LinkEditComponent extends React.Component<
             <br />
             {getFieldDecorator('staticParameter', {
               rules: [],
-            })(<Input placeholder={'StaticParameter'} />)}
+            })(<Input.TextArea placeholder={'StaticParameter'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -284,7 +296,7 @@ class LinkEditComponent extends React.Component<
             <br />
             {getFieldDecorator('timeoutInSecond', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'TimeoutInSecond'} />)}
+            })(<InputNumber placeholder={'TimeoutInSecond'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -311,5 +323,5 @@ export const WrappedLinkEditComponent = Form.create({ name: 'Link Edit' })(
 
 
 /*<Codenesium>
-    <Hash>ffe719206e9c8c83b1306a117dd006eb</Hash>
+    <Hash>930ad6570bea951705d8ead389490e8b</Hash>
 </Codenesium>*/

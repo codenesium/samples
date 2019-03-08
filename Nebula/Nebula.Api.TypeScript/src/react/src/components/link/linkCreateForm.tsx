@@ -122,26 +122,35 @@ class LinkCreateComponent extends React.Component<
 
         return ( 
          <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='assignedMachineId'>AssignedMachineId</label>
-              <br />             
-              {getFieldDecorator('assignedMachineId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"AssignedMachineId"} /> )}
-              </Form.Item>
+            			
+                        <Form.Item>
+                        <label htmlFor='assignedMachineId'>AssignedMachineId</label>
+                        <br />   
+                        <MachineSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Machines}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="assignedMachineId"
+                          required={false}
+                          selectedValue={this.state.model!.assignedMachineId}
+                         />
+                        </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='chainId'>ChainId</label>
-              <br />             
-              {getFieldDecorator('chainId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"ChainId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='chainId'>ChainId</label>
+                        <br />   
+                        <ChainSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Chains}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="chainId"
+                          required={true}
+                          selectedValue={this.state.model!.chainId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
               <label htmlFor='dateCompleted'>DateCompleted</label>
@@ -150,7 +159,7 @@ class LinkCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"DateCompleted"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DateCompleted"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -160,7 +169,7 @@ class LinkCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"DateStarted"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"DateStarted"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -215,7 +224,7 @@ class LinkCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"Order"} /> )}
+              ( <InputNumber placeholder={"Order"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -235,7 +244,7 @@ class LinkCreateComponent extends React.Component<
               rules:[],
               
               })
-              ( <Input placeholder={"StaticParameter"} /> )}
+              ( <Input.TextArea placeholder={"StaticParameter"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -246,7 +255,7 @@ class LinkCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"TimeoutInSecond"} /> )}
+              ( <InputNumber placeholder={"TimeoutInSecond"} /> )}
               </Form.Item>
 
 			
@@ -266,5 +275,5 @@ class LinkCreateComponent extends React.Component<
 export const WrappedLinkCreateComponent = Form.create({ name: 'Link Create' })(LinkCreateComponent);
 
 /*<Codenesium>
-    <Hash>ce2c3ba2c41ac41cd75f181c7f4ed32c</Hash>
+    <Hash>3f8b18c2d6b2a568f5ee0b41c7887882</Hash>
 </Codenesium>*/

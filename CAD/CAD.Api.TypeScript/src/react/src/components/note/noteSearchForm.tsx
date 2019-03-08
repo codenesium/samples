@@ -161,7 +161,7 @@ export default class NoteSearchComponent extends React.Component<NoteSearchCompo
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Notes',
+                    Header: 'Note',
                     columns: [
 					  {
                       Header: 'CallId',
@@ -251,5 +251,5 @@ export default class NoteSearchComponent extends React.Component<NoteSearchCompo
 export const WrappedNoteSearchComponent = Form.create({ name: 'Note Search' })(NoteSearchComponent);
 
 /*<Codenesium>
-    <Hash>550fda8b94fb94f11e2e3d7ad17b774e</Hash>
+    <Hash>a1f19ce439aa4229e60b2362bf0177fc</Hash>
 </Codenesium>*/

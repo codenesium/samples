@@ -194,7 +194,7 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
                       return <span>{String(props.original.phone)}</span>;
                       }           
                     },  {
-                      Header: 'UserId',
+                      Header: 'User',
                       accessor: 'userId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.userId); }}>
@@ -259,5 +259,5 @@ export default class AdminSearchComponent extends React.Component<AdminSearchCom
 export const WrappedAdminSearchComponent = Form.create({ name: 'Admin Search' })(AdminSearchComponent);
 
 /*<Codenesium>
-    <Hash>12f9549d89d4cb1640909e01fe40e70e</Hash>
+    <Hash>214680ee34b5bb3df5704c629d9b457e</Hash>
 </Codenesium>*/

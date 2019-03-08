@@ -165,7 +165,7 @@ class EventEditComponent extends React.Component<
         return ( 
          <Form onSubmit={this.handleSubmit}>
             			<Form.Item>
-              <label htmlFor='address1'>address1</label>
+              <label htmlFor='address1'>Address1</label>
               <br />             
               {getFieldDecorator('address1', {
               rules:[{ required: true, message: 'Required' },
@@ -173,11 +173,11 @@ class EventEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"address1"} /> )}
+              ( <Input placeholder={"Address1"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='address2'>address2</label>
+              <label htmlFor='address2'>Address2</label>
               <br />             
               {getFieldDecorator('address2', {
               rules:[{ required: true, message: 'Required' },
@@ -185,55 +185,59 @@ class EventEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"address2"} /> )}
+              ( <Input placeholder={"Address2"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='cityId'>cityId</label>
-              <br />             
-              {getFieldDecorator('cityId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"cityId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='cityId'>City</label>
+                        <br />   
+                        <CitySelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Cities}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="cityId"
+                          required={true}
+                          selectedValue={this.state.model!.cityId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='date'>date</label>
+              <label htmlFor='date'>Date</label>
               <br />             
               {getFieldDecorator('date', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"date"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Date"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='description'>description</label>
+              <label htmlFor='description'>Description</label>
               <br />             
               {getFieldDecorator('description', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <Input placeholder={"description"} /> )}
+              ( <Input placeholder={"Description"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='endDate'>endDate</label>
+              <label htmlFor='endDate'>End Date</label>
               <br />             
               {getFieldDecorator('endDate', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"endDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"End Date"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='facebook'>facebook</label>
+              <label htmlFor='facebook'>Facebook</label>
               <br />             
               {getFieldDecorator('facebook', {
               rules:[{ required: true, message: 'Required' },
@@ -241,11 +245,11 @@ class EventEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"facebook"} /> )}
+              ( <Input placeholder={"Facebook"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='name'>name</label>
+              <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
@@ -253,22 +257,22 @@ class EventEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='startDate'>startDate</label>
+              <label htmlFor='startDate'>Start Date</label>
               <br />             
               {getFieldDecorator('startDate', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"startDate"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Start Date"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='website'>website</label>
+              <label htmlFor='website'>Website</label>
               <br />             
               {getFieldDecorator('website', {
               rules:[{ required: true, message: 'Required' },
@@ -276,7 +280,7 @@ class EventEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"website"} /> )}
+              ( <Input placeholder={"Website"} /> )}
               </Form.Item>
 
 			
@@ -296,5 +300,5 @@ class EventEditComponent extends React.Component<
 export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(EventEditComponent);
 
 /*<Codenesium>
-    <Hash>ccecac4a6b7b07e2636abd3a40d9c478</Hash>
+    <Hash>550c15954b7fca399ba2cad924b585d6</Hash>
 </Codenesium>*/

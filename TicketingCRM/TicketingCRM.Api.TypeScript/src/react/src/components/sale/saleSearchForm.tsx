@@ -164,25 +164,25 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
                     Header: 'Sales',
                     columns: [
 					  {
-                      Header: 'IpAddress',
+                      Header: 'Ip Address',
                       accessor: 'ipAddress',
                       Cell: (props) => {
                       return <span>{String(props.original.ipAddress)}</span>;
                       }           
                     },  {
-                      Header: 'Notes',
+                      Header: 'Note',
                       accessor: 'note',
                       Cell: (props) => {
                       return <span>{String(props.original.note)}</span>;
                       }           
                     },  {
-                      Header: 'SaleDate',
+                      Header: 'Sale Date',
                       accessor: 'saleDate',
                       Cell: (props) => {
                       return <span>{String(props.original.saleDate)}</span>;
                       }           
                     },  {
-                      Header: 'TransactionId',
+                      Header: 'Transaction',
                       accessor: 'transactionId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Transactions + '/' + props.original.transactionId); }}>
@@ -247,5 +247,5 @@ export default class SaleSearchComponent extends React.Component<SaleSearchCompo
 export const WrappedSaleSearchComponent = Form.create({ name: 'Sale Search' })(SaleSearchComponent);
 
 /*<Codenesium>
-    <Hash>fe5b83c9e4948f68bbe05ba9c9db4099</Hash>
+    <Hash>4d809d91cba770db147b454c49b050e6</Hash>
 </Codenesium>*/

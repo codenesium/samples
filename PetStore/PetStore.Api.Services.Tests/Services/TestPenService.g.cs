@@ -31,8 +31,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			List<ApiPenServerResponseModel> response = await service.All();
 
@@ -50,8 +49,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			ApiPenServerResponseModel response = await service.Get(default(int));
 
@@ -68,8 +66,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			ApiPenServerResponseModel response = await service.Get(default(int));
 
@@ -87,8 +84,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			CreateResponse<ApiPenServerResponseModel> response = await service.Create(model);
 
@@ -110,8 +106,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             validatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			CreateResponse<ApiPenServerResponseModel> response = await service.Create(model);
 
@@ -132,8 +127,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			UpdateResponse<ApiPenServerResponseModel> response = await service.Update(default(int), model);
 
@@ -156,8 +150,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             validatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			UpdateResponse<ApiPenServerResponseModel> response = await service.Update(default(int), model);
 
@@ -177,8 +170,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -200,8 +192,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             validatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
+			                             mock.DALMapperMockFactory.DALPenMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -210,47 +201,9 @@ namespace PetStoreNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PenDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
-
-		[Fact]
-		public async void PetsByPenId_Exists()
-		{
-			var mock = new ServiceMockFacade<IPenRepository>();
-			var records = new List<Pet>();
-			records.Add(new Pet());
-			mock.RepositoryMock.Setup(x => x.PetsByPenId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PenService(mock.LoggerMock.Object,
-			                             mock.MediatorMock.Object,
-			                             mock.RepositoryMock.Object,
-			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
-
-			List<ApiPetServerResponseModel> response = await service.PetsByPenId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.PetsByPenId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void PetsByPenId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPenRepository>();
-			mock.RepositoryMock.Setup(x => x.PetsByPenId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
-			var service = new PenService(mock.LoggerMock.Object,
-			                             mock.MediatorMock.Object,
-			                             mock.RepositoryMock.Object,
-			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
-			                             mock.DALMapperMockFactory.DALPenMapperMock,
-			                             mock.DALMapperMockFactory.DALPetMapperMock);
-
-			List<ApiPetServerResponseModel> response = await service.PetsByPenId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.PetsByPenId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c824f75facc2cc20d0c28f9eb827fb46</Hash>
+    <Hash>b2172134756ec2b3b226389b0e1fba64</Hash>
 </Codenesium>*/

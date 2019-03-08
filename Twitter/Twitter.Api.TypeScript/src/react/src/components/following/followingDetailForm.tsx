@@ -7,6 +7,9 @@ import FollowingViewModel from './followingViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface FollowingDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface FollowingDetailComponentState {
 }
 
 class FollowingDetailComponent extends React.Component<
-  FollowingDetailComponentProps,
-  FollowingDetailComponentState
+FollowingDetailComponentProps,
+FollowingDetailComponentState
 > {
   state = {
     model: new FollowingViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Followings + '/edit/' + this.state.model!.userId
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Followings + '/edit/' + this.state.model!.userId);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,36 +85,39 @@ class FollowingDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>date_followed</h3>
-              <p>{String(this.state.model!.dateFollowed)}</p>
-            </div>
-            <div>
-              <h3>muted</h3>
-              <p>{String(this.state.model!.muted)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>date_followed</h3>
+							<p>{String(this.state.model!.dateFollowed)}</p>
+						 </div>
+					   						 <div>
+							<h3>muted</h3>
+							<p>{String(this.state.model!.muted)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -122,11 +126,10 @@ class FollowingDetailComponent extends React.Component<
   }
 }
 
-export const WrappedFollowingDetailComponent = Form.create({
-  name: 'Following Detail',
-})(FollowingDetailComponent);
-
+export const WrappedFollowingDetailComponent = Form.create({ name: 'Following Detail' })(
+  FollowingDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>617bd152346ceaf74e143585ee60d03b</Hash>
+    <Hash>07e6beec7f4ae77657f05c1169ad5367</Hash>
 </Codenesium>*/

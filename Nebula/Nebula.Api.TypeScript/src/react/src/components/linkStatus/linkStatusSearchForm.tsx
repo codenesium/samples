@@ -205,7 +205,7 @@ export default class LinkStatusSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'LinkStatuses',
+                Header: 'Link Status',
                 columns: [
                   {
                     Header: 'Id',
@@ -282,5 +282,5 @@ export const WrappedLinkStatusSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6c8730ddc1e80d4db852fa1dc2a568c7</Hash>
+    <Hash>106a919b61474700d248c43b6b7919fc</Hash>
 </Codenesium>*/

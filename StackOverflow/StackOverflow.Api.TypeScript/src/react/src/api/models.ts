@@ -1,8 +1,10 @@
-export class BadgeClientRequestModel {
+export class BadgesClientRequestModel {
 				date:any;
 id:number;
 name:string;
 userId:number;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 
 	
 				constructor() {
@@ -10,6 +12,8 @@ userId:number;
 this.id = 0;
 this.name = '';
 this.userId = 0;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
@@ -23,11 +27,13 @@ this.userId = userId;
 				}
 			}
 
-			export class BadgeClientResponseModel {
+			export class BadgesClientResponseModel {
 				date:any;
 id:number;
 name:string;
 userId:number;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 
 	
 				constructor() {
@@ -35,6 +41,8 @@ userId:number;
 this.id = 0;
 this.name = '';
 this.userId = 0;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
@@ -47,22 +55,30 @@ this.userId = userId;
 
 				}
 			}
-			export class CommentClientRequestModel {
+			export class CommentsClientRequestModel {
 				creationDate:any;
 id:number;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 score:any;
 text:string;
 userId:any;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 
 	
 				constructor() {
 					this.creationDate = undefined;
 this.id = 0;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.score = undefined;
 this.text = '';
 this.userId = undefined;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
@@ -78,22 +94,30 @@ this.userId = userId;
 				}
 			}
 
-			export class CommentClientResponseModel {
+			export class CommentsClientResponseModel {
 				creationDate:any;
 id:number;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 score:any;
 text:string;
 userId:any;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 
 	
 				constructor() {
 					this.creationDate = undefined;
 this.id = 0;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.score = undefined;
 this.text = '';
 this.userId = undefined;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
@@ -108,7 +132,7 @@ this.userId = userId;
 
 				}
 			}
-			export class LinkTypeClientRequestModel {
+			export class LinkTypesClientRequestModel {
 				id:number;
 rwType:string;
 
@@ -127,7 +151,7 @@ this.rwType = rwType;
 				}
 			}
 
-			export class LinkTypeClientResponseModel {
+			export class LinkTypesClientResponseModel {
 				id:number;
 rwType:string;
 
@@ -150,11 +174,17 @@ this.rwType = rwType;
 creationDate:any;
 id:number;
 postHistoryTypeId:number;
+postHistoryTypeIdEntity : string;
+postHistoryTypeIdNavigation? : PostHistoryTypesClientResponseModel;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 revisionGUID:string;
 text:string;
 userDisplayName:string;
 userId:any;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 
 	
 				constructor() {
@@ -162,11 +192,17 @@ userId:any;
 this.creationDate = undefined;
 this.id = 0;
 this.postHistoryTypeId = 0;
+this.postHistoryTypeIdEntity = '';
+this.postHistoryTypeIdNavigation = undefined;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.revisionGUID = '';
 this.text = '';
 this.userDisplayName = '';
 this.userId = undefined;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
@@ -190,11 +226,17 @@ this.userId = userId;
 creationDate:any;
 id:number;
 postHistoryTypeId:number;
+postHistoryTypeIdEntity : string;
+postHistoryTypeIdNavigation? : PostHistoryTypesClientResponseModel;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 revisionGUID:string;
 text:string;
 userDisplayName:string;
 userId:any;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 
 	
 				constructor() {
@@ -202,11 +244,17 @@ userId:any;
 this.creationDate = undefined;
 this.id = 0;
 this.postHistoryTypeId = 0;
+this.postHistoryTypeIdEntity = '';
+this.postHistoryTypeIdNavigation = undefined;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.revisionGUID = '';
 this.text = '';
 this.userDisplayName = '';
 this.userId = undefined;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 
 				}
 
@@ -224,7 +272,7 @@ this.userId = userId;
 
 				}
 			}
-			export class PostHistoryTypeClientRequestModel {
+			export class PostHistoryTypesClientRequestModel {
 				id:number;
 rwType:string;
 
@@ -243,7 +291,7 @@ this.rwType = rwType;
 				}
 			}
 
-			export class PostHistoryTypeClientResponseModel {
+			export class PostHistoryTypesClientResponseModel {
 				id:number;
 rwType:string;
 
@@ -261,20 +309,32 @@ this.rwType = rwType;
 
 				}
 			}
-			export class PostLinkClientRequestModel {
+			export class PostLinksClientRequestModel {
 				creationDate:any;
 id:number;
 linkTypeId:number;
+linkTypeIdEntity : string;
+linkTypeIdNavigation? : LinkTypesClientResponseModel;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 relatedPostId:number;
+relatedPostIdEntity : string;
+relatedPostIdNavigation? : PostsClientResponseModel;
 
 	
 				constructor() {
 					this.creationDate = undefined;
 this.id = 0;
 this.linkTypeId = 0;
+this.linkTypeIdEntity = '';
+this.linkTypeIdNavigation = undefined;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.relatedPostId = 0;
+this.relatedPostIdEntity = '';
+this.relatedPostIdNavigation = undefined;
 
 				}
 
@@ -289,20 +349,32 @@ this.relatedPostId = relatedPostId;
 				}
 			}
 
-			export class PostLinkClientResponseModel {
+			export class PostLinksClientResponseModel {
 				creationDate:any;
 id:number;
 linkTypeId:number;
+linkTypeIdEntity : string;
+linkTypeIdNavigation? : LinkTypesClientResponseModel;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 relatedPostId:number;
+relatedPostIdEntity : string;
+relatedPostIdNavigation? : PostsClientResponseModel;
 
 	
 				constructor() {
 					this.creationDate = undefined;
 this.id = 0;
 this.linkTypeId = 0;
+this.linkTypeIdEntity = '';
+this.linkTypeIdNavigation = undefined;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.relatedPostId = 0;
+this.relatedPostIdEntity = '';
+this.relatedPostIdNavigation = undefined;
 
 				}
 
@@ -316,7 +388,7 @@ this.relatedPostId = relatedPostId;
 
 				}
 			}
-			export class PostClientRequestModel {
+			export class PostsClientRequestModel {
 				acceptedAnswerId:any;
 answerCount:any;
 body:string;
@@ -330,9 +402,17 @@ lastActivityDate:any;
 lastEditDate:any;
 lastEditorDisplayName:string;
 lastEditorUserId:any;
+lastEditorUserIdEntity : string;
+lastEditorUserIdNavigation? : UsersClientResponseModel;
 ownerUserId:any;
+ownerUserIdEntity : string;
+ownerUserIdNavigation? : UsersClientResponseModel;
 parentId:any;
+parentIdEntity : string;
+parentIdNavigation? : PostsClientResponseModel;
 postTypeId:number;
+postTypeIdEntity : string;
+postTypeIdNavigation? : PostTypesClientResponseModel;
 score:number;
 tag:string;
 title:string;
@@ -353,9 +433,17 @@ this.lastActivityDate = undefined;
 this.lastEditDate = undefined;
 this.lastEditorDisplayName = '';
 this.lastEditorUserId = undefined;
+this.lastEditorUserIdEntity = '';
+this.lastEditorUserIdNavigation = undefined;
 this.ownerUserId = undefined;
+this.ownerUserIdEntity = '';
+this.ownerUserIdNavigation = undefined;
 this.parentId = undefined;
+this.parentIdEntity = '';
+this.parentIdNavigation = undefined;
 this.postTypeId = 0;
+this.postTypeIdEntity = '';
+this.postTypeIdNavigation = undefined;
 this.score = 0;
 this.tag = '';
 this.title = '';
@@ -389,7 +477,7 @@ this.viewCount = viewCount;
 				}
 			}
 
-			export class PostClientResponseModel {
+			export class PostsClientResponseModel {
 				acceptedAnswerId:any;
 answerCount:any;
 body:string;
@@ -403,9 +491,17 @@ lastActivityDate:any;
 lastEditDate:any;
 lastEditorDisplayName:string;
 lastEditorUserId:any;
+lastEditorUserIdEntity : string;
+lastEditorUserIdNavigation? : UsersClientResponseModel;
 ownerUserId:any;
+ownerUserIdEntity : string;
+ownerUserIdNavigation? : UsersClientResponseModel;
 parentId:any;
+parentIdEntity : string;
+parentIdNavigation? : PostsClientResponseModel;
 postTypeId:number;
+postTypeIdEntity : string;
+postTypeIdNavigation? : PostTypesClientResponseModel;
 score:number;
 tag:string;
 title:string;
@@ -426,9 +522,17 @@ this.lastActivityDate = undefined;
 this.lastEditDate = undefined;
 this.lastEditorDisplayName = '';
 this.lastEditorUserId = undefined;
+this.lastEditorUserIdEntity = '';
+this.lastEditorUserIdNavigation = undefined;
 this.ownerUserId = undefined;
+this.ownerUserIdEntity = '';
+this.ownerUserIdNavigation = undefined;
 this.parentId = undefined;
+this.parentIdEntity = '';
+this.parentIdNavigation = undefined;
 this.postTypeId = 0;
+this.postTypeIdEntity = '';
+this.postTypeIdNavigation = undefined;
 this.score = 0;
 this.tag = '';
 this.title = '';
@@ -461,7 +565,7 @@ this.viewCount = viewCount;
 
 				}
 			}
-			export class PostTypeClientRequestModel {
+			export class PostTypesClientRequestModel {
 				id:number;
 rwType:string;
 
@@ -480,7 +584,7 @@ this.rwType = rwType;
 				}
 			}
 
-			export class PostTypeClientResponseModel {
+			export class PostTypesClientResponseModel {
 				id:number;
 rwType:string;
 
@@ -498,20 +602,28 @@ this.rwType = rwType;
 
 				}
 			}
-			export class TagClientRequestModel {
+			export class TagsClientRequestModel {
 				count:number;
 excerptPostId:number;
+excerptPostIdEntity : string;
+excerptPostIdNavigation? : PostsClientResponseModel;
 id:number;
 tagName:string;
 wikiPostId:number;
+wikiPostIdEntity : string;
+wikiPostIdNavigation? : PostsClientResponseModel;
 
 	
 				constructor() {
 					this.count = 0;
 this.excerptPostId = 0;
+this.excerptPostIdEntity = '';
+this.excerptPostIdNavigation = undefined;
 this.id = 0;
 this.tagName = '';
 this.wikiPostId = 0;
+this.wikiPostIdEntity = '';
+this.wikiPostIdNavigation = undefined;
 
 				}
 
@@ -526,20 +638,28 @@ this.wikiPostId = wikiPostId;
 				}
 			}
 
-			export class TagClientResponseModel {
+			export class TagsClientResponseModel {
 				count:number;
 excerptPostId:number;
+excerptPostIdEntity : string;
+excerptPostIdNavigation? : PostsClientResponseModel;
 id:number;
 tagName:string;
 wikiPostId:number;
+wikiPostIdEntity : string;
+wikiPostIdNavigation? : PostsClientResponseModel;
 
 	
 				constructor() {
 					this.count = 0;
 this.excerptPostId = 0;
+this.excerptPostIdEntity = '';
+this.excerptPostIdNavigation = undefined;
 this.id = 0;
 this.tagName = '';
 this.wikiPostId = 0;
+this.wikiPostIdEntity = '';
+this.wikiPostIdNavigation = undefined;
 
 				}
 
@@ -553,7 +673,7 @@ this.wikiPostId = wikiPostId;
 
 				}
 			}
-			export class UserClientRequestModel {
+			export class UsersClientRequestModel {
 				aboutMe:string;
 accountId:any;
 age:any;
@@ -608,7 +728,7 @@ this.websiteUrl = websiteUrl;
 				}
 			}
 
-			export class UserClientResponseModel {
+			export class UsersClientResponseModel {
 				aboutMe:string;
 accountId:any;
 age:any;
@@ -662,13 +782,19 @@ this.websiteUrl = websiteUrl;
 
 				}
 			}
-			export class VoteClientRequestModel {
+			export class VotesClientRequestModel {
 				bountyAmount:any;
 creationDate:any;
 id:number;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 userId:any;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 voteTypeId:number;
+voteTypeIdEntity : string;
+voteTypeIdNavigation? : VoteTypesClientResponseModel;
 
 	
 				constructor() {
@@ -676,8 +802,14 @@ voteTypeId:number;
 this.creationDate = undefined;
 this.id = 0;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.userId = undefined;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 this.voteTypeId = 0;
+this.voteTypeIdEntity = '';
+this.voteTypeIdNavigation = undefined;
 
 				}
 
@@ -693,13 +825,19 @@ this.voteTypeId = voteTypeId;
 				}
 			}
 
-			export class VoteClientResponseModel {
+			export class VotesClientResponseModel {
 				bountyAmount:any;
 creationDate:any;
 id:number;
 postId:number;
+postIdEntity : string;
+postIdNavigation? : PostsClientResponseModel;
 userId:any;
+userIdEntity : string;
+userIdNavigation? : UsersClientResponseModel;
 voteTypeId:number;
+voteTypeIdEntity : string;
+voteTypeIdNavigation? : VoteTypesClientResponseModel;
 
 	
 				constructor() {
@@ -707,8 +845,14 @@ voteTypeId:number;
 this.creationDate = undefined;
 this.id = 0;
 this.postId = 0;
+this.postIdEntity = '';
+this.postIdNavigation = undefined;
 this.userId = undefined;
+this.userIdEntity = '';
+this.userIdNavigation = undefined;
 this.voteTypeId = 0;
+this.voteTypeIdEntity = '';
+this.voteTypeIdNavigation = undefined;
 
 				}
 
@@ -723,7 +867,7 @@ this.voteTypeId = voteTypeId;
 
 				}
 			}
-			export class VoteTypeClientRequestModel {
+			export class VoteTypesClientRequestModel {
 				id:number;
 name:string;
 
@@ -742,7 +886,7 @@ this.name = name;
 				}
 			}
 
-			export class VoteTypeClientResponseModel {
+			export class VoteTypesClientResponseModel {
 				id:number;
 name:string;
 
@@ -762,5 +906,5 @@ this.name = name;
 			}
 
 /*<Codenesium>
-    <Hash>2c915f18d19f699e2d448092016ab3be</Hash>
+    <Hash>a553614461eb79d33cb8202659122d50</Hash>
 </Codenesium>*/

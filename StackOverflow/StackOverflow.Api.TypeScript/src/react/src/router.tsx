@@ -4,54 +4,54 @@ import Dashboard from './components/dashboard';
 import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
 import { wrapperHeader } from './components/header';
 import { ClientRoutes, Constants } from './constants'; 
-import { WrappedBadgeCreateComponent } from './components/badge/badgeCreateForm';
-import { WrappedBadgeDetailComponent } from './components/badge/badgeDetailForm';
-import { WrappedBadgeEditComponent } from './components/badge/badgeEditForm';
-import { WrappedBadgeSearchComponent } from './components/badge/badgeSearchForm';					
-import { WrappedCommentCreateComponent } from './components/comment/commentCreateForm';
-import { WrappedCommentDetailComponent } from './components/comment/commentDetailForm';
-import { WrappedCommentEditComponent } from './components/comment/commentEditForm';
-import { WrappedCommentSearchComponent } from './components/comment/commentSearchForm';					
-import { WrappedLinkTypeCreateComponent } from './components/linkType/linkTypeCreateForm';
-import { WrappedLinkTypeDetailComponent } from './components/linkType/linkTypeDetailForm';
-import { WrappedLinkTypeEditComponent } from './components/linkType/linkTypeEditForm';
-import { WrappedLinkTypeSearchComponent } from './components/linkType/linkTypeSearchForm';					
+import { WrappedBadgesCreateComponent } from './components/badges/badgesCreateForm';
+import { WrappedBadgesDetailComponent } from './components/badges/badgesDetailForm';
+import { WrappedBadgesEditComponent } from './components/badges/badgesEditForm';
+import { WrappedBadgesSearchComponent } from './components/badges/badgesSearchForm';					
+import { WrappedCommentsCreateComponent } from './components/comments/commentsCreateForm';
+import { WrappedCommentsDetailComponent } from './components/comments/commentsDetailForm';
+import { WrappedCommentsEditComponent } from './components/comments/commentsEditForm';
+import { WrappedCommentsSearchComponent } from './components/comments/commentsSearchForm';					
+import { WrappedLinkTypesCreateComponent } from './components/linkTypes/linkTypesCreateForm';
+import { WrappedLinkTypesDetailComponent } from './components/linkTypes/linkTypesDetailForm';
+import { WrappedLinkTypesEditComponent } from './components/linkTypes/linkTypesEditForm';
+import { WrappedLinkTypesSearchComponent } from './components/linkTypes/linkTypesSearchForm';					
 import { WrappedPostHistoryCreateComponent } from './components/postHistory/postHistoryCreateForm';
 import { WrappedPostHistoryDetailComponent } from './components/postHistory/postHistoryDetailForm';
 import { WrappedPostHistoryEditComponent } from './components/postHistory/postHistoryEditForm';
 import { WrappedPostHistorySearchComponent } from './components/postHistory/postHistorySearchForm';					
-import { WrappedPostHistoryTypeCreateComponent } from './components/postHistoryType/postHistoryTypeCreateForm';
-import { WrappedPostHistoryTypeDetailComponent } from './components/postHistoryType/postHistoryTypeDetailForm';
-import { WrappedPostHistoryTypeEditComponent } from './components/postHistoryType/postHistoryTypeEditForm';
-import { WrappedPostHistoryTypeSearchComponent } from './components/postHistoryType/postHistoryTypeSearchForm';					
-import { WrappedPostLinkCreateComponent } from './components/postLink/postLinkCreateForm';
-import { WrappedPostLinkDetailComponent } from './components/postLink/postLinkDetailForm';
-import { WrappedPostLinkEditComponent } from './components/postLink/postLinkEditForm';
-import { WrappedPostLinkSearchComponent } from './components/postLink/postLinkSearchForm';					
-import { WrappedPostCreateComponent } from './components/post/postCreateForm';
-import { WrappedPostDetailComponent } from './components/post/postDetailForm';
-import { WrappedPostEditComponent } from './components/post/postEditForm';
-import { WrappedPostSearchComponent } from './components/post/postSearchForm';					
-import { WrappedPostTypeCreateComponent } from './components/postType/postTypeCreateForm';
-import { WrappedPostTypeDetailComponent } from './components/postType/postTypeDetailForm';
-import { WrappedPostTypeEditComponent } from './components/postType/postTypeEditForm';
-import { WrappedPostTypeSearchComponent } from './components/postType/postTypeSearchForm';					
-import { WrappedTagCreateComponent } from './components/tag/tagCreateForm';
-import { WrappedTagDetailComponent } from './components/tag/tagDetailForm';
-import { WrappedTagEditComponent } from './components/tag/tagEditForm';
-import { WrappedTagSearchComponent } from './components/tag/tagSearchForm';					
-import { WrappedUserCreateComponent } from './components/user/userCreateForm';
-import { WrappedUserDetailComponent } from './components/user/userDetailForm';
-import { WrappedUserEditComponent } from './components/user/userEditForm';
-import { WrappedUserSearchComponent } from './components/user/userSearchForm';					
-import { WrappedVoteCreateComponent } from './components/vote/voteCreateForm';
-import { WrappedVoteDetailComponent } from './components/vote/voteDetailForm';
-import { WrappedVoteEditComponent } from './components/vote/voteEditForm';
-import { WrappedVoteSearchComponent } from './components/vote/voteSearchForm';					
-import { WrappedVoteTypeCreateComponent } from './components/voteType/voteTypeCreateForm';
-import { WrappedVoteTypeDetailComponent } from './components/voteType/voteTypeDetailForm';
-import { WrappedVoteTypeEditComponent } from './components/voteType/voteTypeEditForm';
-import { WrappedVoteTypeSearchComponent } from './components/voteType/voteTypeSearchForm';					
+import { WrappedPostHistoryTypesCreateComponent } from './components/postHistoryTypes/postHistoryTypesCreateForm';
+import { WrappedPostHistoryTypesDetailComponent } from './components/postHistoryTypes/postHistoryTypesDetailForm';
+import { WrappedPostHistoryTypesEditComponent } from './components/postHistoryTypes/postHistoryTypesEditForm';
+import { WrappedPostHistoryTypesSearchComponent } from './components/postHistoryTypes/postHistoryTypesSearchForm';					
+import { WrappedPostLinksCreateComponent } from './components/postLinks/postLinksCreateForm';
+import { WrappedPostLinksDetailComponent } from './components/postLinks/postLinksDetailForm';
+import { WrappedPostLinksEditComponent } from './components/postLinks/postLinksEditForm';
+import { WrappedPostLinksSearchComponent } from './components/postLinks/postLinksSearchForm';					
+import { WrappedPostsCreateComponent } from './components/posts/postsCreateForm';
+import { WrappedPostsDetailComponent } from './components/posts/postsDetailForm';
+import { WrappedPostsEditComponent } from './components/posts/postsEditForm';
+import { WrappedPostsSearchComponent } from './components/posts/postsSearchForm';					
+import { WrappedPostTypesCreateComponent } from './components/postTypes/postTypesCreateForm';
+import { WrappedPostTypesDetailComponent } from './components/postTypes/postTypesDetailForm';
+import { WrappedPostTypesEditComponent } from './components/postTypes/postTypesEditForm';
+import { WrappedPostTypesSearchComponent } from './components/postTypes/postTypesSearchForm';					
+import { WrappedTagsCreateComponent } from './components/tags/tagsCreateForm';
+import { WrappedTagsDetailComponent } from './components/tags/tagsDetailForm';
+import { WrappedTagsEditComponent } from './components/tags/tagsEditForm';
+import { WrappedTagsSearchComponent } from './components/tags/tagsSearchForm';					
+import { WrappedUsersCreateComponent } from './components/users/usersCreateForm';
+import { WrappedUsersDetailComponent } from './components/users/usersDetailForm';
+import { WrappedUsersEditComponent } from './components/users/usersEditForm';
+import { WrappedUsersSearchComponent } from './components/users/usersSearchForm';					
+import { WrappedVotesCreateComponent } from './components/votes/votesCreateForm';
+import { WrappedVotesDetailComponent } from './components/votes/votesDetailForm';
+import { WrappedVotesEditComponent } from './components/votes/votesEditForm';
+import { WrappedVotesSearchComponent } from './components/votes/votesSearchForm';					
+import { WrappedVoteTypesCreateComponent } from './components/voteTypes/voteTypesCreateForm';
+import { WrappedVoteTypesDetailComponent } from './components/voteTypes/voteTypesDetailForm';
+import { WrappedVoteTypesEditComponent } from './components/voteTypes/voteTypesEditForm';
+import { WrappedVoteTypesSearchComponent } from './components/voteTypes/voteTypesSearchForm';					
 
 const config = {
   oidc: {
@@ -65,61 +65,61 @@ const config = {
 export const AppRouter: React.StatelessComponent<{}> = () => {
 
   return (
-    <BrowserRouter>   
+    <BrowserRouter basename={Constants.HostedSubDirectory}>   
 	<Security issuer={config.oidc.issuer}
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}>
 	    <SecureRoute path="/protected" component={() => '<div>secure route</div>'} />
         <Switch>
           <Route exact path="/" component={wrapperHeader(Dashboard, "Dashboard")} />
-		  <Route path={ClientRoutes.Badges + "/create"} component={wrapperHeader(WrappedBadgeCreateComponent, "Badges Create")} />
-                      <Route path={ClientRoutes.Badges + "/edit/:id"} component={wrapperHeader(WrappedBadgeEditComponent, "Badges Edit")} />
-                      <Route path={ClientRoutes.Badges + "/:id"} component={wrapperHeader(WrappedBadgeDetailComponent , "Badges Detail")} />
-                      <Route path={ClientRoutes.Badges} component={wrapperHeader(WrappedBadgeSearchComponent, "Badges Search")} />
-					<Route path={ClientRoutes.Comments + "/create"} component={wrapperHeader(WrappedCommentCreateComponent, "Comments Create")} />
-                      <Route path={ClientRoutes.Comments + "/edit/:id"} component={wrapperHeader(WrappedCommentEditComponent, "Comments Edit")} />
-                      <Route path={ClientRoutes.Comments + "/:id"} component={wrapperHeader(WrappedCommentDetailComponent , "Comments Detail")} />
-                      <Route path={ClientRoutes.Comments} component={wrapperHeader(WrappedCommentSearchComponent, "Comments Search")} />
-					<Route path={ClientRoutes.LinkTypes + "/create"} component={wrapperHeader(WrappedLinkTypeCreateComponent, "LinkTypes Create")} />
-                      <Route path={ClientRoutes.LinkTypes + "/edit/:id"} component={wrapperHeader(WrappedLinkTypeEditComponent, "LinkTypes Edit")} />
-                      <Route path={ClientRoutes.LinkTypes + "/:id"} component={wrapperHeader(WrappedLinkTypeDetailComponent , "LinkTypes Detail")} />
-                      <Route path={ClientRoutes.LinkTypes} component={wrapperHeader(WrappedLinkTypeSearchComponent, "LinkTypes Search")} />
-					<Route path={ClientRoutes.PostHistories + "/create"} component={wrapperHeader(WrappedPostHistoryCreateComponent, "PostHistories Create")} />
-                      <Route path={ClientRoutes.PostHistories + "/edit/:id"} component={wrapperHeader(WrappedPostHistoryEditComponent, "PostHistories Edit")} />
-                      <Route path={ClientRoutes.PostHistories + "/:id"} component={wrapperHeader(WrappedPostHistoryDetailComponent , "PostHistories Detail")} />
-                      <Route path={ClientRoutes.PostHistories} component={wrapperHeader(WrappedPostHistorySearchComponent, "PostHistories Search")} />
-					<Route path={ClientRoutes.PostHistoryTypes + "/create"} component={wrapperHeader(WrappedPostHistoryTypeCreateComponent, "PostHistoryTypes Create")} />
-                      <Route path={ClientRoutes.PostHistoryTypes + "/edit/:id"} component={wrapperHeader(WrappedPostHistoryTypeEditComponent, "PostHistoryTypes Edit")} />
-                      <Route path={ClientRoutes.PostHistoryTypes + "/:id"} component={wrapperHeader(WrappedPostHistoryTypeDetailComponent , "PostHistoryTypes Detail")} />
-                      <Route path={ClientRoutes.PostHistoryTypes} component={wrapperHeader(WrappedPostHistoryTypeSearchComponent, "PostHistoryTypes Search")} />
-					<Route path={ClientRoutes.PostLinks + "/create"} component={wrapperHeader(WrappedPostLinkCreateComponent, "PostLinks Create")} />
-                      <Route path={ClientRoutes.PostLinks + "/edit/:id"} component={wrapperHeader(WrappedPostLinkEditComponent, "PostLinks Edit")} />
-                      <Route path={ClientRoutes.PostLinks + "/:id"} component={wrapperHeader(WrappedPostLinkDetailComponent , "PostLinks Detail")} />
-                      <Route path={ClientRoutes.PostLinks} component={wrapperHeader(WrappedPostLinkSearchComponent, "PostLinks Search")} />
-					<Route path={ClientRoutes.Posts + "/create"} component={wrapperHeader(WrappedPostCreateComponent, "Posts Create")} />
-                      <Route path={ClientRoutes.Posts + "/edit/:id"} component={wrapperHeader(WrappedPostEditComponent, "Posts Edit")} />
-                      <Route path={ClientRoutes.Posts + "/:id"} component={wrapperHeader(WrappedPostDetailComponent , "Posts Detail")} />
-                      <Route path={ClientRoutes.Posts} component={wrapperHeader(WrappedPostSearchComponent, "Posts Search")} />
-					<Route path={ClientRoutes.PostTypes + "/create"} component={wrapperHeader(WrappedPostTypeCreateComponent, "PostTypes Create")} />
-                      <Route path={ClientRoutes.PostTypes + "/edit/:id"} component={wrapperHeader(WrappedPostTypeEditComponent, "PostTypes Edit")} />
-                      <Route path={ClientRoutes.PostTypes + "/:id"} component={wrapperHeader(WrappedPostTypeDetailComponent , "PostTypes Detail")} />
-                      <Route path={ClientRoutes.PostTypes} component={wrapperHeader(WrappedPostTypeSearchComponent, "PostTypes Search")} />
-					<Route path={ClientRoutes.Tags + "/create"} component={wrapperHeader(WrappedTagCreateComponent, "Tags Create")} />
-                      <Route path={ClientRoutes.Tags + "/edit/:id"} component={wrapperHeader(WrappedTagEditComponent, "Tags Edit")} />
-                      <Route path={ClientRoutes.Tags + "/:id"} component={wrapperHeader(WrappedTagDetailComponent , "Tags Detail")} />
-                      <Route path={ClientRoutes.Tags} component={wrapperHeader(WrappedTagSearchComponent, "Tags Search")} />
-					<Route path={ClientRoutes.Users + "/create"} component={wrapperHeader(WrappedUserCreateComponent, "Users Create")} />
-                      <Route path={ClientRoutes.Users + "/edit/:id"} component={wrapperHeader(WrappedUserEditComponent, "Users Edit")} />
-                      <Route path={ClientRoutes.Users + "/:id"} component={wrapperHeader(WrappedUserDetailComponent , "Users Detail")} />
-                      <Route path={ClientRoutes.Users} component={wrapperHeader(WrappedUserSearchComponent, "Users Search")} />
-					<Route path={ClientRoutes.Votes + "/create"} component={wrapperHeader(WrappedVoteCreateComponent, "Votes Create")} />
-                      <Route path={ClientRoutes.Votes + "/edit/:id"} component={wrapperHeader(WrappedVoteEditComponent, "Votes Edit")} />
-                      <Route path={ClientRoutes.Votes + "/:id"} component={wrapperHeader(WrappedVoteDetailComponent , "Votes Detail")} />
-                      <Route path={ClientRoutes.Votes} component={wrapperHeader(WrappedVoteSearchComponent, "Votes Search")} />
-					<Route path={ClientRoutes.VoteTypes + "/create"} component={wrapperHeader(WrappedVoteTypeCreateComponent, "VoteTypes Create")} />
-                      <Route path={ClientRoutes.VoteTypes + "/edit/:id"} component={wrapperHeader(WrappedVoteTypeEditComponent, "VoteTypes Edit")} />
-                      <Route path={ClientRoutes.VoteTypes + "/:id"} component={wrapperHeader(WrappedVoteTypeDetailComponent , "VoteTypes Detail")} />
-                      <Route path={ClientRoutes.VoteTypes} component={wrapperHeader(WrappedVoteTypeSearchComponent, "VoteTypes Search")} />
+		  <Route path={ClientRoutes.Badges + "/create"} component={wrapperHeader(WrappedBadgesCreateComponent, "Badges Create")} />
+                      <Route path={ClientRoutes.Badges + "/edit/:id"} component={wrapperHeader(WrappedBadgesEditComponent, "Badges Edit")} />
+                      <Route path={ClientRoutes.Badges + "/:id"} component={wrapperHeader(WrappedBadgesDetailComponent , "Badges Detail")} />
+                      <Route path={ClientRoutes.Badges} component={wrapperHeader(WrappedBadgesSearchComponent, "Badges Search")} />
+					<Route path={ClientRoutes.Comments + "/create"} component={wrapperHeader(WrappedCommentsCreateComponent, "Comments Create")} />
+                      <Route path={ClientRoutes.Comments + "/edit/:id"} component={wrapperHeader(WrappedCommentsEditComponent, "Comments Edit")} />
+                      <Route path={ClientRoutes.Comments + "/:id"} component={wrapperHeader(WrappedCommentsDetailComponent , "Comments Detail")} />
+                      <Route path={ClientRoutes.Comments} component={wrapperHeader(WrappedCommentsSearchComponent, "Comments Search")} />
+					<Route path={ClientRoutes.LinkTypes + "/create"} component={wrapperHeader(WrappedLinkTypesCreateComponent, "Link Types Create")} />
+                      <Route path={ClientRoutes.LinkTypes + "/edit/:id"} component={wrapperHeader(WrappedLinkTypesEditComponent, "Link Types Edit")} />
+                      <Route path={ClientRoutes.LinkTypes + "/:id"} component={wrapperHeader(WrappedLinkTypesDetailComponent , "Link Types Detail")} />
+                      <Route path={ClientRoutes.LinkTypes} component={wrapperHeader(WrappedLinkTypesSearchComponent, "Link Types Search")} />
+					<Route path={ClientRoutes.PostHistory + "/create"} component={wrapperHeader(WrappedPostHistoryCreateComponent, "Post History Create")} />
+                      <Route path={ClientRoutes.PostHistory + "/edit/:id"} component={wrapperHeader(WrappedPostHistoryEditComponent, "Post History Edit")} />
+                      <Route path={ClientRoutes.PostHistory + "/:id"} component={wrapperHeader(WrappedPostHistoryDetailComponent , "Post History Detail")} />
+                      <Route path={ClientRoutes.PostHistory} component={wrapperHeader(WrappedPostHistorySearchComponent, "Post History Search")} />
+					<Route path={ClientRoutes.PostHistoryTypes + "/create"} component={wrapperHeader(WrappedPostHistoryTypesCreateComponent, "Post History Types Create")} />
+                      <Route path={ClientRoutes.PostHistoryTypes + "/edit/:id"} component={wrapperHeader(WrappedPostHistoryTypesEditComponent, "Post History Types Edit")} />
+                      <Route path={ClientRoutes.PostHistoryTypes + "/:id"} component={wrapperHeader(WrappedPostHistoryTypesDetailComponent , "Post History Types Detail")} />
+                      <Route path={ClientRoutes.PostHistoryTypes} component={wrapperHeader(WrappedPostHistoryTypesSearchComponent, "Post History Types Search")} />
+					<Route path={ClientRoutes.PostLinks + "/create"} component={wrapperHeader(WrappedPostLinksCreateComponent, "Post Links Create")} />
+                      <Route path={ClientRoutes.PostLinks + "/edit/:id"} component={wrapperHeader(WrappedPostLinksEditComponent, "Post Links Edit")} />
+                      <Route path={ClientRoutes.PostLinks + "/:id"} component={wrapperHeader(WrappedPostLinksDetailComponent , "Post Links Detail")} />
+                      <Route path={ClientRoutes.PostLinks} component={wrapperHeader(WrappedPostLinksSearchComponent, "Post Links Search")} />
+					<Route path={ClientRoutes.Posts + "/create"} component={wrapperHeader(WrappedPostsCreateComponent, "Posts Create")} />
+                      <Route path={ClientRoutes.Posts + "/edit/:id"} component={wrapperHeader(WrappedPostsEditComponent, "Posts Edit")} />
+                      <Route path={ClientRoutes.Posts + "/:id"} component={wrapperHeader(WrappedPostsDetailComponent , "Posts Detail")} />
+                      <Route path={ClientRoutes.Posts} component={wrapperHeader(WrappedPostsSearchComponent, "Posts Search")} />
+					<Route path={ClientRoutes.PostTypes + "/create"} component={wrapperHeader(WrappedPostTypesCreateComponent, "Post Types Create")} />
+                      <Route path={ClientRoutes.PostTypes + "/edit/:id"} component={wrapperHeader(WrappedPostTypesEditComponent, "Post Types Edit")} />
+                      <Route path={ClientRoutes.PostTypes + "/:id"} component={wrapperHeader(WrappedPostTypesDetailComponent , "Post Types Detail")} />
+                      <Route path={ClientRoutes.PostTypes} component={wrapperHeader(WrappedPostTypesSearchComponent, "Post Types Search")} />
+					<Route path={ClientRoutes.Tags + "/create"} component={wrapperHeader(WrappedTagsCreateComponent, "Tags Create")} />
+                      <Route path={ClientRoutes.Tags + "/edit/:id"} component={wrapperHeader(WrappedTagsEditComponent, "Tags Edit")} />
+                      <Route path={ClientRoutes.Tags + "/:id"} component={wrapperHeader(WrappedTagsDetailComponent , "Tags Detail")} />
+                      <Route path={ClientRoutes.Tags} component={wrapperHeader(WrappedTagsSearchComponent, "Tags Search")} />
+					<Route path={ClientRoutes.Users + "/create"} component={wrapperHeader(WrappedUsersCreateComponent, "Users Create")} />
+                      <Route path={ClientRoutes.Users + "/edit/:id"} component={wrapperHeader(WrappedUsersEditComponent, "Users Edit")} />
+                      <Route path={ClientRoutes.Users + "/:id"} component={wrapperHeader(WrappedUsersDetailComponent , "Users Detail")} />
+                      <Route path={ClientRoutes.Users} component={wrapperHeader(WrappedUsersSearchComponent, "Users Search")} />
+					<Route path={ClientRoutes.Votes + "/create"} component={wrapperHeader(WrappedVotesCreateComponent, "Votes Create")} />
+                      <Route path={ClientRoutes.Votes + "/edit/:id"} component={wrapperHeader(WrappedVotesEditComponent, "Votes Edit")} />
+                      <Route path={ClientRoutes.Votes + "/:id"} component={wrapperHeader(WrappedVotesDetailComponent , "Votes Detail")} />
+                      <Route path={ClientRoutes.Votes} component={wrapperHeader(WrappedVotesSearchComponent, "Votes Search")} />
+					<Route path={ClientRoutes.VoteTypes + "/create"} component={wrapperHeader(WrappedVoteTypesCreateComponent, "Vote Types Create")} />
+                      <Route path={ClientRoutes.VoteTypes + "/edit/:id"} component={wrapperHeader(WrappedVoteTypesEditComponent, "Vote Types Edit")} />
+                      <Route path={ClientRoutes.VoteTypes + "/:id"} component={wrapperHeader(WrappedVoteTypesDetailComponent , "Vote Types Detail")} />
+                      <Route path={ClientRoutes.VoteTypes} component={wrapperHeader(WrappedVoteTypesSearchComponent, "Vote Types Search")} />
 					        </Switch>
 	  </Security>
     </BrowserRouter>
@@ -127,5 +127,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>9a609020ed24909e3b45e0d907db8f5c</Hash>
+    <Hash>8b05ef94a6fab90b8bba56b1e78b9949</Hash>
 </Codenesium>*/

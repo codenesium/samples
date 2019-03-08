@@ -6,7 +6,9 @@ import SpeciesMapper from './speciesMapper';
 import SpeciesViewModel from './speciesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { BreedTableComponent } from '../shared/breedTable';
+
+
+
 
 interface SpeciesDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +25,21 @@ interface SpeciesDetailComponentState {
 }
 
 class SpeciesDetailComponent extends React.Component<
-  SpeciesDetailComponentProps,
-  SpeciesDetailComponentState
+SpeciesDetailComponentProps,
+SpeciesDetailComponentState
 > {
   state = {
     model: new SpeciesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Species + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Species + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,48 +85,35 @@ class SpeciesDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
-            <h3>Breeds</h3>
-            <BreedTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Species +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Breeds
-              }
-            />
-          </div>
+
+
         </div>
       );
     } else {
@@ -135,11 +122,10 @@ class SpeciesDetailComponent extends React.Component<
   }
 }
 
-export const WrappedSpeciesDetailComponent = Form.create({
-  name: 'Species Detail',
-})(SpeciesDetailComponent);
-
+export const WrappedSpeciesDetailComponent = Form.create({ name: 'Species Detail' })(
+  SpeciesDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>aa9c5afb19f799a13a9c80dceaa40395</Hash>
+    <Hash>80348061c0fbebfc594975cb4205c0ab</Hash>
 </Codenesium>*/

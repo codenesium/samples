@@ -165,16 +165,20 @@ class ChainEditComponent extends React.Component<
 
         return ( 
          <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='chainStatusId'>ChainStatusId</label>
-              <br />             
-              {getFieldDecorator('chainStatusId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"ChainStatusId"} /> )}
-              </Form.Item>
+            			
+                        <Form.Item>
+                        <label htmlFor='chainStatusId'>ChainStatusId</label>
+                        <br />   
+                        <ChainStatusSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.ChainStatuses}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="chainStatusId"
+                          required={true}
+                          selectedValue={this.state.model!.chainStatusId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
               <label htmlFor='externalId'>ExternalId</label>
@@ -199,16 +203,20 @@ class ChainEditComponent extends React.Component<
               ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='teamId'>TeamId</label>
-              <br />             
-              {getFieldDecorator('teamId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"TeamId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='teamId'>TeamId</label>
+                        <br />   
+                        <TeamSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Teams}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="teamId"
+                          required={true}
+                          selectedValue={this.state.model!.teamId}
+                         />
+                        </Form.Item>
 
 			
             <Form.Item>
@@ -227,5 +235,5 @@ class ChainEditComponent extends React.Component<
 export const WrappedChainEditComponent = Form.create({ name: 'Chain Edit' })(ChainEditComponent);
 
 /*<Codenesium>
-    <Hash>8f0fa66ae0a69b7b7995db4b9a9d1048</Hash>
+    <Hash>78ff0a299569352c7026f9b8014005d5</Hash>
 </Codenesium>*/

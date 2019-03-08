@@ -161,7 +161,7 @@ export default class FileTypeSearchComponent extends React.Component<FileTypeSea
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'FileTypes',
+                    Header: 'File Types',
                     columns: [
 					  {
                       Header: 'Name',
@@ -225,5 +225,5 @@ export default class FileTypeSearchComponent extends React.Component<FileTypeSea
 export const WrappedFileTypeSearchComponent = Form.create({ name: 'FileType Search' })(FileTypeSearchComponent);
 
 /*<Codenesium>
-    <Hash>782059e8d8a534f8ae96164360a776f5</Hash>
+    <Hash>39d96dc5c825de3c94ac23380d483907</Hash>
 </Codenesium>*/

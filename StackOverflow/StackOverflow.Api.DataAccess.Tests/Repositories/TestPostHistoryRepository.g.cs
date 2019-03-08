@@ -73,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostHistoryRepository(loggerMoc.Object, context);
 
 			PostHistory entity = new PostHistory();
-			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B", "B", 1);
 			context.Set<PostHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostHistoryRepository(loggerMoc.Object, context);
 
 			var entity = new PostHistory();
-			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B", "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<PostHistory>().Where(x => true).ToListAsync();
@@ -105,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostHistoryRepositoryMoc.GetContext();
 			var repository = new PostHistoryRepository(loggerMoc.Object, context);
 			PostHistory entity = new PostHistory();
-			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B", "B", 1);
 			context.Set<PostHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostHistoryRepositoryMoc.GetContext();
 			var repository = new PostHistoryRepository(loggerMoc.Object, context);
 			PostHistory entity = new PostHistory();
-			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B", "B", 1);
 			context.Set<PostHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostHistoryRepositoryMoc.GetContext();
 			var repository = new PostHistoryRepository(loggerMoc.Object, context);
 			PostHistory entity = new PostHistory();
-			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B", "B", 1);
 			context.Set<PostHistory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58500623849b4505f374b584b74e6fff</Hash>
+    <Hash>51c675194ad987124ac42f0e82e279de</Hash>
 </Codenesium>*/

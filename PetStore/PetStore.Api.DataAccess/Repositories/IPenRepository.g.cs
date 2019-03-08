@@ -16,11 +16,9 @@ namespace PetStoreNS.Api.DataAccess
 		Task<Pen> Get(int id);
 
 		Task<List<Pen>> All(int limit = int.MaxValue, int offset = 0, string query = "");
-
-		Task<List<Pet>> PetsByPenId(int penId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>75f63beedfa46168b64602217239f9b6</Hash>
+    <Hash>0da84ab539f3cee11f175878622562ba</Hash>
 </Codenesium>*/

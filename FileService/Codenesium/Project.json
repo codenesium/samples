@@ -1506,33 +1506,6 @@
       },
       {
         "$id": "89",
-        "Table": "File",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "File",
-        "AppTableNamePlural": "Files",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id",
-        "AppViewLabel": "Files",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "90",
         "Table": "FileType",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -1559,7 +1532,7 @@
         "AppViewIcon": ""
       },
       {
-        "$id": "91",
+        "$id": "90",
         "Table": "Bucket",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -1583,6 +1556,33 @@
         "AppPatchMethodAttribute": "",
         "ForeignKeyDisplayColumn": "this.name",
         "AppViewLabel": "Buckets",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "91",
+        "Table": "File",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "File",
+        "AppTableNamePlural": "Files",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.externalId",
+        "AppViewLabel": "Files",
         "AppViewIcon": ""
       }
     ],
@@ -1671,26 +1671,6 @@
         "$id": "96",
         "Table": "File",
         "Schema": "dbo",
-        "Column": "Expiration",
-        "AppCLRType": "DateTime",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 11,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "",
-        "AppName": "Expiration",
-        "AppNamePlural": "Expirations"
-      },
-      {
-        "$id": "97",
-        "Table": "File",
-        "Schema": "dbo",
         "Column": "Extension",
         "AppCLRType": "string",
         "AppDoNotProcess": false,
@@ -1708,7 +1688,7 @@
         "AppNamePlural": "Extensions"
       },
       {
-        "$id": "98",
+        "$id": "97",
         "Table": "File",
         "Schema": "dbo",
         "Column": "ExternalId",
@@ -1728,7 +1708,7 @@
         "AppNamePlural": "ExternalIds"
       },
       {
-        "$id": "99",
+        "$id": "98",
         "Table": "File",
         "Schema": "dbo",
         "Column": "FileSizeInByte",
@@ -1748,7 +1728,7 @@
         "AppNamePlural": "FileSizeInBytes"
       },
       {
-        "$id": "100",
+        "$id": "99",
         "Table": "File",
         "Schema": "dbo",
         "Column": "Location",
@@ -1768,7 +1748,7 @@
         "AppNamePlural": "Locations"
       },
       {
-        "$id": "101",
+        "$id": "100",
         "Table": "File",
         "Schema": "dbo",
         "Column": "PrivateKey",
@@ -1788,7 +1768,7 @@
         "AppNamePlural": "PrivateKeys"
       },
       {
-        "$id": "102",
+        "$id": "101",
         "Table": "File",
         "Schema": "dbo",
         "Column": "PublicKey",
@@ -1808,7 +1788,7 @@
         "AppNamePlural": "PublicKeys"
       },
       {
-        "$id": "103",
+        "$id": "102",
         "Table": "FileType",
         "Schema": "dbo",
         "Column": "Name",
@@ -1828,7 +1808,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "104",
+        "$id": "103",
         "Table": "Bucket",
         "Schema": "dbo",
         "Column": "Id",
@@ -1848,7 +1828,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "105",
+        "$id": "104",
         "Table": "File",
         "Schema": "dbo",
         "Column": "Id",
@@ -1868,7 +1848,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "106",
+        "$id": "105",
         "Table": "FileType",
         "Schema": "dbo",
         "Column": "Id",
@@ -1888,7 +1868,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "107",
+        "$id": "106",
         "Table": "VersionInfo",
         "Schema": "dbo",
         "Column": "Version",
@@ -1908,7 +1888,7 @@
         "AppNamePlural": "Versions"
       },
       {
-        "$id": "108",
+        "$id": "107",
         "Table": "File",
         "Schema": "dbo",
         "Column": "BucketId",
@@ -1928,7 +1908,7 @@
         "AppNamePlural": "BucketIds"
       },
       {
-        "$id": "109",
+        "$id": "108",
         "Table": "File",
         "Schema": "dbo",
         "Column": "FileTypeId",
@@ -1946,6 +1926,26 @@
         "AppViewControlLabel": "",
         "AppName": "FileTypeId",
         "AppNamePlural": "FileTypeIds"
+      },
+      {
+        "$id": "109",
+        "Table": "File",
+        "Schema": "dbo",
+        "Column": "Expiration",
+        "AppCLRType": "DateTime",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 3,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "",
+        "AppName": "Expiration",
+        "AppNamePlural": "Expirations"
       }
     ],
     "VirtualForeignKeys": [],

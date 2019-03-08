@@ -140,25 +140,25 @@ class SpaceCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">Description</label>
             <br />
             {getFieldDecorator('description', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input.TextArea placeholder={'description'} />)}
+            })(<Input.TextArea placeholder={'Description'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -185,5 +185,5 @@ export const WrappedSpaceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cddbc8132d8ec613e1964c9c4d8ebe4c</Hash>
+    <Hash>7bcba6081a3379ed97ea0eacdc0eb18a</Hash>
 </Codenesium>*/

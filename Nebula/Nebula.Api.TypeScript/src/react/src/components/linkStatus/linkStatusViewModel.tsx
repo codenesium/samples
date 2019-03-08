@@ -15,11 +15,11 @@ export default class LinkStatusViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>2dcbdb0c8c6d4e5c50586aac312a849e</Hash>
+    <Hash>d484e3e2d9f674ac748ee03c9c52b68a</Hash>
 </Codenesium>*/

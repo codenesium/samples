@@ -3,19 +3,15 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import PipelineStepStatusMapper from '../pipelineStepStatus/pipelineStepStatusMapper';
 import PipelineStepStatusViewModel from '../pipelineStepStatus/pipelineStepStatusViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
 interface PipelineStepStatusSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface PipelineStepStatusSelectComponentState {
@@ -23,46 +19,44 @@ interface PipelineStepStatusSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PipelineStepStatusViewModel>;
+  filteredRecords: Array<PipelineStepStatusViewModel>;
 }
 
-export class  PipelineStepStatusSelectComponent extends React.Component<
-PipelineStepStatusSelectComponentProps,
-PipelineStepStatusSelectComponentState
+export class PipelineStepStatusSelectComponent extends React.Component<
+  PipelineStepStatusSelectComponentProps,
+  PipelineStepStatusSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(
         resp => {
-          let response = resp.data as Array<Api.PipelineStepStatusClientResponseModel>;
+          let response = resp.data as Array<
+            Api.PipelineStepStatusClientResponseModel
+          >;
 
           console.log(response);
 
           let mapper = new PipelineStepStatusMapper();
-          
-          let devices:Array<PipelineStepStatusViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<PipelineStepStatusViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -87,46 +81,41 @@ PipelineStepStatusSelectComponentState
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
         <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:PipelineStepStatusViewModel) =>
-            {
-                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue,
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map(
+                (x: PipelineStepStatusViewModel) => {
+                  return (
+                    <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
+                  );
+                }
+              )}
+            </Select>
+          )}
+        </div>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>c2d771bbe55afe4bf391680b7b5977ad</Hash>
+    <Hash>7f607092804086a2768fcb6cf0e46798</Hash>
 </Codenesium>*/

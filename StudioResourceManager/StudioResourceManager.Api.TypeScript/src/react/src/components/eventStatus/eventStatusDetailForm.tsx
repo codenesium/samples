@@ -106,7 +106,7 @@ class EventStatusDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -141,5 +141,5 @@ export const WrappedEventStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>390623b62204827c3e26b771776b8363</Hash>
+    <Hash>934da6a80010486effb6fabeb28efe88</Hash>
 </Codenesium>*/

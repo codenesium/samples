@@ -138,7 +138,6 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			ApiPaymentTypeClientResponseModel response = await client.PaymentTypeGetAsync(1);
 
 			response.Should().NotBeNull();
-			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
 
@@ -169,36 +168,7 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 			List<ApiPaymentTypeClientResponseModel> response = await client.PaymentTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
-			response[0].Id.Should().Be(1);
 			response[0].Name.Should().Be("A");
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeySalesByPaymentTypeIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiSaleClientResponseModel> response = await client.SalesByPaymentTypeId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeySalesByPaymentTypeIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiSaleClientResponseModel> response = await client.SalesByPaymentTypeId(default(int));
-
-			response.Should().BeEmpty();
 		}
 
 		[Fact]
@@ -224,5 +194,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>ea9e0afba276fbf1ed69b58e83dcbbed</Hash>
+    <Hash>8b678c62d973aa976c7567fb190be267</Hash>
 </Codenesium>*/

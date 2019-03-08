@@ -12,9 +12,14 @@ interface WrapperHeaderProps {}
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
-displayName:string) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -30,70 +35,58 @@ displayName:string) => {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
+              <MenuItem
                 key="Home"
-				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}></Link>
+                <Link to={'/'} />
               </MenuItem>
 
-			   			   <MenuItem
-                key="breed"
-              >
-			  <Icon type="pie-chart" />
-              <span>Breeds</span>
-              <Link to={ClientRoutes.Breeds}></Link>
+              <MenuItem key="breed">
+                <Icon type="pie-chart" />
+                <span>Breeds</span>
+                <Link to={ClientRoutes.Breeds} />
               </MenuItem>
 
-							   <MenuItem
-                key="paymentType"
-              >
-			  <Icon type="rise" />
-              <span>Payment Types</span>
-              <Link to={ClientRoutes.PaymentTypes}></Link>
+              <MenuItem key="paymentType">
+                <Icon type="rise" />
+                <span>Payment Types</span>
+                <Link to={ClientRoutes.PaymentTypes} />
               </MenuItem>
 
-							   <MenuItem
-                key="pen"
-              >
-			  <Icon type="bars" />
-              <span>Pens</span>
-              <Link to={ClientRoutes.Pens}></Link>
+              <MenuItem key="pen">
+                <Icon type="bars" />
+                <span>Pens</span>
+                <Link to={ClientRoutes.Pens} />
               </MenuItem>
 
-							   <MenuItem
-                key="pet"
-              >
-			  <Icon type="cloud" />
-              <span>Pets</span>
-              <Link to={ClientRoutes.Pets}></Link>
+              <MenuItem key="pet">
+                <Icon type="cloud" />
+                <span>Pets</span>
+                <Link to={ClientRoutes.Pets} />
               </MenuItem>
 
-							   <MenuItem
-                key="sale"
-              >
-			  <Icon type="code" />
-              <span>Sales</span>
-              <Link to={ClientRoutes.Sales}></Link>
+              <MenuItem key="sale">
+                <Icon type="code" />
+                <span>Sales</span>
+                <Link to={ClientRoutes.Sales} />
               </MenuItem>
 
-							   <MenuItem
-                key="species"
-              >
-			  <Icon type="smile" />
-              <span>Species</span>
-              <Link to={ClientRoutes.Species}></Link>
+              <MenuItem key="species">
+                <Icon type="smile" />
+                <span>Species</span>
+                <Link to={ClientRoutes.Species} />
               </MenuItem>
-
-				
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-            <h2>{displayName}</h2>
-			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+              <h2>{displayName}</h2>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Component {...this.props} />
               </div>
             </Content>
@@ -106,6 +99,7 @@ displayName:string) => {
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>d6a60fbe0bdcc66e642cd237226bcc55</Hash>
+    <Hash>2b39d1610dae003d2ddca5af493baf71</Hash>
 </Codenesium>*/

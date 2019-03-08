@@ -1,0 +1,167 @@
+using StackOverflowNS.Api.Contracts;
+using StackOverflowNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+
+namespace StackOverflowNS.Api.Services
+{
+	public abstract class AbstractDALPostsMapper
+	{
+		public virtual Posts MapModelToEntity(
+			int id,
+			ApiPostsServerRequestModel model
+			)
+		{
+			Posts item = new Posts();
+			item.SetProperties(
+				id,
+				model.AcceptedAnswerId,
+				model.AnswerCount,
+				model.Body,
+				model.ClosedDate,
+				model.CommentCount,
+				model.CommunityOwnedDate,
+				model.CreationDate,
+				model.FavoriteCount,
+				model.LastActivityDate,
+				model.LastEditDate,
+				model.LastEditorDisplayName,
+				model.LastEditorUserId,
+				model.OwnerUserId,
+				model.ParentId,
+				model.PostTypeId,
+				model.Score,
+				model.Tag,
+				model.Title,
+				model.ViewCount);
+			return item;
+		}
+
+		public virtual ApiPostsServerResponseModel MapEntityToModel(
+			Posts item)
+		{
+			var model = new ApiPostsServerResponseModel();
+
+			model.SetProperties(item.Id,
+			                    item.AcceptedAnswerId,
+			                    item.AnswerCount,
+			                    item.Body,
+			                    item.ClosedDate,
+			                    item.CommentCount,
+			                    item.CommunityOwnedDate,
+			                    item.CreationDate,
+			                    item.FavoriteCount,
+			                    item.LastActivityDate,
+			                    item.LastEditDate,
+			                    item.LastEditorDisplayName,
+			                    item.LastEditorUserId,
+			                    item.OwnerUserId,
+			                    item.ParentId,
+			                    item.PostTypeId,
+			                    item.Score,
+			                    item.Tag,
+			                    item.Title,
+			                    item.ViewCount);
+			if (item.LastEditorUserIdNavigation != null)
+			{
+				var lastEditorUserIdModel = new ApiUsersServerResponseModel();
+				lastEditorUserIdModel.SetProperties(
+					item.LastEditorUserIdNavigation.Id,
+					item.LastEditorUserIdNavigation.AboutMe,
+					item.LastEditorUserIdNavigation.AccountId,
+					item.LastEditorUserIdNavigation.Age,
+					item.LastEditorUserIdNavigation.CreationDate,
+					item.LastEditorUserIdNavigation.DisplayName,
+					item.LastEditorUserIdNavigation.DownVote,
+					item.LastEditorUserIdNavigation.EmailHash,
+					item.LastEditorUserIdNavigation.LastAccessDate,
+					item.LastEditorUserIdNavigation.Location,
+					item.LastEditorUserIdNavigation.Reputation,
+					item.LastEditorUserIdNavigation.UpVote,
+					item.LastEditorUserIdNavigation.View,
+					item.LastEditorUserIdNavigation.WebsiteUrl);
+
+				model.SetLastEditorUserIdNavigation(lastEditorUserIdModel);
+			}
+
+			if (item.OwnerUserIdNavigation != null)
+			{
+				var ownerUserIdModel = new ApiUsersServerResponseModel();
+				ownerUserIdModel.SetProperties(
+					item.OwnerUserIdNavigation.Id,
+					item.OwnerUserIdNavigation.AboutMe,
+					item.OwnerUserIdNavigation.AccountId,
+					item.OwnerUserIdNavigation.Age,
+					item.OwnerUserIdNavigation.CreationDate,
+					item.OwnerUserIdNavigation.DisplayName,
+					item.OwnerUserIdNavigation.DownVote,
+					item.OwnerUserIdNavigation.EmailHash,
+					item.OwnerUserIdNavigation.LastAccessDate,
+					item.OwnerUserIdNavigation.Location,
+					item.OwnerUserIdNavigation.Reputation,
+					item.OwnerUserIdNavigation.UpVote,
+					item.OwnerUserIdNavigation.View,
+					item.OwnerUserIdNavigation.WebsiteUrl);
+
+				model.SetOwnerUserIdNavigation(ownerUserIdModel);
+			}
+
+			if (item.ParentIdNavigation != null)
+			{
+				var parentIdModel = new ApiPostsServerResponseModel();
+				parentIdModel.SetProperties(
+					item.ParentIdNavigation.Id,
+					item.ParentIdNavigation.AcceptedAnswerId,
+					item.ParentIdNavigation.AnswerCount,
+					item.ParentIdNavigation.Body,
+					item.ParentIdNavigation.ClosedDate,
+					item.ParentIdNavigation.CommentCount,
+					item.ParentIdNavigation.CommunityOwnedDate,
+					item.ParentIdNavigation.CreationDate,
+					item.ParentIdNavigation.FavoriteCount,
+					item.ParentIdNavigation.LastActivityDate,
+					item.ParentIdNavigation.LastEditDate,
+					item.ParentIdNavigation.LastEditorDisplayName,
+					item.ParentIdNavigation.LastEditorUserId,
+					item.ParentIdNavigation.OwnerUserId,
+					item.ParentIdNavigation.ParentId,
+					item.ParentIdNavigation.PostTypeId,
+					item.ParentIdNavigation.Score,
+					item.ParentIdNavigation.Tag,
+					item.ParentIdNavigation.Title,
+					item.ParentIdNavigation.ViewCount);
+
+				model.SetParentIdNavigation(parentIdModel);
+			}
+
+			if (item.PostTypeIdNavigation != null)
+			{
+				var postTypeIdModel = new ApiPostTypesServerResponseModel();
+				postTypeIdModel.SetProperties(
+					item.PostTypeIdNavigation.Id,
+					item.PostTypeIdNavigation.RwType);
+
+				model.SetPostTypeIdNavigation(postTypeIdModel);
+			}
+
+			return model;
+		}
+
+		public virtual List<ApiPostsServerResponseModel> MapEntityToModel(
+			List<Posts> items)
+		{
+			List<ApiPostsServerResponseModel> response = new List<ApiPostsServerResponseModel>();
+
+			items.ForEach(x =>
+			{
+				response.Add(this.MapEntityToModel(x));
+			});
+
+			return response;
+		}
+	}
+}
+
+/*<Codenesium>
+    <Hash>07cfdc757ffabd9a9286a1b7076e8c14</Hash>
+</Codenesium>*/

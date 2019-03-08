@@ -166,7 +166,7 @@ class FileCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"Expiration"} /> )}
+              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Expiration"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -271,5 +271,5 @@ class FileCreateComponent extends React.Component<
 export const WrappedFileCreateComponent = Form.create({ name: 'File Create' })(FileCreateComponent);
 
 /*<Codenesium>
-    <Hash>328013bb0064b39cad1d8be04dad6b55</Hash>
+    <Hash>374a882d9ad8a7914dea0b7f34f2bf37</Hash>
 </Codenesium>*/

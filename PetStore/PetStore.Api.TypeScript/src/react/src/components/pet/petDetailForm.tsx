@@ -6,8 +6,7 @@ import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {SaleTableComponent} from '../shared/saleTable'
-	
+
 
 
 
@@ -108,37 +107,28 @@ PetDetailComponentState
 		  </Button>
 		  <div>
 									 <div>
-							<h3>acquiredDate</h3>
+							<h3>Acquired Date</h3>
 							<p>{String(this.state.model!.acquiredDate)}</p>
 						 </div>
 					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>breedId</h3>
+							<h3>Breed</h3>
 							<p>{String(this.state.model!.breedIdNavigation!.toDisplay())}</p>
 						 </div>
 					   						 <div>
-							<h3>description</h3>
+							<h3>Description</h3>
 							<p>{String(this.state.model!.description)}</p>
 						 </div>
 					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>penId</h3>
+							<h3>Pen</h3>
 							<p>{String(this.state.model!.penIdNavigation!.toDisplay())}</p>
 						 </div>
 					   						 <div>
-							<h3>price</h3>
+							<h3>Price</h3>
 							<p>{String(this.state.model!.price)}</p>
 						 </div>
 					   		  </div>
           {message}
-		 <div>
-            <h3>Sales</h3>
-            <SaleTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Pets + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
-			/>
-         </div>
-	
+
 
         </div>
       );
@@ -153,5 +143,5 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
 );
 
 /*<Codenesium>
-    <Hash>ca57e02de18a22a466275f67e6059b13</Hash>
+    <Hash>d35bf920a69e72ebcbf24deaa3f387e0</Hash>
 </Codenesium>*/

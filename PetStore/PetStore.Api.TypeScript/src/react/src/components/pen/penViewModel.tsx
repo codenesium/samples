@@ -1,16 +1,13 @@
 import moment from 'moment';
 
 export default class PenViewModel {
-  id: number;
   name: string;
 
   constructor() {
-    this.id = 0;
     this.name = '';
   }
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
+  setProperties(name: string): void {
     this.name = name;
   }
 
@@ -21,5 +18,5 @@ export default class PenViewModel {
 
 
 /*<Codenesium>
-    <Hash>00fbb4650fbfdfae53f510dc92cab850</Hash>
+    <Hash>753fa2dab83e6e6ae8a47d4b2fb55edc</Hash>
 </Codenesium>*/

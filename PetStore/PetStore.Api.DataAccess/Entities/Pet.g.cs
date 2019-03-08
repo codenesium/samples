@@ -39,10 +39,6 @@ namespace PetStoreNS.Api.DataAccess
 		[Column("description")]
 		public virtual string Description { get; private set; }
 
-		[Key]
-		[Column("id")]
-		public virtual int Id { get; private set; }
-
 		[Column("penId")]
 		public virtual int PenId { get; private set; }
 
@@ -68,5 +64,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>75a21e3ef8e65f8b6db2a9c3b4974bd1</Hash>
+    <Hash>80daa1df29714cf320b6a3e6fe5d6dfe</Hash>
 </Codenesium>*/

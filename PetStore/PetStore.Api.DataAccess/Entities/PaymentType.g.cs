@@ -21,10 +21,6 @@ namespace PetStoreNS.Api.DataAccess
 			this.Name = name;
 		}
 
-		[Key]
-		[Column("id")]
-		public virtual int Id { get; private set; }
-
 		[MaxLength(128)]
 		[Column("name")]
 		public virtual string Name { get; private set; }
@@ -32,5 +28,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51647ad89be6168adfb2b8eaad35fca9</Hash>
+    <Hash>e64b8bfffea76d5b9dbc388a69d36132</Hash>
 </Codenesium>*/

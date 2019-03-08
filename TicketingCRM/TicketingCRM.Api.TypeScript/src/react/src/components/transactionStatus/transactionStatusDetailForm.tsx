@@ -106,7 +106,7 @@ class TransactionStatusDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -141,5 +141,5 @@ export const WrappedTransactionStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0a88f90be1ccbb8a494ecf9a579d3a06</Hash>
+    <Hash>e81abe2097097d483f549aceb540e7d3</Hash>
 </Codenesium>*/

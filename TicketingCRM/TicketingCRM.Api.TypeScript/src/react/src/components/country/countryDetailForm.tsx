@@ -106,7 +106,7 @@ class CountryDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -141,5 +141,5 @@ export const WrappedCountryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a523db8eecbafb516eb517fc252577a2</Hash>
+    <Hash>1db0de610ebb57849204a5d9e7a5d115</Hash>
 </Codenesium>*/

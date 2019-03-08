@@ -124,19 +124,19 @@ handleEditClick(e:any, row: SaleViewModel) {
                       return <span>{String(props.original.amount)}</span>;
                       }           
                     },  {
-                      Header: 'FirstName',
+                      Header: 'First Name',
                       accessor: 'firstName',
                       Cell: (props) => {
                       return <span>{String(props.original.firstName)}</span>;
                       }           
                     },  {
-                      Header: 'LastName',
+                      Header: 'Last Name',
                       accessor: 'lastName',
                       Cell: (props) => {
                       return <span>{String(props.original.lastName)}</span>;
                       }           
                     },  {
-                      Header: 'PaymentTypeId',
+                      Header: 'Payment Type',
                       accessor: 'paymentTypeId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.PaymentTypes + '/' + props.original.paymentTypeId); }}>
@@ -146,7 +146,7 @@ handleEditClick(e:any, row: SaleViewModel) {
                         </a>
                       }           
                     },  {
-                      Header: 'PetId',
+                      Header: 'Pet',
                       accessor: 'petId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Pets + '/' + props.original.petId); }}>
@@ -202,5 +202,5 @@ handleEditClick(e:any, row: SaleViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>b4f4d817bed0906d71d66c4c15e26381</Hash>
+    <Hash>9d858918c2c7380affb5f85791d5a3eb</Hash>
 </Codenesium>*/

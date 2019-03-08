@@ -201,9 +201,117 @@ namespace StackOverflowNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostHistoryDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
+
+		[Fact]
+		public async void ByPostHistoryTypeId_Exists()
+		{
+			var mock = new ServiceMockFacade<IPostHistoryRepository>();
+			var records = new List<PostHistory>();
+			records.Add(new PostHistory());
+			mock.RepositoryMock.Setup(x => x.ByPostHistoryTypeId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
+			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
+
+			List<ApiPostHistoryServerResponseModel> response = await service.ByPostHistoryTypeId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByPostHistoryTypeId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByPostHistoryTypeId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IPostHistoryRepository>();
+			mock.RepositoryMock.Setup(x => x.ByPostHistoryTypeId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PostHistory>>(new List<PostHistory>()));
+			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
+			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
+
+			List<ApiPostHistoryServerResponseModel> response = await service.ByPostHistoryTypeId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByPostHistoryTypeId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByPostId_Exists()
+		{
+			var mock = new ServiceMockFacade<IPostHistoryRepository>();
+			var records = new List<PostHistory>();
+			records.Add(new PostHistory());
+			mock.RepositoryMock.Setup(x => x.ByPostId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
+			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
+
+			List<ApiPostHistoryServerResponseModel> response = await service.ByPostId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByPostId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByPostId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IPostHistoryRepository>();
+			mock.RepositoryMock.Setup(x => x.ByPostId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PostHistory>>(new List<PostHistory>()));
+			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
+			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
+
+			List<ApiPostHistoryServerResponseModel> response = await service.ByPostId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByPostId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByUserId_Exists()
+		{
+			var mock = new ServiceMockFacade<IPostHistoryRepository>();
+			var records = new List<PostHistory>();
+			records.Add(new PostHistory());
+			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
+			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
+
+			List<ApiPostHistoryServerResponseModel> response = await service.ByUserId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByUserId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IPostHistoryRepository>();
+			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PostHistory>>(new List<PostHistory>()));
+			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
+			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
+
+			List<ApiPostHistoryServerResponseModel> response = await service.ByUserId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4fe7cb3135d0260d783dadef7101fec3</Hash>
+    <Hash>034a3d8efa1f5fbe7ea5fd02da2e12b4</Hash>
 </Codenesium>*/

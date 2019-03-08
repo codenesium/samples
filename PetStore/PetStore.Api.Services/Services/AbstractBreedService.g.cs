@@ -17,8 +17,6 @@ namespace PetStoreNS.Api.Services
 
 		protected IDALBreedMapper DalBreedMapper { get; private set; }
 
-		protected IDALPetMapper DalPetMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractBreedService(
@@ -26,14 +24,12 @@ namespace PetStoreNS.Api.Services
 			MediatR.IMediator mediator,
 			IBreedRepository breedRepository,
 			IApiBreedServerRequestModelValidator breedModelValidator,
-			IDALBreedMapper dalBreedMapper,
-			IDALPetMapper dalPetMapper)
+			IDALBreedMapper dalBreedMapper)
 			: base()
 		{
 			this.BreedRepository = breedRepository;
 			this.BreedModelValidator = breedModelValidator;
 			this.DalBreedMapper = dalBreedMapper;
-			this.DalPetMapper = dalPetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -122,16 +118,9 @@ namespace PetStoreNS.Api.Services
 
 			return this.DalBreedMapper.MapEntityToModel(records);
 		}
-
-		public async virtual Task<List<ApiPetServerResponseModel>> PetsByBreedId(int breedId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Pet> records = await this.BreedRepository.PetsByBreedId(breedId, limit, offset);
-
-			return this.DalPetMapper.MapEntityToModel(records);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b8d67452d939e8ff1a83fd9a2c342ac1</Hash>
+    <Hash>d84e64cd3f91b8f2b750be9e123c837b</Hash>
 </Codenesium>*/

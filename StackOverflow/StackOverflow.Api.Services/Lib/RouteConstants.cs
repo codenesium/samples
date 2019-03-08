@@ -11,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 		public const string Badges = "badges";
 		public const string Comments = "comments";
 		public const string LinkTypes = "linktypes";
-		public const string PostHistories = "posthistories";
+		public const string PostHistory = "posthistory";
 		public const string PostHistoryTypes = "posthistorytypes";
 		public const string PostLinks = "postlinks";
 		public const string Posts = "posts";
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>065b84a16706f0901091da5dfd702a66</Hash>
+    <Hash>c41ce4bf8f8dc3c87517c4ca48e7f862</Hash>
 </Codenesium>*/

@@ -18,53 +18,53 @@ namespace StackOverflowNS.Api.DataAccess
 
 		public virtual async Task Migrate()
 		{
-			var badgeItem1 = new Badge();
-			badgeItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-			this.Context.Badges.Add(badgeItem1);
+			var badgesItem1 = new Badges();
+			badgesItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
+			this.Context.Badges.Add(badgesItem1);
 
-			var commentItem1 = new Comment();
-			commentItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", 1);
-			this.Context.Comments.Add(commentItem1);
+			var commentsItem1 = new Comments();
+			commentsItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", 1);
+			this.Context.Comments.Add(commentsItem1);
 
-			var linkTypeItem1 = new LinkType();
-			linkTypeItem1.SetProperties(1, "A");
-			this.Context.LinkTypes.Add(linkTypeItem1);
+			var linkTypesItem1 = new LinkTypes();
+			linkTypesItem1.SetProperties(1, "A");
+			this.Context.LinkTypes.Add(linkTypesItem1);
 
 			var postHistoryItem1 = new PostHistory();
 			postHistoryItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", "A", "A", 1);
-			this.Context.PostHistories.Add(postHistoryItem1);
+			this.Context.PostHistory.Add(postHistoryItem1);
 
-			var postHistoryTypeItem1 = new PostHistoryType();
-			postHistoryTypeItem1.SetProperties(1, "A");
-			this.Context.PostHistoryTypes.Add(postHistoryTypeItem1);
+			var postHistoryTypesItem1 = new PostHistoryTypes();
+			postHistoryTypesItem1.SetProperties(1, "A");
+			this.Context.PostHistoryTypes.Add(postHistoryTypesItem1);
 
-			var postLinkItem1 = new PostLink();
-			postLinkItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-			this.Context.PostLinks.Add(postLinkItem1);
+			var postLinksItem1 = new PostLinks();
+			postLinksItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+			this.Context.PostLinks.Add(postLinksItem1);
 
-			var postItem1 = new Post();
-			postItem1.SetProperties(1, 1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, 1, 1, "A", "A", 1);
-			this.Context.Posts.Add(postItem1);
+			var postsItem1 = new Posts();
+			postsItem1.SetProperties(1, 1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, 1, 1, "A", "A", 1);
+			this.Context.Posts.Add(postsItem1);
 
-			var postTypeItem1 = new PostType();
-			postTypeItem1.SetProperties(1, "A");
-			this.Context.PostTypes.Add(postTypeItem1);
+			var postTypesItem1 = new PostTypes();
+			postTypesItem1.SetProperties(1, "A");
+			this.Context.PostTypes.Add(postTypesItem1);
 
-			var tagItem1 = new Tag();
-			tagItem1.SetProperties(1, 1, 1, "A", 1);
-			this.Context.Tags.Add(tagItem1);
+			var tagsItem1 = new Tags();
+			tagsItem1.SetProperties(1, 1, 1, "A", 1);
+			this.Context.Tags.Add(tagsItem1);
 
-			var userItem1 = new User();
-			userItem1.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
-			this.Context.Users.Add(userItem1);
+			var usersItem1 = new Users();
+			usersItem1.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
+			this.Context.Users.Add(usersItem1);
 
-			var voteItem1 = new Vote();
-			voteItem1.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-			this.Context.Votes.Add(voteItem1);
+			var votesItem1 = new Votes();
+			votesItem1.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
+			this.Context.Votes.Add(votesItem1);
 
-			var voteTypeItem1 = new VoteType();
-			voteTypeItem1.SetProperties(1, "A");
-			this.Context.VoteTypes.Add(voteTypeItem1);
+			var voteTypesItem1 = new VoteTypes();
+			voteTypesItem1.SetProperties(1, "A");
+			this.Context.VoteTypes.Add(voteTypesItem1);
 
 			await this.Context.SaveChangesAsync();
 		}
@@ -72,5 +72,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7f77a3ec0547dd980de1c13288fec0c8</Hash>
+    <Hash>294e2208e3296d6092add1880d9f5cc7</Hash>
 </Codenesium>*/

@@ -130,14 +130,6 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiBreedClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPetClientResponseModel>> PetsByBreedId(int breedId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Breeds/{breedId}/Pets", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiPetClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<CreateResponse<List<ApiPaymentTypeClientResponseModel>>> PaymentTypeBulkInsertAsync(List<ApiPaymentTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PaymentTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -201,14 +193,6 @@ namespace PetStoreNS.Api.Client
 			}
 
 			return response;
-		}
-
-		public virtual async Task<List<ApiSaleClientResponseModel>> SalesByPaymentTypeId(int paymentTypeId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/PaymentTypes/{paymentTypeId}/Sales", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiSaleClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiPenClientResponseModel>>> PenBulkInsertAsync(List<ApiPenClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -276,14 +260,6 @@ namespace PetStoreNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiPetClientResponseModel>> PetsByPenId(int penId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Pens/{penId}/Pets", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiPetClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<CreateResponse<List<ApiPetClientResponseModel>>> PetBulkInsertAsync(List<ApiPetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Pets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -347,14 +323,6 @@ namespace PetStoreNS.Api.Client
 			}
 
 			return response;
-		}
-
-		public virtual async Task<List<ApiSaleClientResponseModel>> SalesByPetId(int petId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Pets/{petId}/Sales", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiSaleClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiSaleClientResponseModel>>> SaleBulkInsertAsync(List<ApiSaleClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -487,14 +455,6 @@ namespace PetStoreNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiBreedClientResponseModel>> BreedsBySpeciesId(int speciesId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Species/{speciesId}/Breeds", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiBreedClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
@@ -523,5 +483,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>708ec9021ee83da0afa45ef6aeafb429</Hash>
+    <Hash>e55736e8901dae0bd0d310517d81fcab</Hash>
 </Codenesium>*/

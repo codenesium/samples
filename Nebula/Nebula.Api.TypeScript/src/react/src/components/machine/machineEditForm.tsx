@@ -190,7 +190,7 @@ class MachineEditComponent extends React.Component<
             <br />
             {getFieldDecorator('description', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Description'} />)}
+            })(<Input.TextArea placeholder={'Description'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -258,5 +258,5 @@ export const WrappedMachineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8a1c5fff36b8663d821ddea5ed96c0cb</Hash>
+    <Hash>a89b547cc8946a3f6a1b79a6b9bf2085</Hash>
 </Codenesium>*/

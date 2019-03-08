@@ -138,7 +138,7 @@ export class EventTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Status',
+                    Header: 'Event Status',
                     accessor: 'eventStatusId',
                     Cell: props => {
                       return (
@@ -179,14 +179,14 @@ export class EventTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Student Notes',
+                    Header: 'Student Note',
                     accessor: 'studentNote',
                     Cell: props => {
                       return <span>{String(props.original.studentNote)}</span>;
                     },
                   },
                   {
-                    Header: 'Teacher notes',
+                    Header: 'Teacher Note',
                     accessor: 'teacherNote',
                     Cell: props => {
                       return <span>{String(props.original.teacherNote)}</span>;
@@ -237,5 +237,5 @@ export class EventTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e3a228880758d2d415536ad4d4937c6f</Hash>
+    <Hash>6f198a584afdb0fef7ab6ba761dcbd61</Hash>
 </Codenesium>*/

@@ -1,0 +1,68 @@
+version: '2'
+
+services:
+  app:
+    container_name: 'espiotpostgres-app'
+    image: 'espiotpostgres-app'
+    build:
+      context: .
+      dockerfile: DockerFileReact
+      args:
+      - REACT_APP_API_URL=http://192.168.99.100:81/
+    environment:
+       - REACT_APP_API_URL=http://192.168.99.100:81/
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "80:80"
+    networks:
+      - espiotpostgres-network
+
+  api:
+    container_name: 'espiotpostgres-api'
+    image: 'espiotpostgres-api'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:81
+       - ConnectionStrings__ApplicationDbContext=Host=espiotpostgres-db;Persist Security Info=False;User ID=postgres;Password=test;Database=espiotpostgres;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
+    volumes:
+      - .:/var/www/api
+    ports:
+     - "81:81"
+    depends_on:
+     - "db"
+    networks:
+      - espiotpostgres-network
+
+  db:
+    container_name: 'espiotpostgres-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: espiotpostgres
+    networks:
+      - espiotpostgres-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+  watchtower:
+    container_name: 'watchtower'
+    image: v2tec/watchtower
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    networks:
+      - espiotpostgres-network
+volumes:
+     pgdata:
+
+networks:
+    espiotpostgres-network:
+       driver: bridge

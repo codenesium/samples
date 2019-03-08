@@ -6,11 +6,11 @@ import MessageMapper from '../message/messageMapper';
 import MessageViewModel from '../message/messageViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface MessageTableComponentProps {
-  message_id: number;
-  apiRoute: string;
+  message_id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface MessageTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<MessageViewModel>;
+  filteredRecords : Array<MessageViewModel>;
 }
 
-export class MessageTableComponent extends React.Component<
-  MessageTableComponentProps,
-  MessageTableComponentState
+export class  MessageTableComponent extends React.Component<
+MessageTableComponentProps,
+MessageTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: MessageViewModel) {
-    this.props.history.push(ClientRoutes.Messages + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: MessageViewModel) {
+  this.props.history.push(ClientRoutes.Messages + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: MessageViewModel) {
-    this.props.history.push(ClientRoutes.Messages + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: MessageViewModel) {
+   this.props.history.push(ClientRoutes.Messages + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.MessageClientResponseModel>;
@@ -63,11 +65,12 @@ export class MessageTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new MessageMapper();
+          
+          let messages:Array<MessageViewModel> = [];
 
-          let messages: Array<MessageViewModel> = [];
-
-          response.forEach(x => {
-            messages.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              messages.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,64 +95,52 @@ export class MessageTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Messages',
-                columns: [
-                  {
-                    Header: 'Content',
-                    accessor: 'content',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Messages',
+                    columns: [
+					  {
+                      Header: 'Content',
+                      accessor: 'content',
+                      Cell: (props) => {
                       return <span>{String(props.original.content)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Sender_user_id',
-                    accessor: 'senderUserId',
-                    Cell: props => {
-                      return (
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.history.push(
-                              ClientRoutes.Users +
-                                '/' +
-                                props.original.senderUserId
-                            );
-                          }}
-                        >
+                      }           
+                    },  {
+                      Header: 'Sender_user_id',
+                      accessor: 'senderUserId',
+                      Cell: (props) => {
+                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Users + '/' + props.original.senderUserId); }}>
                           {String(
                             props.original.senderUserIdNavigation.toDisplay()
                           )}
                         </a>
-                      );
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as MessageViewModel
@@ -160,8 +151,8 @@ export class MessageTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as MessageViewModel
@@ -170,14 +161,11 @@ export class MessageTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -185,7 +173,6 @@ export class MessageTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>c7a0a5b14f99bed4a924a04f0a452864</Hash>
+    <Hash>a5bb7352c91566e4458072bf69be1965</Hash>
 </Codenesium>*/

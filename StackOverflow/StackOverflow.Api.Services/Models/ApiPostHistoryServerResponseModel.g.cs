@@ -44,7 +44,29 @@ namespace StackOverflowNS.Api.Services
 		public int PostHistoryTypeId { get; private set; }
 
 		[JsonProperty]
+		public string PostHistoryTypeIdEntity { get; private set; } = RouteConstants.PostHistoryTypes;
+
+		[JsonProperty]
+		public ApiPostHistoryTypesServerResponseModel PostHistoryTypeIdNavigation { get; private set; }
+
+		public void SetPostHistoryTypeIdNavigation(ApiPostHistoryTypesServerResponseModel value)
+		{
+			this.PostHistoryTypeIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int PostId { get; private set; }
+
+		[JsonProperty]
+		public string PostIdEntity { get; private set; } = RouteConstants.Posts;
+
+		[JsonProperty]
+		public ApiPostsServerResponseModel PostIdNavigation { get; private set; }
+
+		public void SetPostIdNavigation(ApiPostsServerResponseModel value)
+		{
+			this.PostIdNavigation = value;
+		}
 
 		[JsonProperty]
 		public string RevisionGUID { get; private set; }
@@ -60,9 +82,20 @@ namespace StackOverflowNS.Api.Services
 		[Required]
 		[JsonProperty]
 		public int? UserId { get; private set; }
+
+		[JsonProperty]
+		public string UserIdEntity { get; private set; } = RouteConstants.Users;
+
+		[JsonProperty]
+		public ApiUsersServerResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUsersServerResponseModel value)
+		{
+			this.UserIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5a8c1e94859ab4addf2d068a0d703b9</Hash>
+    <Hash>c5a606c6eb601b7b8dd46b4a09fcbd2e</Hash>
 </Codenesium>*/

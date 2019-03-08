@@ -161,7 +161,7 @@ export default class DeviceSearchComponent extends React.Component<DeviceSearchC
             <ReactTable 
                 data={this.state.filteredRecords}
                 columns={[{
-                    Header: 'Devices',
+                    Header: 'Device',
                     columns: [
 					  {
                       Header: 'Date of Last Ping',
@@ -243,5 +243,5 @@ export default class DeviceSearchComponent extends React.Component<DeviceSearchC
 export const WrappedDeviceSearchComponent = Form.create({ name: 'Device Search' })(DeviceSearchComponent);
 
 /*<Codenesium>
-    <Hash>1a16a0a1d4bb419b543aaee940081d80</Hash>
+    <Hash>561d9463595906866518c45e73b88c55</Hash>
 </Codenesium>*/

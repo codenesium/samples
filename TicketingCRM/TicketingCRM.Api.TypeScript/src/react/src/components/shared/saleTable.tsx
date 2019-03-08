@@ -113,28 +113,28 @@ export class SaleTableComponent extends React.Component<
                 Header: 'Sales',
                 columns: [
                   {
-                    Header: 'IpAddress',
+                    Header: 'Ip Address',
                     accessor: 'ipAddress',
                     Cell: props => {
                       return <span>{String(props.original.ipAddress)}</span>;
                     },
                   },
                   {
-                    Header: 'Notes',
+                    Header: 'Note',
                     accessor: 'note',
                     Cell: props => {
                       return <span>{String(props.original.note)}</span>;
                     },
                   },
                   {
-                    Header: 'SaleDate',
+                    Header: 'Sale Date',
                     accessor: 'saleDate',
                     Cell: props => {
                       return <span>{String(props.original.saleDate)}</span>;
                     },
                   },
                   {
-                    Header: 'TransactionId',
+                    Header: 'Transaction',
                     accessor: 'transactionId',
                     Cell: props => {
                       return (
@@ -201,5 +201,5 @@ export class SaleTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8a1cd927089961ca397b37a37ce1a2c2</Hash>
+    <Hash>1282a5a48d43e65a78c19e54e445a02e</Hash>
 </Codenesium>*/

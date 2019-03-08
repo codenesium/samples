@@ -221,11 +221,11 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="eventStatusId">status</label>
+            <label htmlFor="eventStatusId">Event Status</label>
             <br />
             {getFieldDecorator('eventStatusId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'status'} />)}
+            })(<InputNumber placeholder={'Event Status'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -255,19 +255,19 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="studentNote">Student Notes</label>
+            <label htmlFor="studentNote">Student Note</label>
             <br />
             {getFieldDecorator('studentNote', {
               rules: [],
-            })(<Input placeholder={'Student Notes'} />)}
+            })(<Input placeholder={'Student Note'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherNote">Teacher notes</label>
+            <label htmlFor="teacherNote">Teacher Note</label>
             <br />
             {getFieldDecorator('teacherNote', {
               rules: [],
-            })(<Input placeholder={'Teacher notes'} />)}
+            })(<Input placeholder={'Teacher Note'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -294,5 +294,5 @@ export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
 
 
 /*<Codenesium>
-    <Hash>fe9faf4264ed0d39d32337fc4f6b2495</Hash>
+    <Hash>0934df7798c33b2747da8bbc9c4b437e</Hash>
 </Codenesium>*/

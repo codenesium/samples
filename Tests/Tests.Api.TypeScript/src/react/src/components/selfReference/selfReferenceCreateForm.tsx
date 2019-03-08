@@ -8,7 +8,8 @@ import SelfReferenceViewModel from './selfReferenceViewModel';
 import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-
+import { SelfReferenceSelectComponent } from '../shared/selfReferenceSelect'
+	
 interface SelfReferenceCreateComponentProps {
   form:WrappedFormUtils;
   history:any;
@@ -156,5 +157,5 @@ class SelfReferenceCreateComponent extends React.Component<
 export const WrappedSelfReferenceCreateComponent = Form.create({ name: 'SelfReference Create' })(SelfReferenceCreateComponent);
 
 /*<Codenesium>
-    <Hash>80fe9bbcab24bf39ec6251b08867db51</Hash>
+    <Hash>20385c661e7828723c5120837f215d67</Hash>
 </Codenesium>*/

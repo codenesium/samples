@@ -106,7 +106,7 @@ class TicketStatusDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -141,5 +141,5 @@ export const WrappedTicketStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2c04a3460879477f9fb97aef9e36c378</Hash>
+    <Hash>88961550d89cabd07860703776855a2d</Hash>
 </Codenesium>*/

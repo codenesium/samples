@@ -127,7 +127,7 @@ class MachineCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"Description"} /> )}
+              ( <Input.TextArea placeholder={"Description"} /> )}
               </Form.Item>
 
 						<Form.Item>
@@ -194,5 +194,5 @@ class MachineCreateComponent extends React.Component<
 export const WrappedMachineCreateComponent = Form.create({ name: 'Machine Create' })(MachineCreateComponent);
 
 /*<Codenesium>
-    <Hash>a19d388618e7189cb3e8eed2f1cf31c0</Hash>
+    <Hash>4d8e01dca32454cb55c6f1e1fc48f6db</Hash>
 </Codenesium>*/

@@ -24,18 +24,18 @@ export default class LinkLogViewModel {
     linkId: number,
     log: string
   ): void {
-    this.dateEntered = dateEntered;
+    this.dateEntered = moment(dateEntered, 'YYYY-MM-DD');
     this.id = id;
     this.linkId = linkId;
     this.log = log;
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.linkId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>779dabd19212fdeaa12f6f2b6b8e4788</Hash>
+    <Hash>0fc9ffd7d6961bbf2b88614c642ebad1</Hash>
 </Codenesium>*/

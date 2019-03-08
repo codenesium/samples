@@ -5,24 +5,14 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceActionMapper from './deviceActionMapper';
 import DeviceActionViewModel from './deviceActionViewModel';
-import {
-  Form,
-  Input,
-  Button,
-  Switch,
-  InputNumber,
-  DatePicker,
-  Spin,
-  Alert,
-  TimePicker,
-} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { DeviceSelectComponent } from '../shared/deviceSelect';
-interface DeviceActionEditComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+import { DeviceSelectComponent } from '../shared/deviceSelect'
+	interface DeviceActionEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface DeviceActionEditComponentState {
@@ -31,8 +21,8 @@ interface DeviceActionEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted: boolean;
-  submitting: boolean;
+  submitted:boolean;
+  submitting:boolean;
 }
 
 class DeviceActionEditComponent extends React.Component<
@@ -45,11 +35,11 @@ class DeviceActionEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    submitted: false,
-    submitting: false,
+	submitted:false,
+	submitting:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -80,9 +70,7 @@ class DeviceActionEditComponent extends React.Component<
             errorMessage: '',
           });
 
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -95,30 +83,29 @@ class DeviceActionEditComponent extends React.Component<
           });
         }
       );
-  }
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.setState({ ...this.state, submitting: true, submitted: false });
-    this.props.form.validateFields((err: any, values: any) => {
-      if (!err) {
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
+     this.props.form.validateFields((err:any, values:any) => {
+     if (!err) {
         let model = values as DeviceActionViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      } else {
-        this.setState({ ...this.state, submitting: false, submitted: false });
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
-  submit = (model: DeviceActionViewModel) => {
+  submit = (model:DeviceActionViewModel) =>
+  {  
     let mapper = new DeviceActionMapper();
-    axios
+     axios
       .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.DeviceActions +
-          '/' +
-          this.state.model!.id,
+        Constants.ApiEndpoint + ApiRoutes.DeviceActions + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -131,121 +118,107 @@ class DeviceActionEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.DeviceActionClientRequestModel
           >;
-          this.setState({
-            ...this.state,
-            submitted: true,
-            submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
-            errorOccurred: false,
-            errorMessage: '',
-          });
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
-          this.setState({
-            ...this.state,
-            submitted: true,
-            submitting: false,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  };
-
+      ); 
+  }
+  
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-    } = this.props.form;
 
-    let message: JSX.Element = <div />;
-    if (this.state.submitted) {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type="error" />;
-      } else {
-        message = <Alert message="Submitted" type="success" />;
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } else if (this.state.loaded) {
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="action">Action</label>
-            <br />
-            {getFieldDecorator('action', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 4000, message: 'Exceeds max length of 4000' },
-              ],
-            })(<Input placeholder={'Action'} />)}
-          </Form.Item>
+    } 
+    else if (this.state.loaded) {
 
-          <Form.Item>
-            <label htmlFor="deviceId">Device</label>
-            <br />
-            <DeviceSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Devices}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="deviceId"
-              required={true}
-              selectedValue={this.state.model!.deviceId}
-            />
-          </Form.Item>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='action'>Action</label>
+              <br />             
+              {getFieldDecorator('action', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 4000, message: 'Exceeds max length of 4000' },
+],
+              
+              })
+              ( <Input placeholder={"Action"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="name">Name</label>
-            <br />
-            {getFieldDecorator('name', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 90, message: 'Exceeds max length of 90' },
-              ],
-            })(<Input placeholder={'Name'} />)}
-          </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='deviceId'>Device</label>
+                        <br />   
+                        <DeviceSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Devices}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="deviceId"
+                          required={true}
+                          selectedValue={this.state.model!.deviceId}
+                         />
+                        </Form.Item>
 
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={this.state.submitting}
-            >
-              {this.state.submitting ? 'Submitting...' : 'Submit'}
-            </Button>
-          </Form.Item>
-          {message}
-        </Form>
-      );
+						<Form.Item>
+              <label htmlFor='name'>Name</label>
+              <br />             
+              {getFieldDecorator('name', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 90, message: 'Exceeds max length of 90' },
+],
+              
+              })
+              ( <Input placeholder={"Name"} /> )}
+              </Form.Item>
+
+			
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
-export const WrappedDeviceActionEditComponent = Form.create({
-  name: 'DeviceAction Edit',
-})(DeviceActionEditComponent);
-
+export const WrappedDeviceActionEditComponent = Form.create({ name: 'DeviceAction Edit' })(DeviceActionEditComponent);
 
 /*<Codenesium>
-    <Hash>349ac343395482e06179591af0dc7bde</Hash>
+    <Hash>065ef257ac49462b1e2bdb6b80e209a5</Hash>
 </Codenesium>*/

@@ -189,17 +189,25 @@ class ClaspEditComponent extends React.Component<
           <Form.Item>
             <label htmlFor="nextChainId">NextChainId</label>
             <br />
-            {getFieldDecorator('nextChainId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'NextChainId'} />)}
+            <ChainSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="nextChainId"
+              required={true}
+              selectedValue={this.state.model!.nextChainId}
+            />
           </Form.Item>
 
           <Form.Item>
             <label htmlFor="previousChainId">PreviousChainId</label>
             <br />
-            {getFieldDecorator('previousChainId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'PreviousChainId'} />)}
+            <ChainSelectComponent
+              apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
+              getFieldDecorator={this.props.form.getFieldDecorator}
+              propertyName="previousChainId"
+              required={true}
+              selectedValue={this.state.model!.previousChainId}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -226,5 +234,5 @@ export const WrappedClaspEditComponent = Form.create({ name: 'Clasp Edit' })(
 
 
 /*<Codenesium>
-    <Hash>666cd3202ec8cdfdffcc5b49d361dc03</Hash>
+    <Hash>6efcacc8454bdbd8e34be960b7d4ac50</Hash>
 </Codenesium>*/

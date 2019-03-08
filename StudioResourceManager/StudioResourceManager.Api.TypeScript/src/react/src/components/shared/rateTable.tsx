@@ -122,7 +122,7 @@ export class RateTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'TeacherId',
+                    Header: 'Teacher',
                     accessor: 'teacherId',
                     Cell: props => {
                       return (
@@ -145,7 +145,7 @@ export class RateTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'TeacherSkillId',
+                    Header: 'Teacher Skill',
                     accessor: 'teacherSkillId',
                     Cell: props => {
                       return (
@@ -212,5 +212,5 @@ export class RateTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6a81d7c0620aef271507c7bd437adc1b</Hash>
+    <Hash>261cfbd8e224c44042cd203bea2ac736</Hash>
 </Codenesium>*/

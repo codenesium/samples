@@ -106,11 +106,11 @@ class CityDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>provinceId</h3>
+              <h3>Province</h3>
               <p>
                 {String(this.state.model!.provinceIdNavigation!.toDisplay())}
               </p>
@@ -147,5 +147,5 @@ export const WrappedCityDetailComponent = Form.create({ name: 'City Detail' })(
 
 
 /*<Codenesium>
-    <Hash>ec9f71939e97edec08d9f0655517c408</Hash>
+    <Hash>4da01f3d3a0fb4e05886319a6e031e0b</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ export default class CallSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Calls',
+                Header: 'Call',
                 columns: [
                   {
                     Header: 'AddressId',
@@ -398,5 +398,5 @@ export const WrappedCallSearchComponent = Form.create({ name: 'Call Search' })(
 
 
 /*<Codenesium>
-    <Hash>fc74f0ccdbb8e46a4b283003eeb1a6bd</Hash>
+    <Hash>772df62fea712a18fe6d95fc00e7a85d</Hash>
 </Codenesium>*/

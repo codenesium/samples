@@ -189,14 +189,14 @@ class SpaceFeatureEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -223,5 +223,5 @@ export const WrappedSpaceFeatureEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>190e3a9bad2541684b62c2066d0dc204</Hash>
+    <Hash>18713260f457f5b8f46fca2c3e8f2a4d</Hash>
 </Codenesium>*/

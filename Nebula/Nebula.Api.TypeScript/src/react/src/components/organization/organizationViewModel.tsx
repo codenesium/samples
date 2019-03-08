@@ -15,11 +15,11 @@ export default class OrganizationViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>b160ab517a45590aa7b28b262a15b30a</Hash>
+    <Hash>c042456deaca066e6fbc8b5f4f74d17f</Hash>
 </Codenesium>*/

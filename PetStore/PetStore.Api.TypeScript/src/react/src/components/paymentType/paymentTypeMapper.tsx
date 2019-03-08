@@ -5,7 +5,7 @@ export default class PaymentTypeMapper {
     dto: Api.PaymentTypeClientResponseModel
   ): PaymentTypeViewModel {
     let response = new PaymentTypeViewModel();
-    response.setProperties(dto.id, dto.name);
+    response.setProperties(dto.name);
 
     return response;
   }
@@ -14,12 +14,12 @@ export default class PaymentTypeMapper {
     model: PaymentTypeViewModel
   ): Api.PaymentTypeClientRequestModel {
     let response = new Api.PaymentTypeClientRequestModel();
-    response.setProperties(model.id, model.name);
+    response.setProperties(model.name);
     return response;
   }
 }
 
 
 /*<Codenesium>
-    <Hash>feabac69328f5b8a7be4f9f63a20d489</Hash>
+    <Hash>57540d5ff139ba937e587503a7237f0f</Hash>
 </Codenesium>*/

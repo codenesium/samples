@@ -1,0 +1,103 @@
+using ESPIOTPostgresNS.Api.Contracts;
+using ESPIOTPostgresNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace ESPIOTPostgresNS.Api.Services.Tests
+{
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Device")]
+	[Trait("Area", "ModelValidators")]
+	public partial class ApiDeviceServerRequestModelValidatorTest
+	{
+		public ApiDeviceServerRequestModelValidatorTest()
+		{
+		}
+
+		[Fact]
+		public async void Name_Create_length()
+		{
+			Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
+			deviceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
+
+			var validator = new ApiDeviceServerRequestModelValidator(deviceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiDeviceServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
+		}
+
+		[Fact]
+		public async void Name_Update_length()
+		{
+			Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
+			deviceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
+
+			var validator = new ApiDeviceServerRequestModelValidator(deviceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
+		}
+
+		[Fact]
+		private async void BeUniqueByPublicId_Create_Exists()
+		{
+			Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
+			deviceRepository.Setup(x => x.ByPublicId(It.IsAny<Guid>())).Returns(Task.FromResult<Device>(new Device()));
+			var validator = new ApiDeviceServerRequestModelValidator(deviceRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiDeviceServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PublicId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByPublicId_Create_Not_Exists()
+		{
+			Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
+			deviceRepository.Setup(x => x.ByPublicId(It.IsAny<Guid>())).Returns(Task.FromResult<Device>(null));
+			var validator = new ApiDeviceServerRequestModelValidator(deviceRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiDeviceServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.PublicId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByPublicId_Update_Exists()
+		{
+			Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
+			deviceRepository.Setup(x => x.ByPublicId(It.IsAny<Guid>())).Returns(Task.FromResult<Device>(new Device()));
+			var validator = new ApiDeviceServerRequestModelValidator(deviceRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PublicId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByPublicId_Update_Not_Exists()
+		{
+			Mock<IDeviceRepository> deviceRepository = new Mock<IDeviceRepository>();
+			deviceRepository.Setup(x => x.ByPublicId(It.IsAny<Guid>())).Returns(Task.FromResult<Device>(null));
+			var validator = new ApiDeviceServerRequestModelValidator(deviceRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.PublicId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+	}
+}
+
+/*<Codenesium>
+    <Hash>605f029c988f483a5e357377c06d0fee</Hash>
+</Codenesium>*/

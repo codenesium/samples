@@ -32,7 +32,6 @@ namespace PetStoreNS.Api.Services
 			item.SetProperties(1, "A", 1);
 			ApiBreedServerResponseModel response = mapper.MapEntityToModel(item);
 
-			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.SpeciesId.Should().Be(1);
 		}
@@ -51,5 +50,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>edd1c83dd9604291e03c5caae477da79</Hash>
+    <Hash>33d86c7b11545635f1ddfdc751b3b33e</Hash>
 </Codenesium>*/

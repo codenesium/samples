@@ -7,9 +7,6 @@ import PostHistoryViewModel from './postHistoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
-
-
-
 interface PostHistoryDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -25,28 +22,30 @@ interface PostHistoryDetailComponentState {
 }
 
 class PostHistoryDetailComponent extends React.Component<
-PostHistoryDetailComponentProps,
-PostHistoryDetailComponentState
+  PostHistoryDetailComponentProps,
+  PostHistoryDetailComponentState
 > {
   state = {
     model: new PostHistoryViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.PostHistories + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PostHistory + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
       .get(
         Constants.ApiEndpoint +
-          ApiRoutes.PostHistories +
+          ApiRoutes.PostHistory +
           '/' +
           this.props.match.params.id,
         {
@@ -85,63 +84,64 @@ PostHistoryDetailComponentState
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Comment</h3>
-							<p>{String(this.state.model!.comment)}</p>
-						 </div>
-					   						 <div>
-							<h3>CreationDate</h3>
-							<p>{String(this.state.model!.creationDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>PostHistoryTypeId</h3>
-							<p>{String(this.state.model!.postHistoryTypeId)}</p>
-						 </div>
-					   						 <div>
-							<h3>PostId</h3>
-							<p>{String(this.state.model!.postId)}</p>
-						 </div>
-					   						 <div>
-							<h3>RevisionGUID</h3>
-							<p>{String(this.state.model!.revisionGUID)}</p>
-						 </div>
-					   						 <div>
-							<h3>Text</h3>
-							<p>{String(this.state.model!.text)}</p>
-						 </div>
-					   						 <div>
-							<h3>UserDisplayName</h3>
-							<p>{String(this.state.model!.userDisplayName)}</p>
-						 </div>
-					   						 <div>
-							<h3>UserId</h3>
-							<p>{String(this.state.model!.userId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Comment</h3>
+              <p>{String(this.state.model!.comment)}</p>
+            </div>
+            <div>
+              <h3>Creation Date</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Post History Type</h3>
+              <p>
+                {String(
+                  this.state.model!.postHistoryTypeIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Post</h3>
+              <p>{String(this.state.model!.postIdNavigation!.toDisplay())}</p>
+            </div>
+            <div>
+              <h3>Revision GUID</h3>
+              <p>{String(this.state.model!.revisionGUID)}</p>
+            </div>
+            <div>
+              <h3>Text</h3>
+              <p>{String(this.state.model!.text)}</p>
+            </div>
+            <div>
+              <h3>User Display Name</h3>
+              <p>{String(this.state.model!.userDisplayName)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>User</h3>
+              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -150,10 +150,11 @@ PostHistoryDetailComponentState
   }
 }
 
-export const WrappedPostHistoryDetailComponent = Form.create({ name: 'PostHistory Detail' })(
-  PostHistoryDetailComponent
-);
+export const WrappedPostHistoryDetailComponent = Form.create({
+  name: 'PostHistory Detail',
+})(PostHistoryDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>aed0e3ffa74d8aa71bd1cec0a2dcee0b</Hash>
+    <Hash>e229e5e69322ef04a9d3cdabf221de8b</Hash>
 </Codenesium>*/

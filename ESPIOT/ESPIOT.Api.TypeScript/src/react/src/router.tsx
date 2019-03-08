@@ -25,7 +25,7 @@ const config = {
 export const AppRouter: React.StatelessComponent<{}> = () => {
 
   return (
-    <BrowserRouter>   
+    <BrowserRouter basename={Constants.HostedSubDirectory}>   
 	<Security issuer={config.oidc.issuer}
         client_id={config.oidc.clientId}
         redirect_uri={config.oidc.redirectUri}>
@@ -47,5 +47,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 }
 
 /*<Codenesium>
-    <Hash>83fd3aedf8ffd1a841ec86b0afb3c784</Hash>
+    <Hash>192e11cd173a1dedbe6fb397ac3a5fb1</Hash>
 </Codenesium>*/

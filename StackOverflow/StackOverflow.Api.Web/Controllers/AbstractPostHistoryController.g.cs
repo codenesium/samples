@@ -126,7 +126,7 @@ namespace StackOverflowNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistories/{result.Record.Id}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistory/{result.Record.Id}", result);
 			}
 			else
 			{
@@ -216,6 +216,57 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
+		[HttpGet]
+		[Route("byPostHistoryTypeId/{postHistoryTypeId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPostHistoryServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByPostHistoryTypeId(int postHistoryTypeId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPostHistoryServerResponseModel> response = await this.PostHistoryService.ByPostHistoryTypeId(postHistoryTypeId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byPostId/{postId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPostHistoryServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByPostId(int postId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPostHistoryServerResponseModel> response = await this.PostHistoryService.ByPostId(postId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byUserId/{userId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPostHistoryServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByUserId(int? userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPostHistoryServerResponseModel> response = await this.PostHistoryService.ByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiPostHistoryServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostHistoryServerRequestModel> patch)
 		{
 			var record = await this.PostHistoryService.Get(id);
@@ -235,5 +286,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0e525cd2017406da87481d70128c34dd</Hash>
+    <Hash>d41362b652564c337f6890cbbc48ce4b</Hash>
 </Codenesium>*/

@@ -44,11 +44,11 @@ namespace StackOverflowNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int PostHistoryTypeId { get; private set; } = default(int);
+		public int PostHistoryTypeId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public int PostId { get; private set; } = default(int);
+		public int PostId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -61,10 +61,10 @@ namespace StackOverflowNS.Api.Services
 		public string UserDisplayName { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? UserId { get; private set; } = default(int);
+		public int? UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>570b54db7cf4d1b7ed2ae8c707b61b96</Hash>
+    <Hash>062e96e65d89b3d775b4054a2b6d320c</Hash>
 </Codenesium>*/

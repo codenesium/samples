@@ -6,7 +6,10 @@ import TransactionMapper from './transactionMapper';
 import TransactionViewModel from './transactionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { SaleTableComponent } from '../shared/saleTable';
+import {SaleTableComponent} from '../shared/saleTable'
+	
+
+
 
 interface TransactionDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface TransactionDetailComponentState {
 }
 
 class TransactionDetailComponent extends React.Component<
-  TransactionDetailComponentProps,
-  TransactionDetailComponentState
+TransactionDetailComponentProps,
+TransactionDetailComponentState
 > {
   state = {
     model: new TransactionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Transactions + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Transactions + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,60 +86,52 @@ class TransactionDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>amount</h3>
-              <p>{String(this.state.model!.amount)}</p>
-            </div>
-            <div>
-              <h3>gatewayConfirmationNumber</h3>
-              <p>{String(this.state.model!.gatewayConfirmationNumber)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>transactionStatusId</h3>
-              <p>
-                {String(
-                  this.state.model!.transactionStatusIdNavigation!.toDisplay()
-                )}
-              </p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Amount</h3>
+							<p>{String(this.state.model!.amount)}</p>
+						 </div>
+					   						 <div>
+							<h3>Gateway Confirmation Number</h3>
+							<p>{String(this.state.model!.gatewayConfirmationNumber)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>Transaction Status</h3>
+							<p>{String(this.state.model!.transactionStatusIdNavigation!.toDisplay())}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>Sales</h3>
-            <SaleTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Transactions +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.Sales
-              }
-            />
-          </div>
+            <SaleTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Transactions + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -147,11 +140,10 @@ class TransactionDetailComponent extends React.Component<
   }
 }
 
-export const WrappedTransactionDetailComponent = Form.create({
-  name: 'Transaction Detail',
-})(TransactionDetailComponent);
-
+export const WrappedTransactionDetailComponent = Form.create({ name: 'Transaction Detail' })(
+  TransactionDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>640c84e3d4658c258668323698d5257e</Hash>
+    <Hash>8ae48f1b18abd1012fcc756667693cb1</Hash>
 </Codenesium>*/

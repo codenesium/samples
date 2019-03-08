@@ -7,6 +7,9 @@ import EventViewModel from './eventViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 
+
+
+
 interface EventDetailComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -22,23 +25,21 @@ interface EventDetailComponentState {
 }
 
 class EventDetailComponent extends React.Component<
-  EventDetailComponentProps,
-  EventDetailComponentState
+EventDetailComponentProps,
+EventDetailComponentState
 > {
   state = {
     model: new EventViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Events + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Events + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -84,68 +85,71 @@ class EventDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>address1</h3>
-              <p>{String(this.state.model!.address1)}</p>
-            </div>
-            <div>
-              <h3>address2</h3>
-              <p>{String(this.state.model!.address2)}</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <h3>cityId</h3>
-              <p>{String(this.state.model!.cityIdNavigation!.toDisplay())}</p>
-            </div>
-            <div>
-              <h3>date</h3>
-              <p>{String(this.state.model!.date)}</p>
-            </div>
-            <div>
-              <h3>description</h3>
-              <p>{String(this.state.model!.description)}</p>
-            </div>
-            <div>
-              <h3>endDate</h3>
-              <p>{String(this.state.model!.endDate)}</p>
-            </div>
-            <div>
-              <h3>facebook</h3>
-              <p>{String(this.state.model!.facebook)}</p>
-            </div>
-            <div>
-              <h3>name</h3>
-              <p>{String(this.state.model!.name)}</p>
-            </div>
-            <div>
-              <h3>startDate</h3>
-              <p>{String(this.state.model!.startDate)}</p>
-            </div>
-            <div>
-              <h3>website</h3>
-              <p>{String(this.state.model!.website)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>Address1</h3>
+							<p>{String(this.state.model!.address1)}</p>
+						 </div>
+					   						 <div>
+							<h3>Address2</h3>
+							<p>{String(this.state.model!.address2)}</p>
+						 </div>
+					   						 <div style={{"marginBottom":"10px"}}>
+							<h3>City</h3>
+							<p>{String(this.state.model!.cityIdNavigation!.toDisplay())}</p>
+						 </div>
+					   						 <div>
+							<h3>Date</h3>
+							<p>{String(this.state.model!.date)}</p>
+						 </div>
+					   						 <div>
+							<h3>Description</h3>
+							<p>{String(this.state.model!.description)}</p>
+						 </div>
+					   						 <div>
+							<h3>End Date</h3>
+							<p>{String(this.state.model!.endDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Facebook</h3>
+							<p>{String(this.state.model!.facebook)}</p>
+						 </div>
+					   						 <div>
+							<h3>Name</h3>
+							<p>{String(this.state.model!.name)}</p>
+						 </div>
+					   						 <div>
+							<h3>Start Date</h3>
+							<p>{String(this.state.model!.startDate)}</p>
+						 </div>
+					   						 <div>
+							<h3>Website</h3>
+							<p>{String(this.state.model!.website)}</p>
+						 </div>
+					   		  </div>
           {message}
+
+
         </div>
       );
     } else {
@@ -154,11 +158,10 @@ class EventDetailComponent extends React.Component<
   }
 }
 
-export const WrappedEventDetailComponent = Form.create({
-  name: 'Event Detail',
-})(EventDetailComponent);
-
+export const WrappedEventDetailComponent = Form.create({ name: 'Event Detail' })(
+  EventDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>90e190d69a519129f7a9c1f1ae55e2b3</Hash>
+    <Hash>8c8baa38275ef8cee6e9ff1063f36edd</Hash>
 </Codenesium>*/

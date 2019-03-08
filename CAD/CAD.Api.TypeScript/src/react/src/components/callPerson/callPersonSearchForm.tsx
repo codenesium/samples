@@ -205,7 +205,7 @@ export default class CallPersonSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'CallPersons',
+                Header: 'CallPerson',
                 columns: [
                   {
                     Header: 'Note',
@@ -321,5 +321,5 @@ export const WrappedCallPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e112db33036c78b644a1c8bcedd47937</Hash>
+    <Hash>556f94d634959c46874964e8ed962b1c</Hash>
 </Codenesium>*/

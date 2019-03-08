@@ -216,23 +216,6 @@ namespace PetStoreNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{petId}/Sales")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSaleServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesByPetId(int petId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSaleServerResponseModel> response = await this.PetService.SalesByPetId(petId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiPetServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPetServerRequestModel> patch)
 		{
 			var record = await this.PetService.Get(id);
@@ -252,5 +235,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8f8e7a8716af5df59bfbfaeb0c5896b9</Hash>
+    <Hash>63f0031d13542c9930ec71c758d36c40</Hash>
 </Codenesium>*/

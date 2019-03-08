@@ -5,24 +5,14 @@ import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FollowerMapper from './followerMapper';
 import FollowerViewModel from './followerViewModel';
-import {
-  Form,
-  Input,
-  Button,
-  Switch,
-  InputNumber,
-  DatePicker,
-  Spin,
-  Alert,
-  TimePicker,
-} from 'antd';
+import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { UserSelectComponent } from '../shared/userSelect';
-interface FollowerEditComponentProps {
-  form: WrappedFormUtils;
-  history: any;
-  match: any;
+import { UserSelectComponent } from '../shared/userSelect'
+	interface FollowerEditComponentProps {
+  form:WrappedFormUtils;
+  history:any;
+  match:any;
 }
 
 interface FollowerEditComponentState {
@@ -31,8 +21,8 @@ interface FollowerEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted: boolean;
-  submitting: boolean;
+  submitted:boolean;
+  submitting:boolean;
 }
 
 class FollowerEditComponent extends React.Component<
@@ -45,11 +35,11 @@ class FollowerEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    submitted: false,
-    submitting: false,
+	submitted:false,
+	submitting:false
   };
 
-  componentDidMount() {
+    componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
@@ -80,9 +70,7 @@ class FollowerEditComponent extends React.Component<
             errorMessage: '',
           });
 
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
+		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
         },
         error => {
           console.log(error);
@@ -95,30 +83,29 @@ class FollowerEditComponent extends React.Component<
           });
         }
       );
-  }
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.setState({ ...this.state, submitting: true, submitted: false });
-    this.props.form.validateFields((err: any, values: any) => {
-      if (!err) {
+ }
+ 
+ handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+     e.preventDefault();
+	 this.setState({...this.state, submitting:true, submitted:false});
+     this.props.form.validateFields((err:any, values:any) => {
+     if (!err) {
         let model = values as FollowerViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
-      } else {
-        this.setState({ ...this.state, submitting: false, submitted: false });
-      }
+      } 
+	  else {
+		  this.setState({...this.state, submitting:false, submitted:false});
+	  }
     });
   };
 
-  submit = (model: FollowerViewModel) => {
+  submit = (model:FollowerViewModel) =>
+  {  
     let mapper = new FollowerMapper();
-    axios
+     axios
       .put(
-        Constants.ApiEndpoint +
-          ApiRoutes.Followers +
-          '/' +
-          this.state.model!.id,
+        Constants.ApiEndpoint + ApiRoutes.Followers + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -131,144 +118,137 @@ class FollowerEditComponent extends React.Component<
           let response = resp.data as CreateResponse<
             Api.FollowerClientRequestModel
           >;
-          this.setState({
-            ...this.state,
-            submitted: true,
-            submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
-            errorOccurred: false,
-            errorMessage: '',
-          });
+          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
           console.log(response);
         },
         error => {
           console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
-          this.setState({
-            ...this.state,
-            submitted: true,
-            submitting: false,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+		  let errorResponse = error.response.data as ActionResponse; 
+		  if(error.response.data)
+          {
+			  errorResponse.validationErrors.forEach(x =>
+			  {
+				this.props.form.setFields({
+				 [ToLowerCaseFirstLetter(x.propertyName)]: {
+				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
+				  errors: [new Error(x.errorMessage)]
+				},
+				})
+			  });
+		  }
+          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
         }
-      );
-  };
-
+      ); 
+  }
+  
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-    } = this.props.form;
 
-    let message: JSX.Element = <div />;
-    if (this.state.submitted) {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        
+    let message:JSX.Element = <div></div>;
+    if(this.state.submitted)
+    {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type="error" />;
-      } else {
-        message = <Alert message="Submitted" type="success" />;
+        message = <Alert message={this.state.errorMessage} type='error' />;
+      }
+      else
+      {
+        message = <Alert message='Submitted' type='success' />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } else if (this.state.loaded) {
-      return (
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="blocked">blocked</label>
-            <br />
-            {getFieldDecorator('blocked', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 1, message: 'Exceeds max length of 1' },
-              ],
-            })(<Input placeholder={'blocked'} />)}
-          </Form.Item>
+    } 
+    else if (this.state.loaded) {
 
-          <Form.Item>
-            <label htmlFor="dateFollowed">date_followed</label>
-            <br />
-            {getFieldDecorator('dateFollowed', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'date_followed'} />)}
-          </Form.Item>
+        return ( 
+         <Form onSubmit={this.handleSubmit}>
+            			<Form.Item>
+              <label htmlFor='blocked'>blocked</label>
+              <br />             
+              {getFieldDecorator('blocked', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 1, message: 'Exceeds max length of 1' },
+],
+              
+              })
+              ( <Input placeholder={"blocked"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="followRequestStatu">follow_request_status</label>
-            <br />
-            {getFieldDecorator('followRequestStatu', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 1, message: 'Exceeds max length of 1' },
-              ],
-            })(<Input placeholder={'follow_request_status'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='dateFollowed'>date_followed</label>
+              <br />             
+              {getFieldDecorator('dateFollowed', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"date_followed"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="followedUserId">followed_user_id</label>
-            <br />
-            {getFieldDecorator('followedUserId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'followed_user_id'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='followRequestStatu'>follow_request_status</label>
+              <br />             
+              {getFieldDecorator('followRequestStatu', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 1, message: 'Exceeds max length of 1' },
+],
+              
+              })
+              ( <Input placeholder={"follow_request_status"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="followingUserId">following_user_id</label>
-            <br />
-            {getFieldDecorator('followingUserId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'following_user_id'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='followedUserId'>followed_user_id</label>
+              <br />             
+              {getFieldDecorator('followedUserId', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"followed_user_id"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="muted">muted</label>
-            <br />
-            {getFieldDecorator('muted', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 1, message: 'Exceeds max length of 1' },
-              ],
-            })(<Input placeholder={'muted'} />)}
-          </Form.Item>
+						<Form.Item>
+              <label htmlFor='followingUserId'>following_user_id</label>
+              <br />             
+              {getFieldDecorator('followingUserId', {
+              rules:[{ required: true, message: 'Required' },
+],
+              
+              })
+              ( <Input placeholder={"following_user_id"} /> )}
+              </Form.Item>
 
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={this.state.submitting}
-            >
-              {this.state.submitting ? 'Submitting...' : 'Submit'}
-            </Button>
-          </Form.Item>
-          {message}
-        </Form>
-      );
+						<Form.Item>
+              <label htmlFor='muted'>muted</label>
+              <br />             
+              {getFieldDecorator('muted', {
+              rules:[{ required: true, message: 'Required' },
+{ max: 1, message: 'Exceeds max length of 1' },
+],
+              
+              })
+              ( <Input placeholder={"muted"} /> )}
+              </Form.Item>
+
+			
+            <Form.Item>
+             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
+                {(this.state.submitting ? "Submitting..." : "Submit")}
+              </Button>
+            </Form.Item>
+			{message}
+        </Form>);
     } else {
       return null;
     }
   }
 }
 
-export const WrappedFollowerEditComponent = Form.create({
-  name: 'Follower Edit',
-})(FollowerEditComponent);
-
+export const WrappedFollowerEditComponent = Form.create({ name: 'Follower Edit' })(FollowerEditComponent);
 
 /*<Codenesium>
-    <Hash>36db3a49a0d43c2a64224085bd8d8b72</Hash>
+    <Hash>bdd1714c1f8a523a88deea6aa10fc560</Hash>
 </Codenesium>*/

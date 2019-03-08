@@ -37,10 +37,12 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void PostHistoryTypeIdRules()
 		{
+			this.RuleFor(x => x.PostHistoryTypeId).MustAsync(this.BeValidPostHistoryTypesByPostHistoryTypeId).When(x => !x?.PostHistoryTypeId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void PostIdRules()
 		{
+			this.RuleFor(x => x.PostId).MustAsync(this.BeValidPostsByPostId).When(x => !x?.PostId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void RevisionGUIDRules()
@@ -61,10 +63,32 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void UserIdRules()
 		{
+			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUsersByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidPostHistoryTypesByPostHistoryTypeId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.PostHistoryRepository.PostHistoryTypesByPostHistoryTypeId(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidPostsByPostId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.PostHistoryRepository.PostsByPostId(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidUsersByUserId(int? id,  CancellationToken cancellationToken)
+		{
+			var record = await this.PostHistoryRepository.UsersByUserId(id.GetValueOrDefault());
+
+			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3bce57ddd2298f52560ec2ebbc6bd53c</Hash>
+    <Hash>938c7db79aebd5c887e8744f86d4ce39</Hash>
 </Codenesium>*/

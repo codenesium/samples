@@ -121,16 +121,20 @@ class ChainCreateComponent extends React.Component<
 
         return ( 
          <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='chainStatusId'>ChainStatusId</label>
-              <br />             
-              {getFieldDecorator('chainStatusId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"ChainStatusId"} /> )}
-              </Form.Item>
+            			
+                        <Form.Item>
+                        <label htmlFor='chainStatusId'>ChainStatusId</label>
+                        <br />   
+                        <ChainStatusSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.ChainStatuses}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="chainStatusId"
+                          required={true}
+                          selectedValue={this.state.model!.chainStatusId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
               <label htmlFor='externalId'>ExternalId</label>
@@ -155,16 +159,20 @@ class ChainCreateComponent extends React.Component<
               ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='teamId'>TeamId</label>
-              <br />             
-              {getFieldDecorator('teamId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"TeamId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='teamId'>TeamId</label>
+                        <br />   
+                        <TeamSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Teams}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="teamId"
+                          required={true}
+                          selectedValue={this.state.model!.teamId}
+                         />
+                        </Form.Item>
 
 			
            <Form.Item>
@@ -183,5 +191,5 @@ class ChainCreateComponent extends React.Component<
 export const WrappedChainCreateComponent = Form.create({ name: 'Chain Create' })(ChainCreateComponent);
 
 /*<Codenesium>
-    <Hash>fc8d04cedb79d909de488b5cfbcbd243</Hash>
+    <Hash>280dc444d608dfefde2488adcb18972b</Hash>
 </Codenesium>*/

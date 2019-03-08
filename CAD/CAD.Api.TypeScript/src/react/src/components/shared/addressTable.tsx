@@ -6,11 +6,11 @@ import AddressMapper from '../address/addressMapper';
 import AddressViewModel from '../address/addressViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from 'react-table';
+import ReactTable from "react-table";
 
 interface AddressTableComponentProps {
-  id: number;
-  apiRoute: string;
+  id:number,
+  apiRoute:string;
   history: any;
   match: any;
 }
@@ -20,42 +20,44 @@ interface AddressTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords: Array<AddressViewModel>;
+  filteredRecords : Array<AddressViewModel>;
 }
 
-export class AddressTableComponent extends React.Component<
-  AddressTableComponentProps,
-  AddressTableComponentState
+export class  AddressTableComponent extends React.Component<
+AddressTableComponentProps,
+AddressTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords: [],
+    filteredRecords:[]
   };
 
-  handleEditClick(e: any, row: AddressViewModel) {
-    this.props.history.push(ClientRoutes.Addresses + '/edit/' + row.id);
-  }
+handleEditClick(e:any, row: AddressViewModel) {
+  this.props.history.push(ClientRoutes.Addresses + '/edit/' + row.id);
+}
 
-  handleDetailClick(e: any, row: AddressViewModel) {
-    this.props.history.push(ClientRoutes.Addresses + '/' + row.id);
-  }
+ handleDetailClick(e:any, row: AddressViewModel) {
+   this.props.history.push(ClientRoutes.Addresses + '/' + row.id);
+ }
 
   componentDidMount() {
-    this.loadRecords();
+	this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(this.props.apiRoute,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(
         resp => {
           let response = resp.data as Array<Api.AddressClientResponseModel>;
@@ -63,11 +65,12 @@ export class AddressTableComponent extends React.Component<
           console.log(response);
 
           let mapper = new AddressMapper();
+          
+          let addresses:Array<AddressViewModel> = [];
 
-          let addresses: Array<AddressViewModel> = [];
-
-          response.forEach(x => {
-            addresses.push(mapper.mapApiResponseToViewModel(x));
+          response.forEach(x =>
+          {
+              addresses.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -92,69 +95,66 @@ export class AddressTableComponent extends React.Component<
   }
 
   render() {
-    let message: JSX.Element = <div />;
+    
+	let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-      return <Spin size="large" />;
-    } else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type="error" />;
-    } else if (this.state.loaded) {
+       return <Spin size="large" />;
+    }
+	else if (this.state.errorOccurred) {
+	  return <Alert message={this.state.errorMessage} type='error' />;
+	}
+	 else if (this.state.loaded) {
       return (
-        <div>
-          {message}
-          <ReactTable
-            data={this.state.filteredRecords}
-            defaultPageSize={10}
-            columns={[
-              {
-                Header: 'Addresses',
-                columns: [
-                  {
-                    Header: 'Address1',
-                    accessor: 'address1',
-                    Cell: props => {
+	  <div>
+		{message}
+         <ReactTable 
+                data={this.state.filteredRecords}
+				defaultPageSize={10}
+                columns={[{
+                    Header: 'Addresses',
+                    columns: [
+					  {
+                      Header: 'Address1',
+                      accessor: 'address1',
+                      Cell: (props) => {
                       return <span>{String(props.original.address1)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Address2',
-                    accessor: 'address2',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Address2',
+                      accessor: 'address2',
+                      Cell: (props) => {
                       return <span>{String(props.original.address2)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'City',
-                    accessor: 'city',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'City',
+                      accessor: 'city',
+                      Cell: (props) => {
                       return <span>{String(props.original.city)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'State',
-                    accessor: 'state',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'State',
+                      accessor: 'state',
+                      Cell: (props) => {
                       return <span>{String(props.original.state)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Zip',
-                    accessor: 'zip',
-                    Cell: props => {
+                      }           
+                    },  {
+                      Header: 'Zip',
+                      accessor: 'zip',
+                      Cell: (props) => {
                       return <span>{String(props.original.zip)}</span>;
+                      }           
                     },
-                  },
-                  {
-                    Header: 'Actions',
-                    minWidth: 150,
-                    Cell: row => (
-                      <div>
-                        <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                    {
+                        Header: 'Actions',
+					    minWidth:150,
+                        Cell: row => (<div>
+					    <Button
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleDetailClick(
                               e,
                               row.original as AddressViewModel
@@ -165,8 +165,8 @@ export class AddressTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
-                          onClick={(e: any) => {
+                          type="primary" 
+                          onClick={(e:any) => {
                             this.handleEditClick(
                               e,
                               row.original as AddressViewModel
@@ -175,14 +175,11 @@ export class AddressTableComponent extends React.Component<
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                      </div>
-                    ),
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+                        </div>)
+                    }],
+                    
+                  }]} />
+			</div>
       );
     } else {
       return null;
@@ -190,7 +187,6 @@ export class AddressTableComponent extends React.Component<
   }
 }
 
-
 /*<Codenesium>
-    <Hash>1144feedb72d38e759455930122b8a71</Hash>
+    <Hash>bb4b331b7b953552c6871e229f7a77a5</Hash>
 </Codenesium>*/

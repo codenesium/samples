@@ -1,16 +1,13 @@
 import moment from 'moment';
 
 export default class SpeciesViewModel {
-  id: number;
   name: string;
 
   constructor() {
-    this.id = 0;
     this.name = '';
   }
 
-  setProperties(id: number, name: string): void {
-    this.id = id;
+  setProperties(name: string): void {
     this.name = name;
   }
 
@@ -21,5 +18,5 @@ export default class SpeciesViewModel {
 
 
 /*<Codenesium>
-    <Hash>f7518e0bb3b7d6c85ba2b93b6babfcf6</Hash>
+    <Hash>7c74b1178cfab6af6327db739f962896</Hash>
 </Codenesium>*/

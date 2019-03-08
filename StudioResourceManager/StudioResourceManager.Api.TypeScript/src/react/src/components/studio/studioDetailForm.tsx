@@ -107,31 +107,31 @@ StudioDetailComponentState
 		  </Button>
 		  <div>
 									 <div>
-							<h3>address1</h3>
+							<h3>Address1</h3>
 							<p>{String(this.state.model!.address1)}</p>
 						 </div>
 					   						 <div>
-							<h3>address2</h3>
+							<h3>Address2</h3>
 							<p>{String(this.state.model!.address2)}</p>
 						 </div>
 					   						 <div>
-							<h3>city</h3>
+							<h3>City</h3>
 							<p>{String(this.state.model!.city)}</p>
 						 </div>
 					   						 <div>
-							<h3>name</h3>
+							<h3>Name</h3>
 							<p>{String(this.state.model!.name)}</p>
 						 </div>
 					   						 <div>
-							<h3>province</h3>
+							<h3>Province</h3>
 							<p>{String(this.state.model!.province)}</p>
 						 </div>
 					   						 <div>
-							<h3>website</h3>
+							<h3>Website</h3>
 							<p>{String(this.state.model!.website)}</p>
 						 </div>
 					   						 <div>
-							<h3>zip</h3>
+							<h3>Zip</h3>
 							<p>{String(this.state.model!.zip)}</p>
 						 </div>
 					   		  </div>
@@ -151,5 +151,5 @@ export const WrappedStudioDetailComponent = Form.create({ name: 'Studio Detail' 
 );
 
 /*<Codenesium>
-    <Hash>097ed7810305b4b2a10dd34f4110fcb0</Hash>
+    <Hash>31c09f074cb81e765f97989cba61ecfe</Hash>
 </Codenesium>*/

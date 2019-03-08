@@ -6,7 +6,10 @@ import CustomerMapper from './customerMapper';
 import CustomerViewModel from './customerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { CustomerCommunicationTableComponent } from '../shared/customerCommunicationTable';
+import {CustomerCommunicationTableComponent} from '../shared/customerCommunicationTable'
+	
+
+
 
 interface CustomerDetailComponentProps {
   form: WrappedFormUtils;
@@ -23,23 +26,21 @@ interface CustomerDetailComponentState {
 }
 
 class CustomerDetailComponent extends React.Component<
-  CustomerDetailComponentProps,
-  CustomerDetailComponentState
+CustomerDetailComponentProps,
+CustomerDetailComponentState
 > {
   state = {
     model: new CustomerViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: '',
+    errorMessage: ''
   };
 
-  handleEditClick(e: any) {
-    this.props.history.push(
-      ClientRoutes.Customers + '/edit/' + this.state.model!.id
-    );
+  handleEditClick(e:any) {
+    this.props.history.push(ClientRoutes.Customers + '/edit/' + this.state.model!.id);
   }
-
+  
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
@@ -85,60 +86,56 @@ class CustomerDetailComponent extends React.Component<
   }
 
   render() {
+    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    }
-
+    } 
+  
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-          <Button
-            style={{ float: 'right' }}
-            type="primary"
-            onClick={(e: any) => {
-              this.handleEditClick(e);
-            }}
-          >
-            <i className="fas fa-edit" />
-          </Button>
-          <div>
-            <div>
-              <h3>email</h3>
-              <p>{String(this.state.model!.email)}</p>
-            </div>
-            <div>
-              <h3>firstName</h3>
-              <p>{String(this.state.model!.firstName)}</p>
-            </div>
-            <div>
-              <h3>notes</h3>
-              <p>{String(this.state.model!.note)}</p>
-            </div>
-            <div>
-              <h3>phone</h3>
-              <p>{String(this.state.model!.phone)}</p>
-            </div>
-          </div>
+		<Button 
+			style={{'float':'right'}}
+			type="primary" 
+			onClick={(e:any) => {
+				this.handleEditClick(e)
+				}}
+			>
+             <i className="fas fa-edit" />
+		  </Button>
+		  <div>
+									 <div>
+							<h3>email</h3>
+							<p>{String(this.state.model!.email)}</p>
+						 </div>
+					   						 <div>
+							<h3>firstName</h3>
+							<p>{String(this.state.model!.firstName)}</p>
+						 </div>
+					   						 <div>
+							<h3>notes</h3>
+							<p>{String(this.state.model!.note)}</p>
+						 </div>
+					   						 <div>
+							<h3>phone</h3>
+							<p>{String(this.state.model!.phone)}</p>
+						 </div>
+					   		  </div>
           {message}
-          <div>
+		 <div>
             <h3>CustomerCommunications</h3>
-            <CustomerCommunicationTableComponent
-              id={this.state.model!.id}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Customers +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.CustomerCommunications
-              }
-            />
-          </div>
+            <CustomerCommunicationTableComponent 
+			id={this.state.model!.id} 
+			history={this.props.history} 
+			match={this.props.match} 
+			apiRoute={Constants.ApiEndpoint + ApiRoutes.Customers + '/' + this.state.model!.id + '/' + ApiRoutes.CustomerCommunications}
+			/>
+         </div>
+	
+
         </div>
       );
     } else {
@@ -147,11 +144,10 @@ class CustomerDetailComponent extends React.Component<
   }
 }
 
-export const WrappedCustomerDetailComponent = Form.create({
-  name: 'Customer Detail',
-})(CustomerDetailComponent);
-
+export const WrappedCustomerDetailComponent = Form.create({ name: 'Customer Detail' })(
+  CustomerDetailComponent
+);
 
 /*<Codenesium>
-    <Hash>6964b831ea686150d91202c388d9dc5e</Hash>
+    <Hash>d07fce84b7ce09840a5e57ae80effd85</Hash>
 </Codenesium>*/

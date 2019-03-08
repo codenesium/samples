@@ -107,11 +107,11 @@ StudentDetailComponentState
 		  </Button>
 		  <div>
 									 <div>
-							<h3>birthday</h3>
+							<h3>Birthday</h3>
 							<p>{String(this.state.model!.birthday)}</p>
 						 </div>
 					   						 <div>
-							<h3>email</h3>
+							<h3>Email</h3>
 							<p>{String(this.state.model!.email)}</p>
 						 </div>
 					   						 <div>
@@ -119,7 +119,7 @@ StudentDetailComponentState
 							<p>{String(this.state.model!.emailRemindersEnabled)}</p>
 						 </div>
 					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>familyId</h3>
+							<h3>Family</h3>
 							<p>{String(this.state.model!.familyIdNavigation!.toDisplay())}</p>
 						 </div>
 					   						 <div>
@@ -135,15 +135,15 @@ StudentDetailComponentState
 							<p>{String(this.state.model!.lastName)}</p>
 						 </div>
 					   						 <div>
-							<h3>phone</h3>
+							<h3>Phone</h3>
 							<p>{String(this.state.model!.phone)}</p>
 						 </div>
 					   						 <div>
-							<h3>SMS Reminders Enabled</h3>
+							<h3>Sms Reminders Enabled</h3>
 							<p>{String(this.state.model!.smsRemindersEnabled)}</p>
 						 </div>
 					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>userId</h3>
+							<h3>User</h3>
 							<p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
 						 </div>
 					   		  </div>
@@ -163,5 +163,5 @@ export const WrappedStudentDetailComponent = Form.create({ name: 'Student Detail
 );
 
 /*<Codenesium>
-    <Hash>3cabc4a3dca2069c19dc055bc86669f5</Hash>
+    <Hash>919032f7e50b820e9629ec4b8916fd36</Hash>
 </Codenesium>*/

@@ -41,10 +41,10 @@ namespace StackOverflowNS.Api.Client
 		public DateTime CreationDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[JsonProperty]
-		public int PostHistoryTypeId { get; private set; } = default(int);
+		public int PostHistoryTypeId { get; private set; }
 
 		[JsonProperty]
-		public int PostId { get; private set; } = default(int);
+		public int PostId { get; private set; }
 
 		[JsonProperty]
 		public string RevisionGUID { get; private set; } = default(string);
@@ -56,10 +56,10 @@ namespace StackOverflowNS.Api.Client
 		public string UserDisplayName { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? UserId { get; private set; } = default(int);
+		public int? UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>69891d5ba48ce7f3eb5175c52520f1e7</Hash>
+    <Hash>a2406eb24284b7fd706ae88ced092e00</Hash>
 </Codenesium>*/

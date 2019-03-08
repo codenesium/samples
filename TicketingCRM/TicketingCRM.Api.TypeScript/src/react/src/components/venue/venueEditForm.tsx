@@ -166,7 +166,7 @@ class VenueEditComponent extends React.Component<
         return ( 
          <Form onSubmit={this.handleSubmit}>
             			<Form.Item>
-              <label htmlFor='address1'>address1</label>
+              <label htmlFor='address1'>Address1</label>
               <br />             
               {getFieldDecorator('address1', {
               rules:[{ required: true, message: 'Required' },
@@ -174,11 +174,11 @@ class VenueEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"address1"} /> )}
+              ( <Input placeholder={"Address1"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='address2'>address2</label>
+              <label htmlFor='address2'>Address2</label>
               <br />             
               {getFieldDecorator('address2', {
               rules:[{ required: true, message: 'Required' },
@@ -186,22 +186,26 @@ class VenueEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"address2"} /> )}
+              ( <Input placeholder={"Address2"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='adminId'>adminId</label>
-              <br />             
-              {getFieldDecorator('adminId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"adminId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='adminId'>Admin</label>
+                        <br />   
+                        <AdminSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Admins}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="adminId"
+                          required={true}
+                          selectedValue={this.state.model!.adminId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='email'>email</label>
+              <label htmlFor='email'>Email</label>
               <br />             
               {getFieldDecorator('email', {
               rules:[{ required: true, message: 'Required' },
@@ -209,11 +213,11 @@ class VenueEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"email"} /> )}
+              ( <Input placeholder={"Email"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='facebook'>facebook</label>
+              <label htmlFor='facebook'>Facebook</label>
               <br />             
               {getFieldDecorator('facebook', {
               rules:[{ required: true, message: 'Required' },
@@ -221,11 +225,11 @@ class VenueEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"facebook"} /> )}
+              ( <Input placeholder={"Facebook"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='name'>name</label>
+              <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
@@ -233,11 +237,11 @@ class VenueEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='phone'>phone</label>
+              <label htmlFor='phone'>Phone</label>
               <br />             
               {getFieldDecorator('phone', {
               rules:[{ required: true, message: 'Required' },
@@ -245,22 +249,26 @@ class VenueEditComponent extends React.Component<
 ],
               
               })
-              ( <InputNumber placeholder={"phone"} /> )}
+              ( <InputNumber placeholder={"Phone"} /> )}
               </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='provinceId'>provinceId</label>
-              <br />             
-              {getFieldDecorator('provinceId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"provinceId"} /> )}
-              </Form.Item>
+						
+                        <Form.Item>
+                        <label htmlFor='provinceId'>Province</label>
+                        <br />   
+                        <ProvinceSelectComponent   
+                          apiRoute={
+                          Constants.ApiEndpoint +
+                          ApiRoutes.Provinces}
+                          getFieldDecorator={this.props.form.getFieldDecorator}
+                          propertyName="provinceId"
+                          required={true}
+                          selectedValue={this.state.model!.provinceId}
+                         />
+                        </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='website'>website</label>
+              <label htmlFor='website'>Website</label>
               <br />             
               {getFieldDecorator('website', {
               rules:[{ required: true, message: 'Required' },
@@ -268,7 +276,7 @@ class VenueEditComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"website"} /> )}
+              ( <Input placeholder={"Website"} /> )}
               </Form.Item>
 
 			
@@ -288,5 +296,5 @@ class VenueEditComponent extends React.Component<
 export const WrappedVenueEditComponent = Form.create({ name: 'Venue Edit' })(VenueEditComponent);
 
 /*<Codenesium>
-    <Hash>6fdd01245bfc9ba0a3b0488222d1ca50</Hash>
+    <Hash>2889ebb0fcc745826dc9bd656df9d408</Hash>
 </Codenesium>*/

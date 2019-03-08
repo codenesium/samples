@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 2.2
+script:
+   -  dotnet build ESPIOTPostgres.Api.Web.csproj
+   -  dotnet test ESPIOTPostgres.Api.DataAccess.csproj
+   -  dotnet test ESPIOTPostgres.Api.Servicea.csproj
+   -  dotnet test ESPIOTPostgres.Api.Client.csproj
+   -  dotnet test ESPIOTPostgres.Api.Web.csproj

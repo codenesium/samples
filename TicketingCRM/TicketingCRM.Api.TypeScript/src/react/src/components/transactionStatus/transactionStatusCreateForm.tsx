@@ -120,7 +120,7 @@ class TransactionStatusCreateComponent extends React.Component<
         return ( 
          <Form onSubmit={this.handleSubmit}>
             			<Form.Item>
-              <label htmlFor='name'>name</label>
+              <label htmlFor='name'>Name</label>
               <br />             
               {getFieldDecorator('name', {
               rules:[{ required: true, message: 'Required' },
@@ -128,7 +128,7 @@ class TransactionStatusCreateComponent extends React.Component<
 ],
               
               })
-              ( <Input placeholder={"name"} /> )}
+              ( <Input placeholder={"Name"} /> )}
               </Form.Item>
 
 			
@@ -148,5 +148,5 @@ class TransactionStatusCreateComponent extends React.Component<
 export const WrappedTransactionStatusCreateComponent = Form.create({ name: 'TransactionStatus Create' })(TransactionStatusCreateComponent);
 
 /*<Codenesium>
-    <Hash>d4da872a133f314cac0fd2e735a24260</Hash>
+    <Hash>95799739a72737de860b628b2e80c00a</Hash>
 </Codenesium>*/

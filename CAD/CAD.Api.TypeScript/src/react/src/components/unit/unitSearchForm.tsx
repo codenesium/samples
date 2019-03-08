@@ -204,7 +204,7 @@ export default class UnitSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Units',
+                Header: 'Unit',
                 columns: [
                   {
                     Header: 'CallSign',
@@ -274,5 +274,5 @@ export const WrappedUnitSearchComponent = Form.create({ name: 'Unit Search' })(
 
 
 /*<Codenesium>
-    <Hash>8d90c91e4a4e29d016399b9cd1523d16</Hash>
+    <Hash>f4bf2d92e186ed3597f5760407239634</Hash>
 </Codenesium>*/

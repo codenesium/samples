@@ -130,7 +130,7 @@ handleEditClick(e:any, row: VenueViewModel) {
                       return <span>{String(props.original.address2)}</span>;
                       }           
                     },  {
-                      Header: 'AdminId',
+                      Header: 'Admin',
                       accessor: 'adminId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Admins + '/' + props.original.adminId); }}>
@@ -164,7 +164,7 @@ handleEditClick(e:any, row: VenueViewModel) {
                       return <span>{String(props.original.phone)}</span>;
                       }           
                     },  {
-                      Header: 'ProvinceId',
+                      Header: 'Province',
                       accessor: 'provinceId',
                       Cell: (props) => {
                         return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Provinces + '/' + props.original.provinceId); }}>
@@ -220,5 +220,5 @@ handleEditClick(e:any, row: VenueViewModel) {
 }
 
 /*<Codenesium>
-    <Hash>5e92ac33f8e55e7aa5648f3aa489e140</Hash>
+    <Hash>c1f540d0c9a612faf92a42ac73e98a80</Hash>
 </Codenesium>*/

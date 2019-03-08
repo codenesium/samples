@@ -177,25 +177,25 @@ class RateEditComponent extends React.Component<
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='teacherId'>teacherId</label>
+              <label htmlFor='teacherId'>Teacher</label>
               <br />             
               {getFieldDecorator('teacherId', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <InputNumber placeholder={"teacherId"} /> )}
+              ( <InputNumber placeholder={"Teacher"} /> )}
               </Form.Item>
 
 						<Form.Item>
-              <label htmlFor='teacherSkillId'>teacherSkillId</label>
+              <label htmlFor='teacherSkillId'>Teacher Skill</label>
               <br />             
               {getFieldDecorator('teacherSkillId', {
               rules:[{ required: true, message: 'Required' },
 ],
               
               })
-              ( <InputNumber placeholder={"teacherSkillId"} /> )}
+              ( <InputNumber placeholder={"Teacher Skill"} /> )}
               </Form.Item>
 
 			
@@ -215,5 +215,5 @@ class RateEditComponent extends React.Component<
 export const WrappedRateEditComponent = Form.create({ name: 'Rate Edit' })(RateEditComponent);
 
 /*<Codenesium>
-    <Hash>3ee4b4a20bdffdcdfd45323027b75a8d</Hash>
+    <Hash>cf7ca1e008d79e56dd882580a724d58d</Hash>
 </Codenesium>*/

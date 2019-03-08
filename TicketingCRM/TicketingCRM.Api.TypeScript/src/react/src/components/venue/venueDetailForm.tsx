@@ -105,41 +105,41 @@ class VenueDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>address1</h3>
+              <h3>Address1</h3>
               <p>{String(this.state.model!.address1)}</p>
             </div>
             <div>
-              <h3>address2</h3>
+              <h3>Address2</h3>
               <p>{String(this.state.model!.address2)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>adminId</h3>
+              <h3>Admin</h3>
               <p>{String(this.state.model!.adminIdNavigation!.toDisplay())}</p>
             </div>
             <div>
-              <h3>email</h3>
+              <h3>Email</h3>
               <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <h3>facebook</h3>
+              <h3>Facebook</h3>
               <p>{String(this.state.model!.facebook)}</p>
             </div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div>
-              <h3>phone</h3>
+              <h3>Phone</h3>
               <p>{String(this.state.model!.phone)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>provinceId</h3>
+              <h3>Province</h3>
               <p>
                 {String(this.state.model!.provinceIdNavigation!.toDisplay())}
               </p>
             </div>
             <div>
-              <h3>website</h3>
+              <h3>Website</h3>
               <p>{String(this.state.model!.website)}</p>
             </div>
           </div>
@@ -158,5 +158,5 @@ export const WrappedVenueDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ba864c125092aab23f65994e161d9d02</Hash>
+    <Hash>1a1b515b7e129f10d7fe25df6b7a4530</Hash>
 </Codenesium>*/

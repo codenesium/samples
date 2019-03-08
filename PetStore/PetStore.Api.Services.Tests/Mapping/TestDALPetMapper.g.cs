@@ -38,7 +38,6 @@ namespace PetStoreNS.Api.Services
 			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.BreedId.Should().Be(1);
 			response.Description.Should().Be("A");
-			response.Id.Should().Be(1);
 			response.PenId.Should().Be(1);
 			response.Price.Should().Be(1m);
 		}
@@ -57,5 +56,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d91e821ed12200021cbf822bc68a366</Hash>
+    <Hash>1796aa4244c26375f351a1b3901eb31e</Hash>
 </Codenesium>*/

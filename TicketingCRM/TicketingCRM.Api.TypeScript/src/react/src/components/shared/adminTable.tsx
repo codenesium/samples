@@ -120,14 +120,14 @@ export class AdminTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -199,5 +199,5 @@ export class AdminTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6c6801ae7d1cc80ff530d6a522989f61</Hash>
+    <Hash>6e064e1fc7983441bceb568615ef861a</Hash>
 </Codenesium>*/

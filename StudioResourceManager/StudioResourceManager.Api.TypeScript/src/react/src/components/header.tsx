@@ -60,13 +60,13 @@ export const wrapperHeader = (
 
               <MenuItem key="eventStatus">
                 <Icon type="bars" />
-                <span>EventStatus</span>
+                <span>Event Status</span>
                 <Link to={ClientRoutes.EventStatus} />
               </MenuItem>
 
               <MenuItem key="family">
                 <Icon type="cloud" />
-                <span>Families</span>
+                <span>Familes</span>
                 <Link to={ClientRoutes.Families} />
               </MenuItem>
 
@@ -84,7 +84,7 @@ export const wrapperHeader = (
 
               <MenuItem key="spaceFeature">
                 <Icon type="laptop" />
-                <span>SpaceFeatures</span>
+                <span>Space Feature</span>
                 <Link to={ClientRoutes.SpaceFeatures} />
               </MenuItem>
 
@@ -108,7 +108,7 @@ export const wrapperHeader = (
 
               <MenuItem key="teacherSkill">
                 <Icon type="user" />
-                <span>TeacherSkills</span>
+                <span>Teacher Skills</span>
                 <Link to={ClientRoutes.TeacherSkills} />
               </MenuItem>
 
@@ -137,5 +137,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>8befe645e078459943569f5313a283ff</Hash>
+    <Hash>2e85ee804eb9a7f09b7e320acbbc30c4</Hash>
 </Codenesium>*/
