@@ -134,7 +134,12 @@ namespace ESPIOTNS.Api.Web
         {
             if (this.Configuration.GetValue<bool>("SecurityEnabled"))
             {
-                var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
+                byte[] key = Encoding.UTF8.GetBytes(this.Configuration["JwtSettings:SigningKey"]);
+				if ( key.Length <= 16)
+				{
+					throw new Exception("JWT key mut be longer than 16 characters");
+				}
+
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(jwtBearerOptions =>
                 {
@@ -146,8 +151,8 @@ namespace ESPIOTNS.Api.Web
                         ValidateLifetime = true,
                         RequireSignedTokens = true,
                         RequireExpirationTime = true,
-                        ValidAudience = this.Configuration["JwtAudience"],
-                        ValidIssuer = this.Configuration["JwtIssuer"],
+                        ValidAudience = this.Configuration["JwtSettings:Audience"],
+                        ValidIssuer = this.Configuration["JwtSettings:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(key)
                     };
                 });
@@ -386,13 +391,15 @@ namespace ESPIOTNS.Api.Web
 
             app.UseMvc();
 
-		    app.UseStaticFiles(new StaticFileOptions
+			if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "app")))
 			{
-				FileProvider = new PhysicalFileProvider(
-				Path.Combine(Directory.GetCurrentDirectory(), "app")),
-				RequestPath = string.Empty
-			});
-
+				app.UseStaticFiles(new StaticFileOptions
+				{
+					FileProvider = new PhysicalFileProvider(
+					Path.Combine(Directory.GetCurrentDirectory(), "app")),
+					RequestPath = string.Empty
+				});
+			}
 
             // If you want to dispose of resources that have been resolved in the
             // application container, register for the "ApplicationStopped" event.

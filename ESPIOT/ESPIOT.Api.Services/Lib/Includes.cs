@@ -6,6 +6,29 @@ using System.Text;
 
 namespace ESPIOTNS.Api.Services
 {
+
+	public class ApiSettings
+	{
+		public virtual string DatabaseProvider { get; set; }
+
+		public virtual string ExternalBaseUrl { get; set; }
+
+		public virtual bool MigrateDatabase { get; set; }
+
+		public virtual bool SecurityEnabled { get; set; }
+
+		public virtual JwtSettings JwtSettings { get; set; }
+	}
+
+	public class JwtSettings
+	{
+		public virtual string SigningKey { get; set; }
+
+		public virtual string Issuer { get; set; }
+
+		public virtual string Audience { get; set; }
+	}
+
 	public abstract class AbstractService
 	{
 	}
