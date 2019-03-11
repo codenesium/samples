@@ -1,3 +1,5 @@
+using ESPIOTNS.Api.DataAccess.Auth;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-	public abstract class AbstractApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : IdentityDbContext<AuthUser>
 	{
 		public Guid UserId { get; private set; }
 
@@ -68,8 +70,34 @@ namespace ESPIOTNS.Api.DataAccess
 			base.OnConfiguring(options);
 		}
 
+
+		public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+		{
+			public virtual ApplicationDbContext CreateDbContext(string[] args)
+			{
+				string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Web");
+
+				string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+				IConfigurationRoot configuration = new ConfigurationBuilder()
+				.SetBasePath(settingsDirectory)
+				.AddJsonFile($"appsettings.{environment}.json")
+				.Build();
+
+				var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+				var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+
+				builder.UseSqlServer(connectionString);
+
+				return new ApplicationDbContext(builder.Options);
+			}
+		}
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			base.OnModelCreating(modelBuilder);
+
 			modelBuilder.Entity<Device>()
 			.HasKey(c => new
 			{

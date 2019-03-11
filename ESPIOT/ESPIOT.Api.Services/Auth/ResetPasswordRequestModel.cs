@@ -8,5 +8,5 @@ namespace ESPIOTNS.Api.Services.Auth
     public class ResetPasswordRequestModel
     {
 		public string Email { get; set; }
-    }
+	}
 }

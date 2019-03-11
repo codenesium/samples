@@ -84,6 +84,18 @@ namespace ESPIOTNS.Api.Services
 
 			return response;
 		}
+
+		public static AuthResponse AuthResponse(bool success, string message, string errorCode, string token, string link)
+		{
+			var response = new AuthResponse();
+			response.Success = success;
+			response.SetLink(link);
+			response.SetMessage(message);
+			response.SetToken(token);
+			response.SetErrorCode(errorCode);
+
+			return response;
+		}
 	}
 }
 

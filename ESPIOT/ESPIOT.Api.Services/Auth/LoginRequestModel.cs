@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services.Auth
 {
-    public class AuthenticateRequestModel
+    public class LoginRequestModel
     {
 		public string Email { get; set; }
 

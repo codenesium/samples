@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Update;
 using ESPIOTNS.Api.DataAccess;
+using ESPIOTNS.Api.Services;
 
 namespace Codenesium.Foundation.CommonMVC.Tests
 {

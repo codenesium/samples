@@ -6,7 +6,21 @@ export class Constants {
    static readonly HostedSubDirectory = process.env.REACT_APP_HOST_SUBDIRECTORY;
 }
 
-export class ClientRoutes {
+export class AuthClientRoutes
+{
+    static readonly Login = '/login';
+    static readonly Register = '/register';	
+    static readonly ResetPassword = '/resetpassword';	
+}
+
+export class AuthApiRoutes
+{
+    static readonly Login = 'auth/login';	
+    static readonly Register = 'auth/register';	
+    static readonly ResetPassword = 'auth/resetpassword';	
+}
+
+export class ClientRoutes {    
 static readonly Devices = '/devices';		
 static readonly DeviceActions = '/deviceactions';		
 }

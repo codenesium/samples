@@ -1,22 +1,22 @@
-import React, { Component, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
 import axios from 'axios';
-import { Constants, AuthClientRoutes, AuthApiRoutes } from '../../constants';
+import { Constants, AuthApiRoutes } from '../../constants';
 import * as Api from './models';
-import { ActionResponse, CreateResponse, AuthResponse } from '../../api/apiObjects';
-import LoginMapper from './loginMapper';
-import LoginViewModel from './loginViewModel';
+import {AuthResponse } from '../../api/apiObjects';
+import RegisterMapper from './registerMapper';
+import RegisterViewModel from './registerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
-interface LoginComponentProps {
+interface RegisterComponentProps {
   form: WrappedFormUtils;
   history: any;
   match: any;
 }
 
-interface LoginComponentState {
-  model?: LoginViewModel;
+interface RegisterComponentState {
+  model?: RegisterViewModel;
   loading: boolean;
   loaded: boolean;
   submitting:boolean,
@@ -25,12 +25,12 @@ interface LoginComponentState {
   message: string;
 }
 
-class LoginComponent extends React.Component<
-  LoginComponentProps,
-  LoginComponentState
+class RegisterComponent extends React.Component<
+  RegisterComponentProps,
+  RegisterComponentState
 > {
   state = {
-    model: new LoginViewModel(),
+    model: new RegisterViewModel(),
     loading: false,
     loaded: true,
     submitting:false,
@@ -44,7 +44,7 @@ class LoginComponent extends React.Component<
     this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
-        let model = values as LoginViewModel;
+        let model = values as RegisterViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       } else {
@@ -53,11 +53,11 @@ class LoginComponent extends React.Component<
     });
   };
 
-  submit = (model: LoginViewModel) => {
-    let mapper = new LoginMapper();
+  submit = (model: RegisterViewModel) => {
+    let mapper = new RegisterMapper();
     axios
       .post(
-        Constants.ApiEndpoint + AuthApiRoutes.Login,
+        Constants.ApiEndpoint + AuthApiRoutes.Register,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -73,11 +73,11 @@ class LoginComponent extends React.Component<
             submitted: true,
             submitting: false,
             errorOccurred: false,
-            message: '',
+            model:undefined,
+            message: 'An account confirmation has been sent to your email. Click the link to continue.',
           });
           console.log(response);
-          localStorage.setItem("token", response.token);
-          this.props.history.push('/');
+          
         },
         error => {
           console.log(error);
@@ -106,15 +106,15 @@ class LoginComponent extends React.Component<
 
     let message: JSX.Element = <div />;
     if (this.state.message) {
-        if(this.state.errorOccurred)
-        {
-            message = <Alert message={this.state.message} type="error" />;
-        }
-        else
-        {
-            message = <Alert message={this.state.message} type="success" />;
-        }
-    }
+      if(this.state.errorOccurred)
+      {
+          message = <Alert message={this.state.message} type="error" />;
+      }
+      else
+      {
+          message = <Alert message={this.state.message} type="success" />;
+      }
+  }
 
     if (this.state.loading) {
       return <Spin size="large" />;
@@ -140,7 +140,7 @@ class LoginComponent extends React.Component<
               rules: [
                 { required: true, message: 'Required' }
               ],
-            })(<Input.Password placeholder='password' />)}
+            })(<Input.Password placeholder={'password'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -164,7 +164,7 @@ class LoginComponent extends React.Component<
   }
 }
 
-export const WrappedLoginComponent = Form.create({
-  name: 'Login Form',
-})(LoginComponent);
+export const WrappedRegisterComponent = Form.create({
+  name: 'Register Form',
+})(RegisterComponent);
 

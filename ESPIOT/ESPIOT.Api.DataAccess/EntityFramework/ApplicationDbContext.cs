@@ -1,3 +1,4 @@
+using ESPIOTNS.Api.DataAccess.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -11,10 +12,14 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public class ApplicationDbContext : AbstractApplicationDbContext
 	{
+		public virtual DbSet<AuthUser> AuthUsers { get; set; }
+
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
+
+
 	}
 }
 

@@ -1,22 +1,20 @@
-import React, { Component, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
 import axios from 'axios';
-import { Constants, AuthClientRoutes, AuthApiRoutes } from '../../constants';
-import * as Api from './models';
-import { ActionResponse, CreateResponse, AuthResponse } from '../../api/apiObjects';
-import LoginMapper from './loginMapper';
-import LoginViewModel from './loginViewModel';
+import { Constants, AuthApiRoutes } from '../../constants';
+import { AuthResponse } from '../../api/apiObjects';
+import ResetPasswordMapper from './resetPasswordMapper';
+import ResetPasswordViewModel from './resetPasswordViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
 
-interface LoginComponentProps {
+interface ResetPasswordComponentProps {
   form: WrappedFormUtils;
   history: any;
   match: any;
 }
 
-interface LoginComponentState {
-  model?: LoginViewModel;
+interface ResetPasswordComponentState {
+  model?: ResetPasswordViewModel;
   loading: boolean;
   loaded: boolean;
   submitting:boolean,
@@ -25,12 +23,12 @@ interface LoginComponentState {
   message: string;
 }
 
-class LoginComponent extends React.Component<
-  LoginComponentProps,
-  LoginComponentState
+class ResetPasswordComponent extends React.Component<
+  ResetPasswordComponentProps,
+  ResetPasswordComponentState
 > {
   state = {
-    model: new LoginViewModel(),
+    model: new ResetPasswordViewModel(),
     loading: false,
     loaded: true,
     submitting:false,
@@ -44,7 +42,7 @@ class LoginComponent extends React.Component<
     this.setState({ ...this.state, submitting: true, submitted: false });
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
-        let model = values as LoginViewModel;
+        let model = values as ResetPasswordViewModel;
         console.log('Received values of form: ', model);
         this.submit(model);
       } else {
@@ -53,11 +51,11 @@ class LoginComponent extends React.Component<
     });
   };
 
-  submit = (model: LoginViewModel) => {
-    let mapper = new LoginMapper();
+  submit = (model: ResetPasswordViewModel) => {
+    let mapper = new ResetPasswordMapper();
     axios
       .post(
-        Constants.ApiEndpoint + AuthApiRoutes.Login,
+        Constants.ApiEndpoint + AuthApiRoutes.ResetPassword,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: {
@@ -73,11 +71,10 @@ class LoginComponent extends React.Component<
             submitted: true,
             submitting: false,
             errorOccurred: false,
-            message: '',
+            model:undefined,
+            message: 'A password reset link has been sent to your email. Click the link to continue.',
           });
           console.log(response);
-          localStorage.setItem("token", response.token);
-          this.props.history.push('/');
         },
         error => {
           console.log(error);
@@ -133,16 +130,6 @@ class LoginComponent extends React.Component<
             })(<Input placeholder={'Email'} />)}
           </Form.Item>
 
-           <Form.Item>
-            <label htmlFor="password">Password</label>
-            <br />
-            {getFieldDecorator('password', {
-              rules: [
-                { required: true, message: 'Required' }
-              ],
-            })(<Input.Password placeholder='password' />)}
-          </Form.Item>
-
           <Form.Item>
             <Button
               type="primary"
@@ -164,7 +151,7 @@ class LoginComponent extends React.Component<
   }
 }
 
-export const WrappedLoginComponent = Form.create({
-  name: 'Login Form',
-})(LoginComponent);
+export const WrappedResetPasswordComponent = Form.create({
+  name: 'ResetPassword Form',
+})(ResetPasswordComponent);
 

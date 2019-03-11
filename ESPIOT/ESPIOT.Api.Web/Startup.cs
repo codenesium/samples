@@ -38,6 +38,9 @@ using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.Services;
 using ESPIOTNS.Api.DataAccess;
+using Microsoft.AspNetCore.Identity;
+using ESPIOTNS.Api.DataAccess.Auth;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ESPIOTNS.Api.Web
 {
@@ -140,7 +143,34 @@ namespace ESPIOTNS.Api.Web
 					throw new Exception("JWT key mut be longer than 16 characters");
 				}
 
-                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				services.AddIdentity<AuthUser, IdentityRole>()
+				   .AddEntityFrameworkStores<ApplicationDbContext>()
+				   .AddDefaultTokenProviders();
+
+				services.Configure<IdentityOptions>(options =>
+				{
+					// Password settings.
+					//options.Password.RequireDigit = true;
+					//options.Password.RequireLowercase = true;
+					//options.Password.RequireNonAlphanumeric = true;
+					//options.Password.RequireUppercase = true;
+					//options.Password.RequiredLength = 6;
+					//options.Password.RequiredUniqueChars = 1;
+
+					// Lockout settings.
+					//options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+					//options.Lockout.MaxFailedAccessAttempts = 5;
+					//options.Lockout.AllowedForNewUsers = true;
+
+					//options.SignIn.RequireConfirmedEmail = true;
+
+					// User settings.
+					options.User.AllowedUserNameCharacters =
+					"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+					options.User.RequireUniqueEmail = true;
+				});
+
+				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(jwtBearerOptions =>
                 {
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()

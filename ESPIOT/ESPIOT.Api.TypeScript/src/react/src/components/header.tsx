@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
+import MenuItem from 'antd/lib/menu/MenuItem';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ClientRoutes, Constants } from '../constants';
+import { ClientRoutes, AuthClientRoutes } from '../constants';
 const { Header, Content, Footer, Sider } = Layout;
 
 const SubMenu = Menu.SubMenu;
@@ -55,8 +55,36 @@ displayName:string) => {
               <Link to={ClientRoutes.DeviceActions}></Link>
               </MenuItem>
 
+        <MenuItem
+                key="login"
+              >
+			  <Icon type="delete" />
+              <span>Login</span>
+              <Link to={AuthClientRoutes.Login}></Link>
+              </MenuItem>
+
+ <MenuItem
+                key="register"
+              >
+			  <Icon type="delete" />
+              <span>Register</span>
+              <Link to={AuthClientRoutes.Register}></Link>
+              </MenuItem>
+
+ <MenuItem
+                key="resetpassword"
+              >
+			  <Icon type="delete" />
+              <span>Reset Password</span>
+              <Link to={AuthClientRoutes.ResetPassword}></Link>
+              </MenuItem>
+
+
 				
             </Menu>
+
+            
+							
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>

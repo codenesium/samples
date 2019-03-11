@@ -20,6 +20,7 @@ export class ActionResponse {
     }
 }
 
+
 export class CreateResponse<T> extends ActionResponse
 {
     record?: T;
@@ -41,3 +42,22 @@ export class UpdateResponse<T> extends ActionResponse
         this.record = undefined;
     }
 }
+
+export class AuthResponse extends ActionResponse
+{
+    token:string;
+    link:string;
+    message:string;
+    errorCode:string;
+
+    constructor()
+    {
+        super();
+        this.errorCode = '';
+        this.token = '';
+        this.link = '';
+        this.message = '';
+    }
+}
+
+

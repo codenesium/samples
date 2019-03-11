@@ -38,14 +38,14 @@ namespace ESPIOTNS.Api.Web.Auth
 
 
 		[HttpPost]
-		[Route("authenticate")]
+		[Route("login")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(AuthenticateResponseModel), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
 
-		public virtual async Task<IActionResult> Authenticate([FromBody] AuthenticateRequestModel model)
+		public virtual async Task<IActionResult> Login([FromBody] LoginRequestModel model)
 		{
-			AuthenticateResponseModel result = await this.authService.Authenticate(model);
+			AuthResponse result = await this.authService.Login(model);
 
 			if (result.Success)
 			{
@@ -60,12 +60,12 @@ namespace ESPIOTNS.Api.Web.Auth
 		[HttpPost]
 		[Route("register")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(RegisterResponseModel), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
 
 		public virtual async Task<IActionResult> Register([FromBody] RegisterRequestModel model)
 		{
-			RegisterResponseModel result = await this.authService.Register(model);
+			AuthResponse result = await this.authService.Register(model);
 
 			if (result.Success)
 			{
@@ -80,12 +80,32 @@ namespace ESPIOTNS.Api.Web.Auth
 		[HttpPost]
 		[Route("resetpassword")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(ResetPasswordResponseModel), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
 
 		public virtual async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestModel model)
 		{
-			ResetPasswordResponseModel result = await this.authService.ResetPassword(model);
+			AuthResponse result = await this.authService.ResetPassword(model);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status401Unauthorized, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("confirmemail")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailRequestModel model)
+		{
+			AuthResponse result = await this.authService.ConfirmEmail(model);
 
 			if (result.Success)
 			{

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services.Auth
 {
-    public class ResetPasswordResponseModel
+    public class ConfirmEmailRequestModel
     {
-		public bool Success { get; private set; }
+		public string Id { get; set; }
+
+		public string Token { get; set; }
     }
 }

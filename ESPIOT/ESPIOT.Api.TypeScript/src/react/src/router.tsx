@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/dashboard';
-import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
 import { wrapperHeader } from './components/header';
-import { ClientRoutes, Constants } from './constants'; 
+import { ClientRoutes, Constants, AuthClientRoutes } from './constants'; 
 import { WrappedDeviceCreateComponent } from './components/device/deviceCreateForm';
 import { WrappedDeviceDetailComponent } from './components/device/deviceDetailForm';
 import { WrappedDeviceEditComponent } from './components/device/deviceEditForm';
@@ -11,27 +10,23 @@ import { WrappedDeviceSearchComponent } from './components/device/deviceSearchFo
 import { WrappedDeviceActionCreateComponent } from './components/deviceAction/deviceActionCreateForm';
 import { WrappedDeviceActionDetailComponent } from './components/deviceAction/deviceActionDetailForm';
 import { WrappedDeviceActionEditComponent } from './components/deviceAction/deviceActionEditForm';
-import { WrappedDeviceActionSearchComponent } from './components/deviceAction/deviceActionSearchForm';					
+import { WrappedDeviceActionSearchComponent } from './components/deviceAction/deviceActionSearchForm';
 
-const config = {
-  oidc: {
-    clientId: '<okta_client_id>',
-    issuer: 'https://<okta_application_url>/oauth2/default',
-    redirectUri: 'https://<your_public_webserver>/implicit/callback',
-    scope: 'openid profile email',
-  }
-}
+import { WrappedLoginComponent } from './components/auth/loginForm';
+import { WrappedRegisterComponent } from './components/auth/registerForm';
+import { WrappedResetPasswordComponent } from './components/auth/resetPasswordForm';
+
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
 
   return (
     <BrowserRouter basename={Constants.HostedSubDirectory}>   
-	<Security issuer={config.oidc.issuer}
-        client_id={config.oidc.clientId}
-        redirect_uri={config.oidc.redirectUri}>
-	    <SecureRoute path="/protected" component={() => '<div>secure route</div>'} />
+
         <Switch>
           <Route exact path="/" component={wrapperHeader(Dashboard, "Dashboard")} />
+          <Route exact path={AuthClientRoutes.Login} component={wrapperHeader(WrappedLoginComponent, "Login")} />
+          <Route exact path={AuthClientRoutes.Register} component={wrapperHeader(WrappedRegisterComponent, "Register")} />
+          <Route exact path={AuthClientRoutes.ResetPassword} component={wrapperHeader(WrappedResetPasswordComponent, "Reset Password")} />
 		  <Route path={ClientRoutes.Devices + "/create"} component={wrapperHeader(WrappedDeviceCreateComponent, "Device Create")} />
                       <Route path={ClientRoutes.Devices + "/edit/:id"} component={wrapperHeader(WrappedDeviceEditComponent, "Device Edit")} />
                       <Route path={ClientRoutes.Devices + "/:id"} component={wrapperHeader(WrappedDeviceDetailComponent , "Device Detail")} />
@@ -41,7 +36,6 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
                       <Route path={ClientRoutes.DeviceActions + "/:id"} component={wrapperHeader(WrappedDeviceActionDetailComponent , "Device Actions Detail")} />
                       <Route path={ClientRoutes.DeviceActions} component={wrapperHeader(WrappedDeviceActionSearchComponent, "Device Actions Search")} />
 					        </Switch>
-	  </Security>
     </BrowserRouter>
   );
 }
