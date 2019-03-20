@@ -6,11 +6,11 @@ import DeviceMapper from '../device/deviceMapper';
 import DeviceViewModel from '../device/deviceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DeviceTableComponentProps {
-  id:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,57 +20,52 @@ interface DeviceTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<DeviceViewModel>;
+  filteredRecords: Array<DeviceViewModel>;
 }
 
-export class  DeviceTableComponent extends React.Component<
-DeviceTableComponentProps,
-DeviceTableComponentState
+export class DeviceTableComponent extends React.Component<
+  DeviceTableComponentProps,
+  DeviceTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: DeviceViewModel) {
-  this.props.history.push(ClientRoutes.Devices + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: DeviceViewModel) {
+    this.props.history.push(ClientRoutes.Devices + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: DeviceViewModel) {
-   this.props.history.push(ClientRoutes.Devices + '/' + row.id);
- }
+  handleDetailClick(e: any, row: DeviceViewModel) {
+    this.props.history.push(ClientRoutes.Devices + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.DeviceClientResponseModel>;
 
-          console.log(response);
+          GlobalUtilities.logInfo(resp);
 
           let mapper = new DeviceMapper();
-          
-          let devices:Array<DeviceViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<DeviceViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -82,7 +77,7 @@ handleEditClick(e:any, row: DeviceViewModel) {
           });
         },
         error => {
-          console.log(error);
+          GlobalUtilities.logError(error);
           this.setState({
             ...this.state,
             loading: false,
@@ -95,60 +90,64 @@ handleEditClick(e:any, row: DeviceViewModel) {
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Devices',
-                    columns: [
-					  {
-                      Header: 'Date of Last Ping',
-                      accessor: 'dateOfLastPing',
-                      Cell: (props) => {
-                      return <span>{String(props.original.dateOfLastPing)}</span>;
-                      }           
-                    },  {
-                      Header: 'Active',
-                      accessor: 'isActive',
-                      Cell: (props) => {
-                      return <span>{String(props.original.isActive)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'Public Id',
-                      accessor: 'publicId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.publicId)}</span>;
-                      }           
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Devices',
+                columns: [
+                  {
+                    Header: 'Date of Last Ping',
+                    accessor: 'dateOfLastPing',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.dateOfLastPing)}</span>
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Active',
+                    accessor: 'isActive',
+                    Cell: props => {
+                      return <span>{String(props.original.isActive)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Public Id',
+                    accessor: 'publicId',
+                    Cell: props => {
+                      return <span>{String(props.original.publicId)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as DeviceViewModel
@@ -159,8 +158,8 @@ handleEditClick(e:any, row: DeviceViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as DeviceViewModel
@@ -169,11 +168,14 @@ handleEditClick(e:any, row: DeviceViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -181,6 +183,7 @@ handleEditClick(e:any, row: DeviceViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>dc05211a5cee6cf4a10e11ff1493b79a</Hash>
+    <Hash>82d26ee243fc001e0ea600829ff2942a</Hash>
 </Codenesium>*/

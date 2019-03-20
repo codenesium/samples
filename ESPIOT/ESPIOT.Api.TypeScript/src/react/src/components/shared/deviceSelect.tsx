@@ -3,19 +3,16 @@ import axios from 'axios';
 import * as Api from '../../api/models';
 import DeviceMapper from '../device/deviceMapper';
 import DeviceViewModel from '../device/deviceViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DeviceSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface DeviceSelectComponentState {
@@ -23,46 +20,40 @@ interface DeviceSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<DeviceViewModel>;
+  filteredRecords: Array<DeviceViewModel>;
 }
 
-export class  DeviceSelectComponent extends React.Component<
-DeviceSelectComponentProps,
-DeviceSelectComponentState
+export class DeviceSelectComponent extends React.Component<
+  DeviceSelectComponentProps,
+  DeviceSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .get(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
       .then(
         resp => {
           let response = resp.data as Array<Api.DeviceClientResponseModel>;
 
-          console.log(response);
+          GlobalUtilities.logInfo(resp);
 
           let mapper = new DeviceMapper();
-          
-          let devices:Array<DeviceViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
+          let devices: Array<DeviceViewModel> = [];
+
+          response.forEach(x => {
+            devices.push(mapper.mapApiResponseToViewModel(x));
           });
           this.setState({
             ...this.state,
@@ -74,7 +65,7 @@ DeviceSelectComponentState
           });
         },
         error => {
-          console.log(error);
+          GlobalUtilities.logError(error);
           this.setState({
             ...this.state,
             loading: false,
@@ -87,46 +78,39 @@ DeviceSelectComponentState
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
         <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:DeviceViewModel) =>
-            {
-                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue || [],
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map((x: DeviceViewModel) => {
+                return (
+                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </div>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>228b6419a7598525f24b9904271b2048</Hash>
+    <Hash>7b8ed4611f71abd56483b0c42ec88e99</Hash>
 </Codenesium>*/

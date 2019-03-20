@@ -103,6 +103,7 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			return await this.Context.Set<DeviceAction>()
 			       .Include(x => x.DeviceIdNavigation)
+
 			       .Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
 		}
 
@@ -132,5 +133,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>91edddd2a42286f8aa0b14b2d36373c4</Hash>
+    <Hash>cc74a7c656de21fcdfdf307dac0a097a</Hash>
 </Codenesium>*/

@@ -5,6 +5,7 @@ import DeviceActionMapper from '../deviceAction/deviceActionMapper';
 import DeviceActionViewModel from '../deviceAction/deviceActionViewModel';
 import { Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DeviceActionSelectComponentProps {
   getFieldDecorator: any;
@@ -39,9 +40,7 @@ export class DeviceActionSelectComponent extends React.Component<
 
     axios
       .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
       .then(
         resp => {
@@ -49,7 +48,7 @@ export class DeviceActionSelectComponent extends React.Component<
             Api.DeviceActionClientResponseModel
           >;
 
-          console.log(response);
+          GlobalUtilities.logInfo(resp);
 
           let mapper = new DeviceActionMapper();
 
@@ -68,7 +67,7 @@ export class DeviceActionSelectComponent extends React.Component<
           });
         },
         error => {
-          console.log(error);
+          GlobalUtilities.logError(error);
           this.setState({
             ...this.state,
             loading: false,
@@ -94,7 +93,7 @@ export class DeviceActionSelectComponent extends React.Component<
       return (
         <div>
           {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
+            initialValue: this.props.selectedValue || [],
             rules: [{ required: this.props.required, message: 'Required' }],
           })(
             <Select>
@@ -115,5 +114,5 @@ export class DeviceActionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>915d358ae0ab5188f9c5d56e37b3a7f8</Hash>
+    <Hash>58d1c2bda082f6e2cbd2d6bbe69d8ebf</Hash>
 </Codenesium>*/

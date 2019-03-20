@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DeviceCreateComponentProps {
   form: WrappedFormUtils;
@@ -55,7 +55,6 @@ class DeviceCreateComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as DeviceViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -70,9 +69,7 @@ class DeviceCreateComponent extends React.Component<
         Constants.ApiEndpoint + ApiRoutes.Devices,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
       .then(
@@ -88,18 +85,18 @@ class DeviceCreateComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
+          GlobalUtilities.logInfo(resp);
         },
         error => {
-          console.log(error);
+          GlobalUtilities.logError(error);
           if (error.response.data) {
             let errorResponse = error.response.data as ActionResponse;
 
             errorResponse.validationErrors.forEach(x => {
               this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
                   value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
+                    GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
                   ),
                   errors: [new Error(x.errorMessage)],
                 },
@@ -156,7 +153,7 @@ class DeviceCreateComponent extends React.Component<
             <label htmlFor="isActive">Active</label>
             <br />
             {getFieldDecorator('isActive', {
-              rules: [{ required: true, message: 'Required' }],
+              rules: [],
               valuePropName: 'checked',
             })(<Switch />)}
           </Form.Item>
@@ -204,5 +201,5 @@ export const WrappedDeviceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c6aea8d068f15c204b30e4b277904c4c</Hash>
+    <Hash>d542c3acf42ac194ab24148cfb10d547</Hash>
 </Codenesium>*/

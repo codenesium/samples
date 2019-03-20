@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { DeviceSelectComponent } from '../shared/deviceSelect';
 
 interface DeviceActionCreateComponentProps {
@@ -56,7 +56,6 @@ class DeviceActionCreateComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as DeviceActionViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -71,9 +70,7 @@ class DeviceActionCreateComponent extends React.Component<
         Constants.ApiEndpoint + ApiRoutes.DeviceActions,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
       .then(
@@ -89,18 +86,18 @@ class DeviceActionCreateComponent extends React.Component<
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
+          GlobalUtilities.logInfo(resp);
         },
         error => {
-          console.log(error);
+          GlobalUtilities.logError(error);
           if (error.response.data) {
             let errorResponse = error.response.data as ActionResponse;
 
             errorResponse.validationErrors.forEach(x => {
               this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
+                [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
                   value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
+                    GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
                   ),
                   errors: [new Error(x.errorMessage)],
                 },
@@ -198,5 +195,5 @@ export const WrappedDeviceActionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>aae79f71aadb909c9968ef09c12997df</Hash>
+    <Hash>ac57a5d4d429cda719c452faae179ee5</Hash>
 </Codenesium>*/

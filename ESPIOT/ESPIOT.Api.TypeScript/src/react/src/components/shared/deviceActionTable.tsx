@@ -7,9 +7,9 @@ import DeviceActionViewModel from '../deviceAction/deviceActionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DeviceActionTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -52,9 +52,7 @@ export class DeviceActionTableComponent extends React.Component<
 
     axios
       .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
       .then(
         resp => {
@@ -62,7 +60,7 @@ export class DeviceActionTableComponent extends React.Component<
             Api.DeviceActionClientResponseModel
           >;
 
-          console.log(response);
+          GlobalUtilities.logInfo(resp);
 
           let mapper = new DeviceActionMapper();
 
@@ -81,7 +79,7 @@ export class DeviceActionTableComponent extends React.Component<
           });
         },
         error => {
-          console.log(error);
+          GlobalUtilities.logError(error);
           this.setState({
             ...this.state,
             loading: false,
@@ -138,7 +136,8 @@ export class DeviceActionTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.deviceIdNavigation.toDisplay()
+                            props.original.deviceIdNavigation &&
+                              props.original.deviceIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -196,5 +195,5 @@ export class DeviceActionTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>de2efd5b809421a4d3ad19c9e11e608e</Hash>
+    <Hash>962898ee7e1a68308c6108490a143619</Hash>
 </Codenesium>*/

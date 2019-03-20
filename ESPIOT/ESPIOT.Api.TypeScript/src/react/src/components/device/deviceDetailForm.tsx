@@ -6,6 +6,7 @@ import DeviceMapper from './deviceMapper';
 import DeviceViewModel from './deviceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { DeviceActionTableComponent } from '../shared/deviceActionTable';
 
 interface DeviceDetailComponentProps {
@@ -50,16 +51,14 @@ class DeviceDetailComponent extends React.Component<
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
       .then(
         resp => {
           let response = resp.data as Api.DeviceClientResponseModel;
 
-          console.log(response);
+          GlobalUtilities.logInfo(resp);
 
           let mapper = new DeviceMapper();
 
@@ -72,7 +71,7 @@ class DeviceDetailComponent extends React.Component<
           });
         },
         error => {
-          console.log(error);
+          GlobalUtilities.logError(error);
           this.setState({
             model: undefined,
             loading: false,
@@ -126,7 +125,6 @@ class DeviceDetailComponent extends React.Component<
           <div>
             <h3>DeviceActions</h3>
             <DeviceActionTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -153,5 +151,5 @@ export const WrappedDeviceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ece1fac45f84f03dc6cba63b1668193d</Hash>
+    <Hash>5687a82a7cc0d0cf9a287dfb99104c59</Hash>
 </Codenesium>*/
