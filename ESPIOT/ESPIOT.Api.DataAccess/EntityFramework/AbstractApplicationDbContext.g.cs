@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-	public abstract class AbstractApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : IdentityDbContext<AuthUser>
 	{
 		public Guid UserId { get; private set; }
 
@@ -99,6 +100,8 @@ namespace ESPIOTNS.Api.DataAccess
 			.UseSqlServerIdentityColumn();
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
+
+			base.OnModelCreating(modelBuilder);
 		}
 	}
 

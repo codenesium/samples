@@ -1,6 +1,5 @@
 ﻿using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-using ESPIOTNS.Api.DataAccess.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;

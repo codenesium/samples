@@ -39,8 +39,9 @@ using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.Services;
 using ESPIOTNS.Api.DataAccess;
 using Microsoft.AspNetCore.Identity;
-using ESPIOTNS.Api.DataAccess.Auth;
+using ESPIOTNS.Api.DataAccess;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace ESPIOTNS.Api.Web
 {
@@ -143,6 +144,8 @@ namespace ESPIOTNS.Api.Web
 					throw new Exception("JWT key mut be longer than 16 characters");
 				}
 
+
+
 				services.AddIdentity<AuthUser, IdentityRole>()
 				   .AddEntityFrameworkStores<ApplicationDbContext>()
 				   .AddDefaultTokenProviders();
@@ -222,6 +225,8 @@ namespace ESPIOTNS.Api.Web
            services.Configure<ApiSettings>(this.Configuration);
 
 		   services.AddHealthChecks();
+
+			services.AddIdentity<AuthUser,IdentityRole>();
 
 		   // enable CORS for all requests
            services.AddCors(config =>
@@ -380,9 +385,19 @@ namespace ESPIOTNS.Api.Web
 
             // register the mediator and register all handlers in the services assembly
 			builder.AddMediatR(typeof(AbstractService).Assembly);
+			builder.RegisterType<UserStore<AuthUser>>().As<IUserStore<AuthUser>>();
+			/*
+			builder.RegisterType<UserManager<AuthUser>>().AsSelf();
 
-            // build the DI container
-            this.ApplicationApiContainer = builder.Build();
+
+		
+
+			builder.RegisterType<PasswordHasher<AuthUser>>().As<IPasswordHasher<AuthUser>>();
+
+			builder.RegisterType<UpperInvariantLookupNormalizer>().As<ILookupNormalizer>();
+			*/
+			// build the DI container
+			this.ApplicationApiContainer = builder.Build();
             return new AutofacServiceProvider(this.ApplicationApiContainer);
         }
 
