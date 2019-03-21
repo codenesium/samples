@@ -1,14 +1,6 @@
 {
 "Projects" : [
 {
-	"Id":"6b9cf39a-8347-4475-95b4-a363c99d9e12",
-	"Name":"AdventureWorks",
-	"ProjectType" : ".NET Core REST API 1.0.0",
-	"LocalDestinationDirectory":"",
-	"Description":"Microsoft sample database",
-	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/AdventureWorks/Codenesium/Project.json"
-},
-{
 	"Id":"a211eeab-39a3-4cbc-81c0-3636d01fe227",
 	"Name":"ESPIOT",
 	"ProjectType" : ".NET Core REST API 1.0.0",
