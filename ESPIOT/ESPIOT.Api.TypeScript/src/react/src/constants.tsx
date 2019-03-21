@@ -8,16 +8,20 @@ export class Constants {
 
 export class AuthClientRoutes
 {
-    static readonly Login = '/login';
-    static readonly Register = '/register';	
-    static readonly ResetPassword = '/resetpassword';	
+    static readonly Login = '/auth/login';
+    static readonly Register = '/auth/register';	
+    static readonly ResetPassword = '/auth/resetpassword';	
+    static readonly ConfirmRegistration = '/auth/confirmregistration';	
+    static readonly ConfirmPasswordReset = '/auth/confirmpasswordreset';	
 }
 
 export class AuthApiRoutes
 {
     static readonly Login = 'auth/login';	
     static readonly Register = 'auth/register';	
-    static readonly ResetPassword = 'auth/resetpassword';	
+    static readonly ResetPassword = 'auth/resetpassword';
+    static readonly ConfirmRegistration = 'auth/confirmregistration';
+    static readonly ConfirmPasswordReset = 'auth/confirmpasswordreset';	
 }
 
 export class ClientRoutes {    

@@ -1,5 +1,6 @@
 ﻿using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using ESPIOTNS.Api.Services.Lib;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -18,10 +19,13 @@ namespace ESPIOTNS.Api.Services.Auth
 
 		private readonly UserManager<AuthUser> userManager;
 
-		public AuthService(ApiSettings apiSettings, UserManager<AuthUser> userManager)
+		private readonly IEmailSender emailSender;
+
+		public AuthService(ApiSettings apiSettings, UserManager<AuthUser> userManager, IEmailSender emailSender)
 		{
 			this.apiSettings = apiSettings;
 			this.userManager = userManager;
+			this.emailSender = emailSender;
 		}
 		
 		public async Task<AuthResponse> Login(LoginRequestModel model)
@@ -65,18 +69,19 @@ namespace ESPIOTNS.Api.Services.Auth
 					UserName = model.Email
 					
 				};
-				user.PasswordHash = model.Password;
 
-				IdentityResult  result = await this.userManager.CreateAsync(user);
+				user.PasswordHash = this.userManager.PasswordHasher.HashPassword(user, model.Password);
+
+				IdentityResult result = await this.userManager.CreateAsync(user);
 
 				if (result.Succeeded)
 				{
 					string confirmationToken = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
 
-					string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/auth/confirmregistration?id={user.Id}&token={confirmationToken}";
+					string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/auth/confirmregistration/{user.Id}/{System.Net.WebUtility.UrlEncode(confirmationToken)}";
 
-					// TODO: SEND EMAIL HERE
-
+					await this.emailSender.SendEmailAsync(model.Email, "Registration", $"Click the link to complete registration.  {confirmationLink}");
+					
 					return ValidationResponseFactory<AuthResponse>.AuthResponse(true, string.Empty, string.Empty, string.Empty, string.Empty);
 				}
 				else
@@ -91,7 +96,7 @@ namespace ESPIOTNS.Api.Services.Auth
 			}
 		}
 
-		public async Task<AuthResponse> ConfirmEmail(ConfirmEmailRequestModel model)
+		public async Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model)
 		{
 
 			AuthUser user = await this.userManager.FindByIdAsync(model.Id);
@@ -102,7 +107,7 @@ namespace ESPIOTNS.Api.Services.Auth
 			}
 			else
 			{
-				IdentityResult result = await this.userManager.ConfirmEmailAsync(user, model.Token);
+				IdentityResult result = await this.userManager.ConfirmEmailAsync(user, System.Net.WebUtility.UrlDecode(model.Token));
 
 				if (result.Succeeded)
 				{
@@ -110,7 +115,31 @@ namespace ESPIOTNS.Api.Services.Auth
 				}
 				else
 				{
-					return ValidationResponseFactory<AuthResponse>.AuthResponse(false, result.Errors.ToString(), "ERROR CODE", string.Empty, string.Empty);
+					return ValidationResponseFactory<AuthResponse>.AuthResponse(false, result, "ERROR CODE", string.Empty, string.Empty);
+				}
+			}
+		}
+
+		public async Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model)
+		{
+
+			AuthUser user = await this.userManager.FindByIdAsync(model.Id);
+
+			if (user == null)
+			{
+				return ValidationResponseFactory<AuthResponse>.AuthResponse(false, "User Not Found", "ERROR CODE", string.Empty, string.Empty);
+			}
+			else
+			{
+				IdentityResult result = await this.userManager.ResetPasswordAsync(user, System.Net.WebUtility.UrlDecode(model.Token), model.NewPassword);
+
+				if (result.Succeeded)
+				{
+					return ValidationResponseFactory<AuthResponse>.AuthResponse(true, string.Empty, string.Empty, string.Empty, string.Empty);
+				}
+				else
+				{
+					return ValidationResponseFactory<AuthResponse>.AuthResponse(false, result, "ERROR CODE", string.Empty, string.Empty);
 				}
 			}
 		}
@@ -126,9 +155,9 @@ namespace ESPIOTNS.Api.Services.Auth
 			else
 			{
 				string confirmationToken = await this.userManager.GeneratePasswordResetTokenAsync(user);
-				string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/auth/confirmpasswordreset?id={user.Id}&token={confirmationToken}";
+				string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/auth/confirmpasswordreset/{user.Id}/{System.Net.WebUtility.UrlEncode(confirmationToken)}";
 
-				//TODO:SEND EMAIL HERE
+				await this.emailSender.SendEmailAsync(model.Email, "Password Reset", $"Click the link to reset your password.  {confirmationLink}");
 
 				return ValidationResponseFactory<AuthResponse>.AuthResponse(true, string.Empty, string.Empty, string.Empty, string.Empty);
 			}

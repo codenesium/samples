@@ -15,6 +15,8 @@ import { WrappedDeviceActionSearchComponent } from './components/deviceAction/de
 import { WrappedLoginComponent } from './components/auth/loginForm';
 import { WrappedRegisterComponent } from './components/auth/registerForm';
 import { WrappedResetPasswordComponent } from './components/auth/resetPasswordForm';
+import { WrappedConfirmPasswordResetComponent } from './components/auth/confirmPasswordResetForm';
+import { WrappedConfirmRegistrationComponent } from './components/auth/confirmRegistrationForm';
 
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
@@ -24,6 +26,11 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
         <Switch>
           <Route exact path="/" component={wrapperHeader(Dashboard, "Dashboard")} />
+
+  <Route exact path={AuthClientRoutes.ConfirmPasswordReset + '/:id/:token'} component={wrapperHeader(WrappedConfirmPasswordResetComponent, "Confirm Password Reset")} />
+  <Route exact path={AuthClientRoutes.ConfirmRegistration +  '/:id/:token'} component={wrapperHeader(WrappedConfirmRegistrationComponent, "Confirm Registration")} />
+
+
           <Route exact path={AuthClientRoutes.Login} component={wrapperHeader(WrappedLoginComponent, "Login")} />
           <Route exact path={AuthClientRoutes.Register} component={wrapperHeader(WrappedRegisterComponent, "Register")} />
           <Route exact path={AuthClientRoutes.ResetPassword} component={wrapperHeader(WrappedResetPasswordComponent, "Reset Password")} />

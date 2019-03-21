@@ -1,5 +1,6 @@
 using ESPIOTNS.Api.Contracts;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -90,6 +91,25 @@ namespace ESPIOTNS.Api.Services
 			var response = new AuthResponse();
 			response.Success = success;
 			response.SetLink(link);
+			response.SetMessage(message);
+			response.SetToken(token);
+			response.SetErrorCode(errorCode);
+
+			return response;
+		}
+
+		public static AuthResponse AuthResponse(bool success, IdentityResult identityResult, string errorCode, string token, string link)
+		{
+			var response = new AuthResponse();
+			response.Success = success;
+			response.SetLink(link);
+
+			string message = string.Empty;
+			foreach (var error in identityResult.Errors)
+			{
+				message += error.Description + Environment.NewLine;
+			}
+
 			response.SetMessage(message);
 			response.SetToken(token);
 			response.SetErrorCode(errorCode);

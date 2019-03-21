@@ -98,14 +98,34 @@ namespace ESPIOTNS.Api.Web.Auth
 		}
 
 		[HttpPost]
-		[Route("confirmemail")]
+		[Route("confirmregistration")]
 		[UnitOfWork]
 		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
 
-		public virtual async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailRequestModel model)
+		public virtual async Task<IActionResult> ConfirmRegistration([FromBody] ConfirmRegistrationRequestModel model)
 		{
-			AuthResponse result = await this.authService.ConfirmEmail(model);
+			AuthResponse result = await this.authService.ConfirmRegistration(model);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status401Unauthorized, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("confirmpasswordreset")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> ConfirmPasswordReset([FromBody] ConfirmPasswordResetRequestModel model)
+		{
+			AuthResponse result = await this.authService.ConfirmPasswordReset(model);
 
 			if (result.Success)
 			{

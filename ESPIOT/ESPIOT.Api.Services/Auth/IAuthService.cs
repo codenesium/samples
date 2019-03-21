@@ -7,8 +7,9 @@ namespace ESPIOTNS.Api.Services.Auth
 	{
 		Task<AuthResponse> Login(LoginRequestModel model);
 
-		Task<AuthResponse> ConfirmEmail(ConfirmEmailRequestModel model);
+		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
 
+		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
 
 		Task<AuthResponse> Register(RegisterRequestModel model);
 

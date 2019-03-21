@@ -140,7 +140,7 @@ class RegisterComponent extends React.Component<
               rules: [
                 { required: true, message: 'Required' }
               ],
-            })(<Input.Password placeholder={'password'} />)}
+            })(<Input.Password placeholder={'Password'} />)}
           </Form.Item>
 
           <Form.Item>

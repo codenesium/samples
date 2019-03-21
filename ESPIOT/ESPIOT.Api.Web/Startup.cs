@@ -42,6 +42,7 @@ using Microsoft.AspNetCore.Identity;
 using ESPIOTNS.Api.DataAccess;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.DataProtection;
+using ESPIOTNS.Api.Services.Lib;
 
 namespace ESPIOTNS.Api.Web
 {
@@ -157,7 +158,7 @@ namespace ESPIOTNS.Api.Web
 					//options.Password.RequireLowercase = true;
 					//options.Password.RequireNonAlphanumeric = true;
 					//options.Password.RequireUppercase = true;
-					//options.Password.RequiredLength = 6;
+					options.Password.RequiredLength = 8;
 					//options.Password.RequiredUniqueChars = 1;
 
 					// Lockout settings.
@@ -225,8 +226,6 @@ namespace ESPIOTNS.Api.Web
            services.Configure<ApiSettings>(this.Configuration);
 
 		   services.AddHealthChecks();
-
-			services.AddIdentity<AuthUser,IdentityRole>();
 
 		   // enable CORS for all requests
            services.AddCors(config =>
@@ -385,17 +384,12 @@ namespace ESPIOTNS.Api.Web
 
             // register the mediator and register all handlers in the services assembly
 			builder.AddMediatR(typeof(AbstractService).Assembly);
+
 			builder.RegisterType<UserStore<AuthUser>>().As<IUserStore<AuthUser>>();
-			/*
-			builder.RegisterType<UserManager<AuthUser>>().AsSelf();
+
+			builder.RegisterType<EmailSender>().AsImplementedInterfaces();
 
 
-		
-
-			builder.RegisterType<PasswordHasher<AuthUser>>().As<IPasswordHasher<AuthUser>>();
-
-			builder.RegisterType<UpperInvariantLookupNormalizer>().As<ILookupNormalizer>();
-			*/
 			// build the DI container
 			this.ApplicationApiContainer = builder.Build();
             return new AutofacServiceProvider(this.ApplicationApiContainer);

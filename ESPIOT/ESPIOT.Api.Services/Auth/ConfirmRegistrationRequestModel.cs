@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services.Auth
 {
-    public class ConfirmEmailRequestModel
+    public class ConfirmRegistrationRequestModel
     {
 		public string Id { get; set; }
 
