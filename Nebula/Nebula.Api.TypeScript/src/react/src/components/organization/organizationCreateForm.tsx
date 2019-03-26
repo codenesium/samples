@@ -1,18 +1,28 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import OrganizationMapper from './organizationMapper';
 import OrganizationViewModel from './organizationViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface OrganizationCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface OrganizationCreateComponentState {
@@ -21,8 +31,8 @@ interface OrganizationCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class OrganizationCreateComponent extends React.Component<
@@ -35,118 +45,134 @@ class OrganizationCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as OrganizationViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
-	  else {
-	      this.setState({...this.state, submitting:false, submitted:false});
-	  }
     });
   };
 
-  submit = (model:OrganizationViewModel) =>
-  {  
+  submit = (model: OrganizationViewModel) => {
     let mapper = new OrganizationMapper();
-     axios
-      .post(
+    axios
+      .post<CreateResponse<Api.OrganizationClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Organizations,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.OrganizationClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if(error.response.data)
-          {
-			  let errorResponse = error.response.data as ActionResponse; 
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      });
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'Name'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='name'>Name</label>
-              <br />             
-              {getFieldDecorator('name', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <Input placeholder={"Name"} /> )}
-              </Form.Item>
-
-			
-           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedOrganizationCreateComponent = Form.create({ name: 'Organization Create' })(OrganizationCreateComponent);
+export const WrappedOrganizationCreateComponent = Form.create({
+  name: 'Organization Create',
+})(OrganizationCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>8480b99297f564f28dee7dd459e81365</Hash>
+    <Hash>5a5781b3c5530c283eaf4baa750f6cff</Hash>
 </Codenesium>*/

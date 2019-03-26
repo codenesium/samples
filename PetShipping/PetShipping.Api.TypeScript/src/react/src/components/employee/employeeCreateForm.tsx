@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EmployeeCreateComponentProps {
   form: WrappedFormUtils;
@@ -55,7 +55,6 @@ class EmployeeCreateComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as EmployeeViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -66,55 +65,56 @@ class EmployeeCreateComponent extends React.Component<
   submit = (model: EmployeeViewModel) => {
     let mapper = new EmployeeMapper();
     axios
-      .post(
+      .post<CreateResponse<Api.EmployeeClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Employees,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.EmployeeClientRequestModel
-          >;
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if (error.response.data) {
-            let errorResponse = error.response.data as ActionResponse;
-
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -154,7 +154,7 @@ class EmployeeCreateComponent extends React.Component<
             <label htmlFor="isSalesPerson">isSalesPerson</label>
             <br />
             {getFieldDecorator('isSalesPerson', {
-              rules: [{ required: true, message: 'Required' }],
+              rules: [],
               valuePropName: 'checked',
             })(<Switch />)}
           </Form.Item>
@@ -163,7 +163,7 @@ class EmployeeCreateComponent extends React.Component<
             <label htmlFor="isShipper">isShipper</label>
             <br />
             {getFieldDecorator('isShipper', {
-              rules: [{ required: true, message: 'Required' }],
+              rules: [],
               valuePropName: 'checked',
             })(<Switch />)}
           </Form.Item>
@@ -203,5 +203,5 @@ export const WrappedEmployeeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>edafae695be1c4a3bf455d4e06e517ab</Hash>
+    <Hash>6bc4bf348dee730201dbc490b05cea2e</Hash>
 </Codenesium>*/

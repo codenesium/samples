@@ -17,6 +17,26 @@ namespace StudioResourceManagerMTNS.Api.Client
 			this.AmountPerMinute = amountPerMinute;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
+
+			this.TeacherIdEntity = nameof(ApiResponse.Teachers);
+
+			this.TeacherSkillIdEntity = nameof(ApiResponse.TeacherSkills);
+		}
+
+		[JsonProperty]
+		public ApiTeacherClientResponseModel TeacherIdNavigation { get; private set; }
+
+		public void SetTeacherIdNavigation(ApiTeacherClientResponseModel value)
+		{
+			this.TeacherIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiTeacherSkillClientResponseModel TeacherSkillIdNavigation { get; private set; }
+
+		public void SetTeacherSkillIdNavigation(ApiTeacherSkillClientResponseModel value)
+		{
+			this.TeacherSkillIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -29,10 +49,16 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public int TeacherId { get; private set; }
 
 		[JsonProperty]
+		public string TeacherIdEntity { get; set; }
+
+		[JsonProperty]
 		public int TeacherSkillId { get; private set; }
+
+		[JsonProperty]
+		public string TeacherSkillIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9cf79941c9296b07f7d1a5f754fe90b</Hash>
+    <Hash>2853442a49489ea8db29ec1c412aa4a8</Hash>
 </Codenesium>*/

@@ -32,6 +32,15 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiUnitDispositionClientRequestModel();
@@ -57,6 +66,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiUnitDispositionClientRequestModel();
@@ -79,6 +95,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			var mapper = new ApiUnitDispositionServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IUnitDispositionService service = testServer.Host.Services.GetService(typeof(IUnitDispositionService)) as IUnitDispositionService;
@@ -107,6 +130,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			IUnitDispositionService service = testServer.Host.Services.GetService(typeof(IUnitDispositionService)) as IUnitDispositionService;
@@ -133,6 +163,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiUnitDispositionClientResponseModel response = await client.UnitDispositionGetAsync(1);
@@ -151,6 +188,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApiUnitDispositionClientResponseModel response = await client.UnitDispositionGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -165,7 +209,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiUnitDispositionClientResponseModel> response = await client.UnitDispositionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -196,5 +246,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>bc7a63042036ff8bf80a69ab86773077</Hash>
+    <Hash>5b091f5acd9dd3efc8988012b38f25df</Hash>
 </Codenesium>*/

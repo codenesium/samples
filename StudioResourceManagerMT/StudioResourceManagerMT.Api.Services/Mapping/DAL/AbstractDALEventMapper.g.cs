@@ -40,6 +40,15 @@ namespace StudioResourceManagerMTNS.Api.Services
 			                    item.ScheduledStartDate,
 			                    item.StudentNote,
 			                    item.TeacherNote);
+			if (item.EventStatusIdNavigation != null)
+			{
+				var eventStatusIdModel = new ApiEventStatuServerResponseModel();
+				eventStatusIdModel.SetProperties(
+					item.EventStatusIdNavigation.Id,
+					item.EventStatusIdNavigation.Name);
+
+				model.SetEventStatusIdNavigation(eventStatusIdModel);
+			}
 
 			return model;
 		}
@@ -60,5 +69,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da7b37764fa2228008f73925ae3d7e56</Hash>
+    <Hash>86d050c9bd9138de56b75f26466b6acb</Hash>
 </Codenesium>*/

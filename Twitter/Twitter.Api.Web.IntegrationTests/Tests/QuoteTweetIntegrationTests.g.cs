@@ -32,6 +32,15 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiQuoteTweetClientRequestModel();
@@ -65,6 +74,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiQuoteTweetClientRequestModel();
@@ -95,6 +111,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			var mapper = new ApiQuoteTweetServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IQuoteTweetService service = testServer.Host.Services.GetService(typeof(IQuoteTweetService)) as IQuoteTweetService;
@@ -131,6 +154,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			IQuoteTweetService service = testServer.Host.Services.GetService(typeof(IQuoteTweetService)) as IQuoteTweetService;
@@ -157,6 +187,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiQuoteTweetClientResponseModel response = await client.QuoteTweetGetAsync(1);
@@ -179,6 +216,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApiQuoteTweetClientResponseModel response = await client.QuoteTweetGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -193,7 +237,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiQuoteTweetClientResponseModel> response = await client.QuoteTweetAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -214,6 +264,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiQuoteTweetClientResponseModel> response = await client.ByQuoteTweetByRetweeterUserId(1);
 
 			response.Should().NotBeEmpty();
@@ -234,6 +291,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiQuoteTweetClientResponseModel> response = await client.ByQuoteTweetByRetweeterUserId(default(int));
 
 			response.Should().BeEmpty();
@@ -248,6 +312,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiQuoteTweetClientResponseModel> response = await client.ByQuoteTweetBySourceTweetId(1);
 
 			response.Should().NotBeEmpty();
@@ -268,6 +339,13 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiQuoteTweetClientResponseModel> response = await client.ByQuoteTweetBySourceTweetId(default(int));
 
 			response.Should().BeEmpty();
@@ -296,5 +374,5 @@ namespace TwitterNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>e0dab768300d14e104400f81731a5330</Hash>
+    <Hash>03672497aa8a2cba2fc78031580f2387</Hash>
 </Codenesium>*/

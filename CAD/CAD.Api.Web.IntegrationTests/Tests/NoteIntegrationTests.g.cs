@@ -32,6 +32,15 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiNoteClientRequestModel();
@@ -63,6 +72,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiNoteClientRequestModel();
@@ -91,6 +107,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			var mapper = new ApiNoteServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			INoteService service = testServer.Host.Services.GetService(typeof(INoteService)) as INoteService;
@@ -125,6 +148,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			INoteService service = testServer.Host.Services.GetService(typeof(INoteService)) as INoteService;
@@ -151,6 +181,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiNoteClientResponseModel response = await client.NoteGetAsync(1);
@@ -172,6 +209,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApiNoteClientResponseModel response = await client.NoteGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -186,7 +230,13 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiNoteClientResponseModel> response = await client.NoteAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -220,5 +270,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d3a47f2f2604396cb0dbd1fefc6e9800</Hash>
+    <Hash>cc0d6a25a273c8267a5282176041cb49</Hash>
 </Codenesium>*/

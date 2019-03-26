@@ -1,20 +1,23 @@
 import * as React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ClientRoutes, Constants } from '../constants';
+import { ClientRoutes, Constants, AuthClientRoutes } from '../constants';
+import ErrorBoundary from './errorBoundary';
 const { Header, Content, Footer, Sider } = Layout;
-
-const SubMenu = Menu.SubMenu;
 
 interface WrapperHeaderProps {}
 
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
-displayName:string) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -30,47 +33,65 @@ displayName:string) => {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
+              <Menu.Item
                 key="Home"
-				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}></Link>
-              </MenuItem>
+                <Link to={'/'} />
+              </Menu.Item>
 
-			   			   <MenuItem
-                key="bucket"
+              <Menu.Item key="bucket">
+                <Icon type="pie-chart" />
+                <span>Buckets</span>
+                <Link to={ClientRoutes.Buckets} />
+              </Menu.Item>
+
+              <Menu.Item key="file">
+                <Icon type="rise" />
+                <span>Files</span>
+                <Link to={ClientRoutes.Files} />
+              </Menu.Item>
+
+              <Menu.Item key="fileType">
+                <Icon type="bars" />
+                <span>File Types</span>
+                <Link to={ClientRoutes.FileTypes} />
+              </Menu.Item>
+
+              <Menu.SubMenu
+                title={
+                  <span>
+                    <Icon type="setting" />
+                    <span>Settings</span>
+                  </span>
+                }
               >
-			  <Icon type="pie-chart" />
-              <span>Buckets</span>
-              <Link to={ClientRoutes.Buckets}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="file"
-              >
-			  <Icon type="rise" />
-              <span>Files</span>
-              <Link to={ClientRoutes.Files}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="fileType"
-              >
-			  <Icon type="bars" />
-              <span>File Types</span>
-              <Link to={ClientRoutes.FileTypes}></Link>
-              </MenuItem>
-
-				
+                <Menu.Item key="lock">
+                  <Icon type="lock" />
+                  <span>Change Password</span>
+                  <Link to={AuthClientRoutes.ChangePassword} />
+                </Menu.Item>
+                <Menu.Item key="logout">
+                  <Icon type="logout" />
+                  <span>Logout</span>
+                  <Link to={AuthClientRoutes.Logout} />
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-            <h2>{displayName}</h2>
-			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                <Component {...this.props} />
+              <h2>{displayName}</h2>
+              <div
+                style={{ padding: 24, background: '#fff', minHeight: '600px' }}
+              >
+                <ErrorBoundary>
+                  <Component {...this.props} />
+                </ErrorBoundary>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Footer</Footer>
@@ -82,6 +103,7 @@ displayName:string) => {
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>152c968840a6f5f108c2e2794336899e</Hash>
+    <Hash>d6269c442954aefcfce834a2cec3a026</Hash>
 </Codenesium>*/

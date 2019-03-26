@@ -1,16 +1,16 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TransactionStatusMapper from '../transactionStatus/transactionStatusMapper';
 import TransactionStatusViewModel from '../transactionStatus/transactionStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TransactionStatusTableComponentProps {
-  id:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,117 +20,118 @@ interface TransactionStatusTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<TransactionStatusViewModel>;
+  filteredRecords: Array<TransactionStatusViewModel>;
 }
 
-export class  TransactionStatusTableComponent extends React.Component<
-TransactionStatusTableComponentProps,
-TransactionStatusTableComponentState
+export class TransactionStatusTableComponent extends React.Component<
+  TransactionStatusTableComponentProps,
+  TransactionStatusTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: TransactionStatusViewModel) {
-  this.props.history.push(ClientRoutes.TransactionStatus + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: TransactionStatusViewModel) {
+    this.props.history.push(ClientRoutes.TransactionStatus + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: TransactionStatusViewModel) {
-   this.props.history.push(ClientRoutes.TransactionStatus + '/' + row.id);
- }
+  handleDetailClick(e: any, row: TransactionStatusViewModel) {
+    this.props.history.push(ClientRoutes.TransactionStatus + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
+      .get<Array<Api.TransactionStatusClientResponseModel>>(
+        this.props.apiRoute,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.TransactionStatusClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TransactionStatusMapper();
 
-          let mapper = new TransactionStatusMapper();
-          
-          let transactionStatus:Array<TransactionStatusViewModel> = [];
+        let transactionStatus: Array<TransactionStatusViewModel> = [];
 
-          response.forEach(x =>
-          {
-              transactionStatus.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          transactionStatus.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: transactionStatus,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: transactionStatus,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'TransactionStatus',
-                    columns: [
-					  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'TransactionStatus',
+                columns: [
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as TransactionStatusViewModel
@@ -141,8 +142,8 @@ handleEditClick(e:any, row: TransactionStatusViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as TransactionStatusViewModel
@@ -151,11 +152,14 @@ handleEditClick(e:any, row: TransactionStatusViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -163,6 +167,7 @@ handleEditClick(e:any, row: TransactionStatusViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>4dddc4ce745a450d58228e21d7a2ce47</Hash>
+    <Hash>9e28e6b9dc2e6eb00d6823500d840725</Hash>
 </Codenesium>*/

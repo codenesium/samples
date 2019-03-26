@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PetMapper from '../pet/petMapper';
@@ -7,9 +7,9 @@ import PetViewModel from '../pet/petViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PetTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class PetTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.PetClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.PetClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PetMapper();
 
-          let mapper = new PetMapper();
+        let pets: Array<PetViewModel> = [];
 
-          let pets: Array<PetViewModel> = [];
+        response.data.forEach(x => {
+          pets.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            pets.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: pets,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: pets,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -133,7 +135,10 @@ export class PetTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.breedIdNavigation.toDisplay())}
+                          {String(
+                            props.original.breedIdNavigation &&
+                              props.original.breedIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -159,7 +164,10 @@ export class PetTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.penIdNavigation.toDisplay())}
+                          {String(
+                            props.original.penIdNavigation &&
+                              props.original.penIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -216,5 +224,5 @@ export class PetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3d79bc00195613414da114f974d3500f</Hash>
+    <Hash>2edbe069a509419d18c1c6704601e538</Hash>
 </Codenesium>*/

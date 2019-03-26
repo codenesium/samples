@@ -17,10 +17,10 @@ export default class RateViewModel {
     this.id = 0;
     this.teacherId = 0;
     this.teacherIdEntity = '';
-    this.teacherIdNavigation = new TeacherViewModel();
+    this.teacherIdNavigation = undefined;
     this.teacherSkillId = 0;
     this.teacherSkillIdEntity = '';
-    this.teacherSkillIdNavigation = new TeacherSkillViewModel();
+    this.teacherSkillIdNavigation = undefined;
   }
 
   setProperties(
@@ -42,5 +42,5 @@ export default class RateViewModel {
 
 
 /*<Codenesium>
-    <Hash>f70a6dfa1e3599c8b71338cea75a5af6</Hash>
+    <Hash>7151e926a500016b40e704012d3f336c</Hash>
 </Codenesium>*/

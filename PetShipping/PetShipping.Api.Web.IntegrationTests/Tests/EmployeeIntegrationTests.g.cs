@@ -32,6 +32,15 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEmployeeClientRequestModel();
@@ -63,6 +72,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEmployeeClientRequestModel();
@@ -91,6 +107,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			var mapper = new ApiEmployeeServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IEmployeeService service = testServer.Host.Services.GetService(typeof(IEmployeeService)) as IEmployeeService;
@@ -125,6 +148,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			IEmployeeService service = testServer.Host.Services.GetService(typeof(IEmployeeService)) as IEmployeeService;
@@ -151,6 +181,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiEmployeeClientResponseModel response = await client.EmployeeGetAsync(1);
@@ -172,6 +209,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApiEmployeeClientResponseModel response = await client.EmployeeGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -186,7 +230,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiEmployeeClientResponseModel> response = await client.EmployeeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -206,6 +256,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiCustomerCommunicationClientResponseModel> response = await client.CustomerCommunicationsByEmployeeId(1);
 
 			response.Should().NotBeEmpty();
@@ -220,6 +277,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiCustomerCommunicationClientResponseModel> response = await client.CustomerCommunicationsByEmployeeId(default(int));
 
 			response.Should().BeEmpty();
@@ -234,6 +298,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiPipelineStepClientResponseModel> response = await client.PipelineStepsByShipperId(1);
 
 			response.Should().NotBeEmpty();
@@ -248,6 +319,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiPipelineStepClientResponseModel> response = await client.PipelineStepsByShipperId(default(int));
 
 			response.Should().BeEmpty();
@@ -262,6 +340,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiPipelineStepNoteClientResponseModel> response = await client.PipelineStepNotesByEmployeeId(1);
 
 			response.Should().NotBeEmpty();
@@ -276,6 +361,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiPipelineStepNoteClientResponseModel> response = await client.PipelineStepNotesByEmployeeId(default(int));
 
 			response.Should().BeEmpty();
@@ -304,5 +396,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>48211670ca3a263d09f5632a8e1546b3</Hash>
+    <Hash>215df36c8b40b7e56796be341c1de47c</Hash>
 </Codenesium>*/

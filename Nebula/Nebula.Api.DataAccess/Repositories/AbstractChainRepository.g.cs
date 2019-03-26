@@ -105,6 +105,8 @@ namespace NebulaNS.Api.DataAccess
 		{
 			return await this.Context.Set<Clasp>()
 			       .Include(x => x.NextChainIdNavigation)
+			       .Include(x => x.PreviousChainIdNavigation)
+
 			       .Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
 		}
 
@@ -112,7 +114,9 @@ namespace NebulaNS.Api.DataAccess
 		public async virtual Task<List<Clasp>> ClaspsByPreviousChainId(int previousChainId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Clasp>()
+			       .Include(x => x.NextChainIdNavigation)
 			       .Include(x => x.PreviousChainIdNavigation)
+
 			       .Where(x => x.PreviousChainId == previousChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
 		}
 
@@ -120,7 +124,10 @@ namespace NebulaNS.Api.DataAccess
 		public async virtual Task<List<Link>> LinksByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Link>()
+			       .Include(x => x.AssignedMachineIdNavigation)
 			       .Include(x => x.ChainIdNavigation)
+			       .Include(x => x.LinkStatusIdNavigation)
+
 			       .Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
@@ -166,5 +173,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cc78b99864d3c0408930bb561771a3cd</Hash>
+    <Hash>fe9704e29ffdde6c9337df469470edc5</Hash>
 </Codenesium>*/

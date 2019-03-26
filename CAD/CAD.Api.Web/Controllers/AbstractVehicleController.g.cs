@@ -219,7 +219,7 @@ namespace CADNS.Api.Web
 		[HttpGet]
 		[Route("{vehicleId}/VehicleCapabilities")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVehicleCapabilitiesServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVehicleCapabilittyServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> VehicleCapabilitiesByVehicleId(int vehicleId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -228,7 +228,7 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVehicleCapabilitiesServerResponseModel> response = await this.VehicleService.VehicleCapabilitiesByVehicleId(vehicleId, query.Limit, query.Offset);
+			List<ApiVehicleCapabilittyServerResponseModel> response = await this.VehicleService.VehicleCapabilitiesByVehicleId(vehicleId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -269,5 +269,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>790d904da03d9ed3ef737138e22f6979</Hash>
+    <Hash>baad89de8f085004bc0fd5e8a50e6706</Hash>
 </Codenesium>*/

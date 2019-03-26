@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { BreedSelectComponent } from '../shared/breedSelect';
 import { PenSelectComponent } from '../shared/penSelect';
 interface PetEditComponentProps {
@@ -54,48 +54,53 @@ class PetEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.PetClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Pets +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.PetClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PetMapper();
 
-          let mapper = new PetMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -104,7 +109,6 @@ class PetEditComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as PetViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -115,52 +119,56 @@ class PetEditComponent extends React.Component<
   submit = (model: PetViewModel) => {
     let mapper = new PetMapper();
     axios
-      .put(
+      .put<CreateResponse<Api.PetClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Pets + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<Api.PetClientRequestModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -195,17 +203,13 @@ class PetEditComponent extends React.Component<
             )}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="breedId">Breed</label>
-            <br />
-            <BreedSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Breeds}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="breedId"
-              required={true}
-              selectedValue={this.state.model!.breedId}
-            />
-          </Form.Item>
+          <BreedSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Breeds}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="breedId"
+            required={true}
+            selectedValue={this.state.model!.breedId}
+          />
 
           <Form.Item>
             <label htmlFor="description">Description</label>
@@ -215,17 +219,13 @@ class PetEditComponent extends React.Component<
             })(<Input placeholder={'Description'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="penId">Pen</label>
-            <br />
-            <PenSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Pens}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="penId"
-              required={true}
-              selectedValue={this.state.model!.penId}
-            />
-          </Form.Item>
+          <PenSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Pens}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="penId"
+            required={true}
+            selectedValue={this.state.model!.penId}
+          />
 
           <Form.Item>
             <label htmlFor="price">Price</label>
@@ -259,5 +259,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>34970f93cc4c4cf8436b4fb0bdeba0f5</Hash>
+    <Hash>34f74c53c42d7a9b9fc88e70cd44066e</Hash>
 </Codenesium>*/

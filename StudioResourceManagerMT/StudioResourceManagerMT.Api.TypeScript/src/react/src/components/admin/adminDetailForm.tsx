@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface AdminDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,119 +23,120 @@ interface AdminDetailComponentState {
 }
 
 class AdminDetailComponent extends React.Component<
-AdminDetailComponentProps,
-AdminDetailComponentState
+  AdminDetailComponentProps,
+  AdminDetailComponentState
 > {
   state = {
     model: new AdminViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Admins + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Admins + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.AdminClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Admins +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.AdminClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new AdminMapper();
 
-          let mapper = new AdminMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>birthday</h3>
-							<p>{String(this.state.model!.birthday)}</p>
-						 </div>
-					   						 <div>
-							<h3>email</h3>
-							<p>{String(this.state.model!.email)}</p>
-						 </div>
-					   						 <div>
-							<h3>firstName</h3>
-							<p>{String(this.state.model!.firstName)}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>lastName</h3>
-							<p>{String(this.state.model!.lastName)}</p>
-						 </div>
-					   						 <div>
-							<h3>phone</h3>
-							<p>{String(this.state.model!.phone)}</p>
-						 </div>
-					   						 <div>
-							<h3>userId</h3>
-							<p>{String(this.state.model!.userId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Birthday</h3>
+              <p>{String(this.state.model!.birthday)}</p>
+            </div>
+            <div>
+              <h3>Email</h3>
+              <p>{String(this.state.model!.email)}</p>
+            </div>
+            <div>
+              <h3>First Name</h3>
+              <p>{String(this.state.model!.firstName)}</p>
+            </div>
+            <div>
+              <h3>Last Name</h3>
+              <p>{String(this.state.model!.lastName)}</p>
+            </div>
+            <div>
+              <h3>Phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>User</h3>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -146,10 +145,11 @@ AdminDetailComponentState
   }
 }
 
-export const WrappedAdminDetailComponent = Form.create({ name: 'Admin Detail' })(
-  AdminDetailComponent
-);
+export const WrappedAdminDetailComponent = Form.create({
+  name: 'Admin Detail',
+})(AdminDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>143cfc900615a8514de3b1541ecc3fde</Hash>
+    <Hash>0bb3d9050cf679e572986b9cf0b8fcec</Hash>
 </Codenesium>*/

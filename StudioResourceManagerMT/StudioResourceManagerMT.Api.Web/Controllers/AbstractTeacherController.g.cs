@@ -216,6 +216,23 @@ namespace StudioResourceManagerMTNS.Api.Web
 			}
 		}
 
+		[HttpGet]
+		[Route("{teacherId}/Rates")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiRateServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> RatesByTeacherId(int teacherId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiRateServerResponseModel> response = await this.TeacherService.RatesByTeacherId(teacherId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiTeacherServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherServerRequestModel> patch)
 		{
 			var record = await this.TeacherService.Get(id);
@@ -235,5 +252,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c1e329a8e0e842df84e4cf7d85795491</Hash>
+    <Hash>ead998e85ea42b31cf2d1345eb0bcaa8</Hash>
 </Codenesium>*/

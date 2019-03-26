@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PaymentTypeMapper from '../paymentType/paymentTypeMapper';
@@ -7,9 +7,9 @@ import PaymentTypeViewModel from '../paymentType/paymentTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PaymentTypeTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class PaymentTypeTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.PaymentTypeClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.PaymentTypeClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PaymentTypeMapper();
 
-          let mapper = new PaymentTypeMapper();
+        let paymentTypes: Array<PaymentTypeViewModel> = [];
 
-          let paymentTypes: Array<PaymentTypeViewModel> = [];
+        response.data.forEach(x => {
+          paymentTypes.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            paymentTypes.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: paymentTypes,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: paymentTypes,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -164,5 +166,5 @@ export class PaymentTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4f9078a9ceedc8b84d88a8d2930a196d</Hash>
+    <Hash>e5a4e7a87919505be5e812214d722b35</Hash>
 </Codenesium>*/

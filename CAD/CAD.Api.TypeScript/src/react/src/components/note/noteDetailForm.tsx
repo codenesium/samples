@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import NoteMapper from './noteMapper';
 import NoteViewModel from './noteViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface NoteDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,107 +23,117 @@ interface NoteDetailComponentState {
 }
 
 class NoteDetailComponent extends React.Component<
-NoteDetailComponentProps,
-NoteDetailComponentState
+  NoteDetailComponentProps,
+  NoteDetailComponentState
 > {
   state = {
     model: new NoteViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Notes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Notes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.NoteClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Notes +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.NoteClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new NoteMapper();
 
-          let mapper = new NoteMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div style={{"marginBottom":"10px"}}>
-							<h3>callId</h3>
-							<p>{String(this.state.model!.callIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>dateCreated</h3>
-							<p>{String(this.state.model!.dateCreated)}</p>
-						 </div>
-					   						 <div>
-							<h3>noteText</h3>
-							<p>{String(this.state.model!.noteText)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>officerId</h3>
-							<p>{String(this.state.model!.officerIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>callId</h3>
+              <p>
+                {String(
+                  this.state.model!.callIdNavigation &&
+                    this.state.model!.callIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>dateCreated</h3>
+              <p>{String(this.state.model!.dateCreated)}</p>
+            </div>
+            <div>
+              <h3>noteText</h3>
+              <p>{String(this.state.model!.noteText)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>officerId</h3>
+              <p>
+                {String(
+                  this.state.model!.officerIdNavigation &&
+                    this.state.model!.officerIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -138,6 +146,7 @@ export const WrappedNoteDetailComponent = Form.create({ name: 'Note Detail' })(
   NoteDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>ca88b8424ee9ed654fa39df37ef3fb6c</Hash>
+    <Hash>94415f4a0ee262d2e8babe8186151303</Hash>
 </Codenesium>*/

@@ -1,21 +1,18 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Api from '../../api/models';
 import PipelineStepMapper from '../pipelineStep/pipelineStepMapper';
 import PipelineStepViewModel from '../pipelineStep/pipelineStepViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Form, Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PipelineStepSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface PipelineStepSelectComponentState {
@@ -23,110 +20,105 @@ interface PipelineStepSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<PipelineStepViewModel>;
+  filteredRecords: Array<PipelineStepViewModel>;
 }
 
-export class  PipelineStepSelectComponent extends React.Component<
-PipelineStepSelectComponentProps,
-PipelineStepSelectComponentState
+export class PipelineStepSelectComponent extends React.Component<
+  PipelineStepSelectComponentProps,
+  PipelineStepSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.PipelineStepClientResponseModel>;
+      .get<Array<Api.PipelineStepClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PipelineStepMapper();
 
-          let mapper = new PipelineStepMapper();
-          
-          let devices:Array<PipelineStepViewModel> = [];
+        let devices: Array<PipelineStepViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          devices.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: devices,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: devices,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-        <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:PipelineStepViewModel) =>
-            {
-                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+        <Form.Item>
+          <label htmlFor={this.props.propertyName} />
+          <br />
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue || [],
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map((x: PipelineStepViewModel) => {
+                return (
+                  <Select.Option key={x.id} value={x.id}>
+                    {x.toDisplay()}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </Form.Item>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>7500a7792a0bee8f0cb6c1a717d495f5</Hash>
+    <Hash>8e517055a4589a6333fbab3ea387d75f</Hash>
 </Codenesium>*/

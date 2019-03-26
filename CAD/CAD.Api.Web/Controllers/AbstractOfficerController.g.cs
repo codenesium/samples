@@ -236,7 +236,7 @@ namespace CADNS.Api.Web
 		[HttpGet]
 		[Route("{officerId}/OfficerCapabilities")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiOfficerCapabilitiesServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiOfficerCapabilityServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> OfficerCapabilitiesByOfficerId(int officerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -245,7 +245,7 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiOfficerCapabilitiesServerResponseModel> response = await this.OfficerService.OfficerCapabilitiesByOfficerId(officerId, query.Limit, query.Offset);
+			List<ApiOfficerCapabilityServerResponseModel> response = await this.OfficerService.OfficerCapabilitiesByOfficerId(officerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -286,5 +286,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b47f7eecd649ec70b83223b1d0f61fd3</Hash>
+    <Hash>b449e0625aaa8a0ecce49d437691527a</Hash>
 </Codenesium>*/

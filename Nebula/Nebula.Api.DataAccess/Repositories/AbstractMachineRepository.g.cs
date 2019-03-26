@@ -104,6 +104,9 @@ namespace NebulaNS.Api.DataAccess
 		{
 			return await this.Context.Set<Link>()
 			       .Include(x => x.AssignedMachineIdNavigation)
+			       .Include(x => x.ChainIdNavigation)
+			       .Include(x => x.LinkStatusIdNavigation)
+
 			       .Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
@@ -133,5 +136,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa6c2eb5fecd3e0eb4cae664ff9e4a7c</Hash>
+    <Hash>0cee713f7061e46de7f4eae4d48f9227</Hash>
 </Codenesium>*/

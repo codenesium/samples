@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { EventStatusSelectComponent } from '../shared/eventStatusSelect';
 interface EventEditComponentProps {
   form: WrappedFormUtils;
@@ -53,48 +53,53 @@ class EventEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.EventClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Events +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.EventClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new EventMapper();
 
-          let mapper = new EventMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -103,7 +108,6 @@ class EventEditComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as EventViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -114,54 +118,56 @@ class EventEditComponent extends React.Component<
   submit = (model: EventViewModel) => {
     let mapper = new EventMapper();
     axios
-      .put(
+      .put<CreateResponse<Api.EventClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Events + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.EventClientRequestModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -220,13 +226,13 @@ class EventEditComponent extends React.Component<
             })(<InputNumber placeholder={'Bill Amount'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="eventStatusId">Event Status</label>
-            <br />
-            {getFieldDecorator('eventStatusId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Event Status'} />)}
-          </Form.Item>
+          <EventStatusSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.EventStatus}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="eventStatusId"
+            required={true}
+            selectedValue={this.state.model!.eventStatusId}
+          />
 
           <Form.Item>
             <label htmlFor="scheduledEndDate">Scheduled End Date</label>
@@ -294,5 +300,5 @@ export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
 
 
 /*<Codenesium>
-    <Hash>0934df7798c33b2747da8bbc9c4b437e</Hash>
+    <Hash>80f3b70a4af3bc11f8e4ebe2b439243e</Hash>
 </Codenesium>*/

@@ -87,6 +87,15 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Event via eventStatusId.
+		public async virtual Task<List<Event>> EventsByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Event>()
+			       .Include(x => x.EventStatusIdNavigation)
+
+			       .Where(x => x.EventStatusId == eventStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
+		}
+
 		protected async Task<List<EventStatu>> Where(
 			Expression<Func<EventStatu, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +122,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4723896484f7136bfd179909f76938a3</Hash>
+    <Hash>b27764dfdad1ccab29239ca619fbc8fe</Hash>
 </Codenesium>*/

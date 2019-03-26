@@ -31,14 +31,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int TeacherId { get; private set; } = default(int);
+		public int TeacherId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public int TeacherSkillId { get; private set; } = default(int);
+		public int TeacherSkillId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1629e71b512888681eaea1ccb702c091</Hash>
+    <Hash>5bea9942542b6c52c1b04d1c079dbbe8</Hash>
 </Codenesium>*/

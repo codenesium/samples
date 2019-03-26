@@ -95,19 +95,23 @@ namespace CADNS.Api.DataAccess
 		public async virtual Task<List<Note>> NotesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Note>()
+			       .Include(x => x.CallIdNavigation)
 			       .Include(x => x.OfficerIdNavigation)
+
 			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Note>();
 		}
 
-		// Foreign key reference to this table OfficerCapabilities via officerId.
-		public async virtual Task<List<OfficerCapabilities>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table OfficerCapability via officerId.
+		public async virtual Task<List<OfficerCapability>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<OfficerCapabilities>()
+			return await this.Context.Set<OfficerCapability>()
+			       .Include(x => x.CapabilityIdNavigation)
 			       .Include(x => x.OfficerIdNavigation)
-			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OfficerCapabilities>();
+
+			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OfficerCapability>();
 		}
 
-		// Foreign key reference pass-though. Pass-thru table OfficerCapabilities. Foreign Table Officer.
+		// Foreign key reference pass-though. Pass-thru table OfficerCapability. Foreign Table Officer.
 		public async virtual Task<List<Officer>> ByCapabilityId(int capabilityId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.OfficerCapabilities
@@ -117,20 +121,20 @@ namespace CADNS.Api.DataAccess
 			              select officers).Skip(offset).Take(limit).ToListAsync();
 		}
 
-		// Foreign key reference pass-though. Pass-thru table OfficerCapabilities. Foreign Table Officer.
-		public async virtual Task<OfficerCapabilities> CreateOfficerCapabilities(OfficerCapabilities item)
+		// Foreign key reference pass-though. Pass-thru table OfficerCapability. Foreign Table Officer.
+		public async virtual Task<OfficerCapability> CreateOfficerCapability(OfficerCapability item)
 		{
-			this.Context.Set<OfficerCapabilities>().Add(item);
+			this.Context.Set<OfficerCapability>().Add(item);
 			await this.Context.SaveChangesAsync();
 
 			this.Context.Entry(item).State = EntityState.Detached;
 			return item;
 		}
 
-		// Foreign key reference pass-though. Pass-thru table OfficerCapabilities. Foreign Table Officer.
-		public async virtual Task DeleteOfficerCapabilities(OfficerCapabilities item)
+		// Foreign key reference pass-though. Pass-thru table OfficerCapability. Foreign Table Officer.
+		public async virtual Task DeleteOfficerCapability(OfficerCapability item)
 		{
-			this.Context.Set<OfficerCapabilities>().Remove(item);
+			this.Context.Set<OfficerCapability>().Remove(item);
 			await this.Context.SaveChangesAsync();
 		}
 
@@ -187,5 +191,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70e2a8675c29ab671b558f802d41f20c</Hash>
+    <Hash>eb10c7c4a83680d7261d07f345203d07</Hash>
 </Codenesium>*/

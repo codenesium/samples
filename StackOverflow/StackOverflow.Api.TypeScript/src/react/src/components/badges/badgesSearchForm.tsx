@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import BadgesMapper from './badgesMapper';
@@ -9,6 +9,7 @@ import BadgesViewModel from './badgesViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface BadgesSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class BadgesSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.BadgesClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Badges + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class BadgesSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.BadgesClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.BadgesClientResponseModel>;
-          let viewModels: Array<BadgesViewModel> = [];
-          let mapper = new BadgesMapper();
+      .then(response => {
+        let viewModels: Array<BadgesViewModel> = [];
+        let mapper = new BadgesMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<BadgesViewModel>(),
-            filteredRecords: new Array<BadgesViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<BadgesViewModel>(),
+          filteredRecords: new Array<BadgesViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -235,7 +227,10 @@ export default class BadgesSearchComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.userIdNavigation.toDisplay())}
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -301,5 +296,5 @@ export const WrappedBadgesSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b83fbc9bfe47b71c053652aa718879f3</Hash>
+    <Hash>0ae643c4764e84003992735f0ee25bdc</Hash>
 </Codenesium>*/

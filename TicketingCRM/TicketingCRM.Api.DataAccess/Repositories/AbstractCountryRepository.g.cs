@@ -92,6 +92,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		{
 			return await this.Context.Set<Province>()
 			       .Include(x => x.CountryIdNavigation)
+
 			       .Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Province>();
 		}
 
@@ -121,5 +122,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a67db8e2c5978f40406ee00efcc63548</Hash>
+    <Hash>63bd6b9cf2fa378460e6c707ce798afe</Hash>
 </Codenesium>*/

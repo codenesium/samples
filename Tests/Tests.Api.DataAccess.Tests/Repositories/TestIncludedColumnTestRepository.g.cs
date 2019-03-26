@@ -22,7 +22,7 @@ namespace TestsNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace TestsNS.Api.DataAccess
 			entity.SetProperties(default(int), "B", "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<IncludedColumnTest>().Where(x => true).ToListAsync();
+			var records = await context.Set<IncludedColumnTest>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<IncludedColumnTest>().Where(x => true).ToListAsync();
+			var records = await context.Set<IncludedColumnTest>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<IncludedColumnTest>().Where(x => true).ToListAsync();
+			var records = await context.Set<IncludedColumnTest>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<IncludedColumnTest>().Where(x => true).ToListAsync();
+			var records = await context.Set<IncludedColumnTest>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5091e01b8b8957632a92ec3bb0545f22</Hash>
+    <Hash>a2a51a6da8111432b96dd903e272176a</Hash>
 </Codenesium>*/

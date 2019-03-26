@@ -93,6 +93,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			return await this.Context.Set<Admin>()
 			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
@@ -100,7 +101,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async virtual Task<List<Student>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Student>()
+			       .Include(x => x.FamilyIdNavigation)
 			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
@@ -109,6 +112,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			return await this.Context.Set<Teacher>()
 			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
 		}
 
@@ -138,5 +142,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>05faa613f3298aad954d7e951d7d42f1</Hash>
+    <Hash>49e9656fc2938d828dc250db81290855</Hash>
 </Codenesium>*/

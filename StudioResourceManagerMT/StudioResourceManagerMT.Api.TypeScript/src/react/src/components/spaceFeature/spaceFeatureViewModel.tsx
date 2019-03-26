@@ -10,16 +10,16 @@ export default class SpaceFeatureViewModel {
   }
 
   setProperties(id: number, name: string): void {
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.name = moment(name, 'YYYY-MM-DD');
+    this.id = id;
+    this.name = name;
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>af0d76b378d328db3a78ac769e81f50f</Hash>
+    <Hash>a19d681c5a6ad0cc99c7231ee7eb9979</Hash>
 </Codenesium>*/

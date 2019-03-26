@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from '../user/userMapper';
@@ -7,9 +7,9 @@ import UserViewModel from '../user/userViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface UserTableComponentProps {
-  user_id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -36,11 +36,11 @@ export class UserTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: UserViewModel) {
-    this.props.history.push(ClientRoutes.Users + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.Users + '/edit/' + row.userId);
   }
 
   handleDetailClick(e: any, row: UserViewModel) {
-    this.props.history.push(ClientRoutes.Users + '/' + row.id);
+    this.props.history.push(ClientRoutes.Users + '/' + row.userId);
   }
 
   componentDidMount() {
@@ -51,44 +51,46 @@ export class UserTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.UserClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.UserClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new UserMapper();
 
-          let mapper = new UserMapper();
+        let users: Array<UserViewModel> = [];
 
-          let users: Array<UserViewModel> = [];
+        response.data.forEach(x => {
+          users.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            users.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: users,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: users,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -180,7 +182,8 @@ export class UserTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.locationLocationIdNavigation.toDisplay()
+                            props.original.locationLocationIdNavigation &&
+                              props.original.locationLocationIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -266,5 +269,5 @@ export class UserTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c0800cfa1802458822b8c9d0b65377fa</Hash>
+    <Hash>fa1e1bdf69d6b784c22c99f5708d8cfb</Hash>
 </Codenesium>*/

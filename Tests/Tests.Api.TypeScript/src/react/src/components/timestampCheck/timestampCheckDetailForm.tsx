@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TimestampCheckMapper from './timestampCheckMapper';
 import TimestampCheckViewModel from './timestampCheckViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TimestampCheckDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class TimestampCheckDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TimestampCheckClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.TimestampChecks +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TimestampCheckClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TimestampCheckMapper();
 
-          let mapper = new TimestampCheckMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -132,5 +134,5 @@ export const WrappedTimestampCheckDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cfa60de1bce36d864bca12890c8848da</Hash>
+    <Hash>e9a1aeb94b562d66b26b87a0817609be</Hash>
 </Codenesium>*/

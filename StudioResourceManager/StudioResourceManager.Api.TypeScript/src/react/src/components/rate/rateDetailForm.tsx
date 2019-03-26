@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RateMapper from './rateMapper';
 import RateViewModel from './rateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface RateDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,103 +23,113 @@ interface RateDetailComponentState {
 }
 
 class RateDetailComponent extends React.Component<
-RateDetailComponentProps,
-RateDetailComponentState
+  RateDetailComponentProps,
+  RateDetailComponentState
 > {
   state = {
     model: new RateViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Rates + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Rates + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.RateClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Rates +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.RateClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new RateMapper();
 
-          let mapper = new RateMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Amount Per Minute</h3>
-							<p>{String(this.state.model!.amountPerMinute)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Teacher</h3>
-							<p>{String(this.state.model!.teacherIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Teacher Skill</h3>
-							<p>{String(this.state.model!.teacherSkillIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Amount Per Minute</h3>
+              <p>{String(this.state.model!.amountPerMinute)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Teacher</h3>
+              <p>
+                {String(
+                  this.state.model!.teacherIdNavigation &&
+                    this.state.model!.teacherIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Teacher Skill</h3>
+              <p>
+                {String(
+                  this.state.model!.teacherSkillIdNavigation &&
+                    this.state.model!.teacherSkillIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -134,6 +142,7 @@ export const WrappedRateDetailComponent = Form.create({ name: 'Rate Detail' })(
   RateDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>9b91d9a91398efe27c35ffa55a4fb776</Hash>
+    <Hash>b7ad0056611ddfc80804d2f1622fbe72</Hash>
 </Codenesium>*/

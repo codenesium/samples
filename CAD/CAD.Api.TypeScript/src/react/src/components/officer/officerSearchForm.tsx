@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import OfficerMapper from './officerMapper';
@@ -9,6 +9,7 @@ import OfficerViewModel from './officerViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface OfficerSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class OfficerSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.OfficerClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Officers + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class OfficerSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.OfficerClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.OfficerClientResponseModel>;
-          let viewModels: Array<OfficerViewModel> = [];
-          let mapper = new OfficerMapper();
+      .then(response => {
+        let viewModels: Array<OfficerViewModel> = [];
+        let mapper = new OfficerMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<OfficerViewModel>(),
-            filteredRecords: new Array<OfficerViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<OfficerViewModel>(),
+          filteredRecords: new Array<OfficerViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -303,5 +295,5 @@ export const WrappedOfficerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>81b66d8b6e0244d456bd21a2a4e743b7</Hash>
+    <Hash>da3a960cc1cd9d2a4f4a35eccc89950a</Hash>
 </Codenesium>*/

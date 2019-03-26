@@ -1,16 +1,16 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from '../user/userMapper';
 import UserViewModel from '../user/userViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface UserTableComponentProps {
-  id:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,129 +20,122 @@ interface UserTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<UserViewModel>;
+  filteredRecords: Array<UserViewModel>;
 }
 
-export class  UserTableComponent extends React.Component<
-UserTableComponentProps,
-UserTableComponentState
+export class UserTableComponent extends React.Component<
+  UserTableComponentProps,
+  UserTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: UserViewModel) {
-  this.props.history.push(ClientRoutes.Users + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: UserViewModel) {
+    this.props.history.push(ClientRoutes.Users + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: UserViewModel) {
-   this.props.history.push(ClientRoutes.Users + '/' + row.id);
- }
+  handleDetailClick(e: any, row: UserViewModel) {
+    this.props.history.push(ClientRoutes.Users + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.UserClientResponseModel>;
+      .get<Array<Api.UserClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new UserMapper();
 
-          let mapper = new UserMapper();
-          
-          let users:Array<UserViewModel> = [];
+        let users: Array<UserViewModel> = [];
 
-          response.forEach(x =>
-          {
-              users.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          users.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: users,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: users,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Users',
-                    columns: [
-					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'Password',
-                      accessor: 'password',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Users',
+                columns: [
+                  {
+                    Header: 'Password',
+                    accessor: 'password',
+                    Cell: props => {
                       return <span>{String(props.original.password)}</span>;
-                      }           
-                    },  {
-                      Header: 'Username',
-                      accessor: 'username',
-                      Cell: (props) => {
-                      return <span>{String(props.original.username)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Username',
+                    accessor: 'username',
+                    Cell: props => {
+                      return <span>{String(props.original.username)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as UserViewModel
@@ -153,8 +146,8 @@ handleEditClick(e:any, row: UserViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as UserViewModel
@@ -163,11 +156,14 @@ handleEditClick(e:any, row: UserViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -175,6 +171,7 @@ handleEditClick(e:any, row: UserViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>6f67ce89e0ca767695a8b17e8b769017</Hash>
+    <Hash>f548ea553e98bbf683e2b5c794f34e87</Hash>
 </Codenesium>*/

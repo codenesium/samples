@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LocationMapper from './locationMapper';
 import LocationViewModel from './locationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { TweetTableComponent } from '../shared/tweetTable';
 import { UserTableComponent } from '../shared/userTable';
 
@@ -45,44 +46,45 @@ class LocationDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.LocationClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Locations +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.LocationClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new LocationMapper();
 
-          let mapper = new LocationMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -123,7 +125,6 @@ class LocationDetailComponent extends React.Component<
           <div>
             <h3>Tweets</h3>
             <TweetTableComponent
-              tweetId={this.state.model!.tweetId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -139,7 +140,6 @@ class LocationDetailComponent extends React.Component<
           <div>
             <h3>Users</h3>
             <UserTableComponent
-              userId={this.state.model!.userId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -166,5 +166,5 @@ export const WrappedLocationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7cef6b59a23736fcfae7c40f461217f8</Hash>
+    <Hash>28216cf9d74c08bcd51f1d1e93b4d658</Hash>
 </Codenesium>*/

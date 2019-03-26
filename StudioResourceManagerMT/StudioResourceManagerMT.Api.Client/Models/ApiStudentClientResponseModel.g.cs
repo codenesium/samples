@@ -31,6 +31,26 @@ namespace StudioResourceManagerMTNS.Api.Client
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.UserId = userId;
+
+			this.FamilyIdEntity = nameof(ApiResponse.Families);
+
+			this.UserIdEntity = nameof(ApiResponse.Users);
+		}
+
+		[JsonProperty]
+		public ApiFamilyClientResponseModel FamilyIdNavigation { get; private set; }
+
+		public void SetFamilyIdNavigation(ApiFamilyClientResponseModel value)
+		{
+			this.FamilyIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.UserIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -44,6 +64,9 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		[JsonProperty]
 		public int FamilyId { get; private set; }
+
+		[JsonProperty]
+		public string FamilyIdEntity { get; set; }
 
 		[JsonProperty]
 		public string FirstName { get; private set; }
@@ -65,9 +88,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		[JsonProperty]
 		public int UserId { get; private set; }
+
+		[JsonProperty]
+		public string UserIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4f5bfc8dfe659682908b010a909a21b</Hash>
+    <Hash>69ceb8d279b135262e36d9573e8b87ac</Hash>
 </Codenesium>*/

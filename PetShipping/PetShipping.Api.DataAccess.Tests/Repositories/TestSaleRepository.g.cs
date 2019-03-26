@@ -22,7 +22,7 @@ namespace PetShippingNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace PetShippingNS.Api.DataAccess
 			entity.SetProperties(default(int), 2m, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			await repository.Create(entity);
 
-			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
+			var records = await context.Set<Sale>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace PetShippingNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
+			var records = await context.Set<Sale>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace PetShippingNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
+			var records = await context.Set<Sale>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace PetShippingNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
+			var records = await context.Set<Sale>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>efe42a0f7499f191f4c0cfcca13822f5</Hash>
+    <Hash>472cdaa39f57c5ff266d686836d22611</Hash>
 </Codenesium>*/

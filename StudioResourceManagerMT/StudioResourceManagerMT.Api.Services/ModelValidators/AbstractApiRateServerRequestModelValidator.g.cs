@@ -32,14 +32,30 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void TeacherIdRules()
 		{
+			this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacherByTeacherId).When(x => !x?.TeacherId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void TeacherSkillIdRules()
 		{
+			this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkillByTeacherSkillId).When(x => !x?.TeacherSkillId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidTeacherByTeacherId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.RateRepository.TeacherByTeacherId(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidTeacherSkillByTeacherSkillId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.RateRepository.TeacherSkillByTeacherSkillId(id);
+
+			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c9df01bec143a5f1f362c813bbf5490</Hash>
+    <Hash>bd66066bff82130df77d2ed6a6d35fd7</Hash>
 </Codenesium>*/

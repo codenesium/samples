@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import IncludedColumnTestMapper from './includedColumnTestMapper';
 import IncludedColumnTestViewModel from './includedColumnTestViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface IncludedColumnTestDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class IncludedColumnTestDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.IncludedColumnTestClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.IncludedColumnTests +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.IncludedColumnTestClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new IncludedColumnTestMapper();
 
-          let mapper = new IncludedColumnTestMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -132,5 +134,5 @@ export const WrappedIncludedColumnTestDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8d7f2866bd659ee5e0a68a44ad7bf821</Hash>
+    <Hash>81294ad701fae579f973cb972cb08e5b</Hash>
 </Codenesium>*/

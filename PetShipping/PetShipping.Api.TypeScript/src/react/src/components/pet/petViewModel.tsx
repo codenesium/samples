@@ -13,7 +13,7 @@ export default class PetViewModel {
   constructor() {
     this.breedId = 0;
     this.breedIdEntity = '';
-    this.breedIdNavigation = new BreedViewModel();
+    this.breedIdNavigation = undefined;
     this.clientId = 0;
     this.id = 0;
     this.name = '';
@@ -41,5 +41,5 @@ export default class PetViewModel {
 
 
 /*<Codenesium>
-    <Hash>243b732372cf1c351ca88ea505887301</Hash>
+    <Hash>6ae95cda9921f13ca0534bc9895f174d</Hash>
 </Codenesium>*/

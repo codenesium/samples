@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from '../event/eventMapper';
@@ -7,9 +7,9 @@ import EventViewModel from '../event/eventViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EventTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class EventTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.EventClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.EventClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new EventMapper();
 
-          let mapper = new EventMapper();
+        let events: Array<EventViewModel> = [];
 
-          let events: Array<EventViewModel> = [];
+        response.data.forEach(x => {
+          events.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            events.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: events,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: events,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -140,7 +142,10 @@ export class EventTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.cityIdNavigation.toDisplay())}
+                          {String(
+                            props.original.cityIdNavigation &&
+                              props.original.cityIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -239,5 +244,5 @@ export class EventTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9e983c862af1c9d9e15f6a15450afa1d</Hash>
+    <Hash>1406c652c42a16f22c4bf77dde22afee</Hash>
 </Codenesium>*/

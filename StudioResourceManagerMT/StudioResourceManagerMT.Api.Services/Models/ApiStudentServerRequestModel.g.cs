@@ -53,7 +53,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int FamilyId { get; private set; } = default(int);
+		public int FamilyId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -77,10 +77,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int UserId { get; private set; } = default(int);
+		public int UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e79c6ed9fd0708ac06dfc54b2ded0c44</Hash>
+    <Hash>9f30801bde210b97f7b510e24400dbba</Hash>
 </Codenesium>*/

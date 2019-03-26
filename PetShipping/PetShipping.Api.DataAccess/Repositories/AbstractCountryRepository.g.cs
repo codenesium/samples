@@ -92,6 +92,7 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			return await this.Context.Set<CountryRequirement>()
 			       .Include(x => x.CountryIdNavigation)
+
 			       .Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
 		}
 
@@ -100,6 +101,7 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			return await this.Context.Set<Destination>()
 			       .Include(x => x.CountryIdNavigation)
+
 			       .Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Destination>();
 		}
 
@@ -129,5 +131,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8ec2420be7c579ede4a1c7af27877a3</Hash>
+    <Hash>f035a148d0d895c199a9c6308be83201</Hash>
 </Codenesium>*/

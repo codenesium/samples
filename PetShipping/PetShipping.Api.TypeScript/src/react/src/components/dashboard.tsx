@@ -1,43 +1,70 @@
 import * as React from 'react';
-import axios from 'axios';
-import { Constants } from '../constants';
-import { Alert } from 'antd'
+import axios, { AxiosError, AxiosResponse} from 'axios';
+import { Constants, AuthClientRoutes } from '../constants';
+import { Alert, Input, Button } from 'antd'
+import * as GlobalUtilities from '../lib/globalUtilities';
 
-interface DashboardComponentProps{
+interface DashboardComponentProps {
+  history: any;
+  match: any;
 }
 
-interface DashboardComponentState{
+interface DashboardComponentState {
   connected:boolean;
   connecting:boolean;
+  authToken:string | null;
+  tokenSubmitted:boolean;
+  getDecodedToken:() => string;
 }
 
 export default class Dashboard extends React.Component<DashboardComponentProps, DashboardComponentState>  {
   
-  state = ({connected:false, connecting:false});
+  state = ({connected:false, 
+    connecting:false, 
+    tokenSubmitted:false,
+    authToken:window.localStorage.getItem('authToken'),
+    getDecodedToken: () =>
+    {
+        return GlobalUtilities.parseJWT(this.state.authToken || '');
+    }});
 
   testConnection() {
     this.setState({...this.state,connecting:true});
 
     axios.get(Constants.ApiHealthEndpoint, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: GlobalUtilities.defaultHeaders(),
     })
     .then(
-      resp => {
-        console.log(resp);
+      response => {
+		GlobalUtilities.logInfo(response);
         this.setState({connecting:false, connected:true});
 
-      },
-      error => {
-        console.log(error);
-        this.setState({connecting:false, connected:false});
-      }
-    );
+      })
+	  .catch((error:AxiosError) => {
+          GlobalUtilities.logError(error);
+	      this.setState({connecting:false, connected:false});
+      });
+  }
+
+  updateToken = (token:string) =>
+  {
+     window.localStorage.setItem('authToken', '')
+     this.setState({...this.state, authToken:token.replace('Bearer', '').trim(), tokenSubmitted:false});
+  }
+
+  updateTokenInLocalStorage = () =>
+  {
+    window.localStorage.setItem('authToken', this.state.authToken || '')
+    this.setState({...this.state, tokenSubmitted:true});
   }
 
   componentDidMount()
   {
+     if( !localStorage.getItem('authToken'))
+     {
+        this.props.history.push(AuthClientRoutes.Login);
+     }
+
      this.testConnection();
   }
 
@@ -58,6 +85,32 @@ export default class Dashboard extends React.Component<DashboardComponentProps, 
         <br />
         <div>API Health Endpoint : <a target='_blank' href={Constants.ApiHealthEndpoint}>{Constants.ApiHealthEndpoint}</a></div>
         <div>Swagger Endpoint : <a target='_blank' href={Constants.SwaggerEndpoint}>{Constants.SwaggerEndpoint}</a></div>
+        <div style={{'marginTop':'35px'}} > 
+            <label htmlFor='authToken'>Auth Token</label>
+            <Input.Search 
+              name='authToken' 
+              placeholder={'Auth Token'} 
+              key={'updateTokenInput'}
+              value={this.state.authToken || ''}
+              enterButton='Update Token'
+              onChange={(e) => 
+              {
+                this.updateToken(e.target.value);
+              }}
+              onSearch={() => 
+              { 
+                this.updateTokenInLocalStorage();
+              }}
+              
+            />
+            <br />
+            <br />
+              {this.state.tokenSubmitted ? <Alert message='Token Updated...' type='success' /> : <div></div> }
+            <br />
+            <pre> 
+             {JSON.stringify(this.state.getDecodedToken(), null, 2)}
+            </pre>
+       </div>
       </div>;
   }
 }

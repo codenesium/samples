@@ -20,10 +20,10 @@ export default class QuoteTweetViewModel {
     this.quoteTweetId = 0;
     this.retweeterUserId = 0;
     this.retweeterUserIdEntity = '';
-    this.retweeterUserIdNavigation = new UserViewModel();
+    this.retweeterUserIdNavigation = undefined;
     this.sourceTweetId = 0;
     this.sourceTweetIdEntity = '';
-    this.sourceTweetIdNavigation = new TweetViewModel();
+    this.sourceTweetIdNavigation = undefined;
     this.time = undefined;
   }
 
@@ -44,11 +44,11 @@ export default class QuoteTweetViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.quoteTweetId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>62774ada8a79d4cd37ecd9c49ee0085f</Hash>
+    <Hash>d78ea96ecdf29a67acd19dcdb3ab2f8d</Hash>
 </Codenesium>*/

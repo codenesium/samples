@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkTypesMapper from '../linkTypes/linkTypesMapper';
@@ -7,9 +7,9 @@ import LinkTypesViewModel from '../linkTypes/linkTypesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface LinkTypesTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class LinkTypesTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.LinkTypesClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.LinkTypesClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new LinkTypesMapper();
 
-          let mapper = new LinkTypesMapper();
+        let linkTypes: Array<LinkTypesViewModel> = [];
 
-          let linkTypes: Array<LinkTypesViewModel> = [];
+        response.data.forEach(x => {
+          linkTypes.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            linkTypes.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: linkTypes,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: linkTypes,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -164,5 +166,5 @@ export class LinkTypesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>55677cc25e7dd87ae195adbda6dd4130</Hash>
+    <Hash>501db1d57970947384da9397e2030c93</Hash>
 </Codenesium>*/

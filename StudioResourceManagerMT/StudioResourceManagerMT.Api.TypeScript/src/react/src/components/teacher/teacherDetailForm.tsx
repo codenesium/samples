@@ -1,11 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherMapper from './teacherMapper';
 import TeacherViewModel from './teacherViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { RateTableComponent } from '../shared/rateTable';
 
 interface TeacherDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +45,45 @@ class TeacherDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TeacherClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Teachers +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TeacherClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TeacherMapper();
 
-          let mapper = new TeacherMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -105,35 +108,51 @@ class TeacherDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>birthday</h3>
+              <h3>Birthday</h3>
               <p>{String(this.state.model!.birthday)}</p>
             </div>
             <div>
-              <h3>email</h3>
+              <h3>Email</h3>
               <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <h3>firstName</h3>
+              <h3>First Name</h3>
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>lastName</h3>
+              <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <h3>phone</h3>
+              <h3>Phone</h3>
               <p>{String(this.state.model!.phone)}</p>
             </div>
-            <div>
-              <h3>userId</h3>
-              <p>{String(this.state.model!.userId)}</p>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>User</h3>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
           </div>
           {message}
+          <div>
+            <h3>Rates</h3>
+            <RateTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Teachers +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Rates
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -148,5 +167,5 @@ export const WrappedTeacherDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d339f01d1a97b6324271dff192222050</Hash>
+    <Hash>4fcbdf0ced79e3b09a6af743191a123a</Hash>
 </Codenesium>*/

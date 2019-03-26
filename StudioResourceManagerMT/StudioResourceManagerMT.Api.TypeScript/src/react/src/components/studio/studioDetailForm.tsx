@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudioMapper from './studioMapper';
 import StudioViewModel from './studioViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface StudioDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class StudioDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.StudioClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Studios +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.StudioClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new StudioMapper();
 
-          let mapper = new StudioMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -105,35 +107,31 @@ class StudioDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>address1</h3>
+              <h3>Address1</h3>
               <p>{String(this.state.model!.address1)}</p>
             </div>
             <div>
-              <h3>address2</h3>
+              <h3>Address2</h3>
               <p>{String(this.state.model!.address2)}</p>
             </div>
             <div>
-              <h3>city</h3>
+              <h3>City</h3>
               <p>{String(this.state.model!.city)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div>
-              <h3>province</h3>
+              <h3>Province</h3>
               <p>{String(this.state.model!.province)}</p>
             </div>
             <div>
-              <h3>website</h3>
+              <h3>Website</h3>
               <p>{String(this.state.model!.website)}</p>
             </div>
             <div>
-              <h3>zip</h3>
+              <h3>Zip</h3>
               <p>{String(this.state.model!.zip)}</p>
             </div>
           </div>
@@ -152,5 +150,5 @@ export const WrappedStudioDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8a29430aea9c90dde0a8d9bb03b47965</Hash>
+    <Hash>4b104115e41ff0a160c5b443db646416</Hash>
 </Codenesium>*/

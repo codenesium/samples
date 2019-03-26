@@ -22,7 +22,7 @@ namespace CADNS.Api.Services
 
 		Task<List<ApiNoteServerResponseModel>> NotesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiOfficerCapabilitiesServerResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiOfficerCapabilityServerResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiOfficerServerResponseModel>> ByCapabilityId(int officerId, int limit = int.MaxValue, int offset = 0);
 
@@ -31,5 +31,5 @@ namespace CADNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e18a8ece4cc474f2f166d8599a8dd781</Hash>
+    <Hash>2bb746d74c140f5e08c52ad021657ed5</Hash>
 </Codenesium>*/

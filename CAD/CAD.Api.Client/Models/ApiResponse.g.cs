@@ -21,13 +21,13 @@ namespace CADNS.Api.Client
 			from.CallTypes.ForEach(x => this.AddCallType(x));
 			from.Notes.ForEach(x => this.AddNote(x));
 			from.Officers.ForEach(x => this.AddOfficer(x));
-			from.OfficerCapabilities.ForEach(x => this.AddOfficerCapabilities(x));
+			from.OfficerCapabilities.ForEach(x => this.AddOfficerCapability(x));
 			from.People.ForEach(x => this.AddPerson(x));
 			from.PersonTypes.ForEach(x => this.AddPersonType(x));
 			from.Units.ForEach(x => this.AddUnit(x));
 			from.UnitDispositions.ForEach(x => this.AddUnitDisposition(x));
 			from.Vehicles.ForEach(x => this.AddVehicle(x));
-			from.VehicleCapabilities.ForEach(x => this.AddVehicleCapabilities(x));
+			from.VehicleCapabilities.ForEach(x => this.AddVehicleCapabilitty(x));
 		}
 
 		public List<ApiAddressClientResponseModel> Addresses { get; private set; } = new List<ApiAddressClientResponseModel>();
@@ -46,7 +46,7 @@ namespace CADNS.Api.Client
 
 		public List<ApiOfficerClientResponseModel> Officers { get; private set; } = new List<ApiOfficerClientResponseModel>();
 
-		public List<ApiOfficerCapabilitiesClientResponseModel> OfficerCapabilities { get; private set; } = new List<ApiOfficerCapabilitiesClientResponseModel>();
+		public List<ApiOfficerCapabilityClientResponseModel> OfficerCapabilities { get; private set; } = new List<ApiOfficerCapabilityClientResponseModel>();
 
 		public List<ApiPersonClientResponseModel> People { get; private set; } = new List<ApiPersonClientResponseModel>();
 
@@ -58,7 +58,7 @@ namespace CADNS.Api.Client
 
 		public List<ApiVehicleClientResponseModel> Vehicles { get; private set; } = new List<ApiVehicleClientResponseModel>();
 
-		public List<ApiVehicleCapabilitiesClientResponseModel> VehicleCapabilities { get; private set; } = new List<ApiVehicleCapabilitiesClientResponseModel>();
+		public List<ApiVehicleCapabilittyClientResponseModel> VehicleCapabilities { get; private set; } = new List<ApiVehicleCapabilittyClientResponseModel>();
 
 		public void AddAddress(ApiAddressClientResponseModel item)
 		{
@@ -124,7 +124,7 @@ namespace CADNS.Api.Client
 			}
 		}
 
-		public void AddOfficerCapabilities(ApiOfficerCapabilitiesClientResponseModel item)
+		public void AddOfficerCapability(ApiOfficerCapabilityClientResponseModel item)
 		{
 			if (!this.OfficerCapabilities.Any(x => x.CapabilityId == item.CapabilityId))
 			{
@@ -172,7 +172,7 @@ namespace CADNS.Api.Client
 			}
 		}
 
-		public void AddVehicleCapabilities(ApiVehicleCapabilitiesClientResponseModel item)
+		public void AddVehicleCapabilitty(ApiVehicleCapabilittyClientResponseModel item)
 		{
 			if (!this.VehicleCapabilities.Any(x => x.VehicleId == item.VehicleId))
 			{
@@ -183,5 +183,5 @@ namespace CADNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>7ab2aaf52a2c2a314d1ec122933d0446</Hash>
+    <Hash>8ba019e94cd338e10b92348fc5e85e6a</Hash>
 </Codenesium>*/

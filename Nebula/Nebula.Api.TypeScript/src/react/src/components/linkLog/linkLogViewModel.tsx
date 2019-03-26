@@ -14,7 +14,7 @@ export default class LinkLogViewModel {
     this.id = 0;
     this.linkId = 0;
     this.linkIdEntity = '';
-    this.linkIdNavigation = new LinkViewModel();
+    this.linkIdNavigation = undefined;
     this.log = '';
   }
 
@@ -37,5 +37,5 @@ export default class LinkLogViewModel {
 
 
 /*<Codenesium>
-    <Hash>0fc9ffd7d6961bbf2b88614c642ebad1</Hash>
+    <Hash>c04a65496415bfc71f0136ad8dfad0d3</Hash>
 </Codenesium>*/

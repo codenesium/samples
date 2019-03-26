@@ -91,7 +91,11 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<Posts>> PostsByPostTypeId(int postTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Posts>()
+			       .Include(x => x.LastEditorUserIdNavigation)
+			       .Include(x => x.OwnerUserIdNavigation)
+			       .Include(x => x.ParentIdNavigation)
 			       .Include(x => x.PostTypeIdNavigation)
+
 			       .Where(x => x.PostTypeId == postTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Posts>();
 		}
 
@@ -121,5 +125,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a8e42e032455e3b98535ce9b16b257c</Hash>
+    <Hash>188cbee429de9319a2ab0c3d1f17b02b</Hash>
 </Codenesium>*/

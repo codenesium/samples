@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FamilyMapper from '../family/familyMapper';
@@ -7,9 +7,9 @@ import FamilyViewModel from '../family/familyViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface FamilyTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class FamilyTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.FamilyClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.FamilyClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new FamilyMapper();
 
-          let mapper = new FamilyMapper();
+        let families: Array<FamilyViewModel> = [];
 
-          let families: Array<FamilyViewModel> = [];
+        response.data.forEach(x => {
+          families.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            families.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: families,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: families,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -113,13 +115,6 @@ export class FamilyTableComponent extends React.Component<
                 Header: 'Families',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Notes',
                     accessor: 'note',
                     Cell: props => {
@@ -127,7 +122,7 @@ export class FamilyTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PrimaryContactEmail',
+                    Header: 'Primary Contact Email',
                     accessor: 'primaryContactEmail',
                     Cell: props => {
                       return (
@@ -138,7 +133,7 @@ export class FamilyTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PrimaryContactFirstName',
+                    Header: 'Primary Contact First Name',
                     accessor: 'primaryContactFirstName',
                     Cell: props => {
                       return (
@@ -149,7 +144,7 @@ export class FamilyTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PrimaryContactLastName',
+                    Header: 'Primary Contact Last Name',
                     accessor: 'primaryContactLastName',
                     Cell: props => {
                       return (
@@ -160,7 +155,7 @@ export class FamilyTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PrimaryContactPhone',
+                    Header: 'Primary Contact Phone',
                     accessor: 'primaryContactPhone',
                     Cell: props => {
                       return (
@@ -215,5 +210,5 @@ export class FamilyTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d72e1d2f256e973034c3e7e2db1da8b1</Hash>
+    <Hash>26f017a1a4e7bb3afc9692781ac247ce</Hash>
 </Codenesium>*/

@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SpeciesMapper from './speciesMapper';
 import SpeciesViewModel from './speciesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { BreedTableComponent } from '../shared/breedTable';
 
 interface SpeciesDetailComponentProps {
@@ -44,44 +45,45 @@ class SpeciesDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.SpeciesClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Species +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.SpeciesClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SpeciesMapper();
 
-          let mapper = new SpeciesMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -114,7 +116,6 @@ class SpeciesDetailComponent extends React.Component<
           <div>
             <h3>Breeds</h3>
             <BreedTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -141,5 +142,5 @@ export const WrappedSpeciesDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>aa9c5afb19f799a13a9c80dceaa40395</Hash>
+    <Hash>ddd00f8339125953d9d4bdccc6ca0e94</Hash>
 </Codenesium>*/

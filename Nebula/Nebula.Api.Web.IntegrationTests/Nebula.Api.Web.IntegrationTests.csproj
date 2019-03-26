@@ -24,6 +24,12 @@
 	<ProjectReference Include="../Nebula.Api.Web/Nebula.Api.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+     <None Update="appSettings.Test.json">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+   </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>Nebula.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
    </PropertyGroup>

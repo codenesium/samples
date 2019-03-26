@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../Tests.Api.Web/Tests.Api.Web.csproj" />
+	<ProjectReference Include="../Tests.Api.Services/Tests.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

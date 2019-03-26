@@ -1,15 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FileTypeMapper from './fileTypeMapper';
 import FileTypeViewModel from './fileTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {FileTableComponent} from '../shared/fileTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { FileTableComponent } from '../shared/fileTable';
 
 interface FileTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,104 +24,110 @@ interface FileTypeDetailComponentState {
 }
 
 class FileTypeDetailComponent extends React.Component<
-FileTypeDetailComponentProps,
-FileTypeDetailComponentState
+  FileTypeDetailComponentProps,
+  FileTypeDetailComponentState
 > {
   state = {
     model: new FileTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.FileTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.FileTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.FileTypeClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.FileTypes +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.FileTypeClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new FileTypeMapper();
 
-          let mapper = new FileTypeMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Files</h3>
-            <FileTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.FileTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Files}
-			/>
-         </div>
-	
-
+            <FileTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.FileTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Files
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +136,11 @@ FileTypeDetailComponentState
   }
 }
 
-export const WrappedFileTypeDetailComponent = Form.create({ name: 'FileType Detail' })(
-  FileTypeDetailComponent
-);
+export const WrappedFileTypeDetailComponent = Form.create({
+  name: 'FileType Detail',
+})(FileTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b8b38ec755b83100b92bf06a69781e2d</Hash>
+    <Hash>59b8c8769be35129434222e80615d6bc</Hash>
 </Codenesium>*/

@@ -93,6 +93,8 @@ namespace TestsNS.Api.DataAccess
 		{
 			return await this.Context.Set<SelfReference>()
 			       .Include(x => x.SelfReferenceIdNavigation)
+			       .Include(x => x.SelfReferenceId2Navigation)
+
 			       .Where(x => x.SelfReferenceId == selfReferenceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SelfReference>();
 		}
 
@@ -100,7 +102,9 @@ namespace TestsNS.Api.DataAccess
 		public async virtual Task<List<SelfReference>> SelfReferencesBySelfReferenceId2(int selfReferenceId2, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SelfReference>()
+			       .Include(x => x.SelfReferenceIdNavigation)
 			       .Include(x => x.SelfReferenceId2Navigation)
+
 			       .Where(x => x.SelfReferenceId2 == selfReferenceId2).AsQueryable().Skip(offset).Take(limit).ToListAsync<SelfReference>();
 		}
 
@@ -146,5 +150,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c472b7ed91d501fa7a3bbe8bbe4052cb</Hash>
+    <Hash>b81420c4d799cb8a94c577f909d64681</Hash>
 </Codenesium>*/

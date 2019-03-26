@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
@@ -9,6 +9,7 @@ import EventViewModel from './eventViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EventSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class EventSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.EventClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Events + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class EventSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.EventClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.EventClientResponseModel>;
-          let viewModels: Array<EventViewModel> = [];
-          let mapper = new EventMapper();
+      .then(response => {
+        let viewModels: Array<EventViewModel> = [];
+        let mapper = new EventMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<EventViewModel>(),
-            filteredRecords: new Array<EventViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<EventViewModel>(),
+          filteredRecords: new Array<EventViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -249,7 +241,8 @@ export default class EventSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.eventStatusIdNavigation.toDisplay()
+                            props.original.eventStatusIdNavigation &&
+                              props.original.eventStatusIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -348,5 +341,5 @@ export const WrappedEventSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c7dc62572ae8aff4f67f0a08696011c5</Hash>
+    <Hash>49adbe20a23eb36adc242e1ac2f0783e</Hash>
 </Codenesium>*/

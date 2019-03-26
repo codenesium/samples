@@ -12,17 +12,19 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			ITeacherSkillRepository teacherSkillRepository,
 			IApiTeacherSkillServerRequestModelValidator teacherSkillModelValidator,
-			IDALTeacherSkillMapper dalTeacherSkillMapper)
+			IDALTeacherSkillMapper dalTeacherSkillMapper,
+			IDALRateMapper dalRateMapper)
 			: base(logger,
 			       mediator,
 			       teacherSkillRepository,
 			       teacherSkillModelValidator,
-			       dalTeacherSkillMapper)
+			       dalTeacherSkillMapper,
+			       dalRateMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b2e44b9dfa788317c37c45ccfe47db8</Hash>
+    <Hash>af75d2e4cbd12d7caf643a3a0421af74</Hash>
 </Codenesium>*/

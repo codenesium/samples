@@ -1,10 +1,11 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Api from '../../api/models';
 import CommentsMapper from '../comments/commentsMapper';
 import CommentsViewModel from '../comments/commentsViewModel';
-import { Spin, Alert, Select } from 'antd';
+import { Form, Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CommentsSelectComponentProps {
   getFieldDecorator: any;
@@ -38,44 +39,46 @@ export class CommentsSelectComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.CommentsClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.CommentsClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CommentsMapper();
 
-          let mapper = new CommentsMapper();
+        let devices: Array<CommentsViewModel> = [];
 
-          let devices: Array<CommentsViewModel> = [];
+        response.data.forEach(x => {
+          devices.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: devices,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: devices,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -90,20 +93,24 @@ export class CommentsSelectComponent extends React.Component<
       return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       return (
-        <div>
+        <Form.Item>
+          <label htmlFor={this.props.propertyName}>Comments</label>
+          <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
+            initialValue: this.props.selectedValue || [],
             rules: [{ required: this.props.required, message: 'Required' }],
           })(
             <Select>
               {this.state.filteredRecords.map((x: CommentsViewModel) => {
                 return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
+                  <Select.Option key={x.id} value={x.id}>
+                    {x.toDisplay()}
+                  </Select.Option>
                 );
               })}
             </Select>
           )}
-        </div>
+        </Form.Item>
       );
     } else {
       return null;
@@ -113,5 +120,5 @@ export class CommentsSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>65ef8f0e247f896406ca3612744b4432</Hash>
+    <Hash>4994f627a1603ad2367eb319782104c4</Hash>
 </Codenesium>*/

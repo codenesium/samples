@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import MessageMapper from './messageMapper';
 import MessageViewModel from './messageViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { MessengerTableComponent } from '../shared/messengerTable';
 
 interface MessageDetailComponentProps {
@@ -44,44 +45,45 @@ class MessageDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.MessageClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Messages +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.MessageClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new MessageMapper();
 
-          let mapper = new MessageMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -112,7 +114,10 @@ class MessageDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>sender_user_id</h3>
               <p>
-                {String(this.state.model!.senderUserIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.senderUserIdNavigation &&
+                    this.state.model!.senderUserIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
           </div>
@@ -120,7 +125,6 @@ class MessageDetailComponent extends React.Component<
           <div>
             <h3>Messengers</h3>
             <MessengerTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -147,5 +151,5 @@ export const WrappedMessageDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ad3cf47954f0dee87704adcd290a588f</Hash>
+    <Hash>13a6e573cc53bee50e0e59efe1c3a2d0</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ export default class TeamViewModel {
     this.name = '';
     this.organizationId = 0;
     this.organizationIdEntity = '';
-    this.organizationIdNavigation = new OrganizationViewModel();
+    this.organizationIdNavigation = undefined;
   }
 
   setProperties(id: number, name: string, organizationId: number): void {
@@ -29,5 +29,5 @@ export default class TeamViewModel {
 
 
 /*<Codenesium>
-    <Hash>3602caad57ca37c75e46b486bc21bf4f</Hash>
+    <Hash>59631bcf752155dac4c6dec6b54b890f</Hash>
 </Codenesium>*/

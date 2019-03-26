@@ -13,7 +13,7 @@ export default class TicketViewModel {
     this.publicId = '';
     this.ticketStatusId = 0;
     this.ticketStatusIdEntity = '';
-    this.ticketStatusIdNavigation = new TicketStatusViewModel();
+    this.ticketStatusIdNavigation = undefined;
   }
 
   setProperties(id: number, publicId: string, ticketStatusId: number): void {
@@ -29,5 +29,5 @@ export default class TicketViewModel {
 
 
 /*<Codenesium>
-    <Hash>8fea0cf00ee0fdd8852195810916f2f0</Hash>
+    <Hash>90d98c441e8d21fbea307cd6e9197fff</Hash>
 </Codenesium>*/

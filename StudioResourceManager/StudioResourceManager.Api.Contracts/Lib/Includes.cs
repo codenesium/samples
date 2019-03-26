@@ -5,6 +5,17 @@ using System.Text;
 
 namespace StudioResourceManagerNS.Api.Contracts
 {
+	public class AuthErrorCodes
+	{
+		public const string UserDoesNotExist = "UserDoesNotExist";
+		public const string InvalidUsernameOrPassword = "InvalidUsernameOrPassword";
+		public const string UnableToRegister = "UnableToRegister";
+		public const string UserAlreadyExists = "UserAlreadyExists";
+		public const string UnableToConfirmRegistration = "UnableToConfirmRegistration";
+		public const string UnableToConfirmPasssordReset = "UnableToConfirmPasssordReset";
+		public const string UnableToChangePassword = "UnableToChangePassword";
+	}
+
 	public class ValidationErrorCodes
 	{
 		public const string ViolatesShouldNotBeNullRule = "ViolatesShouldNotBeNullRule";
@@ -95,4 +106,44 @@ namespace StudioResourceManagerNS.Api.Contracts
             this.ValidationErrors.Add(validationError);
         }
     }
+
+		public class AuthResponse : ActionResponse
+		{
+			[JsonProperty]
+			public virtual string Token { get; private set; }
+
+			[JsonProperty]
+			public virtual string LinkText { get; private set; }
+
+			[JsonProperty]
+			public virtual string LinkValue { get; private set; }
+
+			[JsonProperty]
+			public virtual string Message { get; private set; }
+
+			[JsonProperty]
+			public virtual string ErrorCode { get; private set; }
+
+			public virtual void SetMessage(string message)
+			{
+				this.Message = message;
+			}
+
+		    public virtual void SetLink(string linkText, string linkValue)
+			{
+				this.LinkText = linkText;
+				this.LinkValue = linkValue;
+			}
+
+
+			public virtual void SetToken(string token)
+			{
+				this.Token = token;
+			}
+
+			public virtual void SetErrorCode(string errorCode)
+			{
+				this.ErrorCode = errorCode;
+			}
+		}
 }

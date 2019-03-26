@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceMapper from './deviceMapper';
 import DeviceViewModel from './deviceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { DeviceActionTableComponent } from '../shared/deviceActionTable';
 
 interface DeviceDetailComponentProps {
@@ -44,44 +45,45 @@ class DeviceDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.DeviceClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Devices +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.DeviceClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new DeviceMapper();
 
-          let mapper = new DeviceMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -126,7 +128,6 @@ class DeviceDetailComponent extends React.Component<
           <div>
             <h3>DeviceActions</h3>
             <DeviceActionTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -153,5 +154,5 @@ export const WrappedDeviceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ece1fac45f84f03dc6cba63b1668193d</Hash>
+    <Hash>c34cdf90a810be58cb1368f5d5a68bed</Hash>
 </Codenesium>*/

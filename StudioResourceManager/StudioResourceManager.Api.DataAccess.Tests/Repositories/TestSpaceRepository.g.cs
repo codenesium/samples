@@ -22,7 +22,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			entity.SetProperties(default(int), "B", "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<Space>().Where(x => true).ToListAsync();
+			var records = await context.Set<Space>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Space>().Where(x => true).ToListAsync();
+			var records = await context.Set<Space>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Space>().Where(x => true).ToListAsync();
+			var records = await context.Set<Space>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Space>().Where(x => true).ToListAsync();
+			var records = await context.Set<Space>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6692d5d3c1364183e5e48cc74a79549e</Hash>
+    <Hash>5c4657ca7b1866d65355ce5b8cfcf757</Hash>
 </Codenesium>*/

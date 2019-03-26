@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CallMapper from './callMapper';
@@ -9,6 +9,7 @@ import CallViewModel from './callViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CallSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class CallSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.CallClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Calls + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -104,42 +101,37 @@ export default class CallSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.CallClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.CallClientResponseModel>;
-          let viewModels: Array<CallViewModel> = [];
-          let mapper = new CallMapper();
+      .then(response => {
+        let viewModels: Array<CallViewModel> = [];
+        let mapper = new CallMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<CallViewModel>(),
-            filteredRecords: new Array<CallViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<CallViewModel>(),
+          filteredRecords: new Array<CallViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -223,7 +215,8 @@ export default class CallSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.addressIdNavigation.toDisplay()
+                            props.original.addressIdNavigation &&
+                              props.original.addressIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -246,7 +239,8 @@ export default class CallSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.callDispositionIdNavigation.toDisplay()
+                            props.original.callDispositionIdNavigation &&
+                              props.original.callDispositionIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -269,7 +263,8 @@ export default class CallSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.callStatusIdNavigation.toDisplay()
+                            props.original.callStatusIdNavigation &&
+                              props.original.callStatusIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -299,7 +294,8 @@ export default class CallSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.callTypeIdNavigation.toDisplay()
+                            props.original.callTypeIdNavigation &&
+                              props.original.callTypeIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -398,5 +394,5 @@ export const WrappedCallSearchComponent = Form.create({ name: 'Call Search' })(
 
 
 /*<Codenesium>
-    <Hash>772df62fea712a18fe6d95fc00e7a85d</Hash>
+    <Hash>783c3604232fd98de10a2abb16693bab</Hash>
 </Codenesium>*/

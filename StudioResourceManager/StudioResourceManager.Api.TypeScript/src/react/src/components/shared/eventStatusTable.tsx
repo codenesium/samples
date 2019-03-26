@@ -1,16 +1,16 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventStatusMapper from '../eventStatus/eventStatusMapper';
 import EventStatusViewModel from '../eventStatus/eventStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EventStatusTableComponentProps {
-  id:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,117 +20,115 @@ interface EventStatusTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<EventStatusViewModel>;
+  filteredRecords: Array<EventStatusViewModel>;
 }
 
-export class  EventStatusTableComponent extends React.Component<
-EventStatusTableComponentProps,
-EventStatusTableComponentState
+export class EventStatusTableComponent extends React.Component<
+  EventStatusTableComponentProps,
+  EventStatusTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: EventStatusViewModel) {
-  this.props.history.push(ClientRoutes.EventStatus + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: EventStatusViewModel) {
+    this.props.history.push(ClientRoutes.EventStatus + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: EventStatusViewModel) {
-   this.props.history.push(ClientRoutes.EventStatus + '/' + row.id);
- }
+  handleDetailClick(e: any, row: EventStatusViewModel) {
+    this.props.history.push(ClientRoutes.EventStatus + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.EventStatusClientResponseModel>;
+      .get<Array<Api.EventStatusClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new EventStatusMapper();
 
-          let mapper = new EventStatusMapper();
-          
-          let eventStatus:Array<EventStatusViewModel> = [];
+        let eventStatus: Array<EventStatusViewModel> = [];
 
-          response.forEach(x =>
-          {
-              eventStatus.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          eventStatus.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: eventStatus,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: eventStatus,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'EventStatus',
-                    columns: [
-					  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'EventStatus',
+                columns: [
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
                       return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as EventStatusViewModel
@@ -141,8 +139,8 @@ handleEditClick(e:any, row: EventStatusViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as EventStatusViewModel
@@ -151,11 +149,14 @@ handleEditClick(e:any, row: EventStatusViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -163,6 +164,7 @@ handleEditClick(e:any, row: EventStatusViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>f7f47fc77452ca7208d2259954fa9de3</Hash>
+    <Hash>f7fa3b3f79669105f857950abede93f0</Hash>
 </Codenesium>*/

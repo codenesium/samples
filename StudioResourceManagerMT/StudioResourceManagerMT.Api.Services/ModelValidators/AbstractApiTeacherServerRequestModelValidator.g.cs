@@ -55,10 +55,18 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void UserIdRules()
 		{
+			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.TeacherRepository.UserByUserId(id);
+
+			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d619f8bfa8fccfe3304c3fc0e06e81a9</Hash>
+    <Hash>f6e5cd0acbc878604b97218e461a9dba</Hash>
 </Codenesium>*/

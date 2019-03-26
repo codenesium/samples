@@ -134,6 +134,8 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 			return await this.Context.Set<Comments>()
 			       .Include(x => x.PostIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.PostId == postId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Comments>();
 		}
 
@@ -141,7 +143,11 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<Posts>> PostsByParentId(int parentId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Posts>()
+			       .Include(x => x.LastEditorUserIdNavigation)
+			       .Include(x => x.OwnerUserIdNavigation)
 			       .Include(x => x.ParentIdNavigation)
+			       .Include(x => x.PostTypeIdNavigation)
+
 			       .Where(x => x.ParentId == parentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Posts>();
 		}
 
@@ -150,6 +156,8 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 			return await this.Context.Set<Tags>()
 			       .Include(x => x.ExcerptPostIdNavigation)
+			       .Include(x => x.WikiPostIdNavigation)
+
 			       .Where(x => x.ExcerptPostId == excerptPostId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tags>();
 		}
 
@@ -157,7 +165,9 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<Tags>> TagsByWikiPostId(int wikiPostId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Tags>()
+			       .Include(x => x.ExcerptPostIdNavigation)
 			       .Include(x => x.WikiPostIdNavigation)
+
 			       .Where(x => x.WikiPostId == wikiPostId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tags>();
 		}
 
@@ -166,6 +176,9 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 			return await this.Context.Set<Votes>()
 			       .Include(x => x.PostIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+			       .Include(x => x.VoteTypeIdNavigation)
+
 			       .Where(x => x.PostId == postId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Votes>();
 		}
 
@@ -173,7 +186,10 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<PostHistory>> PostHistoryByPostId(int postId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PostHistory>()
+			       .Include(x => x.PostHistoryTypeIdNavigation)
 			       .Include(x => x.PostIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.PostId == postId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PostHistory>();
 		}
 
@@ -181,7 +197,10 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<PostLinks>> PostLinksByPostId(int postId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PostLinks>()
+			       .Include(x => x.LinkTypeIdNavigation)
 			       .Include(x => x.PostIdNavigation)
+			       .Include(x => x.RelatedPostIdNavigation)
+
 			       .Where(x => x.PostId == postId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PostLinks>();
 		}
 
@@ -189,7 +208,10 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<PostLinks>> PostLinksByRelatedPostId(int relatedPostId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PostLinks>()
+			       .Include(x => x.LinkTypeIdNavigation)
+			       .Include(x => x.PostIdNavigation)
 			       .Include(x => x.RelatedPostIdNavigation)
+
 			       .Where(x => x.RelatedPostId == relatedPostId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PostLinks>();
 		}
 
@@ -251,5 +273,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70f38177733bc868f7d46e7ab849fda2</Hash>
+    <Hash>0c2fb20154bbb40a9e33a07e83f2fbf9</Hash>
 </Codenesium>*/

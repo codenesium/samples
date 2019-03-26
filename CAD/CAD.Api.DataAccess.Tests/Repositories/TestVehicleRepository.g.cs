@@ -22,7 +22,7 @@ namespace CADNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace CADNS.Api.DataAccess
 			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<Vehicle>().Where(x => true).ToListAsync();
+			var records = await context.Set<Vehicle>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace CADNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Vehicle>().Where(x => true).ToListAsync();
+			var records = await context.Set<Vehicle>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace CADNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Vehicle>().Where(x => true).ToListAsync();
+			var records = await context.Set<Vehicle>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace CADNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Vehicle>().Where(x => true).ToListAsync();
+			var records = await context.Set<Vehicle>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b1e5276f8b95cb78eb4c12ac3f5d3dc</Hash>
+    <Hash>61868b7546e75ff80e976a5e4e8b0f2d</Hash>
 </Codenesium>*/

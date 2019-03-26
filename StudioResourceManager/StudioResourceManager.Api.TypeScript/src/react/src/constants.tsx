@@ -1,41 +1,67 @@
 export class Constants {
-   static readonly BaseEndpoint = process.env.REACT_APP_API_URL;
-   static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
-   static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
-   static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
-   static readonly HostedSubDirectory = process.env.REACT_APP_HOST_SUBDIRECTORY;
+  static readonly BaseEndpoint = process.env.REACT_APP_API_URL;
+  static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
+  static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
+  static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
+  static readonly HostedBaseUrl = location.protocol + '//' + location.host;
+  static readonly HostedSubDirectory =
+    process.env.REACT_APP_HOST_SUBDIRECTORY == '/'
+      ? ''
+      : '/' + process.env.REACT_APP_HOST_SUBDIRECTORY;
+  static readonly HostedUrl =
+    Constants.HostedBaseUrl + Constants.HostedSubDirectory;
+}
+
+export class AuthClientRoutes {
+  static readonly Login = '/login';
+  static readonly Logout = '/logout';
+  static readonly Register = '/register';
+  static readonly ResetPassword = '/resetpassword';
+  static readonly ConfirmRegistration = '/confirmregistration';
+  static readonly ConfirmPasswordReset = '/confirmpasswordreset';
+  static readonly ChangePassword = '/changepassword';
+}
+
+export class AuthApiRoutes {
+  static readonly Login = 'auth/login';
+  static readonly Register = 'auth/register';
+  static readonly ResetPassword = 'auth/resetpassword';
+  static readonly ConfirmRegistration = 'auth/confirmregistration';
+  static readonly ConfirmPasswordReset = 'auth/confirmpasswordreset';
+  static readonly ChangePassword = 'auth/changepassword';
 }
 
 export class ClientRoutes {
-static readonly Admins = '/admins';		
-static readonly Events = '/events';		
-static readonly EventStatus = '/eventstatus';		
-static readonly Families = '/families';		
-static readonly Rates = '/rates';		
-static readonly Spaces = '/spaces';		
-static readonly SpaceFeatures = '/spacefeatures';		
-static readonly Students = '/students';		
-static readonly Studios = '/studios';		
-static readonly Teachers = '/teachers';		
-static readonly TeacherSkills = '/teacherskills';		
-static readonly Users = '/users';		
+  static readonly Admins = '/admins';
+  static readonly Events = '/events';
+  static readonly EventStatus = '/eventstatus';
+  static readonly Families = '/families';
+  static readonly Rates = '/rates';
+  static readonly Spaces = '/spaces';
+  static readonly SpaceFeatures = '/spacefeatures';
+  static readonly Students = '/students';
+  static readonly Studios = '/studios';
+  static readonly Teachers = '/teachers';
+  static readonly TeacherSkills = '/teacherskills';
+  static readonly Users = '/users';
 }
 
 export class ApiRoutes {
-static readonly Admins = 'admins';		
-static readonly Events = 'events';		
-static readonly EventStatus = 'eventstatus';		
-static readonly Families = 'families';		
-static readonly Rates = 'rates';		
-static readonly Spaces = 'spaces';		
-static readonly SpaceFeatures = 'spacefeatures';		
-static readonly Students = 'students';		
-static readonly Studios = 'studios';		
-static readonly Teachers = 'teachers';		
-static readonly TeacherSkills = 'teacherskills';		
-static readonly Users = 'users';		
+  static readonly Admins = 'admins';
+  static readonly Events = 'events';
+  static readonly EventStatus = 'eventstatus';
+  static readonly Families = 'families';
+  static readonly Rates = 'rates';
+  static readonly Spaces = 'spaces';
+  static readonly SpaceFeatures = 'spacefeatures';
+  static readonly Students = 'students';
+  static readonly Studios = 'studios';
+  static readonly Teachers = 'teachers';
+  static readonly TeacherSkills = 'teacherskills';
+  static readonly Users = 'users';
 }
 
+
 /*<Codenesium>
-    <Hash>0ecae479db29b933fd7e5473d5fd8f37</Hash>
+    <Hash>91371fb0d17174ce908f79c8388da077</Hash>
 </Codenesium>*/

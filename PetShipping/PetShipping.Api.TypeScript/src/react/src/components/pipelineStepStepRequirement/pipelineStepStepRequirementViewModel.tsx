@@ -14,7 +14,7 @@ export default class PipelineStepStepRequirementViewModel {
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
-    this.pipelineStepIdNavigation = new PipelineStepViewModel();
+    this.pipelineStepIdNavigation = undefined;
     this.requirementMet = false;
   }
 
@@ -37,5 +37,5 @@ export default class PipelineStepStepRequirementViewModel {
 
 
 /*<Codenesium>
-    <Hash>23fce7144172cacd4f3daeb720f42605</Hash>
+    <Hash>0d8e1da301dba5a059e4d91fc2709afb</Hash>
 </Codenesium>*/

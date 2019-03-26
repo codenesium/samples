@@ -96,6 +96,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			return await this.Context.Set<Student>()
 			       .Include(x => x.FamilyIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.FamilyId == familyId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
@@ -125,5 +127,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad2ac9bd277d17eb9c577dad17ebf583</Hash>
+    <Hash>1553e1f254ee5bef3fd5cdf6ef54c9f5</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DirectTweetMapper from '../directTweet/directTweetMapper';
@@ -7,9 +7,9 @@ import DirectTweetViewModel from '../directTweet/directTweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DirectTweetTableComponentProps {
-  tweet_id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -36,11 +36,11 @@ export class DirectTweetTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: DirectTweetViewModel) {
-    this.props.history.push(ClientRoutes.DirectTweets + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.DirectTweets + '/edit/' + row.tweetId);
   }
 
   handleDetailClick(e: any, row: DirectTweetViewModel) {
-    this.props.history.push(ClientRoutes.DirectTweets + '/' + row.id);
+    this.props.history.push(ClientRoutes.DirectTweets + '/' + row.tweetId);
   }
 
   componentDidMount() {
@@ -51,44 +51,46 @@ export class DirectTweetTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.DirectTweetClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.DirectTweetClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new DirectTweetMapper();
 
-          let mapper = new DirectTweetMapper();
+        let directTweets: Array<DirectTweetViewModel> = [];
 
-          let directTweets: Array<DirectTweetViewModel> = [];
+        response.data.forEach(x => {
+          directTweets.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            directTweets.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: directTweets,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: directTweets,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -143,7 +145,8 @@ export class DirectTweetTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.taggedUserIdNavigation.toDisplay()
+                            props.original.taggedUserIdNavigation &&
+                              props.original.taggedUserIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -201,5 +204,5 @@ export class DirectTweetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1ef8a71f2dcf44b00c88291f2aecc8a3</Hash>
+    <Hash>b49513181c9e7cad935f768b547c06e0</Hash>
 </Codenesium>*/

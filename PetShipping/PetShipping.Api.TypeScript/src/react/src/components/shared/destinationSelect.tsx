@@ -1,10 +1,11 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Api from '../../api/models';
 import DestinationMapper from '../destination/destinationMapper';
 import DestinationViewModel from '../destination/destinationViewModel';
-import { Spin, Alert, Select } from 'antd';
+import { Form, Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DestinationSelectComponentProps {
   getFieldDecorator: any;
@@ -38,44 +39,46 @@ export class DestinationSelectComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.DestinationClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.DestinationClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new DestinationMapper();
 
-          let mapper = new DestinationMapper();
+        let devices: Array<DestinationViewModel> = [];
 
-          let devices: Array<DestinationViewModel> = [];
+        response.data.forEach(x => {
+          devices.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: devices,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: devices,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -90,20 +93,24 @@ export class DestinationSelectComponent extends React.Component<
       return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       return (
-        <div>
+        <Form.Item>
+          <label htmlFor={this.props.propertyName} />
+          <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
+            initialValue: this.props.selectedValue || [],
             rules: [{ required: this.props.required, message: 'Required' }],
           })(
             <Select>
               {this.state.filteredRecords.map((x: DestinationViewModel) => {
                 return (
-                  <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
+                  <Select.Option key={x.id} value={x.id}>
+                    {x.toDisplay()}
+                  </Select.Option>
                 );
               })}
             </Select>
           )}
-        </div>
+        </Form.Item>
       );
     } else {
       return null;
@@ -113,5 +120,5 @@ export class DestinationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9df7fa7d65e687aa27a8eb61b668dc7c</Hash>
+    <Hash>8aab2b87b69e95da57c979eff4216e4d</Hash>
 </Codenesium>*/

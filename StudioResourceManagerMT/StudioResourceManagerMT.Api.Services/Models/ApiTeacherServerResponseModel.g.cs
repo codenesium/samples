@@ -47,9 +47,20 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[JsonProperty]
 		public int UserId { get; private set; }
+
+		[JsonProperty]
+		public string UserIdEntity { get; private set; } = RouteConstants.Users;
+
+		[JsonProperty]
+		public ApiUserServerResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.UserIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9384e51dbc106350f321f99389d1f9d</Hash>
+    <Hash>46216cdd89a5df401452433940b83d61</Hash>
 </Codenesium>*/

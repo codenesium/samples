@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VenueMapper from './venueMapper';
 import VenueViewModel from './venueViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface VenueDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class VenueDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.VenueClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Venues +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.VenueClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new VenueMapper();
 
-          let mapper = new VenueMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -114,7 +116,12 @@ class VenueDetailComponent extends React.Component<
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Admin</h3>
-              <p>{String(this.state.model!.adminIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.adminIdNavigation &&
+                    this.state.model!.adminIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>Email</h3>
@@ -135,7 +142,10 @@ class VenueDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>Province</h3>
               <p>
-                {String(this.state.model!.provinceIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.provinceIdNavigation &&
+                    this.state.model!.provinceIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -158,5 +168,5 @@ export const WrappedVenueDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1a1b515b7e129f10d7fe25df6b7a4530</Hash>
+    <Hash>f77667bafff21cf1fdb9fd8a4d7ed83f</Hash>
 </Codenesium>*/

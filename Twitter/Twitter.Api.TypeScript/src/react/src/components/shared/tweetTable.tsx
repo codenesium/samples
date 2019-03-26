@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TweetMapper from '../tweet/tweetMapper';
@@ -7,9 +7,9 @@ import TweetViewModel from '../tweet/tweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TweetTableComponentProps {
-  tweet_id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -36,11 +36,11 @@ export class TweetTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: TweetViewModel) {
-    this.props.history.push(ClientRoutes.Tweets + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.Tweets + '/edit/' + row.tweetId);
   }
 
   handleDetailClick(e: any, row: TweetViewModel) {
-    this.props.history.push(ClientRoutes.Tweets + '/' + row.id);
+    this.props.history.push(ClientRoutes.Tweets + '/' + row.tweetId);
   }
 
   componentDidMount() {
@@ -51,44 +51,46 @@ export class TweetTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.TweetClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.TweetClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TweetMapper();
 
-          let mapper = new TweetMapper();
+        let tweets: Array<TweetViewModel> = [];
 
-          let tweets: Array<TweetViewModel> = [];
+        response.data.forEach(x => {
+          tweets.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            tweets.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: tweets,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: tweets,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -143,7 +145,8 @@ export class TweetTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.locationIdNavigation.toDisplay()
+                            props.original.locationIdNavigation &&
+                              props.original.locationIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -173,7 +176,8 @@ export class TweetTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.userUserIdNavigation.toDisplay()
+                            props.original.userUserIdNavigation &&
+                              props.original.userUserIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -224,5 +228,5 @@ export class TweetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5161208a957d1e7c92d17eda8be206dd</Hash>
+    <Hash>45530630ad8377bef708d98b34cb9406</Hash>
 </Codenesium>*/

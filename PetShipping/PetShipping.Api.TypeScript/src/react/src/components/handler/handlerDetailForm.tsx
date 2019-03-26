@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import HandlerMapper from './handlerMapper';
 import HandlerViewModel from './handlerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { AirTransportTableComponent } from '../shared/airTransportTable';
 import { HandlerPipelineStepTableComponent } from '../shared/handlerPipelineStepTable';
 import { OtherTransportTableComponent } from '../shared/otherTransportTable';
@@ -46,44 +47,45 @@ class HandlerDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.HandlerClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Handlers +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.HandlerClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new HandlerMapper();
 
-          let mapper = new HandlerMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -132,7 +134,6 @@ class HandlerDetailComponent extends React.Component<
           <div>
             <h3>AirTransports</h3>
             <AirTransportTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -148,7 +149,6 @@ class HandlerDetailComponent extends React.Component<
           <div>
             <h3>HandlerPipelineSteps</h3>
             <HandlerPipelineStepTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -164,7 +164,6 @@ class HandlerDetailComponent extends React.Component<
           <div>
             <h3>OtherTransports</h3>
             <OtherTransportTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -191,5 +190,5 @@ export const WrappedHandlerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dca1050086b3698e0e625ef8e911a493</Hash>
+    <Hash>e240e6dde0135b22295687e97bce1652</Hash>
 </Codenesium>*/

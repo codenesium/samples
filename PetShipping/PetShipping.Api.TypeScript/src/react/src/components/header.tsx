@@ -1,20 +1,23 @@
 import * as React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ClientRoutes, Constants } from '../constants';
+import { ClientRoutes, Constants, AuthClientRoutes } from '../constants';
+import ErrorBoundary from './errorBoundary';
 const { Header, Content, Footer, Sider } = Layout;
-
-const SubMenu = Menu.SubMenu;
 
 interface WrapperHeaderProps {}
 
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
-displayName:string) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -30,199 +33,179 @@ displayName:string) => {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
+              <Menu.Item
                 key="Home"
-				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}></Link>
-              </MenuItem>
+                <Link to={'/'} />
+              </Menu.Item>
 
-			   			   <MenuItem
-                key="airline"
+              <Menu.Item key="airline">
+                <Icon type="pie-chart" />
+                <span>Airlines</span>
+                <Link to={ClientRoutes.Airlines} />
+              </Menu.Item>
+
+              <Menu.Item key="airTransport">
+                <Icon type="rise" />
+                <span>AirTransports</span>
+                <Link to={ClientRoutes.AirTransports} />
+              </Menu.Item>
+
+              <Menu.Item key="breed">
+                <Icon type="bars" />
+                <span>Breeds</span>
+                <Link to={ClientRoutes.Breeds} />
+              </Menu.Item>
+
+              <Menu.Item key="country">
+                <Icon type="cloud" />
+                <span>Countries</span>
+                <Link to={ClientRoutes.Countries} />
+              </Menu.Item>
+
+              <Menu.Item key="countryRequirement">
+                <Icon type="code" />
+                <span>CountryRequirements</span>
+                <Link to={ClientRoutes.CountryRequirements} />
+              </Menu.Item>
+
+              <Menu.Item key="customer">
+                <Icon type="smile" />
+                <span>Customers</span>
+                <Link to={ClientRoutes.Customers} />
+              </Menu.Item>
+
+              <Menu.Item key="customerCommunication">
+                <Icon type="laptop" />
+                <span>CustomerCommunications</span>
+                <Link to={ClientRoutes.CustomerCommunications} />
+              </Menu.Item>
+
+              <Menu.Item key="destination">
+                <Icon type="mobile" />
+                <span>Destinations</span>
+                <Link to={ClientRoutes.Destinations} />
+              </Menu.Item>
+
+              <Menu.Item key="employee">
+                <Icon type="paper-clip" />
+                <span>Employees</span>
+                <Link to={ClientRoutes.Employees} />
+              </Menu.Item>
+
+              <Menu.Item key="handler">
+                <Icon type="setting" />
+                <span>Handlers</span>
+                <Link to={ClientRoutes.Handlers} />
+              </Menu.Item>
+
+              <Menu.Item key="handlerPipelineStep">
+                <Icon type="user" />
+                <span>HandlerPipelineSteps</span>
+                <Link to={ClientRoutes.HandlerPipelineSteps} />
+              </Menu.Item>
+
+              <Menu.Item key="otherTransport">
+                <Icon type="home" />
+                <span>OtherTransports</span>
+                <Link to={ClientRoutes.OtherTransports} />
+              </Menu.Item>
+
+              <Menu.Item key="pet">
+                <Icon type="camera" />
+                <span>Pets</span>
+                <Link to={ClientRoutes.Pets} />
+              </Menu.Item>
+
+              <Menu.Item key="pipeline">
+                <Icon type="like" />
+                <span>Pipelines</span>
+                <Link to={ClientRoutes.Pipelines} />
+              </Menu.Item>
+
+              <Menu.Item key="pipelineStatus">
+                <Icon type="bulb" />
+                <span>PipelineStatus</span>
+                <Link to={ClientRoutes.PipelineStatus} />
+              </Menu.Item>
+
+              <Menu.Item key="pipelineStep">
+                <Icon type="tool" />
+                <span>PipelineSteps</span>
+                <Link to={ClientRoutes.PipelineSteps} />
+              </Menu.Item>
+
+              <Menu.Item key="pipelineStepDestination">
+                <Icon type="coffee" />
+                <span>PipelineStepDestinations</span>
+                <Link to={ClientRoutes.PipelineStepDestinations} />
+              </Menu.Item>
+
+              <Menu.Item key="pipelineStepNote">
+                <Icon type="experiment" />
+                <span>PipelineStepNotes</span>
+                <Link to={ClientRoutes.PipelineStepNotes} />
+              </Menu.Item>
+
+              <Menu.Item key="pipelineStepStatus">
+                <Icon type="security-scan" />
+                <span>PipelineStepStatus</span>
+                <Link to={ClientRoutes.PipelineStepStatus} />
+              </Menu.Item>
+
+              <Menu.Item key="pipelineStepStepRequirement">
+                <Icon type="thunderbolt" />
+                <span>PipelineStepStepRequirements</span>
+                <Link to={ClientRoutes.PipelineStepStepRequirements} />
+              </Menu.Item>
+
+              <Menu.Item key="sale">
+                <Icon type="gateway" />
+                <span>Sales</span>
+                <Link to={ClientRoutes.Sales} />
+              </Menu.Item>
+
+              <Menu.Item key="species">
+                <Icon type="shopping" />
+                <span>Species</span>
+                <Link to={ClientRoutes.Species} />
+              </Menu.Item>
+
+              <Menu.SubMenu
+                title={
+                  <span>
+                    <Icon type="setting" />
+                    <span>Settings</span>
+                  </span>
+                }
               >
-			  <Icon type="pie-chart" />
-              <span>Airlines</span>
-              <Link to={ClientRoutes.Airlines}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="airTransport"
-              >
-			  <Icon type="rise" />
-              <span>AirTransports</span>
-              <Link to={ClientRoutes.AirTransports}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="breed"
-              >
-			  <Icon type="bars" />
-              <span>Breeds</span>
-              <Link to={ClientRoutes.Breeds}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="country"
-              >
-			  <Icon type="cloud" />
-              <span>Countries</span>
-              <Link to={ClientRoutes.Countries}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="countryRequirement"
-              >
-			  <Icon type="code" />
-              <span>CountryRequirements</span>
-              <Link to={ClientRoutes.CountryRequirements}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="customer"
-              >
-			  <Icon type="smile" />
-              <span>Customers</span>
-              <Link to={ClientRoutes.Customers}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="customerCommunication"
-              >
-			  <Icon type="laptop" />
-              <span>CustomerCommunications</span>
-              <Link to={ClientRoutes.CustomerCommunications}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="destination"
-              >
-			  <Icon type="mobile" />
-              <span>Destinations</span>
-              <Link to={ClientRoutes.Destinations}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="employee"
-              >
-			  <Icon type="paper-clip" />
-              <span>Employees</span>
-              <Link to={ClientRoutes.Employees}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="handler"
-              >
-			  <Icon type="setting" />
-              <span>Handlers</span>
-              <Link to={ClientRoutes.Handlers}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="handlerPipelineStep"
-              >
-			  <Icon type="user" />
-              <span>HandlerPipelineSteps</span>
-              <Link to={ClientRoutes.HandlerPipelineSteps}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="otherTransport"
-              >
-			  <Icon type="home" />
-              <span>OtherTransports</span>
-              <Link to={ClientRoutes.OtherTransports}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pet"
-              >
-			  <Icon type="camera" />
-              <span>Pets</span>
-              <Link to={ClientRoutes.Pets}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pipeline"
-              >
-			  <Icon type="like" />
-              <span>Pipelines</span>
-              <Link to={ClientRoutes.Pipelines}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pipelineStatus"
-              >
-			  <Icon type="bulb" />
-              <span>PipelineStatus</span>
-              <Link to={ClientRoutes.PipelineStatus}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pipelineStep"
-              >
-			  <Icon type="tool" />
-              <span>PipelineSteps</span>
-              <Link to={ClientRoutes.PipelineSteps}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pipelineStepDestination"
-              >
-			  <Icon type="coffee" />
-              <span>PipelineStepDestinations</span>
-              <Link to={ClientRoutes.PipelineStepDestinations}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pipelineStepNote"
-              >
-			  <Icon type="experiment" />
-              <span>PipelineStepNotes</span>
-              <Link to={ClientRoutes.PipelineStepNotes}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pipelineStepStatus"
-              >
-			  <Icon type="security-scan" />
-              <span>PipelineStepStatus</span>
-              <Link to={ClientRoutes.PipelineStepStatus}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="pipelineStepStepRequirement"
-              >
-			  <Icon type="thunderbolt" />
-              <span>PipelineStepStepRequirements</span>
-              <Link to={ClientRoutes.PipelineStepStepRequirements}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="sale"
-              >
-			  <Icon type="gateway" />
-              <span>Sales</span>
-              <Link to={ClientRoutes.Sales}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="species"
-              >
-			  <Icon type="shopping" />
-              <span>Species</span>
-              <Link to={ClientRoutes.Species}></Link>
-              </MenuItem>
-
-				
+                <Menu.Item key="lock">
+                  <Icon type="lock" />
+                  <span>Change Password</span>
+                  <Link to={AuthClientRoutes.ChangePassword} />
+                </Menu.Item>
+                <Menu.Item key="logout">
+                  <Icon type="logout" />
+                  <span>Logout</span>
+                  <Link to={AuthClientRoutes.Logout} />
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-            <h2>{displayName}</h2>
-			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                <Component {...this.props} />
+              <h2>{displayName}</h2>
+              <div
+                style={{ padding: 24, background: '#fff', minHeight: '600px' }}
+              >
+                <ErrorBoundary>
+                  <Component {...this.props} />
+                </ErrorBoundary>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Footer</Footer>
@@ -234,6 +217,7 @@ displayName:string) => {
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>9b1f3afb274a60fbeda1f44a08c8b338</Hash>
+    <Hash>040ee0309e8b3dd1b16a0f799330b3c4</Hash>
 </Codenesium>*/

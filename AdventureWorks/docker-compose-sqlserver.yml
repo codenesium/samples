@@ -1,0 +1,68 @@
+version: '2'
+
+services:
+  app:
+    container_name: 'adventureworks-app'
+    image: 'adventureworks-app'
+    build:
+      context: .
+      dockerfile: DockerFileReact
+      args:
+      - REACT_APP_API_URL=http://192.168.99.100:81/
+	  - REACT_APP_HOST_SUBDIRECTORY=/
+    environment:
+       - REACT_APP_API_URL=http://192.168.99.100:81/
+	   - REACT_APP_HOST_SUBDIRECTORY=/
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "80:80"
+    networks:
+      - adventureworks-network
+
+  api:
+    container_name: 'adventureworks-api'
+    image: 'adventureworks'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:81
+       - ConnectionStrings__ApplicationDbContext=Server=db;Persist Security Info=False;User ID=sa;Password=Passw0rd;Initial Catalog=adventureworks;MultipleActiveResultSets=True;Connection Timeout=10;
+       - DatabaseProvider=MSSQL
+       - MigrateDatabase=true
+    volumes:
+      - .:/var/www/api
+    ports:
+     - "81:81"
+    depends_on:
+     - "db"
+    networks:
+      - adventureworks-network
+    extra_hosts:
+      - "localhost:10.0.2.2"
+
+  db:
+    image: "microsoft/mssql-server-linux"
+    container_name: 'db'
+    environment:
+       SA_PASSWORD: "Passw0rd"
+       ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - adventureworks-network
+
+  watchtower:
+    container_name: 'watchtower'
+    image: v2tec/watchtower
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    networks:
+      - adventureworks-network
+
+networks:
+    adventureworks-network:
+       driver: bridge

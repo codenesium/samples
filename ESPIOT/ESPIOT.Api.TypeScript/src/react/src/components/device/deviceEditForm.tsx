@@ -1,17 +1,27 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceMapper from './deviceMapper';
 import DeviceViewModel from './deviceViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 interface DeviceEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface DeviceEditComponentState {
@@ -20,8 +30,8 @@ interface DeviceEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class DeviceEditComponent extends React.Component<
@@ -34,196 +44,217 @@ class DeviceEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.DeviceClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Devices +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.DeviceClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new DeviceMapper();
 
-          let mapper = new DeviceMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
-     if (!err) {
+      });
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
         let model = values as DeviceViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
-      } 
-	  else {
-		  this.setState({...this.state, submitting:false, submitted:false});
-	  }
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
+      }
     });
   };
 
-  submit = (model:DeviceViewModel) =>
-  {  
+  submit = (model: DeviceViewModel) => {
     let mapper = new DeviceMapper();
-     axios
-      .put(
+    axios
+      .put<CreateResponse<Api.DeviceClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Devices + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.DeviceClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-		  let errorResponse = error.response.data as ActionResponse; 
-		  if(error.response.data)
-          {
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
+        }
+      });
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="dateOfLastPing">Date of Last Ping</label>
+            <br />
+            {getFieldDecorator('dateOfLastPing', {
+              rules: [{ required: true, message: 'Required' }],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Date of Last Ping'}
+              />
+            )}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='dateOfLastPing'>Date of Last Ping</label>
-              <br />             
-              {getFieldDecorator('dateOfLastPing', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Date of Last Ping"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="isActive">Active</label>
+            <br />
+            {getFieldDecorator('isActive', {
+              rules: [],
+              valuePropName: 'checked',
+            })(<Switch />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='isActive'>Active</label>
-              <br />             
-              {getFieldDecorator('isActive', {
-              rules:[{ required: true, message: 'Required' },
-],
-              valuePropName: 'checked'
-              })
-              ( <Switch /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="name">Name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 90, message: 'Exceeds max length of 90' },
+              ],
+            })(<Input placeholder={'Name'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='name'>Name</label>
-              <br />             
-              {getFieldDecorator('name', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 90, message: 'Exceeds max length of 90' },
-],
-              
-              })
-              ( <Input placeholder={"Name"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="publicId">Public Id</label>
+            <br />
+            {getFieldDecorator('publicId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'Public Id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='publicId'>Public Id</label>
-              <br />             
-              {getFieldDecorator('publicId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"Public Id"} /> )}
-              </Form.Item>
-
-			
-            <Form.Item>
-             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedDeviceEditComponent = Form.create({ name: 'Device Edit' })(DeviceEditComponent);
+export const WrappedDeviceEditComponent = Form.create({ name: 'Device Edit' })(
+  DeviceEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>05120c1a3c6803d3194e4eb1ce79bad3</Hash>
+    <Hash>8fc2fe87f87a86c0b500f63322e581db</Hash>
 </Codenesium>*/

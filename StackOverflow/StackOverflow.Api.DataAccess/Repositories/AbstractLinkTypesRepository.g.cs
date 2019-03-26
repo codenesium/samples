@@ -92,6 +92,9 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 			return await this.Context.Set<PostLinks>()
 			       .Include(x => x.LinkTypeIdNavigation)
+			       .Include(x => x.PostIdNavigation)
+			       .Include(x => x.RelatedPostIdNavigation)
+
 			       .Where(x => x.LinkTypeId == linkTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PostLinks>();
 		}
 
@@ -121,5 +124,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0261d6b2f1e8750f51daf231531f7a10</Hash>
+    <Hash>e47288365f96cae4ef6268dc417731f0</Hash>
 </Codenesium>*/

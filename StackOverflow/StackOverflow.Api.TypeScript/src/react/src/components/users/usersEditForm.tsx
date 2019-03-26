@@ -1,17 +1,27 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UsersMapper from './usersMapper';
 import UsersViewModel from './usersViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 interface UsersEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface UsersEditComponentState {
@@ -20,8 +30,8 @@ interface UsersEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class UsersEditComponent extends React.Component<
@@ -34,292 +44,290 @@ class UsersEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.UsersClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Users +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.UsersClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new UsersMapper();
 
-          let mapper = new UsersMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
-     if (!err) {
+      });
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
         let model = values as UsersViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
-      } 
-	  else {
-		  this.setState({...this.state, submitting:false, submitted:false});
-	  }
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
+      }
     });
   };
 
-  submit = (model:UsersViewModel) =>
-  {  
+  submit = (model: UsersViewModel) => {
     let mapper = new UsersMapper();
-     axios
-      .put(
+    axios
+      .put<CreateResponse<Api.UsersClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.UsersClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-		  let errorResponse = error.response.data as ActionResponse; 
-		  if(error.response.data)
-          {
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
+        }
+      });
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="aboutMe">About Me</label>
+            <br />
+            {getFieldDecorator('aboutMe', {
+              rules: [],
+            })(<Input placeholder={'About Me'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='aboutMe'>About Me</label>
-              <br />             
-              {getFieldDecorator('aboutMe', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"About Me"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="accountId">Account</label>
+            <br />
+            {getFieldDecorator('accountId', {
+              rules: [],
+            })(<Input placeholder={'Account'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='accountId'>Account</label>
-              <br />             
-              {getFieldDecorator('accountId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"Account"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="age">Age</label>
+            <br />
+            {getFieldDecorator('age', {
+              rules: [],
+            })(<Input placeholder={'Age'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='age'>Age</label>
-              <br />             
-              {getFieldDecorator('age', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"Age"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="creationDate">Creation Date</label>
+            <br />
+            {getFieldDecorator('creationDate', {
+              rules: [{ required: true, message: 'Required' }],
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Creation Date'} />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='creationDate'>Creation Date</label>
-              <br />             
-              {getFieldDecorator('creationDate', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Creation Date"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="displayName">Display Name</label>
+            <br />
+            {getFieldDecorator('displayName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 40, message: 'Exceeds max length of 40' },
+              ],
+            })(<Input placeholder={'Display Name'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='displayName'>Display Name</label>
-              <br />             
-              {getFieldDecorator('displayName', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 40, message: 'Exceeds max length of 40' },
-],
-              
-              })
-              ( <Input placeholder={"Display Name"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="downVote">Down Vote</label>
+            <br />
+            {getFieldDecorator('downVote', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'Down Vote'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='downVote'>Down Vote</label>
-              <br />             
-              {getFieldDecorator('downVote', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"Down Vote"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="emailHash">Email Hash</label>
+            <br />
+            {getFieldDecorator('emailHash', {
+              rules: [{ max: 40, message: 'Exceeds max length of 40' }],
+            })(<Input placeholder={'Email Hash'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='emailHash'>Email Hash</label>
-              <br />             
-              {getFieldDecorator('emailHash', {
-              rules:[{ max: 40, message: 'Exceeds max length of 40' },
-],
-              
-              })
-              ( <Input placeholder={"Email Hash"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="lastAccessDate">Last Access Date</label>
+            <br />
+            {getFieldDecorator('lastAccessDate', {
+              rules: [{ required: true, message: 'Required' }],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Last Access Date'}
+              />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='lastAccessDate'>Last Access Date</label>
-              <br />             
-              {getFieldDecorator('lastAccessDate', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"Last Access Date"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="location">Location</label>
+            <br />
+            {getFieldDecorator('location', {
+              rules: [{ max: 100, message: 'Exceeds max length of 100' }],
+            })(<Input placeholder={'Location'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='location'>Location</label>
-              <br />             
-              {getFieldDecorator('location', {
-              rules:[{ max: 100, message: 'Exceeds max length of 100' },
-],
-              
-              })
-              ( <Input placeholder={"Location"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="reputation">Reputation</label>
+            <br />
+            {getFieldDecorator('reputation', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'Reputation'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='reputation'>Reputation</label>
-              <br />             
-              {getFieldDecorator('reputation', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"Reputation"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="upVote">Up Vote</label>
+            <br />
+            {getFieldDecorator('upVote', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'Up Vote'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='upVote'>Up Vote</label>
-              <br />             
-              {getFieldDecorator('upVote', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"Up Vote"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="view">View</label>
+            <br />
+            {getFieldDecorator('view', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'View'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='view'>View</label>
-              <br />             
-              {getFieldDecorator('view', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"View"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="websiteUrl">Website Url</label>
+            <br />
+            {getFieldDecorator('websiteUrl', {
+              rules: [{ max: 200, message: 'Exceeds max length of 200' }],
+            })(<Input placeholder={'Website Url'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='websiteUrl'>Website Url</label>
-              <br />             
-              {getFieldDecorator('websiteUrl', {
-              rules:[{ max: 200, message: 'Exceeds max length of 200' },
-],
-              
-              })
-              ( <Input placeholder={"Website Url"} /> )}
-              </Form.Item>
-
-			
-            <Form.Item>
-             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedUsersEditComponent = Form.create({ name: 'Users Edit' })(UsersEditComponent);
+export const WrappedUsersEditComponent = Form.create({ name: 'Users Edit' })(
+  UsersEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>ee0545ff61ddd8abf0762a46b03086c7</Hash>
+    <Hash>ec7186bfc46314b6ef67e9822b661771</Hash>
 </Codenesium>*/

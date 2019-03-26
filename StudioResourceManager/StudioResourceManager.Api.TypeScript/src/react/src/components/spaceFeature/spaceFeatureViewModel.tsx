@@ -1,29 +1,25 @@
-import moment from 'moment'
-
+import moment from 'moment';
 
 export default class SpaceFeatureViewModel {
-    id:number;
-name:string;
+  id: number;
+  name: string;
 
-    constructor() {
-		this.id = 0;
-this.name = '';
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
 
-    }
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
 
-	setProperties(id : number,name : string) : void
-	{
-		this.id = id;
-this.name = name;
+  toDisplay(): string {
+    return String(this.name);
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String(this.name);
-	}
-};
 
 /*<Codenesium>
-    <Hash>85c88f4d670e3f4b362327badf00f80e</Hash>
+    <Hash>0dda4a5dda629177ed8d2a9fab33429e</Hash>
 </Codenesium>*/

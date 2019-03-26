@@ -110,6 +110,7 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<DirectTweet>()
 			       .Include(x => x.TaggedUserIdNavigation)
+
 			       .Where(x => x.TaggedUserId == taggedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DirectTweet>();
 		}
 
@@ -118,6 +119,8 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<Follower>()
 			       .Include(x => x.FollowedUserIdNavigation)
+			       .Include(x => x.FollowingUserIdNavigation)
+
 			       .Where(x => x.FollowedUserId == followedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
@@ -125,7 +128,9 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Follower>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Follower>()
+			       .Include(x => x.FollowedUserIdNavigation)
 			       .Include(x => x.FollowingUserIdNavigation)
+
 			       .Where(x => x.FollowingUserId == followingUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
@@ -134,6 +139,7 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<Message>()
 			       .Include(x => x.SenderUserIdNavigation)
+
 			       .Where(x => x.SenderUserId == senderUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Message>();
 		}
 
@@ -141,7 +147,10 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Messenger>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Messenger>()
+			       .Include(x => x.MessageIdNavigation)
 			       .Include(x => x.ToUserIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.ToUserId == toUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
@@ -149,7 +158,10 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Messenger>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Messenger>()
+			       .Include(x => x.MessageIdNavigation)
+			       .Include(x => x.ToUserIdNavigation)
 			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
@@ -158,6 +170,8 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<QuoteTweet>()
 			       .Include(x => x.RetweeterUserIdNavigation)
+			       .Include(x => x.SourceTweetIdNavigation)
+
 			       .Where(x => x.RetweeterUserId == retweeterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
@@ -166,6 +180,7 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<Reply>()
 			       .Include(x => x.ReplierUserIdNavigation)
+
 			       .Where(x => x.ReplierUserId == replierUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Reply>();
 		}
 
@@ -174,6 +189,8 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<Retweet>()
 			       .Include(x => x.RetwitterUserIdNavigation)
+			       .Include(x => x.TweetTweetIdNavigation)
+
 			       .Where(x => x.RetwitterUserId == retwitterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
@@ -181,7 +198,9 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Tweet>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Tweet>()
+			       .Include(x => x.LocationIdNavigation)
 			       .Include(x => x.UserUserIdNavigation)
+
 			       .Where(x => x.UserUserId == userUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
@@ -246,5 +265,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7d6d971684d7e8e2b30d460554307d7b</Hash>
+    <Hash>d8a42197b256e87f7ea8fdcd4189d84d</Hash>
 </Codenesium>*/

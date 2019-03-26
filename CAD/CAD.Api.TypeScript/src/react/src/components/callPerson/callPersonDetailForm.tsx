@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CallPersonMapper from './callPersonMapper';
 import CallPersonViewModel from './callPersonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CallPersonDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,103 +23,113 @@ interface CallPersonDetailComponentState {
 }
 
 class CallPersonDetailComponent extends React.Component<
-CallPersonDetailComponentProps,
-CallPersonDetailComponentState
+  CallPersonDetailComponentProps,
+  CallPersonDetailComponentState
 > {
   state = {
     model: new CallPersonViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.CallPersons + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.CallPersons + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.CallPersonClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.CallPersons +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.CallPersonClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CallPersonMapper();
 
-          let mapper = new CallPersonMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>note</h3>
-							<p>{String(this.state.model!.note)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>personId</h3>
-							<p>{String(this.state.model!.personIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>personTypeId</h3>
-							<p>{String(this.state.model!.personTypeIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>note</h3>
+              <p>{String(this.state.model!.note)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>personId</h3>
+              <p>
+                {String(
+                  this.state.model!.personIdNavigation &&
+                    this.state.model!.personIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>personTypeId</h3>
+              <p>
+                {String(
+                  this.state.model!.personTypeIdNavigation &&
+                    this.state.model!.personTypeIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +138,11 @@ CallPersonDetailComponentState
   }
 }
 
-export const WrappedCallPersonDetailComponent = Form.create({ name: 'CallPerson Detail' })(
-  CallPersonDetailComponent
-);
+export const WrappedCallPersonDetailComponent = Form.create({
+  name: 'CallPerson Detail',
+})(CallPersonDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>312c829841db2f822f4645cffb587679</Hash>
+    <Hash>831a4f38fc2e20dde1532a0b95e4bdaa</Hash>
 </Codenesium>*/

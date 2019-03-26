@@ -42,6 +42,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void FamilyIdRules()
 		{
+			this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamilyByFamilyId).When(x => !x?.FamilyId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void FirstNameRules()
@@ -72,10 +73,25 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void UserIdRules()
 		{
+			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidFamilyByFamilyId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.StudentRepository.FamilyByFamilyId(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.StudentRepository.UserByUserId(id);
+
+			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>78fe317a28a868fbd0108b10ab54c4c0</Hash>
+    <Hash>0b79e1445c37014570e8e242714a54e4</Hash>
 </Codenesium>*/

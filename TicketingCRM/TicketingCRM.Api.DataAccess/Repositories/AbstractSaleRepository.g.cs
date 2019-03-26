@@ -101,6 +101,8 @@ namespace TicketingCRMNS.Api.DataAccess
 		{
 			return await this.Context.Set<SaleTicket>()
 			       .Include(x => x.SaleIdNavigation)
+			       .Include(x => x.TicketIdNavigation)
+
 			       .Where(x => x.SaleId == saleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTicket>();
 		}
 
@@ -138,5 +140,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>93ffbb4be3479ec7ea76779a89da490b</Hash>
+    <Hash>6901b4d5c964e246132d804ab4db2949</Hash>
 </Codenesium>*/

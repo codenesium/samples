@@ -216,6 +216,57 @@ namespace StudioResourceManagerMTNS.Api.Web
 			}
 		}
 
+		[HttpGet]
+		[Route("{userId}/Admins")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiAdminServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> AdminsByUserId(int userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiAdminServerResponseModel> response = await this.UserService.AdminsByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{userId}/Students")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiStudentServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> StudentsByUserId(int userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiStudentServerResponseModel> response = await this.UserService.StudentsByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{userId}/Teachers")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> TeachersByUserId(int userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTeacherServerResponseModel> response = await this.UserService.TeachersByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiUserServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiUserServerRequestModel> patch)
 		{
 			var record = await this.UserService.Get(id);
@@ -235,5 +286,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b579595f3a1f21b4ea4fc8624824624d</Hash>
+    <Hash>36435cd753b1ada124f194fa43fdd875</Hash>
 </Codenesium>*/

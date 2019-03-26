@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import LinkStatusMapper from './linkStatusMapper';
@@ -9,6 +9,7 @@ import LinkStatusViewModel from './linkStatusViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface LinkStatusSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class LinkStatusSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.LinkStatusClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.LinkStatuses + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class LinkStatusSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.LinkStatusClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.LinkStatusClientResponseModel>;
-          let viewModels: Array<LinkStatusViewModel> = [];
-          let mapper = new LinkStatusMapper();
+      .then(response => {
+        let viewModels: Array<LinkStatusViewModel> = [];
+        let mapper = new LinkStatusMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<LinkStatusViewModel>(),
-            filteredRecords: new Array<LinkStatusViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<LinkStatusViewModel>(),
+          filteredRecords: new Array<LinkStatusViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -282,5 +274,5 @@ export const WrappedLinkStatusSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>106a919b61474700d248c43b6b7919fc</Hash>
+    <Hash>3a3bc04126672083de63a1c544da7b3e</Hash>
 </Codenesium>*/

@@ -41,3 +41,24 @@ export class UpdateResponse<T> extends ActionResponse
         this.record = undefined;
     }
 }
+
+export class AuthResponse extends ActionResponse
+{
+    token:string;
+    linkValue:string;
+    linkText:string;
+    message:string;
+    errorCode:string;
+    validationErrors: Array<ValidationError>;
+
+    constructor()
+    {
+        super();
+        this.errorCode = '';
+        this.token = '';
+        this.linkValue = '';
+        this.linkText = '';
+        this.message = '';
+        this.validationErrors = [];
+    }
+}

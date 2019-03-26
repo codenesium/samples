@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from '../admin/adminMapper';
@@ -7,9 +7,9 @@ import AdminViewModel from '../admin/adminViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface AdminTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class AdminTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.AdminClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.AdminClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new AdminMapper();
 
-          let mapper = new AdminMapper();
+        let admins: Array<AdminViewModel> = [];
 
-          let admins: Array<AdminViewModel> = [];
+        response.data.forEach(x => {
+          admins.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            admins.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: admins,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: admins,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -127,21 +129,14 @@ export class AdminTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -155,10 +150,25 @@ export class AdminTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'UserId',
+                    Header: 'User',
                     accessor: 'userId',
                     Cell: props => {
-                      return <span>{String(props.original.userId)}</span>;
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Users + '/' + props.original.userId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
                     },
                   },
                   {
@@ -206,5 +216,5 @@ export class AdminTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>23596fbf8fc56f74ddd6806e7b93b570</Hash>
+    <Hash>95443bbcf151b4109dcd053d1dec8100</Hash>
 </Codenesium>*/

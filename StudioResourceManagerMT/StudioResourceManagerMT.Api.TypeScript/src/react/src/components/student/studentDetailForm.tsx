@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudentMapper from './studentMapper';
 import StudentViewModel from './studentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface StudentDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,135 +23,141 @@ interface StudentDetailComponentState {
 }
 
 class StudentDetailComponent extends React.Component<
-StudentDetailComponentProps,
-StudentDetailComponentState
+  StudentDetailComponentProps,
+  StudentDetailComponentState
 > {
   state = {
     model: new StudentViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Students + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Students + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.StudentClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Students +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.StudentClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new StudentMapper();
 
-          let mapper = new StudentMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>birthday</h3>
-							<p>{String(this.state.model!.birthday)}</p>
-						 </div>
-					   						 <div>
-							<h3>email</h3>
-							<p>{String(this.state.model!.email)}</p>
-						 </div>
-					   						 <div>
-							<h3>emailRemindersEnabled</h3>
-							<p>{String(this.state.model!.emailRemindersEnabled)}</p>
-						 </div>
-					   						 <div>
-							<h3>familyId</h3>
-							<p>{String(this.state.model!.familyId)}</p>
-						 </div>
-					   						 <div>
-							<h3>firstName</h3>
-							<p>{String(this.state.model!.firstName)}</p>
-						 </div>
-					   						 <div>
-							<h3>id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>isAdult</h3>
-							<p>{String(this.state.model!.isAdult)}</p>
-						 </div>
-					   						 <div>
-							<h3>lastName</h3>
-							<p>{String(this.state.model!.lastName)}</p>
-						 </div>
-					   						 <div>
-							<h3>phone</h3>
-							<p>{String(this.state.model!.phone)}</p>
-						 </div>
-					   						 <div>
-							<h3>smsRemindersEnabled</h3>
-							<p>{String(this.state.model!.smsRemindersEnabled)}</p>
-						 </div>
-					   						 <div>
-							<h3>userId</h3>
-							<p>{String(this.state.model!.userId)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Birthday</h3>
+              <p>{String(this.state.model!.birthday)}</p>
+            </div>
+            <div>
+              <h3>Email</h3>
+              <p>{String(this.state.model!.email)}</p>
+            </div>
+            <div>
+              <h3>Email Reminders Enabled</h3>
+              <p>{String(this.state.model!.emailRemindersEnabled)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Family</h3>
+              <p>
+                {String(
+                  this.state.model!.familyIdNavigation &&
+                    this.state.model!.familyIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>First Name</h3>
+              <p>{String(this.state.model!.firstName)}</p>
+            </div>
+            <div>
+              <h3>Is Adult</h3>
+              <p>{String(this.state.model!.isAdult)}</p>
+            </div>
+            <div>
+              <h3>Last Name</h3>
+              <p>{String(this.state.model!.lastName)}</p>
+            </div>
+            <div>
+              <h3>Phone</h3>
+              <p>{String(this.state.model!.phone)}</p>
+            </div>
+            <div>
+              <h3>Sms Reminders Enabled</h3>
+              <p>{String(this.state.model!.smsRemindersEnabled)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>User</h3>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -162,10 +166,11 @@ StudentDetailComponentState
   }
 }
 
-export const WrappedStudentDetailComponent = Form.create({ name: 'Student Detail' })(
-  StudentDetailComponent
-);
+export const WrappedStudentDetailComponent = Form.create({
+  name: 'Student Detail',
+})(StudentDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>3399f90b807c49d43fbb907e7a6ecb39</Hash>
+    <Hash>13cbd7d79f574d733fd3302d2ce33fe3</Hash>
 </Codenesium>*/

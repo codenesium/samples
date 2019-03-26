@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AdminMapper from './adminMapper';
 import AdminViewModel from './adminViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface AdminDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class AdminDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.AdminClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Admins +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.AdminClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new AdminMapper();
 
-          let mapper = new AdminMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -126,7 +128,12 @@ class AdminDetailComponent extends React.Component<
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>User</h3>
-              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
           </div>
           {message}
@@ -144,5 +151,5 @@ export const WrappedAdminDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5d78267ab6076fe0ff20bf5fe50be52b</Hash>
+    <Hash>0bb3d9050cf679e572986b9cf0b8fcec</Hash>
 </Codenesium>*/

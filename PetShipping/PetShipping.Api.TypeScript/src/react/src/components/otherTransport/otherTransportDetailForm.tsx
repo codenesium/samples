@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import OtherTransportMapper from './otherTransportMapper';
 import OtherTransportViewModel from './otherTransportViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface OtherTransportDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class OtherTransportDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.OtherTransportClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.OtherTransports +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.OtherTransportClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new OtherTransportMapper();
 
-          let mapper = new OtherTransportMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -107,14 +109,18 @@ class OtherTransportDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>handlerId</h3>
               <p>
-                {String(this.state.model!.handlerIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.handlerIdNavigation &&
+                    this.state.model!.handlerIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>pipelineStepId</h3>
               <p>
                 {String(
-                  this.state.model!.pipelineStepIdNavigation!.toDisplay()
+                  this.state.model!.pipelineStepIdNavigation &&
+                    this.state.model!.pipelineStepIdNavigation!.toDisplay()
                 )}
               </p>
             </div>
@@ -134,5 +140,5 @@ export const WrappedOtherTransportDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7c3f08770333afe810a2f9266fef977d</Hash>
+    <Hash>cae2e2f180a50a0eae76a8ea8e60cb86</Hash>
 </Codenesium>*/

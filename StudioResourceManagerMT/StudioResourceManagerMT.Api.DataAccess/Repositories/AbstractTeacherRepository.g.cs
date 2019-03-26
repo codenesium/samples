@@ -92,6 +92,23 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Rate via teacherId.
+		public async virtual Task<List<Rate>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Rate>()
+			       .Include(x => x.TeacherIdNavigation)
+			       .Include(x => x.TeacherSkillIdNavigation)
+
+			       .Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
+		}
+
+		// Foreign key reference to table User via userId.
+		public async virtual Task<User> UserByUserId(int userId)
+		{
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.Id == userId);
+		}
+
 		protected async Task<List<Teacher>> Where(
 			Expression<Func<Teacher, bool>> predicate,
 			int limit = int.MaxValue,
@@ -104,6 +121,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Teacher>()
+			       .Include(x => x.UserIdNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Teacher>();
 		}
@@ -118,5 +136,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2e3d52039ee92b04d2b3de8e5314005</Hash>
+    <Hash>083ed6c202d3cda6bb28ac4b74f1605a</Hash>
 </Codenesium>*/

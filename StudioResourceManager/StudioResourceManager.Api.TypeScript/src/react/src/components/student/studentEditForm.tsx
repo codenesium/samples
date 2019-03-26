@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { FamilySelectComponent } from '../shared/familySelect';
 import { UserSelectComponent } from '../shared/userSelect';
 interface StudentEditComponentProps {
@@ -54,48 +54,53 @@ class StudentEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.StudentClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Students +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.StudentClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new StudentMapper();
 
-          let mapper = new StudentMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -104,7 +109,6 @@ class StudentEditComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as StudentViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -115,54 +119,56 @@ class StudentEditComponent extends React.Component<
   submit = (model: StudentViewModel) => {
     let mapper = new StudentMapper();
     axios
-      .put(
+      .put<CreateResponse<Api.StudentClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Students + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.StudentClientRequestModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -212,18 +218,18 @@ class StudentEditComponent extends React.Component<
             </label>
             <br />
             {getFieldDecorator('emailRemindersEnabled', {
-              rules: [{ required: true, message: 'Required' }],
+              rules: [],
               valuePropName: 'checked',
             })(<Switch />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="familyId">Family</label>
-            <br />
-            {getFieldDecorator('familyId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Family'} />)}
-          </Form.Item>
+          <FamilySelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Families}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="familyId"
+            required={true}
+            selectedValue={this.state.model!.familyId}
+          />
 
           <Form.Item>
             <label htmlFor="firstName">First Name</label>
@@ -240,7 +246,7 @@ class StudentEditComponent extends React.Component<
             <label htmlFor="isAdult">Is Adult</label>
             <br />
             {getFieldDecorator('isAdult', {
-              rules: [{ required: true, message: 'Required' }],
+              rules: [],
               valuePropName: 'checked',
             })(<Switch />)}
           </Form.Item>
@@ -271,22 +277,18 @@ class StudentEditComponent extends React.Component<
             <label htmlFor="smsRemindersEnabled">Sms Reminders Enabled</label>
             <br />
             {getFieldDecorator('smsRemindersEnabled', {
-              rules: [{ required: true, message: 'Required' }],
+              rules: [],
               valuePropName: 'checked',
             })(<Switch />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="userId">User</label>
-            <br />
-            <UserSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Users}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="userId"
-              required={true}
-              selectedValue={this.state.model!.userId}
-            />
-          </Form.Item>
+          <UserSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Users}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="userId"
+            required={true}
+            selectedValue={this.state.model!.userId}
+          />
 
           <Form.Item>
             <Button
@@ -312,5 +314,5 @@ export const WrappedStudentEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8c52dc5cd38d78ad614607cef0ffc929</Hash>
+    <Hash>5261a901f6fc4610b90cc915d6e05843</Hash>
 </Codenesium>*/

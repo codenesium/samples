@@ -31,7 +31,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			List<ApiEventStatuServerResponseModel> response = await service.All();
 
@@ -49,7 +50,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ApiEventStatuServerResponseModel response = await service.Get(default(int));
 
@@ -66,7 +68,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ApiEventStatuServerResponseModel response = await service.Get(default(int));
 
@@ -84,7 +87,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			CreateResponse<ApiEventStatuServerResponseModel> response = await service.Create(model);
 
@@ -106,7 +110,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			CreateResponse<ApiEventStatuServerResponseModel> response = await service.Create(model);
 
@@ -127,7 +132,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			UpdateResponse<ApiEventStatuServerResponseModel> response = await service.Update(default(int), model);
 
@@ -150,7 +156,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			UpdateResponse<ApiEventStatuServerResponseModel> response = await service.Update(default(int), model);
 
@@ -170,7 +177,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -192,7 +200,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock);
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,9 +210,47 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventStatuDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
+
+		[Fact]
+		public async void EventsByEventStatusId_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventStatuRepository>();
+			var records = new List<Event>();
+			records.Add(new Event());
+			mock.RepositoryMock.Setup(x => x.EventsByEventStatusId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
+
+			List<ApiEventServerResponseModel> response = await service.EventsByEventStatusId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventsByEventStatusId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void EventsByEventStatusId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventStatuRepository>();
+			mock.RepositoryMock.Setup(x => x.EventsByEventStatusId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
+			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
+
+			List<ApiEventServerResponseModel> response = await service.EventsByEventStatusId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventsByEventStatusId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2f04ef752e8cfe8ea89da7196dc9c04c</Hash>
+    <Hash>2159192264b2c5480133b442cfd59649</Hash>
 </Codenesium>*/

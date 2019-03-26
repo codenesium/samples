@@ -32,7 +32,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			List<ApiVehicleServerResponseModel> response = await service.All();
 
@@ -51,7 +51,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			ApiVehicleServerResponseModel response = await service.Get(default(int));
 
@@ -69,7 +69,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			ApiVehicleServerResponseModel response = await service.Get(default(int));
 
@@ -88,7 +88,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			CreateResponse<ApiVehicleServerResponseModel> response = await service.Create(model);
 
@@ -111,7 +111,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			CreateResponse<ApiVehicleServerResponseModel> response = await service.Create(model);
 
@@ -133,7 +133,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			UpdateResponse<ApiVehicleServerResponseModel> response = await service.Update(default(int), model);
 
@@ -157,7 +157,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			UpdateResponse<ApiVehicleServerResponseModel> response = await service.Update(default(int), model);
 
@@ -178,7 +178,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,7 +201,7 @@ namespace CADNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -215,17 +215,17 @@ namespace CADNS.Api.Services.Tests
 		public async void VehicleCapabilitiesByVehicleId_Exists()
 		{
 			var mock = new ServiceMockFacade<IVehicleRepository>();
-			var records = new List<VehicleCapabilities>();
-			records.Add(new VehicleCapabilities());
+			var records = new List<VehicleCapabilitty>();
+			records.Add(new VehicleCapabilitty());
 			mock.RepositoryMock.Setup(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VehicleService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
-			List<ApiVehicleCapabilitiesServerResponseModel> response = await service.VehicleCapabilitiesByVehicleId(default(int));
+			List<ApiVehicleCapabilittyServerResponseModel> response = await service.VehicleCapabilitiesByVehicleId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -235,15 +235,15 @@ namespace CADNS.Api.Services.Tests
 		public async void VehicleCapabilitiesByVehicleId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IVehicleRepository>();
-			mock.RepositoryMock.Setup(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<VehicleCapabilities>>(new List<VehicleCapabilities>()));
+			mock.RepositoryMock.Setup(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<VehicleCapabilitty>>(new List<VehicleCapabilitty>()));
 			var service = new VehicleService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VehicleModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALVehicleMapperMock,
-			                                 mock.DALMapperMockFactory.DALVehicleCapabilitiesMapperMock);
+			                                 mock.DALMapperMockFactory.DALVehicleCapabilittyMapperMock);
 
-			List<ApiVehicleCapabilitiesServerResponseModel> response = await service.VehicleCapabilitiesByVehicleId(default(int));
+			List<ApiVehicleCapabilittyServerResponseModel> response = await service.VehicleCapabilitiesByVehicleId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.VehicleCapabilitiesByVehicleId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -252,5 +252,5 @@ namespace CADNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a7f361e1bc59d63f53aefc9b9a9753b7</Hash>
+    <Hash>1018895969e7831e6bc4b230c7895a0d</Hash>
 </Codenesium>*/

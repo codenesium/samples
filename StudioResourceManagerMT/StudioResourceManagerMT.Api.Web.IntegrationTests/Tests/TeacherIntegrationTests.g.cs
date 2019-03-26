@@ -32,12 +32,21 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTeacherClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			var model2 = new ApiTeacherClientRequestModel();
-			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C", "C", 3);
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C", "C", 1);
 			var request = new List<ApiTeacherClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiTeacherClientResponseModel>> result = await client.TeacherBulkInsertAsync(request);
 
@@ -49,14 +58,14 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Teacher>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].LastName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].Phone.Should().Be("B");
-			context.Set<Teacher>().ToList()[1].UserId.Should().Be(2);
+			context.Set<Teacher>().ToList()[1].UserId.Should().Be(1);
 
 			context.Set<Teacher>().ToList()[2].Birthday.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Teacher>().ToList()[2].Email.Should().Be("C");
 			context.Set<Teacher>().ToList()[2].FirstName.Should().Be("C");
 			context.Set<Teacher>().ToList()[2].LastName.Should().Be("C");
 			context.Set<Teacher>().ToList()[2].Phone.Should().Be("C");
-			context.Set<Teacher>().ToList()[2].UserId.Should().Be(3);
+			context.Set<Teacher>().ToList()[2].UserId.Should().Be(1);
 		}
 
 		[Fact]
@@ -67,10 +76,17 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTeacherClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			CreateResponse<ApiTeacherClientResponseModel> result = await client.TeacherCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -80,14 +96,14 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Teacher>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].LastName.Should().Be("B");
 			context.Set<Teacher>().ToList()[1].Phone.Should().Be("B");
-			context.Set<Teacher>().ToList()[1].UserId.Should().Be(2);
+			context.Set<Teacher>().ToList()[1].UserId.Should().Be(1);
 
 			result.Record.Birthday.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Email.Should().Be("B");
 			result.Record.FirstName.Should().Be("B");
 			result.Record.LastName.Should().Be("B");
 			result.Record.Phone.Should().Be("B");
-			result.Record.UserId.Should().Be(2);
+			result.Record.UserId.Should().Be(1);
 		}
 
 		[Fact]
@@ -99,13 +115,20 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			var mapper = new ApiTeacherServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			ITeacherService service = testServer.Host.Services.GetService(typeof(ITeacherService)) as ITeacherService;
 			ApiTeacherServerResponseModel model = await service.Get(1);
 
 			ApiTeacherClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 
 			UpdateResponse<ApiTeacherClientResponseModel> updateResponse = await client.TeacherUpdateAsync(model.Id, request);
 
@@ -118,7 +141,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Teacher>().ToList()[0].FirstName.Should().Be("B");
 			context.Set<Teacher>().ToList()[0].LastName.Should().Be("B");
 			context.Set<Teacher>().ToList()[0].Phone.Should().Be("B");
-			context.Set<Teacher>().ToList()[0].UserId.Should().Be(2);
+			context.Set<Teacher>().ToList()[0].UserId.Should().Be(1);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.Birthday.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -126,7 +149,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			updateResponse.Record.FirstName.Should().Be("B");
 			updateResponse.Record.LastName.Should().Be("B");
 			updateResponse.Record.Phone.Should().Be("B");
-			updateResponse.Record.UserId.Should().Be(2);
+			updateResponse.Record.UserId.Should().Be(1);
 		}
 
 		[Fact]
@@ -137,11 +160,18 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ITeacherService service = testServer.Host.Services.GetService(typeof(ITeacherService)) as ITeacherService;
 			var model = new ApiTeacherServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			CreateResponse<ApiTeacherServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -163,6 +193,13 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiTeacherClientResponseModel response = await client.TeacherGetAsync(1);
@@ -186,6 +223,13 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApiTeacherClientResponseModel response = await client.TeacherGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -200,7 +244,13 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiTeacherClientResponseModel> response = await client.TeacherAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -211,6 +261,48 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			response[0].LastName.Should().Be("A");
 			response[0].Phone.Should().Be("A");
 			response[0].UserId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyRatesByTeacherIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiRateClientResponseModel> response = await client.RatesByTeacherId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyRatesByTeacherIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiRateClientResponseModel> response = await client.RatesByTeacherId(default(int));
+
+			response.Should().BeEmpty();
 		}
 
 		[Fact]
@@ -236,5 +328,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f6d1b7cd97cfffb46c0828d79e7d8de7</Hash>
+    <Hash>7f48ea824c438199f6d7fb1c23138fb7</Hash>
 </Codenesium>*/

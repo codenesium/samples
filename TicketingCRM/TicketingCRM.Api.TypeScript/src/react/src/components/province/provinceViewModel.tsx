@@ -11,7 +11,7 @@ export default class ProvinceViewModel {
   constructor() {
     this.countryId = 0;
     this.countryIdEntity = '';
-    this.countryIdNavigation = new CountryViewModel();
+    this.countryIdNavigation = undefined;
     this.id = 0;
     this.name = '';
   }
@@ -29,5 +29,5 @@ export default class ProvinceViewModel {
 
 
 /*<Codenesium>
-    <Hash>817540f6a6acc298b4be725f8a40a3bb</Hash>
+    <Hash>46ecc80b284054cde656e3b39edf6754</Hash>
 </Codenesium>*/

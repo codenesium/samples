@@ -26,11 +26,11 @@ export default class LocationViewModel {
   }
 
   toDisplay(): string {
-    return String(this.gps_lat);
+    return String(this.locationName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>aa9cd391c708108c2e676bd030e45bc8</Hash>
+    <Hash>e6430b600d15aa58639d6291dd7dae70</Hash>
 </Codenesium>*/

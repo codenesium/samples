@@ -92,6 +92,9 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 			return await this.Context.Set<PostHistory>()
 			       .Include(x => x.PostHistoryTypeIdNavigation)
+			       .Include(x => x.PostIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.PostHistoryTypeId == postHistoryTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PostHistory>();
 		}
 
@@ -121,5 +124,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>308c279bb9f4af336fe099d32187284b</Hash>
+    <Hash>3a7d071d7e569db719b4cd51105850ab</Hash>
 </Codenesium>*/

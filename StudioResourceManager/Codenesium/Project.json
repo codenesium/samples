@@ -7341,86 +7341,6 @@
       },
       {
         "$id": "431",
-        "Table": "EventStudent",
-        "Schema": "dbo",
-        "Column": "EventId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Event",
-        "AppName": "EventId",
-        "AppNamePlural": "EventIds"
-      },
-      {
-        "$id": "432",
-        "Table": "EventStudent",
-        "Schema": "dbo",
-        "Column": "StudentId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Student",
-        "AppName": "StudentId",
-        "AppNamePlural": "StudentIds"
-      },
-      {
-        "$id": "433",
-        "Table": "EventTeacher",
-        "Schema": "dbo",
-        "Column": "EventId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Event",
-        "AppName": "EventId",
-        "AppNamePlural": "EventIds"
-      },
-      {
-        "$id": "434",
-        "Table": "EventTeacher",
-        "Schema": "dbo",
-        "Column": "TeacherId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Teacher",
-        "AppName": "TeacherId",
-        "AppNamePlural": "TeacherIds"
-      },
-      {
-        "$id": "435",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "Note",
@@ -7440,7 +7360,7 @@
         "AppNamePlural": "Notes"
       },
       {
-        "$id": "436",
+        "$id": "432",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "Description",
@@ -7460,7 +7380,7 @@
         "AppNamePlural": "Descriptions"
       },
       {
-        "$id": "437",
+        "$id": "433",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "Name",
@@ -7480,7 +7400,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "438",
+        "$id": "434",
         "Table": "SpaceFeature",
         "Schema": "dbo",
         "Column": "Name",
@@ -7500,47 +7420,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "439",
-        "Table": "SpaceSpaceFeature",
-        "Schema": "dbo",
-        "Column": "SpaceFeatureId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Space Feature",
-        "AppName": "SpaceFeatureId",
-        "AppNamePlural": "SpaceFeatureIds"
-      },
-      {
-        "$id": "440",
-        "Table": "SpaceSpaceFeature",
-        "Schema": "dbo",
-        "Column": "SpaceId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Space",
-        "AppName": "SpaceId",
-        "AppNamePlural": "SpaceIds"
-      },
-      {
-        "$id": "441",
+        "$id": "435",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Id",
@@ -7560,7 +7440,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "442",
+        "$id": "436",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Address1",
@@ -7580,7 +7460,7 @@
         "AppNamePlural": "Address1"
       },
       {
-        "$id": "443",
+        "$id": "437",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Address2",
@@ -7600,7 +7480,7 @@
         "AppNamePlural": "Address2"
       },
       {
-        "$id": "444",
+        "$id": "438",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "City",
@@ -7620,7 +7500,7 @@
         "AppNamePlural": "Cities"
       },
       {
-        "$id": "445",
+        "$id": "439",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Name",
@@ -7640,7 +7520,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "446",
+        "$id": "440",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Province",
@@ -7660,7 +7540,7 @@
         "AppNamePlural": "Provinces"
       },
       {
-        "$id": "447",
+        "$id": "441",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Website",
@@ -7680,7 +7560,7 @@
         "AppNamePlural": "Websites"
       },
       {
-        "$id": "448",
+        "$id": "442",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Zip",
@@ -7700,7 +7580,7 @@
         "AppNamePlural": "Zips"
       },
       {
-        "$id": "449",
+        "$id": "443",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Birthday",
@@ -7720,7 +7600,7 @@
         "AppNamePlural": "Birthdays"
       },
       {
-        "$id": "450",
+        "$id": "444",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Email",
@@ -7740,7 +7620,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "451",
+        "$id": "445",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Phone",
@@ -7760,7 +7640,7 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "452",
+        "$id": "446",
         "Table": "TeacherSkill",
         "Schema": "dbo",
         "Column": "Name",
@@ -7780,47 +7660,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "453",
-        "Table": "TeacherTeacherSkill",
-        "Schema": "dbo",
-        "Column": "TeacherSkillId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Teacher Skill",
-        "AppName": "TeacherSkillId",
-        "AppNamePlural": "TeacherSkillIds"
-      },
-      {
-        "$id": "454",
-        "Table": "TeacherTeacherSkill",
-        "Schema": "dbo",
-        "Column": "TeacherId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Teacher",
-        "AppName": "TeacherId",
-        "AppNamePlural": "TeacherIds"
-      },
-      {
-        "$id": "455",
+        "$id": "447",
         "Table": "User",
         "Schema": "dbo",
         "Column": "Password",
@@ -7840,7 +7680,7 @@
         "AppNamePlural": "Passwords"
       },
       {
-        "$id": "456",
+        "$id": "448",
         "Table": "User",
         "Schema": "dbo",
         "Column": "Username",
@@ -7860,7 +7700,7 @@
         "AppNamePlural": "Usernames"
       },
       {
-        "$id": "457",
+        "$id": "449",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -7880,7 +7720,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "458",
+        "$id": "450",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "LastName",
@@ -7900,7 +7740,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "459",
+        "$id": "451",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ActualEndDate",
@@ -7920,7 +7760,7 @@
         "AppNamePlural": "ActualEndDates"
       },
       {
-        "$id": "460",
+        "$id": "452",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ActualStartDate",
@@ -7940,7 +7780,7 @@
         "AppNamePlural": "ActualStartDates"
       },
       {
-        "$id": "461",
+        "$id": "453",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "BillAmount",
@@ -7960,7 +7800,7 @@
         "AppNamePlural": "BillAmounts"
       },
       {
-        "$id": "462",
+        "$id": "454",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ScheduledEndDate",
@@ -7980,7 +7820,7 @@
         "AppNamePlural": "ScheduledEndDates"
       },
       {
-        "$id": "463",
+        "$id": "455",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ScheduledStartDate",
@@ -8000,7 +7840,7 @@
         "AppNamePlural": "ScheduledStartDates"
       },
       {
-        "$id": "464",
+        "$id": "456",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "StudentNote",
@@ -8020,7 +7860,7 @@
         "AppNamePlural": "StudentNotes"
       },
       {
-        "$id": "465",
+        "$id": "457",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactEmail",
@@ -8040,7 +7880,7 @@
         "AppNamePlural": "PrimaryContactEmails"
       },
       {
-        "$id": "466",
+        "$id": "458",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactFirstName",
@@ -8060,7 +7900,7 @@
         "AppNamePlural": "PrimaryContactFirstNames"
       },
       {
-        "$id": "467",
+        "$id": "459",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactLastName",
@@ -8080,7 +7920,7 @@
         "AppNamePlural": "PrimaryContactLastNames"
       },
       {
-        "$id": "468",
+        "$id": "460",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactPhone",
@@ -8100,7 +7940,7 @@
         "AppNamePlural": "PrimaryContactPhones"
       },
       {
-        "$id": "469",
+        "$id": "461",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "AmountPerMinute",
@@ -8120,7 +7960,7 @@
         "AppNamePlural": "AmountPerMinutes"
       },
       {
-        "$id": "470",
+        "$id": "462",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "EmailRemindersEnabled",
@@ -8140,7 +7980,7 @@
         "AppNamePlural": "EmailRemindersEnableds"
       },
       {
-        "$id": "471",
+        "$id": "463",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -8160,7 +8000,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "472",
+        "$id": "464",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "IsAdult",
@@ -8180,7 +8020,7 @@
         "AppNamePlural": "IsAdults"
       },
       {
-        "$id": "473",
+        "$id": "465",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "LastName",
@@ -8200,7 +8040,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "474",
+        "$id": "466",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "SmsRemindersEnabled",
@@ -8220,7 +8060,7 @@
         "AppNamePlural": "SmsRemindersEnableds"
       },
       {
-        "$id": "475",
+        "$id": "467",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -8240,7 +8080,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "476",
+        "$id": "468",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "LastName",
@@ -8260,7 +8100,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "477",
+        "$id": "469",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8280,7 +8120,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "478",
+        "$id": "470",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8300,7 +8140,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "479",
+        "$id": "471",
         "Table": "EventStatu",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8320,7 +8160,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "480",
+        "$id": "472",
         "Table": "EventStudent",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8340,7 +8180,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "481",
+        "$id": "473",
         "Table": "EventTeacher",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8360,7 +8200,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "482",
+        "$id": "474",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8380,7 +8220,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "483",
+        "$id": "475",
         "Table": "SpaceFeature",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8400,7 +8240,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "484",
+        "$id": "476",
         "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8420,7 +8260,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "485",
+        "$id": "477",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8440,7 +8280,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "486",
+        "$id": "478",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8460,7 +8300,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "487",
+        "$id": "479",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8480,7 +8320,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "488",
+        "$id": "480",
         "Table": "TeacherSkill",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8500,7 +8340,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "489",
+        "$id": "481",
         "Table": "TeacherTeacherSkill",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8520,7 +8360,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "490",
+        "$id": "482",
         "Table": "User",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8538,6 +8378,30 @@
         "AppViewControlLabel": "Is Deleted",
         "AppName": "IsDeleted",
         "AppNamePlural": "IsDeleteds"
+      },
+      {
+        "$ref": "469"
+      },
+      {
+        "$ref": "470"
+      },
+      {
+        "$ref": "471"
+      },
+      {
+        "$ref": "472"
+      },
+      {
+        "$ref": "473"
+      },
+      {
+        "$ref": "474"
+      },
+      {
+        "$ref": "475"
+      },
+      {
+        "$ref": "476"
       },
       {
         "$ref": "477"
@@ -8558,31 +8422,7 @@
         "$ref": "482"
       },
       {
-        "$ref": "483"
-      },
-      {
-        "$ref": "484"
-      },
-      {
-        "$ref": "485"
-      },
-      {
-        "$ref": "486"
-      },
-      {
-        "$ref": "487"
-      },
-      {
-        "$ref": "488"
-      },
-      {
-        "$ref": "489"
-      },
-      {
-        "$ref": "490"
-      },
-      {
-        "$id": "491",
+        "$id": "483",
         "Table": "EventStatu",
         "Schema": "dbo",
         "Column": "Id",
@@ -8602,7 +8442,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "492",
+        "$id": "484",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Id",
@@ -8622,27 +8462,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "493",
-        "Table": "Event",
-        "Schema": "dbo",
-        "Column": "EventStatusId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Event Status",
-        "AppName": "EventStatusId",
-        "AppNamePlural": "EventStatusIds"
-      },
-      {
-        "$id": "494",
+        "$id": "485",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "Id",
@@ -8662,7 +8482,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "495",
+        "$id": "486",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8682,7 +8502,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "496",
+        "$id": "487",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "Id",
@@ -8702,7 +8522,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "497",
+        "$id": "488",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8722,7 +8542,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "498",
+        "$id": "489",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "Id",
@@ -8742,7 +8562,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "499",
+        "$id": "490",
         "Table": "SpaceFeature",
         "Schema": "dbo",
         "Column": "Id",
@@ -8762,7 +8582,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "500",
+        "$id": "491",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Id",
@@ -8782,7 +8602,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "501",
+        "$id": "492",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Id",
@@ -8802,7 +8622,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "502",
+        "$id": "493",
         "Table": "TeacherSkill",
         "Schema": "dbo",
         "Column": "Id",
@@ -8822,7 +8642,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "503",
+        "$id": "494",
         "Table": "User",
         "Schema": "dbo",
         "Column": "Id",
@@ -8842,27 +8662,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "504",
-        "Table": "Admin",
-        "Schema": "dbo",
-        "Column": "UserId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "User",
-        "AppName": "UserId",
-        "AppNamePlural": "UserIds"
-      },
-      {
-        "$id": "505",
+        "$id": "495",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "TeacherNote",
@@ -8882,7 +8682,7 @@
         "AppNamePlural": "TeacherNotes"
       },
       {
-        "$id": "506",
+        "$id": "496",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "TeacherId",
@@ -8902,7 +8702,7 @@
         "AppNamePlural": "TeacherIds"
       },
       {
-        "$id": "507",
+        "$id": "497",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "TeacherSkillId",
@@ -8922,27 +8722,7 @@
         "AppNamePlural": "TeacherSkillIds"
       },
       {
-        "$id": "508",
-        "Table": "Student",
-        "Schema": "dbo",
-        "Column": "FamilyId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Family",
-        "AppName": "FamilyId",
-        "AppNamePlural": "FamilyIds"
-      },
-      {
-        "$id": "509",
+        "$id": "498",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Birthday",
@@ -8962,7 +8742,7 @@
         "AppNamePlural": "Birthdays"
       },
       {
-        "$id": "510",
+        "$id": "499",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Email",
@@ -8982,7 +8762,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "511",
+        "$id": "500",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Phone",
@@ -9002,7 +8782,7 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "512",
+        "$id": "501",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "UserId",
@@ -9022,7 +8802,7 @@
         "AppNamePlural": "UserIds"
       },
       {
-        "$id": "513",
+        "$id": "502",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "UserId",
@@ -9040,6 +8820,226 @@
         "AppViewControlLabel": "User",
         "AppName": "UserId",
         "AppNamePlural": "UserIds"
+      },
+      {
+        "$id": "503",
+        "Table": "Admin",
+        "Schema": "dbo",
+        "Column": "UserId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "User",
+        "AppName": "UserId",
+        "AppNamePlural": "UserIds"
+      },
+      {
+        "$id": "504",
+        "Table": "Event",
+        "Schema": "dbo",
+        "Column": "EventStatusId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Event Status",
+        "AppName": "EventStatusId",
+        "AppNamePlural": "EventStatusIds"
+      },
+      {
+        "$id": "505",
+        "Table": "EventStudent",
+        "Schema": "dbo",
+        "Column": "EventId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "Event",
+        "AppName": "EventId",
+        "AppNamePlural": "EventIds"
+      },
+      {
+        "$id": "506",
+        "Table": "EventStudent",
+        "Schema": "dbo",
+        "Column": "StudentId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Student",
+        "AppName": "StudentId",
+        "AppNamePlural": "StudentIds"
+      },
+      {
+        "$id": "507",
+        "Table": "EventTeacher",
+        "Schema": "dbo",
+        "Column": "EventId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "Event",
+        "AppName": "EventId",
+        "AppNamePlural": "EventIds"
+      },
+      {
+        "$id": "508",
+        "Table": "EventTeacher",
+        "Schema": "dbo",
+        "Column": "TeacherId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Teacher",
+        "AppName": "TeacherId",
+        "AppNamePlural": "TeacherIds"
+      },
+      {
+        "$id": "509",
+        "Table": "SpaceSpaceFeature",
+        "Schema": "dbo",
+        "Column": "SpaceFeatureId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Space Feature",
+        "AppName": "SpaceFeatureId",
+        "AppNamePlural": "SpaceFeatureIds"
+      },
+      {
+        "$id": "510",
+        "Table": "SpaceSpaceFeature",
+        "Schema": "dbo",
+        "Column": "SpaceId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "Space",
+        "AppName": "SpaceId",
+        "AppNamePlural": "SpaceIds"
+      },
+      {
+        "$id": "511",
+        "Table": "Student",
+        "Schema": "dbo",
+        "Column": "FamilyId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Family",
+        "AppName": "FamilyId",
+        "AppNamePlural": "FamilyIds"
+      },
+      {
+        "$id": "512",
+        "Table": "TeacherTeacherSkill",
+        "Schema": "dbo",
+        "Column": "TeacherId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "Teacher",
+        "AppName": "TeacherId",
+        "AppNamePlural": "TeacherIds"
+      },
+      {
+        "$id": "513",
+        "Table": "TeacherTeacherSkill",
+        "Schema": "dbo",
+        "Column": "TeacherSkillId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Teacher Skill",
+        "AppName": "TeacherSkillId",
+        "AppNamePlural": "TeacherSkillIds"
       }
     ],
     "VirtualForeignKeys": [],

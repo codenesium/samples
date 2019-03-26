@@ -97,6 +97,8 @@ namespace TicketingCRMNS.Api.DataAccess
 		{
 			return await this.Context.Set<Venue>()
 			       .Include(x => x.AdminIdNavigation)
+			       .Include(x => x.ProvinceIdNavigation)
+
 			       .Where(x => x.AdminId == adminId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
 		}
 
@@ -126,5 +128,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9f11c6df3b2be8d2dd99e77cd43dbfb7</Hash>
+    <Hash>b0706002e82bd219e30e3bcb00acd88a</Hash>
 </Codenesium>*/

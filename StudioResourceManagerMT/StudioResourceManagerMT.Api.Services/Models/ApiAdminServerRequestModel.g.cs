@@ -51,10 +51,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int UserId { get; private set; } = default(int);
+		public int UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>62b1ba72dd64e1ef4e74671bdaa28471</Hash>
+    <Hash>8aed2cefef4785968afd152d7a466156</Hash>
 </Codenesium>*/

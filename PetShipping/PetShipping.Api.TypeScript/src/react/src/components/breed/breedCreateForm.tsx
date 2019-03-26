@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { SpeciesSelectComponent } from '../shared/speciesSelect';
 
 interface BreedCreateComponentProps {
@@ -56,7 +56,6 @@ class BreedCreateComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as BreedViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -67,55 +66,56 @@ class BreedCreateComponent extends React.Component<
   submit = (model: BreedViewModel) => {
     let mapper = new BreedMapper();
     axios
-      .post(
+      .post<CreateResponse<Api.BreedClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Breeds,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.BreedClientRequestModel
-          >;
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if (error.response.data) {
-            let errorResponse = error.response.data as ActionResponse;
-
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -183,5 +183,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6dc41322ae6133b2a1f569bc76ddc9e8</Hash>
+    <Hash>e9dd90ca137151e381fd2d65bf7c5af7</Hash>
 </Codenesium>*/

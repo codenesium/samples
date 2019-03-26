@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RateMapper from '../rate/rateMapper';
@@ -7,9 +7,9 @@ import RateViewModel from '../rate/rateViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface RateTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class RateTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.RateClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.RateClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new RateMapper();
 
-          let mapper = new RateMapper();
+        let rates: Array<RateViewModel> = [];
 
-          let rates: Array<RateViewModel> = [];
+        response.data.forEach(x => {
+          rates.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            rates.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: rates,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: rates,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -113,7 +115,7 @@ export class RateTableComponent extends React.Component<
                 Header: 'Rates',
                 columns: [
                   {
-                    Header: 'AmountPerMinute',
+                    Header: 'Amount Per Minute',
                     accessor: 'amountPerMinute',
                     Cell: props => {
                       return (
@@ -122,25 +124,50 @@ export class RateTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'TeacherId',
+                    Header: 'Teacher',
                     accessor: 'teacherId',
                     Cell: props => {
-                      return <span>{String(props.original.teacherId)}</span>;
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Teachers +
+                                '/' +
+                                props.original.teacherId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.teacherIdNavigation &&
+                              props.original.teacherIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
                     },
                   },
                   {
-                    Header: 'TeacherSkillId',
+                    Header: 'Teacher Skill',
                     accessor: 'teacherSkillId',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.teacherSkillId)}</span>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.TeacherSkills +
+                                '/' +
+                                props.original.teacherSkillId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.teacherSkillIdNavigation &&
+                              props.original.teacherSkillIdNavigation.toDisplay()
+                          )}
+                        </a>
                       );
                     },
                   },
@@ -189,5 +216,5 @@ export class RateTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>17419f107d3fdc5371a91d7ad85f8580</Hash>
+    <Hash>1d1f594913a814c78f42bf0eebfe14f2</Hash>
 </Codenesium>*/

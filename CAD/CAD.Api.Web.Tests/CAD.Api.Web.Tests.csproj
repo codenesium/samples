@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../CAD.Api.Web/CAD.Api.Web.csproj" />
+	<ProjectReference Include="../CAD.Api.Services/CAD.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

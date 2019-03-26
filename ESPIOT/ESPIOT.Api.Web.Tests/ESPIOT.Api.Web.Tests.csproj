@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../ESPIOT.Api.Web/ESPIOT.Api.Web.csproj" />
+	<ProjectReference Include="../ESPIOT.Api.Services/ESPIOT.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

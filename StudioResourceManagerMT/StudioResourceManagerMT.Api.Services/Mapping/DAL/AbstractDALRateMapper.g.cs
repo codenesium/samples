@@ -30,6 +30,30 @@ namespace StudioResourceManagerMTNS.Api.Services
 			                    item.AmountPerMinute,
 			                    item.TeacherId,
 			                    item.TeacherSkillId);
+			if (item.TeacherIdNavigation != null)
+			{
+				var teacherIdModel = new ApiTeacherServerResponseModel();
+				teacherIdModel.SetProperties(
+					item.TeacherIdNavigation.Id,
+					item.TeacherIdNavigation.Birthday,
+					item.TeacherIdNavigation.Email,
+					item.TeacherIdNavigation.FirstName,
+					item.TeacherIdNavigation.LastName,
+					item.TeacherIdNavigation.Phone,
+					item.TeacherIdNavigation.UserId);
+
+				model.SetTeacherIdNavigation(teacherIdModel);
+			}
+
+			if (item.TeacherSkillIdNavigation != null)
+			{
+				var teacherSkillIdModel = new ApiTeacherSkillServerResponseModel();
+				teacherSkillIdModel.SetProperties(
+					item.TeacherSkillIdNavigation.Id,
+					item.TeacherSkillIdNavigation.Name);
+
+				model.SetTeacherSkillIdNavigation(teacherSkillIdModel);
+			}
 
 			return model;
 		}
@@ -50,5 +74,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>92142134ea78d1a160a105e225a3ff13</Hash>
+    <Hash>c0cfecb3b2a3e4e717c87e3cccb82f16</Hash>
 </Codenesium>*/

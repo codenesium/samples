@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherSkillMapper from '../teacherSkill/teacherSkillMapper';
@@ -7,9 +7,9 @@ import TeacherSkillViewModel from '../teacherSkill/teacherSkillViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TeacherSkillTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,46 +51,46 @@ export class TeacherSkillTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.TeacherSkillClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.TeacherSkillClientResponseModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TeacherSkillMapper();
 
-          let mapper = new TeacherSkillMapper();
+        let teacherSkills: Array<TeacherSkillViewModel> = [];
 
-          let teacherSkills: Array<TeacherSkillViewModel> = [];
+        response.data.forEach(x => {
+          teacherSkills.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            teacherSkills.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: teacherSkills,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: teacherSkills,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -166,5 +166,5 @@ export class TeacherSkillTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f12e610bbd7feef5b124bc487c3d8b46</Hash>
+    <Hash>63c016ee686f4cb1208298aa7b4be2b9</Hash>
 </Codenesium>*/

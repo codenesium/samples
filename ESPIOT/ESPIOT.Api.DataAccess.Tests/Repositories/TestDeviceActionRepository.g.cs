@@ -22,7 +22,7 @@ namespace ESPIOTNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace ESPIOTNS.Api.DataAccess
 			entity.SetProperties(default(int), "B", 1, "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<DeviceAction>().Where(x => true).ToListAsync();
+			var records = await context.Set<DeviceAction>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<DeviceAction>().Where(x => true).ToListAsync();
+			var records = await context.Set<DeviceAction>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<DeviceAction>().Where(x => true).ToListAsync();
+			var records = await context.Set<DeviceAction>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<DeviceAction>().Where(x => true).ToListAsync();
+			var records = await context.Set<DeviceAction>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e0a7d6d49d057eb7dbcce1c0859965a</Hash>
+    <Hash>3722ca7448d893d55e562623b382ee16</Hash>
 </Codenesium>*/

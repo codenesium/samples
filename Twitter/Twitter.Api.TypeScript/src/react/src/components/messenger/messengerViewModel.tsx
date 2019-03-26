@@ -23,14 +23,14 @@ export default class MessengerViewModel {
     this.id = 0;
     this.messageId = undefined;
     this.messageIdEntity = '';
-    this.messageIdNavigation = new MessageViewModel();
+    this.messageIdNavigation = undefined;
     this.time = undefined;
     this.toUserId = 0;
     this.toUserIdEntity = '';
-    this.toUserIdNavigation = new UserViewModel();
+    this.toUserIdNavigation = undefined;
     this.userId = undefined;
     this.userIdEntity = '';
-    this.userIdNavigation = new UserViewModel();
+    this.userIdNavigation = undefined;
   }
 
   setProperties(
@@ -58,5 +58,5 @@ export default class MessengerViewModel {
 
 
 /*<Codenesium>
-    <Hash>8735da4f0872446ee8e32c51c0c1d82d</Hash>
+    <Hash>7f8e9fc6d054a2412337c7a48ec13cbe</Hash>
 </Codenesium>*/

@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RetweetMapper from './retweetMapper';
 import RetweetViewModel from './retweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface RetweetDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,107 +23,117 @@ interface RetweetDetailComponentState {
 }
 
 class RetweetDetailComponent extends React.Component<
-RetweetDetailComponentProps,
-RetweetDetailComponentState
+  RetweetDetailComponentProps,
+  RetweetDetailComponentState
 > {
   state = {
     model: new RetweetViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Retweets + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Retweets + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.RetweetClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Retweets +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.RetweetClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new RetweetMapper();
 
-          let mapper = new RetweetMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>date</h3>
-							<p>{String(this.state.model!.date)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>retwitter_user_id</h3>
-							<p>{String(this.state.model!.retwitterUserIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>time</h3>
-							<p>{String(this.state.model!.time)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>tweet_tweet_id</h3>
-							<p>{String(this.state.model!.tweetTweetIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>date</h3>
+              <p>{String(this.state.model!.date)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>retwitter_user_id</h3>
+              <p>
+                {String(
+                  this.state.model!.retwitterUserIdNavigation &&
+                    this.state.model!.retwitterUserIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>time</h3>
+              <p>{String(this.state.model!.time)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>tweet_tweet_id</h3>
+              <p>
+                {String(
+                  this.state.model!.tweetTweetIdNavigation &&
+                    this.state.model!.tweetTweetIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -134,10 +142,11 @@ RetweetDetailComponentState
   }
 }
 
-export const WrappedRetweetDetailComponent = Form.create({ name: 'Retweet Detail' })(
-  RetweetDetailComponent
-);
+export const WrappedRetweetDetailComponent = Form.create({
+  name: 'Retweet Detail',
+})(RetweetDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>dfe47a35e1497493fadc4b0a001d272d</Hash>
+    <Hash>a5fb3732858500a50461bb81addf53a6</Hash>
 </Codenesium>*/

@@ -109,6 +109,8 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			return await this.Context.Set<File>()
 			       .Include(x => x.BucketIdNavigation)
+			       .Include(x => x.FileTypeIdNavigation)
+
 			       .Where(x => x.BucketId == bucketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
 		}
 
@@ -138,5 +140,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>846937d4720faf37ff19a69eccd49f98</Hash>
+    <Hash>509f527af23505f3140d441953e63ce7</Hash>
 </Codenesium>*/

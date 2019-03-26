@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import StudentMapper from '../student/studentMapper';
@@ -7,9 +7,9 @@ import StudentViewModel from '../student/studentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface StudentTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class StudentTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.StudentClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.StudentClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new StudentMapper();
 
-          let mapper = new StudentMapper();
+        let students: Array<StudentViewModel> = [];
 
-          let students: Array<StudentViewModel> = [];
+        response.data.forEach(x => {
+          students.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            students.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: students,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: students,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -127,7 +129,7 @@ export class StudentTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'EmailRemindersEnabled',
+                    Header: 'Email Reminders Enabled',
                     accessor: 'emailRemindersEnabled',
                     Cell: props => {
                       return (
@@ -138,35 +140,45 @@ export class StudentTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FamilyId',
+                    Header: 'Family',
                     accessor: 'familyId',
                     Cell: props => {
-                      return <span>{String(props.original.familyId)}</span>;
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Families +
+                                '/' +
+                                props.original.familyId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.familyIdNavigation &&
+                              props.original.familyIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'IsAdult',
+                    Header: 'Is Adult',
                     accessor: 'isAdult',
                     Cell: props => {
                       return <span>{String(props.original.isAdult)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -180,7 +192,7 @@ export class StudentTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SmsRemindersEnabled',
+                    Header: 'Sms Reminders Enabled',
                     accessor: 'smsRemindersEnabled',
                     Cell: props => {
                       return (
@@ -191,10 +203,25 @@ export class StudentTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'UserId',
+                    Header: 'User',
                     accessor: 'userId',
                     Cell: props => {
-                      return <span>{String(props.original.userId)}</span>;
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Users + '/' + props.original.userId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
                     },
                   },
                   {
@@ -242,5 +269,5 @@ export class StudentTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>94dea62e0e2e171ca28e7a23ff193c5c</Hash>
+    <Hash>986a60b302405c65e68b2058e1cb01ee</Hash>
 </Codenesium>*/

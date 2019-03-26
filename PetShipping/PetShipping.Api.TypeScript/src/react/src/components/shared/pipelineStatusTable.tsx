@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PipelineStatusMapper from '../pipelineStatus/pipelineStatusMapper';
@@ -7,9 +7,9 @@ import PipelineStatusViewModel from '../pipelineStatus/pipelineStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PipelineStatusTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,46 +51,46 @@ export class PipelineStatusTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.PipelineStatusClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.PipelineStatusClientResponseModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PipelineStatusMapper();
 
-          let mapper = new PipelineStatusMapper();
+        let pipelineStatus: Array<PipelineStatusViewModel> = [];
 
-          let pipelineStatus: Array<PipelineStatusViewModel> = [];
+        response.data.forEach(x => {
+          pipelineStatus.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            pipelineStatus.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: pipelineStatus,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: pipelineStatus,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -166,5 +166,5 @@ export class PipelineStatusTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>718c3bfe40ddc1318a7f1d71048d3bb7</Hash>
+    <Hash>c01950802bf71520090bf83a6780fed1</Hash>
 </Codenesium>*/

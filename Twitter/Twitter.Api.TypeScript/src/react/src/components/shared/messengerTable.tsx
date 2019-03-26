@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import MessengerMapper from '../messenger/messengerMapper';
@@ -7,9 +7,9 @@ import MessengerViewModel from '../messenger/messengerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface MessengerTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class MessengerTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.MessengerClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.MessengerClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new MessengerMapper();
 
-          let mapper = new MessengerMapper();
+        let messengers: Array<MessengerViewModel> = [];
 
-          let messengers: Array<MessengerViewModel> = [];
+        response.data.forEach(x => {
+          messengers.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            messengers.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: messengers,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: messengers,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -143,7 +145,8 @@ export class MessengerTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.messageIdNavigation.toDisplay()
+                            props.original.messageIdNavigation &&
+                              props.original.messageIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -171,7 +174,8 @@ export class MessengerTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.toUserIdNavigation.toDisplay()
+                            props.original.toUserIdNavigation &&
+                              props.original.toUserIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -191,7 +195,10 @@ export class MessengerTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.userIdNavigation.toDisplay())}
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -241,5 +248,5 @@ export class MessengerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>80586805418e914e8aa5705b29944db6</Hash>
+    <Hash>dfbc19aa37492b6eac4a3031e4f48c10</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { ProvinceSelectComponent } from '../shared/provinceSelect';
 interface CityEditComponentProps {
   form: WrappedFormUtils;
@@ -53,48 +53,53 @@ class CityEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.CityClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Cities +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.CityClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CityMapper();
 
-          let mapper = new CityMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -103,7 +108,6 @@ class CityEditComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as CityViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -114,54 +118,56 @@ class CityEditComponent extends React.Component<
   submit = (model: CityViewModel) => {
     let mapper = new CityMapper();
     axios
-      .put(
+      .put<CreateResponse<Api.CityClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Cities + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.CityClientRequestModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -197,17 +203,13 @@ class CityEditComponent extends React.Component<
             })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="provinceId">Province</label>
-            <br />
-            <ProvinceSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Provinces}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="provinceId"
-              required={true}
-              selectedValue={this.state.model!.provinceId}
-            />
-          </Form.Item>
+          <ProvinceSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Provinces}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="provinceId"
+            required={true}
+            selectedValue={this.state.model!.provinceId}
+          />
 
           <Form.Item>
             <Button
@@ -233,5 +235,5 @@ export const WrappedCityEditComponent = Form.create({ name: 'City Edit' })(
 
 
 /*<Codenesium>
-    <Hash>2cbcf2c78498a4dd0c04628fece49202</Hash>
+    <Hash>b859ff2a0963b755ea674d251c5461cd</Hash>
 </Codenesium>*/

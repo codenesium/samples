@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PipelineStepStatusMapper from './pipelineStepStatusMapper';
 import PipelineStepStatusViewModel from './pipelineStepStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { PipelineStepTableComponent } from '../shared/pipelineStepTable';
 
 interface PipelineStepStatusDetailComponentProps {
@@ -44,44 +45,45 @@ class PipelineStepStatusDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.PipelineStepStatusClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.PipelineStepStatus +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.PipelineStepStatusClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PipelineStepStatusMapper();
 
-          let mapper = new PipelineStepStatusMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -114,7 +116,6 @@ class PipelineStepStatusDetailComponent extends React.Component<
           <div>
             <h3>PipelineSteps</h3>
             <PipelineStepTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -141,5 +142,5 @@ export const WrappedPipelineStepStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>71194f54c884cfc298d7f8fce6199ba5</Hash>
+    <Hash>84787300fc1522cbf0bfe6db7d141ebe</Hash>
 </Codenesium>*/

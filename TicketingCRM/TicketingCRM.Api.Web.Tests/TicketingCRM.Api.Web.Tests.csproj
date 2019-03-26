@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj" />
+	<ProjectReference Include="../TicketingCRM.Api.Services/TicketingCRM.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

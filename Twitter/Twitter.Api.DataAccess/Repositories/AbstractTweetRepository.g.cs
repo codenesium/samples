@@ -107,7 +107,9 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<QuoteTweet>> QuoteTweetsBySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<QuoteTweet>()
+			       .Include(x => x.RetweeterUserIdNavigation)
 			       .Include(x => x.SourceTweetIdNavigation)
+
 			       .Where(x => x.SourceTweetId == sourceTweetId).AsQueryable().Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
@@ -115,7 +117,9 @@ namespace TwitterNS.Api.DataAccess
 		public async virtual Task<List<Retweet>> RetweetsByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Retweet>()
+			       .Include(x => x.RetwitterUserIdNavigation)
 			       .Include(x => x.TweetTweetIdNavigation)
+
 			       .Where(x => x.TweetTweetId == tweetTweetId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
@@ -188,5 +192,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>549f32878e58ac5b5970b066193efb57</Hash>
+    <Hash>96eb9b20c00bcb1d315159930f033d2c</Hash>
 </Codenesium>*/

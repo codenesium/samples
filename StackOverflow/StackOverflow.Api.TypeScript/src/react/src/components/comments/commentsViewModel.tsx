@@ -19,12 +19,12 @@ export default class CommentsViewModel {
     this.id = 0;
     this.postId = 0;
     this.postIdEntity = '';
-    this.postIdNavigation = new PostsViewModel();
+    this.postIdNavigation = undefined;
     this.score = 0;
     this.text = '';
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = new UsersViewModel();
+    this.userIdNavigation = undefined;
   }
 
   setProperties(
@@ -50,5 +50,5 @@ export default class CommentsViewModel {
 
 
 /*<Codenesium>
-    <Hash>88c937b22ce8d0a5cfaf2afccf2678c5</Hash>
+    <Hash>ffdc8080942c3f865318566ea8d6ea1d</Hash>
 </Codenesium>*/

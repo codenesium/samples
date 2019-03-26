@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SpaceMapper from './spaceMapper';
 import SpaceViewModel from './spaceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SpaceDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,99 +23,99 @@ interface SpaceDetailComponentState {
 }
 
 class SpaceDetailComponent extends React.Component<
-SpaceDetailComponentProps,
-SpaceDetailComponentState
+  SpaceDetailComponentProps,
+  SpaceDetailComponentState
 > {
   state = {
     model: new SpaceViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Spaces + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Spaces + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.SpaceClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Spaces +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.SpaceClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SpaceMapper();
 
-          let mapper = new SpaceMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Description</h3>
-							<p>{String(this.state.model!.description)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Description</h3>
+              <p>{String(this.state.model!.description)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -126,10 +124,11 @@ SpaceDetailComponentState
   }
 }
 
-export const WrappedSpaceDetailComponent = Form.create({ name: 'Space Detail' })(
-  SpaceDetailComponent
-);
+export const WrappedSpaceDetailComponent = Form.create({
+  name: 'Space Detail',
+})(SpaceDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>de179b093df88fd1f9594a1c5734e8c3</Hash>
+    <Hash>52e27c6aa14afe2a7c1420916c74af92</Hash>
 </Codenesium>*/

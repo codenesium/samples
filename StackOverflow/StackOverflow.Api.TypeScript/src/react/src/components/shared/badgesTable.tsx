@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BadgesMapper from '../badges/badgesMapper';
@@ -7,9 +7,9 @@ import BadgesViewModel from '../badges/badgesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface BadgesTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class BadgesTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.BadgesClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.BadgesClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new BadgesMapper();
 
-          let mapper = new BadgesMapper();
+        let badges: Array<BadgesViewModel> = [];
 
-          let badges: Array<BadgesViewModel> = [];
+        response.data.forEach(x => {
+          badges.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            badges.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: badges,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: badges,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -140,7 +142,10 @@ export class BadgesTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.userIdNavigation.toDisplay())}
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -190,5 +195,5 @@ export class BadgesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f05ca9e5cb02657ae83713287bbb049c</Hash>
+    <Hash>65f691fd739cb336c54126db5b1c7224</Hash>
 </Codenesium>*/

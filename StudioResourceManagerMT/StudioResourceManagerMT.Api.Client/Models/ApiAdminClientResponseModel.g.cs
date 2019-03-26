@@ -23,6 +23,16 @@ namespace StudioResourceManagerMTNS.Api.Client
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.UserId = userId;
+
+			this.UserIdEntity = nameof(ApiResponse.Users);
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.UserIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -45,9 +55,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		[JsonProperty]
 		public int UserId { get; private set; }
+
+		[JsonProperty]
+		public string UserIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>89a1a22db8143fc9f03b4523379f7b5f</Hash>
+    <Hash>96dc28b09d63db63d2fbf820ad6f89f3</Hash>
 </Codenesium>*/

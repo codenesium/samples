@@ -216,6 +216,23 @@ namespace StudioResourceManagerMTNS.Api.Web
 			}
 		}
 
+		[HttpGet]
+		[Route("{eventStatusId}/Events")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiEventServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> EventsByEventStatusId(int eventStatusId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventServerResponseModel> response = await this.EventStatuService.EventsByEventStatusId(eventStatusId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiEventStatuServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventStatuServerRequestModel> patch)
 		{
 			var record = await this.EventStatuService.Get(id);
@@ -235,5 +252,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e9dd32ddd9d58b4b15f2ae8ebebf76b2</Hash>
+    <Hash>e0c2462dd9cae0e1fb666c6f9cc3663a</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace CADNS.Api.DataAccess
 {
-	[Table("OfficerCapability", Schema="dbo")]
+	[Table("OfficerCapabilities", Schema="dbo")]
 	public partial class OfficerCapability : AbstractEntity
 	{
 		public OfficerCapability()
@@ -14,23 +14,39 @@ namespace CADNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int id,
-			string name)
+			int capabilityId,
+			int officerId)
 		{
-			this.Id = id;
-			this.Name = name;
+			this.CapabilityId = capabilityId;
+			this.OfficerId = officerId;
 		}
 
 		[Key]
-		[Column("id")]
-		public virtual int Id { get; private set; }
+		[Column("capabilityId")]
+		public virtual int CapabilityId { get; private set; }
 
-		[MaxLength(128)]
-		[Column("name")]
-		public virtual string Name { get; private set; }
+		[Key]
+		[Column("officerId")]
+		public virtual int OfficerId { get; private set; }
+
+		[ForeignKey("CapabilityId")]
+		public virtual OfficerCapability CapabilityIdNavigation { get; private set; }
+
+		public void SetCapabilityIdNavigation(OfficerCapability item)
+		{
+			this.CapabilityIdNavigation = item;
+		}
+
+		[ForeignKey("OfficerId")]
+		public virtual Officer OfficerIdNavigation { get; private set; }
+
+		public void SetOfficerIdNavigation(Officer item)
+		{
+			this.OfficerIdNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d5b6221f1ea0d9d2d5468828dbfb4659</Hash>
+    <Hash>fddc8d9967fd7f99250f522b97eb260e</Hash>
 </Codenesium>*/

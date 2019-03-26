@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TwitterNS.Api.DataAccess
 {
-	[Table("QuoteTweet", Schema="dbo")]
+	[Table("Quote_Tweet", Schema="dbo")]
 	public partial class QuoteTweet : AbstractEntity
 	{
 		public QuoteTweet()
@@ -68,5 +68,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b60c2893486415a056e439b0bfabe91d</Hash>
+    <Hash>8dae43508c8b5b4661d247508a40a4dc</Hash>
 </Codenesium>*/

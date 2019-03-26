@@ -1,10 +1,11 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Api from '../../api/models';
 import PostHistoryTypesMapper from '../postHistoryTypes/postHistoryTypesMapper';
 import PostHistoryTypesViewModel from '../postHistoryTypes/postHistoryTypesViewModel';
-import { Spin, Alert, Select } from 'antd';
+import { Form, Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PostHistoryTypesSelectComponentProps {
   getFieldDecorator: any;
@@ -38,46 +39,49 @@ export class PostHistoryTypesSelectComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.PostHistoryTypesClientResponseModel>>(
+        this.props.apiRoute,
+        {
+          headers: GlobalUtilities.defaultHeaders(),
+        }
+      )
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+
+        let mapper = new PostHistoryTypesMapper();
+
+        let devices: Array<PostHistoryTypesViewModel> = [];
+
+        response.data.forEach(x => {
+          devices.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: devices,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.PostHistoryTypesClientResponseModel
-          >;
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-          console.log(response);
-
-          let mapper = new PostHistoryTypesMapper();
-
-          let devices: Array<PostHistoryTypesViewModel> = [];
-
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
-          });
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: devices,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -92,22 +96,26 @@ export class PostHistoryTypesSelectComponent extends React.Component<
       return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       return (
-        <div>
+        <Form.Item>
+          <label htmlFor={this.props.propertyName}>Post History Types</label>
+          <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
+            initialValue: this.props.selectedValue || [],
             rules: [{ required: this.props.required, message: 'Required' }],
           })(
             <Select>
               {this.state.filteredRecords.map(
                 (x: PostHistoryTypesViewModel) => {
                   return (
-                    <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>
+                    <Select.Option key={x.id} value={x.id}>
+                      {x.toDisplay()}
+                    </Select.Option>
                   );
                 }
               )}
             </Select>
           )}
-        </div>
+        </Form.Item>
       );
     } else {
       return null;
@@ -117,5 +125,5 @@ export class PostHistoryTypesSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>74760660aeacd73a491f29d789be3596</Hash>
+    <Hash>c2f8dacc01f3f4b6960e41244b5423a7</Hash>
 </Codenesium>*/

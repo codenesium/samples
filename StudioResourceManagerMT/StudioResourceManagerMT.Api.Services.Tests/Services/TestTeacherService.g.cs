@@ -31,7 +31,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiTeacherServerResponseModel> response = await service.All();
 
@@ -49,7 +50,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ApiTeacherServerResponseModel response = await service.Get(default(int));
 
@@ -66,7 +68,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ApiTeacherServerResponseModel response = await service.Get(default(int));
 
@@ -84,7 +87,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			CreateResponse<ApiTeacherServerResponseModel> response = await service.Create(model);
 
@@ -106,7 +110,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			CreateResponse<ApiTeacherServerResponseModel> response = await service.Create(model);
 
@@ -127,7 +132,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			UpdateResponse<ApiTeacherServerResponseModel> response = await service.Update(default(int), model);
 
@@ -150,7 +156,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			UpdateResponse<ApiTeacherServerResponseModel> response = await service.Update(default(int), model);
 
@@ -170,7 +177,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -192,7 +200,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock);
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,9 +210,47 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TeacherDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
+
+		[Fact]
+		public async void RatesByTeacherId_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeacherRepository>();
+			var records = new List<Rate>();
+			records.Add(new Rate());
+			mock.RepositoryMock.Setup(x => x.RatesByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new TeacherService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
+
+			List<ApiRateServerResponseModel> response = await service.RatesByTeacherId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.RatesByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void RatesByTeacherId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeacherRepository>();
+			mock.RepositoryMock.Setup(x => x.RatesByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
+			var service = new TeacherService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
+
+			List<ApiRateServerResponseModel> response = await service.RatesByTeacherId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.RatesByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff65b8fe5af05cf84fda76f253a0d039</Hash>
+    <Hash>8ab2fbea472741fc1fbae43f169960f1</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
@@ -9,6 +9,7 @@ import EventViewModel from './eventViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EventSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class EventSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.EventClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Events + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class EventSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.EventClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.EventClientResponseModel>;
-          let viewModels: Array<EventViewModel> = [];
-          let mapper = new EventMapper();
+      .then(response => {
+        let viewModels: Array<EventViewModel> = [];
+        let mapper = new EventMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<EventViewModel>(),
-            filteredRecords: new Array<EventViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<EventViewModel>(),
+          filteredRecords: new Array<EventViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -205,10 +197,10 @@ export default class EventSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Events',
+                Header: 'Event',
                 columns: [
                   {
-                    Header: 'ActualEndDate',
+                    Header: 'Actual End Date',
                     accessor: 'actualEndDate',
                     Cell: props => {
                       return (
@@ -217,7 +209,7 @@ export default class EventSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ActualStartDate',
+                    Header: 'Actual Start Date',
                     accessor: 'actualStartDate',
                     Cell: props => {
                       return (
@@ -226,30 +218,38 @@ export default class EventSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'BillAmount',
+                    Header: 'Bill Amount',
                     accessor: 'billAmount',
                     Cell: props => {
                       return <span>{String(props.original.billAmount)}</span>;
                     },
                   },
                   {
-                    Header: 'EventStatusId',
+                    Header: 'Event Status',
                     accessor: 'eventStatusId',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.eventStatusId)}</span>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.EventStatus +
+                                '/' +
+                                props.original.eventStatusId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.eventStatusIdNavigation &&
+                              props.original.eventStatusIdNavigation.toDisplay()
+                          )}
+                        </a>
                       );
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'ScheduledEndDate',
+                    Header: 'Scheduled End Date',
                     accessor: 'scheduledEndDate',
                     Cell: props => {
                       return (
@@ -258,7 +258,7 @@ export default class EventSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ScheduledStartDate',
+                    Header: 'Scheduled Start Date',
                     accessor: 'scheduledStartDate',
                     Cell: props => {
                       return (
@@ -267,14 +267,14 @@ export default class EventSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'StudentNotes',
+                    Header: 'Student Notes',
                     accessor: 'studentNote',
                     Cell: props => {
                       return <span>{String(props.original.studentNote)}</span>;
                     },
                   },
                   {
-                    Header: 'TeacherNotes',
+                    Header: 'Teacher Notes',
                     accessor: 'teacherNote',
                     Cell: props => {
                       return <span>{String(props.original.teacherNote)}</span>;
@@ -341,5 +341,5 @@ export const WrappedEventSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a61ed6d7e125150f0c0ce77696de7d6d</Hash>
+    <Hash>24d8b5607c84ef9b4d2bafb90f9a6485</Hash>
 </Codenesium>*/

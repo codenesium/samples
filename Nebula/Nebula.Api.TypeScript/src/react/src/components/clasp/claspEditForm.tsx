@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { ChainSelectComponent } from '../shared/chainSelect';
 interface ClaspEditComponentProps {
   form: WrappedFormUtils;
@@ -53,48 +53,53 @@ class ClaspEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.ClaspClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Clasps +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.ClaspClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new ClaspMapper();
 
-          let mapper = new ClaspMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -103,7 +108,6 @@ class ClaspEditComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as ClaspViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -114,54 +118,56 @@ class ClaspEditComponent extends React.Component<
   submit = (model: ClaspViewModel) => {
     let mapper = new ClaspMapper();
     axios
-      .put(
+      .put<CreateResponse<Api.ClaspClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Clasps + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.ClaspClientRequestModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -186,29 +192,21 @@ class ClaspEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="nextChainId">NextChainId</label>
-            <br />
-            <ChainSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="nextChainId"
-              required={true}
-              selectedValue={this.state.model!.nextChainId}
-            />
-          </Form.Item>
+          <ChainSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="nextChainId"
+            required={true}
+            selectedValue={this.state.model!.nextChainId}
+          />
 
-          <Form.Item>
-            <label htmlFor="previousChainId">PreviousChainId</label>
-            <br />
-            <ChainSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="previousChainId"
-              required={true}
-              selectedValue={this.state.model!.previousChainId}
-            />
-          </Form.Item>
+          <ChainSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="previousChainId"
+            required={true}
+            selectedValue={this.state.model!.previousChainId}
+          />
 
           <Form.Item>
             <Button
@@ -234,5 +232,5 @@ export const WrappedClaspEditComponent = Form.create({ name: 'Clasp Edit' })(
 
 
 /*<Codenesium>
-    <Hash>6efcacc8454bdbd8e34be960b7d4ac50</Hash>
+    <Hash>b36b57b98053f5308cd5700e2ace9367</Hash>
 </Codenesium>*/

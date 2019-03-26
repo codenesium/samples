@@ -19,12 +19,12 @@ export default class TweetViewModel {
     this.date = undefined;
     this.locationId = 0;
     this.locationIdEntity = '';
-    this.locationIdNavigation = new LocationViewModel();
+    this.locationIdNavigation = undefined;
     this.time = undefined;
     this.tweetId = 0;
     this.userUserId = 0;
     this.userUserIdEntity = '';
-    this.userUserIdNavigation = new UserViewModel();
+    this.userUserIdNavigation = undefined;
   }
 
   setProperties(
@@ -44,11 +44,11 @@ export default class TweetViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.tweetId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>0459a3496ef78e54c43c3f3b8710098e</Hash>
+    <Hash>be862ace64fead5c83f04f971c07272f</Hash>
 </Codenesium>*/

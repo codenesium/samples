@@ -14,11 +14,11 @@ export default class HandlerPipelineStepViewModel {
   constructor() {
     this.handlerId = 0;
     this.handlerIdEntity = '';
-    this.handlerIdNavigation = new HandlerViewModel();
+    this.handlerIdNavigation = undefined;
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
-    this.pipelineStepIdNavigation = new PipelineStepViewModel();
+    this.pipelineStepIdNavigation = undefined;
   }
 
   setProperties(handlerId: number, id: number, pipelineStepId: number): void {
@@ -34,5 +34,5 @@ export default class HandlerPipelineStepViewModel {
 
 
 /*<Codenesium>
-    <Hash>f6b6cd2c772829fd7267b0e29681847e</Hash>
+    <Hash>1bb5e3771ba86ddc077e799e9c61d14c</Hash>
 </Codenesium>*/

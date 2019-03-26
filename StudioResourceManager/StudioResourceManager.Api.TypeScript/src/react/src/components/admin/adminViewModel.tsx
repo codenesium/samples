@@ -21,7 +21,7 @@ export default class AdminViewModel {
     this.phone = '';
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = new UserViewModel();
+    this.userIdNavigation = undefined;
   }
 
   setProperties(
@@ -49,5 +49,5 @@ export default class AdminViewModel {
 
 
 /*<Codenesium>
-    <Hash>5f557ef7aa841df0783834d632c94290</Hash>
+    <Hash>6ab823b9d4067b4a232b796d39591077</Hash>
 </Codenesium>*/

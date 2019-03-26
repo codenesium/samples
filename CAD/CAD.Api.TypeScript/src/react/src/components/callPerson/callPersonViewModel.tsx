@@ -1,45 +1,46 @@
-import moment from 'moment'
-import PersonViewModel from '../person/personViewModel'
-	import PersonTypeViewModel from '../personType/personTypeViewModel'
-	
+import moment from 'moment';
+import PersonViewModel from '../person/personViewModel';
+import PersonTypeViewModel from '../personType/personTypeViewModel';
 
 export default class CallPersonViewModel {
-    id:number;
-note:string;
-personId:number;
-personIdEntity : string;
-personIdNavigation? : PersonViewModel;
-personTypeId:number;
-personTypeIdEntity : string;
-personTypeIdNavigation? : PersonTypeViewModel;
+  id: number;
+  note: string;
+  personId: number;
+  personIdEntity: string;
+  personIdNavigation?: PersonViewModel;
+  personTypeId: number;
+  personTypeIdEntity: string;
+  personTypeIdNavigation?: PersonTypeViewModel;
 
-    constructor() {
-		this.id = 0;
-this.note = '';
-this.personId = 0;
-this.personIdEntity = '';
-this.personIdNavigation = new PersonViewModel();
-this.personTypeId = 0;
-this.personTypeIdEntity = '';
-this.personTypeIdNavigation = new PersonTypeViewModel();
+  constructor() {
+    this.id = 0;
+    this.note = '';
+    this.personId = 0;
+    this.personIdEntity = '';
+    this.personIdNavigation = undefined;
+    this.personTypeId = 0;
+    this.personTypeIdEntity = '';
+    this.personTypeIdNavigation = undefined;
+  }
 
-    }
+  setProperties(
+    id: number,
+    note: string,
+    personId: number,
+    personTypeId: number
+  ): void {
+    this.id = id;
+    this.note = note;
+    this.personId = personId;
+    this.personTypeId = personTypeId;
+  }
 
-	setProperties(id : number,note : string,personId : number,personTypeId : number) : void
-	{
-		this.id = id;
-this.note = note;
-this.personId = personId;
-this.personTypeId = personTypeId;
+  toDisplay(): string {
+    return String(this.id);
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String(this.id);
-	}
-};
 
 /*<Codenesium>
-    <Hash>92254d26a5cf267cc1018e5dbe1ded4e</Hash>
+    <Hash>82638cfe5eee75fa16a9d7837cd67ce7</Hash>
 </Codenesium>*/

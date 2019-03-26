@@ -4,33 +4,31 @@ using System.Threading.Tasks;
 
 namespace StudioResourceManagerMTNS.Api.Client
 {
-    public abstract class AbstractApiSpaceModelMapper 
-    {
-
-	    public virtual ApiSpaceClientResponseModel MapClientRequestToResponse(
-		int id,
-		ApiSpaceClientRequestModel request)
-        {
-			
+	public abstract class AbstractApiSpaceModelMapper
+	{
+		public virtual ApiSpaceClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiSpaceClientRequestModel request)
+		{
 			var response = new ApiSpaceClientResponseModel();
 			response.SetProperties(id,
-			 request.Description, 
- request.Name);
+			                       request.Description,
+			                       request.Name);
 			return response;
 		}
 
 		public virtual ApiSpaceClientRequestModel MapClientResponseToRequest(
-		ApiSpaceClientResponseModel response)
-        {
+			ApiSpaceClientResponseModel response)
+		{
 			var request = new ApiSpaceClientRequestModel();
 			request.SetProperties(
-			 response.Description, 
- response.Name);
+				response.Description,
+				response.Name);
 			return request;
 		}
-    }
+	}
 }
 
 /*<Codenesium>
-    <Hash>a531725f865c2ff2beeb93b3bcf9ffcd</Hash>
+    <Hash>ba74ffb5ab91b425db85af02aedc3768</Hash>
 </Codenesium>*/

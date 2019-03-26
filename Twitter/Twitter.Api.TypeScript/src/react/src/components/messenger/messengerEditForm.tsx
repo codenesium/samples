@@ -1,19 +1,29 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import MessengerMapper from './messengerMapper';
 import MessengerViewModel from './messengerViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { MessageSelectComponent } from '../shared/messageSelect'
-	import { UserSelectComponent } from '../shared/userSelect'
-	interface MessengerEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { MessageSelectComponent } from '../shared/messageSelect';
+import { UserSelectComponent } from '../shared/userSelect';
+interface MessengerEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface MessengerEditComponentState {
@@ -22,8 +32,8 @@ interface MessengerEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class MessengerEditComponent extends React.Component<
@@ -36,212 +46,227 @@ class MessengerEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.MessengerClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Messengers +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.MessengerClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new MessengerMapper();
 
-          let mapper = new MessengerMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
-     if (!err) {
+      });
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
         let model = values as MessengerViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
-      } 
-	  else {
-		  this.setState({...this.state, submitting:false, submitted:false});
-	  }
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
+      }
     });
   };
 
-  submit = (model:MessengerViewModel) =>
-  {  
+  submit = (model: MessengerViewModel) => {
     let mapper = new MessengerMapper();
-     axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.Messengers + '/' + this.state.model!.id,
+    axios
+      .put<CreateResponse<Api.MessengerClientRequestModel>>(
+        Constants.ApiEndpoint +
+          ApiRoutes.Messengers +
+          '/' +
+          this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.MessengerClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-		  let errorResponse = error.response.data as ActionResponse; 
-		  if(error.response.data)
-          {
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
+        }
+      });
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="date">date</label>
+            <br />
+            {getFieldDecorator('date', {
+              rules: [],
+            })(<Input placeholder={'date'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='date'>date</label>
-              <br />             
-              {getFieldDecorator('date', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"date"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="fromUserId">from_user_id</label>
+            <br />
+            {getFieldDecorator('fromUserId', {
+              rules: [],
+            })(<Input placeholder={'from_user_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='fromUserId'>from_user_id</label>
-              <br />             
-              {getFieldDecorator('fromUserId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"from_user_id"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="messageId">message_id</label>
+            <br />
+            {getFieldDecorator('messageId', {
+              rules: [],
+            })(<Input placeholder={'message_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='messageId'>message_id</label>
-              <br />             
-              {getFieldDecorator('messageId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"message_id"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="time">time</label>
+            <br />
+            {getFieldDecorator('time', {
+              rules: [],
+            })(<Input placeholder={'time'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='time'>time</label>
-              <br />             
-              {getFieldDecorator('time', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"time"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="toUserId">to_user_id</label>
+            <br />
+            {getFieldDecorator('toUserId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'to_user_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='toUserId'>to_user_id</label>
-              <br />             
-              {getFieldDecorator('toUserId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"to_user_id"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="userId">user_id</label>
+            <br />
+            {getFieldDecorator('userId', {
+              rules: [],
+            })(<Input placeholder={'user_id'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='userId'>user_id</label>
-              <br />             
-              {getFieldDecorator('userId', {
-              rules:[],
-              
-              })
-              ( <Input placeholder={"user_id"} /> )}
-              </Form.Item>
-
-			
-            <Form.Item>
-             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedMessengerEditComponent = Form.create({ name: 'Messenger Edit' })(MessengerEditComponent);
+export const WrappedMessengerEditComponent = Form.create({
+  name: 'Messenger Edit',
+})(MessengerEditComponent);
+
 
 /*<Codenesium>
-    <Hash>ac719c7a36293eafd929e57a28d3ff2e</Hash>
+    <Hash>182f51c413df43db66a875682e09efcc</Hash>
 </Codenesium>*/

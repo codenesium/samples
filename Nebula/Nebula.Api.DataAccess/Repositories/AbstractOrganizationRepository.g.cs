@@ -100,6 +100,7 @@ namespace NebulaNS.Api.DataAccess
 		{
 			return await this.Context.Set<Team>()
 			       .Include(x => x.OrganizationIdNavigation)
+
 			       .Where(x => x.OrganizationId == organizationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Team>();
 		}
 
@@ -129,5 +130,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4e862df3480bf0a7d8b389ba1c490c60</Hash>
+    <Hash>1ddaec8b511a3ae4db740b3e2d31b190</Hash>
 </Codenesium>*/

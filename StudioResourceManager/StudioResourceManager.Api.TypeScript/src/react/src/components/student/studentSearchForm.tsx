@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import StudentMapper from './studentMapper';
@@ -9,6 +9,7 @@ import StudentViewModel from './studentViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface StudentSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class StudentSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.StudentClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Students + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class StudentSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.StudentClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.StudentClientResponseModel>;
-          let viewModels: Array<StudentViewModel> = [];
-          let mapper = new StudentMapper();
+      .then(response => {
+        let viewModels: Array<StudentViewModel> = [];
+        let mapper = new StudentMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<StudentViewModel>(),
-            filteredRecords: new Array<StudentViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<StudentViewModel>(),
+          filteredRecords: new Array<StudentViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -249,7 +241,8 @@ export default class StudentSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.familyIdNavigation.toDisplay()
+                            props.original.familyIdNavigation &&
+                              props.original.familyIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -308,7 +301,10 @@ export default class StudentSearchComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.userIdNavigation.toDisplay())}
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -374,5 +370,5 @@ export const WrappedStudentSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a7ecb805235dd3cffa88ddf199407d38</Hash>
+    <Hash>088f9e826d08c987b54f30e626349b6d</Hash>
 </Codenesium>*/

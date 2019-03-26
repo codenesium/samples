@@ -27,17 +27,17 @@ export default class CallViewModel {
   constructor() {
     this.addressId = undefined;
     this.addressIdEntity = '';
-    this.addressIdNavigation = new AddressViewModel();
+    this.addressIdNavigation = undefined;
     this.callDispositionId = undefined;
     this.callDispositionIdEntity = '';
-    this.callDispositionIdNavigation = new CallDispositionViewModel();
+    this.callDispositionIdNavigation = undefined;
     this.callStatusId = undefined;
     this.callStatusIdEntity = '';
-    this.callStatusIdNavigation = new CallStatuViewModel();
+    this.callStatusIdNavigation = undefined;
     this.callString = '';
     this.callTypeId = undefined;
     this.callTypeIdEntity = '';
-    this.callTypeIdNavigation = new CallTypeViewModel();
+    this.callTypeIdNavigation = undefined;
     this.dateCleared = undefined;
     this.dateCreated = undefined;
     this.dateDispatched = undefined;
@@ -76,5 +76,5 @@ export default class CallViewModel {
 
 
 /*<Codenesium>
-    <Hash>3ff96134766bef32943cfb718453410c</Hash>
+    <Hash>67d411931209007841749f874e3c06bd</Hash>
 </Codenesium>*/

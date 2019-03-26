@@ -16,12 +16,12 @@ export default class TagsViewModel {
     this.count = 0;
     this.excerptPostId = 0;
     this.excerptPostIdEntity = '';
-    this.excerptPostIdNavigation = new PostsViewModel();
+    this.excerptPostIdNavigation = undefined;
     this.id = 0;
     this.tagName = '';
     this.wikiPostId = 0;
     this.wikiPostIdEntity = '';
-    this.wikiPostIdNavigation = new PostsViewModel();
+    this.wikiPostIdNavigation = undefined;
   }
 
   setProperties(
@@ -45,5 +45,5 @@ export default class TagsViewModel {
 
 
 /*<Codenesium>
-    <Hash>92fad15c6b32624c047282d56327f201</Hash>
+    <Hash>84f30e7f09546c81118a0a353d602a24</Hash>
 </Codenesium>*/

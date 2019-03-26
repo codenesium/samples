@@ -1,21 +1,18 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Api from '../../api/models';
 import CountryRequirementMapper from '../countryRequirement/countryRequirementMapper';
 import CountryRequirementViewModel from '../countryRequirement/countryRequirementViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Form, Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CountryRequirementSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface CountryRequirementSelectComponentState {
@@ -23,110 +20,110 @@ interface CountryRequirementSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<CountryRequirementViewModel>;
+  filteredRecords: Array<CountryRequirementViewModel>;
 }
 
-export class  CountryRequirementSelectComponent extends React.Component<
-CountryRequirementSelectComponentProps,
-CountryRequirementSelectComponentState
+export class CountryRequirementSelectComponent extends React.Component<
+  CountryRequirementSelectComponentProps,
+  CountryRequirementSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
+      .get<Array<Api.CountryRequirementClientResponseModel>>(
+        this.props.apiRoute,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.CountryRequirementClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CountryRequirementMapper();
 
-          let mapper = new CountryRequirementMapper();
-          
-          let devices:Array<CountryRequirementViewModel> = [];
+        let devices: Array<CountryRequirementViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          devices.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: devices,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: devices,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-        <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:CountryRequirementViewModel) =>
-            {
-                return <Select.Option value={x.id}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+        <Form.Item>
+          <label htmlFor={this.props.propertyName} />
+          <br />
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue || [],
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map(
+                (x: CountryRequirementViewModel) => {
+                  return (
+                    <Select.Option key={x.id} value={x.id}>
+                      {x.toDisplay()}
+                    </Select.Option>
+                  );
+                }
+              )}
+            </Select>
+          )}
+        </Form.Item>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>2fc05c8d06cc4acf7d78a137e88395ff</Hash>
+    <Hash>01801c9e7be25f43da7b5da604af7c78</Hash>
 </Codenesium>*/

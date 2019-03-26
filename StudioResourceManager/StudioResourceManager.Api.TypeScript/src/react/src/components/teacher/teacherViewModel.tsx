@@ -21,7 +21,7 @@ export default class TeacherViewModel {
     this.phone = '';
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = new UserViewModel();
+    this.userIdNavigation = undefined;
   }
 
   setProperties(
@@ -49,5 +49,5 @@ export default class TeacherViewModel {
 
 
 /*<Codenesium>
-    <Hash>37faaf99c9b6fbddeb7a33a0e0b50ac9</Hash>
+    <Hash>0fdaea5256cef969259900aed38e51b2</Hash>
 </Codenesium>*/

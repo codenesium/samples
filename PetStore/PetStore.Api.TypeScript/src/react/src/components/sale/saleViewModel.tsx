@@ -22,10 +22,10 @@ export default class SaleViewModel {
     this.lastName = '';
     this.paymentTypeId = 0;
     this.paymentTypeIdEntity = '';
-    this.paymentTypeIdNavigation = new PaymentTypeViewModel();
+    this.paymentTypeIdNavigation = undefined;
     this.petId = 0;
     this.petIdEntity = '';
-    this.petIdNavigation = new PetViewModel();
+    this.petIdNavigation = undefined;
     this.phone = '';
   }
 
@@ -54,5 +54,5 @@ export default class SaleViewModel {
 
 
 /*<Codenesium>
-    <Hash>9b45cc7a861a8d75fddae87a11b3ade9</Hash>
+    <Hash>70f8d8e3f122d0e7fe10f883dac8e8f0</Hash>
 </Codenesium>*/

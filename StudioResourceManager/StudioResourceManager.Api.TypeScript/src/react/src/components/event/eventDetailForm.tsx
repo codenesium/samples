@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import EventViewModel from './eventViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EventDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class EventDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.EventClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Events +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.EventClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new EventMapper();
 
-          let mapper = new EventMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -119,7 +121,10 @@ class EventDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>Event Status</h3>
               <p>
-                {String(this.state.model!.eventStatusIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.eventStatusIdNavigation &&
+                    this.state.model!.eventStatusIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -154,5 +159,5 @@ export const WrappedEventDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>19a5bae8c1e89dd38d2eb720a4efdc81</Hash>
+    <Hash>6ec703ccf2b82ca509d48f6546daf4e9</Hash>
 </Codenesium>*/

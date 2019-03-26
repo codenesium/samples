@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import CountryRequirementMapper from './countryRequirementMapper';
@@ -9,6 +9,7 @@ import CountryRequirementViewModel from './countryRequirementViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CountryRequirementSearchComponentProps {
   form: WrappedFormUtils;
@@ -69,31 +70,27 @@ export default class CountryRequirementSearchComponent extends React.Component<
       .delete(
         Constants.ApiEndpoint + ApiRoutes.CountryRequirements + '/' + row.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -110,44 +107,37 @@ export default class CountryRequirementSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.CountryRequirementClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.CountryRequirementClientResponseModel
-          >;
-          let viewModels: Array<CountryRequirementViewModel> = [];
-          let mapper = new CountryRequirementMapper();
+      .then(response => {
+        let viewModels: Array<CountryRequirementViewModel> = [];
+        let mapper = new CountryRequirementMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<CountryRequirementViewModel>(),
-            filteredRecords: new Array<CountryRequirementViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<CountryRequirementViewModel>(),
+          filteredRecords: new Array<CountryRequirementViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -231,7 +221,8 @@ export default class CountryRequirementSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.countryIdNavigation.toDisplay()
+                            props.original.countryIdNavigation &&
+                              props.original.countryIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -305,5 +296,5 @@ export const WrappedCountryRequirementSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>efa8dd15ef1cd87a82423efd4ba9a0fc</Hash>
+    <Hash>dbbc039ec917ae35ec011eb284bbe242</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import HandlerPipelineStepMapper from '../handlerPipelineStep/handlerPipelineStepMapper';
@@ -7,9 +7,9 @@ import HandlerPipelineStepViewModel from '../handlerPipelineStep/handlerPipeline
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface HandlerPipelineStepTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -53,46 +53,49 @@ export class HandlerPipelineStepTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.HandlerPipelineStepClientResponseModel>>(
+        this.props.apiRoute,
+        {
+          headers: GlobalUtilities.defaultHeaders(),
+        }
+      )
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+
+        let mapper = new HandlerPipelineStepMapper();
+
+        let handlerPipelineSteps: Array<HandlerPipelineStepViewModel> = [];
+
+        response.data.forEach(x => {
+          handlerPipelineSteps.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: handlerPipelineSteps,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.HandlerPipelineStepClientResponseModel
-          >;
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-          console.log(response);
-
-          let mapper = new HandlerPipelineStepMapper();
-
-          let handlerPipelineSteps: Array<HandlerPipelineStepViewModel> = [];
-
-          response.forEach(x => {
-            handlerPipelineSteps.push(mapper.mapApiResponseToViewModel(x));
-          });
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: handlerPipelineSteps,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -133,7 +136,8 @@ export class HandlerPipelineStepTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.handlerIdNavigation.toDisplay()
+                            props.original.handlerIdNavigation &&
+                              props.original.handlerIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -156,7 +160,8 @@ export class HandlerPipelineStepTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.pipelineStepIdNavigation.toDisplay()
+                            props.original.pipelineStepIdNavigation &&
+                              props.original.pipelineStepIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -207,5 +212,5 @@ export class HandlerPipelineStepTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>80000fee93aa5ee6c31306b100cd704f</Hash>
+    <Hash>2fa54747c12c8a8afd8dd65c25adee32</Hash>
 </Codenesium>*/

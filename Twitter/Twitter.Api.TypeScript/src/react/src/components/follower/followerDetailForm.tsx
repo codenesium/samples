@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FollowerMapper from './followerMapper';
 import FollowerViewModel from './followerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface FollowerDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class FollowerDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.FollowerClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Followers +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.FollowerClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new FollowerMapper();
 
-          let mapper = new FollowerMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -120,7 +122,8 @@ class FollowerDetailComponent extends React.Component<
               <h3>followed_user_id</h3>
               <p>
                 {String(
-                  this.state.model!.followedUserIdNavigation!.toDisplay()
+                  this.state.model!.followedUserIdNavigation &&
+                    this.state.model!.followedUserIdNavigation!.toDisplay()
                 )}
               </p>
             </div>
@@ -128,7 +131,8 @@ class FollowerDetailComponent extends React.Component<
               <h3>following_user_id</h3>
               <p>
                 {String(
-                  this.state.model!.followingUserIdNavigation!.toDisplay()
+                  this.state.model!.followingUserIdNavigation &&
+                    this.state.model!.followingUserIdNavigation!.toDisplay()
                 )}
               </p>
             </div>
@@ -152,5 +156,5 @@ export const WrappedFollowerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6a5c913c56fec2f19f6d0602b0f3734c</Hash>
+    <Hash>aeca46e4271f243aef30140b2e782d96</Hash>
 </Codenesium>*/

@@ -1,18 +1,30 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RateMapper from './rateMapper';
 import RateViewModel from './rateViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { TeacherSelectComponent } from '../shared/teacherSelect';
+import { TeacherSkillSelectComponent } from '../shared/teacherSkillSelect';
 
 interface RateCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface RateCreateComponentState {
@@ -21,8 +33,8 @@ interface RateCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class RateCreateComponent extends React.Component<
@@ -35,139 +47,147 @@ class RateCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as RateViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
-	  else {
-	      this.setState({...this.state, submitting:false, submitted:false});
-	  }
     });
   };
 
-  submit = (model:RateViewModel) =>
-  {  
+  submit = (model: RateViewModel) => {
     let mapper = new RateMapper();
-     axios
-      .post(
+    axios
+      .post<CreateResponse<Api.RateClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Rates,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.RateClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if(error.response.data)
-          {
-			  let errorResponse = error.response.data as ActionResponse; 
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      });
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="amountPerMinute">Amount Per Minute</label>
+            <br />
+            {getFieldDecorator('amountPerMinute', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<InputNumber placeholder={'Amount Per Minute'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='amountPerMinute'>amountPerMinute</label>
-              <br />             
-              {getFieldDecorator('amountPerMinute', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"amountPerMinute"} /> )}
-              </Form.Item>
+          <TeacherSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Teachers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="teacherId"
+            required={true}
+            selectedValue={this.state.model!.teacherId}
+          />
 
-						<Form.Item>
-              <label htmlFor='teacherId'>teacherId</label>
-              <br />             
-              {getFieldDecorator('teacherId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"teacherId"} /> )}
-              </Form.Item>
+          <TeacherSkillSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.TeacherSkills}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="teacherSkillId"
+            required={true}
+            selectedValue={this.state.model!.teacherSkillId}
+          />
 
-						<Form.Item>
-              <label htmlFor='teacherSkillId'>teacherSkillId</label>
-              <br />             
-              {getFieldDecorator('teacherSkillId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"teacherSkillId"} /> )}
-              </Form.Item>
-
-			
-           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedRateCreateComponent = Form.create({ name: 'Rate Create' })(RateCreateComponent);
+export const WrappedRateCreateComponent = Form.create({ name: 'Rate Create' })(
+  RateCreateComponent
+);
+
 
 /*<Codenesium>
-    <Hash>d6878d62e6eaee9b2d11ac5a5566984a</Hash>
+    <Hash>3e84d7b251a3ca5968d2cadf6e614abd</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import PipelineStepStepRequirementMapper from './pipelineStepStepRequirementMapper';
@@ -9,6 +9,7 @@ import PipelineStepStepRequirementViewModel from './pipelineStepStepRequirementV
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PipelineStepStepRequirementSearchComponentProps {
   form: WrappedFormUtils;
@@ -79,31 +80,27 @@ export default class PipelineStepStepRequirementSearchComponent extends React.Co
           '/' +
           row.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -122,44 +119,40 @@ export default class PipelineStepStepRequirementSearchComponent extends React.Co
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.PipelineStepStepRequirementClientResponseModel
-          >;
-          let viewModels: Array<PipelineStepStepRequirementViewModel> = [];
-          let mapper = new PipelineStepStepRequirementMapper();
-
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
-
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<PipelineStepStepRequirementViewModel>(),
-            filteredRecords: new Array<PipelineStepStepRequirementViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
+      .get<Array<Api.PipelineStepStepRequirementClientResponseModel>>(
+        searchEndpoint,
+        {
+          headers: GlobalUtilities.defaultHeaders(),
         }
-      );
+      )
+      .then(response => {
+        let viewModels: Array<PipelineStepStepRequirementViewModel> = [];
+        let mapper = new PipelineStepStepRequirementMapper();
+
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<PipelineStepStepRequirementViewModel>(),
+          filteredRecords: new Array<PipelineStepStepRequirementViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -250,7 +243,8 @@ export default class PipelineStepStepRequirementSearchComponent extends React.Co
                           }}
                         >
                           {String(
-                            props.original.pipelineStepIdNavigation.toDisplay()
+                            props.original.pipelineStepIdNavigation &&
+                              props.original.pipelineStepIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -326,5 +320,5 @@ export const WrappedPipelineStepStepRequirementSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c8ccc5f7e77867c5d1cb111285b2a8a1</Hash>
+    <Hash>6ca7881db058c9c88e99dee19dd9e650</Hash>
 </Codenesium>*/

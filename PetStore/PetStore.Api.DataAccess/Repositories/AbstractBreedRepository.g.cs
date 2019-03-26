@@ -99,6 +99,8 @@ namespace PetStoreNS.Api.DataAccess
 		{
 			return await this.Context.Set<Pet>()
 			       .Include(x => x.BreedIdNavigation)
+			       .Include(x => x.PenIdNavigation)
+
 			       .Where(x => x.BreedId == breedId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
 
@@ -136,5 +138,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>32fadb810fdf8f5b8e296efed757b429</Hash>
+    <Hash>7e6df41795b2af431847253d392309d1</Hash>
 </Codenesium>*/

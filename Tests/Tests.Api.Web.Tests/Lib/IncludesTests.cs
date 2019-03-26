@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Update;
 using TestsNS.Api.DataAccess;
+using TestsNS.Api.Services;
 
 namespace Codenesium.Foundation.CommonMVC.Tests
 {
@@ -485,7 +486,7 @@ namespace Codenesium.Foundation.CommonMVC.Tests
     public class TestContext : ApplicationDbContext
     {
         public TestContext(DbContextOptions options)
-                        : base(options)
+                        : base(options, null)
         {
         }
 

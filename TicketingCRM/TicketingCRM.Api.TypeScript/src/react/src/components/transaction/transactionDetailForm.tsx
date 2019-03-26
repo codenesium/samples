@@ -1,15 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TransactionMapper from './transactionMapper';
 import TransactionViewModel from './transactionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {SaleTableComponent} from '../shared/saleTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { SaleTableComponent } from '../shared/saleTable';
 
 interface TransactionDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,112 +24,123 @@ interface TransactionDetailComponentState {
 }
 
 class TransactionDetailComponent extends React.Component<
-TransactionDetailComponentProps,
-TransactionDetailComponentState
+  TransactionDetailComponentProps,
+  TransactionDetailComponentState
 > {
   state = {
     model: new TransactionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Transactions + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Transactions + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TransactionClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Transactions +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TransactionClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TransactionMapper();
 
-          let mapper = new TransactionMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Amount</h3>
-							<p>{String(this.state.model!.amount)}</p>
-						 </div>
-					   						 <div>
-							<h3>Gateway Confirmation Number</h3>
-							<p>{String(this.state.model!.gatewayConfirmationNumber)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Transaction Status</h3>
-							<p>{String(this.state.model!.transactionStatusIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Amount</h3>
+              <p>{String(this.state.model!.amount)}</p>
+            </div>
+            <div>
+              <h3>Gateway Confirmation Number</h3>
+              <p>{String(this.state.model!.gatewayConfirmationNumber)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Transaction Status</h3>
+              <p>
+                {String(
+                  this.state.model!.transactionStatusIdNavigation &&
+                    this.state.model!.transactionStatusIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Sales</h3>
-            <SaleTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Transactions + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
-			/>
-         </div>
-	
-
+            <SaleTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Transactions +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Sales
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -140,10 +149,11 @@ TransactionDetailComponentState
   }
 }
 
-export const WrappedTransactionDetailComponent = Form.create({ name: 'Transaction Detail' })(
-  TransactionDetailComponent
-);
+export const WrappedTransactionDetailComponent = Form.create({
+  name: 'Transaction Detail',
+})(TransactionDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>8ae48f1b18abd1012fcc756667693cb1</Hash>
+    <Hash>b16edcd1b0c1b0e9d1512c8bd8529ab4</Hash>
 </Codenesium>*/

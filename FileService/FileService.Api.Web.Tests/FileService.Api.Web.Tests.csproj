@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../FileService.Api.Web/FileService.Api.Web.csproj" />
+	<ProjectReference Include="../FileService.Api.Services/FileService.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

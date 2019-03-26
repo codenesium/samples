@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
 import SaleViewModel from './saleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { SaleTicketTableComponent } from '../shared/saleTicketTable';
 
 interface SaleDetailComponentProps {
@@ -44,44 +45,45 @@ class SaleDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.SaleClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Sales +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.SaleClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SaleMapper();
 
-          let mapper = new SaleMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -120,7 +122,10 @@ class SaleDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>Transaction</h3>
               <p>
-                {String(this.state.model!.transactionIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.transactionIdNavigation &&
+                    this.state.model!.transactionIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
           </div>
@@ -128,7 +133,6 @@ class SaleDetailComponent extends React.Component<
           <div>
             <h3>SaleTickets</h3>
             <SaleTicketTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -155,5 +159,5 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 
 
 /*<Codenesium>
-    <Hash>4b8ae5c3a2bda238af6078d768c01d94</Hash>
+    <Hash>27b319a41331159a2724bfb78552f71d</Hash>
 </Codenesium>*/

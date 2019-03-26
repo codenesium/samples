@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+	<RootNamespace>AdventureWorksNS.Api.Services.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="2.4.0" />
+    <PackageReference Include="FluentAssertions" Version="5.5.3" />
+	<PackageReference Include="MediatR" Version="6.0.0" />
+	<PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+	<PackageReference Include="Moq" Version="4.10.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+   <ItemGroup>
+   	<ProjectReference Include="../AdventureWorks.Api.Contracts/AdventureWorks.Api.Contracts.csproj" />
+	<ProjectReference Include="../AdventureWorks.Api.DataAccess/AdventureWorks.Api.DataAccess.csproj" />
+	<ProjectReference Include="../AdventureWorks.Api.Services/AdventureWorks.Api.Services.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>AdventureWorks.Api.Services.Tests.ruleset</CodeAnalysisRuleSet>
+   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>AdventureWorks.Api.Services.Tests.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+</Project>

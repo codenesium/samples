@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TimestampCheckMapper from '../timestampCheck/timestampCheckMapper';
@@ -7,9 +7,9 @@ import TimestampCheckViewModel from '../timestampCheck/timestampCheckViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TimestampCheckTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,46 +51,46 @@ export class TimestampCheckTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.TimestampCheckClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.TimestampCheckClientResponseModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TimestampCheckMapper();
 
-          let mapper = new TimestampCheckMapper();
+        let timestampChecks: Array<TimestampCheckViewModel> = [];
 
-          let timestampChecks: Array<TimestampCheckViewModel> = [];
+        response.data.forEach(x => {
+          timestampChecks.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            timestampChecks.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: timestampChecks,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: timestampChecks,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -180,5 +180,5 @@ export class TimestampCheckTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>40d3401604b48a2ea9ba9ec19eae6c20</Hash>
+    <Hash>7b6aac0a63bddc3e12849a3840836834</Hash>
 </Codenesium>*/

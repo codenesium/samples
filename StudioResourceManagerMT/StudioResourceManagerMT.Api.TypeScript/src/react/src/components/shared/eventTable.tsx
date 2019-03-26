@@ -1,16 +1,16 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from '../event/eventMapper';
 import EventViewModel from '../event/eventViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EventTableComponentProps {
-  id:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,165 +20,189 @@ interface EventTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<EventViewModel>;
+  filteredRecords: Array<EventViewModel>;
 }
 
-export class  EventTableComponent extends React.Component<
-EventTableComponentProps,
-EventTableComponentState
+export class EventTableComponent extends React.Component<
+  EventTableComponentProps,
+  EventTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: EventViewModel) {
-  this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: EventViewModel) {
+    this.props.history.push(ClientRoutes.Events + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: EventViewModel) {
-   this.props.history.push(ClientRoutes.Events + '/' + row.id);
- }
+  handleDetailClick(e: any, row: EventViewModel) {
+    this.props.history.push(ClientRoutes.Events + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.EventClientResponseModel>;
+      .get<Array<Api.EventClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new EventMapper();
 
-          let mapper = new EventMapper();
-          
-          let events:Array<EventViewModel> = [];
+        let events: Array<EventViewModel> = [];
 
-          response.forEach(x =>
-          {
-              events.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          events.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: events,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: events,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Events',
-                    columns: [
-					  {
-                      Header: 'ActualEndDate',
-                      accessor: 'actualEndDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.actualEndDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'ActualStartDate',
-                      accessor: 'actualStartDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.actualStartDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'BillAmount',
-                      accessor: 'billAmount',
-                      Cell: (props) => {
-                      return <span>{String(props.original.billAmount)}</span>;
-                      }           
-                    },  {
-                      Header: 'EventStatusId',
-                      accessor: 'eventStatusId',
-                      Cell: (props) => {
-                      return <span>{String(props.original.eventStatusId)}</span>;
-                      }           
-                    },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
-                      Header: 'ScheduledEndDate',
-                      accessor: 'scheduledEndDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.scheduledEndDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'ScheduledStartDate',
-                      accessor: 'scheduledStartDate',
-                      Cell: (props) => {
-                      return <span>{String(props.original.scheduledStartDate)}</span>;
-                      }           
-                    },  {
-                      Header: 'StudentNotes',
-                      accessor: 'studentNote',
-                      Cell: (props) => {
-                      return <span>{String(props.original.studentNote)}</span>;
-                      }           
-                    },  {
-                      Header: 'TeacherNotes',
-                      accessor: 'teacherNote',
-                      Cell: (props) => {
-                      return <span>{String(props.original.teacherNote)}</span>;
-                      }           
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Events',
+                columns: [
+                  {
+                    Header: 'Actual End Date',
+                    accessor: 'actualEndDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.actualEndDate)}</span>
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Actual Start Date',
+                    accessor: 'actualStartDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.actualStartDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Bill Amount',
+                    accessor: 'billAmount',
+                    Cell: props => {
+                      return <span>{String(props.original.billAmount)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Event Status',
+                    accessor: 'eventStatusId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.EventStatus +
+                                '/' +
+                                props.original.eventStatusId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.eventStatusIdNavigation &&
+                              props.original.eventStatusIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Scheduled End Date',
+                    accessor: 'scheduledEndDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.scheduledEndDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Scheduled Start Date',
+                    accessor: 'scheduledStartDate',
+                    Cell: props => {
+                      return (
+                        <span>{String(props.original.scheduledStartDate)}</span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Student Notes',
+                    accessor: 'studentNote',
+                    Cell: props => {
+                      return <span>{String(props.original.studentNote)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Teacher Notes',
+                    accessor: 'teacherNote',
+                    Cell: props => {
+                      return <span>{String(props.original.teacherNote)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as EventViewModel
@@ -189,8 +213,8 @@ handleEditClick(e:any, row: EventViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as EventViewModel
@@ -199,11 +223,14 @@ handleEditClick(e:any, row: EventViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -211,6 +238,7 @@ handleEditClick(e:any, row: EventViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>fc87d81a3215ad054557043b4792e39c</Hash>
+    <Hash>b5cdfaf5faeb312b2ddb51bbcf4c517a</Hash>
 </Codenesium>*/

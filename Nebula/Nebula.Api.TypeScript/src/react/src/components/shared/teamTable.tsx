@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeamMapper from '../team/teamMapper';
@@ -7,9 +7,9 @@ import TeamViewModel from '../team/teamViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TeamTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class TeamTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.TeamClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.TeamClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TeamMapper();
 
-          let mapper = new TeamMapper();
+        let teams: Array<TeamViewModel> = [];
 
-          let teams: Array<TeamViewModel> = [];
+        response.data.forEach(x => {
+          teams.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            teams.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: teams,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: teams,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -143,7 +145,8 @@ export class TeamTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.organizationIdNavigation.toDisplay()
+                            props.original.organizationIdNavigation &&
+                              props.original.organizationIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -194,5 +197,5 @@ export class TeamTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f5e72554caea170f0430a4aed5b15a72</Hash>
+    <Hash>4253ceb8bbca014b0a33eb46c1375e07</Hash>
 </Codenesium>*/

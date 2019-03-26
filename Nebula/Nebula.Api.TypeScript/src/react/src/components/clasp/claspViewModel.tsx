@@ -14,10 +14,10 @@ export default class ClaspViewModel {
     this.id = 0;
     this.nextChainId = 0;
     this.nextChainIdEntity = '';
-    this.nextChainIdNavigation = new ChainViewModel();
+    this.nextChainIdNavigation = undefined;
     this.previousChainId = 0;
     this.previousChainIdEntity = '';
-    this.previousChainIdNavigation = new ChainViewModel();
+    this.previousChainIdNavigation = undefined;
   }
 
   setProperties(
@@ -37,5 +37,5 @@ export default class ClaspViewModel {
 
 
 /*<Codenesium>
-    <Hash>938ec3eda8c409eddb6cca0f679bb617</Hash>
+    <Hash>561f1f69ff3826cf491e0889874922f1</Hash>
 </Codenesium>*/

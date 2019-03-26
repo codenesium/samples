@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SaleMapper from '../sale/saleMapper';
@@ -7,9 +7,9 @@ import SaleViewModel from '../sale/saleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SaleTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class SaleTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.SaleClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.SaleClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SaleMapper();
 
-          let mapper = new SaleMapper();
+        let sales: Array<SaleViewModel> = [];
 
-          let sales: Array<SaleViewModel> = [];
+        response.data.forEach(x => {
+          sales.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            sales.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: sales,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: sales,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -150,7 +152,8 @@ export class SaleTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.transactionIdNavigation.toDisplay()
+                            props.original.transactionIdNavigation &&
+                              props.original.transactionIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -201,5 +204,5 @@ export class SaleTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1282a5a48d43e65a78c19e54e445a02e</Hash>
+    <Hash>d0e533528314fed923ddeda24b0c056c</Hash>
 </Codenesium>*/

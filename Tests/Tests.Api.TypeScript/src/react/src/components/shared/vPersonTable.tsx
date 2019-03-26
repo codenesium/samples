@@ -1,16 +1,16 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VPersonMapper from '../vPerson/vPersonMapper';
 import VPersonViewModel from '../vPerson/vPersonViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface VPersonTableComponentProps {
-  pERSON_ID:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,123 +20,122 @@ interface VPersonTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<VPersonViewModel>;
+  filteredRecords: Array<VPersonViewModel>;
 }
 
-export class  VPersonTableComponent extends React.Component<
-VPersonTableComponentProps,
-VPersonTableComponentState
+export class VPersonTableComponent extends React.Component<
+  VPersonTableComponentProps,
+  VPersonTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: VPersonViewModel) {
-  this.props.history.push(ClientRoutes.VPersons + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: VPersonViewModel) {
+    this.props.history.push(ClientRoutes.VPersons + '/edit/' + row.personId);
+  }
 
- handleDetailClick(e:any, row: VPersonViewModel) {
-   this.props.history.push(ClientRoutes.VPersons + '/' + row.id);
- }
+  handleDetailClick(e: any, row: VPersonViewModel) {
+    this.props.history.push(ClientRoutes.VPersons + '/' + row.personId);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.VPersonClientResponseModel>;
+      .get<Array<Api.VPersonClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new VPersonMapper();
 
-          let mapper = new VPersonMapper();
-          
-          let vPersons:Array<VPersonViewModel> = [];
+        let vPersons: Array<VPersonViewModel> = [];
 
-          response.forEach(x =>
-          {
-              vPersons.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          vPersons.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: vPersons,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: vPersons,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'VPersons',
-                    columns: [
-					  {
-                      Header: 'PersonId',
-                      accessor: 'personId',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'VPersons',
+                columns: [
+                  {
+                    Header: 'PersonId',
+                    accessor: 'personId',
+                    Cell: props => {
                       return <span>{String(props.original.personId)}</span>;
-                      }           
-                    },  {
-                      Header: 'PersonName',
-                      accessor: 'personName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.personName)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'PersonName',
+                    accessor: 'personName',
+                    Cell: props => {
+                      return <span>{String(props.original.personName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as VPersonViewModel
@@ -147,8 +146,8 @@ handleEditClick(e:any, row: VPersonViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as VPersonViewModel
@@ -157,11 +156,14 @@ handleEditClick(e:any, row: VPersonViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -169,6 +171,7 @@ handleEditClick(e:any, row: VPersonViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>8c935d7e213e8ea354830dbd8cade1e8</Hash>
+    <Hash>f12396138100710164e2ad50d89b15df</Hash>
 </Codenesium>*/

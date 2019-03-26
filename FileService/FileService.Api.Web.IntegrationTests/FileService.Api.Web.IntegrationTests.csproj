@@ -24,6 +24,12 @@
 	<ProjectReference Include="../FileService.Api.Web/FileService.Api.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+     <None Update="appSettings.Test.json">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+   </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>FileService.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
    </PropertyGroup>

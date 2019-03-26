@@ -1,16 +1,16 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FamilyMapper from '../family/familyMapper';
 import FamilyViewModel from '../family/familyViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface FamilyTableComponentProps {
-  id:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,141 +20,159 @@ interface FamilyTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<FamilyViewModel>;
+  filteredRecords: Array<FamilyViewModel>;
 }
 
-export class  FamilyTableComponent extends React.Component<
-FamilyTableComponentProps,
-FamilyTableComponentState
+export class FamilyTableComponent extends React.Component<
+  FamilyTableComponentProps,
+  FamilyTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: FamilyViewModel) {
-  this.props.history.push(ClientRoutes.Families + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: FamilyViewModel) {
+    this.props.history.push(ClientRoutes.Families + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: FamilyViewModel) {
-   this.props.history.push(ClientRoutes.Families + '/' + row.id);
- }
+  handleDetailClick(e: any, row: FamilyViewModel) {
+    this.props.history.push(ClientRoutes.Families + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.FamilyClientResponseModel>;
+      .get<Array<Api.FamilyClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new FamilyMapper();
 
-          let mapper = new FamilyMapper();
-          
-          let families:Array<FamilyViewModel> = [];
+        let families: Array<FamilyViewModel> = [];
 
-          response.forEach(x =>
-          {
-              families.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          families.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: families,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: families,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Families',
-                    columns: [
-					  {
-                      Header: 'Note',
-                      accessor: 'note',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Families',
+                columns: [
+                  {
+                    Header: 'Note',
+                    accessor: 'note',
+                    Cell: props => {
                       return <span>{String(props.original.note)}</span>;
-                      }           
-                    },  {
-                      Header: 'Primary Contact Email',
-                      accessor: 'primaryContactEmail',
-                      Cell: (props) => {
-                      return <span>{String(props.original.primaryContactEmail)}</span>;
-                      }           
-                    },  {
-                      Header: 'Primary Contact First Name',
-                      accessor: 'primaryContactFirstName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.primaryContactFirstName)}</span>;
-                      }           
-                    },  {
-                      Header: 'Primary Contact Last Name',
-                      accessor: 'primaryContactLastName',
-                      Cell: (props) => {
-                      return <span>{String(props.original.primaryContactLastName)}</span>;
-                      }           
-                    },  {
-                      Header: 'Primary Contact Phone',
-                      accessor: 'primaryContactPhone',
-                      Cell: (props) => {
-                      return <span>{String(props.original.primaryContactPhone)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Primary Contact Email',
+                    accessor: 'primaryContactEmail',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.primaryContactEmail)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Primary Contact First Name',
+                    accessor: 'primaryContactFirstName',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.primaryContactFirstName)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Primary Contact Last Name',
+                    accessor: 'primaryContactLastName',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.primaryContactLastName)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Primary Contact Phone',
+                    accessor: 'primaryContactPhone',
+                    Cell: props => {
+                      return (
+                        <span>
+                          {String(props.original.primaryContactPhone)}
+                        </span>
+                      );
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as FamilyViewModel
@@ -165,8 +183,8 @@ handleEditClick(e:any, row: FamilyViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as FamilyViewModel
@@ -175,11 +193,14 @@ handleEditClick(e:any, row: FamilyViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -187,6 +208,7 @@ handleEditClick(e:any, row: FamilyViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>f91a5a086178b331a7576f9d5ca54eed</Hash>
+    <Hash>f23c8705cbcbe5e049909fb2ac8de0ef</Hash>
 </Codenesium>*/

@@ -22,7 +22,7 @@ namespace TwitterNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace TwitterNS.Api.DataAccess
 			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
 			await repository.Create(entity);
 
-			var records = await context.Set<Messenger>().Where(x => true).ToListAsync();
+			var records = await context.Set<Messenger>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace TwitterNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Messenger>().Where(x => true).ToListAsync();
+			var records = await context.Set<Messenger>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace TwitterNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Messenger>().Where(x => true).ToListAsync();
+			var records = await context.Set<Messenger>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace TwitterNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Messenger>().Where(x => true).ToListAsync();
+			var records = await context.Set<Messenger>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3e75dc00919c749720dd23a8e8b7c81d</Hash>
+    <Hash>02668e727dd6fc9ceb96c4cbd014b218</Hash>
 </Codenesium>*/

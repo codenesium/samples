@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CountryMapper from './countryMapper';
 import CountryViewModel from './countryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { CountryRequirementTableComponent } from '../shared/countryRequirementTable';
 import { DestinationTableComponent } from '../shared/destinationTable';
 
@@ -45,44 +46,45 @@ class CountryDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.CountryClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Countries +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.CountryClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CountryMapper();
 
-          let mapper = new CountryMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -115,7 +117,6 @@ class CountryDetailComponent extends React.Component<
           <div>
             <h3>CountryRequirements</h3>
             <CountryRequirementTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -131,7 +132,6 @@ class CountryDetailComponent extends React.Component<
           <div>
             <h3>Destinations</h3>
             <DestinationTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -158,5 +158,5 @@ export const WrappedCountryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e633ba8cbef35f2919e273f4d4d7b8f3</Hash>
+    <Hash>15cc021a72b8e424aead6beafb85b243</Hash>
 </Codenesium>*/

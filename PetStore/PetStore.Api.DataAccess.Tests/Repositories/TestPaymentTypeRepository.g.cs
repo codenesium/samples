@@ -22,7 +22,7 @@ namespace PetStoreNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace PetStoreNS.Api.DataAccess
 			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
+			var records = await context.Set<PaymentType>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace PetStoreNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
+			var records = await context.Set<PaymentType>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace PetStoreNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
+			var records = await context.Set<PaymentType>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace PetStoreNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
+			var records = await context.Set<PaymentType>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>179f139c62e63715284c15903d438347</Hash>
+    <Hash>fa1e4bf52022d474cf84a0fa449aa045</Hash>
 </Codenesium>*/

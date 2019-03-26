@@ -88,6 +88,34 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Admin via userId.
+		public async virtual Task<List<Admin>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Admin>()
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
+		}
+
+		// Foreign key reference to this table Student via userId.
+		public async virtual Task<List<Student>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Student>()
+			       .Include(x => x.FamilyIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+		}
+
+		// Foreign key reference to this table Teacher via userId.
+		public async virtual Task<List<Teacher>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Teacher>()
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
+		}
+
 		protected async Task<List<User>> Where(
 			Expression<Func<User, bool>> predicate,
 			int limit = int.MaxValue,
@@ -114,5 +142,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a5b9ebfc80cbe6c06c64d47000c3aa1b</Hash>
+    <Hash>fc82e4db4b5dfc1e337ce60acdbe877c</Hash>
 </Codenesium>*/

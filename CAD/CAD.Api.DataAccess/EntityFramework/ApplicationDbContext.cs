@@ -1,3 +1,5 @@
+using Codenesium.DataConversionExtensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -11,13 +13,21 @@ namespace CADNS.Api.DataAccess
 {
 	public class ApplicationDbContext : AbstractApplicationDbContext
 	{
-		public ApplicationDbContext(DbContextOptions options)
+		public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor accessor)
 			: base(options)
 		{
+			// accessoror accessor.HttpContext may be null when this class is instantiated in Startup.Configure when we migrate the databas
+			if (accessor?.HttpContext != null)
+			{
+				int tenantId = accessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "tenant")?.Value.ToInt() ?? 0;
+				Guid userId = accessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "user")?.Value.ToGuid() ?? Guid.Empty;
+				this.SetTenantId(tenantId);
+				this.SetUserId(userId);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ee74330b459fdd2c98c8a8fa9129b6d</Hash>
+    <Hash>6ebf75708932ea93b035d0139a536dd5</Hash>
 </Codenesium>*/

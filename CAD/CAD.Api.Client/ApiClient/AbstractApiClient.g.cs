@@ -625,39 +625,39 @@ namespace CADNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiNoteClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiOfficerCapabilitiesClientResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiOfficerCapabilityClientResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Officers/{officerId}/OfficerCapabilities", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiOfficerCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiOfficerCapabilityClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiOfficerCapabilitiesClientResponseModel>>> OfficerCapabilitiesBulkInsertAsync(List<ApiOfficerCapabilitiesClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiOfficerCapabilityClientResponseModel>>> OfficerCapabilityBulkInsertAsync(List<ApiOfficerCapabilityClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/OfficerCapabilities/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiOfficerCapabilitiesClientResponseModel>>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiOfficerCapabilityClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiOfficerCapabilitiesClientResponseModel>> OfficerCapabilitiesCreateAsync(ApiOfficerCapabilitiesClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<ApiOfficerCapabilityClientResponseModel>> OfficerCapabilityCreateAsync(ApiOfficerCapabilityClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/OfficerCapabilities", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiOfficerCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiOfficerCapabilityClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiOfficerCapabilitiesClientResponseModel>> OfficerCapabilitiesUpdateAsync(int id, ApiOfficerCapabilitiesClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<UpdateResponse<ApiOfficerCapabilityClientResponseModel>> OfficerCapabilityUpdateAsync(int id, ApiOfficerCapabilityClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/OfficerCapabilities/{id}", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiOfficerCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiOfficerCapabilityClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> OfficerCapabilitiesDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ActionResponse> OfficerCapabilityDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/OfficerCapabilities/{id}", cancellationToken).ConfigureAwait(false);
 
@@ -665,25 +665,25 @@ namespace CADNS.Api.Client
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiOfficerCapabilitiesClientResponseModel> OfficerCapabilitiesGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ApiOfficerCapabilityClientResponseModel> OfficerCapabilityGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/OfficerCapabilities/{id}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiOfficerCapabilitiesClientResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiOfficerCapabilityClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiOfficerCapabilitiesClientResponseModel>> OfficerCapabilitiesAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiOfficerCapabilityClientResponseModel>> OfficerCapabilityAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			int offset = 0;
 			bool moreRecords = true;
-			List<ApiOfficerCapabilitiesClientResponseModel> response = new List<ApiOfficerCapabilitiesClientResponseModel>();
+			List<ApiOfficerCapabilityClientResponseModel> response = new List<ApiOfficerCapabilityClientResponseModel>();
 			while (moreRecords)
 			{
 				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/OfficerCapabilities?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
 				this.HandleResponseCode(httpResponse);
-				List<ApiOfficerCapabilitiesClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiOfficerCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+				List<ApiOfficerCapabilityClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiOfficerCapabilityClientResponseModel>>(httpResponse.Content.ContentToString());
 				response.AddRange(records);
 				if (records.Count < this.MaxLimit)
 				{
@@ -1039,39 +1039,39 @@ namespace CADNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiVehicleCapabilitiesClientResponseModel>> VehicleCapabilitiesByVehicleId(int vehicleId, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiVehicleCapabilittyClientResponseModel>> VehicleCapabilitiesByVehicleId(int vehicleId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Vehicles/{vehicleId}/VehicleCapabilities", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiVehicleCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiVehicleCapabilittyClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiVehicleCapabilitiesClientResponseModel>>> VehicleCapabilitiesBulkInsertAsync(List<ApiVehicleCapabilitiesClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiVehicleCapabilittyClientResponseModel>>> VehicleCapabilittyBulkInsertAsync(List<ApiVehicleCapabilittyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VehicleCapabilities/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVehicleCapabilitiesClientResponseModel>>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVehicleCapabilittyClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiVehicleCapabilitiesClientResponseModel>> VehicleCapabilitiesCreateAsync(ApiVehicleCapabilitiesClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<ApiVehicleCapabilittyClientResponseModel>> VehicleCapabilittyCreateAsync(ApiVehicleCapabilittyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VehicleCapabilities", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiVehicleCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiVehicleCapabilittyClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiVehicleCapabilitiesClientResponseModel>> VehicleCapabilitiesUpdateAsync(int id, ApiVehicleCapabilitiesClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<UpdateResponse<ApiVehicleCapabilittyClientResponseModel>> VehicleCapabilittyUpdateAsync(int id, ApiVehicleCapabilittyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/VehicleCapabilities/{id}", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiVehicleCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiVehicleCapabilittyClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> VehicleCapabilitiesDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ActionResponse> VehicleCapabilittyDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/VehicleCapabilities/{id}", cancellationToken).ConfigureAwait(false);
 
@@ -1079,25 +1079,25 @@ namespace CADNS.Api.Client
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiVehicleCapabilitiesClientResponseModel> VehicleCapabilitiesGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ApiVehicleCapabilittyClientResponseModel> VehicleCapabilittyGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/VehicleCapabilities/{id}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiVehicleCapabilitiesClientResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiVehicleCapabilittyClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiVehicleCapabilitiesClientResponseModel>> VehicleCapabilitiesAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiVehicleCapabilittyClientResponseModel>> VehicleCapabilittyAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			int offset = 0;
 			bool moreRecords = true;
-			List<ApiVehicleCapabilitiesClientResponseModel> response = new List<ApiVehicleCapabilitiesClientResponseModel>();
+			List<ApiVehicleCapabilittyClientResponseModel> response = new List<ApiVehicleCapabilittyClientResponseModel>();
 			while (moreRecords)
 			{
 				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/VehicleCapabilities?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
 				this.HandleResponseCode(httpResponse);
-				List<ApiVehicleCapabilitiesClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiVehicleCapabilitiesClientResponseModel>>(httpResponse.Content.ContentToString());
+				List<ApiVehicleCapabilittyClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiVehicleCapabilittyClientResponseModel>>(httpResponse.Content.ContentToString());
 				response.AddRange(records);
 				if (records.Count < this.MaxLimit)
 				{
@@ -1140,5 +1140,5 @@ namespace CADNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>13c2e1e87e8d156d74a75c60c3686e3e</Hash>
+    <Hash>5cc453464eb8b2b761f7321ad0e6e50c</Hash>
 </Codenesium>*/

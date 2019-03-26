@@ -92,6 +92,8 @@ namespace PetStoreNS.Api.DataAccess
 		{
 			return await this.Context.Set<Sale>()
 			       .Include(x => x.PaymentTypeIdNavigation)
+			       .Include(x => x.PetIdNavigation)
+
 			       .Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
@@ -121,5 +123,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cc9ea0125b41c11fb8aba7d5fccd7cb9</Hash>
+    <Hash>9659943a564dd335cbe88053de398b76</Hash>
 </Codenesium>*/

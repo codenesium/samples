@@ -15,7 +15,7 @@ export default class TransactionViewModel {
     this.id = 0;
     this.transactionStatusId = 0;
     this.transactionStatusIdEntity = '';
-    this.transactionStatusIdNavigation = new TransactionStatusViewModel();
+    this.transactionStatusIdNavigation = undefined;
   }
 
   setProperties(
@@ -37,5 +37,5 @@ export default class TransactionViewModel {
 
 
 /*<Codenesium>
-    <Hash>0004300ea2a095a280d246ed8cf95802</Hash>
+    <Hash>7ebbc4eec8b33933372043b51340d889</Hash>
 </Codenesium>*/

@@ -22,7 +22,7 @@ namespace TwitterNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace TwitterNS.Api.DataAccess
 			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
 			await repository.Create(entity);
 
-			var records = await context.Set<Retweet>().Where(x => true).ToListAsync();
+			var records = await context.Set<Retweet>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace TwitterNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Retweet>().Where(x => true).ToListAsync();
+			var records = await context.Set<Retweet>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace TwitterNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Retweet>().Where(x => true).ToListAsync();
+			var records = await context.Set<Retweet>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace TwitterNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Retweet>().Where(x => true).ToListAsync();
+			var records = await context.Set<Retweet>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f5b05f132769801e466fcaf9deb9b4b</Hash>
+    <Hash>55f97ff0d3be99807fb74dc055202794</Hash>
 </Codenesium>*/

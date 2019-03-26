@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.DataAccess
 {
-	public abstract class AbstractApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : IdentityDbContext<AuthUser>
 	{
 		public Guid UserId { get; private set; }
 
@@ -65,10 +66,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public virtual DbSet<User> Users { get; set; }
 
 		/// <summary>
-		/// We're overriding SaveChanges because SQLite does not support database computed columns.
-		/// ROWGUID is a very common type of column and it does not work with SQLite.
-		/// To work around this limitation we detect ROWGUID columns here and set the value.
-		/// On SQL Server the database would set the value.
+		/// We're overriding SaeChanges to set the tenantId and the IsDeleted columns to make the system work wih multi-tenancy and soft deleted.
+		/// We work under the assumption that if you have columns named tenantId then you're multi-tenant and IsDeleted mean you want soft deletes
 		/// </summary>
 		/// <param name="acceptAllChangesOnSuccess">Commit all changes on success</param>
 		/// <param name="cancellationToken">Token that can be passed to hault execution</param>
@@ -76,15 +75,23 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
-			if (entries.Any())
+			foreach (var entry in entries)
 			{
-				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+				var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+				if (tenantEntity != null)
 				{
-					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
-					if (tenantEntity != null)
-					{
-						tenantEntity.CurrentValue = this.TenantId;
-					}
+					tenantEntity.CurrentValue = this.TenantId;
+				}
+			}
+
+			var deletedEntries = this.ChangeTracker.Entries().Where(e => EntityState.Deleted.HasFlag(e.State));
+			foreach (var entry in deletedEntries)
+			{
+				var softDeleteEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ISDELETED");
+				if (softDeleteEntity != null)
+				{
+					softDeleteEntity.CurrentValue = true;
+					entry.State = EntityState.Modified;
 				}
 			}
 
@@ -275,10 +282,36 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			modelBuilder.Entity<TeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<TeacherTeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+			base.OnModelCreating(modelBuilder);
+		}
+	}
+
+	// this is needed to make Entity Framework migrations command line tools work
+	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+	{
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
+		{
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "StudioResourceManager.Api.Web");
+
+			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+			IConfigurationRoot configuration = new ConfigurationBuilder()
+			                                   .SetBasePath(settingsDirectory)
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
+			                                   .Build();
+
+			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+
+			builder.UseSqlServer(connectionString);
+
+			return new ApplicationDbContext(builder.Options, null);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3b138fb92dde3eb9eb1aa2ea6a1da8e</Hash>
+    <Hash>b9fa5acfcc9b51af1b536296a1c3ca79</Hash>
 </Codenesium>*/

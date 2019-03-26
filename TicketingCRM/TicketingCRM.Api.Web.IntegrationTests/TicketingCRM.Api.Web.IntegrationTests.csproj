@@ -24,6 +24,12 @@
 	<ProjectReference Include="../TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+     <None Update="appSettings.Test.json">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+   </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>TicketingCRM.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
    </PropertyGroup>

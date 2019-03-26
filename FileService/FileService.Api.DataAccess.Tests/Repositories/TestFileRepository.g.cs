@@ -22,7 +22,7 @@ namespace FileServiceNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace FileServiceNS.Api.DataAccess
 			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 1, "B", "B", "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<File>().Where(x => true).ToListAsync();
+			var records = await context.Set<File>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace FileServiceNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<File>().Where(x => true).ToListAsync();
+			var records = await context.Set<File>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace FileServiceNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<File>().Where(x => true).ToListAsync();
+			var records = await context.Set<File>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace FileServiceNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<File>().Where(x => true).ToListAsync();
+			var records = await context.Set<File>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7aa66a0ad9def438657e3e24900cc76c</Hash>
+    <Hash>176cd1433c03efd4a619bfece7ce560e</Hash>
 </Codenesium>*/

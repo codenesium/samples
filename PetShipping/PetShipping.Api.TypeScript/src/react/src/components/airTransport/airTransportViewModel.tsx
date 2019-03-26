@@ -17,7 +17,7 @@ export default class AirTransportViewModel {
     this.flightNumber = '';
     this.handlerId = 0;
     this.handlerIdEntity = '';
-    this.handlerIdNavigation = new HandlerViewModel();
+    this.handlerIdNavigation = undefined;
     this.id = 0;
     this.landDate = undefined;
     this.pipelineStepId = 0;
@@ -49,5 +49,5 @@ export default class AirTransportViewModel {
 
 
 /*<Codenesium>
-    <Hash>3c8eaeb59eef5120ceb0a568f052716b</Hash>
+    <Hash>1b0fcab9d9e75687a3391111ee80002e</Hash>
 </Codenesium>*/

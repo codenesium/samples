@@ -100,6 +100,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		{
 			return await this.Context.Set<Sale>()
 			       .Include(x => x.TransactionIdNavigation)
+
 			       .Where(x => x.TransactionId == transactionId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
@@ -137,5 +138,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e9811ecd5be3c51d7c8a58b424013c51</Hash>
+    <Hash>37e1e0bdaff6b50f6256c9e1ca46dbb6</Hash>
 </Codenesium>*/

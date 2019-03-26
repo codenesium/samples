@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TagsMapper from './tagsMapper';
 import TagsViewModel from './tagsViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TagsDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class TagsDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TagsClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Tags +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TagsClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TagsMapper();
 
-          let mapper = new TagsMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -111,7 +113,10 @@ class TagsDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>Excerpt Post</h3>
               <p>
-                {String(this.state.model!.excerptPostIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.excerptPostIdNavigation &&
+                    this.state.model!.excerptPostIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -121,7 +126,10 @@ class TagsDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>Wiki Post</h3>
               <p>
-                {String(this.state.model!.wikiPostIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.wikiPostIdNavigation &&
+                    this.state.model!.wikiPostIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
           </div>
@@ -140,5 +148,5 @@ export const WrappedTagsDetailComponent = Form.create({ name: 'Tags Detail' })(
 
 
 /*<Codenesium>
-    <Hash>ab097e1ae47ef227efd0a05171b8cbbd</Hash>
+    <Hash>90d2d5b52a37cc0f50ff93bdd9d10916</Hash>
 </Codenesium>*/

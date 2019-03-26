@@ -24,6 +24,12 @@
 	<ProjectReference Include="../StackOverflow.Api.Web/StackOverflow.Api.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+     <None Update="appSettings.Test.json">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+   </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>StackOverflow.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
    </PropertyGroup>

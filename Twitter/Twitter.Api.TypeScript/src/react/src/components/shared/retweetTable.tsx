@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RetweetMapper from '../retweet/retweetMapper';
@@ -7,9 +7,9 @@ import RetweetViewModel from '../retweet/retweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface RetweetTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class RetweetTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.RetweetClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.RetweetClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new RetweetMapper();
 
-          let mapper = new RetweetMapper();
+        let retweets: Array<RetweetViewModel> = [];
 
-          let retweets: Array<RetweetViewModel> = [];
+        response.data.forEach(x => {
+          retweets.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            retweets.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: retweets,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: retweets,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -136,7 +138,8 @@ export class RetweetTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.retwitterUserIdNavigation.toDisplay()
+                            props.original.retwitterUserIdNavigation &&
+                              props.original.retwitterUserIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -166,7 +169,8 @@ export class RetweetTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.tweetTweetIdNavigation.toDisplay()
+                            props.original.tweetTweetIdNavigation &&
+                              props.original.tweetTweetIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -217,5 +221,5 @@ export class RetweetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a39f2f724d144eb4256cf68e6a016b64</Hash>
+    <Hash>36e2b4b084504a3e9d44ce02c8935d97</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import SelfReferenceMapper from './selfReferenceMapper';
@@ -9,6 +9,7 @@ import SelfReferenceViewModel from './selfReferenceViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SelfReferenceSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class SelfReferenceSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.SelfReferenceClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.SelfReferences + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,44 +102,37 @@ export default class SelfReferenceSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.SelfReferenceClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.SelfReferenceClientResponseModel
-          >;
-          let viewModels: Array<SelfReferenceViewModel> = [];
-          let mapper = new SelfReferenceMapper();
+      .then(response => {
+        let viewModels: Array<SelfReferenceViewModel> = [];
+        let mapper = new SelfReferenceMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<SelfReferenceViewModel>(),
-            filteredRecords: new Array<SelfReferenceViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<SelfReferenceViewModel>(),
+          filteredRecords: new Array<SelfReferenceViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -233,7 +223,8 @@ export default class SelfReferenceSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.selfReferenceIdNavigation.toDisplay()
+                            props.original.selfReferenceIdNavigation &&
+                              props.original.selfReferenceIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -256,7 +247,8 @@ export default class SelfReferenceSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.selfReferenceId2Navigation.toDisplay()
+                            props.original.selfReferenceId2Navigation &&
+                              props.original.selfReferenceId2Navigation.toDisplay()
                           )}
                         </a>
                       );
@@ -323,5 +315,5 @@ export const WrappedSelfReferenceSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d673a12a33ae1de60a3398d092455fe8</Hash>
+    <Hash>63175cacd2ff25b34745665489647d30</Hash>
 </Codenesium>*/

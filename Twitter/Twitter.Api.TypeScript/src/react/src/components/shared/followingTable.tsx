@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FollowingMapper from '../following/followingMapper';
@@ -7,9 +7,9 @@ import FollowingViewModel from '../following/followingViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface FollowingTableComponentProps {
-  user_id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -36,11 +36,11 @@ export class FollowingTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: FollowingViewModel) {
-    this.props.history.push(ClientRoutes.Followings + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.Followings + '/edit/' + row.userId);
   }
 
   handleDetailClick(e: any, row: FollowingViewModel) {
-    this.props.history.push(ClientRoutes.Followings + '/' + row.id);
+    this.props.history.push(ClientRoutes.Followings + '/' + row.userId);
   }
 
   componentDidMount() {
@@ -51,44 +51,46 @@ export class FollowingTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.FollowingClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.FollowingClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new FollowingMapper();
 
-          let mapper = new FollowingMapper();
+        let followings: Array<FollowingViewModel> = [];
 
-          let followings: Array<FollowingViewModel> = [];
+        response.data.forEach(x => {
+          followings.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            followings.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: followings,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: followings,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -171,5 +173,5 @@ export class FollowingTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a3a7d7489eabbc28df435d509a9831f2</Hash>
+    <Hash>8cb0d7fa474e9c750a821a6b7be3afdb</Hash>
 </Codenesium>*/

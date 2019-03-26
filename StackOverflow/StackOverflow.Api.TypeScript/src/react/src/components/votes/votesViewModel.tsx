@@ -23,13 +23,13 @@ export default class VotesViewModel {
     this.id = 0;
     this.postId = 0;
     this.postIdEntity = '';
-    this.postIdNavigation = new PostsViewModel();
+    this.postIdNavigation = undefined;
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = new UsersViewModel();
+    this.userIdNavigation = undefined;
     this.voteTypeId = 0;
     this.voteTypeIdEntity = '';
-    this.voteTypeIdNavigation = new VoteTypesViewModel();
+    this.voteTypeIdNavigation = undefined;
   }
 
   setProperties(
@@ -55,5 +55,5 @@ export default class VotesViewModel {
 
 
 /*<Codenesium>
-    <Hash>c917f738eaf31258e69f116ce35581db</Hash>
+    <Hash>3f39a56343d35a2f1037530210e6ec99</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import LinkLogMapper from './linkLogMapper';
@@ -9,6 +9,7 @@ import LinkLogViewModel from './linkLogViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface LinkLogSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class LinkLogSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.LinkLogClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.LinkLogs + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class LinkLogSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.LinkLogClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.LinkLogClientResponseModel>;
-          let viewModels: Array<LinkLogViewModel> = [];
-          let mapper = new LinkLogMapper();
+      .then(response => {
+        let viewModels: Array<LinkLogViewModel> = [];
+        let mapper = new LinkLogMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<LinkLogViewModel>(),
-            filteredRecords: new Array<LinkLogViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<LinkLogViewModel>(),
+          filteredRecords: new Array<LinkLogViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -235,7 +227,10 @@ export default class LinkLogSearchComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.linkIdNavigation.toDisplay())}
+                          {String(
+                            props.original.linkIdNavigation &&
+                              props.original.linkIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -308,5 +303,5 @@ export const WrappedLinkLogSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3bbf53844ad8e4634b7704dc54682344</Hash>
+    <Hash>10aac283e6ba75e05d0310d8780ae1ae</Hash>
 </Codenesium>*/

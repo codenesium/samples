@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CountryRequirementMapper from '../countryRequirement/countryRequirementMapper';
@@ -7,9 +7,9 @@ import CountryRequirementViewModel from '../countryRequirement/countryRequiremen
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CountryRequirementTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -53,46 +53,49 @@ export class CountryRequirementTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.CountryRequirementClientResponseModel>>(
+        this.props.apiRoute,
+        {
+          headers: GlobalUtilities.defaultHeaders(),
+        }
+      )
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+
+        let mapper = new CountryRequirementMapper();
+
+        let countryRequirements: Array<CountryRequirementViewModel> = [];
+
+        response.data.forEach(x => {
+          countryRequirements.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: countryRequirements,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.CountryRequirementClientResponseModel
-          >;
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-          console.log(response);
-
-          let mapper = new CountryRequirementMapper();
-
-          let countryRequirements: Array<CountryRequirementViewModel> = [];
-
-          response.forEach(x => {
-            countryRequirements.push(mapper.mapApiResponseToViewModel(x));
-          });
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: countryRequirements,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -133,7 +136,8 @@ export class CountryRequirementTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.countryIdNavigation.toDisplay()
+                            props.original.countryIdNavigation &&
+                              props.original.countryIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -191,5 +195,5 @@ export class CountryRequirementTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>224ec65e2e367076973c6fb9eb07b2ae</Hash>
+    <Hash>89d7aa0d26b2c28fa47feebd731a6ce2</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import OtherTransportMapper from './otherTransportMapper';
@@ -9,6 +9,7 @@ import OtherTransportViewModel from './otherTransportViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface OtherTransportSearchComponentProps {
   form: WrappedFormUtils;
@@ -67,31 +68,27 @@ export default class OtherTransportSearchComponent extends React.Component<
       .delete(
         Constants.ApiEndpoint + ApiRoutes.OtherTransports + '/' + row.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -108,44 +105,37 @@ export default class OtherTransportSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.OtherTransportClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.OtherTransportClientResponseModel
-          >;
-          let viewModels: Array<OtherTransportViewModel> = [];
-          let mapper = new OtherTransportMapper();
+      .then(response => {
+        let viewModels: Array<OtherTransportViewModel> = [];
+        let mapper = new OtherTransportMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<OtherTransportViewModel>(),
-            filteredRecords: new Array<OtherTransportViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<OtherTransportViewModel>(),
+          filteredRecords: new Array<OtherTransportViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -229,7 +219,8 @@ export default class OtherTransportSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.handlerIdNavigation.toDisplay()
+                            props.original.handlerIdNavigation &&
+                              props.original.handlerIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -252,7 +243,8 @@ export default class OtherTransportSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.pipelineStepIdNavigation.toDisplay()
+                            props.original.pipelineStepIdNavigation &&
+                              props.original.pipelineStepIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -319,5 +311,5 @@ export const WrappedOtherTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4cf89c1464a9b8ca41ebb30ed436e71a</Hash>
+    <Hash>6923e3e047bb6e8fc2d19e0a7ff831d3</Hash>
 </Codenesium>*/

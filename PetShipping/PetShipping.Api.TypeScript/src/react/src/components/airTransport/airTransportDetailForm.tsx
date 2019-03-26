@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import AirTransportMapper from './airTransportMapper';
 import AirTransportViewModel from './airTransportViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface AirTransportDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,115 +23,120 @@ interface AirTransportDetailComponentState {
 }
 
 class AirTransportDetailComponent extends React.Component<
-AirTransportDetailComponentProps,
-AirTransportDetailComponentState
+  AirTransportDetailComponentProps,
+  AirTransportDetailComponentState
 > {
   state = {
     model: new AirTransportViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.AirTransports + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.AirTransports + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.AirTransportClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.AirTransports +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.AirTransportClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new AirTransportMapper();
 
-          let mapper = new AirTransportMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>airlineId</h3>
-							<p>{String(this.state.model!.airlineId)}</p>
-						 </div>
-					   						 <div>
-							<h3>flightNumber</h3>
-							<p>{String(this.state.model!.flightNumber)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>handlerId</h3>
-							<p>{String(this.state.model!.handlerIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>landDate</h3>
-							<p>{String(this.state.model!.landDate)}</p>
-						 </div>
-					   						 <div>
-							<h3>pipelineStepId</h3>
-							<p>{String(this.state.model!.pipelineStepId)}</p>
-						 </div>
-					   						 <div>
-							<h3>takeoffDate</h3>
-							<p>{String(this.state.model!.takeoffDate)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>airlineId</h3>
+              <p>{String(this.state.model!.airlineId)}</p>
+            </div>
+            <div>
+              <h3>flightNumber</h3>
+              <p>{String(this.state.model!.flightNumber)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>handlerId</h3>
+              <p>
+                {String(
+                  this.state.model!.handlerIdNavigation &&
+                    this.state.model!.handlerIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>landDate</h3>
+              <p>{String(this.state.model!.landDate)}</p>
+            </div>
+            <div>
+              <h3>pipelineStepId</h3>
+              <p>{String(this.state.model!.pipelineStepId)}</p>
+            </div>
+            <div>
+              <h3>takeoffDate</h3>
+              <p>{String(this.state.model!.takeoffDate)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -142,10 +145,11 @@ AirTransportDetailComponentState
   }
 }
 
-export const WrappedAirTransportDetailComponent = Form.create({ name: 'AirTransport Detail' })(
-  AirTransportDetailComponent
-);
+export const WrappedAirTransportDetailComponent = Form.create({
+  name: 'AirTransport Detail',
+})(AirTransportDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>a8770324bf0c2bb582f0abd1cd0351a6</Hash>
+    <Hash>699e0ad601bde471b2668eb218f689a7</Hash>
 </Codenesium>*/

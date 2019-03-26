@@ -9,8 +9,10 @@ services:
       dockerfile: DockerFileReact
       args:
       - REACT_APP_API_URL=http://192.168.99.100:81/
+	  - REACT_APP_HOST_SUBDIRECTORY=/
     environment:
        - REACT_APP_API_URL=http://192.168.99.100:81/
+	   - REACT_APP_HOST_SUBDIRECTORY=/
     volumes:
       - .:/var/www/app
     ports:

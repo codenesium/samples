@@ -22,7 +22,7 @@ namespace StackOverflowNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace StackOverflowNS.Api.DataAccess
 			entity.SetProperties(default(int), 2, 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 1, 1, 1, 1, 2, "B", "B", 2);
 			await repository.Create(entity);
 
-			var records = await context.Set<Posts>().Where(x => true).ToListAsync();
+			var records = await context.Set<Posts>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Posts>().Where(x => true).ToListAsync();
+			var records = await context.Set<Posts>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Posts>().Where(x => true).ToListAsync();
+			var records = await context.Set<Posts>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Posts>().Where(x => true).ToListAsync();
+			var records = await context.Set<Posts>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>050e875125a03c9cb2264efcdc096881</Hash>
+    <Hash>1d49b1667bad029ab4c95be15098d026</Hash>
 </Codenesium>*/

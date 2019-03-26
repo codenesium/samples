@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../PetShipping.Api.Web/PetShipping.Api.Web.csproj" />
+	<ProjectReference Include="../PetShipping.Api.Services/PetShipping.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

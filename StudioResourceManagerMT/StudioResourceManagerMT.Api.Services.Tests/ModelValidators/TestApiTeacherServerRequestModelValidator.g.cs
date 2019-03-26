@@ -191,9 +191,59 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
 		}
+
+		[Fact]
+		public async void UserId_Create_Valid_Reference()
+		{
+			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+
+			var validator = new ApiTeacherServerRequestModelValidator(teacherRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTeacherServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Create_Invalid_Reference()
+		{
+			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+
+			var validator = new ApiTeacherServerRequestModelValidator(teacherRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiTeacherServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Update_Valid_Reference()
+		{
+			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+
+			var validator = new ApiTeacherServerRequestModelValidator(teacherRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTeacherServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Update_Invalid_Reference()
+		{
+			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+
+			var validator = new ApiTeacherServerRequestModelValidator(teacherRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiTeacherServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UserId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8156011a05a7c15e29ac95d51b41150f</Hash>
+    <Hash>425f6f031b5f74ee07a589093d6d4513</Hash>
 </Codenesium>*/

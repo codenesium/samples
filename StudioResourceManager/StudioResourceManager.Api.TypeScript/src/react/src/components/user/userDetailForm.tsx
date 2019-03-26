@@ -1,17 +1,15 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {AdminTableComponent} from '../shared/adminTable'
-	import {StudentTableComponent} from '../shared/studentTable'
-	import {TeacherTableComponent} from '../shared/teacherTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { AdminTableComponent } from '../shared/adminTable';
+import { StudentTableComponent } from '../shared/studentTable';
+import { TeacherTableComponent } from '../shared/teacherTable';
 
 interface UserDetailComponentProps {
   form: WrappedFormUtils;
@@ -28,126 +26,144 @@ interface UserDetailComponentState {
 }
 
 class UserDetailComponent extends React.Component<
-UserDetailComponentProps,
-UserDetailComponentState
+  UserDetailComponentProps,
+  UserDetailComponentState
 > {
   state = {
     model: new UserViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Users + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Users + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.UserClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Users +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.UserClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new UserMapper();
 
-          let mapper = new UserMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Password</h3>
-							<p>{String(this.state.model!.password)}</p>
-						 </div>
-					   						 <div>
-							<h3>Username</h3>
-							<p>{String(this.state.model!.username)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Password</h3>
+              <p>{String(this.state.model!.password)}</p>
+            </div>
+            <div>
+              <h3>Username</h3>
+              <p>{String(this.state.model!.username)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Admins</h3>
-            <AdminTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.id + '/' + ApiRoutes.Admins}
-			/>
-         </div>
-			 <div>
+            <AdminTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Admins
+              }
+            />
+          </div>
+          <div>
             <h3>Students</h3>
-            <StudentTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.id + '/' + ApiRoutes.Students}
-			/>
-         </div>
-			 <div>
+            <StudentTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Students
+              }
+            />
+          </div>
+          <div>
             <h3>Teachers</h3>
-            <TeacherTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.id + '/' + ApiRoutes.Teachers}
-			/>
-         </div>
-	
-
+            <TeacherTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Teachers
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -160,6 +176,7 @@ export const WrappedUserDetailComponent = Form.create({ name: 'User Detail' })(
   UserDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>543d31e34e658af8c9166412d4de39fa</Hash>
+    <Hash>0520091773c537979afcfa288586c35e</Hash>
 </Codenesium>*/

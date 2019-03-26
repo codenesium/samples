@@ -100,6 +100,8 @@ namespace NebulaNS.Api.DataAccess
 		{
 			return await this.Context.Set<Chain>()
 			       .Include(x => x.ChainStatusIdNavigation)
+			       .Include(x => x.TeamIdNavigation)
+
 			       .Where(x => x.ChainStatusId == chainStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
 		}
 
@@ -129,5 +131,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a21ed3fd22c9479c0279b2a09770fbe8</Hash>
+    <Hash>a4f8822347c7ae83aca64e6b3d8f07d4</Hash>
 </Codenesium>*/

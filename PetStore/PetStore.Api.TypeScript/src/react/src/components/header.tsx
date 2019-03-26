@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ClientRoutes, Constants } from '../constants';
+import { ClientRoutes, Constants, AuthClientRoutes } from '../constants';
+import ErrorBoundary from './errorBoundary';
 const { Header, Content, Footer, Sider } = Layout;
-
-const SubMenu = Menu.SubMenu;
 
 interface WrapperHeaderProps {}
 
@@ -35,7 +33,7 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+              <Menu.Item
                 key="Home"
                 onClick={() => {
                   this.setState({ ...this.state, collapsed: true });
@@ -44,50 +42,74 @@ export const wrapperHeader = (
                 <Icon type="home" />
                 <span>Home</span>
                 <Link to={'/'} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="breed">
+              <Menu.Item key="breed">
                 <Icon type="pie-chart" />
                 <span>Breeds</span>
                 <Link to={ClientRoutes.Breeds} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="paymentType">
+              <Menu.Item key="paymentType">
                 <Icon type="rise" />
                 <span>Payment Types</span>
                 <Link to={ClientRoutes.PaymentTypes} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="pen">
+              <Menu.Item key="pen">
                 <Icon type="bars" />
                 <span>Pens</span>
                 <Link to={ClientRoutes.Pens} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="pet">
+              <Menu.Item key="pet">
                 <Icon type="cloud" />
                 <span>Pets</span>
                 <Link to={ClientRoutes.Pets} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="sale">
+              <Menu.Item key="sale">
                 <Icon type="code" />
                 <span>Sales</span>
                 <Link to={ClientRoutes.Sales} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="species">
+              <Menu.Item key="species">
                 <Icon type="smile" />
                 <span>Species</span>
                 <Link to={ClientRoutes.Species} />
-              </MenuItem>
+              </Menu.Item>
+
+              <Menu.SubMenu
+                title={
+                  <span>
+                    <Icon type="setting" />
+                    <span>Settings</span>
+                  </span>
+                }
+              >
+                <Menu.Item key="lock">
+                  <Icon type="lock" />
+                  <span>Change Password</span>
+                  <Link to={AuthClientRoutes.ChangePassword} />
+                </Menu.Item>
+                <Menu.Item key="logout">
+                  <Icon type="logout" />
+                  <span>Logout</span>
+                  <Link to={AuthClientRoutes.Logout} />
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
               <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                <Component {...this.props} />
+              <div
+                style={{ padding: 24, background: '#fff', minHeight: '600px' }}
+              >
+                <ErrorBoundary>
+                  <Component {...this.props} />
+                </ErrorBoundary>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Footer</Footer>
@@ -101,5 +123,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>2b39d1610dae003d2ddca5af493baf71</Hash>
+    <Hash>284d6ab0119c9a1c31aa25c1205d5a06</Hash>
 </Codenesium>*/

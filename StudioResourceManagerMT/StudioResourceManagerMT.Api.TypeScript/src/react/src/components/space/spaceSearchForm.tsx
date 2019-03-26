@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import SpaceMapper from './spaceMapper';
@@ -9,6 +9,7 @@ import SpaceViewModel from './spaceViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SpaceSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class SpaceSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.SpaceClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Spaces + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class SpaceSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.SpaceClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.SpaceClientResponseModel>;
-          let viewModels: Array<SpaceViewModel> = [];
-          let mapper = new SpaceMapper();
+      .then(response => {
+        let viewModels: Array<SpaceViewModel> = [];
+        let mapper = new SpaceMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<SpaceViewModel>(),
-            filteredRecords: new Array<SpaceViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<SpaceViewModel>(),
+          filteredRecords: new Array<SpaceViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -205,20 +197,13 @@ export default class SpaceSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Spaces',
+                Header: 'Space',
                 columns: [
                   {
                     Header: 'Description',
                     accessor: 'description',
                     Cell: props => {
                       return <span>{String(props.original.description)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
                     },
                   },
                   {
@@ -289,5 +274,5 @@ export const WrappedSpaceSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6a8aba3628fb255c4f00837ce77f1caa</Hash>
+    <Hash>f610a0dabef62cd63925717812e0ee4a</Hash>
 </Codenesium>*/

@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../StudioResourceManagerMT.Api.Web/StudioResourceManagerMT.Api.Web.csproj" />
+	<ProjectReference Include="../StudioResourceManagerMT.Api.Services/StudioResourceManagerMT.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

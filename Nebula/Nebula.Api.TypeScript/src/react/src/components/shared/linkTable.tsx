@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkMapper from '../link/linkMapper';
@@ -7,9 +7,9 @@ import LinkViewModel from '../link/linkViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface LinkTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class LinkTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.LinkClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.LinkClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new LinkMapper();
 
-          let mapper = new LinkMapper();
+        let links: Array<LinkViewModel> = [];
 
-          let links: Array<LinkViewModel> = [];
+        response.data.forEach(x => {
+          links.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            links.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: links,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: links,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -129,7 +131,8 @@ export class LinkTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.assignedMachineIdNavigation.toDisplay()
+                            props.original.assignedMachineIdNavigation &&
+                              props.original.assignedMachineIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -149,7 +152,10 @@ export class LinkTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.chainIdNavigation.toDisplay())}
+                          {String(
+                            props.original.chainIdNavigation &&
+                              props.original.chainIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -210,7 +216,8 @@ export class LinkTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.linkStatusIdNavigation.toDisplay()
+                            props.original.linkStatusIdNavigation &&
+                              props.original.linkStatusIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -300,5 +307,5 @@ export class LinkTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>52e444280eb0f6abed8c7c24563519fa</Hash>
+    <Hash>05c251cb93815849ef212dbc2ae90464</Hash>
 </Codenesium>*/

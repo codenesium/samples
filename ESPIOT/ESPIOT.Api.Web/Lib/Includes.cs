@@ -1,5 +1,6 @@
 using Codenesium.DataConversionExtensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using ESPIOTNS.Api.Services;
 
 namespace Codenesium.Foundation.CommonMVC
 {
@@ -50,6 +53,152 @@ namespace Codenesium.Foundation.CommonMVC
             return this.Ok("Api is healthy!");
         }
     }
+
+	[Route("api/auth")]
+	[ApiController]
+	[ApiVersion("1.0")]
+	[AllowAnonymous]
+
+	public class AuthController : AbstractApiController
+	{
+		private ApiSettings settings;
+		private ILogger<AuthController> logger;
+		private ITransactionCoordinator transactionCoordinator;
+		private IAuthService authService;
+
+		public AuthController(
+			ApiSettings settings,
+			ILogger<AuthController> logger,
+			ITransactionCoordinator transactionCoordinator,
+			IAuthService authService
+			)
+			: base(settings, logger, transactionCoordinator)
+		{
+			this.authService = authService;
+		}
+
+
+		[HttpPost]
+		[Route("login")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> Login([FromBody] LoginRequestModel model)
+		{
+			AuthResponse result = await this.authService.Login(model);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status401Unauthorized, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("register")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> Register([FromBody] RegisterRequestModel model)
+		{
+			AuthResponse result = await this.authService.Register(model);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status400BadRequest, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("resetpassword")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status400BadRequest)]
+
+		public virtual async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestModel model)
+		{
+			AuthResponse result = await this.authService.ResetPassword(model);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status400BadRequest, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("confirmregistration")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> ConfirmRegistration([FromBody] ConfirmRegistrationRequestModel model)
+		{
+			AuthResponse result = await this.authService.ConfirmRegistration(model);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status400BadRequest, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("confirmpasswordreset")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> ConfirmPasswordReset([FromBody] ConfirmPasswordResetRequestModel model)
+		{
+			AuthResponse result = await this.authService.ConfirmPasswordReset(model);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status400BadRequest, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("changepassword")]
+		[Authorize]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestModel model)
+		{
+			AuthResponse result = await this.authService.ChangePassword(model, this.User.Claims.First(x => x.Type == ClaimTypes.Email).Value);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status400BadRequest, result);
+			}
+		}
+	}
 
 	public class HealthCheck : IHealthCheck
 	{
@@ -353,29 +502,7 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
-    public class ApiSettings
-    {
-		public virtual string DatabaseProvider { get; set; }
-
-        public virtual string ExternalBaseUrl { get; set; }
-
-        public virtual bool MigrateDatabase { get; set; }
-
-        public virtual bool SecurityEnabled { get; set; }
-
-        public virtual JwtSettings JwtSettings { get; set; }
-    }
-
-    public class JwtSettings
-    {
-        public virtual string SigningKey { get; set; }
-
-        public virtual string Issuer { get; set; }
-
-        public virtual string Audience { get; set; }
-    }
-
-      public class SearchQuery
+    public class SearchQuery
     {
         public int Limit { get; private set; } = 0;
 

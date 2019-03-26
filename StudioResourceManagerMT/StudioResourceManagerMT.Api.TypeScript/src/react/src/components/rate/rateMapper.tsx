@@ -1,5 +1,7 @@
 import * as Api from '../../api/models';
 import RateViewModel from './rateViewModel';
+import TeacherViewModel from '../teacher/teacherViewModel';
+import TeacherSkillViewModel from '../teacherSkill/teacherSkillViewModel';
 export default class RateMapper {
   mapApiResponseToViewModel(dto: Api.RateClientResponseModel): RateViewModel {
     let response = new RateViewModel();
@@ -9,6 +11,26 @@ export default class RateMapper {
       dto.teacherId,
       dto.teacherSkillId
     );
+
+    if (dto.teacherIdNavigation != null) {
+      response.teacherIdNavigation = new TeacherViewModel();
+      response.teacherIdNavigation.setProperties(
+        dto.teacherIdNavigation.birthday,
+        dto.teacherIdNavigation.email,
+        dto.teacherIdNavigation.firstName,
+        dto.teacherIdNavigation.id,
+        dto.teacherIdNavigation.lastName,
+        dto.teacherIdNavigation.phone,
+        dto.teacherIdNavigation.userId
+      );
+    }
+    if (dto.teacherSkillIdNavigation != null) {
+      response.teacherSkillIdNavigation = new TeacherSkillViewModel();
+      response.teacherSkillIdNavigation.setProperties(
+        dto.teacherSkillIdNavigation.id,
+        dto.teacherSkillIdNavigation.name
+      );
+    }
 
     return response;
   }
@@ -27,5 +49,5 @@ export default class RateMapper {
 
 
 /*<Codenesium>
-    <Hash>6d163f9dfea5b09f5b2f8a0ab2bfa315</Hash>
+    <Hash>97545d07fed86c4e5780c95c378a47d8</Hash>
 </Codenesium>*/

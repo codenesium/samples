@@ -1,3 +1,5 @@
+using Codenesium.DataConversionExtensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -11,13 +13,21 @@ namespace StudioResourceManagerNS.Api.DataAccess
 {
 	public class ApplicationDbContext : AbstractApplicationDbContext
 	{
-		public ApplicationDbContext(DbContextOptions options)
+		public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor accessor)
 			: base(options)
 		{
+			// accessoror accessor.HttpContext may be null when this class is instantiated in Startup.Configure when we migrate the databas
+			if (accessor?.HttpContext != null)
+			{
+				int tenantId = accessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "tenant")?.Value.ToInt() ?? 0;
+				Guid userId = accessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "user")?.Value.ToGuid() ?? Guid.Empty;
+				this.SetTenantId(tenantId);
+				this.SetUserId(userId);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>992c9f1860d1355149853211bb1229ed</Hash>
+    <Hash>1a19c6dcf01dfc41a8980d069ba6fbf8</Hash>
 </Codenesium>*/

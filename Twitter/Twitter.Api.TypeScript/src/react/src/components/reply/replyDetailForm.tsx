@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ReplyMapper from './replyMapper';
 import ReplyViewModel from './replyViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface ReplyDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class ReplyDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.ReplyClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Replies +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.ReplyClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new ReplyMapper();
 
-          let mapper = new ReplyMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -115,7 +117,10 @@ class ReplyDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>replier_user_id</h3>
               <p>
-                {String(this.state.model!.replierUserIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.replierUserIdNavigation &&
+                    this.state.model!.replierUserIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -138,5 +143,5 @@ export const WrappedReplyDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a7768e7560c63fb4263807b6afe923b8</Hash>
+    <Hash>5d02f053035840796272d33c8fb48c3e</Hash>
 </Codenesium>*/

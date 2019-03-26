@@ -1,11 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherSkillMapper from './teacherSkillMapper';
 import TeacherSkillViewModel from './teacherSkillViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { RateTableComponent } from '../shared/rateTable';
 
 interface TeacherSkillDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +45,45 @@ class TeacherSkillDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TeacherSkillClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.TeacherSkills +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TeacherSkillClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TeacherSkillMapper();
 
-          let mapper = new TeacherSkillMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -105,15 +108,26 @@ class TeacherSkillDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
           {message}
+          <div>
+            <h3>Rates</h3>
+            <RateTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.TeacherSkills +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Rates
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -128,5 +142,5 @@ export const WrappedTeacherSkillDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>24bf61ff7371c3ee84a7ad703cebd7bc</Hash>
+    <Hash>4d46e2b629f0a864167cdcd7fd840ded</Hash>
 </Codenesium>*/

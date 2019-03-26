@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { PostsSelectComponent } from '../shared/postsSelect';
 import { UsersSelectComponent } from '../shared/usersSelect';
 import { VoteTypesSelectComponent } from '../shared/voteTypesSelect';
@@ -55,48 +55,53 @@ class VotesEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.VotesClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Votes +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.VotesClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new VotesMapper();
 
-          let mapper = new VotesMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -105,7 +110,6 @@ class VotesEditComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as VotesViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -116,54 +120,56 @@ class VotesEditComponent extends React.Component<
   submit = (model: VotesViewModel) => {
     let mapper = new VotesMapper();
     axios
-      .put(
+      .put<CreateResponse<Api.VotesClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Votes + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.VotesClientRequestModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -206,41 +212,29 @@ class VotesEditComponent extends React.Component<
             )}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="postId">Post</label>
-            <br />
-            <PostsSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="postId"
-              required={true}
-              selectedValue={this.state.model!.postId}
-            />
-          </Form.Item>
+          <PostsSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="postId"
+            required={true}
+            selectedValue={this.state.model!.postId}
+          />
 
-          <Form.Item>
-            <label htmlFor="userId">User</label>
-            <br />
-            <UsersSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Users}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="userId"
-              required={false}
-              selectedValue={this.state.model!.userId}
-            />
-          </Form.Item>
+          <UsersSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Users}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="userId"
+            required={false}
+            selectedValue={this.state.model!.userId}
+          />
 
-          <Form.Item>
-            <label htmlFor="voteTypeId">Vote Type</label>
-            <br />
-            <VoteTypesSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.VoteTypes}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="voteTypeId"
-              required={true}
-              selectedValue={this.state.model!.voteTypeId}
-            />
-          </Form.Item>
+          <VoteTypesSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.VoteTypes}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="voteTypeId"
+            required={true}
+            selectedValue={this.state.model!.voteTypeId}
+          />
 
           <Form.Item>
             <Button
@@ -266,5 +260,5 @@ export const WrappedVotesEditComponent = Form.create({ name: 'Votes Edit' })(
 
 
 /*<Codenesium>
-    <Hash>422c561bc54820e75e7038f8797abb88</Hash>
+    <Hash>f23648afdb5dea25dfc09b5717489ce2</Hash>
 </Codenesium>*/

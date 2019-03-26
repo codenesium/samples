@@ -1,19 +1,29 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PipelineStepMapper from './pipelineStepMapper';
 import PipelineStepViewModel from './pipelineStepViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { PipelineStepStatusSelectComponent } from '../shared/pipelineStepStatusSelect'
-	import { EmployeeSelectComponent } from '../shared/employeeSelect'
-	interface PipelineStepEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { PipelineStepStatusSelectComponent } from '../shared/pipelineStepStatusSelect';
+import { EmployeeSelectComponent } from '../shared/employeeSelect';
+interface PipelineStepEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface PipelineStepEditComponentState {
@@ -22,8 +32,8 @@ interface PipelineStepEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class PipelineStepEditComponent extends React.Component<
@@ -36,185 +46,206 @@ class PipelineStepEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.PipelineStepClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.PipelineSteps +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.PipelineStepClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PipelineStepMapper();
 
-          let mapper = new PipelineStepMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
-     if (!err) {
+      });
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
         let model = values as PipelineStepViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
-      } 
-	  else {
-		  this.setState({...this.state, submitting:false, submitted:false});
-	  }
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
+      }
     });
   };
 
-  submit = (model:PipelineStepViewModel) =>
-  {  
+  submit = (model: PipelineStepViewModel) => {
     let mapper = new PipelineStepMapper();
-     axios
-      .put(
-        Constants.ApiEndpoint + ApiRoutes.PipelineSteps + '/' + this.state.model!.id,
+    axios
+      .put<CreateResponse<Api.PipelineStepClientRequestModel>>(
+        Constants.ApiEndpoint +
+          ApiRoutes.PipelineSteps +
+          '/' +
+          this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.PipelineStepClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-		  let errorResponse = error.response.data as ActionResponse; 
-		  if(error.response.data)
-          {
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
+        }
+      });
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="name">name</label>
+            <br />
+            {getFieldDecorator('name', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'name'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='name'>name</label>
-              <br />             
-              {getFieldDecorator('name', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <Input placeholder={"name"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="pipelineStepStatusId">pipelineStepStatusId</label>
+            <br />
+            {getFieldDecorator('pipelineStepStatusId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'pipelineStepStatusId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='pipelineStepStatusId'>pipelineStepStatusId</label>
-              <br />             
-              {getFieldDecorator('pipelineStepStatusId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"pipelineStepStatusId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="shipperId">shipperId</label>
+            <br />
+            {getFieldDecorator('shipperId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'shipperId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='shipperId'>shipperId</label>
-              <br />             
-              {getFieldDecorator('shipperId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"shipperId"} /> )}
-              </Form.Item>
-
-			
-            <Form.Item>
-             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedPipelineStepEditComponent = Form.create({ name: 'PipelineStep Edit' })(PipelineStepEditComponent);
+export const WrappedPipelineStepEditComponent = Form.create({
+  name: 'PipelineStep Edit',
+})(PipelineStepEditComponent);
+
 
 /*<Codenesium>
-    <Hash>fa1d5e8c32935e518b3689b06e5b3c1b</Hash>
+    <Hash>b95bfcaa0d81b348d0c978445811a51f</Hash>
 </Codenesium>*/

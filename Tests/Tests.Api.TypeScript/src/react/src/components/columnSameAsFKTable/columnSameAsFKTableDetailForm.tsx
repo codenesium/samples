@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ColumnSameAsFKTableMapper from './columnSameAsFKTableMapper';
 import ColumnSameAsFKTableViewModel from './columnSameAsFKTableViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface ColumnSameAsFKTableDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,103 +23,113 @@ interface ColumnSameAsFKTableDetailComponentState {
 }
 
 class ColumnSameAsFKTableDetailComponent extends React.Component<
-ColumnSameAsFKTableDetailComponentProps,
-ColumnSameAsFKTableDetailComponentState
+  ColumnSameAsFKTableDetailComponentProps,
+  ColumnSameAsFKTableDetailComponentState
 > {
   state = {
     model: new ColumnSameAsFKTableViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.ColumnSameAsFKTables + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ColumnSameAsFKTables + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.ColumnSameAsFKTableClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.ColumnSameAsFKTables +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.ColumnSameAsFKTableClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new ColumnSameAsFKTableMapper();
 
-          let mapper = new ColumnSameAsFKTableMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Person</h3>
-							<p>{String(this.state.model!.personNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>PersonId</h3>
-							<p>{String(this.state.model!.personIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Person</h3>
+              <p>
+                {String(
+                  this.state.model!.personNavigation &&
+                    this.state.model!.personNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>PersonId</h3>
+              <p>
+                {String(
+                  this.state.model!.personIdNavigation &&
+                    this.state.model!.personIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +138,11 @@ ColumnSameAsFKTableDetailComponentState
   }
 }
 
-export const WrappedColumnSameAsFKTableDetailComponent = Form.create({ name: 'ColumnSameAsFKTable Detail' })(
-  ColumnSameAsFKTableDetailComponent
-);
+export const WrappedColumnSameAsFKTableDetailComponent = Form.create({
+  name: 'ColumnSameAsFKTable Detail',
+})(ColumnSameAsFKTableDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>e5c2d440f3a860385ad338e8938b9c1a</Hash>
+    <Hash>bb597a5476862deed36a0f35362bba2b</Hash>
 </Codenesium>*/

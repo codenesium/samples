@@ -15,7 +15,7 @@ export default class BadgesViewModel {
     this.name = '';
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = new UsersViewModel();
+    this.userIdNavigation = undefined;
   }
 
   setProperties(date: any, id: number, name: string, userId: number): void {
@@ -32,5 +32,5 @@ export default class BadgesViewModel {
 
 
 /*<Codenesium>
-    <Hash>bcebe17d7ff41ad7ff0cb86655103e8a</Hash>
+    <Hash>01b711e200986f1745e6067bf4185389</Hash>
 </Codenesium>*/

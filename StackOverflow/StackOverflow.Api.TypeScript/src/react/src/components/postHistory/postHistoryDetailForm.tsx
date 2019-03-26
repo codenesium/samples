@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostHistoryMapper from './postHistoryMapper';
 import PostHistoryViewModel from './postHistoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PostHistoryDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class PostHistoryDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.PostHistoryClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.PostHistory +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.PostHistoryClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PostHistoryMapper();
 
-          let mapper = new PostHistoryMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -116,13 +118,19 @@ class PostHistoryDetailComponent extends React.Component<
               <h3>Post History Type</h3>
               <p>
                 {String(
-                  this.state.model!.postHistoryTypeIdNavigation!.toDisplay()
+                  this.state.model!.postHistoryTypeIdNavigation &&
+                    this.state.model!.postHistoryTypeIdNavigation!.toDisplay()
                 )}
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Post</h3>
-              <p>{String(this.state.model!.postIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.postIdNavigation &&
+                    this.state.model!.postIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>Revision GUID</h3>
@@ -138,7 +146,12 @@ class PostHistoryDetailComponent extends React.Component<
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>User</h3>
-              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
           </div>
           {message}
@@ -156,5 +169,5 @@ export const WrappedPostHistoryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e229e5e69322ef04a9d3cdabf221de8b</Hash>
+    <Hash>f73731c56ff94859d010c41b3d89eb0a</Hash>
 </Codenesium>*/

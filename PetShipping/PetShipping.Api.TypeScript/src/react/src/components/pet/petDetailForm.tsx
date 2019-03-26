@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PetMapper from './petMapper';
 import PetViewModel from './petViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { SaleTableComponent } from '../shared/saleTable';
 
 interface PetDetailComponentProps {
@@ -44,44 +45,45 @@ class PetDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.PetClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Pets +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.PetClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PetMapper();
 
-          let mapper = new PetMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -107,7 +109,12 @@ class PetDetailComponent extends React.Component<
           <div>
             <div style={{ marginBottom: '10px' }}>
               <h3>breedId</h3>
-              <p>{String(this.state.model!.breedIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.breedIdNavigation &&
+                    this.state.model!.breedIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div>
               <h3>clientId</h3>
@@ -126,7 +133,6 @@ class PetDetailComponent extends React.Component<
           <div>
             <h3>Sales</h3>
             <SaleTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -153,5 +159,5 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
 
 
 /*<Codenesium>
-    <Hash>fc50a57676160772db5f32e4e4129363</Hash>
+    <Hash>865c7767f84c65f6ed28884b56122283</Hash>
 </Codenesium>*/

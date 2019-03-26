@@ -24,7 +24,7 @@ namespace CADNS.Api.Services.Tests
 
 		public IDALOfficerMapper DALOfficerMapperMock { get; set; } = new DALOfficerMapper();
 
-		public IDALOfficerCapabilitiesMapper DALOfficerCapabilitiesMapperMock { get; set; } = new DALOfficerCapabilitiesMapper();
+		public IDALOfficerCapabilityMapper DALOfficerCapabilityMapperMock { get; set; } = new DALOfficerCapabilityMapper();
 
 		public IDALPersonMapper DALPersonMapperMock { get; set; } = new DALPersonMapper();
 
@@ -36,7 +36,7 @@ namespace CADNS.Api.Services.Tests
 
 		public IDALVehicleMapper DALVehicleMapperMock { get; set; } = new DALVehicleMapper();
 
-		public IDALVehicleCapabilitiesMapper DALVehicleCapabilitiesMapperMock { get; set; } = new DALVehicleCapabilitiesMapper();
+		public IDALVehicleCapabilittyMapper DALVehicleCapabilittyMapperMock { get; set; } = new DALVehicleCapabilittyMapper();
 
 		public DALMapperMockFactory()
 		{
@@ -45,5 +45,5 @@ namespace CADNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8894970f225868b4ee9923b4be1be96d</Hash>
+    <Hash>9ecba6eb4af5e5ab4862c4ea5aada289</Hash>
 </Codenesium>*/

@@ -50,9 +50,9 @@ namespace CADNS.Api.DataAccess
 			officerItem1.SetProperties(1, "A", "A", "A", "A", "A");
 			this.Context.Officers.Add(officerItem1);
 
-			var officerCapabilitiesItem1 = new OfficerCapabilities();
-			officerCapabilitiesItem1.SetProperties(1, 1);
-			this.Context.OfficerCapabilities.Add(officerCapabilitiesItem1);
+			var officerCapabilityItem1 = new OfficerCapability();
+			officerCapabilityItem1.SetProperties(1, 1);
+			this.Context.OfficerCapabilities.Add(officerCapabilityItem1);
 
 			var personItem1 = new Person();
 			personItem1.SetProperties(1, "A", "A", "A", "A");
@@ -74,9 +74,9 @@ namespace CADNS.Api.DataAccess
 			vehicleItem1.SetProperties(1, "A");
 			this.Context.Vehicles.Add(vehicleItem1);
 
-			var vehicleCapabilitiesItem1 = new VehicleCapabilities();
-			vehicleCapabilitiesItem1.SetProperties(1, 1);
-			this.Context.VehicleCapabilities.Add(vehicleCapabilitiesItem1);
+			var vehicleCapabilittyItem1 = new VehicleCapabilitty();
+			vehicleCapabilittyItem1.SetProperties(1, 1);
+			this.Context.VehicleCapabilities.Add(vehicleCapabilittyItem1);
 
 			await this.Context.SaveChangesAsync();
 		}
@@ -84,5 +84,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7403152ccb3bb7a3bcaa3172690b2f9d</Hash>
+    <Hash>17a0b54e37dfbef83f5f1b717ab27e7e</Hash>
 </Codenesium>*/

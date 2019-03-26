@@ -1,198 +1,250 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import DestinationMapper from './destinationMapper';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
 import DestinationViewModel from './destinationViewModel';
-import "react-table/react-table.css";
+import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
-interface DestinationSearchComponentProps
-{
-     form:WrappedFormUtils;
-	 history:any;
-	 match:any;
+interface DestinationSearchComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
-interface DestinationSearchComponentState
-{
-    records:Array<DestinationViewModel>;
-    filteredRecords:Array<DestinationViewModel>;
-    loading:boolean;
-    loaded:boolean;
-    errorOccurred:boolean;
-    errorMessage:string;
-    searchValue:string;
-    deleteSubmitted:boolean;
-    deleteSuccess:boolean;
-    deleteResponse:string;
+interface DestinationSearchComponentState {
+  records: Array<DestinationViewModel>;
+  filteredRecords: Array<DestinationViewModel>;
+  loading: boolean;
+  loaded: boolean;
+  errorOccurred: boolean;
+  errorMessage: string;
+  searchValue: string;
+  deleteSubmitted: boolean;
+  deleteSuccess: boolean;
+  deleteResponse: string;
 }
 
-export default class DestinationSearchComponent extends React.Component<DestinationSearchComponentProps, DestinationSearchComponentState> {
+export default class DestinationSearchComponent extends React.Component<
+  DestinationSearchComponentProps,
+  DestinationSearchComponentState
+> {
+  state = {
+    deleteSubmitted: false,
+    deleteSuccess: false,
+    deleteResponse: '',
+    records: new Array<DestinationViewModel>(),
+    filteredRecords: new Array<DestinationViewModel>(),
+    searchValue: '',
+    loading: false,
+    loaded: true,
+    errorOccurred: false,
+    errorMessage: '',
+  };
 
-    state = ({deleteSubmitted:false, deleteSuccess:false, deleteResponse:'', records:new Array<DestinationViewModel>(), filteredRecords:new Array<DestinationViewModel>(), searchValue:'', loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-    
-    componentDidMount () {
-        this.loadRecords();
+  componentDidMount() {
+    this.loadRecords();
+  }
+
+  handleEditClick(e: any, row: DestinationViewModel) {
+    this.props.history.push(ClientRoutes.Destinations + '/edit/' + row.id);
+  }
+
+  handleDetailClick(e: any, row: DestinationViewModel) {
+    this.props.history.push(ClientRoutes.Destinations + '/' + row.id);
+  }
+
+  handleCreateClick(e: any) {
+    this.props.history.push(ClientRoutes.Destinations + '/create');
+  }
+
+  handleDeleteClick(e: any, row: Api.DestinationClientResponseModel) {
+    axios
+      .delete(Constants.ApiEndpoint + ApiRoutes.Destinations + '/' + row.id, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
+  }
+
+  handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
+    this.loadRecords(e.currentTarget.value);
+  }
+
+  loadRecords(query: string = '') {
+    this.setState({ ...this.state, searchValue: query });
+    let searchEndpoint =
+      Constants.ApiEndpoint + ApiRoutes.Destinations + '?limit=100';
+
+    if (query) {
+      searchEndpoint += '&query=' + query;
     }
 
-    handleEditClick(e:any, row:DestinationViewModel) {
-         this.props.history.push(ClientRoutes.Destinations + '/edit/' + row.id);
-    }
+    axios
+      .get<Array<Api.DestinationClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        let viewModels: Array<DestinationViewModel> = [];
+        let mapper = new DestinationMapper();
 
-    handleDetailClick(e:any, row:DestinationViewModel) {
-         this.props.history.push(ClientRoutes.Destinations + '/' + row.id);
-    }
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-    handleCreateClick(e:any) {
-        this.props.history.push(ClientRoutes.Destinations + '/create');
-    }
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<DestinationViewModel>(),
+          filteredRecords: new Array<DestinationViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
+  }
 
-    handleDeleteClick(e:any, row:Api.DestinationClientResponseModel) {
-        axios.delete(Constants.ApiEndpoint + ApiRoutes.Destinations + '/' + row.id,
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(resp => {
-            this.setState({...this.state, deleteResponse:'Record deleted', deleteSuccess:true, deleteSubmitted:true});
-            this.loadRecords(this.state.searchValue);
-        }, error => {
-            console.log(error);
-            this.setState({...this.state, deleteResponse:'Error deleting record', deleteSuccess:false, deleteSubmitted:true});
-        })
-    }
+  filterGrid() {}
 
-   handleSearchChanged(e:React.FormEvent<HTMLInputElement>) {
-		this.loadRecords(e.currentTarget.value);
-   }
-   
-   loadRecords(query:string = '') {
-	   this.setState({...this.state, searchValue:query});
-	   let searchEndpoint = Constants.ApiEndpoint + ApiRoutes.Destinations + '?limit=100';
+  render() {
+    if (this.state.loading) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
+      let errorResponse: JSX.Element = <span />;
 
-	   if(query)
-	   {
-		   searchEndpoint += '&query=' +  query;
-	   }
-
-	   axios.get(searchEndpoint,
-	   {
-		   headers: {
-			   'Content-Type': 'application/json',
-		   }
-	   })
-	   .then(resp => {
-		    let response = resp.data as Array<Api.DestinationClientResponseModel>;
-		    let viewModels : Array<DestinationViewModel> = [];
-			let mapper = new DestinationMapper();
-
-			response.forEach(x =>
-			{
-				viewModels.push(mapper.mapApiResponseToViewModel(x));
-			})
-
-            this.setState({records:viewModels, filteredRecords:viewModels, loading:false, loaded:true, errorOccurred:false, errorMessage:''});
-
-	   }, error => {
-		   console.log(error);
-		   this.setState({records:new Array<DestinationViewModel>(), filteredRecords:new Array<DestinationViewModel>(), loading:false, loaded:true, errorOccurred:true, errorMessage:'Error from API'});
-	   })
-    }
-
-    filterGrid() {
-
-    }
-    
-    render () {
-        if(this.state.loading) {
-            return <Spin size="large" />;
-        } 
-		else if(this.state.errorOccurred) {
-            return <Alert message={this.state.errorMessage} type="error" />
+      if (this.state.deleteSubmitted) {
+        if (this.state.deleteSuccess) {
+          errorResponse = (
+            <Alert
+              message={this.state.deleteResponse}
+              type="success"
+              style={{ marginBottom: '25px' }}
+            />
+          );
+        } else {
+          errorResponse = (
+            <Alert
+              message={this.state.deleteResponse}
+              type="error"
+              style={{ marginBottom: '25px' }}
+            />
+          );
         }
-        else if(this.state.loaded) {
+      }
 
-            let errorResponse:JSX.Element = <span></span>;
-
-            if (this.state.deleteSubmitted) {
-				if (this.state.deleteSuccess) {
-				  errorResponse = (
-					<Alert message={this.state.deleteResponse} type="success" style={{marginBottom:"25px"}} />
-				  );
-				} else {
-				  errorResponse = (
-					<Alert message={this.state.deleteResponse} type="error" style={{marginBottom:"25px"}} />
-				  );
-				}
-			}
-            
-			return (
-            <div>
-            {errorResponse}
-            <Row>
-				<Col span={8}></Col>
-				<Col span={8}>   
-				   <Input 
-					placeholder={"Search"} 
-					id={"search"} 
-					onChange={(e:any) => {
-					  this.handleSearchChanged(e)
-				   }}/>
-				</Col>
-				<Col span={8}>  
-				  <Button 
-				  style={{'float':'right'}}
-				  type="primary" 
-				  onClick={(e:any) => {
-                        this.handleCreateClick(e)
-						}}
-				  >
-				  +
-				  </Button>
-				</Col>
-			</Row>
-			<br />
-			<br />
-            <ReactTable 
-                data={this.state.filteredRecords}
-                columns={[{
-                    Header: 'Destinations',
-                    columns: [
-					  {
-                      Header: 'CountryId',
-                      accessor: 'countryId',
-                      Cell: (props) => {
-                        return <a href='' onClick={(e) => { e.preventDefault(); this.props.history.push(ClientRoutes.Countries + '/' + props.original.countryId); }}>
+      return (
+        <div>
+          {errorResponse}
+          <Row>
+            <Col span={8} />
+            <Col span={8}>
+              <Input
+                placeholder={'Search'}
+                id={'search'}
+                onChange={(e: any) => {
+                  this.handleSearchChanged(e);
+                }}
+              />
+            </Col>
+            <Col span={8}>
+              <Button
+                style={{ float: 'right' }}
+                type="primary"
+                onClick={(e: any) => {
+                  this.handleCreateClick(e);
+                }}
+              >
+                +
+              </Button>
+            </Col>
+          </Row>
+          <br />
+          <br />
+          <ReactTable
+            data={this.state.filteredRecords}
+            columns={[
+              {
+                Header: 'Destinations',
+                columns: [
+                  {
+                    Header: 'CountryId',
+                    accessor: 'countryId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Countries +
+                                '/' +
+                                props.original.countryId
+                            );
+                          }}
+                        >
                           {String(
-                            props.original.countryIdNavigation.toDisplay()
+                            props.original.countryIdNavigation &&
+                              props.original.countryIdNavigation.toDisplay()
                           )}
                         </a>
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
-                    },  {
-                      Header: 'Order',
-                      accessor: 'order',
-                      Cell: (props) => {
-                      return <span>{String(props.original.order)}</span>;
-                      }           
+                      );
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Order',
+                    accessor: 'order',
+                    Cell: props => {
+                      return <span>{String(props.original.order)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as DestinationViewModel
@@ -203,8 +255,8 @@ export default class DestinationSearchComponent extends React.Component<Destinat
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as DestinationViewModel
@@ -215,8 +267,8 @@ export default class DestinationSearchComponent extends React.Component<Destinat
                         </Button>
                         &nbsp;
                         <Button
-                          type="danger" 
-                          onClick={(e:any) => {
+                          type="danger"
+                          onClick={(e: any) => {
                             this.handleDeleteClick(
                               e,
                               row.original as DestinationViewModel
@@ -225,21 +277,26 @@ export default class DestinationSearchComponent extends React.Component<Destinat
                         >
                           <i className="far fa-trash-alt" />
                         </Button>
-
-                        </div>)
-                    }],
-                    
-                  }]} />
-                  </div>);
-        } 
-		else {
-		  return null;
-		}
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
+      );
+    } else {
+      return null;
     }
+  }
 }
 
-export const WrappedDestinationSearchComponent = Form.create({ name: 'Destination Search' })(DestinationSearchComponent);
+export const WrappedDestinationSearchComponent = Form.create({
+  name: 'Destination Search',
+})(DestinationSearchComponent);
+
 
 /*<Codenesium>
-    <Hash>3c617578f8d45a76ad0a07addc02d7fe</Hash>
+    <Hash>a73073bc5ee76c6a803db159430d4843</Hash>
 </Codenesium>*/

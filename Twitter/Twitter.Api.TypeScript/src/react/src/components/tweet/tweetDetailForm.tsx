@@ -1,12 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TweetMapper from './tweetMapper';
 import TweetViewModel from './tweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { LikeTableComponent } from '../shared/likeTable';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { QuoteTweetTableComponent } from '../shared/quoteTweetTable';
 import { RetweetTableComponent } from '../shared/retweetTable';
 
@@ -46,44 +46,45 @@ class TweetDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TweetClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Tweets +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TweetClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TweetMapper();
 
-          let mapper = new TweetMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -118,7 +119,10 @@ class TweetDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>location_id</h3>
               <p>
-                {String(this.state.model!.locationIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.locationIdNavigation &&
+                    this.state.model!.locationIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -128,31 +132,17 @@ class TweetDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>user_user_id</h3>
               <p>
-                {String(this.state.model!.userUserIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.userUserIdNavigation &&
+                    this.state.model!.userUserIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
           </div>
           {message}
           <div>
-            <h3>Likes</h3>
-            <LikeTableComponent
-              likerUserId={this.state.model!.likerUserId}
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Tweets +
-                '/' +
-                this.state.model!.tweetId +
-                '/' +
-                ApiRoutes.Likes
-              }
-            />
-          </div>
-          <div>
             <h3>QuoteTweets</h3>
             <QuoteTweetTableComponent
-              quoteTweetId={this.state.model!.quoteTweetId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -168,7 +158,6 @@ class TweetDetailComponent extends React.Component<
           <div>
             <h3>Retweets</h3>
             <RetweetTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -195,5 +184,5 @@ export const WrappedTweetDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>54f83d4aec0ba2529b69c86b6cab1291</Hash>
+    <Hash>98b0a6333f9e61bba47c8d2ef51c2f8d</Hash>
 </Codenesium>*/

@@ -1,17 +1,28 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventMapper from './eventMapper';
 import EventViewModel from './eventViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { EventStatuSelectComponent } from '../shared/eventStatuSelect';
 interface EventEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface EventEditComponentState {
@@ -20,8 +31,8 @@ interface EventEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class EventEditComponent extends React.Component<
@@ -34,232 +45,260 @@ class EventEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.EventClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Events +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.EventClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new EventMapper();
 
-          let mapper = new EventMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
-     if (!err) {
+      });
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
         let model = values as EventViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
-      } 
-	  else {
-		  this.setState({...this.state, submitting:false, submitted:false});
-	  }
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
+      }
     });
   };
 
-  submit = (model:EventViewModel) =>
-  {  
+  submit = (model: EventViewModel) => {
     let mapper = new EventMapper();
-     axios
-      .put(
+    axios
+      .put<CreateResponse<Api.EventClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Events + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.EventClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-		  let errorResponse = error.response.data as ActionResponse; 
-		  if(error.response.data)
-          {
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
+        }
+      });
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="actualEndDate">Actual End Date</label>
+            <br />
+            {getFieldDecorator('actualEndDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Actual End Date'}
+              />
+            )}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='actualEndDate'>actualEndDate</label>
-              <br />             
-              {getFieldDecorator('actualEndDate', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"actualEndDate"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="actualStartDate">Actual Start Date</label>
+            <br />
+            {getFieldDecorator('actualStartDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Actual Start Date'}
+              />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='actualStartDate'>actualStartDate</label>
-              <br />             
-              {getFieldDecorator('actualStartDate', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"actualStartDate"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="billAmount">Bill Amount</label>
+            <br />
+            {getFieldDecorator('billAmount', {
+              rules: [],
+            })(<InputNumber placeholder={'Bill Amount'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='billAmount'>billAmount</label>
-              <br />             
-              {getFieldDecorator('billAmount', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"billAmount"} /> )}
-              </Form.Item>
+          <EventStatuSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.EventStatus}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="eventStatusId"
+            required={true}
+            selectedValue={this.state.model!.eventStatusId}
+          />
 
-						<Form.Item>
-              <label htmlFor='eventStatusId'>eventStatusId</label>
-              <br />             
-              {getFieldDecorator('eventStatusId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"eventStatusId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="scheduledEndDate">Scheduled End Date</label>
+            <br />
+            {getFieldDecorator('scheduledEndDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Scheduled End Date'}
+              />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='scheduledEndDate'>scheduledEndDate</label>
-              <br />             
-              {getFieldDecorator('scheduledEndDate', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"scheduledEndDate"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="scheduledStartDate">Scheduled Start Date</label>
+            <br />
+            {getFieldDecorator('scheduledStartDate', {
+              rules: [],
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Scheduled Start Date'}
+              />
+            )}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='scheduledStartDate'>scheduledStartDate</label>
-              <br />             
-              {getFieldDecorator('scheduledStartDate', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"scheduledStartDate"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="studentNote">Student Notes</label>
+            <br />
+            {getFieldDecorator('studentNote', {
+              rules: [],
+            })(<Input placeholder={'Student Notes'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='studentNote'>studentNotes</label>
-              <br />             
-              {getFieldDecorator('studentNote', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"studentNotes"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="teacherNote">Teacher Notes</label>
+            <br />
+            {getFieldDecorator('teacherNote', {
+              rules: [],
+            })(<Input placeholder={'Teacher Notes'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='teacherNote'>teacherNotes</label>
-              <br />             
-              {getFieldDecorator('teacherNote', {
-              rules:[],
-              
-              })
-              ( <DatePicker format={'YYYY-MM-DD'} placeholder={"teacherNotes"} /> )}
-              </Form.Item>
-
-			
-            <Form.Item>
-             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(EventEditComponent);
+export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
+  EventEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>6f0bb6701d686114aeeb385446f72d7a</Hash>
+    <Hash>490b0bb5a26781ad87ce94e491eb87d7</Hash>
 </Codenesium>*/

@@ -1,21 +1,18 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Api from '../../api/models';
 import VPersonMapper from '../vPerson/vPersonMapper';
 import VPersonViewModel from '../vPerson/vPersonViewModel';
-import {
-  Spin,
-  Alert,
-  Select
-} from 'antd';
+import { Form, Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface VPersonSelectComponentProps {
   getFieldDecorator: any;
-  apiRoute:string;
-  selectedValue:number;
-  propertyName:string;
-  required:boolean;
+  apiRoute: string;
+  selectedValue: number;
+  propertyName: string;
+  required: boolean;
 }
 
 interface VPersonSelectComponentState {
@@ -23,110 +20,105 @@ interface VPersonSelectComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<VPersonViewModel>;
+  filteredRecords: Array<VPersonViewModel>;
 }
 
-export class  VPersonSelectComponent extends React.Component<
-VPersonSelectComponentProps,
-VPersonSelectComponentState
+export class VPersonSelectComponent extends React.Component<
+  VPersonSelectComponentProps,
+  VPersonSelectComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
   componentDidMount() {
-   
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.VPersonClientResponseModel>;
+      .get<Array<Api.VPersonClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new VPersonMapper();
 
-          let mapper = new VPersonMapper();
-          
-          let devices:Array<VPersonViewModel> = [];
+        let devices: Array<VPersonViewModel> = [];
 
-          response.forEach(x =>
-          {
-              devices.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          devices.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: devices,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: devices,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-    else if (this.state.errorOccurred) {
-      return <Alert message={this.state.errorMessage} type='error' />;
-    }
-	  else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-        <div>
-        {
-          this.props.getFieldDecorator(this.props.propertyName, {
-          initialValue: this.props.selectedValue,
-          rules: [{ required: this.props.required, message: 'Required' }],
-        })(
-          <Select>
-          {
-            this.state.filteredRecords.map((x:VPersonViewModel) =>
-            {
-                return <Select.Option value={x.personId}>{x.toDisplay()}</Select.Option>;
-            })
-          }
-          </Select>
-        )
-      }
-      </div>
-    );
+        <Form.Item>
+          <label htmlFor={this.props.propertyName} />
+          <br />
+          {this.props.getFieldDecorator(this.props.propertyName, {
+            initialValue: this.props.selectedValue || [],
+            rules: [{ required: this.props.required, message: 'Required' }],
+          })(
+            <Select>
+              {this.state.filteredRecords.map((x: VPersonViewModel) => {
+                return (
+                  <Select.Option key={x.personId} value={x.personId}>
+                    {x.toDisplay()}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </Form.Item>
+      );
     } else {
       return null;
     }
   }
 }
 
+
 /*<Codenesium>
-    <Hash>72e1540a55a9b7e3536161f7e1c79b38</Hash>
+    <Hash>3f37770e31020f7074dd4b6ee073a2fe</Hash>
 </Codenesium>*/

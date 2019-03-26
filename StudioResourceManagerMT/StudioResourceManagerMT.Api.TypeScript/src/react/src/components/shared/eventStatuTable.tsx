@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import EventStatuMapper from '../eventStatu/eventStatuMapper';
@@ -7,9 +7,9 @@ import EventStatuViewModel from '../eventStatu/eventStatuViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface EventStatuTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class EventStatuTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.EventStatuClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.EventStatuClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new EventStatuMapper();
 
-          let mapper = new EventStatuMapper();
+        let eventStatus: Array<EventStatuViewModel> = [];
 
-          let eventStatus: Array<EventStatuViewModel> = [];
+        response.data.forEach(x => {
+          eventStatus.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            eventStatus.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: eventStatus,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: eventStatus,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -112,13 +114,6 @@ export class EventStatuTableComponent extends React.Component<
               {
                 Header: 'EventStatus',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -171,5 +166,5 @@ export class EventStatuTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d2f4f3a2869ac8ca436609bc26154a89</Hash>
+    <Hash>f62eeb2ffc1fc0740333cd7041bce7b6</Hash>
 </Codenesium>*/

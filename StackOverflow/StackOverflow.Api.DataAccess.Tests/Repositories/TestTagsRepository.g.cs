@@ -22,7 +22,7 @@ namespace StackOverflowNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace StackOverflowNS.Api.DataAccess
 			entity.SetProperties(default(int), 2, 1, "B", 1);
 			await repository.Create(entity);
 
-			var records = await context.Set<Tags>().Where(x => true).ToListAsync();
+			var records = await context.Set<Tags>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Tags>().Where(x => true).ToListAsync();
+			var records = await context.Set<Tags>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Tags>().Where(x => true).ToListAsync();
+			var records = await context.Set<Tags>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Tags>().Where(x => true).ToListAsync();
+			var records = await context.Set<Tags>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4b0b86c3b67f0b958c6d18eeb993c423</Hash>
+    <Hash>daf3397a4d4ad286950e794437ae8f2d</Hash>
 </Codenesium>*/

@@ -3,13 +3,13 @@ import moment from 'moment';
 export default class TestAllFieldTypesNullableViewModel {
   fieldBigInt: any;
   fieldBinary: any;
-  fieldBit: any;
+  fieldBit: boolean;
   fieldChar: string;
   fieldDate: any;
   fieldDateTime: any;
   fieldDateTime2: any;
   fieldDateTimeOffset: any;
-  fieldDecimal: any;
+  fieldDecimal: number;
   fieldFloat: any;
   fieldImage: any;
   fieldMoney: any;
@@ -34,13 +34,13 @@ export default class TestAllFieldTypesNullableViewModel {
   constructor() {
     this.fieldBigInt = undefined;
     this.fieldBinary = undefined;
-    this.fieldBit = undefined;
+    this.fieldBit = false;
     this.fieldChar = '';
     this.fieldDate = undefined;
     this.fieldDateTime = undefined;
     this.fieldDateTime2 = undefined;
     this.fieldDateTimeOffset = undefined;
-    this.fieldDecimal = undefined;
+    this.fieldDecimal = 0;
     this.fieldFloat = undefined;
     this.fieldImage = undefined;
     this.fieldMoney = undefined;
@@ -66,13 +66,13 @@ export default class TestAllFieldTypesNullableViewModel {
   setProperties(
     fieldBigInt: any,
     fieldBinary: any,
-    fieldBit: any,
+    fieldBit: boolean,
     fieldChar: string,
     fieldDate: any,
     fieldDateTime: any,
     fieldDateTime2: any,
     fieldDateTimeOffset: any,
-    fieldDecimal: any,
+    fieldDecimal: number,
     fieldFloat: any,
     fieldImage: any,
     fieldMoney: any,
@@ -132,5 +132,5 @@ export default class TestAllFieldTypesNullableViewModel {
 
 
 /*<Codenesium>
-    <Hash>03727b9ae10d382a5cafe0fc192a5e2a</Hash>
+    <Hash>40063674fbf516fc1da829c5d0d485b5</Hash>
 </Codenesium>*/

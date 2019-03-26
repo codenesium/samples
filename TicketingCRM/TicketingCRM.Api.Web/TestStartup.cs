@@ -19,7 +19,7 @@ namespace TicketingCRMNS.Api.Web
 
              var builder = new ConfigurationBuilder()
                     .SetBasePath(env.ContentRootPath)
-                    .AddJsonFile($"appSettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile($"appSettings.Test.json", optional: false, reloadOnChange: true)
                     .AddEnvironmentVariables();
                 this.Configuration = builder.Build();
         }

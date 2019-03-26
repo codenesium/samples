@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SelfReferenceMapper from './selfReferenceMapper';
 import SelfReferenceViewModel from './selfReferenceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SelfReferenceDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class SelfReferenceDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.SelfReferenceClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.SelfReferences +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.SelfReferenceClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SelfReferenceMapper();
 
-          let mapper = new SelfReferenceMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -112,7 +114,8 @@ class SelfReferenceDetailComponent extends React.Component<
               <h3>SelfReferenceId</h3>
               <p>
                 {String(
-                  this.state.model!.selfReferenceIdNavigation!.toDisplay()
+                  this.state.model!.selfReferenceIdNavigation &&
+                    this.state.model!.selfReferenceIdNavigation!.toDisplay()
                 )}
               </p>
             </div>
@@ -120,7 +123,8 @@ class SelfReferenceDetailComponent extends React.Component<
               <h3>SelfReferenceId2</h3>
               <p>
                 {String(
-                  this.state.model!.selfReferenceId2Navigation!.toDisplay()
+                  this.state.model!.selfReferenceId2Navigation &&
+                    this.state.model!.selfReferenceId2Navigation!.toDisplay()
                 )}
               </p>
             </div>
@@ -140,5 +144,5 @@ export const WrappedSelfReferenceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>abf0234b850d75d5e945a029f832c65b</Hash>
+    <Hash>157b4d5f8d09b6f98b5c86d55b5a8cea</Hash>
 </Codenesium>*/

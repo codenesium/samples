@@ -22,7 +22,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -73,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 
 			Teacher entity = new Teacher();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,10 +90,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 
 			var entity = new Teacher();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			await repository.Create(entity);
 
-			var records = await context.Set<Teacher>().Where(x => true).ToListAsync();
+			var records = await context.Set<Teacher>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -105,7 +105,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 			Teacher entity = new Teacher();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -113,7 +113,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Teacher>().Where(x => true).ToListAsync();
+			var records = await context.Set<Teacher>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -125,7 +125,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 			Teacher entity = new Teacher();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -133,7 +133,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Teacher>().Where(x => true).ToListAsync();
+			var records = await context.Set<Teacher>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -145,13 +145,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 			Teacher entity = new Teacher();
-			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Teacher>().Where(x => true).ToListAsync();
+			var records = await context.Set<Teacher>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a1d1b5e7fdd66e5c733e2882c101ef64</Hash>
+    <Hash>2fdaf1ea8321e3da3408e3657978a6ff</Hash>
 </Codenesium>*/

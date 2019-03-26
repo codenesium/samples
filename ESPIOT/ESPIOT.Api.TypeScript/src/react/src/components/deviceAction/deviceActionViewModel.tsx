@@ -13,7 +13,7 @@ export default class DeviceActionViewModel {
     this.action = '';
     this.deviceId = 0;
     this.deviceIdEntity = '';
-    this.deviceIdNavigation = new DeviceViewModel();
+    this.deviceIdNavigation = undefined;
     this.id = 0;
     this.name = '';
   }
@@ -37,5 +37,5 @@ export default class DeviceActionViewModel {
 
 
 /*<Codenesium>
-    <Hash>804767f6349b1f375c3c4dd7e9abf4aa</Hash>
+    <Hash>b04cb778061760d6845ff62d85164ec6</Hash>
 </Codenesium>*/

@@ -96,6 +96,10 @@ namespace CADNS.Api.DataAccess
 		{
 			return await this.Context.Set<Call>()
 			       .Include(x => x.AddressIdNavigation)
+			       .Include(x => x.CallDispositionIdNavigation)
+			       .Include(x => x.CallStatusIdNavigation)
+			       .Include(x => x.CallTypeIdNavigation)
+
 			       .Where(x => x.AddressId == addressId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Call>();
 		}
 
@@ -125,5 +129,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>518d2466ced46fa1ff409a3dee7126ec</Hash>
+    <Hash>f78f6d49f0966bc46c4fe202a554b0e9</Hash>
 </Codenesium>*/

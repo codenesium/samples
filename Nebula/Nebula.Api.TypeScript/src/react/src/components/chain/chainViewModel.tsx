@@ -16,13 +16,13 @@ export default class ChainViewModel {
   constructor() {
     this.chainStatusId = 0;
     this.chainStatusIdEntity = '';
-    this.chainStatusIdNavigation = new ChainStatusViewModel();
+    this.chainStatusIdNavigation = undefined;
     this.externalId = undefined;
     this.id = 0;
     this.name = '';
     this.teamId = 0;
     this.teamIdEntity = '';
-    this.teamIdNavigation = new TeamViewModel();
+    this.teamIdNavigation = undefined;
   }
 
   setProperties(
@@ -46,5 +46,5 @@ export default class ChainViewModel {
 
 
 /*<Codenesium>
-    <Hash>d455cc8dfbb49558a2060e017a3a070c</Hash>
+    <Hash>d4d421b43ce4e7bbd84cf93fcb2ebceb</Hash>
 </Codenesium>*/

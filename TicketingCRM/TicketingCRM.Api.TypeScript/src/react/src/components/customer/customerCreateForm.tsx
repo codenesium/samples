@@ -1,18 +1,28 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CustomerMapper from './customerMapper';
 import CustomerViewModel from './customerViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CustomerCreateComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface CustomerCreateComponentState {
@@ -21,8 +31,8 @@ interface CustomerCreateComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class CustomerCreateComponent extends React.Component<
@@ -35,154 +45,167 @@ class CustomerCreateComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as CustomerViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
       }
-	  else {
-	      this.setState({...this.state, submitting:false, submitted:false});
-	  }
     });
   };
 
-  submit = (model:CustomerViewModel) =>
-  {  
+  submit = (model: CustomerViewModel) => {
     let mapper = new CustomerMapper();
-     axios
-      .post(
+    axios
+      .post<CreateResponse<Api.CustomerClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Customers,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.CustomerClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if(error.response.data)
-          {
-			  let errorResponse = error.response.data as ActionResponse; 
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
         }
-      ); 
-  }
-  
-  render() {
+      });
+  };
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="email">Email</label>
+            <br />
+            {getFieldDecorator('email', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'Email'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='email'>Email</label>
-              <br />             
-              {getFieldDecorator('email', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <Input placeholder={"Email"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="firstName">First Name</label>
+            <br />
+            {getFieldDecorator('firstName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'First Name'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='firstName'>First Name</label>
-              <br />             
-              {getFieldDecorator('firstName', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <Input placeholder={"First Name"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="lastName">Last Name</label>
+            <br />
+            {getFieldDecorator('lastName', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<Input placeholder={'Last Name'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='lastName'>Last Name</label>
-              <br />             
-              {getFieldDecorator('lastName', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <Input placeholder={"Last Name"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="phone">Phone</label>
+            <br />
+            {getFieldDecorator('phone', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 128, message: 'Exceeds max length of 128' },
+              ],
+            })(<InputNumber placeholder={'Phone'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='phone'>Phone</label>
-              <br />             
-              {getFieldDecorator('phone', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 128, message: 'Exceeds max length of 128' },
-],
-              
-              })
-              ( <InputNumber placeholder={"Phone"} /> )}
-              </Form.Item>
-
-			
-           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedCustomerCreateComponent = Form.create({ name: 'Customer Create' })(CustomerCreateComponent);
+export const WrappedCustomerCreateComponent = Form.create({
+  name: 'Customer Create',
+})(CustomerCreateComponent);
+
 
 /*<Codenesium>
-    <Hash>9f382d87798be2aa8d205baf4d853634</Hash>
+    <Hash>5de120614b0c0f611f9cb183beae76b5</Hash>
 </Codenesium>*/

@@ -92,6 +92,7 @@ namespace PetStoreNS.Api.DataAccess
 		{
 			return await this.Context.Set<Breed>()
 			       .Include(x => x.SpeciesIdNavigation)
+
 			       .Where(x => x.SpeciesId == speciesId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Breed>();
 		}
 
@@ -121,5 +122,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>04f5fa7113d3799c4a1deb1aa0869519</Hash>
+    <Hash>d6a710d4d571401561f0e535b838dec6</Hash>
 </Codenesium>*/

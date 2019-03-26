@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CallMapper from './callMapper';
 import CallViewModel from './callViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { CallAssignmentTableComponent } from '../shared/callAssignmentTable';
 import { NoteTableComponent } from '../shared/noteTable';
 
@@ -45,44 +46,45 @@ class CallDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.CallClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Calls +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.CallClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CallMapper();
 
-          let mapper = new CallMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -109,21 +111,28 @@ class CallDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>addressId</h3>
               <p>
-                {String(this.state.model!.addressIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.addressIdNavigation &&
+                    this.state.model!.addressIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>callDispositionId</h3>
               <p>
                 {String(
-                  this.state.model!.callDispositionIdNavigation!.toDisplay()
+                  this.state.model!.callDispositionIdNavigation &&
+                    this.state.model!.callDispositionIdNavigation!.toDisplay()
                 )}
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>callStatusId</h3>
               <p>
-                {String(this.state.model!.callStatusIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.callStatusIdNavigation &&
+                    this.state.model!.callStatusIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -133,7 +142,10 @@ class CallDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>callTypeId</h3>
               <p>
-                {String(this.state.model!.callTypeIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.callTypeIdNavigation &&
+                    this.state.model!.callTypeIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -157,7 +169,6 @@ class CallDetailComponent extends React.Component<
           <div>
             <h3>CallAssignments</h3>
             <CallAssignmentTableComponent
-              callId={this.state.model!.callId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -173,7 +184,6 @@ class CallDetailComponent extends React.Component<
           <div>
             <h3>Notes</h3>
             <NoteTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -200,5 +210,5 @@ export const WrappedCallDetailComponent = Form.create({ name: 'Call Detail' })(
 
 
 /*<Codenesium>
-    <Hash>22ef281c472378f178103778c2991b42</Hash>
+    <Hash>f31b2af3683e78024e2c21cb82078dba</Hash>
 </Codenesium>*/

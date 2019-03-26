@@ -95,6 +95,7 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			return await this.Context.Set<Sale>()
 			       .Include(x => x.PetIdNavigation)
+
 			       .Where(x => x.PetId == petId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
@@ -132,5 +133,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c1536592520157e1e306ef2a15360451</Hash>
+    <Hash>6b064073d35be30fc4d06e83c4674512</Hash>
 </Codenesium>*/

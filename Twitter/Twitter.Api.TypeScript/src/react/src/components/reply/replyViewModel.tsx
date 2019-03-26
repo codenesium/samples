@@ -15,7 +15,7 @@ export default class ReplyViewModel {
     this.date = undefined;
     this.replierUserId = 0;
     this.replierUserIdEntity = '';
-    this.replierUserIdNavigation = new UserViewModel();
+    this.replierUserIdNavigation = undefined;
     this.replyId = 0;
     this.time = undefined;
   }
@@ -35,11 +35,11 @@ export default class ReplyViewModel {
   }
 
   toDisplay(): string {
-    return String(this.content);
+    return String(this.date);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>93d3af8a36819a7083ee58ac49adb777</Hash>
+    <Hash>a3cb5209f386770ad133348db521d43f</Hash>
 </Codenesium>*/

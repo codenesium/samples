@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VotesMapper from './votesMapper';
 import VotesViewModel from './votesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface VotesDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class VotesDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.VotesClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Votes +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.VotesClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new VotesMapper();
 
-          let mapper = new VotesMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -114,16 +116,29 @@ class VotesDetailComponent extends React.Component<
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Post</h3>
-              <p>{String(this.state.model!.postIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.postIdNavigation &&
+                    this.state.model!.postIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>User</h3>
-              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Vote Type</h3>
               <p>
-                {String(this.state.model!.voteTypeIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.voteTypeIdNavigation &&
+                    this.state.model!.voteTypeIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
           </div>
@@ -142,5 +157,5 @@ export const WrappedVotesDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4638a327732282ea91dd55c0e40d18d6</Hash>
+    <Hash>4d9c2eafb7f32ac9e39d191a0ceaf8f3</Hash>
 </Codenesium>*/

@@ -22,7 +22,7 @@ namespace NebulaNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace NebulaNS.Api.DataAccess
 			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<Organization>().Where(x => true).ToListAsync();
+			var records = await context.Set<Organization>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace NebulaNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Organization>().Where(x => true).ToListAsync();
+			var records = await context.Set<Organization>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace NebulaNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Organization>().Where(x => true).ToListAsync();
+			var records = await context.Set<Organization>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace NebulaNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Organization>().Where(x => true).ToListAsync();
+			var records = await context.Set<Organization>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67fa52938ea4d8310b33eaa6665acf2f</Hash>
+    <Hash>76f03784273c0f1c664b180ba53f3c58</Hash>
 </Codenesium>*/

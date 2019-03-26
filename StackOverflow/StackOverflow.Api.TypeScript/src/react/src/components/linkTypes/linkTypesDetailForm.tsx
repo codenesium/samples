@@ -1,15 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkTypesMapper from './linkTypesMapper';
 import LinkTypesViewModel from './linkTypesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {PostLinksTableComponent} from '../shared/postLinksTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { PostLinksTableComponent } from '../shared/postLinksTable';
 
 interface LinkTypesDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,104 +24,110 @@ interface LinkTypesDetailComponentState {
 }
 
 class LinkTypesDetailComponent extends React.Component<
-LinkTypesDetailComponentProps,
-LinkTypesDetailComponentState
+  LinkTypesDetailComponentProps,
+  LinkTypesDetailComponentState
 > {
   state = {
     model: new LinkTypesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.LinkTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.LinkTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.LinkTypesClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.LinkTypes +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.LinkTypesClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new LinkTypesMapper();
 
-          let mapper = new LinkTypesMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Rw Type</h3>
-							<p>{String(this.state.model!.rwType)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Rw Type</h3>
+              <p>{String(this.state.model!.rwType)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>PostLinks</h3>
-            <PostLinksTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.LinkTypes + '/' + this.state.model!.id + '/' + ApiRoutes.PostLinks}
-			/>
-         </div>
-	
-
+            <PostLinksTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.LinkTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.PostLinks
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +136,11 @@ LinkTypesDetailComponentState
   }
 }
 
-export const WrappedLinkTypesDetailComponent = Form.create({ name: 'LinkTypes Detail' })(
-  LinkTypesDetailComponent
-);
+export const WrappedLinkTypesDetailComponent = Form.create({
+  name: 'LinkTypes Detail',
+})(LinkTypesDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>ee51af2eb1da27accaa3cdba05c94a2c</Hash>
+    <Hash>ad63b82720a1f9cbcdbea1d1b795bd65</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ export default class SaleViewModel {
     this.saleDate = undefined;
     this.transactionId = 0;
     this.transactionIdEntity = '';
-    this.transactionIdNavigation = new TransactionViewModel();
+    this.transactionIdNavigation = undefined;
   }
 
   setProperties(
@@ -41,5 +41,5 @@ export default class SaleViewModel {
 
 
 /*<Codenesium>
-    <Hash>c0ab27c2d16791114b0e68a6fa4e11a7</Hash>
+    <Hash>2cfd29e24ce4802bacf6e629d1bb3e58</Hash>
 </Codenesium>*/

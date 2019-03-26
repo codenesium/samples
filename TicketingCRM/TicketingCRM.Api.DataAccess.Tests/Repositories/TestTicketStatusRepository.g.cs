@@ -22,7 +22,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<TicketStatus>().Where(x => true).ToListAsync();
+			var records = await context.Set<TicketStatus>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace TicketingCRMNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<TicketStatus>().Where(x => true).ToListAsync();
+			var records = await context.Set<TicketStatus>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace TicketingCRMNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<TicketStatus>().Where(x => true).ToListAsync();
+			var records = await context.Set<TicketStatus>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace TicketingCRMNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<TicketStatus>().Where(x => true).ToListAsync();
+			var records = await context.Set<TicketStatus>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e54bdeb1ee473a25d60c2209adf63ffd</Hash>
+    <Hash>578fdfffa38f79cbd4629ed17d2ad4b4</Hash>
 </Codenesium>*/

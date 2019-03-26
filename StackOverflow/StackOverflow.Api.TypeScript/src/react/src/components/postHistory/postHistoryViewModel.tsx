@@ -26,16 +26,16 @@ export default class PostHistoryViewModel {
     this.id = 0;
     this.postHistoryTypeId = 0;
     this.postHistoryTypeIdEntity = '';
-    this.postHistoryTypeIdNavigation = new PostHistoryTypesViewModel();
+    this.postHistoryTypeIdNavigation = undefined;
     this.postId = 0;
     this.postIdEntity = '';
-    this.postIdNavigation = new PostsViewModel();
+    this.postIdNavigation = undefined;
     this.revisionGUID = '';
     this.text = '';
     this.userDisplayName = '';
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = new UsersViewModel();
+    this.userIdNavigation = undefined;
   }
 
   setProperties(
@@ -67,5 +67,5 @@ export default class PostHistoryViewModel {
 
 
 /*<Codenesium>
-    <Hash>2ccc0608fbe3a777b80d89a1b045d658</Hash>
+    <Hash>6fae2087b748750b12490d275dbab6b9</Hash>
 </Codenesium>*/

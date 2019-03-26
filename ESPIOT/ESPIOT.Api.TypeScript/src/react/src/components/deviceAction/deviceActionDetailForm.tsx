@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceActionMapper from './deviceActionMapper';
 import DeviceActionViewModel from './deviceActionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DeviceActionDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,103 +23,108 @@ interface DeviceActionDetailComponentState {
 }
 
 class DeviceActionDetailComponent extends React.Component<
-DeviceActionDetailComponentProps,
-DeviceActionDetailComponentState
+  DeviceActionDetailComponentProps,
+  DeviceActionDetailComponentState
 > {
   state = {
     model: new DeviceActionViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.DeviceActions + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.DeviceActions + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.DeviceActionClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.DeviceActions +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.DeviceActionClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new DeviceActionMapper();
 
-          let mapper = new DeviceActionMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Action</h3>
-							<p>{String(this.state.model!.action)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Device</h3>
-							<p>{String(this.state.model!.deviceIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Action</h3>
+              <p>{String(this.state.model!.action)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Device</h3>
+              <p>
+                {String(
+                  this.state.model!.deviceIdNavigation &&
+                    this.state.model!.deviceIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +133,11 @@ DeviceActionDetailComponentState
   }
 }
 
-export const WrappedDeviceActionDetailComponent = Form.create({ name: 'DeviceAction Detail' })(
-  DeviceActionDetailComponent
-);
+export const WrappedDeviceActionDetailComponent = Form.create({
+  name: 'DeviceAction Detail',
+})(DeviceActionDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>5391b2c3ac998f908ca96fa8080d390f</Hash>
+    <Hash>edc54c36eaa7df979a5152aa24a9720e</Hash>
 </Codenesium>*/

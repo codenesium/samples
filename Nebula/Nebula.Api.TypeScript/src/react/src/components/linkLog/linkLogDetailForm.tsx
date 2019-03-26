@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import LinkLogMapper from './linkLogMapper';
 import LinkLogViewModel from './linkLogViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface LinkLogDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,107 +23,112 @@ interface LinkLogDetailComponentState {
 }
 
 class LinkLogDetailComponent extends React.Component<
-LinkLogDetailComponentProps,
-LinkLogDetailComponentState
+  LinkLogDetailComponentProps,
+  LinkLogDetailComponentState
 > {
   state = {
     model: new LinkLogViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.LinkLogs + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.LinkLogs + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.LinkLogClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.LinkLogs +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.LinkLogClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new LinkLogMapper();
 
-          let mapper = new LinkLogMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>DateEntered</h3>
-							<p>{String(this.state.model!.dateEntered)}</p>
-						 </div>
-					   						 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>LinkId</h3>
-							<p>{String(this.state.model!.linkIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>Log</h3>
-							<p>{String(this.state.model!.log)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>DateEntered</h3>
+              <p>{String(this.state.model!.dateEntered)}</p>
+            </div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>LinkId</h3>
+              <p>
+                {String(
+                  this.state.model!.linkIdNavigation &&
+                    this.state.model!.linkIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>Log</h3>
+              <p>{String(this.state.model!.log)}</p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -134,10 +137,11 @@ LinkLogDetailComponentState
   }
 }
 
-export const WrappedLinkLogDetailComponent = Form.create({ name: 'LinkLog Detail' })(
-  LinkLogDetailComponent
-);
+export const WrappedLinkLogDetailComponent = Form.create({
+  name: 'LinkLog Detail',
+})(LinkLogDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>15662a2d8b76c97da2baa717837cb35b</Hash>
+    <Hash>a53ea368a4993b2edcd371fa32be7319</Hash>
 </Codenesium>*/

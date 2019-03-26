@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Features.Metadata;
 using Autofac.Features.ResolveAnything;
+using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,9 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -132,55 +136,74 @@ namespace ESPIOTNS.Api.Web
 
         public virtual void SetupAuthentication(IServiceCollection services)
         {
-            if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+			byte[] key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
+			if (key.Length <= 16)
+			{
+				throw new Exception("JWT key mut be longer than 16 characters");
+			}
+
+			services.AddIdentity<AuthUser, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultTokenProviders();
+
+			services.Configure<IdentityOptions>(options =>
+			{
+				// Password settings.
+				options.Password.RequiredLength = 8;
+				// options.Password.RequireDigit = true;
+				// options.Password.RequireLowercase = true;
+				// options.Password.RequireNonAlphanumeric = true;
+				// options.Password.RequireUppercase = true;
+				// options.Password.RequiredUniqueChars = 1;
+
+				// Lockout settings.
+				// options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+				// options.Lockout.MaxFailedAccessAttempts = 5;
+				// options.Lockout.AllowedForNewUsers = true;
+				// options.SignIn.RequireConfirmedEmail = true;
+
+				// User settings.
+				options.User.AllowedUserNameCharacters =
+				"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+				options.User.RequireUniqueEmail = true;
+			});
+
+            services.AddAuthentication(cfg =>
+			{
+				cfg.DefaultScheme = IdentityConstants.ApplicationScheme;
+				cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
+            .AddJwtBearer(jwtBearerOptions =>
             {
-                var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
-                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(jwtBearerOptions =>
+                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ClockSkew = TimeSpan.FromMinutes(5),
-                        ValidateAudience = true,
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        RequireSignedTokens = true,
-                        RequireExpirationTime = true,
-                        ValidAudience = this.Configuration["JwtAudience"],
-                        ValidIssuer = this.Configuration["JwtIssuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(key)
-                    };
-                });
-            }
+                    ClockSkew = TimeSpan.FromMinutes(5),
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+                    RequireSignedTokens = true,
+                    RequireExpirationTime = true,
+                    ValidAudience = this.Configuration["JwtAudience"],
+                    ValidIssuer = this.Configuration["JwtIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
         }
 
 		/// <summary>
-		/// Set up authorization and require the SuperUser claim in order to access
-		/// the API. If SecurityEnabled is set to false in the appsettings then disable all 
-		/// authorization.
+		/// Set up authorization for the API
 		/// </summary>
 		/// <param name="services"></param>
 		public virtual void SetupAuthorization(IServiceCollection services)
 		{
-			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+			services.AddAuthorization(options =>
 			{
-				services.AddAuthorization(options =>
-				{
-				    // set up your policies here
-					// this can be modified to require claims or roles
-					// options.AddPolicy("RequireAuthenticatedUser", policy =>
-					// policy.RequireAuthenticatedUser());
-				});
-			}
+				// set up your policies here
+				// this can be modified to require claims or roles
+				// options.AddPolicy("RequireAuthenticatedUser", policy =>
+				// policy.RequireAuthenticatedUser());
+			});
 		}
-
-        public virtual void EnableSecurity(IApplicationBuilder app)
-        {
-            if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-            {
-                 app.UseAuthentication();
-            }
-        }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -201,15 +224,13 @@ namespace ESPIOTNS.Api.Web
 
             services.AddMvcCore(config =>
             {
-                if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-                {
-                     var policy = new AuthorizationPolicyBuilder()
-                                  .RequireAuthenticatedUser()
-                                  .Build();
+                 var policy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+							.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                            .Build();
 
-					 // add a policy requiring a an authenticated user to hit any controller
-                     config.Filters.Add(new AuthorizeFilter(policy));
-                 }
+				 // add a policy requiring a an authenticated user to hit any controller
+                 config.Filters.Add(new AuthorizeFilter(policy));
 
 				 // add a total request time item to the response header collection
                  config.Filters.Add(new BenchmarkAttribute());
@@ -261,15 +282,12 @@ namespace ESPIOTNS.Api.Web
 
                 // integrate xml comments
                 // o.IncludeXmlComments( XmlCommentsFilePath );
-                if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+                var security = new Dictionary<string, IEnumerable<string>>
                 {
-                   var security = new Dictionary<string, IEnumerable<string>>
-                   {
-                        {"Bearer", new string[] { }},
-                   };
-                   o.AddSecurityRequirement(security);
-                   o.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT prefixed with Bearer", Name = "Authorization", Type = "apiKey" });
-                }
+                    {"Bearer", new string[] { }},
+                };
+                o.AddSecurityRequirement(security);
+                o.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT prefixed with Bearer", Name = "Authorization", Type = "apiKey" });
             });
 
             this.SetupLogging(services);
@@ -346,8 +364,21 @@ namespace ESPIOTNS.Api.Web
             // register the mediator and register all handlers in the services assembly
 			builder.AddMediatR(typeof(AbstractService).Assembly);
 
+			// register HttpContextAccessor so we can access HttpContext outside of controllers
+			builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+
+			// register UserStore so identity works
+			builder.RegisterType<UserStore<AuthUser>>().As<IUserStore<AuthUser>>();
+
+			// register EmailSender so we can send auth emails
+			builder.RegisterType<EmailSender>().As<IEmailSender>();
+
+			// register JWTHelper so we can create bearer tokens
+			builder.RegisterType<JWTHelper>().As<IJWTHelper>();
+			
             // build the DI container
             this.ApplicationApiContainer = builder.Build();
+
             return new AutofacServiceProvider(this.ApplicationApiContainer);
         }
 
@@ -368,7 +399,7 @@ namespace ESPIOTNS.Api.Web
 
             this.MigrateDatabase(context, loggerFactory.CreateLogger<Startup>());
 
-            this.EnableSecurity(app);
+            app.UseAuthentication();
 
             app.UseSwagger();
 				
@@ -386,12 +417,16 @@ namespace ESPIOTNS.Api.Web
 
             app.UseMvc();
 
-		    app.UseStaticFiles(new StaticFileOptions
+			string appDirectory = Path.Combine(Directory.GetCurrentDirectory(), "app");
+
+		    if (Directory.Exists(appDirectory))
 			{
-				FileProvider = new PhysicalFileProvider(
-				Path.Combine(Directory.GetCurrentDirectory(), "app")),
-				RequestPath = string.Empty
-			});
+				app.UseStaticFiles(new StaticFileOptions
+				{
+					FileProvider = new PhysicalFileProvider(appDirectory),
+					RequestPath = string.Empty
+				});
+			}
 
 
             // If you want to dispose of resources that have been resolved in the
@@ -431,7 +466,7 @@ namespace ESPIOTNS.Api.Web
         }
     }
 
-    public static class ExceptionMiddleWareExtentions
+    public static class ExceptionMiddleWareExtensions
     {
         public static IApplicationBuilder UseExceptionMiddleWare(
             this IApplicationBuilder builder)

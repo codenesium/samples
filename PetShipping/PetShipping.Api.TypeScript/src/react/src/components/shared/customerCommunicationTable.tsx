@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CustomerCommunicationMapper from '../customerCommunication/customerCommunicationMapper';
@@ -7,9 +7,9 @@ import CustomerCommunicationViewModel from '../customerCommunication/customerCom
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CustomerCommunicationTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -53,48 +53,49 @@ export class CustomerCommunicationTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.CustomerCommunicationClientResponseModel>>(
+        this.props.apiRoute,
+        {
+          headers: GlobalUtilities.defaultHeaders(),
+        }
+      )
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+
+        let mapper = new CustomerCommunicationMapper();
+
+        let customerCommunications: Array<CustomerCommunicationViewModel> = [];
+
+        response.data.forEach(x => {
+          customerCommunications.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: customerCommunications,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.CustomerCommunicationClientResponseModel
-          >;
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-          console.log(response);
-
-          let mapper = new CustomerCommunicationMapper();
-
-          let customerCommunications: Array<
-            CustomerCommunicationViewModel
-          > = [];
-
-          response.forEach(x => {
-            customerCommunications.push(mapper.mapApiResponseToViewModel(x));
-          });
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: customerCommunications,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -135,7 +136,8 @@ export class CustomerCommunicationTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.customerIdNavigation.toDisplay()
+                            props.original.customerIdNavigation &&
+                              props.original.customerIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -165,7 +167,8 @@ export class CustomerCommunicationTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.employeeIdNavigation.toDisplay()
+                            props.original.employeeIdNavigation &&
+                              props.original.employeeIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -223,5 +226,5 @@ export class CustomerCommunicationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>39578e89cf17a713803bb74b29fcdd9b</Hash>
+    <Hash>50cdfc3b8b3aae84630e0ca22ca061f3</Hash>
 </Codenesium>*/

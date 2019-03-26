@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { CountrySelectComponent } from '../shared/countrySelect';
 
 interface ProvinceCreateComponentProps {
@@ -56,7 +56,6 @@ class ProvinceCreateComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as ProvinceViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -67,55 +66,56 @@ class ProvinceCreateComponent extends React.Component<
   submit = (model: ProvinceViewModel) => {
     let mapper = new ProvinceMapper();
     axios
-      .post(
+      .post<CreateResponse<Api.ProvinceClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Provinces,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.ProvinceClientRequestModel
-          >;
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if (error.response.data) {
-            let errorResponse = error.response.data as ActionResponse;
-
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -140,17 +140,13 @@ class ProvinceCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="countryId">Country</label>
-            <br />
-            <CountrySelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="countryId"
-              required={true}
-              selectedValue={this.state.model!.countryId}
-            />
-          </Form.Item>
+          <CountrySelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="countryId"
+            required={true}
+            selectedValue={this.state.model!.countryId}
+          />
 
           <Form.Item>
             <label htmlFor="name">Name</label>
@@ -187,5 +183,5 @@ export const WrappedProvinceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c31716bd79e7ae7b51d6a5e8efa9fff4</Hash>
+    <Hash>57188f3b75f18a42e980b75a6e6e80c9</Hash>
 </Codenesium>*/

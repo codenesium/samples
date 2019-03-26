@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VehicleMapper from './vehicleMapper';
 import VehicleViewModel from './vehicleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { VehicleCapabilitiesTableComponent } from '../shared/vehicleCapabilitiesTable';
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { VehicleCapabilittyTableComponent } from '../shared/vehicleCapabilittyTable';
 import { VehicleOfficerTableComponent } from '../shared/vehicleOfficerTable';
 
 interface VehicleDetailComponentProps {
@@ -45,44 +46,45 @@ class VehicleDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.VehicleClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Vehicles +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.VehicleClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new VehicleMapper();
 
-          let mapper = new VehicleMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -114,8 +116,7 @@ class VehicleDetailComponent extends React.Component<
           {message}
           <div>
             <h3>VehicleCapabilities</h3>
-            <VehicleCapabilitiesTableComponent
-              vehicleId={this.state.model!.vehicleId}
+            <VehicleCapabilittyTableComponent
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -131,7 +132,6 @@ class VehicleDetailComponent extends React.Component<
           <div>
             <h3>VehicleOfficers</h3>
             <VehicleOfficerTableComponent
-              officerId={this.state.model!.officerId}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -158,5 +158,5 @@ export const WrappedVehicleDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>34ec551f634c41bb62f80914718fdfbb</Hash>
+    <Hash>53847847f49306adf63b8b7e686ef4b9</Hash>
 </Codenesium>*/

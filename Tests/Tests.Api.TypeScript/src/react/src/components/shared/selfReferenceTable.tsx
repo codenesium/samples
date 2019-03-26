@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SelfReferenceMapper from '../selfReference/selfReferenceMapper';
@@ -7,9 +7,9 @@ import SelfReferenceViewModel from '../selfReference/selfReferenceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SelfReferenceTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,46 +51,46 @@ export class SelfReferenceTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.SelfReferenceClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.SelfReferenceClientResponseModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SelfReferenceMapper();
 
-          let mapper = new SelfReferenceMapper();
+        let selfReferences: Array<SelfReferenceViewModel> = [];
 
-          let selfReferences: Array<SelfReferenceViewModel> = [];
+        response.data.forEach(x => {
+          selfReferences.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            selfReferences.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: selfReferences,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: selfReferences,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -138,7 +138,8 @@ export class SelfReferenceTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.selfReferenceIdNavigation.toDisplay()
+                            props.original.selfReferenceIdNavigation &&
+                              props.original.selfReferenceIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -161,7 +162,8 @@ export class SelfReferenceTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.selfReferenceId2Navigation.toDisplay()
+                            props.original.selfReferenceId2Navigation &&
+                              props.original.selfReferenceId2Navigation.toDisplay()
                           )}
                         </a>
                       );
@@ -212,5 +214,5 @@ export class SelfReferenceTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>20b16d17e635d4d5b78e60b3b1eb5f28</Hash>
+    <Hash>7fe28bc1a2a7818401041f2b1049c976</Hash>
 </Codenesium>*/

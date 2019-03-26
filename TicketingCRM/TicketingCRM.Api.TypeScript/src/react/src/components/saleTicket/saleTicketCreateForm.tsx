@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { SaleSelectComponent } from '../shared/saleSelect';
 import { TicketSelectComponent } from '../shared/ticketSelect';
 
@@ -57,7 +57,6 @@ class SaleTicketCreateComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as SaleTicketViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -68,55 +67,56 @@ class SaleTicketCreateComponent extends React.Component<
   submit = (model: SaleTicketViewModel) => {
     let mapper = new SaleTicketMapper();
     axios
-      .post(
+      .post<CreateResponse<Api.SaleTicketClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.SaleTickets,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.SaleTicketClientRequestModel
-          >;
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if (error.response.data) {
-            let errorResponse = error.response.data as ActionResponse;
-
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -141,29 +141,21 @@ class SaleTicketCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="saleId">Sale</label>
-            <br />
-            <SaleSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Sales}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="saleId"
-              required={true}
-              selectedValue={this.state.model!.saleId}
-            />
-          </Form.Item>
+          <SaleSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Sales}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="saleId"
+            required={true}
+            selectedValue={this.state.model!.saleId}
+          />
 
-          <Form.Item>
-            <label htmlFor="ticketId">Ticket</label>
-            <br />
-            <TicketSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Tickets}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="ticketId"
-              required={true}
-              selectedValue={this.state.model!.ticketId}
-            />
-          </Form.Item>
+          <TicketSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Tickets}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="ticketId"
+            required={true}
+            selectedValue={this.state.model!.ticketId}
+          />
 
           <Form.Item>
             <Button
@@ -189,5 +181,5 @@ export const WrappedSaleTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5751c6da1ad7090663514d8afa9cc38c</Hash>
+    <Hash>0be8a852c144c18d085ede5d978d5bf1</Hash>
 </Codenesium>*/

@@ -1,15 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SpeciesMapper from './speciesMapper';
 import SpeciesViewModel from './speciesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {BreedTableComponent} from '../shared/breedTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { BreedTableComponent } from '../shared/breedTable';
 
 interface SpeciesDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,104 +24,110 @@ interface SpeciesDetailComponentState {
 }
 
 class SpeciesDetailComponent extends React.Component<
-SpeciesDetailComponentProps,
-SpeciesDetailComponentState
+  SpeciesDetailComponentProps,
+  SpeciesDetailComponentState
 > {
   state = {
     model: new SpeciesViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Species + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Species + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.SpeciesClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Species +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.SpeciesClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SpeciesMapper();
 
-          let mapper = new SpeciesMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Breeds</h3>
-            <BreedTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Species + '/' + this.state.model!.id + '/' + ApiRoutes.Breeds}
-			/>
-         </div>
-	
-
+            <BreedTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Species +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Breeds
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +136,11 @@ SpeciesDetailComponentState
   }
 }
 
-export const WrappedSpeciesDetailComponent = Form.create({ name: 'Species Detail' })(
-  SpeciesDetailComponent
-);
+export const WrappedSpeciesDetailComponent = Form.create({
+  name: 'Species Detail',
+})(SpeciesDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b816527f2c192f68ea3fb8b12bcc4127</Hash>
+    <Hash>5a7fbccaf24eeb501f1574ef0af60f5f</Hash>
 </Codenesium>*/

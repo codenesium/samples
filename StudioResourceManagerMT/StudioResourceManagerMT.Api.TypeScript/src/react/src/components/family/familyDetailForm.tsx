@@ -1,11 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import FamilyMapper from './familyMapper';
 import FamilyViewModel from './familyViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { StudentTableComponent } from '../shared/studentTable';
 
 interface FamilyDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +45,45 @@ class FamilyDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.FamilyClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Families +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.FamilyClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new FamilyMapper();
 
-          let mapper = new FamilyMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -105,31 +108,42 @@ class FamilyDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>notes</h3>
+              <h3>Notes</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
             <div>
-              <h3>primaryContactEmail</h3>
+              <h3>Primary Contact Email</h3>
               <p>{String(this.state.model!.primaryContactEmail)}</p>
             </div>
             <div>
-              <h3>primaryContactFirstName</h3>
+              <h3>Primary Contact First Name</h3>
               <p>{String(this.state.model!.primaryContactFirstName)}</p>
             </div>
             <div>
-              <h3>primaryContactLastName</h3>
+              <h3>Primary Contact Last Name</h3>
               <p>{String(this.state.model!.primaryContactLastName)}</p>
             </div>
             <div>
-              <h3>primaryContactPhone</h3>
+              <h3>Primary Contact Phone</h3>
               <p>{String(this.state.model!.primaryContactPhone)}</p>
             </div>
           </div>
           {message}
+          <div>
+            <h3>Students</h3>
+            <StudentTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Families +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Students
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -144,5 +158,5 @@ export const WrappedFamilyDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8be505a4d0a5e5f291cdc3a703f4157c</Hash>
+    <Hash>3265a637a5a24fb214bbc36d49d41d85</Hash>
 </Codenesium>*/

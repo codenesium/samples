@@ -15,10 +15,10 @@ export default class SaleTicketViewModel {
     this.id = 0;
     this.saleId = 0;
     this.saleIdEntity = '';
-    this.saleIdNavigation = new SaleViewModel();
+    this.saleIdNavigation = undefined;
     this.ticketId = 0;
     this.ticketIdEntity = '';
-    this.ticketIdNavigation = new TicketViewModel();
+    this.ticketIdNavigation = undefined;
   }
 
   setProperties(id: number, saleId: number, ticketId: number): void {
@@ -34,5 +34,5 @@ export default class SaleTicketViewModel {
 
 
 /*<Codenesium>
-    <Hash>caf21eae567186882df711b67fa7a4c5</Hash>
+    <Hash>fc1c99d58856a09259e3d7f748e2401f</Hash>
 </Codenesium>*/

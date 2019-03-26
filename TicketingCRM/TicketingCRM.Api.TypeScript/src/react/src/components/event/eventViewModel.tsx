@@ -21,7 +21,7 @@ export default class EventViewModel {
     this.address2 = '';
     this.cityId = 0;
     this.cityIdEntity = '';
-    this.cityIdNavigation = new CityViewModel();
+    this.cityIdNavigation = undefined;
     this.date = undefined;
     this.description = '';
     this.endDate = undefined;
@@ -65,5 +65,5 @@ export default class EventViewModel {
 
 
 /*<Codenesium>
-    <Hash>52dab1ae57db3cf92ed750e6ee00626c</Hash>
+    <Hash>459fbcdc5a2b23606d320d263d718b6d</Hash>
 </Codenesium>*/

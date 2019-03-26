@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import SpaceMapper from './spaceMapper';
 import SpaceViewModel from './spaceViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SpaceDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class SpaceDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.SpaceClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Spaces +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.SpaceClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new SpaceMapper();
 
-          let mapper = new SpaceMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -105,15 +107,11 @@ class SpaceDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>description</h3>
+              <h3>Description</h3>
               <p>{String(this.state.model!.description)}</p>
             </div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -132,5 +130,5 @@ export const WrappedSpaceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b2afec706a8a309654bd8ddb39c63051</Hash>
+    <Hash>52e27c6aa14afe2a7c1420916c74af92</Hash>
 </Codenesium>*/

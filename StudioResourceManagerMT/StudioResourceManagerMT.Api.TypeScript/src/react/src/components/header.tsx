@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ClientRoutes, Constants } from '../constants';
+import { ClientRoutes, Constants, AuthClientRoutes } from '../constants';
+import ErrorBoundary from './errorBoundary';
 const { Header, Content, Footer, Sider } = Layout;
-
-const SubMenu = Menu.SubMenu;
 
 interface WrapperHeaderProps {}
 
@@ -35,7 +33,7 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+              <Menu.Item
                 key="Home"
                 onClick={() => {
                   this.setState({ ...this.state, collapsed: true });
@@ -44,86 +42,110 @@ export const wrapperHeader = (
                 <Icon type="home" />
                 <span>Home</span>
                 <Link to={'/'} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="admin">
+              <Menu.Item key="admin">
                 <Icon type="pie-chart" />
-                <span>Admins</span>
+                <span>Admin</span>
                 <Link to={ClientRoutes.Admins} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="event">
+              <Menu.Item key="event">
                 <Icon type="rise" />
-                <span>Events</span>
+                <span>Event</span>
                 <Link to={ClientRoutes.Events} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="eventStatu">
+              <Menu.Item key="eventStatu">
                 <Icon type="bars" />
-                <span>EventStatus</span>
+                <span>Event Status</span>
                 <Link to={ClientRoutes.EventStatus} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="family">
+              <Menu.Item key="family">
                 <Icon type="cloud" />
-                <span>Families</span>
+                <span>Family</span>
                 <Link to={ClientRoutes.Families} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="rate">
+              <Menu.Item key="rate">
                 <Icon type="code" />
-                <span>Rates</span>
+                <span>Rate</span>
                 <Link to={ClientRoutes.Rates} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="space">
+              <Menu.Item key="space">
                 <Icon type="smile" />
-                <span>Spaces</span>
+                <span>Space</span>
                 <Link to={ClientRoutes.Spaces} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="spaceFeature">
+              <Menu.Item key="spaceFeature">
                 <Icon type="laptop" />
-                <span>SpaceFeatures</span>
+                <span>Space Feature</span>
                 <Link to={ClientRoutes.SpaceFeatures} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="student">
+              <Menu.Item key="student">
                 <Icon type="mobile" />
-                <span>Students</span>
+                <span>Student</span>
                 <Link to={ClientRoutes.Students} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="studio">
+              <Menu.Item key="studio">
                 <Icon type="paper-clip" />
-                <span>Studios</span>
+                <span>Studio</span>
                 <Link to={ClientRoutes.Studios} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="teacher">
+              <Menu.Item key="teacher">
                 <Icon type="setting" />
-                <span>Teachers</span>
+                <span>Teacher</span>
                 <Link to={ClientRoutes.Teachers} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="teacherSkill">
+              <Menu.Item key="teacherSkill">
                 <Icon type="user" />
-                <span>TeacherSkills</span>
+                <span>Teacher Skill</span>
                 <Link to={ClientRoutes.TeacherSkills} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="user">
+              <Menu.Item key="user">
                 <Icon type="home" />
-                <span>Users</span>
+                <span>User</span>
                 <Link to={ClientRoutes.Users} />
-              </MenuItem>
+              </Menu.Item>
+
+              <Menu.SubMenu
+                title={
+                  <span>
+                    <Icon type="setting" />
+                    <span>Settings</span>
+                  </span>
+                }
+              >
+                <Menu.Item key="lock">
+                  <Icon type="lock" />
+                  <span>Change Password</span>
+                  <Link to={AuthClientRoutes.ChangePassword} />
+                </Menu.Item>
+                <Menu.Item key="logout">
+                  <Icon type="logout" />
+                  <span>Logout</span>
+                  <Link to={AuthClientRoutes.Logout} />
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
               <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                <Component {...this.props} />
+              <div
+                style={{ padding: 24, background: '#fff', minHeight: '600px' }}
+              >
+                <ErrorBoundary>
+                  <Component {...this.props} />
+                </ErrorBoundary>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Footer</Footer>
@@ -137,5 +159,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>a61c0acb9623ac4a12413ad7266a2538</Hash>
+    <Hash>5a1ac42fe77e3a7c3effedbad740411c</Hash>
 </Codenesium>*/

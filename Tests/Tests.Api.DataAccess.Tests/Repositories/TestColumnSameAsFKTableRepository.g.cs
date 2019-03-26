@@ -22,7 +22,7 @@ namespace TestsNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace TestsNS.Api.DataAccess
 			entity.SetProperties(default(int), 1, 1);
 			await repository.Create(entity);
 
-			var records = await context.Set<ColumnSameAsFKTable>().Where(x => true).ToListAsync();
+			var records = await context.Set<ColumnSameAsFKTable>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<ColumnSameAsFKTable>().Where(x => true).ToListAsync();
+			var records = await context.Set<ColumnSameAsFKTable>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<ColumnSameAsFKTable>().Where(x => true).ToListAsync();
+			var records = await context.Set<ColumnSameAsFKTable>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<ColumnSameAsFKTable>().Where(x => true).ToListAsync();
+			var records = await context.Set<ColumnSameAsFKTable>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>332054f1bd70e1acbe3cd670fe143d5e</Hash>
+    <Hash>906eb8ca5e19bbee5f8a415238877571</Hash>
 </Codenesium>*/

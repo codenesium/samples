@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import QuoteTweetMapper from '../quoteTweet/quoteTweetMapper';
@@ -7,9 +7,9 @@ import QuoteTweetViewModel from '../quoteTweet/quoteTweetViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface QuoteTweetTableComponentProps {
-  quote_tweet_id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -36,11 +36,13 @@ export class QuoteTweetTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: QuoteTweetViewModel) {
-    this.props.history.push(ClientRoutes.QuoteTweets + '/edit/' + row.id);
+    this.props.history.push(
+      ClientRoutes.QuoteTweets + '/edit/' + row.quoteTweetId
+    );
   }
 
   handleDetailClick(e: any, row: QuoteTweetViewModel) {
-    this.props.history.push(ClientRoutes.QuoteTweets + '/' + row.id);
+    this.props.history.push(ClientRoutes.QuoteTweets + '/' + row.quoteTweetId);
   }
 
   componentDidMount() {
@@ -51,44 +53,46 @@ export class QuoteTweetTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.QuoteTweetClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.QuoteTweetClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new QuoteTweetMapper();
 
-          let mapper = new QuoteTweetMapper();
+        let quoteTweets: Array<QuoteTweetViewModel> = [];
 
-          let quoteTweets: Array<QuoteTweetViewModel> = [];
+        response.data.forEach(x => {
+          quoteTweets.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            quoteTweets.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: quoteTweets,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: quoteTweets,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -143,7 +147,8 @@ export class QuoteTweetTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.retweeterUserIdNavigation.toDisplay()
+                            props.original.retweeterUserIdNavigation &&
+                              props.original.retweeterUserIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -166,7 +171,8 @@ export class QuoteTweetTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.sourceTweetIdNavigation.toDisplay()
+                            props.original.sourceTweetIdNavigation &&
+                              props.original.sourceTweetIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -224,5 +230,5 @@ export class QuoteTweetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ca5f3018fb6d9f516330efe2dc5312de</Hash>
+    <Hash>01d49ce5c4b4b6a27ca1334bd644d46e</Hash>
 </Codenesium>*/

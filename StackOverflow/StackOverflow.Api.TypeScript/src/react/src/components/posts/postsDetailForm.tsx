@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostsMapper from './postsMapper';
 import PostsViewModel from './postsViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { CommentsTableComponent } from '../shared/commentsTable';
 import { TagsTableComponent } from '../shared/tagsTable';
 import { VotesTableComponent } from '../shared/votesTable';
@@ -48,44 +49,45 @@ class PostsDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.PostsClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Posts +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.PostsClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PostsMapper();
 
-          let mapper = new PostsMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -157,24 +159,36 @@ class PostsDetailComponent extends React.Component<
               <h3>Last Editor User</h3>
               <p>
                 {String(
-                  this.state.model!.lastEditorUserIdNavigation!.toDisplay()
+                  this.state.model!.lastEditorUserIdNavigation &&
+                    this.state.model!.lastEditorUserIdNavigation!.toDisplay()
                 )}
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Owner User</h3>
               <p>
-                {String(this.state.model!.ownerUserIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.ownerUserIdNavigation &&
+                    this.state.model!.ownerUserIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Parent</h3>
-              <p>{String(this.state.model!.parentIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.parentIdNavigation &&
+                    this.state.model!.parentIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Post Type</h3>
               <p>
-                {String(this.state.model!.postTypeIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.postTypeIdNavigation &&
+                    this.state.model!.postTypeIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -198,7 +212,6 @@ class PostsDetailComponent extends React.Component<
           <div>
             <h3>Comments</h3>
             <CommentsTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -214,7 +227,6 @@ class PostsDetailComponent extends React.Component<
           <div>
             <h3>Tags</h3>
             <TagsTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -230,7 +242,6 @@ class PostsDetailComponent extends React.Component<
           <div>
             <h3>Votes</h3>
             <VotesTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -246,7 +257,6 @@ class PostsDetailComponent extends React.Component<
           <div>
             <h3>PostHistory</h3>
             <PostHistoryTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -262,7 +272,6 @@ class PostsDetailComponent extends React.Component<
           <div>
             <h3>PostLinks</h3>
             <PostLinksTableComponent
-              id={this.state.model!.id}
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -289,5 +298,5 @@ export const WrappedPostsDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>629185dcd531bd9b018f17b29cd29cc5</Hash>
+    <Hash>bd9863667d2cb54c316bccaeaff488eb</Hash>
 </Codenesium>*/

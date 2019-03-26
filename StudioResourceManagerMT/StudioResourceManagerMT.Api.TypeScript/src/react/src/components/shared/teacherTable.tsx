@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TeacherMapper from '../teacher/teacherMapper';
@@ -7,9 +7,9 @@ import TeacherViewModel from '../teacher/teacherViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TeacherTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class TeacherTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.TeacherClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.TeacherClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TeacherMapper();
 
-          let mapper = new TeacherMapper();
+        let teachers: Array<TeacherViewModel> = [];
 
-          let teachers: Array<TeacherViewModel> = [];
+        response.data.forEach(x => {
+          teachers.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            teachers.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: teachers,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: teachers,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -127,21 +129,14 @@ export class TeacherTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -155,10 +150,25 @@ export class TeacherTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'UserId',
+                    Header: 'User',
                     accessor: 'userId',
                     Cell: props => {
-                      return <span>{String(props.original.userId)}</span>;
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Users + '/' + props.original.userId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
                     },
                   },
                   {
@@ -206,5 +216,5 @@ export class TeacherTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>369c45a49d15b8cd0d580e71b7d9a964</Hash>
+    <Hash>d2dbd485c35a4c629733245353701bb4</Hash>
 </Codenesium>*/

@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostHistoryTypesMapper from '../postHistoryTypes/postHistoryTypesMapper';
@@ -7,9 +7,9 @@ import PostHistoryTypesViewModel from '../postHistoryTypes/postHistoryTypesViewM
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PostHistoryTypesTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,46 +51,49 @@ export class PostHistoryTypesTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.PostHistoryTypesClientResponseModel>>(
+        this.props.apiRoute,
+        {
+          headers: GlobalUtilities.defaultHeaders(),
+        }
+      )
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+
+        let mapper = new PostHistoryTypesMapper();
+
+        let postHistoryTypes: Array<PostHistoryTypesViewModel> = [];
+
+        response.data.forEach(x => {
+          postHistoryTypes.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: postHistoryTypes,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.PostHistoryTypesClientResponseModel
-          >;
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-          console.log(response);
-
-          let mapper = new PostHistoryTypesMapper();
-
-          let postHistoryTypes: Array<PostHistoryTypesViewModel> = [];
-
-          response.forEach(x => {
-            postHistoryTypes.push(mapper.mapApiResponseToViewModel(x));
-          });
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: postHistoryTypes,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -166,5 +169,5 @@ export class PostHistoryTypesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0af103e501134fff656d969e6ea829cf</Hash>
+    <Hash>5979dcc9b05acb251974107078dbb0d6</Hash>
 </Codenesium>*/

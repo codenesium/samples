@@ -92,6 +92,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			return await this.Context.Set<Event>()
 			       .Include(x => x.EventStatusIdNavigation)
+
 			       .Where(x => x.EventStatusId == eventStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
 		}
 
@@ -121,5 +122,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c9961c1faf8a112217229031457ad21</Hash>
+    <Hash>d60ae9f85ea3702de8c399a5da6f6f9e</Hash>
 </Codenesium>*/

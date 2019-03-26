@@ -1,15 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TicketMapper from './ticketMapper';
 import TicketViewModel from './ticketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {SaleTicketTableComponent} from '../shared/saleTicketTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { SaleTicketTableComponent } from '../shared/saleTicketTable';
 
 interface TicketDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,108 +24,119 @@ interface TicketDetailComponentState {
 }
 
 class TicketDetailComponent extends React.Component<
-TicketDetailComponentProps,
-TicketDetailComponentState
+  TicketDetailComponentProps,
+  TicketDetailComponentState
 > {
   state = {
     model: new TicketViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Tickets + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Tickets + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TicketClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Tickets +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TicketClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TicketMapper();
 
-          let mapper = new TicketMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Public</h3>
-							<p>{String(this.state.model!.publicId)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Ticket Status</h3>
-							<p>{String(this.state.model!.ticketStatusIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Public</h3>
+              <p>{String(this.state.model!.publicId)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Ticket Status</h3>
+              <p>
+                {String(
+                  this.state.model!.ticketStatusIdNavigation &&
+                    this.state.model!.ticketStatusIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>SaleTickets</h3>
-            <SaleTicketTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Tickets + '/' + this.state.model!.id + '/' + ApiRoutes.SaleTickets}
-			/>
-         </div>
-	
-
+            <SaleTicketTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Tickets +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.SaleTickets
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,10 +145,11 @@ TicketDetailComponentState
   }
 }
 
-export const WrappedTicketDetailComponent = Form.create({ name: 'Ticket Detail' })(
-  TicketDetailComponent
-);
+export const WrappedTicketDetailComponent = Form.create({
+  name: 'Ticket Detail',
+})(TicketDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>9197d01d54167aeb1e006f0e14816be9</Hash>
+    <Hash>e32019d8915a96e482fb39133603b686</Hash>
 </Codenesium>*/

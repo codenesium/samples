@@ -1,16 +1,16 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import BucketMapper from '../bucket/bucketMapper';
 import BucketViewModel from '../bucket/bucketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import ReactTable from "react-table";
+import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface BucketTableComponentProps {
-  id:number,
-  apiRoute:string;
+  apiRoute: string;
   history: any;
   match: any;
 }
@@ -20,123 +20,122 @@ interface BucketTableComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  filteredRecords : Array<BucketViewModel>;
+  filteredRecords: Array<BucketViewModel>;
 }
 
-export class  BucketTableComponent extends React.Component<
-BucketTableComponentProps,
-BucketTableComponentState
+export class BucketTableComponent extends React.Component<
+  BucketTableComponentProps,
+  BucketTableComponentState
 > {
   state = {
     loading: false,
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-    filteredRecords:[]
+    filteredRecords: [],
   };
 
-handleEditClick(e:any, row: BucketViewModel) {
-  this.props.history.push(ClientRoutes.Buckets + '/edit/' + row.id);
-}
+  handleEditClick(e: any, row: BucketViewModel) {
+    this.props.history.push(ClientRoutes.Buckets + '/edit/' + row.id);
+  }
 
- handleDetailClick(e:any, row: BucketViewModel) {
-   this.props.history.push(ClientRoutes.Buckets + '/' + row.id);
- }
+  handleDetailClick(e: any, row: BucketViewModel) {
+    this.props.history.push(ClientRoutes.Buckets + '/' + row.id);
+  }
 
   componentDidMount() {
-	this.loadRecords();
+    this.loadRecords();
   }
 
   loadRecords() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.BucketClientResponseModel>;
+      .get<Array<Api.BucketClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new BucketMapper();
 
-          let mapper = new BucketMapper();
-          
-          let buckets:Array<BucketViewModel> = [];
+        let buckets: Array<BucketViewModel> = [];
 
-          response.forEach(x =>
-          {
-              buckets.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          buckets.push(mapper.mapApiResponseToViewModel(x));
+        });
+
+        this.setState({
+          ...this.state,
+          filteredRecords: buckets,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: buckets,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
-	let message: JSX.Element = <div />;
+    let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
     }
 
     if (this.state.loading) {
-       return <Spin size="large" />;
-    }
-	else if (this.state.errorOccurred) {
-	  return <Alert message={this.state.errorMessage} type='error' />;
-	}
-	 else if (this.state.loaded) {
+      return <Spin size="large" />;
+    } else if (this.state.errorOccurred) {
+      return <Alert message={this.state.errorMessage} type="error" />;
+    } else if (this.state.loaded) {
       return (
-	  <div>
-		{message}
-         <ReactTable 
-                data={this.state.filteredRecords}
-				defaultPageSize={10}
-                columns={[{
-                    Header: 'Buckets',
-                    columns: [
-					  {
-                      Header: 'ExternalId',
-                      accessor: 'externalId',
-                      Cell: (props) => {
+        <div>
+          {message}
+          <ReactTable
+            data={this.state.filteredRecords}
+            defaultPageSize={10}
+            columns={[
+              {
+                Header: 'Buckets',
+                columns: [
+                  {
+                    Header: 'ExternalId',
+                    accessor: 'externalId',
+                    Cell: props => {
                       return <span>{String(props.original.externalId)}</span>;
-                      }           
-                    },  {
-                      Header: 'Name',
-                      accessor: 'name',
-                      Cell: (props) => {
-                      return <span>{String(props.original.name)}</span>;
-                      }           
                     },
-                    {
-                        Header: 'Actions',
-					    minWidth:150,
-                        Cell: row => (<div>
-					    <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Actions',
+                    minWidth: 150,
+                    Cell: row => (
+                      <div>
+                        <Button
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
                               row.original as BucketViewModel
@@ -147,8 +146,8 @@ handleEditClick(e:any, row: BucketViewModel) {
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary" 
-                          onClick={(e:any) => {
+                          type="primary"
+                          onClick={(e: any) => {
                             this.handleEditClick(
                               e,
                               row.original as BucketViewModel
@@ -157,11 +156,14 @@ handleEditClick(e:any, row: BucketViewModel) {
                         >
                           <i className="fas fa-edit" />
                         </Button>
-                        </div>)
-                    }],
-                    
-                  }]} />
-			</div>
+                      </div>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       );
     } else {
       return null;
@@ -169,6 +171,7 @@ handleEditClick(e:any, row: BucketViewModel) {
   }
 }
 
+
 /*<Codenesium>
-    <Hash>7f79775b0e6cec75736ac5b23e7955c9</Hash>
+    <Hash>55c40b2ad66ec80bd047a1a1934de4d6</Hash>
 </Codenesium>*/

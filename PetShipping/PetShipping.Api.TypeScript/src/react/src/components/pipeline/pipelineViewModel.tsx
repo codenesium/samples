@@ -12,7 +12,7 @@ export default class PipelineViewModel {
     this.id = 0;
     this.pipelineStatusId = 0;
     this.pipelineStatusIdEntity = '';
-    this.pipelineStatusIdNavigation = new PipelineStatusViewModel();
+    this.pipelineStatusIdNavigation = undefined;
     this.saleId = 0;
   }
 
@@ -29,5 +29,5 @@ export default class PipelineViewModel {
 
 
 /*<Codenesium>
-    <Hash>be49fe0b5416627e5ca622f3b9e673d4</Hash>
+    <Hash>9444c2d86b45dc68366140aca6a6d310</Hash>
 </Codenesium>*/

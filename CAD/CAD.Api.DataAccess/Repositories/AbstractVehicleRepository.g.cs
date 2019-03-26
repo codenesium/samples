@@ -87,12 +87,13 @@ namespace CADNS.Api.DataAccess
 			}
 		}
 
-		// Foreign key reference to this table VehicleCapabilities via vehicleId.
-		public async virtual Task<List<VehicleCapabilities>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table VehicleCapabilitty via vehicleId.
+		public async virtual Task<List<VehicleCapabilitty>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<VehicleCapabilities>()
+			return await this.Context.Set<VehicleCapabilitty>()
 			       .Include(x => x.VehicleIdNavigation)
-			       .Where(x => x.VehicleId == vehicleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<VehicleCapabilities>();
+
+			       .Where(x => x.VehicleId == vehicleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<VehicleCapabilitty>();
 		}
 
 		// Foreign key reference pass-though. Pass-thru table VehicleOfficer. Foreign Table Vehicle.
@@ -148,5 +149,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bbc607c0d748efb35de1288993babb74</Hash>
+    <Hash>331447b303914d110371a2b6c33a0d19</Hash>
 </Codenesium>*/

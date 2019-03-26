@@ -14,11 +14,11 @@ export default class PipelineStepDestinationViewModel {
   constructor() {
     this.destinationId = 0;
     this.destinationIdEntity = '';
-    this.destinationIdNavigation = new DestinationViewModel();
+    this.destinationIdNavigation = undefined;
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
-    this.pipelineStepIdNavigation = new PipelineStepViewModel();
+    this.pipelineStepIdNavigation = undefined;
   }
 
   setProperties(
@@ -38,5 +38,5 @@ export default class PipelineStepDestinationViewModel {
 
 
 /*<Codenesium>
-    <Hash>7c3a44f41d9efff83c3c8bf6b80d8c07</Hash>
+    <Hash>82835080ee8adea4221d863152922f9d</Hash>
 </Codenesium>*/

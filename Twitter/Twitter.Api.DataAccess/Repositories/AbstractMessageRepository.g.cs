@@ -99,6 +99,9 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<Messenger>()
 			       .Include(x => x.MessageIdNavigation)
+			       .Include(x => x.ToUserIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.MessageId == messageId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
@@ -136,5 +139,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1905c8e8201f0454417559cf3ee135ab</Hash>
+    <Hash>7c08f27a86c6a3687a6f16bb252c1b8d</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ export default class StudentViewModel {
     this.emailRemindersEnabled = false;
     this.familyId = 0;
     this.familyIdEntity = '';
-    this.familyIdNavigation = new FamilyViewModel();
+    this.familyIdNavigation = undefined;
     this.firstName = '';
     this.id = 0;
     this.isAdult = false;
@@ -34,7 +34,7 @@ export default class StudentViewModel {
     this.smsRemindersEnabled = false;
     this.userId = 0;
     this.userIdEntity = '';
-    this.userIdNavigation = new UserViewModel();
+    this.userIdNavigation = undefined;
   }
 
   setProperties(
@@ -70,5 +70,5 @@ export default class StudentViewModel {
 
 
 /*<Codenesium>
-    <Hash>5dfe6fcb086ff6cd0fe705450c0b092d</Hash>
+    <Hash>05a34b1406cb6f69fba94fc2221e4069</Hash>
 </Codenesium>*/

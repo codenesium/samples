@@ -12,17 +12,19 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IFamilyRepository familyRepository,
 			IApiFamilyServerRequestModelValidator familyModelValidator,
-			IDALFamilyMapper dalFamilyMapper)
+			IDALFamilyMapper dalFamilyMapper,
+			IDALStudentMapper dalStudentMapper)
 			: base(logger,
 			       mediator,
 			       familyRepository,
 			       familyModelValidator,
-			       dalFamilyMapper)
+			       dalFamilyMapper,
+			       dalStudentMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1e695ff1b07c56841497202479d59869</Hash>
+    <Hash>a3009675b943699ae4a2f24bb3a71ad6</Hash>
 </Codenesium>*/

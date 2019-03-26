@@ -24,6 +24,12 @@
 	<ProjectReference Include="../Twitter.Api.Web/Twitter.Api.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+     <None Update="appSettings.Test.json">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+   </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>Twitter.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
    </PropertyGroup>

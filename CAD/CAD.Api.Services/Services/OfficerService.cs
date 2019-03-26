@@ -14,19 +14,19 @@ namespace CADNS.Api.Services
 			IApiOfficerServerRequestModelValidator officerModelValidator,
 			IDALOfficerMapper dalOfficerMapper,
 			IDALNoteMapper dalNoteMapper,
-			IDALOfficerCapabilitiesMapper dalOfficerCapabilitiesMapper)
+			IDALOfficerCapabilityMapper dalOfficerCapabilityMapper)
 			: base(logger,
 			       mediator,
 			       officerRepository,
 			       officerModelValidator,
 			       dalOfficerMapper,
 			       dalNoteMapper,
-			       dalOfficerCapabilitiesMapper)
+			       dalOfficerCapabilityMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d06d8e6d617ef291a3c0270cd6397b2e</Hash>
+    <Hash>d9655658425fa8c111e299713b134fca</Hash>
 </Codenesium>*/

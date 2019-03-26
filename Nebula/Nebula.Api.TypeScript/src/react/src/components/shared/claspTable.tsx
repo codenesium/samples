@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ClaspMapper from '../clasp/claspMapper';
@@ -7,9 +7,9 @@ import ClaspViewModel from '../clasp/claspViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface ClaspTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class ClaspTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.ClaspClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.ClaspClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new ClaspMapper();
 
-          let mapper = new ClaspMapper();
+        let clasps: Array<ClaspViewModel> = [];
 
-          let clasps: Array<ClaspViewModel> = [];
+        response.data.forEach(x => {
+          clasps.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            clasps.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: clasps,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: clasps,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -136,7 +138,8 @@ export class ClaspTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.nextChainIdNavigation.toDisplay()
+                            props.original.nextChainIdNavigation &&
+                              props.original.nextChainIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -159,7 +162,8 @@ export class ClaspTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.previousChainIdNavigation.toDisplay()
+                            props.original.previousChainIdNavigation &&
+                              props.original.previousChainIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -210,5 +214,5 @@ export class ClaspTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>321c70d420947f962dfe00651f4f43c7</Hash>
+    <Hash>d7d69e982011b060b2ede097084b55d7</Hash>
 </Codenesium>*/

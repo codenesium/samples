@@ -32,12 +32,21 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			var model2 = new ApiEventClientRequestModel();
-			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), 3m, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C");
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), 3m, 1, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C");
 			var request = new List<ApiEventClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiEventClientResponseModel>> result = await client.EventBulkInsertAsync(request);
 
@@ -47,7 +56,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[1].ActualEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].ActualStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].BillAmount.Should().Be(2m);
-			context.Set<Event>().ToList()[1].EventStatusId.Should().Be(2);
+			context.Set<Event>().ToList()[1].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[1].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].StudentNote.Should().Be("B");
@@ -56,7 +65,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[2].ActualEndDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Event>().ToList()[2].ActualStartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Event>().ToList()[2].BillAmount.Should().Be(3m);
-			context.Set<Event>().ToList()[2].EventStatusId.Should().Be(3);
+			context.Set<Event>().ToList()[2].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[2].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Event>().ToList()[2].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Event>().ToList()[2].StudentNote.Should().Be("C");
@@ -71,10 +80,17 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventClientRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			CreateResponse<ApiEventClientResponseModel> result = await client.EventCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -82,7 +98,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[1].ActualEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].ActualStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].BillAmount.Should().Be(2m);
-			context.Set<Event>().ToList()[1].EventStatusId.Should().Be(2);
+			context.Set<Event>().ToList()[1].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[1].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].StudentNote.Should().Be("B");
@@ -91,7 +107,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			result.Record.ActualEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.ActualStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.BillAmount.Should().Be(2m);
-			result.Record.EventStatusId.Should().Be(2);
+			result.Record.EventStatusId.Should().Be(1);
 			result.Record.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.StudentNote.Should().Be("B");
@@ -107,13 +123,20 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			var mapper = new ApiEventServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IEventService service = testServer.Host.Services.GetService(typeof(IEventService)) as IEventService;
 			ApiEventServerResponseModel model = await service.Get(1);
 
 			ApiEventClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 
 			UpdateResponse<ApiEventClientResponseModel> updateResponse = await client.EventUpdateAsync(model.Id, request);
 
@@ -124,7 +147,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[0].ActualEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[0].ActualStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[0].BillAmount.Should().Be(2m);
-			context.Set<Event>().ToList()[0].EventStatusId.Should().Be(2);
+			context.Set<Event>().ToList()[0].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[0].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[0].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[0].StudentNote.Should().Be("B");
@@ -134,7 +157,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			updateResponse.Record.ActualEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.ActualStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.BillAmount.Should().Be(2m);
-			updateResponse.Record.EventStatusId.Should().Be(2);
+			updateResponse.Record.EventStatusId.Should().Be(1);
 			updateResponse.Record.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.StudentNote.Should().Be("B");
@@ -149,11 +172,18 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			IEventService service = testServer.Host.Services.GetService(typeof(IEventService)) as IEventService;
 			var model = new ApiEventServerRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			CreateResponse<ApiEventServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -175,6 +205,13 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiEventClientResponseModel response = await client.EventGetAsync(1);
@@ -200,6 +237,13 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			ApiEventClientResponseModel response = await client.EventGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -214,7 +258,13 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
 			List<ApiEventClientResponseModel> response = await client.EventAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -252,5 +302,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f22a9efd70b9bac0128592def892ffe6</Hash>
+    <Hash>cd26ad2e4f56594739df75198d5a5485</Hash>
 </Codenesium>*/

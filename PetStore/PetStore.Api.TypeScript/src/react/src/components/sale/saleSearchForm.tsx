@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import SaleMapper from './saleMapper';
@@ -9,6 +9,7 @@ import SaleViewModel from './saleViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface SaleSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class SaleSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.SaleClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Sales + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -104,42 +101,37 @@ export default class SaleSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.SaleClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.SaleClientResponseModel>;
-          let viewModels: Array<SaleViewModel> = [];
-          let mapper = new SaleMapper();
+      .then(response => {
+        let viewModels: Array<SaleViewModel> = [];
+        let mapper = new SaleMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<SaleViewModel>(),
-            filteredRecords: new Array<SaleViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<SaleViewModel>(),
+          filteredRecords: new Array<SaleViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -244,7 +236,8 @@ export default class SaleSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.paymentTypeIdNavigation.toDisplay()
+                            props.original.paymentTypeIdNavigation &&
+                              props.original.paymentTypeIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -264,7 +257,10 @@ export default class SaleSearchComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.petIdNavigation.toDisplay())}
+                          {String(
+                            props.original.petIdNavigation &&
+                              props.original.petIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -337,5 +333,5 @@ export const WrappedSaleSearchComponent = Form.create({ name: 'Sale Search' })(
 
 
 /*<Codenesium>
-    <Hash>29243dff11d43aea6b62d43c7ea92215</Hash>
+    <Hash>02dbfb3f5b2b1d6405b1e9f7d3c05021</Hash>
 </Codenesium>*/

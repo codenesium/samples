@@ -104,6 +104,7 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 			return await this.Context.Set<Badges>()
 			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Badges>();
 		}
 
@@ -111,7 +112,9 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<Comments>> CommentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Comments>()
+			       .Include(x => x.PostIdNavigation)
 			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Comments>();
 		}
 
@@ -120,6 +123,10 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 			return await this.Context.Set<Posts>()
 			       .Include(x => x.LastEditorUserIdNavigation)
+			       .Include(x => x.OwnerUserIdNavigation)
+			       .Include(x => x.ParentIdNavigation)
+			       .Include(x => x.PostTypeIdNavigation)
+
 			       .Where(x => x.LastEditorUserId == lastEditorUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Posts>();
 		}
 
@@ -127,7 +134,11 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<Posts>> PostsByOwnerUserId(int ownerUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Posts>()
+			       .Include(x => x.LastEditorUserIdNavigation)
 			       .Include(x => x.OwnerUserIdNavigation)
+			       .Include(x => x.ParentIdNavigation)
+			       .Include(x => x.PostTypeIdNavigation)
+
 			       .Where(x => x.OwnerUserId == ownerUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Posts>();
 		}
 
@@ -135,7 +146,10 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<Votes>> VotesByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Votes>()
+			       .Include(x => x.PostIdNavigation)
 			       .Include(x => x.UserIdNavigation)
+			       .Include(x => x.VoteTypeIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Votes>();
 		}
 
@@ -143,7 +157,10 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<PostHistory>> PostHistoryByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PostHistory>()
+			       .Include(x => x.PostHistoryTypeIdNavigation)
+			       .Include(x => x.PostIdNavigation)
 			       .Include(x => x.UserIdNavigation)
+
 			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PostHistory>();
 		}
 
@@ -173,5 +190,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2368d0d9dd273e3693e6a656ba972e9</Hash>
+    <Hash>352fac1a398b2144450f59611adc0567</Hash>
 </Codenesium>*/

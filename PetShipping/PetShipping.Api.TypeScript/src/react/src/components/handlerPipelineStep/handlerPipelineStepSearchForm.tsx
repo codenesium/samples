@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import HandlerPipelineStepMapper from './handlerPipelineStepMapper';
@@ -9,6 +9,7 @@ import HandlerPipelineStepViewModel from './handlerPipelineStepViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface HandlerPipelineStepSearchComponentProps {
   form: WrappedFormUtils;
@@ -69,31 +70,27 @@ export default class HandlerPipelineStepSearchComponent extends React.Component<
       .delete(
         Constants.ApiEndpoint + ApiRoutes.HandlerPipelineSteps + '/' + row.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -110,44 +107,37 @@ export default class HandlerPipelineStepSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.HandlerPipelineStepClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.HandlerPipelineStepClientResponseModel
-          >;
-          let viewModels: Array<HandlerPipelineStepViewModel> = [];
-          let mapper = new HandlerPipelineStepMapper();
+      .then(response => {
+        let viewModels: Array<HandlerPipelineStepViewModel> = [];
+        let mapper = new HandlerPipelineStepMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<HandlerPipelineStepViewModel>(),
-            filteredRecords: new Array<HandlerPipelineStepViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<HandlerPipelineStepViewModel>(),
+          filteredRecords: new Array<HandlerPipelineStepViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -231,7 +221,8 @@ export default class HandlerPipelineStepSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.handlerIdNavigation.toDisplay()
+                            props.original.handlerIdNavigation &&
+                              props.original.handlerIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -254,7 +245,8 @@ export default class HandlerPipelineStepSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.pipelineStepIdNavigation.toDisplay()
+                            props.original.pipelineStepIdNavigation &&
+                              props.original.pipelineStepIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -321,5 +313,5 @@ export const WrappedHandlerPipelineStepSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2e03b91ed9c95fddb1607389587da337</Hash>
+    <Hash>377f2f12f9cc835b4e3d27ee864453d6</Hash>
 </Codenesium>*/

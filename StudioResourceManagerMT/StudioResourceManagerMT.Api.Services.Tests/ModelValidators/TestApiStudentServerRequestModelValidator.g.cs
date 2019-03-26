@@ -73,6 +73,56 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void FamilyId_Create_Valid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudentServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
+
+		[Fact]
+		public async void FamilyId_Create_Invalid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiStudentServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
+
+		[Fact]
+		public async void FamilyId_Update_Valid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
+
+		[Fact]
+		public async void FamilyId_Update_Invalid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.FamilyId, 1);
+		}
+
+		[Fact]
 		public async void FirstName_Create_null()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
@@ -215,9 +265,59 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
 		}
+
+		[Fact]
+		public async void UserId_Create_Valid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudentServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Create_Invalid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiStudentServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Update_Valid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Update_Invalid_Reference()
+		{
+			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+
+			var validator = new ApiStudentServerRequestModelValidator(studentRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UserId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd25152f2babc89ee2a03cefe02b9d77</Hash>
+    <Hash>0362aa8b13e5faf76ab230c46d8afacf</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace CADNS.Api.Services
 
 		protected IDALVehicleMapper DalVehicleMapper { get; private set; }
 
-		protected IDALVehicleCapabilitiesMapper DalVehicleCapabilitiesMapper { get; private set; }
+		protected IDALVehicleCapabilittyMapper DalVehicleCapabilittyMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -27,13 +27,13 @@ namespace CADNS.Api.Services
 			IVehicleRepository vehicleRepository,
 			IApiVehicleServerRequestModelValidator vehicleModelValidator,
 			IDALVehicleMapper dalVehicleMapper,
-			IDALVehicleCapabilitiesMapper dalVehicleCapabilitiesMapper)
+			IDALVehicleCapabilittyMapper dalVehicleCapabilittyMapper)
 			: base()
 		{
 			this.VehicleRepository = vehicleRepository;
 			this.VehicleModelValidator = vehicleModelValidator;
 			this.DalVehicleMapper = dalVehicleMapper;
-			this.DalVehicleCapabilitiesMapper = dalVehicleCapabilitiesMapper;
+			this.DalVehicleCapabilittyMapper = dalVehicleCapabilittyMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -116,11 +116,11 @@ namespace CADNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiVehicleCapabilitiesServerResponseModel>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiVehicleCapabilittyServerResponseModel>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<VehicleCapabilities> records = await this.VehicleRepository.VehicleCapabilitiesByVehicleId(vehicleId, limit, offset);
+			List<VehicleCapabilitty> records = await this.VehicleRepository.VehicleCapabilitiesByVehicleId(vehicleId, limit, offset);
 
-			return this.DalVehicleCapabilitiesMapper.MapEntityToModel(records);
+			return this.DalVehicleCapabilittyMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiVehicleServerResponseModel>> ByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
@@ -133,5 +133,5 @@ namespace CADNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2c6c3c8879a4345a65eceeec207a9a83</Hash>
+    <Hash>5d4178985e8d8ed08c3dae2e0b67a10d</Hash>
 </Codenesium>*/

@@ -64,9 +64,17 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		[MaxLength(2147483647)]
 		[Column("teacherNotes")]
 		public virtual string TeacherNote { get; private set; }
+
+		[ForeignKey("EventStatusId")]
+		public virtual EventStatu EventStatusIdNavigation { get; private set; }
+
+		public void SetEventStatusIdNavigation(EventStatu item)
+		{
+			this.EventStatusIdNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9dddc48b3e4cb53c058d9693a01064d</Hash>
+    <Hash>e72eeb087c52dc48a45abd6b5cce362f</Hash>
 </Codenesium>*/

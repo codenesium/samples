@@ -13,7 +13,7 @@ export default class BreedViewModel {
     this.name = '';
     this.speciesId = 0;
     this.speciesIdEntity = '';
-    this.speciesIdNavigation = new SpeciesViewModel();
+    this.speciesIdNavigation = undefined;
   }
 
   setProperties(id: number, name: string, speciesId: number): void {
@@ -29,5 +29,5 @@ export default class BreedViewModel {
 
 
 /*<Codenesium>
-    <Hash>1a6f9c897cd848af1472407cc462d1a6</Hash>
+    <Hash>b4c1c41dedd3a70cc6de11568f63408e</Hash>
 </Codenesium>*/

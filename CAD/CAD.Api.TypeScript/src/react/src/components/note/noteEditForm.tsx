@@ -1,19 +1,29 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import NoteMapper from './noteMapper';
 import NoteViewModel from './noteViewModel';
-import { Form, Input, Button, Switch, InputNumber, DatePicker, Spin, Alert, TimePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Switch,
+  InputNumber,
+  DatePicker,
+  Spin,
+  Alert,
+  TimePicker,
+} from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
-import { CallSelectComponent } from '../shared/callSelect'
-	import { OfficerSelectComponent } from '../shared/officerSelect'
-	interface NoteEditComponentProps {
-  form:WrappedFormUtils;
-  history:any;
-  match:any;
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { CallSelectComponent } from '../shared/callSelect';
+import { OfficerSelectComponent } from '../shared/officerSelect';
+interface NoteEditComponentProps {
+  form: WrappedFormUtils;
+  history: any;
+  match: any;
 }
 
 interface NoteEditComponentState {
@@ -22,8 +32,8 @@ interface NoteEditComponentState {
   loaded: boolean;
   errorOccurred: boolean;
   errorMessage: string;
-  submitted:boolean;
-  submitting:boolean;
+  submitted: boolean;
+  submitting: boolean;
 }
 
 class NoteEditComponent extends React.Component<
@@ -36,196 +46,211 @@ class NoteEditComponent extends React.Component<
     loaded: true,
     errorOccurred: false,
     errorMessage: '',
-	submitted:false,
-	submitting:false
+    submitted: false,
+    submitting: false,
   };
 
-    componentDidMount() {
+  componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.NoteClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Notes +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.NoteClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new NoteMapper();
 
-          let mapper = new NoteMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-		  this.props.form.setFieldsValue(mapper.mapApiResponseToViewModel(response));
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
- }
- 
- handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
-	 this.setState({...this.state, submitting:true, submitted:false});
-     this.props.form.validateFields((err:any, values:any) => {
-     if (!err) {
+      });
+  }
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true, submitted: false });
+    this.props.form.validateFields((err: any, values: any) => {
+      if (!err) {
         let model = values as NoteViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
-      } 
-	  else {
-		  this.setState({...this.state, submitting:false, submitted:false});
-	  }
+      } else {
+        this.setState({ ...this.state, submitting: false, submitted: false });
+      }
     });
   };
 
-  submit = (model:NoteViewModel) =>
-  {  
+  submit = (model: NoteViewModel) => {
     let mapper = new NoteMapper();
-     axios
-      .put(
+    axios
+      .put<CreateResponse<Api.NoteClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Notes + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.NoteClientRequestModel
-          >;
-          this.setState({...this.state, submitted:true, submitting:false, model:mapper.mapApiResponseToViewModel(response.record!), errorOccurred:false, errorMessage:''});
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-		  let errorResponse = error.response.data as ActionResponse; 
-		  if(error.response.data)
-          {
-			  errorResponse.validationErrors.forEach(x =>
-			  {
-				this.props.form.setFields({
-				 [ToLowerCaseFirstLetter(x.propertyName)]: {
-				  value:this.props.form.getFieldValue(ToLowerCaseFirstLetter(x.propertyName)),
-				  errors: [new Error(x.errorMessage)]
-				},
-				})
-			  });
-		  }
-          this.setState({...this.state, submitted:true, submitting:false, errorOccurred:true, errorMessage:'Error from API'});
-        }
-      ); 
-  }
-  
-  render() {
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        
-    let message:JSX.Element = <div></div>;
-    if(this.state.submitted)
-    {
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: false,
+            errorMessage: '',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            submitted: true,
+            submitting: false,
+            errorOccurred: true,
+            errorMessage: 'Error Occurred',
+          });
+        }
+      });
+  };
+
+  render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    let message: JSX.Element = <div />;
+    if (this.state.submitted) {
       if (this.state.errorOccurred) {
-        message = <Alert message={this.state.errorMessage} type='error' />;
-      }
-      else
-      {
-        message = <Alert message='Submitted' type='success' />;
+        message = <Alert message={this.state.errorMessage} type="error" />;
+      } else {
+        message = <Alert message="Submitted" type="success" />;
       }
     }
 
     if (this.state.loading) {
       return <Spin size="large" />;
-    } 
-    else if (this.state.loaded) {
+    } else if (this.state.loaded) {
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            <label htmlFor="callId">callId</label>
+            <br />
+            {getFieldDecorator('callId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'callId'} />)}
+          </Form.Item>
 
-        return ( 
-         <Form onSubmit={this.handleSubmit}>
-            			<Form.Item>
-              <label htmlFor='callId'>callId</label>
-              <br />             
-              {getFieldDecorator('callId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"callId"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="dateCreated">dateCreated</label>
+            <br />
+            {getFieldDecorator('dateCreated', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'dateCreated'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='dateCreated'>dateCreated</label>
-              <br />             
-              {getFieldDecorator('dateCreated', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"dateCreated"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="noteText">noteText</label>
+            <br />
+            {getFieldDecorator('noteText', {
+              rules: [
+                { required: true, message: 'Required' },
+                { max: 8000, message: 'Exceeds max length of 8000' },
+              ],
+            })(<Input placeholder={'noteText'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='noteText'>noteText</label>
-              <br />             
-              {getFieldDecorator('noteText', {
-              rules:[{ required: true, message: 'Required' },
-{ max: 8000, message: 'Exceeds max length of 8000' },
-],
-              
-              })
-              ( <Input placeholder={"noteText"} /> )}
-              </Form.Item>
+          <Form.Item>
+            <label htmlFor="officerId">officerId</label>
+            <br />
+            {getFieldDecorator('officerId', {
+              rules: [{ required: true, message: 'Required' }],
+            })(<Input placeholder={'officerId'} />)}
+          </Form.Item>
 
-						<Form.Item>
-              <label htmlFor='officerId'>officerId</label>
-              <br />             
-              {getFieldDecorator('officerId', {
-              rules:[{ required: true, message: 'Required' },
-],
-              
-              })
-              ( <Input placeholder={"officerId"} /> )}
-              </Form.Item>
-
-			
-            <Form.Item>
-             <Button type="primary" htmlType="submit" loading={this.state.submitting} >
-                {(this.state.submitting ? "Submitting..." : "Submit")}
-              </Button>
-            </Form.Item>
-			{message}
-        </Form>);
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.submitting}
+            >
+              {this.state.submitting ? 'Submitting...' : 'Submit'}
+            </Button>
+          </Form.Item>
+          {message}
+        </Form>
+      );
     } else {
       return null;
     }
   }
 }
 
-export const WrappedNoteEditComponent = Form.create({ name: 'Note Edit' })(NoteEditComponent);
+export const WrappedNoteEditComponent = Form.create({ name: 'Note Edit' })(
+  NoteEditComponent
+);
+
 
 /*<Codenesium>
-    <Hash>c43150d6cb8365db23a934df7c5c22ee</Hash>
+    <Hash>1ca904b01f32e7d9ac5278bd3ba96947</Hash>
 </Codenesium>*/

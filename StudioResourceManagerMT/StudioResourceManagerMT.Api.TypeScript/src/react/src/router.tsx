@@ -1,9 +1,16 @@
 import * as React from 'react';
 import { Route, Switch, match, BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/dashboard';
-import { Security, ImplicitCallback, SecureRoute } from '@okta/okta-react';
 import { wrapperHeader } from './components/header';
-import { ClientRoutes, Constants } from './constants';
+import { wrapperAuthHeader } from './components/auth/authHeader';
+import { AuthClientRoutes, ClientRoutes, Constants } from './constants';
+import { WrappedLoginComponent } from './components/auth/loginForm';
+import { WrappedLogoutComponent } from './components/auth/logoutForm';
+import { WrappedRegisterComponent } from './components/auth/registerForm';
+import { WrappedResetPasswordComponent } from './components/auth/resetPasswordForm';
+import { WrappedConfirmPasswordResetComponent } from './components/auth/confirmPasswordResetForm';
+import { WrappedConfirmRegistrationComponent } from './components/auth/confirmRegistrationForm';
+import { WrappedChangePasswordComponent } from './components/auth/changePasswordForm';
 import { WrappedAdminCreateComponent } from './components/admin/adminCreateForm';
 import { WrappedAdminDetailComponent } from './components/admin/adminDetailForm';
 import { WrappedAdminEditComponent } from './components/admin/adminEditForm';
@@ -53,361 +60,332 @@ import { WrappedUserDetailComponent } from './components/user/userDetailForm';
 import { WrappedUserEditComponent } from './components/user/userEditForm';
 import { WrappedUserSearchComponent } from './components/user/userSearchForm';
 
-const config = {
-  oidc: {
-    clientId: '<okta_client_id>',
-    issuer: 'https://<okta_application_url>/oauth2/default',
-    redirectUri: 'https://<your_public_webserver>/implicit/callback',
-    scope: 'openid profile email',
-  },
-};
-
 export const AppRouter: React.StatelessComponent<{}> = () => {
   return (
     <BrowserRouter basename={Constants.HostedSubDirectory}>
-      <Security
-        issuer={config.oidc.issuer}
-        client_id={config.oidc.clientId}
-        redirect_uri={config.oidc.redirectUri}
-      >
-        <SecureRoute
-          path="/protected"
-          component={() => '<div>secure route</div>'}
+      <Switch>
+        <Route
+          exact
+          path={AuthClientRoutes.ConfirmPasswordReset + '/:id/:token'}
+          component={wrapperAuthHeader(
+            WrappedConfirmPasswordResetComponent,
+            'Confirm Password Reset'
+          )}
         />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={wrapperHeader(Dashboard, 'Dashboard')}
-          />
-          <Route
-            path={ClientRoutes.Admins + '/create'}
-            component={wrapperHeader(
-              WrappedAdminCreateComponent,
-              'Admins Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Admins + '/edit/:id'}
-            component={wrapperHeader(WrappedAdminEditComponent, 'Admins Edit')}
-          />
-          <Route
-            path={ClientRoutes.Admins + '/:id'}
-            component={wrapperHeader(
-              WrappedAdminDetailComponent,
-              'Admins Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Admins}
-            component={wrapperHeader(
-              WrappedAdminSearchComponent,
-              'Admins Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Events + '/create'}
-            component={wrapperHeader(
-              WrappedEventCreateComponent,
-              'Events Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Events + '/edit/:id'}
-            component={wrapperHeader(WrappedEventEditComponent, 'Events Edit')}
-          />
-          <Route
-            path={ClientRoutes.Events + '/:id'}
-            component={wrapperHeader(
-              WrappedEventDetailComponent,
-              'Events Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Events}
-            component={wrapperHeader(
-              WrappedEventSearchComponent,
-              'Events Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.EventStatus + '/create'}
-            component={wrapperHeader(
-              WrappedEventStatuCreateComponent,
-              'EventStatus Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.EventStatus + '/edit/:id'}
-            component={wrapperHeader(
-              WrappedEventStatuEditComponent,
-              'EventStatus Edit'
-            )}
-          />
-          <Route
-            path={ClientRoutes.EventStatus + '/:id'}
-            component={wrapperHeader(
-              WrappedEventStatuDetailComponent,
-              'EventStatus Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.EventStatus}
-            component={wrapperHeader(
-              WrappedEventStatuSearchComponent,
-              'EventStatus Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Families + '/create'}
-            component={wrapperHeader(
-              WrappedFamilyCreateComponent,
-              'Families Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Families + '/edit/:id'}
-            component={wrapperHeader(
-              WrappedFamilyEditComponent,
-              'Families Edit'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Families + '/:id'}
-            component={wrapperHeader(
-              WrappedFamilyDetailComponent,
-              'Families Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Families}
-            component={wrapperHeader(
-              WrappedFamilySearchComponent,
-              'Families Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Rates + '/create'}
-            component={wrapperHeader(
-              WrappedRateCreateComponent,
-              'Rates Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Rates + '/edit/:id'}
-            component={wrapperHeader(WrappedRateEditComponent, 'Rates Edit')}
-          />
-          <Route
-            path={ClientRoutes.Rates + '/:id'}
-            component={wrapperHeader(
-              WrappedRateDetailComponent,
-              'Rates Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Rates}
-            component={wrapperHeader(
-              WrappedRateSearchComponent,
-              'Rates Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Spaces + '/create'}
-            component={wrapperHeader(
-              WrappedSpaceCreateComponent,
-              'Spaces Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Spaces + '/edit/:id'}
-            component={wrapperHeader(WrappedSpaceEditComponent, 'Spaces Edit')}
-          />
-          <Route
-            path={ClientRoutes.Spaces + '/:id'}
-            component={wrapperHeader(
-              WrappedSpaceDetailComponent,
-              'Spaces Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Spaces}
-            component={wrapperHeader(
-              WrappedSpaceSearchComponent,
-              'Spaces Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.SpaceFeatures + '/create'}
-            component={wrapperHeader(
-              WrappedSpaceFeatureCreateComponent,
-              'SpaceFeatures Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.SpaceFeatures + '/edit/:id'}
-            component={wrapperHeader(
-              WrappedSpaceFeatureEditComponent,
-              'SpaceFeatures Edit'
-            )}
-          />
-          <Route
-            path={ClientRoutes.SpaceFeatures + '/:id'}
-            component={wrapperHeader(
-              WrappedSpaceFeatureDetailComponent,
-              'SpaceFeatures Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.SpaceFeatures}
-            component={wrapperHeader(
-              WrappedSpaceFeatureSearchComponent,
-              'SpaceFeatures Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Students + '/create'}
-            component={wrapperHeader(
-              WrappedStudentCreateComponent,
-              'Students Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Students + '/edit/:id'}
-            component={wrapperHeader(
-              WrappedStudentEditComponent,
-              'Students Edit'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Students + '/:id'}
-            component={wrapperHeader(
-              WrappedStudentDetailComponent,
-              'Students Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Students}
-            component={wrapperHeader(
-              WrappedStudentSearchComponent,
-              'Students Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Studios + '/create'}
-            component={wrapperHeader(
-              WrappedStudioCreateComponent,
-              'Studios Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Studios + '/edit/:id'}
-            component={wrapperHeader(
-              WrappedStudioEditComponent,
-              'Studios Edit'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Studios + '/:id'}
-            component={wrapperHeader(
-              WrappedStudioDetailComponent,
-              'Studios Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Studios}
-            component={wrapperHeader(
-              WrappedStudioSearchComponent,
-              'Studios Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Teachers + '/create'}
-            component={wrapperHeader(
-              WrappedTeacherCreateComponent,
-              'Teachers Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Teachers + '/edit/:id'}
-            component={wrapperHeader(
-              WrappedTeacherEditComponent,
-              'Teachers Edit'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Teachers + '/:id'}
-            component={wrapperHeader(
-              WrappedTeacherDetailComponent,
-              'Teachers Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Teachers}
-            component={wrapperHeader(
-              WrappedTeacherSearchComponent,
-              'Teachers Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.TeacherSkills + '/create'}
-            component={wrapperHeader(
-              WrappedTeacherSkillCreateComponent,
-              'TeacherSkills Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.TeacherSkills + '/edit/:id'}
-            component={wrapperHeader(
-              WrappedTeacherSkillEditComponent,
-              'TeacherSkills Edit'
-            )}
-          />
-          <Route
-            path={ClientRoutes.TeacherSkills + '/:id'}
-            component={wrapperHeader(
-              WrappedTeacherSkillDetailComponent,
-              'TeacherSkills Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.TeacherSkills}
-            component={wrapperHeader(
-              WrappedTeacherSkillSearchComponent,
-              'TeacherSkills Search'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Users + '/create'}
-            component={wrapperHeader(
-              WrappedUserCreateComponent,
-              'Users Create'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Users + '/edit/:id'}
-            component={wrapperHeader(WrappedUserEditComponent, 'Users Edit')}
-          />
-          <Route
-            path={ClientRoutes.Users + '/:id'}
-            component={wrapperHeader(
-              WrappedUserDetailComponent,
-              'Users Detail'
-            )}
-          />
-          <Route
-            path={ClientRoutes.Users}
-            component={wrapperHeader(
-              WrappedUserSearchComponent,
-              'Users Search'
-            )}
-          />
-        </Switch>
-      </Security>
+        <Route
+          exact
+          path={AuthClientRoutes.ConfirmRegistration + '/:id/:token'}
+          component={wrapperAuthHeader(
+            WrappedConfirmRegistrationComponent,
+            'Confirm Registration'
+          )}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.Login}
+          component={wrapperAuthHeader(WrappedLoginComponent, 'Login')}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.Logout}
+          component={wrapperAuthHeader(WrappedLogoutComponent, 'Logout')}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.Register}
+          component={wrapperAuthHeader(WrappedRegisterComponent, 'Register')}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.ResetPassword}
+          component={wrapperAuthHeader(
+            WrappedResetPasswordComponent,
+            'Reset Password'
+          )}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.ChangePassword}
+          component={wrapperHeader(
+            WrappedChangePasswordComponent,
+            'Change Password'
+          )}
+        />
+        <Route
+          exact
+          path="/"
+          component={wrapperHeader(Dashboard, 'Dashboard')}
+        />
+        <Route
+          path={ClientRoutes.Admins + '/create'}
+          component={wrapperHeader(WrappedAdminCreateComponent, 'Admin Create')}
+        />
+        <Route
+          path={ClientRoutes.Admins + '/edit/:id'}
+          component={wrapperHeader(WrappedAdminEditComponent, 'Admin Edit')}
+        />
+        <Route
+          path={ClientRoutes.Admins + '/:id'}
+          component={wrapperHeader(WrappedAdminDetailComponent, 'Admin Detail')}
+        />
+        <Route
+          path={ClientRoutes.Admins}
+          component={wrapperHeader(WrappedAdminSearchComponent, 'Admin Search')}
+        />
+        <Route
+          path={ClientRoutes.Events + '/create'}
+          component={wrapperHeader(WrappedEventCreateComponent, 'Event Create')}
+        />
+        <Route
+          path={ClientRoutes.Events + '/edit/:id'}
+          component={wrapperHeader(WrappedEventEditComponent, 'Event Edit')}
+        />
+        <Route
+          path={ClientRoutes.Events + '/:id'}
+          component={wrapperHeader(WrappedEventDetailComponent, 'Event Detail')}
+        />
+        <Route
+          path={ClientRoutes.Events}
+          component={wrapperHeader(WrappedEventSearchComponent, 'Event Search')}
+        />
+        <Route
+          path={ClientRoutes.EventStatus + '/create'}
+          component={wrapperHeader(
+            WrappedEventStatuCreateComponent,
+            'Event Status Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventStatus + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedEventStatuEditComponent,
+            'Event Status Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventStatus + '/:id'}
+          component={wrapperHeader(
+            WrappedEventStatuDetailComponent,
+            'Event Status Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventStatus}
+          component={wrapperHeader(
+            WrappedEventStatuSearchComponent,
+            'Event Status Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Families + '/create'}
+          component={wrapperHeader(
+            WrappedFamilyCreateComponent,
+            'Family Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Families + '/edit/:id'}
+          component={wrapperHeader(WrappedFamilyEditComponent, 'Family Edit')}
+        />
+        <Route
+          path={ClientRoutes.Families + '/:id'}
+          component={wrapperHeader(
+            WrappedFamilyDetailComponent,
+            'Family Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Families}
+          component={wrapperHeader(
+            WrappedFamilySearchComponent,
+            'Family Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Rates + '/create'}
+          component={wrapperHeader(WrappedRateCreateComponent, 'Rate Create')}
+        />
+        <Route
+          path={ClientRoutes.Rates + '/edit/:id'}
+          component={wrapperHeader(WrappedRateEditComponent, 'Rate Edit')}
+        />
+        <Route
+          path={ClientRoutes.Rates + '/:id'}
+          component={wrapperHeader(WrappedRateDetailComponent, 'Rate Detail')}
+        />
+        <Route
+          path={ClientRoutes.Rates}
+          component={wrapperHeader(WrappedRateSearchComponent, 'Rate Search')}
+        />
+        <Route
+          path={ClientRoutes.Spaces + '/create'}
+          component={wrapperHeader(WrappedSpaceCreateComponent, 'Space Create')}
+        />
+        <Route
+          path={ClientRoutes.Spaces + '/edit/:id'}
+          component={wrapperHeader(WrappedSpaceEditComponent, 'Space Edit')}
+        />
+        <Route
+          path={ClientRoutes.Spaces + '/:id'}
+          component={wrapperHeader(WrappedSpaceDetailComponent, 'Space Detail')}
+        />
+        <Route
+          path={ClientRoutes.Spaces}
+          component={wrapperHeader(WrappedSpaceSearchComponent, 'Space Search')}
+        />
+        <Route
+          path={ClientRoutes.SpaceFeatures + '/create'}
+          component={wrapperHeader(
+            WrappedSpaceFeatureCreateComponent,
+            'Space Feature Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.SpaceFeatures + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedSpaceFeatureEditComponent,
+            'Space Feature Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.SpaceFeatures + '/:id'}
+          component={wrapperHeader(
+            WrappedSpaceFeatureDetailComponent,
+            'Space Feature Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.SpaceFeatures}
+          component={wrapperHeader(
+            WrappedSpaceFeatureSearchComponent,
+            'Space Feature Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Students + '/create'}
+          component={wrapperHeader(
+            WrappedStudentCreateComponent,
+            'Student Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Students + '/edit/:id'}
+          component={wrapperHeader(WrappedStudentEditComponent, 'Student Edit')}
+        />
+        <Route
+          path={ClientRoutes.Students + '/:id'}
+          component={wrapperHeader(
+            WrappedStudentDetailComponent,
+            'Student Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Students}
+          component={wrapperHeader(
+            WrappedStudentSearchComponent,
+            'Student Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Studios + '/create'}
+          component={wrapperHeader(
+            WrappedStudioCreateComponent,
+            'Studio Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Studios + '/edit/:id'}
+          component={wrapperHeader(WrappedStudioEditComponent, 'Studio Edit')}
+        />
+        <Route
+          path={ClientRoutes.Studios + '/:id'}
+          component={wrapperHeader(
+            WrappedStudioDetailComponent,
+            'Studio Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Studios}
+          component={wrapperHeader(
+            WrappedStudioSearchComponent,
+            'Studio Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Teachers + '/create'}
+          component={wrapperHeader(
+            WrappedTeacherCreateComponent,
+            'Teacher Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Teachers + '/edit/:id'}
+          component={wrapperHeader(WrappedTeacherEditComponent, 'Teacher Edit')}
+        />
+        <Route
+          path={ClientRoutes.Teachers + '/:id'}
+          component={wrapperHeader(
+            WrappedTeacherDetailComponent,
+            'Teacher Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Teachers}
+          component={wrapperHeader(
+            WrappedTeacherSearchComponent,
+            'Teacher Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.TeacherSkills + '/create'}
+          component={wrapperHeader(
+            WrappedTeacherSkillCreateComponent,
+            'Teacher Skill Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.TeacherSkills + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedTeacherSkillEditComponent,
+            'Teacher Skill Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.TeacherSkills + '/:id'}
+          component={wrapperHeader(
+            WrappedTeacherSkillDetailComponent,
+            'Teacher Skill Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.TeacherSkills}
+          component={wrapperHeader(
+            WrappedTeacherSkillSearchComponent,
+            'Teacher Skill Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Users + '/create'}
+          component={wrapperHeader(WrappedUserCreateComponent, 'User Create')}
+        />
+        <Route
+          path={ClientRoutes.Users + '/edit/:id'}
+          component={wrapperHeader(WrappedUserEditComponent, 'User Edit')}
+        />
+        <Route
+          path={ClientRoutes.Users + '/:id'}
+          component={wrapperHeader(WrappedUserDetailComponent, 'User Detail')}
+        />
+        <Route
+          path={ClientRoutes.Users}
+          component={wrapperHeader(WrappedUserSearchComponent, 'User Search')}
+        />
+      </Switch>
     </BrowserRouter>
   );
 };
 
 
 /*<Codenesium>
-    <Hash>57df820d644430b19ddce8d7c9b2f529</Hash>
+    <Hash>04cbb42caf57601e10bbf4dffef50684</Hash>
 </Codenesium>*/

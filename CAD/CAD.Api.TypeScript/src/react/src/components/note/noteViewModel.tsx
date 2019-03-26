@@ -16,13 +16,13 @@ export default class NoteViewModel {
   constructor() {
     this.callId = 0;
     this.callIdEntity = '';
-    this.callIdNavigation = new CallViewModel();
+    this.callIdNavigation = undefined;
     this.dateCreated = undefined;
     this.id = 0;
     this.noteText = '';
     this.officerId = 0;
     this.officerIdEntity = '';
-    this.officerIdNavigation = new OfficerViewModel();
+    this.officerIdNavigation = undefined;
   }
 
   setProperties(
@@ -46,5 +46,5 @@ export default class NoteViewModel {
 
 
 /*<Codenesium>
-    <Hash>7de6f31ef885006363d6dd3e84d9b4a5</Hash>
+    <Hash>df40dfcf280eb450c220ed4cef084a5a</Hash>
 </Codenesium>*/

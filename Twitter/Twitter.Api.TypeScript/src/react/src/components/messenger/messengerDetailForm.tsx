@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import MessengerMapper from './messengerMapper';
 import MessengerViewModel from './messengerViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface MessengerDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class MessengerDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.MessengerClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Messengers +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.MessengerClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new MessengerMapper();
 
-          let mapper = new MessengerMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -115,7 +117,10 @@ class MessengerDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>message_id</h3>
               <p>
-                {String(this.state.model!.messageIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.messageIdNavigation &&
+                    this.state.model!.messageIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -124,11 +129,21 @@ class MessengerDetailComponent extends React.Component<
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>to_user_id</h3>
-              <p>{String(this.state.model!.toUserIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.toUserIdNavigation &&
+                    this.state.model!.toUserIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>user_id</h3>
-              <p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
             </div>
           </div>
           {message}
@@ -146,5 +161,5 @@ export const WrappedMessengerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>706f54fc1256050f398cbe4d46200f06</Hash>
+    <Hash>18ce06143a7e761158ce8e9267004bfa</Hash>
 </Codenesium>*/

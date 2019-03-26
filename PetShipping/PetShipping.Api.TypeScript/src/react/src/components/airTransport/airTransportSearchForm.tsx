@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import AirTransportMapper from './airTransportMapper';
@@ -9,6 +9,7 @@ import AirTransportViewModel from './airTransportViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface AirTransportSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class AirTransportSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.AirTransportClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.AirTransports + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,44 +102,37 @@ export default class AirTransportSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.AirTransportClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.AirTransportClientResponseModel
-          >;
-          let viewModels: Array<AirTransportViewModel> = [];
-          let mapper = new AirTransportMapper();
+      .then(response => {
+        let viewModels: Array<AirTransportViewModel> = [];
+        let mapper = new AirTransportMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<AirTransportViewModel>(),
-            filteredRecords: new Array<AirTransportViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<AirTransportViewModel>(),
+          filteredRecords: new Array<AirTransportViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -240,7 +230,8 @@ export default class AirTransportSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.handlerIdNavigation.toDisplay()
+                            props.original.handlerIdNavigation &&
+                              props.original.handlerIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -330,5 +321,5 @@ export const WrappedAirTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>790459b57e53e3be78744ada957dc93f</Hash>
+    <Hash>e072a06faa6a347ff64fb85a86e77fd7</Hash>
 </Codenesium>*/

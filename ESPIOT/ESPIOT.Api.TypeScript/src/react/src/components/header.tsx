@@ -1,20 +1,23 @@
 import * as React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ClientRoutes, Constants } from '../constants';
+import { ClientRoutes, Constants, AuthClientRoutes } from '../constants';
+import ErrorBoundary from './errorBoundary';
 const { Header, Content, Footer, Sider } = Layout;
-
-const SubMenu = Menu.SubMenu;
 
 interface WrapperHeaderProps {}
 
 interface WrapperHeaderState {
   collapsed: boolean;
 }
-export const wrapperHeader = (Component: React.ComponentClass<any> | React.SFC<any>,
-displayName:string) => {
-  class WrapperHeaderComponent extends React.Component<WrapperHeaderProps & RouteComponentProps, WrapperHeaderState> {
+export const wrapperHeader = (
+  Component: React.ComponentClass<any> | React.SFC<any>,
+  displayName: string
+) => {
+  class WrapperHeaderComponent extends React.Component<
+    WrapperHeaderProps & RouteComponentProps,
+    WrapperHeaderState
+  > {
     state = { collapsed: true };
 
     onCollapse = () => {
@@ -30,39 +33,59 @@ displayName:string) => {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-               <MenuItem
+              <Menu.Item
                 key="Home"
-				onClick={() =>  {this.setState({...this.state, collapsed:true})}}
+                onClick={() => {
+                  this.setState({ ...this.state, collapsed: true });
+                }}
               >
                 <Icon type="home" />
                 <span>Home</span>
-                <Link to={'/'}></Link>
-              </MenuItem>
+                <Link to={'/'} />
+              </Menu.Item>
 
-			   			   <MenuItem
-                key="device"
+              <Menu.Item key="device">
+                <Icon type="edit" />
+                <span>Devices</span>
+                <Link to={ClientRoutes.Devices} />
+              </Menu.Item>
+
+              <Menu.Item key="deviceAction">
+                <Icon type="delete" />
+                <span>Device Actions</span>
+                <Link to={ClientRoutes.DeviceActions} />
+              </Menu.Item>
+
+              <Menu.SubMenu
+                title={
+                  <span>
+                    <Icon type="setting" />
+                    <span>Settings</span>
+                  </span>
+                }
               >
-			  <Icon type="edit" />
-              <span>Device</span>
-              <Link to={ClientRoutes.Devices}></Link>
-              </MenuItem>
-
-							   <MenuItem
-                key="deviceAction"
-              >
-			  <Icon type="delete" />
-              <span>Device Actions</span>
-              <Link to={ClientRoutes.DeviceActions}></Link>
-              </MenuItem>
-
-				
+                <Menu.Item key="lock">
+                  <Icon type="lock" />
+                  <span>Change Password</span>
+                  <Link to={AuthClientRoutes.ChangePassword} />
+                </Menu.Item>
+                <Menu.Item key="logout">
+                  <Icon type="logout" />
+                  <span>Logout</span>
+                  <Link to={AuthClientRoutes.Logout} />
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-            <h2>{displayName}</h2>
-			  <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                <Component {...this.props} />
+              <h2>{displayName}</h2>
+              <div
+                style={{ padding: 24, background: '#fff', minHeight: '600px' }}
+              >
+                <ErrorBoundary>
+                  <Component {...this.props} />
+                </ErrorBoundary>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Footer</Footer>
@@ -74,6 +97,7 @@ displayName:string) => {
   return WrapperHeaderComponent;
 };
 
+
 /*<Codenesium>
-    <Hash>8e63bc852961e617c6b73e79cd49d44b</Hash>
+    <Hash>46c0bdeeb31d38a806eae3d0f04e5f35</Hash>
 </Codenesium>*/

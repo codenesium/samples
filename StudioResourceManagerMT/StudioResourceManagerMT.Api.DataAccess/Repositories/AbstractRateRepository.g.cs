@@ -89,6 +89,20 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Teacher via teacherId.
+		public async virtual Task<Teacher> TeacherByTeacherId(int teacherId)
+		{
+			return await this.Context.Set<Teacher>()
+			       .SingleOrDefaultAsync(x => x.Id == teacherId);
+		}
+
+		// Foreign key reference to table TeacherSkill via teacherSkillId.
+		public async virtual Task<TeacherSkill> TeacherSkillByTeacherSkillId(int teacherSkillId)
+		{
+			return await this.Context.Set<TeacherSkill>()
+			       .SingleOrDefaultAsync(x => x.Id == teacherSkillId);
+		}
+
 		protected async Task<List<Rate>> Where(
 			Expression<Func<Rate, bool>> predicate,
 			int limit = int.MaxValue,
@@ -101,6 +115,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<Rate>()
+			       .Include(x => x.TeacherIdNavigation)
+			       .Include(x => x.TeacherSkillIdNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
@@ -115,5 +131,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c4828d3bea012c6f8f836949f8d78d8b</Hash>
+    <Hash>a6eea3b83b9ab957c94d4f6c1b304859</Hash>
 </Codenesium>*/

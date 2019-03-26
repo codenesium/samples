@@ -1,32 +1,28 @@
-import moment from 'moment'
-
+import moment from 'moment';
 
 export default class BucketViewModel {
-    externalId:any;
-id:number;
-name:string;
+  externalId: any;
+  id: number;
+  name: string;
 
-    constructor() {
-		this.externalId = undefined;
-this.id = 0;
-this.name = '';
+  constructor() {
+    this.externalId = undefined;
+    this.id = 0;
+    this.name = '';
+  }
 
-    }
+  setProperties(externalId: any, id: number, name: string): void {
+    this.externalId = externalId;
+    this.id = id;
+    this.name = name;
+  }
 
-	setProperties(externalId : any,id : number,name : string) : void
-	{
-		this.externalId = externalId;
-this.id = id;
-this.name = name;
+  toDisplay(): string {
+    return String(this.name);
+  }
+}
 
-	}
-
-	toDisplay() : string
-	{
-		return String(this.name);
-	}
-};
 
 /*<Codenesium>
-    <Hash>03004650007ef256cc332b9598f3b943</Hash>
+    <Hash>5f236311002bf9414f21e02d6050424e</Hash>
 </Codenesium>*/

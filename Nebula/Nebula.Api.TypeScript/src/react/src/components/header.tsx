@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import MenuItem from '../../node_modules/antd/lib/menu/MenuItem';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ClientRoutes, Constants } from '../constants';
+import { ClientRoutes, Constants, AuthClientRoutes } from '../constants';
+import ErrorBoundary from './errorBoundary';
 const { Header, Content, Footer, Sider } = Layout;
-
-const SubMenu = Menu.SubMenu;
 
 interface WrapperHeaderProps {}
 
@@ -35,7 +33,7 @@ export const wrapperHeader = (
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <MenuItem
+              <Menu.Item
                 key="Home"
                 onClick={() => {
                   this.setState({ ...this.state, collapsed: true });
@@ -44,68 +42,92 @@ export const wrapperHeader = (
                 <Icon type="home" />
                 <span>Home</span>
                 <Link to={'/'} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="chain">
+              <Menu.Item key="chain">
                 <Icon type="pie-chart" />
                 <span>Chains</span>
                 <Link to={ClientRoutes.Chains} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="chainStatus">
+              <Menu.Item key="chainStatus">
                 <Icon type="rise" />
                 <span>Chain Status</span>
                 <Link to={ClientRoutes.ChainStatuses} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="clasp">
+              <Menu.Item key="clasp">
                 <Icon type="bars" />
                 <span>Clasps</span>
                 <Link to={ClientRoutes.Clasps} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="link">
+              <Menu.Item key="link">
                 <Icon type="cloud" />
                 <span>Links</span>
                 <Link to={ClientRoutes.Links} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="linkLog">
+              <Menu.Item key="linkLog">
                 <Icon type="code" />
                 <span>Link Log</span>
                 <Link to={ClientRoutes.LinkLogs} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="linkStatus">
+              <Menu.Item key="linkStatus">
                 <Icon type="smile" />
                 <span>Link Status</span>
                 <Link to={ClientRoutes.LinkStatuses} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="machine">
+              <Menu.Item key="machine">
                 <Icon type="laptop" />
                 <span>Machines</span>
                 <Link to={ClientRoutes.Machines} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="organization">
+              <Menu.Item key="organization">
                 <Icon type="mobile" />
                 <span>Organizations</span>
                 <Link to={ClientRoutes.Organizations} />
-              </MenuItem>
+              </Menu.Item>
 
-              <MenuItem key="team">
+              <Menu.Item key="team">
                 <Icon type="paper-clip" />
                 <span>Teams</span>
                 <Link to={ClientRoutes.Teams} />
-              </MenuItem>
+              </Menu.Item>
+
+              <Menu.SubMenu
+                title={
+                  <span>
+                    <Icon type="setting" />
+                    <span>Settings</span>
+                  </span>
+                }
+              >
+                <Menu.Item key="lock">
+                  <Icon type="lock" />
+                  <span>Change Password</span>
+                  <Link to={AuthClientRoutes.ChangePassword} />
+                </Menu.Item>
+                <Menu.Item key="logout">
+                  <Icon type="logout" />
+                  <span>Logout</span>
+                  <Link to={AuthClientRoutes.Logout} />
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
               <h2>{displayName}</h2>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                <Component {...this.props} />
+              <div
+                style={{ padding: 24, background: '#fff', minHeight: '600px' }}
+              >
+                <ErrorBoundary>
+                  <Component {...this.props} />
+                </ErrorBoundary>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Footer</Footer>
@@ -119,5 +141,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>308fc25e38f642ec9dd340d0941709bb</Hash>
+    <Hash>a972d7fce2d9503b23e8602437978730</Hash>
 </Codenesium>*/

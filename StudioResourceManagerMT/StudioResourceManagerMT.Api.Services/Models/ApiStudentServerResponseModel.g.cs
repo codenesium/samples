@@ -47,6 +47,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 		public int FamilyId { get; private set; }
 
 		[JsonProperty]
+		public string FamilyIdEntity { get; private set; } = RouteConstants.Families;
+
+		[JsonProperty]
+		public ApiFamilyServerResponseModel FamilyIdNavigation { get; private set; }
+
+		public void SetFamilyIdNavigation(ApiFamilyServerResponseModel value)
+		{
+			this.FamilyIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string FirstName { get; private set; }
 
 		[JsonProperty]
@@ -66,9 +77,20 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[JsonProperty]
 		public int UserId { get; private set; }
+
+		[JsonProperty]
+		public string UserIdEntity { get; private set; } = RouteConstants.Users;
+
+		[JsonProperty]
+		public ApiUserServerResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.UserIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ac7fd2b84dc140662c8b5bb8d2d08309</Hash>
+    <Hash>bc82243cb22bdb76ace1c43f2da5bf29</Hash>
 </Codenesium>*/

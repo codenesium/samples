@@ -91,7 +91,11 @@ namespace CADNS.Api.DataAccess
 		public async virtual Task<List<Call>> CallsByCallTypeId(int callTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Call>()
+			       .Include(x => x.AddressIdNavigation)
+			       .Include(x => x.CallDispositionIdNavigation)
+			       .Include(x => x.CallStatusIdNavigation)
 			       .Include(x => x.CallTypeIdNavigation)
+
 			       .Where(x => x.CallTypeId == callTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Call>();
 		}
 
@@ -121,5 +125,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9971971bffddabad0bb4f89a0521bf68</Hash>
+    <Hash>e4451342033c6644298c958c7ed3f9b1</Hash>
 </Codenesium>*/

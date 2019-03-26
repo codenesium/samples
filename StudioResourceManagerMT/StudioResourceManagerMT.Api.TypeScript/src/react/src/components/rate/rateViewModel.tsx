@@ -1,16 +1,26 @@
 import moment from 'moment';
+import TeacherViewModel from '../teacher/teacherViewModel';
+import TeacherSkillViewModel from '../teacherSkill/teacherSkillViewModel';
 
 export default class RateViewModel {
   amountPerMinute: number;
   id: number;
   teacherId: number;
+  teacherIdEntity: string;
+  teacherIdNavigation?: TeacherViewModel;
   teacherSkillId: number;
+  teacherSkillIdEntity: string;
+  teacherSkillIdNavigation?: TeacherSkillViewModel;
 
   constructor() {
     this.amountPerMinute = 0;
     this.id = 0;
     this.teacherId = 0;
+    this.teacherIdEntity = '';
+    this.teacherIdNavigation = undefined;
     this.teacherSkillId = 0;
+    this.teacherSkillIdEntity = '';
+    this.teacherSkillIdNavigation = undefined;
   }
 
   setProperties(
@@ -19,18 +29,18 @@ export default class RateViewModel {
     teacherId: number,
     teacherSkillId: number
   ): void {
-    this.amountPerMinute = moment(amountPerMinute, 'YYYY-MM-DD');
-    this.id = moment(id, 'YYYY-MM-DD');
-    this.teacherId = moment(teacherId, 'YYYY-MM-DD');
-    this.teacherSkillId = moment(teacherSkillId, 'YYYY-MM-DD');
+    this.amountPerMinute = amountPerMinute;
+    this.id = id;
+    this.teacherId = teacherId;
+    this.teacherSkillId = teacherSkillId;
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.amountPerMinute);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>fd9e387c650c44333c9e179039bd257d</Hash>
+    <Hash>8a89a4916657af45ca43083c2eb81605</Hash>
 </Codenesium>*/

@@ -18,11 +18,11 @@ export default class RetweetViewModel {
     this.id = 0;
     this.retwitterUserId = undefined;
     this.retwitterUserIdEntity = '';
-    this.retwitterUserIdNavigation = new UserViewModel();
+    this.retwitterUserIdNavigation = undefined;
     this.time = undefined;
     this.tweetTweetId = 0;
     this.tweetTweetIdEntity = '';
-    this.tweetTweetIdNavigation = new TweetViewModel();
+    this.tweetTweetIdNavigation = undefined;
   }
 
   setProperties(
@@ -40,11 +40,11 @@ export default class RetweetViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>788ae40838aec633c535c2d8d8adf13f</Hash>
+    <Hash>eea881a98488e4b703319b37007ebf11</Hash>
 </Codenesium>*/

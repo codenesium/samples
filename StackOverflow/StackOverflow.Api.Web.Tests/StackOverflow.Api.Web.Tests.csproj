@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../StackOverflow.Api.Web/StackOverflow.Api.Web.csproj" />
+	<ProjectReference Include="../StackOverflow.Api.Services/StackOverflow.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

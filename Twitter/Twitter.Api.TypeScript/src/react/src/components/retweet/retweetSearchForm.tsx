@@ -1,5 +1,5 @@
 import React, { Component, ReactElement, ReactHTMLElement } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 import * as Api from '../../api/models';
 import RetweetMapper from './retweetMapper';
@@ -9,6 +9,7 @@ import RetweetViewModel from './retweetViewModel';
 import 'react-table/react-table.css';
 import { Form, Button, Input, Row, Col, Alert, Spin } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface RetweetSearchComponentProps {
   form: WrappedFormUtils;
@@ -65,30 +66,26 @@ export default class RetweetSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.RetweetClientResponseModel) {
     axios
       .delete(Constants.ApiEndpoint + ApiRoutes.Retweets + '/' + row.id, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Record deleted',
-            deleteSuccess: true,
-            deleteSubmitted: true,
-          });
-          this.loadRecords(this.state.searchValue);
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            ...this.state,
-            deleteResponse: 'Error deleting record',
-            deleteSuccess: false,
-            deleteSubmitted: true,
-          });
-        }
-      );
+      .then(resp => {
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Record deleted',
+          deleteSuccess: true,
+          deleteSubmitted: true,
+        });
+        this.loadRecords(this.state.searchValue);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          ...this.state,
+          deleteResponse: 'Error deleting record',
+          deleteSuccess: false,
+          deleteSubmitted: true,
+        });
+      });
   }
 
   handleSearchChanged(e: React.FormEvent<HTMLInputElement>) {
@@ -105,42 +102,37 @@ export default class RetweetSearchComponent extends React.Component<
     }
 
     axios
-      .get(searchEndpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.RetweetClientResponseModel>>(searchEndpoint, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.RetweetClientResponseModel>;
-          let viewModels: Array<RetweetViewModel> = [];
-          let mapper = new RetweetMapper();
+      .then(response => {
+        let viewModels: Array<RetweetViewModel> = [];
+        let mapper = new RetweetMapper();
 
-          response.forEach(x => {
-            viewModels.push(mapper.mapApiResponseToViewModel(x));
-          });
+        response.data.forEach(x => {
+          viewModels.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          this.setState({
-            records: viewModels,
-            filteredRecords: viewModels,
-            loading: false,
-            loaded: true,
-            errorOccurred: false,
-            errorMessage: '',
-          });
-        },
-        error => {
-          console.log(error);
-          this.setState({
-            records: new Array<RetweetViewModel>(),
-            filteredRecords: new Array<RetweetViewModel>(),
-            loading: false,
-            loaded: true,
-            errorOccurred: true,
-            errorMessage: 'Error from API',
-          });
-        }
-      );
+        this.setState({
+          records: viewModels,
+          filteredRecords: viewModels,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+        this.setState({
+          records: new Array<RetweetViewModel>(),
+          filteredRecords: new Array<RetweetViewModel>(),
+          loading: false,
+          loaded: true,
+          errorOccurred: true,
+          errorMessage: 'Error from API',
+        });
+      });
   }
 
   filterGrid() {}
@@ -231,7 +223,8 @@ export default class RetweetSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.retwitterUserIdNavigation.toDisplay()
+                            props.original.retwitterUserIdNavigation &&
+                              props.original.retwitterUserIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -261,7 +254,8 @@ export default class RetweetSearchComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.tweetTweetIdNavigation.toDisplay()
+                            props.original.tweetTweetIdNavigation &&
+                              props.original.tweetTweetIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -328,5 +322,5 @@ export const WrappedRetweetSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ba2cf47eca5b44f2450d4700bd9c8013</Hash>
+    <Hash>fdb7acdff44d51e8761acb895315acb0</Hash>
 </Codenesium>*/

@@ -1,15 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ChainStatusMapper from './chainStatusMapper';
 import ChainStatusViewModel from './chainStatusViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {ChainTableComponent} from '../shared/chainTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { ChainTableComponent } from '../shared/chainTable';
 
 interface ChainStatusDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,108 +24,114 @@ interface ChainStatusDetailComponentState {
 }
 
 class ChainStatusDetailComponent extends React.Component<
-ChainStatusDetailComponentProps,
-ChainStatusDetailComponentState
+  ChainStatusDetailComponentProps,
+  ChainStatusDetailComponentState
 > {
   state = {
     model: new ChainStatusViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.ChainStatuses + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.ChainStatuses + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.ChainStatusClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.ChainStatuses +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.ChainStatusClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new ChainStatusMapper();
 
-          let mapper = new ChainStatusMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Chains</h3>
-            <ChainTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.ChainStatuses + '/' + this.state.model!.id + '/' + ApiRoutes.Chains}
-			/>
-         </div>
-	
-
+            <ChainTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.ChainStatuses +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Chains
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -136,10 +140,11 @@ ChainStatusDetailComponentState
   }
 }
 
-export const WrappedChainStatusDetailComponent = Form.create({ name: 'ChainStatus Detail' })(
-  ChainStatusDetailComponent
-);
+export const WrappedChainStatusDetailComponent = Form.create({
+  name: 'ChainStatus Detail',
+})(ChainStatusDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>be12f84ce15733ff8c5e87e60d83c911</Hash>
+    <Hash>f35fd9427d40431ed1f528b596edde49</Hash>
 </Codenesium>*/

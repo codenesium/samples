@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import RowVersionCheckMapper from '../rowVersionCheck/rowVersionCheckMapper';
@@ -7,9 +7,9 @@ import RowVersionCheckViewModel from '../rowVersionCheck/rowVersionCheckViewMode
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface RowVersionCheckTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,46 +51,46 @@ export class RowVersionCheckTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.RowVersionCheckClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.RowVersionCheckClientResponseModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new RowVersionCheckMapper();
 
-          let mapper = new RowVersionCheckMapper();
+        let rowVersionChecks: Array<RowVersionCheckViewModel> = [];
 
-          let rowVersionChecks: Array<RowVersionCheckViewModel> = [];
+        response.data.forEach(x => {
+          rowVersionChecks.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            rowVersionChecks.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: rowVersionChecks,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: rowVersionChecks,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -180,5 +180,5 @@ export class RowVersionCheckTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7e709ac6b867d8bcf51bbad37fa5f97b</Hash>
+    <Hash>9bc50cf0be2239015ce4fd5c320ee23a</Hash>
 </Codenesium>*/

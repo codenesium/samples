@@ -191,9 +191,59 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
 		}
+
+		[Fact]
+		public async void UserId_Create_Valid_Reference()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+
+			var validator = new ApiAdminServerRequestModelValidator(adminRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAdminServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Create_Invalid_Reference()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+
+			var validator = new ApiAdminServerRequestModelValidator(adminRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiAdminServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Update_Valid_Reference()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+
+			var validator = new ApiAdminServerRequestModelValidator(adminRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.UserId, 1);
+		}
+
+		[Fact]
+		public async void UserId_Update_Invalid_Reference()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+
+			var validator = new ApiAdminServerRequestModelValidator(adminRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.UserId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>96f970a440756463db3836aeda822aa3</Hash>
+    <Hash>3c78b6ab63f86d48999eff753e09a939</Hash>
 </Codenesium>*/

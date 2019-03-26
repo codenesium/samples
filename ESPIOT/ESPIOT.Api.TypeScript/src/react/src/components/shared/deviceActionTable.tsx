@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import DeviceActionMapper from '../deviceAction/deviceActionMapper';
@@ -7,9 +7,9 @@ import DeviceActionViewModel from '../deviceAction/deviceActionViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface DeviceActionTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,46 +51,46 @@ export class DeviceActionTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.DeviceActionClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<
-            Api.DeviceActionClientResponseModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new DeviceActionMapper();
 
-          let mapper = new DeviceActionMapper();
+        let deviceActions: Array<DeviceActionViewModel> = [];
 
-          let deviceActions: Array<DeviceActionViewModel> = [];
+        response.data.forEach(x => {
+          deviceActions.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            deviceActions.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: deviceActions,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: deviceActions,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -138,7 +138,8 @@ export class DeviceActionTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.deviceIdNavigation.toDisplay()
+                            props.original.deviceIdNavigation &&
+                              props.original.deviceIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -196,5 +197,5 @@ export class DeviceActionTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>de2efd5b809421a4d3ad19c9e11e608e</Hash>
+    <Hash>25a8a8b7b1feac300f0e2de79e1cbfac</Hash>
 </Codenesium>*/

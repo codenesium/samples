@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import VoteTypesMapper from '../voteTypes/voteTypesMapper';
@@ -7,9 +7,9 @@ import VoteTypesViewModel from '../voteTypes/voteTypesViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface VoteTypesTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class VoteTypesTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.VoteTypesClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.VoteTypesClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new VoteTypesMapper();
 
-          let mapper = new VoteTypesMapper();
+        let voteTypes: Array<VoteTypesViewModel> = [];
 
-          let voteTypes: Array<VoteTypesViewModel> = [];
+        response.data.forEach(x => {
+          voteTypes.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            voteTypes.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: voteTypes,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: voteTypes,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -164,5 +166,5 @@ export class VoteTypesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>907f9f1e629b8882687636cf19d00152</Hash>
+    <Hash>89492131962cee96a8bb39402c47e011</Hash>
 </Codenesium>*/

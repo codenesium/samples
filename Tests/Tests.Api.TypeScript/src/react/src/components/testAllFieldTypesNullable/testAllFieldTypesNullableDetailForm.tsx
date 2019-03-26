@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import TestAllFieldTypesNullableMapper from './testAllFieldTypesNullableMapper';
 import TestAllFieldTypesNullableViewModel from './testAllFieldTypesNullableViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface TestAllFieldTypesNullableDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class TestAllFieldTypesNullableDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.TestAllFieldTypesNullableClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.TestAllFieldTypesNullables +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.TestAllFieldTypesNullableClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new TestAllFieldTypesNullableMapper();
 
-          let mapper = new TestAllFieldTypesNullableMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -236,5 +238,5 @@ export const WrappedTestAllFieldTypesNullableDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e9f194a18a11194f712fa837f07a4ae3</Hash>
+    <Hash>71f11e3862dc8b415ef565ea50692dc1</Hash>
 </Codenesium>*/

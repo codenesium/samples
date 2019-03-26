@@ -17,6 +17,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IDALEventStatuMapper DalEventStatuMapper { get; private set; }
 
+		protected IDALEventMapper DalEventMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractEventStatuService(
@@ -24,12 +26,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 			MediatR.IMediator mediator,
 			IEventStatuRepository eventStatuRepository,
 			IApiEventStatuServerRequestModelValidator eventStatuModelValidator,
-			IDALEventStatuMapper dalEventStatuMapper)
+			IDALEventStatuMapper dalEventStatuMapper,
+			IDALEventMapper dalEventMapper)
 			: base()
 		{
 			this.EventStatuRepository = eventStatuRepository;
 			this.EventStatuModelValidator = eventStatuModelValidator;
 			this.DalEventStatuMapper = dalEventStatuMapper;
+			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -111,9 +115,16 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiEventServerResponseModel>> EventsByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Event> records = await this.EventStatuRepository.EventsByEventStatusId(eventStatusId, limit, offset);
+
+			return this.DalEventMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9f156eef6e71722f0ea98cefb0c5155</Hash>
+    <Hash>18c5720f6e44a302759859e6dbca8797</Hash>
 </Codenesium>*/

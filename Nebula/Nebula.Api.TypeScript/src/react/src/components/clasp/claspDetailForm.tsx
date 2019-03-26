@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import ClaspMapper from './claspMapper';
 import ClaspViewModel from './claspViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface ClaspDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,103 +23,113 @@ interface ClaspDetailComponentState {
 }
 
 class ClaspDetailComponent extends React.Component<
-ClaspDetailComponentProps,
-ClaspDetailComponentState
+  ClaspDetailComponentProps,
+  ClaspDetailComponentState
 > {
   state = {
     model: new ClaspViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Clasps + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Clasps + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.ClaspClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Clasps +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.ClaspClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new ClaspMapper();
 
-          let mapper = new ClaspMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Id</h3>
-							<p>{String(this.state.model!.id)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>NextChainId</h3>
-							<p>{String(this.state.model!.nextChainIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>PreviousChainId</h3>
-							<p>{String(this.state.model!.previousChainIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Id</h3>
+              <p>{String(this.state.model!.id)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>NextChainId</h3>
+              <p>
+                {String(
+                  this.state.model!.nextChainIdNavigation &&
+                    this.state.model!.nextChainIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>PreviousChainId</h3>
+              <p>
+                {String(
+                  this.state.model!.previousChainIdNavigation &&
+                    this.state.model!.previousChainIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -130,10 +138,11 @@ ClaspDetailComponentState
   }
 }
 
-export const WrappedClaspDetailComponent = Form.create({ name: 'Clasp Detail' })(
-  ClaspDetailComponent
-);
+export const WrappedClaspDetailComponent = Form.create({
+  name: 'Clasp Detail',
+})(ClaspDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>b0b8469a5d21c7e860f9801aaa59e0d5</Hash>
+    <Hash>9daa84b4fb510d445ec0237d7412c7af</Hash>
 </Codenesium>*/

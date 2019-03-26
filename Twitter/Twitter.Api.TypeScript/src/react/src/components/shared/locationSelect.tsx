@@ -1,10 +1,11 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as Api from '../../api/models';
 import LocationMapper from '../location/locationMapper';
 import LocationViewModel from '../location/locationViewModel';
-import { Spin, Alert, Select } from 'antd';
+import { Form, Spin, Alert, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface LocationSelectComponentProps {
   getFieldDecorator: any;
@@ -38,44 +39,46 @@ export class LocationSelectComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.LocationClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.LocationClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new LocationMapper();
 
-          let mapper = new LocationMapper();
+        let devices: Array<LocationViewModel> = [];
 
-          let devices: Array<LocationViewModel> = [];
+        response.data.forEach(x => {
+          devices.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            devices.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: devices,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: devices,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -90,22 +93,24 @@ export class LocationSelectComponent extends React.Component<
       return <Alert message={this.state.errorMessage} type="error" />;
     } else if (this.state.loaded) {
       return (
-        <div>
+        <Form.Item>
+          <label htmlFor={this.props.propertyName} />
+          <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
-            initialValue: this.props.selectedValue,
+            initialValue: this.props.selectedValue || [],
             rules: [{ required: this.props.required, message: 'Required' }],
           })(
             <Select>
               {this.state.filteredRecords.map((x: LocationViewModel) => {
                 return (
-                  <Select.Option value={x.locationId}>
+                  <Select.Option key={x.locationId} value={x.locationId}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
               })}
             </Select>
           )}
-        </div>
+        </Form.Item>
       );
     } else {
       return null;
@@ -115,5 +120,5 @@ export class LocationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>40f30abf6ae8f93b65f357fc083c959b</Hash>
+    <Hash>a8c40d7c58cde7172a15e599ff125aba</Hash>
 </Codenesium>*/

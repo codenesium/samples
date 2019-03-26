@@ -18,12 +18,12 @@ export default class PetViewModel {
     this.acquiredDate = undefined;
     this.breedId = 0;
     this.breedIdEntity = '';
-    this.breedIdNavigation = new BreedViewModel();
+    this.breedIdNavigation = undefined;
     this.description = '';
     this.id = 0;
     this.penId = 0;
     this.penIdEntity = '';
-    this.penIdNavigation = new PenViewModel();
+    this.penIdNavigation = undefined;
     this.price = 0;
   }
 
@@ -50,5 +50,5 @@ export default class PetViewModel {
 
 
 /*<Codenesium>
-    <Hash>7e2a16175af9a6064594880b8ee523be</Hash>
+    <Hash>6ffa08933f889dfeff0d62c2a75011ce</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ export default class DirectTweetViewModel {
     this.date = undefined;
     this.taggedUserId = 0;
     this.taggedUserIdEntity = '';
-    this.taggedUserIdNavigation = new UserViewModel();
+    this.taggedUserIdNavigation = undefined;
     this.time = undefined;
     this.tweetId = 0;
   }
@@ -41,5 +41,5 @@ export default class DirectTweetViewModel {
 
 
 /*<Codenesium>
-    <Hash>c244da51de6ac3e68a250b501527f983</Hash>
+    <Hash>4aa7cfd892372e5548206ce43fd60adb</Hash>
 </Codenesium>*/

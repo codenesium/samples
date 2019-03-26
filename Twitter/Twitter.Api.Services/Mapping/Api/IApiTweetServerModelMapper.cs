@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace TwitterNS.Api.Services
 {
-	public partial interface IApiTweetServerModelMapper
-	{
-	}
+    public partial interface IApiTweetServerModelMapper
+    {		
+    }
 }
 
 /*<Codenesium>
-    <Hash>8bc761ee022e1861942001fd4f29ab14</Hash>
+    <Hash>f7aeac6bf370bd5169866bf5e563fd6e</Hash>
 </Codenesium>*/

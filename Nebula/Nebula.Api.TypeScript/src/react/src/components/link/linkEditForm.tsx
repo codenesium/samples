@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { MachineSelectComponent } from '../shared/machineSelect';
 import { ChainSelectComponent } from '../shared/chainSelect';
 import { LinkStatusSelectComponent } from '../shared/linkStatusSelect';
@@ -55,48 +55,53 @@ class LinkEditComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.LinkClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Links +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.LinkClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new LinkMapper();
 
-          let mapper = new LinkMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
 
+        this.props.form.setFieldsValue(
+          mapper.mapApiResponseToViewModel(response.data)
+        );
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: false,
             errorMessage: '',
           });
-
-          this.props.form.setFieldsValue(
-            mapper.mapApiResponseToViewModel(response)
-          );
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: false,
+            ...this.state,
+            submitted: true,
+            submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -105,7 +110,6 @@ class LinkEditComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as LinkViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -116,54 +120,56 @@ class LinkEditComponent extends React.Component<
   submit = (model: LinkViewModel) => {
     let mapper = new LinkMapper();
     axios
-      .put(
+      .put<CreateResponse<Api.LinkClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Links + '/' + this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.LinkClientRequestModel
-          >;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          let errorResponse = error.response.data as ActionResponse;
-          if (error.response.data) {
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -188,29 +194,21 @@ class LinkEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="assignedMachineId">AssignedMachineId</label>
-            <br />
-            <MachineSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Machines}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="assignedMachineId"
-              required={false}
-              selectedValue={this.state.model!.assignedMachineId}
-            />
-          </Form.Item>
+          <MachineSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Machines}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="assignedMachineId"
+            required={false}
+            selectedValue={this.state.model!.assignedMachineId}
+          />
 
-          <Form.Item>
-            <label htmlFor="chainId">ChainId</label>
-            <br />
-            <ChainSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="chainId"
-              required={true}
-              selectedValue={this.state.model!.chainId}
-            />
-          </Form.Item>
+          <ChainSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Chains}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="chainId"
+            required={true}
+            selectedValue={this.state.model!.chainId}
+          />
 
           <Form.Item>
             <label htmlFor="dateCompleted">DateCompleted</label>
@@ -323,5 +321,5 @@ export const WrappedLinkEditComponent = Form.create({ name: 'Link Edit' })(
 
 
 /*<Codenesium>
-    <Hash>930ad6570bea951705d8ead389490e8b</Hash>
+    <Hash>c8c6cee68032582fd319203b689478e1</Hash>
 </Codenesium>*/

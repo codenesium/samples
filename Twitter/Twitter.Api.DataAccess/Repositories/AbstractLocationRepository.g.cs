@@ -94,6 +94,8 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<Tweet>()
 			       .Include(x => x.LocationIdNavigation)
+			       .Include(x => x.UserUserIdNavigation)
+
 			       .Where(x => x.LocationId == locationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
@@ -102,6 +104,7 @@ namespace TwitterNS.Api.DataAccess
 		{
 			return await this.Context.Set<User>()
 			       .Include(x => x.LocationLocationIdNavigation)
+
 			       .Where(x => x.LocationLocationId == locationLocationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
@@ -131,5 +134,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cbf87d449a1d852f674420290b2d7e6f</Hash>
+    <Hash>050f12c32d8c185ea512711f5d803c9f</Hash>
 </Codenesium>*/

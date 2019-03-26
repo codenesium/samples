@@ -120,6 +120,7 @@ namespace NebulaNS.Api.DataAccess
 		{
 			return await this.Context.Set<LinkLog>()
 			       .Include(x => x.LinkIdNavigation)
+
 			       .Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
 		}
 
@@ -173,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b9c45fae91169271ad4984c17a1a6436</Hash>
+    <Hash>21dfadba79d26a2e53c1da52889d6aea</Hash>
 </Codenesium>*/

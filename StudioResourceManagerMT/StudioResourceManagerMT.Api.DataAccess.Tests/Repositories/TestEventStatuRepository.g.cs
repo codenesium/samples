@@ -22,7 +22,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
+			var records = await context.Set<EventStatu>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
+			var records = await context.Set<EventStatu>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
+			var records = await context.Set<EventStatu>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
+			var records = await context.Set<EventStatu>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>22cbdb50cf0b0dda843918df0668bd25</Hash>
+    <Hash>ef57da5626ca7e5d9a46abae4a681714</Hash>
 </Codenesium>*/

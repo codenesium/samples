@@ -22,7 +22,7 @@ namespace TestsNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace TestsNS.Api.DataAccess
 			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<VPerson>().Where(x => true).ToListAsync();
+			var records = await context.Set<VPerson>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<VPerson>().Where(x => true).ToListAsync();
+			var records = await context.Set<VPerson>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<VPerson>().Where(x => true).ToListAsync();
+			var records = await context.Set<VPerson>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Delete(entity.PersonId);
 
-			var records = await context.Set<VPerson>().Where(x => true).ToListAsync();
+			var records = await context.Set<VPerson>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>50b7e6ce698e19f6dbfb1be4094b163b</Hash>
+    <Hash>65fe9844ec5ed06351a8f1db7483ccee</Hash>
 </Codenesium>*/

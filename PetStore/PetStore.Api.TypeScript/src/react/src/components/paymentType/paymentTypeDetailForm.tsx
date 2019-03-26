@@ -1,15 +1,13 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PaymentTypeMapper from './paymentTypeMapper';
 import PaymentTypeViewModel from './paymentTypeViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {SaleTableComponent} from '../shared/saleTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { SaleTableComponent } from '../shared/saleTable';
 
 interface PaymentTypeDetailComponentProps {
   form: WrappedFormUtils;
@@ -26,104 +24,110 @@ interface PaymentTypeDetailComponentState {
 }
 
 class PaymentTypeDetailComponent extends React.Component<
-PaymentTypeDetailComponentProps,
-PaymentTypeDetailComponentState
+  PaymentTypeDetailComponentProps,
+  PaymentTypeDetailComponentState
 > {
   state = {
     model: new PaymentTypeViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.PaymentTypes + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.PaymentTypes + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.PaymentTypeClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.PaymentTypes +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.PaymentTypeClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PaymentTypeMapper();
 
-          let mapper = new PaymentTypeMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Name</h3>
-							<p>{String(this.state.model!.name)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Name</h3>
+              <p>{String(this.state.model!.name)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>Sales</h3>
-            <SaleTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.PaymentTypes + '/' + this.state.model!.id + '/' + ApiRoutes.Sales}
-			/>
-         </div>
-	
-
+            <SaleTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.PaymentTypes +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.Sales
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -132,10 +136,11 @@ PaymentTypeDetailComponentState
   }
 }
 
-export const WrappedPaymentTypeDetailComponent = Form.create({ name: 'PaymentType Detail' })(
-  PaymentTypeDetailComponent
-);
+export const WrappedPaymentTypeDetailComponent = Form.create({
+  name: 'PaymentType Detail',
+})(PaymentTypeDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>0fc567eac9eb1401741bb61f9af2a7f8</Hash>
+    <Hash>0133dd098b55f425fbd997118c860580</Hash>
 </Codenesium>*/

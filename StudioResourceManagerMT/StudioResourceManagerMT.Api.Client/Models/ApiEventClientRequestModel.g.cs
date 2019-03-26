@@ -44,7 +44,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public decimal? BillAmount { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public int EventStatusId { get; private set; } = default(int);
+		public int EventStatusId { get; private set; }
 
 		[JsonProperty]
 		public DateTime? ScheduledEndDate { get; private set; } = null;
@@ -61,5 +61,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>0a870d3934ca061b9f11ea474c362e2e</Hash>
+    <Hash>bc45d84f48cdb1ea996aa9cd870a4fa4</Hash>
 </Codenesium>*/

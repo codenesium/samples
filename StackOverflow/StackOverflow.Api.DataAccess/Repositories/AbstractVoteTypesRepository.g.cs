@@ -91,7 +91,10 @@ namespace StackOverflowNS.Api.DataAccess
 		public async virtual Task<List<Votes>> VotesByVoteTypeId(int voteTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Votes>()
+			       .Include(x => x.PostIdNavigation)
+			       .Include(x => x.UserIdNavigation)
 			       .Include(x => x.VoteTypeIdNavigation)
+
 			       .Where(x => x.VoteTypeId == voteTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Votes>();
 		}
 
@@ -121,5 +124,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c018e4ac8405d3ebc94d98b027219420</Hash>
+    <Hash>28ab2207c3a178a21ecaa4fb14f5751d</Hash>
 </Codenesium>*/

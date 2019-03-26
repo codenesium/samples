@@ -1,14 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CommentsMapper from './commentsMapper';
 import CommentsViewModel from './commentsViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CommentsDetailComponentProps {
   form: WrappedFormUtils;
@@ -25,111 +23,121 @@ interface CommentsDetailComponentState {
 }
 
 class CommentsDetailComponent extends React.Component<
-CommentsDetailComponentProps,
-CommentsDetailComponentState
+  CommentsDetailComponentProps,
+  CommentsDetailComponentState
 > {
   state = {
     model: new CommentsViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Comments + '/edit/' + this.state.model!.id);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Comments + '/edit/' + this.state.model!.id
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.CommentsClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Comments +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.CommentsClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CommentsMapper();
 
-          let mapper = new CommentsMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>Creation Date</h3>
-							<p>{String(this.state.model!.creationDate)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>Post</h3>
-							<p>{String(this.state.model!.postIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>Score</h3>
-							<p>{String(this.state.model!.score)}</p>
-						 </div>
-					   						 <div>
-							<h3>Text</h3>
-							<p>{String(this.state.model!.text)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>User</h3>
-							<p>{String(this.state.model!.userIdNavigation!.toDisplay())}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>Creation Date</h3>
+              <p>{String(this.state.model!.creationDate)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Post</h3>
+              <p>
+                {String(
+                  this.state.model!.postIdNavigation &&
+                    this.state.model!.postIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>Score</h3>
+              <p>{String(this.state.model!.score)}</p>
+            </div>
+            <div>
+              <h3>Text</h3>
+              <p>{String(this.state.model!.text)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>User</h3>
+              <p>
+                {String(
+                  this.state.model!.userIdNavigation &&
+                    this.state.model!.userIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+          </div>
           {message}
-
-
         </div>
       );
     } else {
@@ -138,10 +146,11 @@ CommentsDetailComponentState
   }
 }
 
-export const WrappedCommentsDetailComponent = Form.create({ name: 'Comments Detail' })(
-  CommentsDetailComponent
-);
+export const WrappedCommentsDetailComponent = Form.create({
+  name: 'Comments Detail',
+})(CommentsDetailComponent);
+
 
 /*<Codenesium>
-    <Hash>590a3c7ffc37ef4731df1db9c5b261bb</Hash>
+    <Hash>c4ef7c7c850c9234f794a8b537f37195</Hash>
 </Codenesium>*/

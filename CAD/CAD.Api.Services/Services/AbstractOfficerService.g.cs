@@ -19,7 +19,7 @@ namespace CADNS.Api.Services
 
 		protected IDALNoteMapper DalNoteMapper { get; private set; }
 
-		protected IDALOfficerCapabilitiesMapper DalOfficerCapabilitiesMapper { get; private set; }
+		protected IDALOfficerCapabilityMapper DalOfficerCapabilityMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -30,14 +30,14 @@ namespace CADNS.Api.Services
 			IApiOfficerServerRequestModelValidator officerModelValidator,
 			IDALOfficerMapper dalOfficerMapper,
 			IDALNoteMapper dalNoteMapper,
-			IDALOfficerCapabilitiesMapper dalOfficerCapabilitiesMapper)
+			IDALOfficerCapabilityMapper dalOfficerCapabilityMapper)
 			: base()
 		{
 			this.OfficerRepository = officerRepository;
 			this.OfficerModelValidator = officerModelValidator;
 			this.DalOfficerMapper = dalOfficerMapper;
 			this.DalNoteMapper = dalNoteMapper;
-			this.DalOfficerCapabilitiesMapper = dalOfficerCapabilitiesMapper;
+			this.DalOfficerCapabilityMapper = dalOfficerCapabilityMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -127,11 +127,11 @@ namespace CADNS.Api.Services
 			return this.DalNoteMapper.MapEntityToModel(records);
 		}
 
-		public async virtual Task<List<ApiOfficerCapabilitiesServerResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiOfficerCapabilityServerResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<OfficerCapabilities> records = await this.OfficerRepository.OfficerCapabilitiesByOfficerId(officerId, limit, offset);
+			List<OfficerCapability> records = await this.OfficerRepository.OfficerCapabilitiesByOfficerId(officerId, limit, offset);
 
-			return this.DalOfficerCapabilitiesMapper.MapEntityToModel(records);
+			return this.DalOfficerCapabilityMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiOfficerServerResponseModel>> ByCapabilityId(int capabilityId, int limit = int.MaxValue, int offset = 0)
@@ -151,5 +151,5 @@ namespace CADNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7693375810bdc032ebb0fce200f84c20</Hash>
+    <Hash>2fab24ff8edb6e8b2b87ba38eaad1dfd</Hash>
 </Codenesium>*/

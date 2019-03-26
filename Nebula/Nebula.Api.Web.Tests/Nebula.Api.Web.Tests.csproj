@@ -22,6 +22,7 @@
 
    <ItemGroup>
 	<ProjectReference Include="../Nebula.Api.Web/Nebula.Api.Web.csproj" />
+	<ProjectReference Include="../Nebula.Api.Services/Nebula.Api.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

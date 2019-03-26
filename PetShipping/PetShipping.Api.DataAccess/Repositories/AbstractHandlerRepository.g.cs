@@ -96,6 +96,7 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			return await this.Context.Set<AirTransport>()
 			       .Include(x => x.HandlerIdNavigation)
+
 			       .Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
@@ -104,6 +105,8 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			return await this.Context.Set<HandlerPipelineStep>()
 			       .Include(x => x.HandlerIdNavigation)
+			       .Include(x => x.PipelineStepIdNavigation)
+
 			       .Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
 		}
 
@@ -112,6 +115,8 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			return await this.Context.Set<OtherTransport>()
 			       .Include(x => x.HandlerIdNavigation)
+			       .Include(x => x.PipelineStepIdNavigation)
+
 			       .Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
 		}
 
@@ -141,5 +146,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4258fb43d3e463379c5ed14930a63d5b</Hash>
+    <Hash>4517850282d3103e8b6a56698d253e45</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ export default class MessageViewModel {
     this.messageId = 0;
     this.senderUserId = undefined;
     this.senderUserIdEntity = '';
-    this.senderUserIdNavigation = new UserViewModel();
+    this.senderUserIdNavigation = undefined;
   }
 
   setProperties(content: string, messageId: number, senderUserId: any): void {
@@ -29,5 +29,5 @@ export default class MessageViewModel {
 
 
 /*<Codenesium>
-    <Hash>62adca5d9d0617144a2a179414569540</Hash>
+    <Hash>3965b281553a1581a659fde01a11283b</Hash>
 </Codenesium>*/

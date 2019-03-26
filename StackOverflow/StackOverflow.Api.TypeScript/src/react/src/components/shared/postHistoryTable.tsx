@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import PostHistoryMapper from '../postHistory/postHistoryMapper';
@@ -7,9 +7,9 @@ import PostHistoryViewModel from '../postHistory/postHistoryViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import ReactTable from 'react-table';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface PostHistoryTableComponentProps {
-  id: number;
   apiRoute: string;
   history: any;
   match: any;
@@ -51,44 +51,46 @@ export class PostHistoryTableComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(this.props.apiRoute, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      .get<Array<Api.PostHistoryClientResponseModel>>(this.props.apiRoute, {
+        headers: GlobalUtilities.defaultHeaders(),
       })
-      .then(
-        resp => {
-          let response = resp.data as Array<Api.PostHistoryClientResponseModel>;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new PostHistoryMapper();
 
-          let mapper = new PostHistoryMapper();
+        let postHistory: Array<PostHistoryViewModel> = [];
 
-          let postHistory: Array<PostHistoryViewModel> = [];
+        response.data.forEach(x => {
+          postHistory.push(mapper.mapApiResponseToViewModel(x));
+        });
 
-          response.forEach(x => {
-            postHistory.push(mapper.mapApiResponseToViewModel(x));
-          });
+        this.setState({
+          ...this.state,
+          filteredRecords: postHistory,
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
           this.setState({
             ...this.state,
-            filteredRecords: postHistory,
-            loading: false,
-            loaded: true,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
             ...this.state,
-            loading: false,
-            loaded: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -143,7 +145,8 @@ export class PostHistoryTableComponent extends React.Component<
                           }}
                         >
                           {String(
-                            props.original.postHistoryTypeIdNavigation.toDisplay()
+                            props.original.postHistoryTypeIdNavigation &&
+                              props.original.postHistoryTypeIdNavigation.toDisplay()
                           )}
                         </a>
                       );
@@ -163,7 +166,10 @@ export class PostHistoryTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.postIdNavigation.toDisplay())}
+                          {String(
+                            props.original.postIdNavigation &&
+                              props.original.postIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -205,7 +211,10 @@ export class PostHistoryTableComponent extends React.Component<
                             );
                           }}
                         >
-                          {String(props.original.userIdNavigation.toDisplay())}
+                          {String(
+                            props.original.userIdNavigation &&
+                              props.original.userIdNavigation.toDisplay()
+                          )}
                         </a>
                       );
                     },
@@ -255,5 +264,5 @@ export class PostHistoryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6a78c179059168ea6689a86fe6ab5099</Hash>
+    <Hash>45c4f97b03e49b6bfdcb4e4706e8fa82</Hash>
 </Codenesium>*/

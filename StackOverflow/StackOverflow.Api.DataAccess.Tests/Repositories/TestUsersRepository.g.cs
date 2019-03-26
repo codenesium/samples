@@ -22,7 +22,7 @@ namespace StackOverflowNS.Api.DataAccess
 			SqliteConnection connection = new SqliteConnection(connectionString);
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			options.UseSqlite(connection);
-			var context = new ApplicationDbContext(options.Options);
+			var context = new ApplicationDbContext(options.Options, null);
 			context.Database.OpenConnection();
 			context.Database.EnsureCreated();
 			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
@@ -93,7 +93,7 @@ namespace StackOverflowNS.Api.DataAccess
 			entity.SetProperties(default(int), "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
 			await repository.Create(entity);
 
-			var records = await context.Set<Users>().Where(x => true).ToListAsync();
+			var records = await context.Set<Users>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -113,7 +113,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var records = await context.Set<Users>().Where(x => true).ToListAsync();
+			var records = await context.Set<Users>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -133,7 +133,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Update(entity);
 
-			var records = await context.Set<Users>().Where(x => true).ToListAsync();
+			var records = await context.Set<Users>().ToListAsync();
 
 			records.Count.Should().Be(2);
 		}
@@ -151,7 +151,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Delete(entity.Id);
 
-			var records = await context.Set<Users>().Where(x => true).ToListAsync();
+			var records = await context.Set<Users>().ToListAsync();
 
 			records.Count.Should().Be(1);
 		}
@@ -174,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d345d36b9cb17521a714c72b523c354c</Hash>
+    <Hash>5354e9c4c3f4c032b6f8c472f1a84512</Hash>
 </Codenesium>*/

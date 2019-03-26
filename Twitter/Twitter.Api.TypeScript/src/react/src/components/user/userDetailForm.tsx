@@ -1,23 +1,20 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import UserMapper from './userMapper';
 import UserViewModel from './userViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import {DirectTweetTableComponent} from '../shared/directTweetTable'
-	import {FollowerTableComponent} from '../shared/followerTable'
-	import {LikeTableComponent} from '../shared/likeTable'
-	import {MessageTableComponent} from '../shared/messageTable'
-	import {MessengerTableComponent} from '../shared/messengerTable'
-	import {QuoteTweetTableComponent} from '../shared/quoteTweetTable'
-	import {ReplyTableComponent} from '../shared/replyTable'
-	import {RetweetTableComponent} from '../shared/retweetTable'
-	import {TweetTableComponent} from '../shared/tweetTable'
-	
-
-
+import * as GlobalUtilities from '../../lib/globalUtilities';
+import { DirectTweetTableComponent } from '../shared/directTweetTable';
+import { FollowerTableComponent } from '../shared/followerTable';
+import { MessageTableComponent } from '../shared/messageTable';
+import { MessengerTableComponent } from '../shared/messengerTable';
+import { QuoteTweetTableComponent } from '../shared/quoteTweetTable';
+import { ReplyTableComponent } from '../shared/replyTable';
+import { RetweetTableComponent } from '../shared/retweetTable';
+import { TweetTableComponent } from '../shared/tweetTable';
 
 interface UserDetailComponentProps {
   form: WrappedFormUtils;
@@ -34,224 +31,268 @@ interface UserDetailComponentState {
 }
 
 class UserDetailComponent extends React.Component<
-UserDetailComponentProps,
-UserDetailComponentState
+  UserDetailComponentProps,
+  UserDetailComponentState
 > {
   state = {
     model: new UserViewModel(),
     loading: false,
     loaded: true,
     errorOccurred: false,
-    errorMessage: ''
+    errorMessage: '',
   };
 
-  handleEditClick(e:any) {
-    this.props.history.push(ClientRoutes.Users + '/edit/' + this.state.model!.userId);
+  handleEditClick(e: any) {
+    this.props.history.push(
+      ClientRoutes.Users + '/edit/' + this.state.model!.userId
+    );
   }
-  
+
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.UserClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.Users +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.UserClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new UserMapper();
 
-          let mapper = new UserMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
-    
     let message: JSX.Element = <div />;
     if (this.state.errorOccurred) {
       message = <Alert message={this.state.errorMessage} type="error" />;
-    } 
-  
+    }
+
     if (this.state.loading) {
       return <Spin size="large" />;
     } else if (this.state.loaded) {
       return (
         <div>
-		<Button 
-			style={{'float':'right'}}
-			type="primary" 
-			onClick={(e:any) => {
-				this.handleEditClick(e)
-				}}
-			>
-             <i className="fas fa-edit" />
-		  </Button>
-		  <div>
-									 <div>
-							<h3>bio_img_url</h3>
-							<p>{String(this.state.model!.bioImgUrl)}</p>
-						 </div>
-					   						 <div>
-							<h3>birthday</h3>
-							<p>{String(this.state.model!.birthday)}</p>
-						 </div>
-					   						 <div>
-							<h3>content_description</h3>
-							<p>{String(this.state.model!.contentDescription)}</p>
-						 </div>
-					   						 <div>
-							<h3>email</h3>
-							<p>{String(this.state.model!.email)}</p>
-						 </div>
-					   						 <div>
-							<h3>full_name</h3>
-							<p>{String(this.state.model!.fullName)}</p>
-						 </div>
-					   						 <div>
-							<h3>header_img_url</h3>
-							<p>{String(this.state.model!.headerImgUrl)}</p>
-						 </div>
-					   						 <div>
-							<h3>interest</h3>
-							<p>{String(this.state.model!.interest)}</p>
-						 </div>
-					   						 <div style={{"marginBottom":"10px"}}>
-							<h3>location_location_id</h3>
-							<p>{String(this.state.model!.locationLocationIdNavigation!.toDisplay())}</p>
-						 </div>
-					   						 <div>
-							<h3>password</h3>
-							<p>{String(this.state.model!.password)}</p>
-						 </div>
-					   						 <div>
-							<h3>phone_number</h3>
-							<p>{String(this.state.model!.phoneNumber)}</p>
-						 </div>
-					   						 <div>
-							<h3>privacy</h3>
-							<p>{String(this.state.model!.privacy)}</p>
-						 </div>
-					   						 <div>
-							<h3>username</h3>
-							<p>{String(this.state.model!.username)}</p>
-						 </div>
-					   						 <div>
-							<h3>website</h3>
-							<p>{String(this.state.model!.website)}</p>
-						 </div>
-					   		  </div>
+          <Button
+            style={{ float: 'right' }}
+            type="primary"
+            onClick={(e: any) => {
+              this.handleEditClick(e);
+            }}
+          >
+            <i className="fas fa-edit" />
+          </Button>
+          <div>
+            <div>
+              <h3>bio_img_url</h3>
+              <p>{String(this.state.model!.bioImgUrl)}</p>
+            </div>
+            <div>
+              <h3>birthday</h3>
+              <p>{String(this.state.model!.birthday)}</p>
+            </div>
+            <div>
+              <h3>content_description</h3>
+              <p>{String(this.state.model!.contentDescription)}</p>
+            </div>
+            <div>
+              <h3>email</h3>
+              <p>{String(this.state.model!.email)}</p>
+            </div>
+            <div>
+              <h3>full_name</h3>
+              <p>{String(this.state.model!.fullName)}</p>
+            </div>
+            <div>
+              <h3>header_img_url</h3>
+              <p>{String(this.state.model!.headerImgUrl)}</p>
+            </div>
+            <div>
+              <h3>interest</h3>
+              <p>{String(this.state.model!.interest)}</p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>location_location_id</h3>
+              <p>
+                {String(
+                  this.state.model!.locationLocationIdNavigation &&
+                    this.state.model!.locationLocationIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div>
+              <h3>password</h3>
+              <p>{String(this.state.model!.password)}</p>
+            </div>
+            <div>
+              <h3>phone_number</h3>
+              <p>{String(this.state.model!.phoneNumber)}</p>
+            </div>
+            <div>
+              <h3>privacy</h3>
+              <p>{String(this.state.model!.privacy)}</p>
+            </div>
+            <div>
+              <h3>username</h3>
+              <p>{String(this.state.model!.username)}</p>
+            </div>
+            <div>
+              <h3>website</h3>
+              <p>{String(this.state.model!.website)}</p>
+            </div>
+          </div>
           {message}
-		 <div>
+          <div>
             <h3>DirectTweets</h3>
-            <DirectTweetTableComponent 
-			tweetId={this.state.model!.tweetId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.DirectTweets}
-			/>
-         </div>
-			 <div>
+            <DirectTweetTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.DirectTweets
+              }
+            />
+          </div>
+          <div>
             <h3>Followers</h3>
-            <FollowerTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.Followers}
-			/>
-         </div>
-			 <div>
-            <h3>Likes</h3>
-            <LikeTableComponent 
-			likerUserId={this.state.model!.likerUserId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.Likes}
-			/>
-         </div>
-			 <div>
+            <FollowerTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.Followers
+              }
+            />
+          </div>
+          <div>
             <h3>Messages</h3>
-            <MessageTableComponent 
-			messageId={this.state.model!.messageId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.Messages}
-			/>
-         </div>
-			 <div>
+            <MessageTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.Messages
+              }
+            />
+          </div>
+          <div>
             <h3>Messengers</h3>
-            <MessengerTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.Messengers}
-			/>
-         </div>
-			 <div>
+            <MessengerTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.Messengers
+              }
+            />
+          </div>
+          <div>
             <h3>QuoteTweets</h3>
-            <QuoteTweetTableComponent 
-			quoteTweetId={this.state.model!.quoteTweetId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.QuoteTweets}
-			/>
-         </div>
-			 <div>
+            <QuoteTweetTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.QuoteTweets
+              }
+            />
+          </div>
+          <div>
             <h3>Replies</h3>
-            <ReplyTableComponent 
-			replyId={this.state.model!.replyId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.Replies}
-			/>
-         </div>
-			 <div>
+            <ReplyTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.Replies
+              }
+            />
+          </div>
+          <div>
             <h3>Retweets</h3>
-            <RetweetTableComponent 
-			id={this.state.model!.id} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.Retweets}
-			/>
-         </div>
-			 <div>
+            <RetweetTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.Retweets
+              }
+            />
+          </div>
+          <div>
             <h3>Tweets</h3>
-            <TweetTableComponent 
-			tweetId={this.state.model!.tweetId} 
-			history={this.props.history} 
-			match={this.props.match} 
-			apiRoute={Constants.ApiEndpoint + ApiRoutes.Users + '/' + this.state.model!.userId + '/' + ApiRoutes.Tweets}
-			/>
-         </div>
-	
-
+            <TweetTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Users +
+                '/' +
+                this.state.model!.userId +
+                '/' +
+                ApiRoutes.Tweets
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -264,6 +305,7 @@ export const WrappedUserDetailComponent = Form.create({ name: 'User Detail' })(
   UserDetailComponent
 );
 
+
 /*<Codenesium>
-    <Hash>f461623d8e7f723819d35ba5ed20a68c</Hash>
+    <Hash>dcb815581cc1d18a9751cf334ad52796</Hash>
 </Codenesium>*/

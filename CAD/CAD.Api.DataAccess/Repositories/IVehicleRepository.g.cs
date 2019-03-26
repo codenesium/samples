@@ -17,7 +17,7 @@ namespace CADNS.Api.DataAccess
 
 		Task<List<Vehicle>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
-		Task<List<VehicleCapabilities>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
+		Task<List<VehicleCapabilitty>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Vehicle>> ByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>302caec2f84993d4aa3299d1fe31e5f1</Hash>
+    <Hash>d7cca3cb5207ae87288fdd9766ddbea4</Hash>
 </Codenesium>*/

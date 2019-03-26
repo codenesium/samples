@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ActionResponse, CreateResponse } from '../../api/apiObjects';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
@@ -17,7 +17,7 @@ import {
   TimePicker,
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
-import { ToLowerCaseFirstLetter } from '../../lib/stringUtilities';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 import { PostsSelectComponent } from '../shared/postsSelect';
 
 interface TagsCreateComponentProps {
@@ -56,7 +56,6 @@ class TagsCreateComponent extends React.Component<
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
         let model = values as TagsViewModel;
-        console.log('Received values of form: ', model);
         this.submit(model);
       } else {
         this.setState({ ...this.state, submitting: false, submitted: false });
@@ -67,55 +66,56 @@ class TagsCreateComponent extends React.Component<
   submit = (model: TagsViewModel) => {
     let mapper = new TagsMapper();
     axios
-      .post(
+      .post<CreateResponse<Api.TagsClientRequestModel>>(
         Constants.ApiEndpoint + ApiRoutes.Tags,
         mapper.mapViewModelToApiRequest(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as CreateResponse<
-            Api.TagsClientRequestModel
-          >;
+      .then(response => {
+        this.setState({
+          ...this.state,
+          submitted: true,
+          submitting: false,
+          model: mapper.mapApiResponseToViewModel(response.data.record!),
+          errorOccurred: false,
+          errorMessage: '',
+        });
+        GlobalUtilities.logInfo(response);
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
+
+        if (error.response && error.response.status == 422) {
+          let errorResponse = error.response.data as ActionResponse;
+          errorResponse.validationErrors.forEach(x => {
+            this.props.form.setFields({
+              [GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)]: {
+                value: this.props.form.getFieldValue(
+                  GlobalUtilities.toLowerCaseFirstLetter(x.propertyName)
+                ),
+                errors: [new Error(x.errorMessage)],
+              },
+            });
+          });
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
-            model: mapper.mapApiResponseToViewModel(response.record!),
             errorOccurred: false,
             errorMessage: '',
           });
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-          if (error.response.data) {
-            let errorResponse = error.response.data as ActionResponse;
-
-            errorResponse.validationErrors.forEach(x => {
-              this.props.form.setFields({
-                [ToLowerCaseFirstLetter(x.propertyName)]: {
-                  value: this.props.form.getFieldValue(
-                    ToLowerCaseFirstLetter(x.propertyName)
-                  ),
-                  errors: [new Error(x.errorMessage)],
-                },
-              });
-            });
-          }
+        } else {
           this.setState({
             ...this.state,
             submitted: true,
             submitting: false,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   };
 
   render() {
@@ -148,17 +148,13 @@ class TagsCreateComponent extends React.Component<
             })(<Input placeholder={'Count'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="excerptPostId">Excerpt Post</label>
-            <br />
-            <PostsSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="excerptPostId"
-              required={true}
-              selectedValue={this.state.model!.excerptPostId}
-            />
-          </Form.Item>
+          <PostsSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="excerptPostId"
+            required={true}
+            selectedValue={this.state.model!.excerptPostId}
+          />
 
           <Form.Item>
             <label htmlFor="tagName">Tag Name</label>
@@ -171,17 +167,13 @@ class TagsCreateComponent extends React.Component<
             })(<Input placeholder={'Tag Name'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="wikiPostId">Wiki Post</label>
-            <br />
-            <PostsSelectComponent
-              apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
-              getFieldDecorator={this.props.form.getFieldDecorator}
-              propertyName="wikiPostId"
-              required={true}
-              selectedValue={this.state.model!.wikiPostId}
-            />
-          </Form.Item>
+          <PostsSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="wikiPostId"
+            required={true}
+            selectedValue={this.state.model!.wikiPostId}
+          />
 
           <Form.Item>
             <Button
@@ -207,5 +199,5 @@ export const WrappedTagsCreateComponent = Form.create({ name: 'Tags Create' })(
 
 
 /*<Codenesium>
-    <Hash>02eac82317db77c4bf11e651b9ab6e4b</Hash>
+    <Hash>8776fe91605fc4ae5f6fa2fa34e88299</Hash>
 </Codenesium>*/

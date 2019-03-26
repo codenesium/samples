@@ -1,11 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Constants, ApiRoutes, ClientRoutes } from '../../constants';
 import * as Api from '../../api/models';
 import CustomerCommunicationMapper from './customerCommunicationMapper';
 import CustomerCommunicationViewModel from './customerCommunicationViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
+import * as GlobalUtilities from '../../lib/globalUtilities';
 
 interface CustomerCommunicationDetailComponentProps {
   form: WrappedFormUtils;
@@ -43,44 +44,45 @@ class CustomerCommunicationDetailComponent extends React.Component<
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get(
+      .get<Api.CustomerCommunicationClientResponseModel>(
         Constants.ApiEndpoint +
           ApiRoutes.CustomerCommunications +
           '/' +
           this.props.match.params.id,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders(),
         }
       )
-      .then(
-        resp => {
-          let response = resp.data as Api.CustomerCommunicationClientResponseModel;
+      .then(response => {
+        GlobalUtilities.logInfo(response);
 
-          console.log(response);
+        let mapper = new CustomerCommunicationMapper();
 
-          let mapper = new CustomerCommunicationMapper();
+        this.setState({
+          model: mapper.mapApiResponseToViewModel(response.data),
+          loading: false,
+          loaded: true,
+          errorOccurred: false,
+          errorMessage: '',
+        });
+      })
+      .catch((error: AxiosError) => {
+        GlobalUtilities.logError(error);
 
+        if (error.response && error.response.status == 422) {
           this.setState({
-            model: mapper.mapApiResponseToViewModel(response),
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: false,
             errorMessage: '',
           });
-        },
-        error => {
-          console.log(error);
+        } else {
           this.setState({
-            model: undefined,
-            loading: false,
-            loaded: true,
+            ...this.state,
             errorOccurred: true,
-            errorMessage: 'Error from API',
+            errorMessage: 'Error Occurred',
           });
         }
-      );
+      });
   }
 
   render() {
@@ -107,7 +109,10 @@ class CustomerCommunicationDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>customerId</h3>
               <p>
-                {String(this.state.model!.customerIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.customerIdNavigation &&
+                    this.state.model!.customerIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -117,7 +122,10 @@ class CustomerCommunicationDetailComponent extends React.Component<
             <div style={{ marginBottom: '10px' }}>
               <h3>employeeId</h3>
               <p>
-                {String(this.state.model!.employeeIdNavigation!.toDisplay())}
+                {String(
+                  this.state.model!.employeeIdNavigation &&
+                    this.state.model!.employeeIdNavigation!.toDisplay()
+                )}
               </p>
             </div>
             <div>
@@ -140,5 +148,5 @@ export const WrappedCustomerCommunicationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5a7a55cba073279e79daf9ef71942aa8</Hash>
+    <Hash>d03cd80dac13e80c20004a95607ddd02</Hash>
 </Codenesium>*/
