@@ -115,14 +115,7 @@ export class VPersonTableComponent extends React.Component<
                 Header: 'VPersons',
                 columns: [
                   {
-                    Header: 'PersonId',
-                    accessor: 'personId',
-                    Cell: props => {
-                      return <span>{String(props.original.personId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PersonName',
+                    Header: 'Person Name',
                     accessor: 'personName',
                     Cell: props => {
                       return <span>{String(props.original.personName)}</span>;
@@ -173,5 +166,5 @@ export class VPersonTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f12396138100710164e2ad50d89b15df</Hash>
+    <Hash>86c66a14c3afc397e370f7a0528d8cd0</Hash>
 </Codenesium>*/

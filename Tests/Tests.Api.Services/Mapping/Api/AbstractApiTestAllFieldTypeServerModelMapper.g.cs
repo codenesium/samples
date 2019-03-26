@@ -24,9 +24,6 @@ namespace TestsNS.Api.Services
 			                       request.FieldDateTimeOffset,
 			                       request.FieldDecimal,
 			                       request.FieldFloat,
-			                       request.FieldGeography,
-			                       request.FieldGeometry,
-			                       request.FieldHierarchyId,
 			                       request.FieldImage,
 			                       request.FieldMoney,
 			                       request.FieldNChar,
@@ -44,7 +41,6 @@ namespace TestsNS.Api.Services
 			                       request.FieldUniqueIdentifier,
 			                       request.FieldVarBinary,
 			                       request.FieldVarchar,
-			                       request.FieldVariant,
 			                       request.FieldXML);
 			return response;
 		}
@@ -64,9 +60,6 @@ namespace TestsNS.Api.Services
 				response.FieldDateTimeOffset,
 				response.FieldDecimal,
 				response.FieldFloat,
-				response.FieldGeography,
-				response.FieldGeometry,
-				response.FieldHierarchyId,
 				response.FieldImage,
 				response.FieldMoney,
 				response.FieldNChar,
@@ -84,7 +77,6 @@ namespace TestsNS.Api.Services
 				response.FieldUniqueIdentifier,
 				response.FieldVarBinary,
 				response.FieldVarchar,
-				response.FieldVariant,
 				response.FieldXML);
 			return request;
 		}
@@ -104,9 +96,6 @@ namespace TestsNS.Api.Services
 				response.FieldDateTimeOffset,
 				response.FieldDecimal,
 				response.FieldFloat,
-				response.FieldGeography,
-				response.FieldGeometry,
-				response.FieldHierarchyId,
 				response.FieldImage,
 				response.FieldMoney,
 				response.FieldNChar,
@@ -124,7 +113,6 @@ namespace TestsNS.Api.Services
 				response.FieldUniqueIdentifier,
 				response.FieldVarBinary,
 				response.FieldVarchar,
-				response.FieldVariant,
 				response.FieldXML);
 			return request;
 		}
@@ -142,9 +130,6 @@ namespace TestsNS.Api.Services
 			patch.Replace(x => x.FieldDateTimeOffset, model.FieldDateTimeOffset);
 			patch.Replace(x => x.FieldDecimal, model.FieldDecimal);
 			patch.Replace(x => x.FieldFloat, model.FieldFloat);
-			patch.Replace(x => x.FieldGeography, model.FieldGeography);
-			patch.Replace(x => x.FieldGeometry, model.FieldGeometry);
-			patch.Replace(x => x.FieldHierarchyId, model.FieldHierarchyId);
 			patch.Replace(x => x.FieldImage, model.FieldImage);
 			patch.Replace(x => x.FieldMoney, model.FieldMoney);
 			patch.Replace(x => x.FieldNChar, model.FieldNChar);
@@ -162,7 +147,6 @@ namespace TestsNS.Api.Services
 			patch.Replace(x => x.FieldUniqueIdentifier, model.FieldUniqueIdentifier);
 			patch.Replace(x => x.FieldVarBinary, model.FieldVarBinary);
 			patch.Replace(x => x.FieldVarchar, model.FieldVarchar);
-			patch.Replace(x => x.FieldVariant, model.FieldVariant);
 			patch.Replace(x => x.FieldXML, model.FieldXML);
 			return patch;
 		}
@@ -170,5 +154,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5720f4892f4a9643164ce1b114abcc2b</Hash>
+    <Hash>9172e0209d7007666540caecffe2d63c</Hash>
 </Codenesium>*/

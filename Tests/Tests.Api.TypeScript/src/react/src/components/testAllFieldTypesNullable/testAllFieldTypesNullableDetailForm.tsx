@@ -107,120 +107,116 @@ class TestAllFieldTypesNullableDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>FieldBigInt</h3>
+              <h3>Field Big Int</h3>
               <p>{String(this.state.model!.fieldBigInt)}</p>
             </div>
             <div>
-              <h3>FieldBinary</h3>
+              <h3>Field Binary</h3>
               <p>{String(this.state.model!.fieldBinary)}</p>
             </div>
             <div>
-              <h3>FieldBit</h3>
+              <h3>Field Bit</h3>
               <p>{String(this.state.model!.fieldBit)}</p>
             </div>
             <div>
-              <h3>FieldChar</h3>
+              <h3>Field Char</h3>
               <p>{String(this.state.model!.fieldChar)}</p>
             </div>
             <div>
-              <h3>FieldDate</h3>
+              <h3>Field Date</h3>
               <p>{String(this.state.model!.fieldDate)}</p>
             </div>
             <div>
-              <h3>FieldDateTime</h3>
+              <h3>Field Date Time</h3>
               <p>{String(this.state.model!.fieldDateTime)}</p>
             </div>
             <div>
-              <h3>FieldDateTime2</h3>
+              <h3>Field Date Time2</h3>
               <p>{String(this.state.model!.fieldDateTime2)}</p>
             </div>
             <div>
-              <h3>FieldDateTimeOffset</h3>
+              <h3>Field Date Time Offset</h3>
               <p>{String(this.state.model!.fieldDateTimeOffset)}</p>
             </div>
             <div>
-              <h3>FieldDecimal</h3>
+              <h3>Field Decimal</h3>
               <p>{String(this.state.model!.fieldDecimal)}</p>
             </div>
             <div>
-              <h3>FieldFloat</h3>
+              <h3>Field Float</h3>
               <p>{String(this.state.model!.fieldFloat)}</p>
             </div>
             <div>
-              <h3>FieldImage</h3>
+              <h3>Field Image</h3>
               <p>{String(this.state.model!.fieldImage)}</p>
             </div>
             <div>
-              <h3>FieldMoney</h3>
+              <h3>Field Money</h3>
               <p>{String(this.state.model!.fieldMoney)}</p>
             </div>
             <div>
-              <h3>FieldNChar</h3>
+              <h3>Field N Char</h3>
               <p>{String(this.state.model!.fieldNChar)}</p>
             </div>
             <div>
-              <h3>FieldNText</h3>
+              <h3>Field N Text</h3>
               <p>{String(this.state.model!.fieldNText)}</p>
             </div>
             <div>
-              <h3>FieldNumeric</h3>
+              <h3>Field Numeric</h3>
               <p>{String(this.state.model!.fieldNumeric)}</p>
             </div>
             <div>
-              <h3>FieldNVarchar</h3>
+              <h3>Field N Varchar</h3>
               <p>{String(this.state.model!.fieldNVarchar)}</p>
             </div>
             <div>
-              <h3>FieldReal</h3>
+              <h3>Field Real</h3>
               <p>{String(this.state.model!.fieldReal)}</p>
             </div>
             <div>
-              <h3>FieldSmallDateTime</h3>
+              <h3>Field Small Date Time</h3>
               <p>{String(this.state.model!.fieldSmallDateTime)}</p>
             </div>
             <div>
-              <h3>FieldSmallInt</h3>
+              <h3>Field Small Int</h3>
               <p>{String(this.state.model!.fieldSmallInt)}</p>
             </div>
             <div>
-              <h3>FieldSmallMoney</h3>
+              <h3>Field Small Money</h3>
               <p>{String(this.state.model!.fieldSmallMoney)}</p>
             </div>
             <div>
-              <h3>FieldText</h3>
+              <h3>Field Text</h3>
               <p>{String(this.state.model!.fieldText)}</p>
             </div>
             <div>
-              <h3>FieldTime</h3>
+              <h3>Field Time</h3>
               <p>{String(this.state.model!.fieldTime)}</p>
             </div>
             <div>
-              <h3>FieldTimestamp</h3>
+              <h3>Field Timestamp</h3>
               <p>{String(this.state.model!.fieldTimestamp)}</p>
             </div>
             <div>
-              <h3>FieldTinyInt</h3>
+              <h3>Field Tiny Int</h3>
               <p>{String(this.state.model!.fieldTinyInt)}</p>
             </div>
             <div>
-              <h3>FieldUniqueIdentifier</h3>
+              <h3>Field Unique Identifier</h3>
               <p>{String(this.state.model!.fieldUniqueIdentifier)}</p>
             </div>
             <div>
-              <h3>FieldVarBinary</h3>
+              <h3>Field Var Binary</h3>
               <p>{String(this.state.model!.fieldVarBinary)}</p>
             </div>
             <div>
-              <h3>FieldVarchar</h3>
+              <h3>Field Varchar</h3>
               <p>{String(this.state.model!.fieldVarchar)}</p>
             </div>
             <div>
-              <h3>FieldXML</h3>
+              <h3>Field X M L</h3>
               <p>{String(this.state.model!.fieldXML)}</p>
-            </div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
             </div>
           </div>
           {message}
@@ -238,5 +234,5 @@ export const WrappedTestAllFieldTypesNullableDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>71f11e3862dc8b415ef565ea50692dc1</Hash>
+    <Hash>f87c36769bade37f28e83954867ebf79</Hash>
 </Codenesium>*/

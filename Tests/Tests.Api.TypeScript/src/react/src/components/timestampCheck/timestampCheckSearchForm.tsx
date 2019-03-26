@@ -200,15 +200,8 @@ export default class TimestampCheckSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'TimestampChecks',
+                Header: 'Timestamp Check',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -284,5 +277,5 @@ export const WrappedTimestampCheckSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8205226420e7df8b0a448bb9be925147</Hash>
+    <Hash>3c10c2cc1fd59a73b78d52a902b73d23</Hash>
 </Codenesium>*/

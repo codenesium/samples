@@ -7,6 +7,8 @@ import EventViewModel from './eventViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
+import { EventStudentTableComponent } from '../shared/eventStudentTable';
+import { EventTeacherTableComponent } from '../shared/eventTeacherTable';
 
 interface EventDetailComponentProps {
   form: WrappedFormUtils;
@@ -145,6 +147,36 @@ class EventDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>EventStudents</h3>
+            <EventStudentTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Events +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.EventStudents
+              }
+            />
+          </div>
+          <div>
+            <h3>EventTeachers</h3>
+            <EventTeacherTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Events +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.EventTeachers
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -159,5 +191,5 @@ export const WrappedEventDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6ec703ccf2b82ca509d48f6546daf4e9</Hash>
+    <Hash>3f49962f53b67b8d1dfca3cec1760196</Hash>
 </Codenesium>*/

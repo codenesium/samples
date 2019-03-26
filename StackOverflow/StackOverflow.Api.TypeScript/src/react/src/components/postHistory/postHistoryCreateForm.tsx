@@ -18,9 +18,9 @@ import {
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
-import { PostHistoryTypesSelectComponent } from '../shared/postHistoryTypesSelect';
-import { PostsSelectComponent } from '../shared/postsSelect';
-import { UsersSelectComponent } from '../shared/usersSelect';
+import { PostHistoryTypeSelectComponent } from '../shared/postHistoryTypeSelect';
+import { PostSelectComponent } from '../shared/postSelect';
+import { UserSelectComponent } from '../shared/userSelect';
 
 interface PostHistoryCreateComponentProps {
   form: WrappedFormUtils;
@@ -69,7 +69,7 @@ class PostHistoryCreateComponent extends React.Component<
     let mapper = new PostHistoryMapper();
     axios
       .post<CreateResponse<Api.PostHistoryClientRequestModel>>(
-        Constants.ApiEndpoint + ApiRoutes.PostHistory,
+        Constants.ApiEndpoint + ApiRoutes.PostHistories,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: GlobalUtilities.defaultHeaders(),
@@ -165,7 +165,7 @@ class PostHistoryCreateComponent extends React.Component<
             )}
           </Form.Item>
 
-          <PostHistoryTypesSelectComponent
+          <PostHistoryTypeSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.PostHistoryTypes}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="postHistoryTypeId"
@@ -173,7 +173,7 @@ class PostHistoryCreateComponent extends React.Component<
             selectedValue={this.state.model!.postHistoryTypeId}
           />
 
-          <PostsSelectComponent
+          <PostSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="postId"
@@ -213,7 +213,7 @@ class PostHistoryCreateComponent extends React.Component<
             })(<Input placeholder={'User Display Name'} />)}
           </Form.Item>
 
-          <UsersSelectComponent
+          <UserSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.Users}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="userId"
@@ -245,5 +245,5 @@ export const WrappedPostHistoryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b00a37e9953f555f68d1b2e96a144442</Hash>
+    <Hash>0d0c6c23dd231272ae79b14c8fe0e16f</Hash>
 </Codenesium>*/

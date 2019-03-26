@@ -115,13 +115,6 @@ export class TableTableComponent extends React.Component<
                 Header: 'Tables',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -173,5 +166,5 @@ export class TableTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7ba5c075f0fd3a40dee32689b42915fd</Hash>
+    <Hash>103cb345392a206d4cc2aae6056e2f44</Hash>
 </Codenesium>*/

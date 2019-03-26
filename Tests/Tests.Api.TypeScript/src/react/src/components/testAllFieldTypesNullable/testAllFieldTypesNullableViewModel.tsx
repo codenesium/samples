@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default class TestAllFieldTypesNullableViewModel {
-  fieldBigInt: any;
+  fieldBigInt: number;
   fieldBinary: any;
   fieldBit: boolean;
   fieldChar: string;
@@ -10,21 +10,21 @@ export default class TestAllFieldTypesNullableViewModel {
   fieldDateTime2: any;
   fieldDateTimeOffset: any;
   fieldDecimal: number;
-  fieldFloat: any;
+  fieldFloat: number;
   fieldImage: any;
-  fieldMoney: any;
+  fieldMoney: number;
   fieldNChar: string;
   fieldNText: string;
-  fieldNumeric: any;
+  fieldNumeric: number;
   fieldNVarchar: string;
-  fieldReal: any;
+  fieldReal: number;
   fieldSmallDateTime: any;
-  fieldSmallInt: any;
-  fieldSmallMoney: any;
+  fieldSmallInt: number;
+  fieldSmallMoney: number;
   fieldText: string;
   fieldTime: any;
   fieldTimestamp: any;
-  fieldTinyInt: any;
+  fieldTinyInt: number;
   fieldUniqueIdentifier: any;
   fieldVarBinary: any;
   fieldVarchar: string;
@@ -32,7 +32,7 @@ export default class TestAllFieldTypesNullableViewModel {
   id: number;
 
   constructor() {
-    this.fieldBigInt = undefined;
+    this.fieldBigInt = 0;
     this.fieldBinary = undefined;
     this.fieldBit = false;
     this.fieldChar = '';
@@ -41,21 +41,21 @@ export default class TestAllFieldTypesNullableViewModel {
     this.fieldDateTime2 = undefined;
     this.fieldDateTimeOffset = undefined;
     this.fieldDecimal = 0;
-    this.fieldFloat = undefined;
+    this.fieldFloat = 0;
     this.fieldImage = undefined;
-    this.fieldMoney = undefined;
+    this.fieldMoney = 0;
     this.fieldNChar = '';
     this.fieldNText = '';
-    this.fieldNumeric = undefined;
+    this.fieldNumeric = 0;
     this.fieldNVarchar = '';
-    this.fieldReal = undefined;
+    this.fieldReal = 0;
     this.fieldSmallDateTime = undefined;
-    this.fieldSmallInt = undefined;
-    this.fieldSmallMoney = undefined;
+    this.fieldSmallInt = 0;
+    this.fieldSmallMoney = 0;
     this.fieldText = '';
     this.fieldTime = undefined;
     this.fieldTimestamp = undefined;
-    this.fieldTinyInt = undefined;
+    this.fieldTinyInt = 0;
     this.fieldUniqueIdentifier = undefined;
     this.fieldVarBinary = undefined;
     this.fieldVarchar = '';
@@ -64,7 +64,7 @@ export default class TestAllFieldTypesNullableViewModel {
   }
 
   setProperties(
-    fieldBigInt: any,
+    fieldBigInt: number,
     fieldBinary: any,
     fieldBit: boolean,
     fieldChar: string,
@@ -73,21 +73,21 @@ export default class TestAllFieldTypesNullableViewModel {
     fieldDateTime2: any,
     fieldDateTimeOffset: any,
     fieldDecimal: number,
-    fieldFloat: any,
+    fieldFloat: number,
     fieldImage: any,
-    fieldMoney: any,
+    fieldMoney: number,
     fieldNChar: string,
     fieldNText: string,
-    fieldNumeric: any,
+    fieldNumeric: number,
     fieldNVarchar: string,
-    fieldReal: any,
+    fieldReal: number,
     fieldSmallDateTime: any,
-    fieldSmallInt: any,
-    fieldSmallMoney: any,
+    fieldSmallInt: number,
+    fieldSmallMoney: number,
     fieldText: string,
     fieldTime: any,
     fieldTimestamp: any,
-    fieldTinyInt: any,
+    fieldTinyInt: number,
     fieldUniqueIdentifier: any,
     fieldVarBinary: any,
     fieldVarchar: string,
@@ -98,9 +98,9 @@ export default class TestAllFieldTypesNullableViewModel {
     this.fieldBinary = fieldBinary;
     this.fieldBit = fieldBit;
     this.fieldChar = fieldChar;
-    this.fieldDate = fieldDate;
-    this.fieldDateTime = fieldDateTime;
-    this.fieldDateTime2 = fieldDateTime2;
+    this.fieldDate = moment(fieldDate, 'YYYY-MM-DD');
+    this.fieldDateTime = moment(fieldDateTime, 'YYYY-MM-DD');
+    this.fieldDateTime2 = moment(fieldDateTime2, 'YYYY-MM-DD');
     this.fieldDateTimeOffset = fieldDateTimeOffset;
     this.fieldDecimal = fieldDecimal;
     this.fieldFloat = fieldFloat;
@@ -111,7 +111,7 @@ export default class TestAllFieldTypesNullableViewModel {
     this.fieldNumeric = fieldNumeric;
     this.fieldNVarchar = fieldNVarchar;
     this.fieldReal = fieldReal;
-    this.fieldSmallDateTime = fieldSmallDateTime;
+    this.fieldSmallDateTime = moment(fieldSmallDateTime, 'YYYY-MM-DD');
     this.fieldSmallInt = fieldSmallInt;
     this.fieldSmallMoney = fieldSmallMoney;
     this.fieldText = fieldText;
@@ -126,11 +126,11 @@ export default class TestAllFieldTypesNullableViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.fieldBigInt);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>40063674fbf516fc1da829c5d0d485b5</Hash>
+    <Hash>70d4afd9c230c345f681b7f7ee9f8984</Hash>
 </Codenesium>*/

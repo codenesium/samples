@@ -108,6 +108,16 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
 
+		// Foreign key reference to this table EventStudent via studentId.
+		public async virtual Task<List<EventStudent>> EventStudentsByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<EventStudent>()
+			       .Include(x => x.EventIdNavigation)
+			       .Include(x => x.StudentIdNavigation)
+
+			       .Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
+		}
+
 		// Foreign key reference to table Family via familyId.
 		public async virtual Task<Family> FamilyByFamilyId(int familyId)
 		{
@@ -150,5 +160,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c9e1dc9ff55a6bc4cd68af16e0b47c1</Hash>
+    <Hash>f8a9ef05191f1bbdedaf9785d0f4d413</Hash>
 </Codenesium>*/

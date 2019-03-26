@@ -118,42 +118,42 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                 Header: 'TestAllFieldTypes',
                 columns: [
                   {
-                    Header: 'Bigint',
+                    Header: 'Field Big Int',
                     accessor: 'fieldBigInt',
                     Cell: props => {
                       return <span>{String(props.original.fieldBigInt)}</span>;
                     },
                   },
                   {
-                    Header: 'Binary',
+                    Header: 'Field Binary',
                     accessor: 'fieldBinary',
                     Cell: props => {
                       return <span>{String(props.original.fieldBinary)}</span>;
                     },
                   },
                   {
-                    Header: 'Bit',
+                    Header: 'Field Bit',
                     accessor: 'fieldBit',
                     Cell: props => {
                       return <span>{String(props.original.fieldBit)}</span>;
                     },
                   },
                   {
-                    Header: 'Char',
+                    Header: 'Field Char',
                     accessor: 'fieldChar',
                     Cell: props => {
                       return <span>{String(props.original.fieldChar)}</span>;
                     },
                   },
                   {
-                    Header: 'Date',
+                    Header: 'Field Date',
                     accessor: 'fieldDate',
                     Cell: props => {
                       return <span>{String(props.original.fieldDate)}</span>;
                     },
                   },
                   {
-                    Header: 'DateTime',
+                    Header: 'Field Date Time',
                     accessor: 'fieldDateTime',
                     Cell: props => {
                       return (
@@ -162,7 +162,7 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateTime2',
+                    Header: 'Field Date Time2',
                     accessor: 'fieldDateTime2',
                     Cell: props => {
                       return (
@@ -171,7 +171,7 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateTimeOffset',
+                    Header: 'Field Date Time Offset',
                     accessor: 'fieldDateTimeOffset',
                     Cell: props => {
                       return (
@@ -182,83 +182,56 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Decimal',
+                    Header: 'Field Decimal',
                     accessor: 'fieldDecimal',
                     Cell: props => {
                       return <span>{String(props.original.fieldDecimal)}</span>;
                     },
                   },
                   {
-                    Header: 'Float',
+                    Header: 'Field Float',
                     accessor: 'fieldFloat',
                     Cell: props => {
                       return <span>{String(props.original.fieldFloat)}</span>;
                     },
                   },
                   {
-                    Header: 'Geography',
-                    accessor: 'fieldGeography',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.fieldGeography)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Geometry',
-                    accessor: 'fieldGeometry',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.fieldGeometry)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'HierarchyId',
-                    accessor: 'fieldHierarchyId',
-                    Cell: props => {
-                      return (
-                        <span>{String(props.original.fieldHierarchyId)}</span>
-                      );
-                    },
-                  },
-                  {
-                    Header: 'Image',
+                    Header: 'Field Image',
                     accessor: 'fieldImage',
                     Cell: props => {
                       return <span>{String(props.original.fieldImage)}</span>;
                     },
                   },
                   {
-                    Header: 'Money',
+                    Header: 'Field Money',
                     accessor: 'fieldMoney',
                     Cell: props => {
                       return <span>{String(props.original.fieldMoney)}</span>;
                     },
                   },
                   {
-                    Header: 'NChar',
+                    Header: 'Field N Char',
                     accessor: 'fieldNChar',
                     Cell: props => {
                       return <span>{String(props.original.fieldNChar)}</span>;
                     },
                   },
                   {
-                    Header: 'NText',
+                    Header: 'Field N Text',
                     accessor: 'fieldNText',
                     Cell: props => {
                       return <span>{String(props.original.fieldNText)}</span>;
                     },
                   },
                   {
-                    Header: 'Numeric',
+                    Header: 'Field Numeric',
                     accessor: 'fieldNumeric',
                     Cell: props => {
                       return <span>{String(props.original.fieldNumeric)}</span>;
                     },
                   },
                   {
-                    Header: 'NVarchar',
+                    Header: 'Field N Varchar',
                     accessor: 'fieldNVarchar',
                     Cell: props => {
                       return (
@@ -267,14 +240,14 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Real',
+                    Header: 'Field Real',
                     accessor: 'fieldReal',
                     Cell: props => {
                       return <span>{String(props.original.fieldReal)}</span>;
                     },
                   },
                   {
-                    Header: 'SmallDateTime',
+                    Header: 'Field Small Date Time',
                     accessor: 'fieldSmallDateTime',
                     Cell: props => {
                       return (
@@ -283,7 +256,7 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SmallInt',
+                    Header: 'Field Small Int',
                     accessor: 'fieldSmallInt',
                     Cell: props => {
                       return (
@@ -292,7 +265,7 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SmallMoney',
+                    Header: 'Field Small Money',
                     accessor: 'fieldSmallMoney',
                     Cell: props => {
                       return (
@@ -301,21 +274,21 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Text',
+                    Header: 'Field Text',
                     accessor: 'fieldText',
                     Cell: props => {
                       return <span>{String(props.original.fieldText)}</span>;
                     },
                   },
                   {
-                    Header: 'Time',
+                    Header: 'Field Time',
                     accessor: 'fieldTime',
                     Cell: props => {
                       return <span>{String(props.original.fieldTime)}</span>;
                     },
                   },
                   {
-                    Header: 'Timestamp',
+                    Header: 'Field Timestamp',
                     accessor: 'fieldTimestamp',
                     Cell: props => {
                       return (
@@ -324,14 +297,14 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'TinyInt',
+                    Header: 'Field Tiny Int',
                     accessor: 'fieldTinyInt',
                     Cell: props => {
                       return <span>{String(props.original.fieldTinyInt)}</span>;
                     },
                   },
                   {
-                    Header: 'UniqueIdentifier',
+                    Header: 'Field Unique Identifier',
                     accessor: 'fieldUniqueIdentifier',
                     Cell: props => {
                       return (
@@ -342,7 +315,7 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'VarBinary',
+                    Header: 'Field Var Binary',
                     accessor: 'fieldVarBinary',
                     Cell: props => {
                       return (
@@ -351,31 +324,17 @@ export class TestAllFieldTypeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Varchar',
+                    Header: 'Field Varchar',
                     accessor: 'fieldVarchar',
                     Cell: props => {
                       return <span>{String(props.original.fieldVarchar)}</span>;
                     },
                   },
                   {
-                    Header: 'Variant',
-                    accessor: 'fieldVariant',
-                    Cell: props => {
-                      return <span>{String(props.original.fieldVariant)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'XML',
+                    Header: 'Field X M L',
                     accessor: 'fieldXML',
                     Cell: props => {
                       return <span>{String(props.original.fieldXML)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
                     },
                   },
                   {
@@ -423,5 +382,5 @@ export class TestAllFieldTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9f9a033f3fa5e55cf707f52df959aa9f</Hash>
+    <Hash>fb8ed9dcb597b3be409b067d80dc6ae6</Hash>
 </Codenesium>*/

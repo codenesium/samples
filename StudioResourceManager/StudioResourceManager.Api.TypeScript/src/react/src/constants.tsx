@@ -35,14 +35,18 @@ export class ClientRoutes {
   static readonly Admins = '/admins';
   static readonly Events = '/events';
   static readonly EventStatus = '/eventstatus';
+  static readonly EventStudents = '/eventstudents';
+  static readonly EventTeachers = '/eventteachers';
   static readonly Families = '/families';
   static readonly Rates = '/rates';
   static readonly Spaces = '/spaces';
   static readonly SpaceFeatures = '/spacefeatures';
+  static readonly SpaceSpaceFeatures = '/spacespacefeatures';
   static readonly Students = '/students';
   static readonly Studios = '/studios';
   static readonly Teachers = '/teachers';
   static readonly TeacherSkills = '/teacherskills';
+  static readonly TeacherTeacherSkills = '/teacherteacherskills';
   static readonly Users = '/users';
 }
 
@@ -50,18 +54,22 @@ export class ApiRoutes {
   static readonly Admins = 'admins';
   static readonly Events = 'events';
   static readonly EventStatus = 'eventstatus';
+  static readonly EventStudents = 'eventstudents';
+  static readonly EventTeachers = 'eventteachers';
   static readonly Families = 'families';
   static readonly Rates = 'rates';
   static readonly Spaces = 'spaces';
   static readonly SpaceFeatures = 'spacefeatures';
+  static readonly SpaceSpaceFeatures = 'spacespacefeatures';
   static readonly Students = 'students';
   static readonly Studios = 'studios';
   static readonly Teachers = 'teachers';
   static readonly TeacherSkills = 'teacherskills';
+  static readonly TeacherTeacherSkills = 'teacherteacherskills';
   static readonly Users = 'users';
 }
 
 
 /*<Codenesium>
-    <Hash>91371fb0d17174ce908f79c8388da077</Hash>
+    <Hash>62671a50995ec7534c20e351d7c5a061</Hash>
 </Codenesium>*/

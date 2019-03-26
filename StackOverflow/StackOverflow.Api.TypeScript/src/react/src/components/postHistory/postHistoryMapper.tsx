@@ -1,8 +1,8 @@
 import * as Api from '../../api/models';
 import PostHistoryViewModel from './postHistoryViewModel';
-import PostHistoryTypesViewModel from '../postHistoryTypes/postHistoryTypesViewModel';
-import PostsViewModel from '../posts/postsViewModel';
-import UsersViewModel from '../users/usersViewModel';
+import PostHistoryTypeViewModel from '../postHistoryType/postHistoryTypeViewModel';
+import PostViewModel from '../post/postViewModel';
+import UserViewModel from '../user/userViewModel';
 export default class PostHistoryMapper {
   mapApiResponseToViewModel(
     dto: Api.PostHistoryClientResponseModel
@@ -21,14 +21,14 @@ export default class PostHistoryMapper {
     );
 
     if (dto.postHistoryTypeIdNavigation != null) {
-      response.postHistoryTypeIdNavigation = new PostHistoryTypesViewModel();
+      response.postHistoryTypeIdNavigation = new PostHistoryTypeViewModel();
       response.postHistoryTypeIdNavigation.setProperties(
         dto.postHistoryTypeIdNavigation.id,
         dto.postHistoryTypeIdNavigation.rwType
       );
     }
     if (dto.postIdNavigation != null) {
-      response.postIdNavigation = new PostsViewModel();
+      response.postIdNavigation = new PostViewModel();
       response.postIdNavigation.setProperties(
         dto.postIdNavigation.acceptedAnswerId,
         dto.postIdNavigation.answerCount,
@@ -53,7 +53,7 @@ export default class PostHistoryMapper {
       );
     }
     if (dto.userIdNavigation != null) {
-      response.userIdNavigation = new UsersViewModel();
+      response.userIdNavigation = new UserViewModel();
       response.userIdNavigation.setProperties(
         dto.userIdNavigation.aboutMe,
         dto.userIdNavigation.accountId,
@@ -96,5 +96,5 @@ export default class PostHistoryMapper {
 
 
 /*<Codenesium>
-    <Hash>f96a98406018dbb2b35d98e6bc6b1734</Hash>
+    <Hash>57b18e30561ffcea28982dd07402cd8d</Hash>
 </Codenesium>*/

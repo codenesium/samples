@@ -112,24 +112,24 @@ namespace StackOverflowNS.Api.DataAccess
 			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
 
-		// Foreign key reference to table PostHistoryTypes via postHistoryTypeId.
-		public async virtual Task<PostHistoryTypes> PostHistoryTypesByPostHistoryTypeId(int postHistoryTypeId)
+		// Foreign key reference to table PostHistoryType via postHistoryTypeId.
+		public async virtual Task<PostHistoryType> PostHistoryTypeByPostHistoryTypeId(int postHistoryTypeId)
 		{
-			return await this.Context.Set<PostHistoryTypes>()
+			return await this.Context.Set<PostHistoryType>()
 			       .SingleOrDefaultAsync(x => x.Id == postHistoryTypeId);
 		}
 
-		// Foreign key reference to table Posts via postId.
-		public async virtual Task<Posts> PostsByPostId(int postId)
+		// Foreign key reference to table Post via postId.
+		public async virtual Task<Post> PostByPostId(int postId)
 		{
-			return await this.Context.Set<Posts>()
+			return await this.Context.Set<Post>()
 			       .SingleOrDefaultAsync(x => x.Id == postId);
 		}
 
-		// Foreign key reference to table Users via userId.
-		public async virtual Task<Users> UsersByUserId(int? userId)
+		// Foreign key reference to table User via userId.
+		public async virtual Task<User> UserByUserId(int? userId)
 		{
-			return await this.Context.Set<Users>()
+			return await this.Context.Set<User>()
 			       .SingleOrDefaultAsync(x => x.Id == userId);
 		}
 
@@ -162,5 +162,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6abab1a0f31032bb98d0240dd051bb00</Hash>
+    <Hash>20eb29b9b105311f280244841de07921</Hash>
 </Codenesium>*/

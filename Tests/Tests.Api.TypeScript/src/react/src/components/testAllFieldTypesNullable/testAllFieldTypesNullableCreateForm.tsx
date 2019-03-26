@@ -140,111 +140,121 @@ class TestAllFieldTypesNullableCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="fieldBigInt">FieldBigInt</label>
+            <label htmlFor="fieldBigInt">Field Big Int</label>
             <br />
             {getFieldDecorator('fieldBigInt', {
               rules: [],
-            })(<Input placeholder={'FieldBigInt'} />)}
+            })(<InputNumber placeholder={'Field Big Int'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldBinary">FieldBinary</label>
+            <label htmlFor="fieldBinary">Field Binary</label>
             <br />
             {getFieldDecorator('fieldBinary', {
               rules: [{ max: 50, message: 'Exceeds max length of 50' }],
-            })(<Input placeholder={'FieldBinary'} />)}
+            })(<Input placeholder={'Field Binary'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldBit">FieldBit</label>
+            <label htmlFor="fieldBit">Field Bit</label>
             <br />
             {getFieldDecorator('fieldBit', {
               rules: [],
-            })(<Input placeholder={'FieldBit'} />)}
+            })(<Input placeholder={'Field Bit'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldChar">FieldChar</label>
+            <label htmlFor="fieldChar">Field Char</label>
             <br />
             {getFieldDecorator('fieldChar', {
               rules: [{ max: 10, message: 'Exceeds max length of 10' }],
-            })(<Input placeholder={'FieldChar'} />)}
+            })(<Input placeholder={'Field Char'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDate">FieldDate</label>
+            <label htmlFor="fieldDate">Field Date</label>
             <br />
             {getFieldDecorator('fieldDate', {
               rules: [],
-            })(<Input placeholder={'FieldDate'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Field Date'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTime">FieldDateTime</label>
+            <label htmlFor="fieldDateTime">Field Date Time</label>
             <br />
             {getFieldDecorator('fieldDateTime', {
               rules: [],
-            })(<Input placeholder={'FieldDateTime'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Field Date Time'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTime2">FieldDateTime2</label>
+            <label htmlFor="fieldDateTime2">Field Date Time2</label>
             <br />
             {getFieldDecorator('fieldDateTime2', {
               rules: [],
-            })(<Input placeholder={'FieldDateTime2'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Field Date Time2'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTimeOffset">FieldDateTimeOffset</label>
+            <label htmlFor="fieldDateTimeOffset">Field Date Time Offset</label>
             <br />
             {getFieldDecorator('fieldDateTimeOffset', {
               rules: [],
-            })(<Input placeholder={'FieldDateTimeOffset'} />)}
+            })(<Input placeholder={'Field Date Time Offset'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDecimal">FieldDecimal</label>
+            <label htmlFor="fieldDecimal">Field Decimal</label>
             <br />
             {getFieldDecorator('fieldDecimal', {
               rules: [],
-            })(<Input placeholder={'FieldDecimal'} />)}
+            })(<Input placeholder={'Field Decimal'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldFloat">FieldFloat</label>
+            <label htmlFor="fieldFloat">Field Float</label>
             <br />
             {getFieldDecorator('fieldFloat', {
               rules: [],
-            })(<Input placeholder={'FieldFloat'} />)}
+            })(<InputNumber placeholder={'Field Float'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldImage">FieldImage</label>
+            <label htmlFor="fieldImage">Field Image</label>
             <br />
             {getFieldDecorator('fieldImage', {
               rules: [],
-            })(<Input placeholder={'FieldImage'} />)}
+            })(<Input placeholder={'Field Image'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldMoney">FieldMoney</label>
+            <label htmlFor="fieldMoney">Field Money</label>
             <br />
             {getFieldDecorator('fieldMoney', {
               rules: [],
-            })(<Input placeholder={'FieldMoney'} />)}
+            })(<InputNumber placeholder={'Field Money'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNChar">FieldNChar</label>
+            <label htmlFor="fieldNChar">Field N Char</label>
             <br />
             {getFieldDecorator('fieldNChar', {
               rules: [{ max: 10, message: 'Exceeds max length of 10' }],
-            })(<Input placeholder={'FieldNChar'} />)}
+            })(<Input placeholder={'Field N Char'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNText">FieldNText</label>
+            <label htmlFor="fieldNText">Field N Text</label>
             <br />
             {getFieldDecorator('fieldNText', {
               rules: [
@@ -253,119 +263,126 @@ class TestAllFieldTypesNullableCreateComponent extends React.Component<
                   message: 'Exceeds max length of 1073741823',
                 },
               ],
-            })(<Input placeholder={'FieldNText'} />)}
+            })(<Input placeholder={'Field N Text'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNumeric">FieldNumeric</label>
+            <label htmlFor="fieldNumeric">Field Numeric</label>
             <br />
             {getFieldDecorator('fieldNumeric', {
               rules: [],
-            })(<Input placeholder={'FieldNumeric'} />)}
+            })(<InputNumber placeholder={'Field Numeric'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNVarchar">FieldNVarchar</label>
+            <label htmlFor="fieldNVarchar">Field N Varchar</label>
             <br />
             {getFieldDecorator('fieldNVarchar', {
               rules: [{ max: 50, message: 'Exceeds max length of 50' }],
-            })(<Input placeholder={'FieldNVarchar'} />)}
+            })(<Input placeholder={'Field N Varchar'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldReal">FieldReal</label>
+            <label htmlFor="fieldReal">Field Real</label>
             <br />
             {getFieldDecorator('fieldReal', {
               rules: [],
-            })(<Input placeholder={'FieldReal'} />)}
+            })(<InputNumber placeholder={'Field Real'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallDateTime">FieldSmallDateTime</label>
+            <label htmlFor="fieldSmallDateTime">Field Small Date Time</label>
             <br />
             {getFieldDecorator('fieldSmallDateTime', {
               rules: [],
-            })(<Input placeholder={'FieldSmallDateTime'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Field Small Date Time'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallInt">FieldSmallInt</label>
+            <label htmlFor="fieldSmallInt">Field Small Int</label>
             <br />
             {getFieldDecorator('fieldSmallInt', {
               rules: [],
-            })(<Input placeholder={'FieldSmallInt'} />)}
+            })(<InputNumber placeholder={'Field Small Int'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallMoney">FieldSmallMoney</label>
+            <label htmlFor="fieldSmallMoney">Field Small Money</label>
             <br />
             {getFieldDecorator('fieldSmallMoney', {
               rules: [],
-            })(<Input placeholder={'FieldSmallMoney'} />)}
+            })(<InputNumber placeholder={'Field Small Money'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldText">FieldText</label>
+            <label htmlFor="fieldText">Field Text</label>
             <br />
             {getFieldDecorator('fieldText', {
               rules: [],
-            })(<Input placeholder={'FieldText'} />)}
+            })(<Input placeholder={'Field Text'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTime">FieldTime</label>
+            <label htmlFor="fieldTime">Field Time</label>
             <br />
             {getFieldDecorator('fieldTime', {
               rules: [],
-            })(<Input placeholder={'FieldTime'} />)}
+            })(<Input placeholder={'Field Time'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTimestamp">FieldTimestamp</label>
+            <label htmlFor="fieldTimestamp">Field Timestamp</label>
             <br />
             {getFieldDecorator('fieldTimestamp', {
               rules: [],
-            })(<Input placeholder={'FieldTimestamp'} />)}
+            })(<Input placeholder={'Field Timestamp'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTinyInt">FieldTinyInt</label>
+            <label htmlFor="fieldTinyInt">Field Tiny Int</label>
             <br />
             {getFieldDecorator('fieldTinyInt', {
               rules: [],
-            })(<Input placeholder={'FieldTinyInt'} />)}
+            })(<InputNumber placeholder={'Field Tiny Int'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldUniqueIdentifier">FieldUniqueIdentifier</label>
+            <label htmlFor="fieldUniqueIdentifier">
+              Field Unique Identifier
+            </label>
             <br />
             {getFieldDecorator('fieldUniqueIdentifier', {
               rules: [],
-            })(<Input placeholder={'FieldUniqueIdentifier'} />)}
+            })(<Input placeholder={'Field Unique Identifier'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldVarBinary">FieldVarBinary</label>
+            <label htmlFor="fieldVarBinary">Field Var Binary</label>
             <br />
             {getFieldDecorator('fieldVarBinary', {
               rules: [{ max: 50, message: 'Exceeds max length of 50' }],
-            })(<Input placeholder={'FieldVarBinary'} />)}
+            })(<Input placeholder={'Field Var Binary'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldVarchar">FieldVarchar</label>
+            <label htmlFor="fieldVarchar">Field Varchar</label>
             <br />
             {getFieldDecorator('fieldVarchar', {
               rules: [{ max: 50, message: 'Exceeds max length of 50' }],
-            })(<Input placeholder={'FieldVarchar'} />)}
+            })(<Input placeholder={'Field Varchar'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldXML">FieldXML</label>
+            <label htmlFor="fieldXML">Field X M L</label>
             <br />
             {getFieldDecorator('fieldXML', {
               rules: [],
-            })(<Input placeholder={'FieldXML'} />)}
+            })(<Input placeholder={'Field X M L'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -392,5 +409,5 @@ export const WrappedTestAllFieldTypesNullableCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2a009116d0f31113a80435620177bde7</Hash>
+    <Hash>cc578e6f79e2fb030b3dffb705df2b65</Hash>
 </Codenesium>*/

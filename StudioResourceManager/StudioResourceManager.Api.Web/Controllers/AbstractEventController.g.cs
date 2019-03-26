@@ -233,6 +233,40 @@ namespace StudioResourceManagerNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("{eventId}/EventStudents")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiEventStudentServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> EventStudentsByEventId(int eventId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventStudentServerResponseModel> response = await this.EventService.EventStudentsByEventId(eventId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{id}/EventTeachers")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiEventTeacherServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> EventTeachersById(int id, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventTeacherServerResponseModel> response = await this.EventService.EventTeachersById(id, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiEventServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventServerRequestModel> patch)
 		{
 			var record = await this.EventService.Get(id);
@@ -252,5 +286,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>791c64d235ccbce85d15573a5c7d137d</Hash>
+    <Hash>da897bbb31481d65debae87713b5d284</Hash>
 </Codenesium>*/

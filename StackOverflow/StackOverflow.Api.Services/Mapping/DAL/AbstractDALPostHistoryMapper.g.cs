@@ -42,7 +42,7 @@ namespace StackOverflowNS.Api.Services
 			                    item.UserId);
 			if (item.PostHistoryTypeIdNavigation != null)
 			{
-				var postHistoryTypeIdModel = new ApiPostHistoryTypesServerResponseModel();
+				var postHistoryTypeIdModel = new ApiPostHistoryTypeServerResponseModel();
 				postHistoryTypeIdModel.SetProperties(
 					item.PostHistoryTypeIdNavigation.Id,
 					item.PostHistoryTypeIdNavigation.RwType);
@@ -52,7 +52,7 @@ namespace StackOverflowNS.Api.Services
 
 			if (item.PostIdNavigation != null)
 			{
-				var postIdModel = new ApiPostsServerResponseModel();
+				var postIdModel = new ApiPostServerResponseModel();
 				postIdModel.SetProperties(
 					item.PostIdNavigation.Id,
 					item.PostIdNavigation.AcceptedAnswerId,
@@ -80,7 +80,7 @@ namespace StackOverflowNS.Api.Services
 
 			if (item.UserIdNavigation != null)
 			{
-				var userIdModel = new ApiUsersServerResponseModel();
+				var userIdModel = new ApiUserServerResponseModel();
 				userIdModel.SetProperties(
 					item.UserIdNavigation.Id,
 					item.UserIdNavigation.AboutMe,
@@ -119,5 +119,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af7d6c9a20d260db9f18600954506631</Hash>
+    <Hash>d34724ea13197bb5c03c2ea2424ba41c</Hash>
 </Codenesium>*/

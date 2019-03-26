@@ -107,15 +107,11 @@ class RowVersionCheckDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div>
-              <h3>RowVersion</h3>
+              <h3>Row Version</h3>
               <p>{String(this.state.model!.rowVersion)}</p>
             </div>
           </div>
@@ -134,5 +130,5 @@ export const WrappedRowVersionCheckDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>37ad9fcb0c216751408ed75124d1b1aa</Hash>
+    <Hash>35cfe33a3443726ee2054bde1c81ec5d</Hash>
 </Codenesium>*/

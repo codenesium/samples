@@ -195,21 +195,21 @@ class SelfReferenceEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="selfReferenceId">SelfReferenceId</label>
-            <br />
-            {getFieldDecorator('selfReferenceId', {
-              rules: [],
-            })(<Input placeholder={'SelfReferenceId'} />)}
-          </Form.Item>
+          <SelfReferenceSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.SelfReferences}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="selfReferenceId"
+            required={false}
+            selectedValue={this.state.model!.selfReferenceId}
+          />
 
-          <Form.Item>
-            <label htmlFor="selfReferenceId2">SelfReferenceId2</label>
-            <br />
-            {getFieldDecorator('selfReferenceId2', {
-              rules: [],
-            })(<Input placeholder={'SelfReferenceId2'} />)}
-          </Form.Item>
+          <SelfReferenceSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.SelfReferences}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="selfReferenceId2"
+            required={false}
+            selectedValue={this.state.model!.selfReferenceId2}
+          />
 
           <Form.Item>
             <Button
@@ -235,5 +235,5 @@ export const WrappedSelfReferenceEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a40a048a29065f78f31c4f14e6a915ca</Hash>
+    <Hash>dc08657b6eb34849e4da7c28c7b4cbf5</Hash>
 </Codenesium>*/

@@ -106,10 +106,6 @@ class ColumnSameAsFKTableDetailComponent extends React.Component<
             <i className="fas fa-edit" />
           </Button>
           <div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
               <h3>Person</h3>
               <p>
@@ -120,7 +116,7 @@ class ColumnSameAsFKTableDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>PersonId</h3>
+              <h3>Person</h3>
               <p>
                 {String(
                   this.state.model!.personIdNavigation &&
@@ -144,5 +140,5 @@ export const WrappedColumnSameAsFKTableDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bb597a5476862deed36a0f35362bba2b</Hash>
+    <Hash>ad0129fff5974609fc8aee0831f999c1</Hash>
 </Codenesium>*/

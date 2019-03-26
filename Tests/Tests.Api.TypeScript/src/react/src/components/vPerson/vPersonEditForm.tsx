@@ -195,14 +195,14 @@ class VPersonEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="personName">PersonName</label>
+            <label htmlFor="personName">Person Name</label>
             <br />
             {getFieldDecorator('personName', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
-            })(<Input placeholder={'PersonName'} />)}
+            })(<Input placeholder={'Person Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -229,5 +229,5 @@ export const WrappedVPersonEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>73e69be69e5edec0e6fbcaf186da1324</Hash>
+    <Hash>e2f79cd0bc7395b67c6e61ff97a5316b</Hash>
 </Codenesium>*/

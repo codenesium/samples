@@ -107,10 +107,6 @@ class IncludedColumnTestDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -134,5 +130,5 @@ export const WrappedIncludedColumnTestDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>81294ad701fae579f973cb972cb08e5b</Hash>
+    <Hash>cb3d3e93df427f88f19a8e9578b69ee5</Hash>
 </Codenesium>*/

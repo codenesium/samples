@@ -36,25 +36,25 @@ namespace StackOverflowNS.Api.Client
 		}
 
 		[JsonProperty]
-		public ApiPostHistoryTypesClientResponseModel PostHistoryTypeIdNavigation { get; private set; }
+		public ApiPostHistoryTypeClientResponseModel PostHistoryTypeIdNavigation { get; private set; }
 
-		public void SetPostHistoryTypeIdNavigation(ApiPostHistoryTypesClientResponseModel value)
+		public void SetPostHistoryTypeIdNavigation(ApiPostHistoryTypeClientResponseModel value)
 		{
 			this.PostHistoryTypeIdNavigation = value;
 		}
 
 		[JsonProperty]
-		public ApiPostsClientResponseModel PostIdNavigation { get; private set; }
+		public ApiPostClientResponseModel PostIdNavigation { get; private set; }
 
-		public void SetPostIdNavigation(ApiPostsClientResponseModel value)
+		public void SetPostIdNavigation(ApiPostClientResponseModel value)
 		{
 			this.PostIdNavigation = value;
 		}
 
 		[JsonProperty]
-		public ApiUsersClientResponseModel UserIdNavigation { get; private set; }
+		public ApiUserClientResponseModel UserIdNavigation { get; private set; }
 
-		public void SetUserIdNavigation(ApiUsersClientResponseModel value)
+		public void SetUserIdNavigation(ApiUserClientResponseModel value)
 		{
 			this.UserIdNavigation = value;
 		}
@@ -98,5 +98,5 @@ namespace StackOverflowNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>581d4a006a0d31887503cb0533e9aa5c</Hash>
+    <Hash>7553bea1add5b5ee2c3b8ef1224519d4</Hash>
 </Codenesium>*/

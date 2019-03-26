@@ -23,14 +23,14 @@ namespace StackOverflowNS.Api.DataAccess
 
 		Task<List<PostHistory>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0);
 
-		Task<PostHistoryTypes> PostHistoryTypesByPostHistoryTypeId(int postHistoryTypeId);
+		Task<PostHistoryType> PostHistoryTypeByPostHistoryTypeId(int postHistoryTypeId);
 
-		Task<Posts> PostsByPostId(int postId);
+		Task<Post> PostByPostId(int postId);
 
-		Task<Users> UsersByUserId(int? userId);
+		Task<User> UserByUserId(int? userId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d416dc5bf88d5ff5892d0d5529c5caf</Hash>
+    <Hash>71ef042709d9215802ccf12eb2aee925</Hash>
 </Codenesium>*/

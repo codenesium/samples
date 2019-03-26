@@ -32,7 +32,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			List<ApiTeacherSkillServerResponseModel> response = await service.All();
 
@@ -51,7 +52,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			ApiTeacherSkillServerResponseModel response = await service.Get(default(int));
 
@@ -69,7 +71,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			ApiTeacherSkillServerResponseModel response = await service.Get(default(int));
 
@@ -88,7 +91,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			CreateResponse<ApiTeacherSkillServerResponseModel> response = await service.Create(model);
 
@@ -111,7 +115,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			CreateResponse<ApiTeacherSkillServerResponseModel> response = await service.Create(model);
 
@@ -133,7 +138,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			UpdateResponse<ApiTeacherSkillServerResponseModel> response = await service.Update(default(int), model);
 
@@ -157,7 +163,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			UpdateResponse<ApiTeacherSkillServerResponseModel> response = await service.Update(default(int), model);
 
@@ -178,7 +185,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,7 +209,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -223,7 +232,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			List<ApiRateServerResponseModel> response = await service.RatesByTeacherSkillId(default(int));
 
@@ -241,16 +251,57 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
 			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                      mock.DALMapperMockFactory.DALRateMapperMock);
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
 
 			List<ApiRateServerResponseModel> response = await service.RatesByTeacherSkillId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.RatesByTeacherSkillId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void TeacherTeacherSkillsByTeacherSkillId_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeacherSkillRepository>();
+			var records = new List<TeacherTeacherSkill>();
+			records.Add(new TeacherTeacherSkill());
+			mock.RepositoryMock.Setup(x => x.TeacherTeacherSkillsByTeacherSkillId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new TeacherSkillService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
+			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+
+			List<ApiTeacherTeacherSkillServerResponseModel> response = await service.TeacherTeacherSkillsByTeacherSkillId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.TeacherTeacherSkillsByTeacherSkillId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void TeacherTeacherSkillsByTeacherSkillId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeacherSkillRepository>();
+			mock.RepositoryMock.Setup(x => x.TeacherTeacherSkillsByTeacherSkillId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherTeacherSkill>>(new List<TeacherTeacherSkill>()));
+			var service = new TeacherSkillService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
+			                                      mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                      mock.DALMapperMockFactory.DALRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+
+			List<ApiTeacherTeacherSkillServerResponseModel> response = await service.TeacherTeacherSkillsByTeacherSkillId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.TeacherTeacherSkillsByTeacherSkillId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ba487e39fa5c2cc437a81458026c410</Hash>
+    <Hash>87e8601aa6baa48d68867f1f523c0a3a</Hash>
 </Codenesium>*/

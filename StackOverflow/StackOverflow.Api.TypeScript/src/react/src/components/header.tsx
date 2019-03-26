@@ -44,19 +44,19 @@ export const wrapperHeader = (
                 <Link to={'/'} />
               </Menu.Item>
 
-              <Menu.Item key="badges">
+              <Menu.Item key="badge">
                 <Icon type="pie-chart" />
                 <span>Badges</span>
                 <Link to={ClientRoutes.Badges} />
               </Menu.Item>
 
-              <Menu.Item key="comments">
+              <Menu.Item key="comment">
                 <Icon type="rise" />
                 <span>Comments</span>
                 <Link to={ClientRoutes.Comments} />
               </Menu.Item>
 
-              <Menu.Item key="linkTypes">
+              <Menu.Item key="linkType">
                 <Icon type="bars" />
                 <span>Link Types</span>
                 <Link to={ClientRoutes.LinkTypes} />
@@ -65,52 +65,52 @@ export const wrapperHeader = (
               <Menu.Item key="postHistory">
                 <Icon type="cloud" />
                 <span>Post History</span>
-                <Link to={ClientRoutes.PostHistory} />
+                <Link to={ClientRoutes.PostHistories} />
               </Menu.Item>
 
-              <Menu.Item key="postHistoryTypes">
+              <Menu.Item key="postHistoryType">
                 <Icon type="code" />
                 <span>Post History Types</span>
                 <Link to={ClientRoutes.PostHistoryTypes} />
               </Menu.Item>
 
-              <Menu.Item key="postLinks">
+              <Menu.Item key="postLink">
                 <Icon type="smile" />
                 <span>Post Links</span>
                 <Link to={ClientRoutes.PostLinks} />
               </Menu.Item>
 
-              <Menu.Item key="posts">
+              <Menu.Item key="post">
                 <Icon type="laptop" />
                 <span>Posts</span>
                 <Link to={ClientRoutes.Posts} />
               </Menu.Item>
 
-              <Menu.Item key="postTypes">
+              <Menu.Item key="postType">
                 <Icon type="mobile" />
                 <span>Post Types</span>
                 <Link to={ClientRoutes.PostTypes} />
               </Menu.Item>
 
-              <Menu.Item key="tags">
+              <Menu.Item key="tag">
                 <Icon type="paper-clip" />
                 <span>Tags</span>
                 <Link to={ClientRoutes.Tags} />
               </Menu.Item>
 
-              <Menu.Item key="users">
+              <Menu.Item key="user">
                 <Icon type="setting" />
                 <span>Users</span>
                 <Link to={ClientRoutes.Users} />
               </Menu.Item>
 
-              <Menu.Item key="votes">
+              <Menu.Item key="vote">
                 <Icon type="user" />
                 <span>Votes</span>
                 <Link to={ClientRoutes.Votes} />
               </Menu.Item>
 
-              <Menu.Item key="voteTypes">
+              <Menu.Item key="voteType">
                 <Icon type="home" />
                 <span>Vote Types</span>
                 <Link to={ClientRoutes.VoteTypes} />
@@ -159,5 +159,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>5b7e1572aa69f67954983f3bf8c7a131</Hash>
+    <Hash>13d8192ee573e919629df8d09cfad513</Hash>
 </Codenesium>*/

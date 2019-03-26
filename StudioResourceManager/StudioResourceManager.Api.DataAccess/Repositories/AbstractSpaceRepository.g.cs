@@ -88,6 +88,16 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table SpaceSpaceFeature via spaceId.
+		public async virtual Task<List<SpaceSpaceFeature>> SpaceSpaceFeaturesBySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<SpaceSpaceFeature>()
+			       .Include(x => x.SpaceFeatureIdNavigation)
+			       .Include(x => x.SpaceIdNavigation)
+
+			       .Where(x => x.SpaceId == spaceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceSpaceFeature>();
+		}
+
 		protected async Task<List<Space>> Where(
 			Expression<Func<Space, bool>> predicate,
 			int limit = int.MaxValue,
@@ -114,5 +124,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9461636b36922c8faeeb237f15185829</Hash>
+    <Hash>c17021c3a48493fbda65a3fe6b70080f</Hash>
 </Codenesium>*/

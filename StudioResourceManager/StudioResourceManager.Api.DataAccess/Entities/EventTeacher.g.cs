@@ -14,23 +14,38 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int eventId,
+			int id,
 			int teacherId)
 		{
-			this.EventId = eventId;
+			this.Id = id;
 			this.TeacherId = teacherId;
 		}
 
 		[Key]
-		[Column("eventId")]
-		public virtual int EventId { get; private set; }
+		[Column("id")]
+		public virtual int Id { get; private set; }
 
-		[Key]
 		[Column("teacherId")]
 		public virtual int TeacherId { get; private set; }
+
+		[ForeignKey("Id")]
+		public virtual Event IdNavigation { get; private set; }
+
+		public void SetIdNavigation(Event item)
+		{
+			this.IdNavigation = item;
+		}
+
+		[ForeignKey("TeacherId")]
+		public virtual Teacher TeacherIdNavigation { get; private set; }
+
+		public void SetTeacherIdNavigation(Teacher item)
+		{
+			this.TeacherIdNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>690cc5d7f57495c378d9019b1eddb13b</Hash>
+    <Hash>9c70981d71ef19f67e0c421b18e89b27</Hash>
 </Codenesium>*/

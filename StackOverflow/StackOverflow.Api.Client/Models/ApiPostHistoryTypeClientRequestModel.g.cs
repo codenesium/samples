@@ -1,0 +1,30 @@
+using Codenesium.DataConversionExtensions;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Linq.Expressions;
+
+namespace StackOverflowNS.Api.Client
+{
+	public partial class ApiPostHistoryTypeClientRequestModel : AbstractApiClientRequestModel
+	{
+		public ApiPostHistoryTypeClientRequestModel()
+			: base()
+		{
+		}
+
+		public virtual void SetProperties(
+			string rwType)
+		{
+			this.RwType = rwType;
+		}
+
+		[JsonProperty]
+		public string RwType { get; private set; } = default(string);
+	}
+}
+
+/*<Codenesium>
+    <Hash>636e135b6ded95e5f292439afe86e597</Hash>
+</Codenesium>*/

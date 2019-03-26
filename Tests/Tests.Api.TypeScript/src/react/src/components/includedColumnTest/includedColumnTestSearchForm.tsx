@@ -202,15 +202,8 @@ export default class IncludedColumnTestSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'IncludedColumnTests',
+                Header: 'Included Column Test',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -286,5 +279,5 @@ export const WrappedIncludedColumnTestSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7766d27689ea40f38d9df958953b2254</Hash>
+    <Hash>b6e2aab50e3cdeef7f21ee17931dba22</Hash>
 </Codenesium>*/

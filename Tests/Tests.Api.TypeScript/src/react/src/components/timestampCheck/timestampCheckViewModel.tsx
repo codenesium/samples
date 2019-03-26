@@ -18,11 +18,11 @@ export default class TimestampCheckViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>8bf508d5c3a2b46001342d332d180717</Hash>
+    <Hash>a741ed760059473722b0cc79f62af5ce</Hash>
 </Codenesium>*/

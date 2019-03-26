@@ -126,7 +126,7 @@ namespace StackOverflowNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistory/{result.Record.Id}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistories/{result.Record.Id}", result);
 			}
 			else
 			{
@@ -286,5 +286,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d41362b652564c337f6890cbbc48ce4b</Hash>
+    <Hash>b3da564f4cdc2c7eff1e14ee9a13dc8d</Hash>
 </Codenesium>*/

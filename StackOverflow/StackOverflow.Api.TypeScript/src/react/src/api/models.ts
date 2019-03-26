@@ -1,10 +1,10 @@
-export class BadgesClientRequestModel {
+export class BadgeClientRequestModel {
   date: any;
   id: number;
   name: string;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
 
   constructor() {
     this.date = undefined;
@@ -23,13 +23,13 @@ export class BadgesClientRequestModel {
   }
 }
 
-export class BadgesClientResponseModel {
+export class BadgeClientResponseModel {
   date: any;
   id: number;
   name: string;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
 
   constructor() {
     this.date = undefined;
@@ -47,17 +47,17 @@ export class BadgesClientResponseModel {
     this.userId = userId;
   }
 }
-export class CommentsClientRequestModel {
+export class CommentClientRequestModel {
   creationDate: any;
   id: number;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   score: number;
   text: string;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
 
   constructor() {
     this.creationDate = undefined;
@@ -89,17 +89,17 @@ export class CommentsClientRequestModel {
   }
 }
 
-export class CommentsClientResponseModel {
+export class CommentClientResponseModel {
   creationDate: any;
   id: number;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   score: number;
   text: string;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
 
   constructor() {
     this.creationDate = undefined;
@@ -130,7 +130,7 @@ export class CommentsClientResponseModel {
     this.userId = userId;
   }
 }
-export class LinkTypesClientRequestModel {
+export class LinkTypeClientRequestModel {
   id: number;
   rwType: string;
 
@@ -145,7 +145,7 @@ export class LinkTypesClientRequestModel {
   }
 }
 
-export class LinkTypesClientResponseModel {
+export class LinkTypeClientResponseModel {
   id: number;
   rwType: string;
 
@@ -165,16 +165,16 @@ export class PostHistoryClientRequestModel {
   id: number;
   postHistoryTypeId: number;
   postHistoryTypeIdEntity: string;
-  postHistoryTypeIdNavigation?: PostHistoryTypesClientResponseModel;
+  postHistoryTypeIdNavigation?: PostHistoryTypeClientResponseModel;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   revisionGUID: string;
   text: string;
   userDisplayName: string;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
 
   constructor() {
     this.comment = '';
@@ -223,16 +223,16 @@ export class PostHistoryClientResponseModel {
   id: number;
   postHistoryTypeId: number;
   postHistoryTypeIdEntity: string;
-  postHistoryTypeIdNavigation?: PostHistoryTypesClientResponseModel;
+  postHistoryTypeIdNavigation?: PostHistoryTypeClientResponseModel;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   revisionGUID: string;
   text: string;
   userDisplayName: string;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
 
   constructor() {
     this.comment = '';
@@ -274,7 +274,7 @@ export class PostHistoryClientResponseModel {
     this.userId = userId;
   }
 }
-export class PostHistoryTypesClientRequestModel {
+export class PostHistoryTypeClientRequestModel {
   id: number;
   rwType: string;
 
@@ -289,7 +289,7 @@ export class PostHistoryTypesClientRequestModel {
   }
 }
 
-export class PostHistoryTypesClientResponseModel {
+export class PostHistoryTypeClientResponseModel {
   id: number;
   rwType: string;
 
@@ -303,18 +303,18 @@ export class PostHistoryTypesClientResponseModel {
     this.rwType = rwType;
   }
 }
-export class PostLinksClientRequestModel {
+export class PostLinkClientRequestModel {
   creationDate: any;
   id: number;
   linkTypeId: number;
   linkTypeIdEntity: string;
-  linkTypeIdNavigation?: LinkTypesClientResponseModel;
+  linkTypeIdNavigation?: LinkTypeClientResponseModel;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   relatedPostId: number;
   relatedPostIdEntity: string;
-  relatedPostIdNavigation?: PostsClientResponseModel;
+  relatedPostIdNavigation?: PostClientResponseModel;
 
   constructor() {
     this.creationDate = undefined;
@@ -345,18 +345,18 @@ export class PostLinksClientRequestModel {
   }
 }
 
-export class PostLinksClientResponseModel {
+export class PostLinkClientResponseModel {
   creationDate: any;
   id: number;
   linkTypeId: number;
   linkTypeIdEntity: string;
-  linkTypeIdNavigation?: LinkTypesClientResponseModel;
+  linkTypeIdNavigation?: LinkTypeClientResponseModel;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   relatedPostId: number;
   relatedPostIdEntity: string;
-  relatedPostIdNavigation?: PostsClientResponseModel;
+  relatedPostIdNavigation?: PostClientResponseModel;
 
   constructor() {
     this.creationDate = undefined;
@@ -386,7 +386,7 @@ export class PostLinksClientResponseModel {
     this.relatedPostId = relatedPostId;
   }
 }
-export class PostsClientRequestModel {
+export class PostClientRequestModel {
   acceptedAnswerId: number;
   answerCount: number;
   body: string;
@@ -401,16 +401,16 @@ export class PostsClientRequestModel {
   lastEditorDisplayName: string;
   lastEditorUserId: number;
   lastEditorUserIdEntity: string;
-  lastEditorUserIdNavigation?: UsersClientResponseModel;
+  lastEditorUserIdNavigation?: UserClientResponseModel;
   ownerUserId: number;
   ownerUserIdEntity: string;
-  ownerUserIdNavigation?: UsersClientResponseModel;
+  ownerUserIdNavigation?: UserClientResponseModel;
   parentId: number;
   parentIdEntity: string;
-  parentIdNavigation?: PostsClientResponseModel;
+  parentIdNavigation?: PostClientResponseModel;
   postTypeId: number;
   postTypeIdEntity: string;
-  postTypeIdNavigation?: PostTypesClientResponseModel;
+  postTypeIdNavigation?: PostTypeClientResponseModel;
   score: number;
   tag: string;
   title: string;
@@ -492,7 +492,7 @@ export class PostsClientRequestModel {
   }
 }
 
-export class PostsClientResponseModel {
+export class PostClientResponseModel {
   acceptedAnswerId: number;
   answerCount: number;
   body: string;
@@ -507,16 +507,16 @@ export class PostsClientResponseModel {
   lastEditorDisplayName: string;
   lastEditorUserId: number;
   lastEditorUserIdEntity: string;
-  lastEditorUserIdNavigation?: UsersClientResponseModel;
+  lastEditorUserIdNavigation?: UserClientResponseModel;
   ownerUserId: number;
   ownerUserIdEntity: string;
-  ownerUserIdNavigation?: UsersClientResponseModel;
+  ownerUserIdNavigation?: UserClientResponseModel;
   parentId: number;
   parentIdEntity: string;
-  parentIdNavigation?: PostsClientResponseModel;
+  parentIdNavigation?: PostClientResponseModel;
   postTypeId: number;
   postTypeIdEntity: string;
-  postTypeIdNavigation?: PostTypesClientResponseModel;
+  postTypeIdNavigation?: PostTypeClientResponseModel;
   score: number;
   tag: string;
   title: string;
@@ -597,7 +597,7 @@ export class PostsClientResponseModel {
     this.viewCount = viewCount;
   }
 }
-export class PostTypesClientRequestModel {
+export class PostTypeClientRequestModel {
   id: number;
   rwType: string;
 
@@ -612,7 +612,7 @@ export class PostTypesClientRequestModel {
   }
 }
 
-export class PostTypesClientResponseModel {
+export class PostTypeClientResponseModel {
   id: number;
   rwType: string;
 
@@ -626,16 +626,16 @@ export class PostTypesClientResponseModel {
     this.rwType = rwType;
   }
 }
-export class TagsClientRequestModel {
+export class TagClientRequestModel {
   count: number;
   excerptPostId: number;
   excerptPostIdEntity: string;
-  excerptPostIdNavigation?: PostsClientResponseModel;
+  excerptPostIdNavigation?: PostClientResponseModel;
   id: number;
   tagName: string;
   wikiPostId: number;
   wikiPostIdEntity: string;
-  wikiPostIdNavigation?: PostsClientResponseModel;
+  wikiPostIdNavigation?: PostClientResponseModel;
 
   constructor() {
     this.count = 0;
@@ -664,16 +664,16 @@ export class TagsClientRequestModel {
   }
 }
 
-export class TagsClientResponseModel {
+export class TagClientResponseModel {
   count: number;
   excerptPostId: number;
   excerptPostIdEntity: string;
-  excerptPostIdNavigation?: PostsClientResponseModel;
+  excerptPostIdNavigation?: PostClientResponseModel;
   id: number;
   tagName: string;
   wikiPostId: number;
   wikiPostIdEntity: string;
-  wikiPostIdNavigation?: PostsClientResponseModel;
+  wikiPostIdNavigation?: PostClientResponseModel;
 
   constructor() {
     this.count = 0;
@@ -701,7 +701,7 @@ export class TagsClientResponseModel {
     this.wikiPostId = wikiPostId;
   }
 }
-export class UsersClientRequestModel {
+export class UserClientRequestModel {
   aboutMe: string;
   accountId: number;
   age: number;
@@ -767,7 +767,7 @@ export class UsersClientRequestModel {
   }
 }
 
-export class UsersClientResponseModel {
+export class UserClientResponseModel {
   aboutMe: string;
   accountId: number;
   age: number;
@@ -832,19 +832,19 @@ export class UsersClientResponseModel {
     this.websiteUrl = websiteUrl;
   }
 }
-export class VotesClientRequestModel {
+export class VoteClientRequestModel {
   bountyAmount: number;
   creationDate: any;
   id: number;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
   voteTypeId: number;
   voteTypeIdEntity: string;
-  voteTypeIdNavigation?: VoteTypesClientResponseModel;
+  voteTypeIdNavigation?: VoteTypeClientResponseModel;
 
   constructor() {
     this.bountyAmount = 0;
@@ -878,19 +878,19 @@ export class VotesClientRequestModel {
   }
 }
 
-export class VotesClientResponseModel {
+export class VoteClientResponseModel {
   bountyAmount: number;
   creationDate: any;
   id: number;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsClientResponseModel;
+  postIdNavigation?: PostClientResponseModel;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersClientResponseModel;
+  userIdNavigation?: UserClientResponseModel;
   voteTypeId: number;
   voteTypeIdEntity: string;
-  voteTypeIdNavigation?: VoteTypesClientResponseModel;
+  voteTypeIdNavigation?: VoteTypeClientResponseModel;
 
   constructor() {
     this.bountyAmount = 0;
@@ -923,7 +923,7 @@ export class VotesClientResponseModel {
     this.voteTypeId = voteTypeId;
   }
 }
-export class VoteTypesClientRequestModel {
+export class VoteTypeClientRequestModel {
   id: number;
   name: string;
 
@@ -938,7 +938,7 @@ export class VoteTypesClientRequestModel {
   }
 }
 
-export class VoteTypesClientResponseModel {
+export class VoteTypeClientResponseModel {
   id: number;
   name: string;
 
@@ -955,5 +955,5 @@ export class VoteTypesClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>3c232a819bfcc61f26243fc3948dfd5c</Hash>
+    <Hash>e1db345907c96b0e0367b866245b01f4</Hash>
 </Codenesium>*/

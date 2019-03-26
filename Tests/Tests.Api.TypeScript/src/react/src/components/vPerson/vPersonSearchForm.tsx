@@ -197,17 +197,10 @@ export default class VPersonSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'VPersons',
+                Header: 'V Person',
                 columns: [
                   {
-                    Header: 'PersonId',
-                    accessor: 'personId',
-                    Cell: props => {
-                      return <span>{String(props.original.personId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PersonName',
+                    Header: 'Person Name',
                     accessor: 'personName',
                     Cell: props => {
                       return <span>{String(props.original.personName)}</span>;
@@ -274,5 +267,5 @@ export const WrappedVPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>be65b68a88aa4ae6b40a4ac53cc81251</Hash>
+    <Hash>7be382c8f1d98c67c3eed815ee5ee2f2</Hash>
 </Codenesium>*/

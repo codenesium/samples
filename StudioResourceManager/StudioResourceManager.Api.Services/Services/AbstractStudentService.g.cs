@@ -17,6 +17,8 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALStudentMapper DalStudentMapper { get; private set; }
 
+		protected IDALEventStudentMapper DalEventStudentMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractStudentService(
@@ -24,12 +26,14 @@ namespace StudioResourceManagerNS.Api.Services
 			MediatR.IMediator mediator,
 			IStudentRepository studentRepository,
 			IApiStudentServerRequestModelValidator studentModelValidator,
-			IDALStudentMapper dalStudentMapper)
+			IDALStudentMapper dalStudentMapper,
+			IDALEventStudentMapper dalEventStudentMapper)
 			: base()
 		{
 			this.StudentRepository = studentRepository;
 			this.StudentModelValidator = studentModelValidator;
 			this.DalStudentMapper = dalStudentMapper;
+			this.DalEventStudentMapper = dalEventStudentMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -125,9 +129,16 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return this.DalStudentMapper.MapEntityToModel(records);
 		}
+
+		public async virtual Task<List<ApiEventStudentServerResponseModel>> EventStudentsByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EventStudent> records = await this.StudentRepository.EventStudentsByStudentId(studentId, limit, offset);
+
+			return this.DalEventStudentMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c80b5c0a5e58fc9f130ddc10a92f2a46</Hash>
+    <Hash>fd08b790fd0b8ad75d21574583ea7d0c</Hash>
 </Codenesium>*/

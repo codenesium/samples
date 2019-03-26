@@ -8,6 +8,7 @@ import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
 import { RateTableComponent } from '../shared/rateTable';
+import { TeacherTeacherSkillTableComponent } from '../shared/teacherTeacherSkillTable';
 
 interface TeacherSkillDetailComponentProps {
   form: WrappedFormUtils;
@@ -128,6 +129,21 @@ class TeacherSkillDetailComponent extends React.Component<
               }
             />
           </div>
+          <div>
+            <h3>TeacherTeacherSkills</h3>
+            <TeacherTeacherSkillTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.TeacherSkills +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.TeacherTeacherSkills
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -142,5 +158,5 @@ export const WrappedTeacherSkillDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4d46e2b629f0a864167cdcd7fd840ded</Hash>
+    <Hash>46609d3f1804827bd35c341e5f9419e0</Hash>
 </Codenesium>*/

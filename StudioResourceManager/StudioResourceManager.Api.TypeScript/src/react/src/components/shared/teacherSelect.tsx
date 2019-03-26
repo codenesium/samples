@@ -103,7 +103,7 @@ export class TeacherSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TeacherViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TeacherSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b446d8296fb841e250c4c9fe54ec2dbf</Hash>
+    <Hash>2ba82cdcb669e39d43ac71a3c08af1f1</Hash>
 </Codenesium>*/

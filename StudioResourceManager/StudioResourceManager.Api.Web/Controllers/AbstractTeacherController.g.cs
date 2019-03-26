@@ -234,6 +234,23 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("{teacherId}/EventTeachers")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiEventTeacherServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> EventTeachersByTeacherId(int teacherId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventTeacherServerResponseModel> response = await this.TeacherService.EventTeachersByTeacherId(teacherId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
 		[Route("{teacherId}/Rates")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiRateServerResponseModel>), 200)]
@@ -246,6 +263,23 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 
 			List<ApiRateServerResponseModel> response = await this.TeacherService.RatesByTeacherId(teacherId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{teacherId}/TeacherTeacherSkills")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherTeacherSkillServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> TeacherTeacherSkillsByTeacherId(int teacherId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTeacherTeacherSkillServerResponseModel> response = await this.TeacherService.TeacherTeacherSkillsByTeacherId(teacherId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -269,5 +303,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bc4833dd20dd9c7597511b441f835dde</Hash>
+    <Hash>ffabadcbd68caf307425f8172f38f84e</Hash>
 </Codenesium>*/

@@ -202,15 +202,8 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'ColumnSameAsFKTables',
+                Header: 'Column Same As F K Table',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Person',
                     accessor: 'person',
@@ -234,7 +227,7 @@ export default class ColumnSameAsFKTableSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PersonId',
+                    Header: 'Person',
                     accessor: 'personId',
                     Cell: props => {
                       return (
@@ -318,5 +311,5 @@ export const WrappedColumnSameAsFKTableSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d43b7058bf0266511d2335b0328e8307</Hash>
+    <Hash>8e7780d30c27bccd27571a2986ea1053</Hash>
 </Codenesium>*/

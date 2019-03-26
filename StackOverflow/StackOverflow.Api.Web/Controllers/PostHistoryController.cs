@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Web
 {
-	[Route("api/postHistory")]
+	[Route("api/postHistories")]
 	[ApiController]
 	[ApiVersion("1.0")]
 
@@ -41,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>658bdff71e18c0c9ecbf1b463a3c79a9</Hash>
+    <Hash>899ba6bd7864e3522e0c765c5a51d621</Hash>
 </Codenesium>*/

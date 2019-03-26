@@ -26,9 +26,6 @@ namespace TestsNS.Api.Services
 			DateTimeOffset fieldDateTimeOffset,
 			decimal fieldDecimal,
 			double fieldFloat,
-			double fieldGeography,
-			double fieldGeometry,
-			Guid fieldHierarchyId,
 			byte[] fieldImage,
 			decimal fieldMoney,
 			string fieldNChar,
@@ -46,7 +43,6 @@ namespace TestsNS.Api.Services
 			Guid fieldUniqueIdentifier,
 			byte[] fieldVarBinary,
 			string fieldVarchar,
-			string fieldVariant,
 			string fieldXML)
 		{
 			this.FieldBigInt = fieldBigInt;
@@ -59,9 +55,6 @@ namespace TestsNS.Api.Services
 			this.FieldDateTimeOffset = fieldDateTimeOffset;
 			this.FieldDecimal = fieldDecimal;
 			this.FieldFloat = fieldFloat;
-			this.FieldGeography = fieldGeography;
-			this.FieldGeometry = fieldGeometry;
-			this.FieldHierarchyId = fieldHierarchyId;
 			this.FieldImage = fieldImage;
 			this.FieldMoney = fieldMoney;
 			this.FieldNChar = fieldNChar;
@@ -79,7 +72,6 @@ namespace TestsNS.Api.Services
 			this.FieldUniqueIdentifier = fieldUniqueIdentifier;
 			this.FieldVarBinary = fieldVarBinary;
 			this.FieldVarchar = fieldVarchar;
-			this.FieldVariant = fieldVariant;
 			this.FieldXML = fieldXML;
 		}
 
@@ -122,18 +114,6 @@ namespace TestsNS.Api.Services
 		[Required]
 		[JsonProperty]
 		public double FieldFloat { get; private set; } = default(double);
-
-		[Required]
-		[JsonProperty]
-		public double FieldGeography { get; private set; } = default(double);
-
-		[Required]
-		[JsonProperty]
-		public double FieldGeometry { get; private set; } = default(double);
-
-		[Required]
-		[JsonProperty]
-		public Guid FieldHierarchyId { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
@@ -205,14 +185,10 @@ namespace TestsNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string FieldVariant { get; private set; } = default(string);
-
-		[Required]
-		[JsonProperty]
 		public string FieldXML { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>65fdd992aa72b290f593b07129652e83</Hash>
+    <Hash>c9dc6e08274a9efdd754ee7d0aa99a6b</Hash>
 </Codenesium>*/

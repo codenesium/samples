@@ -94,7 +94,7 @@ export class TimestampCheckSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Timestamp Check</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class TimestampCheckSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TimestampCheckViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TimestampCheckSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b676e7a887a601535655f717b6525127</Hash>
+    <Hash>497037253b7b12e612f69dad50fbfb47</Hash>
 </Codenesium>*/

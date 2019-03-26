@@ -115,13 +115,6 @@ export class RowVersionCheckTableComponent extends React.Component<
                 Header: 'RowVersionChecks',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -129,7 +122,7 @@ export class RowVersionCheckTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'RowVersion',
+                    Header: 'Row Version',
                     accessor: 'rowVersion',
                     Cell: props => {
                       return <span>{String(props.original.rowVersion)}</span>;
@@ -180,5 +173,5 @@ export class RowVersionCheckTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9bc50cf0be2239015ce4fd5c320ee23a</Hash>
+    <Hash>fd71a043f274810aff5468492a686ddd</Hash>
 </Codenesium>*/

@@ -2,35 +2,39 @@ import moment from 'moment';
 
 export default class SelfReferenceViewModel {
   id: number;
-  selfReferenceId: any;
+  selfReferenceId: number;
   selfReferenceIdEntity: string;
   selfReferenceIdNavigation?: SelfReferenceViewModel;
-  selfReferenceId2: any;
+  selfReferenceId2: number;
   selfReferenceId2Entity: string;
   selfReferenceId2Navigation?: SelfReferenceViewModel;
 
   constructor() {
     this.id = 0;
-    this.selfReferenceId = undefined;
+    this.selfReferenceId = 0;
     this.selfReferenceIdEntity = '';
     this.selfReferenceIdNavigation = undefined;
-    this.selfReferenceId2 = undefined;
+    this.selfReferenceId2 = 0;
     this.selfReferenceId2Entity = '';
     this.selfReferenceId2Navigation = undefined;
   }
 
-  setProperties(id: number, selfReferenceId: any, selfReferenceId2: any): void {
+  setProperties(
+    id: number,
+    selfReferenceId: number,
+    selfReferenceId2: number
+  ): void {
     this.id = id;
     this.selfReferenceId = selfReferenceId;
     this.selfReferenceId2 = selfReferenceId2;
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>a48e7aa5f70042e755046a8b8930d8a1</Hash>
+    <Hash>0697c5f114c07dc903c74f4bd752b0ba</Hash>
 </Codenesium>*/

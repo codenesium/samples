@@ -197,17 +197,10 @@ export default class SelfReferenceSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'SelfReferences',
+                Header: 'Self Reference',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'SelfReferenceId',
+                    Header: 'Self Reference',
                     accessor: 'selfReferenceId',
                     Cell: props => {
                       return (
@@ -231,7 +224,7 @@ export default class SelfReferenceSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SelfReferenceId2',
+                    Header: 'Self Reference Id2',
                     accessor: 'selfReferenceId2',
                     Cell: props => {
                       return (
@@ -315,5 +308,5 @@ export const WrappedSelfReferenceSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>63175cacd2ff25b34745665489647d30</Hash>
+    <Hash>6edb22986285319e9c3a3459205729e3</Hash>
 </Codenesium>*/

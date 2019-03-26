@@ -1,7 +1,7 @@
 import moment from 'moment';
-import PostHistoryTypesViewModel from '../postHistoryTypes/postHistoryTypesViewModel';
-import PostsViewModel from '../posts/postsViewModel';
-import UsersViewModel from '../users/usersViewModel';
+import PostHistoryTypeViewModel from '../postHistoryType/postHistoryTypeViewModel';
+import PostViewModel from '../post/postViewModel';
+import UserViewModel from '../user/userViewModel';
 
 export default class PostHistoryViewModel {
   comment: string;
@@ -9,16 +9,16 @@ export default class PostHistoryViewModel {
   id: number;
   postHistoryTypeId: number;
   postHistoryTypeIdEntity: string;
-  postHistoryTypeIdNavigation?: PostHistoryTypesViewModel;
+  postHistoryTypeIdNavigation?: PostHistoryTypeViewModel;
   postId: number;
   postIdEntity: string;
-  postIdNavigation?: PostsViewModel;
+  postIdNavigation?: PostViewModel;
   revisionGUID: string;
   text: string;
   userDisplayName: string;
   userId: number;
   userIdEntity: string;
-  userIdNavigation?: UsersViewModel;
+  userIdNavigation?: UserViewModel;
 
   constructor() {
     this.comment = '';
@@ -67,5 +67,5 @@ export default class PostHistoryViewModel {
 
 
 /*<Codenesium>
-    <Hash>6fae2087b748750b12490d275dbab6b9</Hash>
+    <Hash>527a84b586e0c8f057bf082b4ec36cd2</Hash>
 </Codenesium>*/

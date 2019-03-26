@@ -103,7 +103,7 @@ export class EventSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: EventViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class EventSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d2f27de56c42f63cd45f568edb58bbe7</Hash>
+    <Hash>a46fd344a5a4d31bb37ad3211f6b175f</Hash>
 </Codenesium>*/

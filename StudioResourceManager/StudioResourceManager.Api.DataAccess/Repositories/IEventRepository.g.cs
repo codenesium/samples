@@ -19,10 +19,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<Event>> ByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0);
 
+		Task<List<EventStudent>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<EventTeacher>> EventTeachersById(int id, int limit = int.MaxValue, int offset = 0);
+
 		Task<EventStatus> EventStatusByEventStatusId(int eventStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>34c72baddebff5622995f17cab55ba48</Hash>
+    <Hash>626a264464c3fe1b268250fc4b48c514</Hash>
 </Codenesium>*/

@@ -150,24 +150,28 @@ export class RowVersionCheckClientResponseModel {
 }
 export class SelfReferenceClientRequestModel {
   id: number;
-  selfReferenceId: any;
+  selfReferenceId: number;
   selfReferenceIdEntity: string;
   selfReferenceIdNavigation?: SelfReferenceClientResponseModel;
-  selfReferenceId2: any;
+  selfReferenceId2: number;
   selfReferenceId2Entity: string;
   selfReferenceId2Navigation?: SelfReferenceClientResponseModel;
 
   constructor() {
     this.id = 0;
-    this.selfReferenceId = undefined;
+    this.selfReferenceId = 0;
     this.selfReferenceIdEntity = '';
     this.selfReferenceIdNavigation = undefined;
-    this.selfReferenceId2 = undefined;
+    this.selfReferenceId2 = 0;
     this.selfReferenceId2Entity = '';
     this.selfReferenceId2Navigation = undefined;
   }
 
-  setProperties(id: number, selfReferenceId: any, selfReferenceId2: any): void {
+  setProperties(
+    id: number,
+    selfReferenceId: number,
+    selfReferenceId2: number
+  ): void {
     this.id = id;
     this.selfReferenceId = selfReferenceId;
     this.selfReferenceId2 = selfReferenceId2;
@@ -176,24 +180,28 @@ export class SelfReferenceClientRequestModel {
 
 export class SelfReferenceClientResponseModel {
   id: number;
-  selfReferenceId: any;
+  selfReferenceId: number;
   selfReferenceIdEntity: string;
   selfReferenceIdNavigation?: SelfReferenceClientResponseModel;
-  selfReferenceId2: any;
+  selfReferenceId2: number;
   selfReferenceId2Entity: string;
   selfReferenceId2Navigation?: SelfReferenceClientResponseModel;
 
   constructor() {
     this.id = 0;
-    this.selfReferenceId = undefined;
+    this.selfReferenceId = 0;
     this.selfReferenceIdEntity = '';
     this.selfReferenceIdNavigation = undefined;
-    this.selfReferenceId2 = undefined;
+    this.selfReferenceId2 = 0;
     this.selfReferenceId2Entity = '';
     this.selfReferenceId2Navigation = undefined;
   }
 
-  setProperties(id: number, selfReferenceId: any, selfReferenceId2: any): void {
+  setProperties(
+    id: number,
+    selfReferenceId: number,
+    selfReferenceId2: number
+  ): void {
     this.id = id;
     this.selfReferenceId = selfReferenceId;
     this.selfReferenceId2 = selfReferenceId2;
@@ -239,9 +247,6 @@ export class TestAllFieldTypeClientRequestModel {
   fieldDateTimeOffset: any;
   fieldDecimal: number;
   fieldFloat: number;
-  fieldGeography: number;
-  fieldGeometry: number;
-  fieldHierarchyId: any;
   fieldImage: any;
   fieldMoney: number;
   fieldNChar: string;
@@ -259,7 +264,6 @@ export class TestAllFieldTypeClientRequestModel {
   fieldUniqueIdentifier: any;
   fieldVarBinary: any;
   fieldVarchar: string;
-  fieldVariant: string;
   fieldXML: string;
   id: number;
 
@@ -274,9 +278,6 @@ export class TestAllFieldTypeClientRequestModel {
     this.fieldDateTimeOffset = undefined;
     this.fieldDecimal = 0;
     this.fieldFloat = 0;
-    this.fieldGeography = 0;
-    this.fieldGeometry = 0;
-    this.fieldHierarchyId = undefined;
     this.fieldImage = undefined;
     this.fieldMoney = 0;
     this.fieldNChar = '';
@@ -294,7 +295,6 @@ export class TestAllFieldTypeClientRequestModel {
     this.fieldUniqueIdentifier = undefined;
     this.fieldVarBinary = undefined;
     this.fieldVarchar = '';
-    this.fieldVariant = '';
     this.fieldXML = '';
     this.id = 0;
   }
@@ -310,9 +310,6 @@ export class TestAllFieldTypeClientRequestModel {
     fieldDateTimeOffset: any,
     fieldDecimal: number,
     fieldFloat: number,
-    fieldGeography: number,
-    fieldGeometry: number,
-    fieldHierarchyId: any,
     fieldImage: any,
     fieldMoney: number,
     fieldNChar: string,
@@ -330,7 +327,6 @@ export class TestAllFieldTypeClientRequestModel {
     fieldUniqueIdentifier: any,
     fieldVarBinary: any,
     fieldVarchar: string,
-    fieldVariant: string,
     fieldXML: string,
     id: number
   ): void {
@@ -344,9 +340,6 @@ export class TestAllFieldTypeClientRequestModel {
     this.fieldDateTimeOffset = fieldDateTimeOffset;
     this.fieldDecimal = fieldDecimal;
     this.fieldFloat = fieldFloat;
-    this.fieldGeography = fieldGeography;
-    this.fieldGeometry = fieldGeometry;
-    this.fieldHierarchyId = fieldHierarchyId;
     this.fieldImage = fieldImage;
     this.fieldMoney = fieldMoney;
     this.fieldNChar = fieldNChar;
@@ -364,7 +357,6 @@ export class TestAllFieldTypeClientRequestModel {
     this.fieldUniqueIdentifier = fieldUniqueIdentifier;
     this.fieldVarBinary = fieldVarBinary;
     this.fieldVarchar = fieldVarchar;
-    this.fieldVariant = fieldVariant;
     this.fieldXML = fieldXML;
     this.id = id;
   }
@@ -381,9 +373,6 @@ export class TestAllFieldTypeClientResponseModel {
   fieldDateTimeOffset: any;
   fieldDecimal: number;
   fieldFloat: number;
-  fieldGeography: number;
-  fieldGeometry: number;
-  fieldHierarchyId: any;
   fieldImage: any;
   fieldMoney: number;
   fieldNChar: string;
@@ -401,7 +390,6 @@ export class TestAllFieldTypeClientResponseModel {
   fieldUniqueIdentifier: any;
   fieldVarBinary: any;
   fieldVarchar: string;
-  fieldVariant: string;
   fieldXML: string;
   id: number;
 
@@ -416,9 +404,6 @@ export class TestAllFieldTypeClientResponseModel {
     this.fieldDateTimeOffset = undefined;
     this.fieldDecimal = 0;
     this.fieldFloat = 0;
-    this.fieldGeography = 0;
-    this.fieldGeometry = 0;
-    this.fieldHierarchyId = undefined;
     this.fieldImage = undefined;
     this.fieldMoney = 0;
     this.fieldNChar = '';
@@ -436,7 +421,6 @@ export class TestAllFieldTypeClientResponseModel {
     this.fieldUniqueIdentifier = undefined;
     this.fieldVarBinary = undefined;
     this.fieldVarchar = '';
-    this.fieldVariant = '';
     this.fieldXML = '';
     this.id = 0;
   }
@@ -452,9 +436,6 @@ export class TestAllFieldTypeClientResponseModel {
     fieldDateTimeOffset: any,
     fieldDecimal: number,
     fieldFloat: number,
-    fieldGeography: number,
-    fieldGeometry: number,
-    fieldHierarchyId: any,
     fieldImage: any,
     fieldMoney: number,
     fieldNChar: string,
@@ -472,7 +453,6 @@ export class TestAllFieldTypeClientResponseModel {
     fieldUniqueIdentifier: any,
     fieldVarBinary: any,
     fieldVarchar: string,
-    fieldVariant: string,
     fieldXML: string,
     id: number
   ): void {
@@ -486,9 +466,6 @@ export class TestAllFieldTypeClientResponseModel {
     this.fieldDateTimeOffset = fieldDateTimeOffset;
     this.fieldDecimal = fieldDecimal;
     this.fieldFloat = fieldFloat;
-    this.fieldGeography = fieldGeography;
-    this.fieldGeometry = fieldGeometry;
-    this.fieldHierarchyId = fieldHierarchyId;
     this.fieldImage = fieldImage;
     this.fieldMoney = fieldMoney;
     this.fieldNChar = fieldNChar;
@@ -506,13 +483,12 @@ export class TestAllFieldTypeClientResponseModel {
     this.fieldUniqueIdentifier = fieldUniqueIdentifier;
     this.fieldVarBinary = fieldVarBinary;
     this.fieldVarchar = fieldVarchar;
-    this.fieldVariant = fieldVariant;
     this.fieldXML = fieldXML;
     this.id = id;
   }
 }
 export class TestAllFieldTypesNullableClientRequestModel {
-  fieldBigInt: any;
+  fieldBigInt: number;
   fieldBinary: any;
   fieldBit: boolean;
   fieldChar: string;
@@ -521,21 +497,21 @@ export class TestAllFieldTypesNullableClientRequestModel {
   fieldDateTime2: any;
   fieldDateTimeOffset: any;
   fieldDecimal: number;
-  fieldFloat: any;
+  fieldFloat: number;
   fieldImage: any;
-  fieldMoney: any;
+  fieldMoney: number;
   fieldNChar: string;
   fieldNText: string;
-  fieldNumeric: any;
+  fieldNumeric: number;
   fieldNVarchar: string;
-  fieldReal: any;
+  fieldReal: number;
   fieldSmallDateTime: any;
-  fieldSmallInt: any;
-  fieldSmallMoney: any;
+  fieldSmallInt: number;
+  fieldSmallMoney: number;
   fieldText: string;
   fieldTime: any;
   fieldTimestamp: any;
-  fieldTinyInt: any;
+  fieldTinyInt: number;
   fieldUniqueIdentifier: any;
   fieldVarBinary: any;
   fieldVarchar: string;
@@ -543,7 +519,7 @@ export class TestAllFieldTypesNullableClientRequestModel {
   id: number;
 
   constructor() {
-    this.fieldBigInt = undefined;
+    this.fieldBigInt = 0;
     this.fieldBinary = undefined;
     this.fieldBit = false;
     this.fieldChar = '';
@@ -552,21 +528,21 @@ export class TestAllFieldTypesNullableClientRequestModel {
     this.fieldDateTime2 = undefined;
     this.fieldDateTimeOffset = undefined;
     this.fieldDecimal = 0;
-    this.fieldFloat = undefined;
+    this.fieldFloat = 0;
     this.fieldImage = undefined;
-    this.fieldMoney = undefined;
+    this.fieldMoney = 0;
     this.fieldNChar = '';
     this.fieldNText = '';
-    this.fieldNumeric = undefined;
+    this.fieldNumeric = 0;
     this.fieldNVarchar = '';
-    this.fieldReal = undefined;
+    this.fieldReal = 0;
     this.fieldSmallDateTime = undefined;
-    this.fieldSmallInt = undefined;
-    this.fieldSmallMoney = undefined;
+    this.fieldSmallInt = 0;
+    this.fieldSmallMoney = 0;
     this.fieldText = '';
     this.fieldTime = undefined;
     this.fieldTimestamp = undefined;
-    this.fieldTinyInt = undefined;
+    this.fieldTinyInt = 0;
     this.fieldUniqueIdentifier = undefined;
     this.fieldVarBinary = undefined;
     this.fieldVarchar = '';
@@ -575,7 +551,7 @@ export class TestAllFieldTypesNullableClientRequestModel {
   }
 
   setProperties(
-    fieldBigInt: any,
+    fieldBigInt: number,
     fieldBinary: any,
     fieldBit: boolean,
     fieldChar: string,
@@ -584,21 +560,21 @@ export class TestAllFieldTypesNullableClientRequestModel {
     fieldDateTime2: any,
     fieldDateTimeOffset: any,
     fieldDecimal: number,
-    fieldFloat: any,
+    fieldFloat: number,
     fieldImage: any,
-    fieldMoney: any,
+    fieldMoney: number,
     fieldNChar: string,
     fieldNText: string,
-    fieldNumeric: any,
+    fieldNumeric: number,
     fieldNVarchar: string,
-    fieldReal: any,
+    fieldReal: number,
     fieldSmallDateTime: any,
-    fieldSmallInt: any,
-    fieldSmallMoney: any,
+    fieldSmallInt: number,
+    fieldSmallMoney: number,
     fieldText: string,
     fieldTime: any,
     fieldTimestamp: any,
-    fieldTinyInt: any,
+    fieldTinyInt: number,
     fieldUniqueIdentifier: any,
     fieldVarBinary: any,
     fieldVarchar: string,
@@ -638,7 +614,7 @@ export class TestAllFieldTypesNullableClientRequestModel {
 }
 
 export class TestAllFieldTypesNullableClientResponseModel {
-  fieldBigInt: any;
+  fieldBigInt: number;
   fieldBinary: any;
   fieldBit: boolean;
   fieldChar: string;
@@ -647,21 +623,21 @@ export class TestAllFieldTypesNullableClientResponseModel {
   fieldDateTime2: any;
   fieldDateTimeOffset: any;
   fieldDecimal: number;
-  fieldFloat: any;
+  fieldFloat: number;
   fieldImage: any;
-  fieldMoney: any;
+  fieldMoney: number;
   fieldNChar: string;
   fieldNText: string;
-  fieldNumeric: any;
+  fieldNumeric: number;
   fieldNVarchar: string;
-  fieldReal: any;
+  fieldReal: number;
   fieldSmallDateTime: any;
-  fieldSmallInt: any;
-  fieldSmallMoney: any;
+  fieldSmallInt: number;
+  fieldSmallMoney: number;
   fieldText: string;
   fieldTime: any;
   fieldTimestamp: any;
-  fieldTinyInt: any;
+  fieldTinyInt: number;
   fieldUniqueIdentifier: any;
   fieldVarBinary: any;
   fieldVarchar: string;
@@ -669,7 +645,7 @@ export class TestAllFieldTypesNullableClientResponseModel {
   id: number;
 
   constructor() {
-    this.fieldBigInt = undefined;
+    this.fieldBigInt = 0;
     this.fieldBinary = undefined;
     this.fieldBit = false;
     this.fieldChar = '';
@@ -678,21 +654,21 @@ export class TestAllFieldTypesNullableClientResponseModel {
     this.fieldDateTime2 = undefined;
     this.fieldDateTimeOffset = undefined;
     this.fieldDecimal = 0;
-    this.fieldFloat = undefined;
+    this.fieldFloat = 0;
     this.fieldImage = undefined;
-    this.fieldMoney = undefined;
+    this.fieldMoney = 0;
     this.fieldNChar = '';
     this.fieldNText = '';
-    this.fieldNumeric = undefined;
+    this.fieldNumeric = 0;
     this.fieldNVarchar = '';
-    this.fieldReal = undefined;
+    this.fieldReal = 0;
     this.fieldSmallDateTime = undefined;
-    this.fieldSmallInt = undefined;
-    this.fieldSmallMoney = undefined;
+    this.fieldSmallInt = 0;
+    this.fieldSmallMoney = 0;
     this.fieldText = '';
     this.fieldTime = undefined;
     this.fieldTimestamp = undefined;
-    this.fieldTinyInt = undefined;
+    this.fieldTinyInt = 0;
     this.fieldUniqueIdentifier = undefined;
     this.fieldVarBinary = undefined;
     this.fieldVarchar = '';
@@ -701,7 +677,7 @@ export class TestAllFieldTypesNullableClientResponseModel {
   }
 
   setProperties(
-    fieldBigInt: any,
+    fieldBigInt: number,
     fieldBinary: any,
     fieldBit: boolean,
     fieldChar: string,
@@ -710,21 +686,21 @@ export class TestAllFieldTypesNullableClientResponseModel {
     fieldDateTime2: any,
     fieldDateTimeOffset: any,
     fieldDecimal: number,
-    fieldFloat: any,
+    fieldFloat: number,
     fieldImage: any,
-    fieldMoney: any,
+    fieldMoney: number,
     fieldNChar: string,
     fieldNText: string,
-    fieldNumeric: any,
+    fieldNumeric: number,
     fieldNVarchar: string,
-    fieldReal: any,
+    fieldReal: number,
     fieldSmallDateTime: any,
-    fieldSmallInt: any,
-    fieldSmallMoney: any,
+    fieldSmallInt: number,
+    fieldSmallMoney: number,
     fieldText: string,
     fieldTime: any,
     fieldTimestamp: any,
-    fieldTinyInt: any,
+    fieldTinyInt: number,
     fieldUniqueIdentifier: any,
     fieldVarBinary: any,
     fieldVarchar: string,
@@ -829,5 +805,5 @@ export class VPersonClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>313dafac3e2bea5766d7cb65f7cc1e9a</Hash>
+    <Hash>d1c4b9b6070ed46a155d0b23f4e07f8b</Hash>
 </Codenesium>*/

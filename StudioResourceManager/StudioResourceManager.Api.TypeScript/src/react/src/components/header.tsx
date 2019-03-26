@@ -62,56 +62,80 @@ export const wrapperHeader = (
                 <Link to={ClientRoutes.EventStatus} />
               </Menu.Item>
 
-              <Menu.Item key="family">
+              <Menu.Item key="eventStudent">
                 <Icon type="cloud" />
+                <span>Event Student</span>
+                <Link to={ClientRoutes.EventStudents} />
+              </Menu.Item>
+
+              <Menu.Item key="eventTeacher">
+                <Icon type="code" />
+                <span>Event Teacher</span>
+                <Link to={ClientRoutes.EventTeachers} />
+              </Menu.Item>
+
+              <Menu.Item key="family">
+                <Icon type="smile" />
                 <span>Familes</span>
                 <Link to={ClientRoutes.Families} />
               </Menu.Item>
 
               <Menu.Item key="rate">
-                <Icon type="code" />
+                <Icon type="laptop" />
                 <span>Rates</span>
                 <Link to={ClientRoutes.Rates} />
               </Menu.Item>
 
               <Menu.Item key="space">
-                <Icon type="smile" />
+                <Icon type="mobile" />
                 <span>Spaces</span>
                 <Link to={ClientRoutes.Spaces} />
               </Menu.Item>
 
               <Menu.Item key="spaceFeature">
-                <Icon type="laptop" />
+                <Icon type="paper-clip" />
                 <span>Space Feature</span>
                 <Link to={ClientRoutes.SpaceFeatures} />
               </Menu.Item>
 
+              <Menu.Item key="spaceSpaceFeature">
+                <Icon type="setting" />
+                <span>Space Space Feature</span>
+                <Link to={ClientRoutes.SpaceSpaceFeatures} />
+              </Menu.Item>
+
               <Menu.Item key="student">
-                <Icon type="mobile" />
+                <Icon type="user" />
                 <span>Students</span>
                 <Link to={ClientRoutes.Students} />
               </Menu.Item>
 
               <Menu.Item key="studio">
-                <Icon type="paper-clip" />
+                <Icon type="home" />
                 <span>Studios</span>
                 <Link to={ClientRoutes.Studios} />
               </Menu.Item>
 
               <Menu.Item key="teacher">
-                <Icon type="setting" />
+                <Icon type="camera" />
                 <span>Teachers</span>
                 <Link to={ClientRoutes.Teachers} />
               </Menu.Item>
 
               <Menu.Item key="teacherSkill">
-                <Icon type="user" />
+                <Icon type="like" />
                 <span>Teacher Skills</span>
                 <Link to={ClientRoutes.TeacherSkills} />
               </Menu.Item>
 
+              <Menu.Item key="teacherTeacherSkill">
+                <Icon type="bulb" />
+                <span>Teacher Teacher Skill</span>
+                <Link to={ClientRoutes.TeacherTeacherSkills} />
+              </Menu.Item>
+
               <Menu.Item key="user">
-                <Icon type="home" />
+                <Icon type="tool" />
                 <span>Users</span>
                 <Link to={ClientRoutes.Users} />
               </Menu.Item>
@@ -159,5 +183,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>0d4d41a29efa48b7a9e587c539bb1eb4</Hash>
+    <Hash>840e3d650e5dfeebbf17d07b4709058e</Hash>
 </Codenesium>*/

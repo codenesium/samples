@@ -19,6 +19,8 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALRateMapper DalRateMapper { get; private set; }
 
+		protected IDALTeacherTeacherSkillMapper DalTeacherTeacherSkillMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractTeacherSkillService(
@@ -27,13 +29,15 @@ namespace StudioResourceManagerNS.Api.Services
 			ITeacherSkillRepository teacherSkillRepository,
 			IApiTeacherSkillServerRequestModelValidator teacherSkillModelValidator,
 			IDALTeacherSkillMapper dalTeacherSkillMapper,
-			IDALRateMapper dalRateMapper)
+			IDALRateMapper dalRateMapper,
+			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper)
 			: base()
 		{
 			this.TeacherSkillRepository = teacherSkillRepository;
 			this.TeacherSkillModelValidator = teacherSkillModelValidator;
 			this.DalTeacherSkillMapper = dalTeacherSkillMapper;
 			this.DalRateMapper = dalRateMapper;
+			this.DalTeacherTeacherSkillMapper = dalTeacherTeacherSkillMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -122,9 +126,16 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return this.DalRateMapper.MapEntityToModel(records);
 		}
+
+		public async virtual Task<List<ApiTeacherTeacherSkillServerResponseModel>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<TeacherTeacherSkill> records = await this.TeacherSkillRepository.TeacherTeacherSkillsByTeacherSkillId(teacherSkillId, limit, offset);
+
+			return this.DalTeacherTeacherSkillMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5932325ecf2c5a535a8d966f2ce28180</Hash>
+    <Hash>da855762fd74233a7e38fb6fd98d59d2</Hash>
 </Codenesium>*/

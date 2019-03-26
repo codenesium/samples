@@ -94,7 +94,7 @@ export class TableSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Tables</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class TableSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TableViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TableSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>055f9919bab89e40e95aeafe376447fc</Hash>
+    <Hash>7328fd007d60307878232bc35e175446</Hash>
 </Codenesium>*/

@@ -16,9 +16,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		Task<Space> Get(int id);
 
 		Task<List<Space>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<SpaceSpaceFeature>> SpaceSpaceFeaturesBySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e255a3797312c81388601def4c5eca9a</Hash>
+    <Hash>009d933cf478893ffe19e849d32f413e</Hash>
 </Codenesium>*/

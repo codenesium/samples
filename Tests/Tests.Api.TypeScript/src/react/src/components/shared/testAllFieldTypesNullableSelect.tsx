@@ -97,7 +97,9 @@ export class TestAllFieldTypesNullableSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            Test All Field Types Nullable
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -107,7 +109,7 @@ export class TestAllFieldTypesNullableSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: TestAllFieldTypesNullableViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +127,5 @@ export class TestAllFieldTypesNullableSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d55cbfcaca02ebd67c2c3075b43a1c85</Hash>
+    <Hash>ecce0310bd794588662094247dfc1e06</Hash>
 </Codenesium>*/

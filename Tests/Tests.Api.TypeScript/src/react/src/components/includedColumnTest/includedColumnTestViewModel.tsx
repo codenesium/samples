@@ -18,11 +18,11 @@ export default class IncludedColumnTestViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>e6152f6558810b259caf2bcad00919f1</Hash>
+    <Hash>c8592720288e80fa0c3995678493de82</Hash>
 </Codenesium>*/

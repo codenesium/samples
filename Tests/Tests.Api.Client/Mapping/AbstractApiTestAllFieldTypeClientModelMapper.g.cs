@@ -22,9 +22,6 @@ namespace TestsNS.Api.Client
 			                       request.FieldDateTimeOffset,
 			                       request.FieldDecimal,
 			                       request.FieldFloat,
-			                       request.FieldGeography,
-			                       request.FieldGeometry,
-			                       request.FieldHierarchyId,
 			                       request.FieldImage,
 			                       request.FieldMoney,
 			                       request.FieldNChar,
@@ -42,7 +39,6 @@ namespace TestsNS.Api.Client
 			                       request.FieldUniqueIdentifier,
 			                       request.FieldVarBinary,
 			                       request.FieldVarchar,
-			                       request.FieldVariant,
 			                       request.FieldXML);
 			return response;
 		}
@@ -62,9 +58,6 @@ namespace TestsNS.Api.Client
 				response.FieldDateTimeOffset,
 				response.FieldDecimal,
 				response.FieldFloat,
-				response.FieldGeography,
-				response.FieldGeometry,
-				response.FieldHierarchyId,
 				response.FieldImage,
 				response.FieldMoney,
 				response.FieldNChar,
@@ -82,7 +75,6 @@ namespace TestsNS.Api.Client
 				response.FieldUniqueIdentifier,
 				response.FieldVarBinary,
 				response.FieldVarchar,
-				response.FieldVariant,
 				response.FieldXML);
 			return request;
 		}
@@ -90,5 +82,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>5759c982040ef8b43b8b195e576819fb</Hash>
+    <Hash>53f789fb60dc0beaca4b98e50e73c8bd</Hash>
 </Codenesium>*/

@@ -107,10 +107,6 @@ class TimestampCheckDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -134,5 +130,5 @@ export const WrappedTimestampCheckDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e9a1aeb94b562d66b26b87a0817609be</Hash>
+    <Hash>8df14778b71ef3a7a8f56374c1b2485e</Hash>
 </Codenesium>*/

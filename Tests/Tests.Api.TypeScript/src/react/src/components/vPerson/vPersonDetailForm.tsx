@@ -107,11 +107,7 @@ class VPersonDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>PersonId</h3>
-              <p>{String(this.state.model!.personId)}</p>
-            </div>
-            <div>
-              <h3>PersonName</h3>
+              <h3>Person Name</h3>
               <p>{String(this.state.model!.personName)}</p>
             </div>
           </div>
@@ -130,5 +126,5 @@ export const WrappedVPersonDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>24fff71a808030990943bce67b5efbb2</Hash>
+    <Hash>21943135395ae2a07d75bbc05c6c0440</Hash>
 </Codenesium>*/

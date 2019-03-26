@@ -23,6 +23,14 @@ import { WrappedEventStatusCreateComponent } from './components/eventStatus/even
 import { WrappedEventStatusDetailComponent } from './components/eventStatus/eventStatusDetailForm';
 import { WrappedEventStatusEditComponent } from './components/eventStatus/eventStatusEditForm';
 import { WrappedEventStatusSearchComponent } from './components/eventStatus/eventStatusSearchForm';
+import { WrappedEventStudentCreateComponent } from './components/eventStudent/eventStudentCreateForm';
+import { WrappedEventStudentDetailComponent } from './components/eventStudent/eventStudentDetailForm';
+import { WrappedEventStudentEditComponent } from './components/eventStudent/eventStudentEditForm';
+import { WrappedEventStudentSearchComponent } from './components/eventStudent/eventStudentSearchForm';
+import { WrappedEventTeacherCreateComponent } from './components/eventTeacher/eventTeacherCreateForm';
+import { WrappedEventTeacherDetailComponent } from './components/eventTeacher/eventTeacherDetailForm';
+import { WrappedEventTeacherEditComponent } from './components/eventTeacher/eventTeacherEditForm';
+import { WrappedEventTeacherSearchComponent } from './components/eventTeacher/eventTeacherSearchForm';
 import { WrappedFamilyCreateComponent } from './components/family/familyCreateForm';
 import { WrappedFamilyDetailComponent } from './components/family/familyDetailForm';
 import { WrappedFamilyEditComponent } from './components/family/familyEditForm';
@@ -39,6 +47,10 @@ import { WrappedSpaceFeatureCreateComponent } from './components/spaceFeature/sp
 import { WrappedSpaceFeatureDetailComponent } from './components/spaceFeature/spaceFeatureDetailForm';
 import { WrappedSpaceFeatureEditComponent } from './components/spaceFeature/spaceFeatureEditForm';
 import { WrappedSpaceFeatureSearchComponent } from './components/spaceFeature/spaceFeatureSearchForm';
+import { WrappedSpaceSpaceFeatureCreateComponent } from './components/spaceSpaceFeature/spaceSpaceFeatureCreateForm';
+import { WrappedSpaceSpaceFeatureDetailComponent } from './components/spaceSpaceFeature/spaceSpaceFeatureDetailForm';
+import { WrappedSpaceSpaceFeatureEditComponent } from './components/spaceSpaceFeature/spaceSpaceFeatureEditForm';
+import { WrappedSpaceSpaceFeatureSearchComponent } from './components/spaceSpaceFeature/spaceSpaceFeatureSearchForm';
 import { WrappedStudentCreateComponent } from './components/student/studentCreateForm';
 import { WrappedStudentDetailComponent } from './components/student/studentDetailForm';
 import { WrappedStudentEditComponent } from './components/student/studentEditForm';
@@ -55,6 +67,10 @@ import { WrappedTeacherSkillCreateComponent } from './components/teacherSkill/te
 import { WrappedTeacherSkillDetailComponent } from './components/teacherSkill/teacherSkillDetailForm';
 import { WrappedTeacherSkillEditComponent } from './components/teacherSkill/teacherSkillEditForm';
 import { WrappedTeacherSkillSearchComponent } from './components/teacherSkill/teacherSkillSearchForm';
+import { WrappedTeacherTeacherSkillCreateComponent } from './components/teacherTeacherSkill/teacherTeacherSkillCreateForm';
+import { WrappedTeacherTeacherSkillDetailComponent } from './components/teacherTeacherSkill/teacherTeacherSkillDetailForm';
+import { WrappedTeacherTeacherSkillEditComponent } from './components/teacherTeacherSkill/teacherTeacherSkillEditForm';
+import { WrappedTeacherTeacherSkillSearchComponent } from './components/teacherTeacherSkill/teacherTeacherSkillSearchForm';
 import { WrappedUserCreateComponent } from './components/user/userCreateForm';
 import { WrappedUserDetailComponent } from './components/user/userDetailForm';
 import { WrappedUserEditComponent } from './components/user/userEditForm';
@@ -195,6 +211,62 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           )}
         />
         <Route
+          path={ClientRoutes.EventStudents + '/create'}
+          component={wrapperHeader(
+            WrappedEventStudentCreateComponent,
+            'Event Student Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventStudents + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedEventStudentEditComponent,
+            'Event Student Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventStudents + '/:id'}
+          component={wrapperHeader(
+            WrappedEventStudentDetailComponent,
+            'Event Student Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventStudents}
+          component={wrapperHeader(
+            WrappedEventStudentSearchComponent,
+            'Event Student Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventTeachers + '/create'}
+          component={wrapperHeader(
+            WrappedEventTeacherCreateComponent,
+            'Event Teacher Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventTeachers + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedEventTeacherEditComponent,
+            'Event Teacher Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventTeachers + '/:id'}
+          component={wrapperHeader(
+            WrappedEventTeacherDetailComponent,
+            'Event Teacher Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.EventTeachers}
+          component={wrapperHeader(
+            WrappedEventTeacherSearchComponent,
+            'Event Teacher Search'
+          )}
+        />
+        <Route
           path={ClientRoutes.Families + '/create'}
           component={wrapperHeader(
             WrappedFamilyCreateComponent,
@@ -286,6 +358,34 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           component={wrapperHeader(
             WrappedSpaceFeatureSearchComponent,
             'Space Feature Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.SpaceSpaceFeatures + '/create'}
+          component={wrapperHeader(
+            WrappedSpaceSpaceFeatureCreateComponent,
+            'Space Space Feature Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.SpaceSpaceFeatures + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedSpaceSpaceFeatureEditComponent,
+            'Space Space Feature Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.SpaceSpaceFeatures + '/:id'}
+          component={wrapperHeader(
+            WrappedSpaceSpaceFeatureDetailComponent,
+            'Space Space Feature Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.SpaceSpaceFeatures}
+          component={wrapperHeader(
+            WrappedSpaceSpaceFeatureSearchComponent,
+            'Space Space Feature Search'
           )}
         />
         <Route
@@ -398,6 +498,34 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           )}
         />
         <Route
+          path={ClientRoutes.TeacherTeacherSkills + '/create'}
+          component={wrapperHeader(
+            WrappedTeacherTeacherSkillCreateComponent,
+            'Teacher Teacher Skill Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.TeacherTeacherSkills + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedTeacherTeacherSkillEditComponent,
+            'Teacher Teacher Skill Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.TeacherTeacherSkills + '/:id'}
+          component={wrapperHeader(
+            WrappedTeacherTeacherSkillDetailComponent,
+            'Teacher Teacher Skill Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.TeacherTeacherSkills}
+          component={wrapperHeader(
+            WrappedTeacherTeacherSkillSearchComponent,
+            'Teacher Teacher Skill Search'
+          )}
+        />
+        <Route
           path={ClientRoutes.Users + '/create'}
           component={wrapperHeader(WrappedUserCreateComponent, 'Users Create')}
         />
@@ -420,5 +548,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>3d432d196e9162e0c8dc807e687b98d8</Hash>
+    <Hash>7264ddab934a96be3ec5587cb6d86f95</Hash>
 </Codenesium>*/

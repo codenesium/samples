@@ -14,23 +14,43 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int spaceId,
-			int spaceFeatureId)
+			int id,
+			int spaceFeatureId,
+			int spaceId)
 		{
-			this.SpaceId = spaceId;
+			this.Id = id;
 			this.SpaceFeatureId = spaceFeatureId;
+			this.SpaceId = spaceId;
 		}
 
 		[Key]
+		[Column("id")]
+		public virtual int Id { get; private set; }
+
 		[Column("spaceFeatureId")]
 		public virtual int SpaceFeatureId { get; private set; }
 
-		[Key]
 		[Column("spaceId")]
 		public virtual int SpaceId { get; private set; }
+
+		[ForeignKey("SpaceFeatureId")]
+		public virtual SpaceFeature SpaceFeatureIdNavigation { get; private set; }
+
+		public void SetSpaceFeatureIdNavigation(SpaceFeature item)
+		{
+			this.SpaceFeatureIdNavigation = item;
+		}
+
+		[ForeignKey("SpaceId")]
+		public virtual Space SpaceIdNavigation { get; private set; }
+
+		public void SetSpaceIdNavigation(Space item)
+		{
+			this.SpaceIdNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>68b2cf7be9d9d7fa2e161b9a295fc674</Hash>
+    <Hash>8e1ce3a9a34f5fc643dd694373fa056c</Hash>
 </Codenesium>*/

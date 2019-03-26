@@ -103,7 +103,7 @@ export class RateSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: RateViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class RateSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a9bbacb6ca5f05b02435a284103be356</Hash>
+    <Hash>cc44a06f69b5a224530891f3c1c01c45</Hash>
 </Codenesium>*/

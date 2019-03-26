@@ -200,13 +200,6 @@ export default class TableSearchComponent extends React.Component<
                 Header: 'Tables',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -274,5 +267,5 @@ export const WrappedTableSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>29796a390946688989978a204201ae6d</Hash>
+    <Hash>987a92beb1135218fb8b37e87b280c66</Hash>
 </Codenesium>*/

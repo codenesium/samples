@@ -31,7 +31,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.All();
 
@@ -49,7 +51,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			ApiEventServerResponseModel response = await service.Get(default(int));
 
@@ -66,7 +70,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			ApiEventServerResponseModel response = await service.Get(default(int));
 
@@ -84,7 +90,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			CreateResponse<ApiEventServerResponseModel> response = await service.Create(model);
 
@@ -106,7 +114,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			CreateResponse<ApiEventServerResponseModel> response = await service.Create(model);
 
@@ -127,7 +137,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			UpdateResponse<ApiEventServerResponseModel> response = await service.Update(default(int), model);
 
@@ -150,7 +162,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			UpdateResponse<ApiEventServerResponseModel> response = await service.Update(default(int), model);
 
@@ -170,7 +184,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -192,7 +208,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -213,7 +231,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.ByEventStatusId(default(int));
 
@@ -230,16 +250,98 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.DALMapperMockFactory.DALEventMapperMock);
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.ByEventStatusId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByEventStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void EventStudentsByEventId_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventRepository>();
+			var records = new List<EventStudent>();
+			records.Add(new EventStudent());
+			mock.RepositoryMock.Setup(x => x.EventStudentsByEventId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
+
+			List<ApiEventStudentServerResponseModel> response = await service.EventStudentsByEventId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventStudentsByEventId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void EventStudentsByEventId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventRepository>();
+			mock.RepositoryMock.Setup(x => x.EventStudentsByEventId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventStudent>>(new List<EventStudent>()));
+			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
+
+			List<ApiEventStudentServerResponseModel> response = await service.EventStudentsByEventId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventStudentsByEventId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void EventTeachersById_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventRepository>();
+			var records = new List<EventTeacher>();
+			records.Add(new EventTeacher());
+			mock.RepositoryMock.Setup(x => x.EventTeachersById(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
+
+			List<ApiEventTeacherServerResponseModel> response = await service.EventTeachersById(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventTeachersById(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void EventTeachersById_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventRepository>();
+			mock.RepositoryMock.Setup(x => x.EventTeachersById(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventTeacher>>(new List<EventTeacher>()));
+			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
+			                               mock.DALMapperMockFactory.DALEventMapperMock,
+			                               mock.DALMapperMockFactory.DALEventStudentMapperMock,
+			                               mock.DALMapperMockFactory.DALEventTeacherMapperMock);
+
+			List<ApiEventTeacherServerResponseModel> response = await service.EventTeachersById(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventTeachersById(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2d9176fb631a507f9ec10b7a3256560f</Hash>
+    <Hash>da14ca069a79439cbad29902e5ebf7a6</Hash>
 </Codenesium>*/

@@ -112,137 +112,140 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.ColumnSameAsFKTables + '/create'}
           component={wrapperHeader(
             WrappedColumnSameAsFKTableCreateComponent,
-            'ColumnSameAsFKTables Create'
+            'Column Same As F K Table Create'
           )}
         />
         <Route
           path={ClientRoutes.ColumnSameAsFKTables + '/edit/:id'}
           component={wrapperHeader(
             WrappedColumnSameAsFKTableEditComponent,
-            'ColumnSameAsFKTables Edit'
+            'Column Same As F K Table Edit'
           )}
         />
         <Route
           path={ClientRoutes.ColumnSameAsFKTables + '/:id'}
           component={wrapperHeader(
             WrappedColumnSameAsFKTableDetailComponent,
-            'ColumnSameAsFKTables Detail'
+            'Column Same As F K Table Detail'
           )}
         />
         <Route
           path={ClientRoutes.ColumnSameAsFKTables}
           component={wrapperHeader(
             WrappedColumnSameAsFKTableSearchComponent,
-            'ColumnSameAsFKTables Search'
+            'Column Same As F K Table Search'
           )}
         />
         <Route
           path={ClientRoutes.IncludedColumnTests + '/create'}
           component={wrapperHeader(
             WrappedIncludedColumnTestCreateComponent,
-            'IncludedColumnTests Create'
+            'Included Column Test Create'
           )}
         />
         <Route
           path={ClientRoutes.IncludedColumnTests + '/edit/:id'}
           component={wrapperHeader(
             WrappedIncludedColumnTestEditComponent,
-            'IncludedColumnTests Edit'
+            'Included Column Test Edit'
           )}
         />
         <Route
           path={ClientRoutes.IncludedColumnTests + '/:id'}
           component={wrapperHeader(
             WrappedIncludedColumnTestDetailComponent,
-            'IncludedColumnTests Detail'
+            'Included Column Test Detail'
           )}
         />
         <Route
           path={ClientRoutes.IncludedColumnTests}
           component={wrapperHeader(
             WrappedIncludedColumnTestSearchComponent,
-            'IncludedColumnTests Search'
+            'Included Column Test Search'
           )}
         />
         <Route
           path={ClientRoutes.People + '/create'}
           component={wrapperHeader(
             WrappedPersonCreateComponent,
-            'People Create'
+            'P E R S O N Create'
           )}
         />
         <Route
           path={ClientRoutes.People + '/edit/:id'}
-          component={wrapperHeader(WrappedPersonEditComponent, 'People Edit')}
+          component={wrapperHeader(
+            WrappedPersonEditComponent,
+            'P E R S O N Edit'
+          )}
         />
         <Route
           path={ClientRoutes.People + '/:id'}
           component={wrapperHeader(
             WrappedPersonDetailComponent,
-            'People Detail'
+            'P E R S O N Detail'
           )}
         />
         <Route
           path={ClientRoutes.People}
           component={wrapperHeader(
             WrappedPersonSearchComponent,
-            'People Search'
+            'P E R S O N Search'
           )}
         />
         <Route
           path={ClientRoutes.RowVersionChecks + '/create'}
           component={wrapperHeader(
             WrappedRowVersionCheckCreateComponent,
-            'RowVersionChecks Create'
+            'Row Version Check Create'
           )}
         />
         <Route
           path={ClientRoutes.RowVersionChecks + '/edit/:id'}
           component={wrapperHeader(
             WrappedRowVersionCheckEditComponent,
-            'RowVersionChecks Edit'
+            'Row Version Check Edit'
           )}
         />
         <Route
           path={ClientRoutes.RowVersionChecks + '/:id'}
           component={wrapperHeader(
             WrappedRowVersionCheckDetailComponent,
-            'RowVersionChecks Detail'
+            'Row Version Check Detail'
           )}
         />
         <Route
           path={ClientRoutes.RowVersionChecks}
           component={wrapperHeader(
             WrappedRowVersionCheckSearchComponent,
-            'RowVersionChecks Search'
+            'Row Version Check Search'
           )}
         />
         <Route
           path={ClientRoutes.SelfReferences + '/create'}
           component={wrapperHeader(
             WrappedSelfReferenceCreateComponent,
-            'SelfReferences Create'
+            'Self Reference Create'
           )}
         />
         <Route
           path={ClientRoutes.SelfReferences + '/edit/:id'}
           component={wrapperHeader(
             WrappedSelfReferenceEditComponent,
-            'SelfReferences Edit'
+            'Self Reference Edit'
           )}
         />
         <Route
           path={ClientRoutes.SelfReferences + '/:id'}
           component={wrapperHeader(
             WrappedSelfReferenceDetailComponent,
-            'SelfReferences Detail'
+            'Self Reference Detail'
           )}
         />
         <Route
           path={ClientRoutes.SelfReferences}
           component={wrapperHeader(
             WrappedSelfReferenceSearchComponent,
-            'SelfReferences Search'
+            'Self Reference Search'
           )}
         />
         <Route
@@ -274,112 +277,112 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.TestAllFieldTypes + '/create'}
           component={wrapperHeader(
             WrappedTestAllFieldTypeCreateComponent,
-            'TestAllFieldTypes Create'
+            'Test All Field Types Create'
           )}
         />
         <Route
           path={ClientRoutes.TestAllFieldTypes + '/edit/:id'}
           component={wrapperHeader(
             WrappedTestAllFieldTypeEditComponent,
-            'TestAllFieldTypes Edit'
+            'Test All Field Types Edit'
           )}
         />
         <Route
           path={ClientRoutes.TestAllFieldTypes + '/:id'}
           component={wrapperHeader(
             WrappedTestAllFieldTypeDetailComponent,
-            'TestAllFieldTypes Detail'
+            'Test All Field Types Detail'
           )}
         />
         <Route
           path={ClientRoutes.TestAllFieldTypes}
           component={wrapperHeader(
             WrappedTestAllFieldTypeSearchComponent,
-            'TestAllFieldTypes Search'
+            'Test All Field Types Search'
           )}
         />
         <Route
           path={ClientRoutes.TestAllFieldTypesNullables + '/create'}
           component={wrapperHeader(
             WrappedTestAllFieldTypesNullableCreateComponent,
-            'TestAllFieldTypesNullables Create'
+            'Test All Field Types Nullable Create'
           )}
         />
         <Route
           path={ClientRoutes.TestAllFieldTypesNullables + '/edit/:id'}
           component={wrapperHeader(
             WrappedTestAllFieldTypesNullableEditComponent,
-            'TestAllFieldTypesNullables Edit'
+            'Test All Field Types Nullable Edit'
           )}
         />
         <Route
           path={ClientRoutes.TestAllFieldTypesNullables + '/:id'}
           component={wrapperHeader(
             WrappedTestAllFieldTypesNullableDetailComponent,
-            'TestAllFieldTypesNullables Detail'
+            'Test All Field Types Nullable Detail'
           )}
         />
         <Route
           path={ClientRoutes.TestAllFieldTypesNullables}
           component={wrapperHeader(
             WrappedTestAllFieldTypesNullableSearchComponent,
-            'TestAllFieldTypesNullables Search'
+            'Test All Field Types Nullable Search'
           )}
         />
         <Route
           path={ClientRoutes.TimestampChecks + '/create'}
           component={wrapperHeader(
             WrappedTimestampCheckCreateComponent,
-            'TimestampChecks Create'
+            'Timestamp Check Create'
           )}
         />
         <Route
           path={ClientRoutes.TimestampChecks + '/edit/:id'}
           component={wrapperHeader(
             WrappedTimestampCheckEditComponent,
-            'TimestampChecks Edit'
+            'Timestamp Check Edit'
           )}
         />
         <Route
           path={ClientRoutes.TimestampChecks + '/:id'}
           component={wrapperHeader(
             WrappedTimestampCheckDetailComponent,
-            'TimestampChecks Detail'
+            'Timestamp Check Detail'
           )}
         />
         <Route
           path={ClientRoutes.TimestampChecks}
           component={wrapperHeader(
             WrappedTimestampCheckSearchComponent,
-            'TimestampChecks Search'
+            'Timestamp Check Search'
           )}
         />
         <Route
           path={ClientRoutes.VPersons + '/create'}
           component={wrapperHeader(
             WrappedVPersonCreateComponent,
-            'VPersons Create'
+            'V Person Create'
           )}
         />
         <Route
           path={ClientRoutes.VPersons + '/edit/:id'}
           component={wrapperHeader(
             WrappedVPersonEditComponent,
-            'VPersons Edit'
+            'V Person Edit'
           )}
         />
         <Route
           path={ClientRoutes.VPersons + '/:id'}
           component={wrapperHeader(
             WrappedVPersonDetailComponent,
-            'VPersons Detail'
+            'V Person Detail'
           )}
         />
         <Route
           path={ClientRoutes.VPersons}
           component={wrapperHeader(
             WrappedVPersonSearchComponent,
-            'VPersons Search'
+            'V Person Search'
           )}
         />
       </Switch>
@@ -389,5 +392,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>b176b14ad3d1ddc2a6fac662a761e0bd</Hash>
+    <Hash>3f2759346f9766b37166bbead010d066</Hash>
 </Codenesium>*/

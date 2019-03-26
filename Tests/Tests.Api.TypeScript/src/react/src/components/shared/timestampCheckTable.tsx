@@ -115,13 +115,6 @@ export class TimestampCheckTableComponent extends React.Component<
                 Header: 'TimestampChecks',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -180,5 +173,5 @@ export class TimestampCheckTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7b6aac0a63bddc3e12849a3840836834</Hash>
+    <Hash>667721c12344e18a19d51b41bc0d721c</Hash>
 </Codenesium>*/

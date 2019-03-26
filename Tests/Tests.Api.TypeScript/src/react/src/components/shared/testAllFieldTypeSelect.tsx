@@ -97,7 +97,7 @@ export class TestAllFieldTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Test All Field Types</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -107,7 +107,7 @@ export class TestAllFieldTypeSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: TestAllFieldTypeViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +125,5 @@ export class TestAllFieldTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>37772823ffce3e76c7d1cb58b8ddaed3</Hash>
+    <Hash>975f4dccd767913604528d1333c8e637</Hash>
 </Codenesium>*/

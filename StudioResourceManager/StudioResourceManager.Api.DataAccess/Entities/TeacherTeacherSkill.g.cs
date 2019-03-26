@@ -14,23 +14,43 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int teacherId,
 			int teacherSkillId)
 		{
+			this.Id = id;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
 		}
 
 		[Key]
+		[Column("id")]
+		public virtual int Id { get; private set; }
+
 		[Column("teacherId")]
 		public virtual int TeacherId { get; private set; }
 
-		[Key]
 		[Column("teacherSkillId")]
 		public virtual int TeacherSkillId { get; private set; }
+
+		[ForeignKey("TeacherId")]
+		public virtual Teacher TeacherIdNavigation { get; private set; }
+
+		public void SetTeacherIdNavigation(Teacher item)
+		{
+			this.TeacherIdNavigation = item;
+		}
+
+		[ForeignKey("TeacherSkillId")]
+		public virtual TeacherSkill TeacherSkillIdNavigation { get; private set; }
+
+		public void SetTeacherSkillIdNavigation(TeacherSkill item)
+		{
+			this.TeacherSkillIdNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8deb25509eb1f0fd4c84198abbe3e7de</Hash>
+    <Hash>285c9b124e86853c1a41f782d6080fc3</Hash>
 </Codenesium>*/

@@ -97,7 +97,7 @@ export class IncludedColumnTestSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Included Column Test</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -107,7 +107,7 @@ export class IncludedColumnTestSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: IncludedColumnTestViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +125,5 @@ export class IncludedColumnTestSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>515d77a3213563c96a76c4ea40901f26</Hash>
+    <Hash>aead69b155355e235e61ccb54bd5dc39</Hash>
 </Codenesium>*/

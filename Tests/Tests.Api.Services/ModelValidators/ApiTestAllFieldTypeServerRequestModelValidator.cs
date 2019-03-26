@@ -25,9 +25,6 @@ namespace TestsNS.Api.Services
 			this.FieldDateTimeOffsetRules();
 			this.FieldDecimalRules();
 			this.FieldFloatRules();
-			this.FieldGeographyRules();
-			this.FieldGeometryRules();
-			this.FieldHierarchyIdRules();
 			this.FieldImageRules();
 			this.FieldMoneyRules();
 			this.FieldNCharRules();
@@ -45,7 +42,6 @@ namespace TestsNS.Api.Services
 			this.FieldUniqueIdentifierRules();
 			this.FieldVarBinaryRules();
 			this.FieldVarcharRules();
-			this.FieldVariantRules();
 			this.FieldXMLRules();
 			return await this.ValidateAsync(model);
 		}
@@ -62,9 +58,6 @@ namespace TestsNS.Api.Services
 			this.FieldDateTimeOffsetRules();
 			this.FieldDecimalRules();
 			this.FieldFloatRules();
-			this.FieldGeographyRules();
-			this.FieldGeometryRules();
-			this.FieldHierarchyIdRules();
 			this.FieldImageRules();
 			this.FieldMoneyRules();
 			this.FieldNCharRules();
@@ -82,7 +75,6 @@ namespace TestsNS.Api.Services
 			this.FieldUniqueIdentifierRules();
 			this.FieldVarBinaryRules();
 			this.FieldVarcharRules();
-			this.FieldVariantRules();
 			this.FieldXMLRules();
 			return await this.ValidateAsync(model, id);
 		}
@@ -95,5 +87,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>50b2ed1a67e19a65956a8b19f0773120</Hash>
+    <Hash>a94308b68bc023c756f8deb7e448677f</Hash>
 </Codenesium>*/

@@ -35,7 +35,7 @@ export class ClientRoutes {
   static readonly Badges = '/badges';
   static readonly Comments = '/comments';
   static readonly LinkTypes = '/linktypes';
-  static readonly PostHistory = '/posthistory';
+  static readonly PostHistories = '/posthistories';
   static readonly PostHistoryTypes = '/posthistorytypes';
   static readonly PostLinks = '/postlinks';
   static readonly Posts = '/posts';
@@ -50,7 +50,7 @@ export class ApiRoutes {
   static readonly Badges = 'badges';
   static readonly Comments = 'comments';
   static readonly LinkTypes = 'linktypes';
-  static readonly PostHistory = 'posthistory';
+  static readonly PostHistories = 'posthistories';
   static readonly PostHistoryTypes = 'posthistorytypes';
   static readonly PostLinks = 'postlinks';
   static readonly Posts = 'posts';
@@ -63,5 +63,5 @@ export class ApiRoutes {
 
 
 /*<Codenesium>
-    <Hash>efc7dc8ca504ff24bd2c71bff895ba96</Hash>
+    <Hash>36450b2c01f44da14e8f3aae344b4228</Hash>
 </Codenesium>*/

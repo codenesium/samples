@@ -140,26 +140,26 @@ class TestAllFieldTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="fieldBigInt">Bigint</label>
+            <label htmlFor="fieldBigInt">Field Big Int</label>
             <br />
             {getFieldDecorator('fieldBigInt', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Bigint'} />)}
+            })(<InputNumber placeholder={'Field Big Int'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldBinary">Binary</label>
+            <label htmlFor="fieldBinary">Field Binary</label>
             <br />
             {getFieldDecorator('fieldBinary', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
-            })(<Input placeholder={'Binary'} />)}
+            })(<Input placeholder={'Field Binary'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldBit">Bit</label>
+            <label htmlFor="fieldBit">Field Bit</label>
             <br />
             {getFieldDecorator('fieldBit', {
               rules: [],
@@ -168,120 +168,103 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldChar">Char</label>
+            <label htmlFor="fieldChar">Field Char</label>
             <br />
             {getFieldDecorator('fieldChar', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
-            })(<Input placeholder={'Char'} />)}
+            })(<Input placeholder={'Field Char'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDate">Date</label>
+            <label htmlFor="fieldDate">Field Date</label>
             <br />
             {getFieldDecorator('fieldDate', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Date'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Field Date'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTime">DateTime</label>
+            <label htmlFor="fieldDateTime">Field Date Time</label>
             <br />
             {getFieldDecorator('fieldDateTime', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'DateTime'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Field Date Time'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTime2">DateTime2</label>
+            <label htmlFor="fieldDateTime2">Field Date Time2</label>
             <br />
             {getFieldDecorator('fieldDateTime2', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'DateTime2'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Field Date Time2'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTimeOffset">DateTimeOffset</label>
+            <label htmlFor="fieldDateTimeOffset">Field Date Time Offset</label>
             <br />
             {getFieldDecorator('fieldDateTimeOffset', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'DateTimeOffset'} />)}
+            })(<Input placeholder={'Field Date Time Offset'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDecimal">Decimal</label>
+            <label htmlFor="fieldDecimal">Field Decimal</label>
             <br />
             {getFieldDecorator('fieldDecimal', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Decimal'} />)}
+            })(<InputNumber placeholder={'Field Decimal'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldFloat">Float</label>
+            <label htmlFor="fieldFloat">Field Float</label>
             <br />
             {getFieldDecorator('fieldFloat', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Float'} />)}
+            })(<InputNumber placeholder={'Field Float'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldGeography">Geography</label>
-            <br />
-            {getFieldDecorator('fieldGeography', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Geography'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="fieldGeometry">Geometry</label>
-            <br />
-            {getFieldDecorator('fieldGeometry', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Geometry'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="fieldHierarchyId">HierarchyId</label>
-            <br />
-            {getFieldDecorator('fieldHierarchyId', {
-              rules: [
-                { required: true, message: 'Required' },
-                { max: 892, message: 'Exceeds max length of 892' },
-              ],
-            })(<Input placeholder={'HierarchyId'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="fieldImage">Image</label>
+            <label htmlFor="fieldImage">Field Image</label>
             <br />
             {getFieldDecorator('fieldImage', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Image'} />)}
+            })(<Input placeholder={'Field Image'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldMoney">Money</label>
+            <label htmlFor="fieldMoney">Field Money</label>
             <br />
             {getFieldDecorator('fieldMoney', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Money'} />)}
+            })(<InputNumber placeholder={'Field Money'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNChar">NChar</label>
+            <label htmlFor="fieldNChar">Field N Char</label>
             <br />
             {getFieldDecorator('fieldNChar', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
-            })(<Input placeholder={'NChar'} />)}
+            })(<Input placeholder={'Field N Char'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNText">NText</label>
+            <label htmlFor="fieldNText">Field N Text</label>
             <br />
             {getFieldDecorator('fieldNText', {
               rules: [
@@ -291,72 +274,75 @@ class TestAllFieldTypeCreateComponent extends React.Component<
                   message: 'Exceeds max length of 1073741823',
                 },
               ],
-            })(<Input.TextArea placeholder={'NText'} />)}
+            })(<Input.TextArea placeholder={'Field N Text'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNumeric">Numeric</label>
+            <label htmlFor="fieldNumeric">Field Numeric</label>
             <br />
             {getFieldDecorator('fieldNumeric', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Numeric'} />)}
+            })(<InputNumber placeholder={'Field Numeric'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNVarchar">NVarchar</label>
+            <label htmlFor="fieldNVarchar">Field N Varchar</label>
             <br />
             {getFieldDecorator('fieldNVarchar', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
-            })(<Input placeholder={'NVarchar'} />)}
+            })(<Input placeholder={'Field N Varchar'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldReal">Real</label>
+            <label htmlFor="fieldReal">Field Real</label>
             <br />
             {getFieldDecorator('fieldReal', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'Real'} />)}
+            })(<InputNumber placeholder={'Field Real'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallDateTime">SmallDateTime</label>
+            <label htmlFor="fieldSmallDateTime">Field Small Date Time</label>
             <br />
             {getFieldDecorator('fieldSmallDateTime', {
               rules: [{ required: true, message: 'Required' }],
             })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'SmallDateTime'} />
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Field Small Date Time'}
+              />
             )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallInt">SmallInt</label>
+            <label htmlFor="fieldSmallInt">Field Small Int</label>
             <br />
             {getFieldDecorator('fieldSmallInt', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'SmallInt'} />)}
+            })(<InputNumber placeholder={'Field Small Int'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallMoney">SmallMoney</label>
+            <label htmlFor="fieldSmallMoney">Field Small Money</label>
             <br />
             {getFieldDecorator('fieldSmallMoney', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'SmallMoney'} />)}
+            })(<InputNumber placeholder={'Field Small Money'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldText">Text</label>
+            <label htmlFor="fieldText">Field Text</label>
             <br />
             {getFieldDecorator('fieldText', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input.TextArea placeholder={'Text'} />)}
+            })(<Input.TextArea placeholder={'Field Text'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTime">Time</label>
+            <label htmlFor="fieldTime">Field Time</label>
             <br />
             {getFieldDecorator('fieldTime', {
               rules: [{ required: true, message: 'Required' }],
@@ -364,65 +350,59 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTimestamp">Timestamp</label>
+            <label htmlFor="fieldTimestamp">Field Timestamp</label>
             <br />
             {getFieldDecorator('fieldTimestamp', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Timestamp'} />)}
+            })(<Input placeholder={'Field Timestamp'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTinyInt">TinyInt</label>
+            <label htmlFor="fieldTinyInt">Field Tiny Int</label>
             <br />
             {getFieldDecorator('fieldTinyInt', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'TinyInt'} />)}
+            })(<InputNumber placeholder={'Field Tiny Int'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldUniqueIdentifier">UniqueIdentifier</label>
+            <label htmlFor="fieldUniqueIdentifier">
+              Field Unique Identifier
+            </label>
             <br />
             {getFieldDecorator('fieldUniqueIdentifier', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'UniqueIdentifier'} />)}
+            })(<Input placeholder={'Field Unique Identifier'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldVarBinary">VarBinary</label>
+            <label htmlFor="fieldVarBinary">Field Var Binary</label>
             <br />
             {getFieldDecorator('fieldVarBinary', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
-            })(<Input placeholder={'VarBinary'} />)}
+            })(<Input placeholder={'Field Var Binary'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldVarchar">Varchar</label>
+            <label htmlFor="fieldVarchar">Field Varchar</label>
             <br />
             {getFieldDecorator('fieldVarchar', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 50, message: 'Exceeds max length of 50' },
               ],
-            })(<Input placeholder={'Varchar'} />)}
+            })(<Input placeholder={'Field Varchar'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldVariant">Variant</label>
-            <br />
-            {getFieldDecorator('fieldVariant', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Variant'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="fieldXML">XML</label>
+            <label htmlFor="fieldXML">Field X M L</label>
             <br />
             {getFieldDecorator('fieldXML', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input.TextArea placeholder={'XML'} />)}
+            })(<Input.TextArea placeholder={'Field X M L'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -449,5 +429,5 @@ export const WrappedTestAllFieldTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>559c205f7674fd317fbb7ea752e973c4</Hash>
+    <Hash>54a5b0176774af50c7b03c8ed4efc4c3</Hash>
 </Codenesium>*/

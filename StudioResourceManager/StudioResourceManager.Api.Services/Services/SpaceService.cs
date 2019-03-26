@@ -12,17 +12,19 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			ISpaceRepository spaceRepository,
 			IApiSpaceServerRequestModelValidator spaceModelValidator,
-			IDALSpaceMapper dalSpaceMapper)
+			IDALSpaceMapper dalSpaceMapper,
+			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper)
 			: base(logger,
 			       mediator,
 			       spaceRepository,
 			       spaceModelValidator,
-			       dalSpaceMapper)
+			       dalSpaceMapper,
+			       dalSpaceSpaceFeatureMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf83f5cc23a8b26e6585bacf3b2d42f4</Hash>
+    <Hash>dc2cc1ef301b25d0fc5d046fc039fd34</Hash>
 </Codenesium>*/

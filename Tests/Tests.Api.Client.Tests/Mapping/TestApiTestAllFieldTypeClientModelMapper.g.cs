@@ -15,7 +15,7 @@ namespace TestsNS.Api.Client.Tests
 		{
 			var mapper = new ApiTestAllFieldTypeModelMapper();
 			var model = new ApiTestAllFieldTypeClientRequestModel();
-			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", "A");
+			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
 			ApiTestAllFieldTypeClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.FieldBigInt.Should().Be(1);
@@ -28,9 +28,6 @@ namespace TestsNS.Api.Client.Tests
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
-			response.FieldGeography.Should().Be(1);
-			response.FieldGeometry.Should().Be(1);
-			response.FieldHierarchyId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
 			response.FieldNChar.Should().Be("A");
@@ -48,7 +45,6 @@ namespace TestsNS.Api.Client.Tests
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldVarchar.Should().Be("A");
-			response.FieldVariant.Should().Be("A");
 			response.FieldXML.Should().Be("A");
 		}
 
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Client.Tests
 		{
 			var mapper = new ApiTestAllFieldTypeModelMapper();
 			var model = new ApiTestAllFieldTypeClientResponseModel();
-			model.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", "A");
+			model.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
 			ApiTestAllFieldTypeClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.FieldBigInt.Should().Be(1);
@@ -70,9 +66,6 @@ namespace TestsNS.Api.Client.Tests
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
-			response.FieldGeography.Should().Be(1);
-			response.FieldGeometry.Should().Be(1);
-			response.FieldHierarchyId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
 			response.FieldNChar.Should().Be("A");
@@ -90,12 +83,11 @@ namespace TestsNS.Api.Client.Tests
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.FieldVarBinary.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldVarchar.Should().Be("A");
-			response.FieldVariant.Should().Be("A");
 			response.FieldXML.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e20e58084de2363d939bccdd17fca207</Hash>
+    <Hash>cc722f34120bf137dc51a5a20e6416c4</Hash>
 </Codenesium>*/

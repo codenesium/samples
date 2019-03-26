@@ -18,9 +18,9 @@ import {
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
-import { PostHistoryTypesSelectComponent } from '../shared/postHistoryTypesSelect';
-import { PostsSelectComponent } from '../shared/postsSelect';
-import { UsersSelectComponent } from '../shared/usersSelect';
+import { PostHistoryTypeSelectComponent } from '../shared/postHistoryTypeSelect';
+import { PostSelectComponent } from '../shared/postSelect';
+import { UserSelectComponent } from '../shared/userSelect';
 interface PostHistoryEditComponentProps {
   form: WrappedFormUtils;
   history: any;
@@ -57,7 +57,7 @@ class PostHistoryEditComponent extends React.Component<
     axios
       .get<Api.PostHistoryClientResponseModel>(
         Constants.ApiEndpoint +
-          ApiRoutes.PostHistory +
+          ApiRoutes.PostHistories +
           '/' +
           this.props.match.params.id,
         {
@@ -122,7 +122,7 @@ class PostHistoryEditComponent extends React.Component<
     axios
       .put<CreateResponse<Api.PostHistoryClientRequestModel>>(
         Constants.ApiEndpoint +
-          ApiRoutes.PostHistory +
+          ApiRoutes.PostHistories +
           '/' +
           this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -220,7 +220,7 @@ class PostHistoryEditComponent extends React.Component<
             )}
           </Form.Item>
 
-          <PostHistoryTypesSelectComponent
+          <PostHistoryTypeSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.PostHistoryTypes}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="postHistoryTypeId"
@@ -228,7 +228,7 @@ class PostHistoryEditComponent extends React.Component<
             selectedValue={this.state.model!.postHistoryTypeId}
           />
 
-          <PostsSelectComponent
+          <PostSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.Posts}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="postId"
@@ -268,7 +268,7 @@ class PostHistoryEditComponent extends React.Component<
             })(<Input placeholder={'User Display Name'} />)}
           </Form.Item>
 
-          <UsersSelectComponent
+          <UserSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.Users}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="userId"
@@ -300,5 +300,5 @@ export const WrappedPostHistoryEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4bd2c149d48ec3e9ba49208c1c7af641</Hash>
+    <Hash>d5d68cca7fd37593e41eec42a92c2653</Hash>
 </Codenesium>*/

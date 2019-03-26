@@ -25,9 +25,6 @@ namespace TestsNS.Api.Services
 				model.FieldDateTimeOffset,
 				model.FieldDecimal,
 				model.FieldFloat,
-				model.FieldGeography,
-				model.FieldGeometry,
-				model.FieldHierarchyId,
 				model.FieldImage,
 				model.FieldMoney,
 				model.FieldNChar,
@@ -45,7 +42,6 @@ namespace TestsNS.Api.Services
 				model.FieldUniqueIdentifier,
 				model.FieldVarBinary,
 				model.FieldVarchar,
-				model.FieldVariant,
 				model.FieldXML);
 			return item;
 		}
@@ -66,9 +62,6 @@ namespace TestsNS.Api.Services
 			                    item.FieldDateTimeOffset,
 			                    item.FieldDecimal,
 			                    item.FieldFloat,
-			                    item.FieldGeography,
-			                    item.FieldGeometry,
-			                    item.FieldHierarchyId,
 			                    item.FieldImage,
 			                    item.FieldMoney,
 			                    item.FieldNChar,
@@ -86,7 +79,6 @@ namespace TestsNS.Api.Services
 			                    item.FieldUniqueIdentifier,
 			                    item.FieldVarBinary,
 			                    item.FieldVarchar,
-			                    item.FieldVariant,
 			                    item.FieldXML);
 
 			return model;
@@ -108,5 +100,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4fad8216dd05d7a403ea6e7c7bf1fce0</Hash>
+    <Hash>bb54ddcef2d26de095b15ba2f46ec8ae</Hash>
 </Codenesium>*/

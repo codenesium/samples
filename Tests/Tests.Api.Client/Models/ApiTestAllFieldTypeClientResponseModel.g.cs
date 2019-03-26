@@ -19,9 +19,6 @@ namespace TestsNS.Api.Client
 			DateTimeOffset fieldDateTimeOffset,
 			decimal fieldDecimal,
 			double fieldFloat,
-			double fieldGeography,
-			double fieldGeometry,
-			Guid fieldHierarchyId,
 			byte[] fieldImage,
 			decimal fieldMoney,
 			string fieldNChar,
@@ -39,7 +36,6 @@ namespace TestsNS.Api.Client
 			Guid fieldUniqueIdentifier,
 			byte[] fieldVarBinary,
 			string fieldVarchar,
-			string fieldVariant,
 			string fieldXML)
 		{
 			this.Id = id;
@@ -53,9 +49,6 @@ namespace TestsNS.Api.Client
 			this.FieldDateTimeOffset = fieldDateTimeOffset;
 			this.FieldDecimal = fieldDecimal;
 			this.FieldFloat = fieldFloat;
-			this.FieldGeography = fieldGeography;
-			this.FieldGeometry = fieldGeometry;
-			this.FieldHierarchyId = fieldHierarchyId;
 			this.FieldImage = fieldImage;
 			this.FieldMoney = fieldMoney;
 			this.FieldNChar = fieldNChar;
@@ -73,7 +66,6 @@ namespace TestsNS.Api.Client
 			this.FieldUniqueIdentifier = fieldUniqueIdentifier;
 			this.FieldVarBinary = fieldVarBinary;
 			this.FieldVarchar = fieldVarchar;
-			this.FieldVariant = fieldVariant;
 			this.FieldXML = fieldXML;
 		}
 
@@ -106,15 +98,6 @@ namespace TestsNS.Api.Client
 
 		[JsonProperty]
 		public double FieldFloat { get; private set; }
-
-		[JsonProperty]
-		public double FieldGeography { get; private set; }
-
-		[JsonProperty]
-		public double FieldGeometry { get; private set; }
-
-		[JsonProperty]
-		public Guid FieldHierarchyId { get; private set; }
 
 		[JsonProperty]
 		public byte[] FieldImage { get; private set; }
@@ -168,9 +151,6 @@ namespace TestsNS.Api.Client
 		public string FieldVarchar { get; private set; }
 
 		[JsonProperty]
-		public string FieldVariant { get; private set; }
-
-		[JsonProperty]
 		public string FieldXML { get; private set; }
 
 		[JsonProperty]
@@ -179,5 +159,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>4bf57c015a6d5e412802327884482c11</Hash>
+    <Hash>837ad3f37cc345fe9ab00bb8a02126b2</Hash>
 </Codenesium>*/

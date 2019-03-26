@@ -15,11 +15,11 @@ export default class PersonViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.personId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>7325c5df07be3c1a21fcb7f2f45df6a5</Hash>
+    <Hash>b4ff224e8b903d948b82297a62063764</Hash>
 </Codenesium>*/

@@ -52,20 +52,20 @@ export default class PostHistorySearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: PostHistoryViewModel) {
-    this.props.history.push(ClientRoutes.PostHistory + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.PostHistories + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: PostHistoryViewModel) {
-    this.props.history.push(ClientRoutes.PostHistory + '/' + row.id);
+    this.props.history.push(ClientRoutes.PostHistories + '/' + row.id);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push(ClientRoutes.PostHistory + '/create');
+    this.props.history.push(ClientRoutes.PostHistories + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.PostHistoryClientResponseModel) {
     axios
-      .delete(Constants.ApiEndpoint + ApiRoutes.PostHistory + '/' + row.id, {
+      .delete(Constants.ApiEndpoint + ApiRoutes.PostHistories + '/' + row.id, {
         headers: GlobalUtilities.defaultHeaders(),
       })
       .then(resp => {
@@ -95,7 +95,7 @@ export default class PostHistorySearchComponent extends React.Component<
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
     let searchEndpoint =
-      Constants.ApiEndpoint + ApiRoutes.PostHistory + '?limit=100';
+      Constants.ApiEndpoint + ApiRoutes.PostHistories + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -365,5 +365,5 @@ export const WrappedPostHistorySearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3c1d109ef4f1cebf2c88746294e52f9c</Hash>
+    <Hash>1d9cb5e69ee363ced5e82270f6e48a03</Hash>
 </Codenesium>*/

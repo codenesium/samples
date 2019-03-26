@@ -94,7 +94,7 @@ export class SelfReferenceSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Self Reference</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class SelfReferenceSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: SelfReferenceViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class SelfReferenceSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>25dfa56807f6e8a96ee52db6f3b751ab</Hash>
+    <Hash>53ad4a3ff2db0debc51a3bfc60fb4433</Hash>
 </Codenesium>*/

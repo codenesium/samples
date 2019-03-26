@@ -13,45 +13,45 @@ namespace StackOverflowNS.Api.Client
 
 		public void Merge(ApiResponse from)
 		{
-			from.Badges.ForEach(x => this.AddBadges(x));
-			from.Comments.ForEach(x => this.AddComments(x));
-			from.LinkTypes.ForEach(x => this.AddLinkTypes(x));
-			from.PostHistory.ForEach(x => this.AddPostHistory(x));
-			from.PostHistoryTypes.ForEach(x => this.AddPostHistoryTypes(x));
-			from.PostLinks.ForEach(x => this.AddPostLinks(x));
-			from.Posts.ForEach(x => this.AddPosts(x));
-			from.PostTypes.ForEach(x => this.AddPostTypes(x));
-			from.Tags.ForEach(x => this.AddTags(x));
-			from.Users.ForEach(x => this.AddUsers(x));
-			from.Votes.ForEach(x => this.AddVotes(x));
-			from.VoteTypes.ForEach(x => this.AddVoteTypes(x));
+			from.Badges.ForEach(x => this.AddBadge(x));
+			from.Comments.ForEach(x => this.AddComment(x));
+			from.LinkTypes.ForEach(x => this.AddLinkType(x));
+			from.PostHistories.ForEach(x => this.AddPostHistory(x));
+			from.PostHistoryTypes.ForEach(x => this.AddPostHistoryType(x));
+			from.PostLinks.ForEach(x => this.AddPostLink(x));
+			from.Posts.ForEach(x => this.AddPost(x));
+			from.PostTypes.ForEach(x => this.AddPostType(x));
+			from.Tags.ForEach(x => this.AddTag(x));
+			from.Users.ForEach(x => this.AddUser(x));
+			from.Votes.ForEach(x => this.AddVote(x));
+			from.VoteTypes.ForEach(x => this.AddVoteType(x));
 		}
 
-		public List<ApiBadgesClientResponseModel> Badges { get; private set; } = new List<ApiBadgesClientResponseModel>();
+		public List<ApiBadgeClientResponseModel> Badges { get; private set; } = new List<ApiBadgeClientResponseModel>();
 
-		public List<ApiCommentsClientResponseModel> Comments { get; private set; } = new List<ApiCommentsClientResponseModel>();
+		public List<ApiCommentClientResponseModel> Comments { get; private set; } = new List<ApiCommentClientResponseModel>();
 
-		public List<ApiLinkTypesClientResponseModel> LinkTypes { get; private set; } = new List<ApiLinkTypesClientResponseModel>();
+		public List<ApiLinkTypeClientResponseModel> LinkTypes { get; private set; } = new List<ApiLinkTypeClientResponseModel>();
 
-		public List<ApiPostHistoryClientResponseModel> PostHistory { get; private set; } = new List<ApiPostHistoryClientResponseModel>();
+		public List<ApiPostHistoryClientResponseModel> PostHistories { get; private set; } = new List<ApiPostHistoryClientResponseModel>();
 
-		public List<ApiPostHistoryTypesClientResponseModel> PostHistoryTypes { get; private set; } = new List<ApiPostHistoryTypesClientResponseModel>();
+		public List<ApiPostHistoryTypeClientResponseModel> PostHistoryTypes { get; private set; } = new List<ApiPostHistoryTypeClientResponseModel>();
 
-		public List<ApiPostLinksClientResponseModel> PostLinks { get; private set; } = new List<ApiPostLinksClientResponseModel>();
+		public List<ApiPostLinkClientResponseModel> PostLinks { get; private set; } = new List<ApiPostLinkClientResponseModel>();
 
-		public List<ApiPostsClientResponseModel> Posts { get; private set; } = new List<ApiPostsClientResponseModel>();
+		public List<ApiPostClientResponseModel> Posts { get; private set; } = new List<ApiPostClientResponseModel>();
 
-		public List<ApiPostTypesClientResponseModel> PostTypes { get; private set; } = new List<ApiPostTypesClientResponseModel>();
+		public List<ApiPostTypeClientResponseModel> PostTypes { get; private set; } = new List<ApiPostTypeClientResponseModel>();
 
-		public List<ApiTagsClientResponseModel> Tags { get; private set; } = new List<ApiTagsClientResponseModel>();
+		public List<ApiTagClientResponseModel> Tags { get; private set; } = new List<ApiTagClientResponseModel>();
 
-		public List<ApiUsersClientResponseModel> Users { get; private set; } = new List<ApiUsersClientResponseModel>();
+		public List<ApiUserClientResponseModel> Users { get; private set; } = new List<ApiUserClientResponseModel>();
 
-		public List<ApiVotesClientResponseModel> Votes { get; private set; } = new List<ApiVotesClientResponseModel>();
+		public List<ApiVoteClientResponseModel> Votes { get; private set; } = new List<ApiVoteClientResponseModel>();
 
-		public List<ApiVoteTypesClientResponseModel> VoteTypes { get; private set; } = new List<ApiVoteTypesClientResponseModel>();
+		public List<ApiVoteTypeClientResponseModel> VoteTypes { get; private set; } = new List<ApiVoteTypeClientResponseModel>();
 
-		public void AddBadges(ApiBadgesClientResponseModel item)
+		public void AddBadge(ApiBadgeClientResponseModel item)
 		{
 			if (!this.Badges.Any(x => x.Id == item.Id))
 			{
@@ -59,7 +59,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddComments(ApiCommentsClientResponseModel item)
+		public void AddComment(ApiCommentClientResponseModel item)
 		{
 			if (!this.Comments.Any(x => x.Id == item.Id))
 			{
@@ -67,7 +67,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddLinkTypes(ApiLinkTypesClientResponseModel item)
+		public void AddLinkType(ApiLinkTypeClientResponseModel item)
 		{
 			if (!this.LinkTypes.Any(x => x.Id == item.Id))
 			{
@@ -77,13 +77,13 @@ namespace StackOverflowNS.Api.Client
 
 		public void AddPostHistory(ApiPostHistoryClientResponseModel item)
 		{
-			if (!this.PostHistory.Any(x => x.Id == item.Id))
+			if (!this.PostHistories.Any(x => x.Id == item.Id))
 			{
-				this.PostHistory.Add(item);
+				this.PostHistories.Add(item);
 			}
 		}
 
-		public void AddPostHistoryTypes(ApiPostHistoryTypesClientResponseModel item)
+		public void AddPostHistoryType(ApiPostHistoryTypeClientResponseModel item)
 		{
 			if (!this.PostHistoryTypes.Any(x => x.Id == item.Id))
 			{
@@ -91,7 +91,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddPostLinks(ApiPostLinksClientResponseModel item)
+		public void AddPostLink(ApiPostLinkClientResponseModel item)
 		{
 			if (!this.PostLinks.Any(x => x.Id == item.Id))
 			{
@@ -99,7 +99,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddPosts(ApiPostsClientResponseModel item)
+		public void AddPost(ApiPostClientResponseModel item)
 		{
 			if (!this.Posts.Any(x => x.Id == item.Id))
 			{
@@ -107,7 +107,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddPostTypes(ApiPostTypesClientResponseModel item)
+		public void AddPostType(ApiPostTypeClientResponseModel item)
 		{
 			if (!this.PostTypes.Any(x => x.Id == item.Id))
 			{
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddTags(ApiTagsClientResponseModel item)
+		public void AddTag(ApiTagClientResponseModel item)
 		{
 			if (!this.Tags.Any(x => x.Id == item.Id))
 			{
@@ -123,7 +123,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddUsers(ApiUsersClientResponseModel item)
+		public void AddUser(ApiUserClientResponseModel item)
 		{
 			if (!this.Users.Any(x => x.Id == item.Id))
 			{
@@ -131,7 +131,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddVotes(ApiVotesClientResponseModel item)
+		public void AddVote(ApiVoteClientResponseModel item)
 		{
 			if (!this.Votes.Any(x => x.Id == item.Id))
 			{
@@ -139,7 +139,7 @@ namespace StackOverflowNS.Api.Client
 			}
 		}
 
-		public void AddVoteTypes(ApiVoteTypesClientResponseModel item)
+		public void AddVoteType(ApiVoteTypeClientResponseModel item)
 		{
 			if (!this.VoteTypes.Any(x => x.Id == item.Id))
 			{
@@ -150,5 +150,5 @@ namespace StackOverflowNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d9c486356d32dc94058d7e46c3cdf35e</Hash>
+    <Hash>dafbbf1449f898903811c904a8182dad</Hash>
 </Codenesium>*/

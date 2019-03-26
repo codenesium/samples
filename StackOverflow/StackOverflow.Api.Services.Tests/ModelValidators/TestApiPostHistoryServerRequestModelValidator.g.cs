@@ -28,7 +28,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostHistoryTypeId_Create_Valid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostHistoryTypesByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryTypes>(new PostHistoryTypes()));
+			postHistoryRepository.Setup(x => x.PostHistoryTypeByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryType>(new PostHistoryType()));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPostHistoryServerRequestModel());
@@ -40,7 +40,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostHistoryTypeId_Create_Invalid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostHistoryTypesByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryTypes>(null));
+			postHistoryRepository.Setup(x => x.PostHistoryTypeByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryType>(null));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 
@@ -53,7 +53,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostHistoryTypeId_Update_Valid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostHistoryTypesByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryTypes>(new PostHistoryTypes()));
+			postHistoryRepository.Setup(x => x.PostHistoryTypeByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryType>(new PostHistoryType()));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryServerRequestModel());
@@ -65,7 +65,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostHistoryTypeId_Update_Invalid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostHistoryTypesByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryTypes>(null));
+			postHistoryRepository.Setup(x => x.PostHistoryTypeByPostHistoryTypeId(It.IsAny<int>())).Returns(Task.FromResult<PostHistoryType>(null));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 
@@ -78,7 +78,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostId_Create_Valid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostsByPostId(It.IsAny<int>())).Returns(Task.FromResult<Posts>(new Posts()));
+			postHistoryRepository.Setup(x => x.PostByPostId(It.IsAny<int>())).Returns(Task.FromResult<Post>(new Post()));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPostHistoryServerRequestModel());
@@ -90,7 +90,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostId_Create_Invalid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostsByPostId(It.IsAny<int>())).Returns(Task.FromResult<Posts>(null));
+			postHistoryRepository.Setup(x => x.PostByPostId(It.IsAny<int>())).Returns(Task.FromResult<Post>(null));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 
@@ -103,7 +103,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostId_Update_Valid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostsByPostId(It.IsAny<int>())).Returns(Task.FromResult<Posts>(new Posts()));
+			postHistoryRepository.Setup(x => x.PostByPostId(It.IsAny<int>())).Returns(Task.FromResult<Post>(new Post()));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryServerRequestModel());
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void PostId_Update_Invalid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.PostsByPostId(It.IsAny<int>())).Returns(Task.FromResult<Posts>(null));
+			postHistoryRepository.Setup(x => x.PostByPostId(It.IsAny<int>())).Returns(Task.FromResult<Post>(null));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 
@@ -200,7 +200,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void UserId_Create_Valid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.UsersByUserId(It.IsAny<int>())).Returns(Task.FromResult<Users>(new Users()));
+			postHistoryRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPostHistoryServerRequestModel());
@@ -212,7 +212,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void UserId_Create_Invalid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.UsersByUserId(It.IsAny<int>())).Returns(Task.FromResult<Users>(null));
+			postHistoryRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 
@@ -225,7 +225,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void UserId_Update_Valid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.UsersByUserId(It.IsAny<int>())).Returns(Task.FromResult<Users>(new Users()));
+			postHistoryRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryServerRequestModel());
@@ -237,7 +237,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void UserId_Update_Invalid_Reference()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
-			postHistoryRepository.Setup(x => x.UsersByUserId(It.IsAny<int>())).Returns(Task.FromResult<Users>(null));
+			postHistoryRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiPostHistoryServerRequestModelValidator(postHistoryRepository.Object);
 
@@ -249,5 +249,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9d063b201bf2beafd6517b9d6d7c3b39</Hash>
+    <Hash>c2efa746e34876cb77075353d9e25149</Hash>
 </Codenesium>*/

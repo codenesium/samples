@@ -15,11 +15,11 @@ export default class TableViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>50bd95d929a1f749f02aaba0137efa3d</Hash>
+    <Hash>d3974bae7d04029f0cd8f3cfc722511b</Hash>
 </Codenesium>*/

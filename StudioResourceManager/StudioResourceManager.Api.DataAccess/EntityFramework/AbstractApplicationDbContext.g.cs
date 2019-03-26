@@ -141,16 +141,24 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			modelBuilder.Entity<EventStudent>()
 			.HasKey(c => new
 			{
-				c.EventId,
-				c.StudentId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<EventStudent>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<EventTeacher>()
 			.HasKey(c => new
 			{
-				c.EventId,
-				c.TeacherId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<EventTeacher>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Family>()
 			.HasKey(c => new
@@ -199,9 +207,13 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			modelBuilder.Entity<SpaceSpaceFeature>()
 			.HasKey(c => new
 			{
-				c.SpaceId,
-				c.SpaceFeatureId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<SpaceSpaceFeature>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Student>()
 			.HasKey(c => new
@@ -250,9 +262,13 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			modelBuilder.Entity<TeacherTeacherSkill>()
 			.HasKey(c => new
 			{
-				c.TeacherId,
-				c.TeacherSkillId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<TeacherTeacherSkill>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<User>()
 			.HasKey(c => new
@@ -313,5 +329,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b9fa5acfcc9b51af1b536296a1c3ca79</Hash>
+    <Hash>5aaddf32773328a13b3c269553cb9e0a</Hash>
 </Codenesium>*/

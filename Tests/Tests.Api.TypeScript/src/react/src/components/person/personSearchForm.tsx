@@ -197,17 +197,10 @@ export default class PersonSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'People',
+                Header: 'P E R S O N',
                 columns: [
                   {
-                    Header: 'PersonId',
-                    accessor: 'personId',
-                    Cell: props => {
-                      return <span>{String(props.original.personId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PersonName',
+                    Header: 'Person Name',
                     accessor: 'personName',
                     Cell: props => {
                       return <span>{String(props.original.personName)}</span>;
@@ -274,5 +267,5 @@ export const WrappedPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2071d6be96b67a01f244b8a215ba97be</Hash>
+    <Hash>f12a997759e949f66f723ecbce875e74</Hash>
 </Codenesium>*/

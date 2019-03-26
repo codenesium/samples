@@ -27,11 +27,11 @@ export default class ColumnSameAsFKTableViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>25e4693671306fd5fedbf216bc4f90af</Hash>
+    <Hash>4e9084f6ee80eea4c97c5274ad7dc614</Hash>
 </Codenesium>*/

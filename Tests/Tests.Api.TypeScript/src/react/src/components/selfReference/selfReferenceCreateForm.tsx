@@ -140,21 +140,21 @@ class SelfReferenceCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="selfReferenceId">SelfReferenceId</label>
-            <br />
-            {getFieldDecorator('selfReferenceId', {
-              rules: [],
-            })(<Input placeholder={'SelfReferenceId'} />)}
-          </Form.Item>
+          <SelfReferenceSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.SelfReferences}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="selfReferenceId"
+            required={false}
+            selectedValue={this.state.model!.selfReferenceId}
+          />
 
-          <Form.Item>
-            <label htmlFor="selfReferenceId2">SelfReferenceId2</label>
-            <br />
-            {getFieldDecorator('selfReferenceId2', {
-              rules: [],
-            })(<Input placeholder={'SelfReferenceId2'} />)}
-          </Form.Item>
+          <SelfReferenceSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.SelfReferences}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="selfReferenceId2"
+            required={false}
+            selectedValue={this.state.model!.selfReferenceId2}
+          />
 
           <Form.Item>
             <Button
@@ -180,5 +180,5 @@ export const WrappedSelfReferenceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>915705532508362008c3d06e412d8a73</Hash>
+    <Hash>35ee53e1f4926b0d1c5d0be1738de1a5</Hash>
 </Codenesium>*/

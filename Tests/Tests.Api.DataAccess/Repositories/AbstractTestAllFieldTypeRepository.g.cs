@@ -44,9 +44,6 @@ namespace TestsNS.Api.DataAccess
 				                  x.FieldDateTimeOffset == query.ToDateTimeOffset() ||
 				                  x.FieldDecimal.ToDecimal() == query.ToDecimal() ||
 				                  x.FieldFloat == query.ToDouble() ||
-				                  x.FieldGeography == query.ToDouble() ||
-				                  x.FieldGeometry == query.ToDouble() ||
-				                  x.FieldHierarchyId == query.ToGuid() ||
 				                  x.FieldMoney.ToDecimal() == query.ToDecimal() ||
 				                  x.FieldNChar.StartsWith(query) ||
 				                  x.FieldNText.StartsWith(query) ||
@@ -61,7 +58,6 @@ namespace TestsNS.Api.DataAccess
 				                  x.FieldTinyInt == query.ToInt() ||
 				                  x.FieldUniqueIdentifier == query.ToGuid() ||
 				                  x.FieldVarchar.StartsWith(query) ||
-				                  x.FieldVariant.StartsWith(query) ||
 				                  x.FieldXML.StartsWith(query) ||
 				                  x.Id == query.ToInt(),
 				                  limit,
@@ -140,5 +136,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e2eb76a70f488fed6120cf300c1ca74</Hash>
+    <Hash>3ece1c29f2922ff7f616d143647edd7c</Hash>
 </Codenesium>*/

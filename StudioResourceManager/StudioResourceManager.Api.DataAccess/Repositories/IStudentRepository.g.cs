@@ -21,6 +21,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<Student>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
+		Task<List<EventStudent>> EventStudentsByStudentId(int studentId, int limit = int.MaxValue, int offset = 0);
+
 		Task<Family> FamilyByFamilyId(int familyId);
 
 		Task<User> UserByUserId(int userId);
@@ -28,5 +30,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>faf5ab86edad5848f58a057a663dbd78</Hash>
+    <Hash>2cee89ba886ebcb25d0b097f1902bdd7</Hash>
 </Codenesium>*/

@@ -30,6 +30,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			eventStatusItem1.SetProperties(1, "A");
 			this.Context.EventStatus.Add(eventStatusItem1);
 
+			var eventStudentItem1 = new EventStudent();
+			eventStudentItem1.SetProperties(1, 1, 1);
+			this.Context.EventStudents.Add(eventStudentItem1);
+
+			var eventTeacherItem1 = new EventTeacher();
+			eventTeacherItem1.SetProperties(1, 1);
+			this.Context.EventTeachers.Add(eventTeacherItem1);
+
 			var familyItem1 = new Family();
 			familyItem1.SetProperties(1, "A", "A", "A", "A", "A");
 			this.Context.Families.Add(familyItem1);
@@ -45,6 +53,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var spaceFeatureItem1 = new SpaceFeature();
 			spaceFeatureItem1.SetProperties(1, "A");
 			this.Context.SpaceFeatures.Add(spaceFeatureItem1);
+
+			var spaceSpaceFeatureItem1 = new SpaceSpaceFeature();
+			spaceSpaceFeatureItem1.SetProperties(1, 1, 1);
+			this.Context.SpaceSpaceFeatures.Add(spaceSpaceFeatureItem1);
 
 			var studentItem1 = new Student();
 			studentItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
@@ -62,6 +74,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			teacherSkillItem1.SetProperties(1, "A");
 			this.Context.TeacherSkills.Add(teacherSkillItem1);
 
+			var teacherTeacherSkillItem1 = new TeacherTeacherSkill();
+			teacherTeacherSkillItem1.SetProperties(1, 1, 1);
+			this.Context.TeacherTeacherSkills.Add(teacherTeacherSkillItem1);
+
 			var userItem1 = new User();
 			userItem1.SetProperties(1, "A", "A");
 			this.Context.Users.Add(userItem1);
@@ -72,5 +88,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>246bf7b45e9b92c427827c83ada8b2d5</Hash>
+    <Hash>2a727e147d630c29eae98f1f4c10861a</Hash>
 </Codenesium>*/

@@ -7,6 +7,7 @@ import SpaceFeatureViewModel from './spaceFeatureViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
+import { SpaceSpaceFeatureTableComponent } from '../shared/spaceSpaceFeatureTable';
 
 interface SpaceFeatureDetailComponentProps {
   form: WrappedFormUtils;
@@ -112,6 +113,21 @@ class SpaceFeatureDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>SpaceSpaceFeatures</h3>
+            <SpaceSpaceFeatureTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.SpaceFeatures +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.SpaceSpaceFeatures
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -126,5 +142,5 @@ export const WrappedSpaceFeatureDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>665db105f2f718847372c81602396e9c</Hash>
+    <Hash>957d53968bccfe483e818596bcd896b9</Hash>
 </Codenesium>*/

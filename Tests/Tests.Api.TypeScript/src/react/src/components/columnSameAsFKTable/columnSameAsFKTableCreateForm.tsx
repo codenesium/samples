@@ -140,21 +140,21 @@ class ColumnSameAsFKTableCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="person">Person</label>
-            <br />
-            {getFieldDecorator('person', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Person'} />)}
-          </Form.Item>
+          <PersonSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.People}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="person"
+            required={true}
+            selectedValue={this.state.model!.person}
+          />
 
-          <Form.Item>
-            <label htmlFor="personId">PersonId</label>
-            <br />
-            {getFieldDecorator('personId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'PersonId'} />)}
-          </Form.Item>
+          <PersonSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.People}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="personId"
+            required={true}
+            selectedValue={this.state.model!.personId}
+          />
 
           <Form.Item>
             <Button
@@ -180,5 +180,5 @@ export const WrappedColumnSameAsFKTableCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3af9ecdb4318834891a11552c292003e</Hash>
+    <Hash>44210ca0c338fe9a04dec2626e84eb23</Hash>
 </Codenesium>*/

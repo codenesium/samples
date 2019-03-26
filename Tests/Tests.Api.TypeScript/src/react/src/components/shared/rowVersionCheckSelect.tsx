@@ -94,7 +94,7 @@ export class RowVersionCheckSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Row Version Check</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class RowVersionCheckSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: RowVersionCheckViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class RowVersionCheckSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>44278a4af234e942653c265467e2156a</Hash>
+    <Hash>8b4a27de43466d5453d83b593bdafa98</Hash>
 </Codenesium>*/

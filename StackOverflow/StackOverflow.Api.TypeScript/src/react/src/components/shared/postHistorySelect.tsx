@@ -103,7 +103,7 @@ export class PostHistorySelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: PostHistoryViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class PostHistorySelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cc37c9be9b23fb362f91ef3bda892819</Hash>
+    <Hash>8fdda41f87129f436acb7c1f3f8d9083</Hash>
 </Codenesium>*/

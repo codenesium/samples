@@ -120,13 +120,6 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
                 Header: 'ColumnSameAsFKTables',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Person',
                     accessor: 'person',
                     Cell: props => {
@@ -149,7 +142,7 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PersonId',
+                    Header: 'Person',
                     accessor: 'personId',
                     Cell: props => {
                       return (
@@ -217,5 +210,5 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>de39813e441a13d7f836a58a4dde9a01</Hash>
+    <Hash>d65835f8c53c4f0ab99e33cb592877ec</Hash>
 </Codenesium>*/

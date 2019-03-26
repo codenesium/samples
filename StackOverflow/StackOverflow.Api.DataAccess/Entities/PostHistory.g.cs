@@ -68,25 +68,25 @@ namespace StackOverflowNS.Api.DataAccess
 		public virtual int? UserId { get; private set; }
 
 		[ForeignKey("PostHistoryTypeId")]
-		public virtual PostHistoryTypes PostHistoryTypeIdNavigation { get; private set; }
+		public virtual PostHistoryType PostHistoryTypeIdNavigation { get; private set; }
 
-		public void SetPostHistoryTypeIdNavigation(PostHistoryTypes item)
+		public void SetPostHistoryTypeIdNavigation(PostHistoryType item)
 		{
 			this.PostHistoryTypeIdNavigation = item;
 		}
 
 		[ForeignKey("PostId")]
-		public virtual Posts PostIdNavigation { get; private set; }
+		public virtual Post PostIdNavigation { get; private set; }
 
-		public void SetPostIdNavigation(Posts item)
+		public void SetPostIdNavigation(Post item)
 		{
 			this.PostIdNavigation = item;
 		}
 
 		[ForeignKey("UserId")]
-		public virtual Users UserIdNavigation { get; private set; }
+		public virtual User UserIdNavigation { get; private set; }
 
-		public void SetUserIdNavigation(Users item)
+		public void SetUserIdNavigation(User item)
 		{
 			this.UserIdNavigation = item;
 		}
@@ -94,5 +94,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a6534aeb82c0a5e2c5a169dc28b313b</Hash>
+    <Hash>ddfa02f6411c4c01cbca930e73ab4b4e</Hash>
 </Codenesium>*/

@@ -47,9 +47,9 @@ namespace StackOverflowNS.Api.Services
 		public string PostHistoryTypeIdEntity { get; private set; } = RouteConstants.PostHistoryTypes;
 
 		[JsonProperty]
-		public ApiPostHistoryTypesServerResponseModel PostHistoryTypeIdNavigation { get; private set; }
+		public ApiPostHistoryTypeServerResponseModel PostHistoryTypeIdNavigation { get; private set; }
 
-		public void SetPostHistoryTypeIdNavigation(ApiPostHistoryTypesServerResponseModel value)
+		public void SetPostHistoryTypeIdNavigation(ApiPostHistoryTypeServerResponseModel value)
 		{
 			this.PostHistoryTypeIdNavigation = value;
 		}
@@ -61,9 +61,9 @@ namespace StackOverflowNS.Api.Services
 		public string PostIdEntity { get; private set; } = RouteConstants.Posts;
 
 		[JsonProperty]
-		public ApiPostsServerResponseModel PostIdNavigation { get; private set; }
+		public ApiPostServerResponseModel PostIdNavigation { get; private set; }
 
-		public void SetPostIdNavigation(ApiPostsServerResponseModel value)
+		public void SetPostIdNavigation(ApiPostServerResponseModel value)
 		{
 			this.PostIdNavigation = value;
 		}
@@ -87,9 +87,9 @@ namespace StackOverflowNS.Api.Services
 		public string UserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
-		public ApiUsersServerResponseModel UserIdNavigation { get; private set; }
+		public ApiUserServerResponseModel UserIdNavigation { get; private set; }
 
-		public void SetUserIdNavigation(ApiUsersServerResponseModel value)
+		public void SetUserIdNavigation(ApiUserServerResponseModel value)
 		{
 			this.UserIdNavigation = value;
 		}
@@ -97,5 +97,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5a606c6eb601b7b8dd46b4a09fcbd2e</Hash>
+    <Hash>d640f62da6cf1cc708c8dc30d9839f97</Hash>
 </Codenesium>*/

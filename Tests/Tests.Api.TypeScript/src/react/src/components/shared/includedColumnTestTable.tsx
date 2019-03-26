@@ -120,13 +120,6 @@ export class IncludedColumnTestTableComponent extends React.Component<
                 Header: 'IncludedColumnTests',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -185,5 +178,5 @@ export class IncludedColumnTestTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cefc716524fc712576677c69e05c6081</Hash>
+    <Hash>31c59531d36ebb1593d1cf4254b79b98</Hash>
 </Codenesium>*/

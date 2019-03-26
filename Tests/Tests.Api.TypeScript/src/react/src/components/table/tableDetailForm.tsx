@@ -107,10 +107,6 @@ class TableDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -130,5 +126,5 @@ export const WrappedTableDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ca35f41c468ea1124d6a7c4aefeadaee</Hash>
+    <Hash>902b8e5897cd579086954d90aeb78f2d</Hash>
 </Codenesium>*/

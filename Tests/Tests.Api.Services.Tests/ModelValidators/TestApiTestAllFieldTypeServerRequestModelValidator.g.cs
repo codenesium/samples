@@ -97,30 +97,6 @@ namespace TestsNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void FieldHierarchyId_Create_length()
-		{
-			Mock<ITestAllFieldTypeRepository> testAllFieldTypeRepository = new Mock<ITestAllFieldTypeRepository>();
-			testAllFieldTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TestAllFieldType()));
-
-			var validator = new ApiTestAllFieldTypeServerRequestModelValidator(testAllFieldTypeRepository.Object);
-			await validator.ValidateCreateAsync(new ApiTestAllFieldTypeServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.FieldHierarchyId, new string('A', 893));
-		}
-
-		[Fact]
-		public async void FieldHierarchyId_Update_length()
-		{
-			Mock<ITestAllFieldTypeRepository> testAllFieldTypeRepository = new Mock<ITestAllFieldTypeRepository>();
-			testAllFieldTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TestAllFieldType()));
-
-			var validator = new ApiTestAllFieldTypeServerRequestModelValidator(testAllFieldTypeRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiTestAllFieldTypeServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.FieldHierarchyId, new string('A', 893));
-		}
-
-		[Fact]
 		public async void FieldNChar_Create_null()
 		{
 			Mock<ITestAllFieldTypeRepository> testAllFieldTypeRepository = new Mock<ITestAllFieldTypeRepository>();
@@ -363,5 +339,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>87a05cc3856afc64daed6704fbe8a9ab</Hash>
+    <Hash>3414498a56c40d1efd5b8f1048158d45</Hash>
 </Codenesium>*/

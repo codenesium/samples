@@ -200,15 +200,8 @@ export default class RowVersionCheckSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'RowVersionChecks',
+                Header: 'Row Version Check',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -217,7 +210,7 @@ export default class RowVersionCheckSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'RowVersion',
+                    Header: 'Row Version',
                     accessor: 'rowVersion',
                     Cell: props => {
                       return <span>{String(props.original.rowVersion)}</span>;
@@ -284,5 +277,5 @@ export const WrappedRowVersionCheckSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>457ea8b5749aca494ededed6619c7365</Hash>
+    <Hash>eeafcdb76ddad767bc4afe68b5e89769</Hash>
 </Codenesium>*/

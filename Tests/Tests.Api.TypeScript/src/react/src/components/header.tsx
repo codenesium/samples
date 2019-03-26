@@ -46,31 +46,31 @@ export const wrapperHeader = (
 
               <Menu.Item key="columnSameAsFKTable">
                 <Icon type="pie-chart" />
-                <span>ColumnSameAsFKTables</span>
+                <span>Column Same As F K Table</span>
                 <Link to={ClientRoutes.ColumnSameAsFKTables} />
               </Menu.Item>
 
               <Menu.Item key="includedColumnTest">
                 <Icon type="rise" />
-                <span>IncludedColumnTests</span>
+                <span>Included Column Test</span>
                 <Link to={ClientRoutes.IncludedColumnTests} />
               </Menu.Item>
 
               <Menu.Item key="person">
                 <Icon type="bars" />
-                <span>People</span>
+                <span>P E R S O N</span>
                 <Link to={ClientRoutes.People} />
               </Menu.Item>
 
               <Menu.Item key="rowVersionCheck">
                 <Icon type="cloud" />
-                <span>RowVersionChecks</span>
+                <span>Row Version Check</span>
                 <Link to={ClientRoutes.RowVersionChecks} />
               </Menu.Item>
 
               <Menu.Item key="selfReference">
                 <Icon type="code" />
-                <span>SelfReferences</span>
+                <span>Self Reference</span>
                 <Link to={ClientRoutes.SelfReferences} />
               </Menu.Item>
 
@@ -82,25 +82,25 @@ export const wrapperHeader = (
 
               <Menu.Item key="testAllFieldType">
                 <Icon type="laptop" />
-                <span>TestAllFieldTypes</span>
+                <span>Test All Field Types</span>
                 <Link to={ClientRoutes.TestAllFieldTypes} />
               </Menu.Item>
 
               <Menu.Item key="testAllFieldTypesNullable">
                 <Icon type="mobile" />
-                <span>TestAllFieldTypesNullables</span>
+                <span>Test All Field Types Nullable</span>
                 <Link to={ClientRoutes.TestAllFieldTypesNullables} />
               </Menu.Item>
 
               <Menu.Item key="timestampCheck">
                 <Icon type="paper-clip" />
-                <span>TimestampChecks</span>
+                <span>Timestamp Check</span>
                 <Link to={ClientRoutes.TimestampChecks} />
               </Menu.Item>
 
               <Menu.Item key="vPerson">
                 <Icon type="setting" />
-                <span>VPersons</span>
+                <span>V Person</span>
                 <Link to={ClientRoutes.VPersons} />
               </Menu.Item>
 
@@ -147,5 +147,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>8a1ec11fee2719bafa0edac3bf483901</Hash>
+    <Hash>1788bf712ab131c59bdece2bb60e74af</Hash>
 </Codenesium>*/

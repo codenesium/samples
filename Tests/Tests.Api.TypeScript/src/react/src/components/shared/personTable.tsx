@@ -115,14 +115,7 @@ export class PersonTableComponent extends React.Component<
                 Header: 'People',
                 columns: [
                   {
-                    Header: 'PersonId',
-                    accessor: 'personId',
-                    Cell: props => {
-                      return <span>{String(props.original.personId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'PersonName',
+                    Header: 'Person Name',
                     accessor: 'personName',
                     Cell: props => {
                       return <span>{String(props.original.personName)}</span>;
@@ -173,5 +166,5 @@ export class PersonTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>378d8381574ea7204fe9dcdc2355847c</Hash>
+    <Hash>8a54ac75ae6108b6876417f7826a8d49</Hash>
 </Codenesium>*/

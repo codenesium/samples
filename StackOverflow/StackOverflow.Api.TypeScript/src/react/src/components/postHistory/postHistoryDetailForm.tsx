@@ -36,7 +36,7 @@ class PostHistoryDetailComponent extends React.Component<
 
   handleEditClick(e: any) {
     this.props.history.push(
-      ClientRoutes.PostHistory + '/edit/' + this.state.model!.id
+      ClientRoutes.PostHistories + '/edit/' + this.state.model!.id
     );
   }
 
@@ -46,7 +46,7 @@ class PostHistoryDetailComponent extends React.Component<
     axios
       .get<Api.PostHistoryClientResponseModel>(
         Constants.ApiEndpoint +
-          ApiRoutes.PostHistory +
+          ApiRoutes.PostHistories +
           '/' +
           this.props.match.params.id,
         {
@@ -169,5 +169,5 @@ export const WrappedPostHistoryDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f73731c56ff94859d010c41b3d89eb0a</Hash>
+    <Hash>513dd5816fdf3c86a1077dd901109a07</Hash>
 </Codenesium>*/

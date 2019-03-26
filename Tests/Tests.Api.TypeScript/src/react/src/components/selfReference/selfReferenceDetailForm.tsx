@@ -106,12 +106,8 @@ class SelfReferenceDetailComponent extends React.Component<
             <i className="fas fa-edit" />
           </Button>
           <div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>SelfReferenceId</h3>
+              <h3>Self Reference</h3>
               <p>
                 {String(
                   this.state.model!.selfReferenceIdNavigation &&
@@ -120,7 +116,7 @@ class SelfReferenceDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>SelfReferenceId2</h3>
+              <h3>Self Reference Id2</h3>
               <p>
                 {String(
                   this.state.model!.selfReferenceId2Navigation &&
@@ -144,5 +140,5 @@ export const WrappedSelfReferenceDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>157b4d5f8d09b6f98b5c86d55b5a8cea</Hash>
+    <Hash>f944af693caa0f5ac62f49640d6af2da</Hash>
 </Codenesium>*/

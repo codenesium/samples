@@ -195,21 +195,21 @@ class ColumnSameAsFKTableEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="person">Person</label>
-            <br />
-            {getFieldDecorator('person', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Person'} />)}
-          </Form.Item>
+          <PersonSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.People}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="person"
+            required={true}
+            selectedValue={this.state.model!.person}
+          />
 
-          <Form.Item>
-            <label htmlFor="personId">PersonId</label>
-            <br />
-            {getFieldDecorator('personId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'PersonId'} />)}
-          </Form.Item>
+          <PersonSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.People}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="personId"
+            required={true}
+            selectedValue={this.state.model!.personId}
+          />
 
           <Form.Item>
             <Button
@@ -235,5 +235,5 @@ export const WrappedColumnSameAsFKTableEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b279d75f9847e317d8a147adab1eb7f0</Hash>
+    <Hash>013b7055f58c2671d13c34a72c4f431d</Hash>
 </Codenesium>*/

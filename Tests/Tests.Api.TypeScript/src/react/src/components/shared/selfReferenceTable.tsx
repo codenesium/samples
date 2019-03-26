@@ -115,14 +115,7 @@ export class SelfReferenceTableComponent extends React.Component<
                 Header: 'SelfReferences',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'SelfReferenceId',
+                    Header: 'Self Reference',
                     accessor: 'selfReferenceId',
                     Cell: props => {
                       return (
@@ -146,7 +139,7 @@ export class SelfReferenceTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SelfReferenceId2',
+                    Header: 'Self Reference Id2',
                     accessor: 'selfReferenceId2',
                     Cell: props => {
                       return (
@@ -214,5 +207,5 @@ export class SelfReferenceTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7fe28bc1a2a7818401041f2b1049c976</Hash>
+    <Hash>54e29cc0063b46a5f30121bf991d80f7</Hash>
 </Codenesium>*/

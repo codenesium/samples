@@ -94,7 +94,7 @@ export class PersonSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>P E R S O N</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class PersonSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: PersonViewModel) => {
                 return (
-                  <Select.Option key={x.personId} value={x.personId}>
+                  <Select.Option key={String(x.personId)} value={x.personId}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class PersonSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>40d617c4489cf746dd8a283aad5fe92f</Hash>
+    <Hash>03736ad823a3840846098231e8d795af</Hash>
 </Codenesium>*/

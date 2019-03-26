@@ -36,11 +36,11 @@ export class PostHistoryTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: PostHistoryViewModel) {
-    this.props.history.push(ClientRoutes.PostHistory + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.PostHistories + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: PostHistoryViewModel) {
-    this.props.history.push(ClientRoutes.PostHistory + '/' + row.id);
+    this.props.history.push(ClientRoutes.PostHistories + '/' + row.id);
   }
 
   componentDidMount() {
@@ -59,15 +59,15 @@ export class PostHistoryTableComponent extends React.Component<
 
         let mapper = new PostHistoryMapper();
 
-        let postHistory: Array<PostHistoryViewModel> = [];
+        let postHistories: Array<PostHistoryViewModel> = [];
 
         response.data.forEach(x => {
-          postHistory.push(mapper.mapApiResponseToViewModel(x));
+          postHistories.push(mapper.mapApiResponseToViewModel(x));
         });
 
         this.setState({
           ...this.state,
-          filteredRecords: postHistory,
+          filteredRecords: postHistories,
           loading: false,
           loaded: true,
           errorOccurred: false,
@@ -112,7 +112,7 @@ export class PostHistoryTableComponent extends React.Component<
             defaultPageSize={10}
             columns={[
               {
-                Header: 'PostHistory',
+                Header: 'PostHistories',
                 columns: [
                   {
                     Header: 'Comment',
@@ -264,5 +264,5 @@ export class PostHistoryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>45c4f97b03e49b6bfdcb4e4706e8fa82</Hash>
+    <Hash>4ac00ccc9c859c8ba55c052dec69f2b4</Hash>
 </Codenesium>*/
