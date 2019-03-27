@@ -11,6 +11,8 @@ import { WrappedResetPasswordComponent } from './components/auth/resetPasswordFo
 import { WrappedConfirmPasswordResetComponent } from './components/auth/confirmPasswordResetForm';
 import { WrappedConfirmRegistrationComponent } from './components/auth/confirmRegistrationForm';
 import { WrappedChangePasswordComponent } from './components/auth/changePasswordForm';
+import { WrappedChangeEmailComponent } from './components/auth/changeEmailForm';
+import { WrappedConfirmChangeEmailComponent } from './components/auth/confirmChangeEmailForm';
 import { WrappedColumnSameAsFKTableCreateComponent } from './components/columnSameAsFKTable/columnSameAsFKTableCreateForm';
 import { WrappedColumnSameAsFKTableDetailComponent } from './components/columnSameAsFKTable/columnSameAsFKTableDetailForm';
 import { WrappedColumnSameAsFKTableEditComponent } from './components/columnSameAsFKTable/columnSameAsFKTableEditForm';
@@ -101,6 +103,19 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           component={wrapperHeader(
             WrappedChangePasswordComponent,
             'Change Password'
+          )}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.ChangeEmail}
+          component={wrapperHeader(WrappedChangeEmailComponent, 'Change Email')}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.ConfirmChangeEmail + '/:id/:token'}
+          component={wrapperAuthHeader(
+            WrappedConfirmChangeEmailComponent,
+            'Confirm Email Change'
           )}
         />
         <Route
@@ -392,5 +407,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>3f2759346f9766b37166bbead010d066</Hash>
+    <Hash>100e0a5470561bf3311f2b31ad9f3b4d</Hash>
 </Codenesium>*/

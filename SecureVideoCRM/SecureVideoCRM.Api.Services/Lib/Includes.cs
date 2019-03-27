@@ -220,7 +220,7 @@ namespace SecureVideoCRMNS.Api.Services
 
 						string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmregistration/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
 
-						string command = "Click the link to complete registration.";
+						string command = "Click this link to complete registration";
 
 						string email = this.FormatLink(command, confirmationLink);
 
@@ -265,7 +265,7 @@ namespace SecureVideoCRMNS.Api.Services
 
 				string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmpasswordreset/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
 
-				string command = "Click the link to reset your password.";
+				string command = "Click this link to reset your password";
 
 				string email = this.FormatLink(command, confirmationLink);
 
@@ -278,6 +278,75 @@ namespace SecureVideoCRMNS.Api.Services
 				else
 				{
 					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+				}
+			}
+		}
+
+		public async Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail)
+		{
+			AuthUser user = await this.userManager.FindByEmailAsync(currentEmail);
+
+			if (user == null)
+			{
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+			}
+			else
+			{
+				if (this.userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
+				{
+					user.NewEmail = model.NewEmail;
+
+					await this.userManager.UpdateAsync(user);
+
+					string confirmationToken = await this.userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
+
+					string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmchangeemail/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
+
+					string command = "Click the link to change your email";
+
+					string email = this.FormatLink(command, confirmationLink);
+
+					await this.emailSender.SendEmailAsync(model.NewEmail, "Change Email", email);
+
+					if (this.apiSettings.DebugSendAuthEmailsToClient)
+					{
+						return ValidationResponseFactory<AuthResponse>.SuccessAuthResponseWithLink(command, confirmationLink);
+					}
+					else
+					{
+						return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+					}
+				}
+				else
+				{
+					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("Invalid email or password", AuthErrorCodes.InvalidUsernameOrPassword);
+				}
+			}
+		}
+
+		public async Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model, string currentEmail)
+		{
+			AuthUser user = await this.userManager.FindByEmailAsync(currentEmail);
+
+			if (user == null)
+			{
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+			}
+			else
+			{
+				IdentityResult result = await this.userManager.ChangeEmailAsync(user, user.NewEmail, System.Net.WebUtility.UrlDecode(model.Token));
+
+				user.NewEmail = string.Empty;
+
+				await this.userManager.UpdateAsync(user);
+
+				if (result.Succeeded)
+				{
+					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+				}
+				else
+				{
+					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(result, AuthErrorCodes.UnableToConfirmRegistration);
 				}
 			}
 		}
@@ -405,17 +474,21 @@ namespace SecureVideoCRMNS.Api.Services
 
 	public interface IAuthService
 	{
+		Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail);
+
+		Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model, string currentEmail);
+
 		Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email);
-
-		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
-
-		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
 
 		Task<AuthResponse> Login(LoginRequestModel model);
 
 		Task<AuthResponse> Register(RegisterRequestModel model);
 
+		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
+
 		Task<AuthResponse> ResetPassword(ResetPasswordRequestModel model);
+
+		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
 	}
 
 	public class LoginRequestModel
@@ -449,8 +522,20 @@ namespace SecureVideoCRMNS.Api.Services
 
 		public string NewPassword { get; set; }
 	}
+
+	public class ChangeEmailRequestModel
+	{
+		public string Password { get; set; }
+
+		public string NewEmail { get; set; }
+	}
+
+	public class ConfirmChangeEmailRequestModel
+	{
+		public string Token { get; set; }
+	}
 }
 
 /*<Codenesium>
-    <Hash>a103031fe891d95884cf308069f3f29a</Hash>
+    <Hash>bf15cb228a228036e21c9f0f95bdf330</Hash>
 </Codenesium>*/

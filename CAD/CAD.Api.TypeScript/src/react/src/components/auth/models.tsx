@@ -62,3 +62,35 @@ export class ChangePasswordClientRequestModel {
         this.newPassword = newPassword;
     }
 }
+
+export class ChangeEmailClientRequestModel {
+    password:string;
+    newEmail:string;
+
+    constructor() {
+        this.password = '';
+        this.newEmail = '';
+    }
+
+    setProperties(password:string, newEmail:string) : void
+    {
+        this.password = password;
+        this.newEmail = newEmail;
+    }
+}
+
+export class ConfirmChangeEmailClientRequestModel {
+    token:string;
+    newEmail:string;
+
+    constructor() {
+        this.token = '';
+        this.newEmail = '';
+    }
+
+    setProperties(token:string, newEmail:string) : void
+    {
+        this.token = token;
+        this.newEmail = newEmail;
+    }
+}

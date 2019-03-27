@@ -11,6 +11,8 @@ import { WrappedResetPasswordComponent } from './components/auth/resetPasswordFo
 import { WrappedConfirmPasswordResetComponent } from './components/auth/confirmPasswordResetForm';
 import { WrappedConfirmRegistrationComponent } from './components/auth/confirmRegistrationForm';
 import { WrappedChangePasswordComponent } from './components/auth/changePasswordForm';
+import { WrappedChangeEmailComponent } from './components/auth/changeEmailForm';
+import { WrappedConfirmChangeEmailComponent } from './components/auth/confirmChangeEmailForm';
 import { WrappedAirlineCreateComponent } from './components/airline/airlineCreateForm';
 import { WrappedAirlineDetailComponent } from './components/airline/airlineDetailForm';
 import { WrappedAirlineEditComponent } from './components/airline/airlineEditForm';
@@ -149,6 +151,19 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           component={wrapperHeader(
             WrappedChangePasswordComponent,
             'Change Password'
+          )}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.ChangeEmail}
+          component={wrapperHeader(WrappedChangeEmailComponent, 'Change Email')}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.ConfirmChangeEmail + '/:id/:token'}
+          component={wrapperAuthHeader(
+            WrappedConfirmChangeEmailComponent,
+            'Confirm Email Change'
           )}
         />
         <Route
@@ -731,5 +746,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>4c41f04359640541196ae26845a95857</Hash>
+    <Hash>944234a3b6e47d726d6fe9e9ef5cc1c5</Hash>
 </Codenesium>*/

@@ -114,7 +114,7 @@ class ConfirmPasswordResetComponent extends React.Component<
                 <Alert message={this.state.message} type='success' /> 
                 <br />          
                <Button
-                type='primary'
+			    type='primary'
                 htmlType='submit'
                >
                    <Link to={AuthClientRoutes.Login}>Log in</Link>
@@ -138,7 +138,7 @@ class ConfirmPasswordResetComponent extends React.Component<
                 })(<Input.Password action='' placeholder='New Password' />)}
               </Form.Item>
               <Button
-                type='primary'
+			    type='primary'
                 htmlType='submit'
                 loading={this.state.submitting}
               >

@@ -8,6 +8,7 @@ import { WrappedLoginComponent } from './components/auth/loginForm';
 import { WrappedLogoutComponent } from './components/auth/logoutForm';
 import { WrappedRegisterComponent } from './components/auth/registerForm';
 import { WrappedResetPasswordComponent } from './components/auth/resetPasswordForm';
+import { WrappedChangeEmailComponent } from './components/auth/changeEmailForm';
 import { WrappedConfirmPasswordResetComponent } from './components/auth/confirmPasswordResetForm';
 import { WrappedConfirmRegistrationComponent } from './components/auth/confirmRegistrationForm';
 import { WrappedChangePasswordComponent } from './components/auth/changePasswordForm';
@@ -69,6 +70,22 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           component={wrapperHeader(
             WrappedChangePasswordComponent,
             'Change Password'
+          )}
+        />
+         <Route
+          exact
+          path={AuthClientRoutes.ChangeEmail}
+          component={wrapperHeader(
+            WrappedChangeEmailComponent,
+            'Change Email'
+          )}
+        />
+        <Route
+          exact
+          path={AuthClientRoutes.ConfirmChangeEmail + '/:id/:token'}
+          component={wrapperAuthHeader(
+            WrappedConfirmChangeEmailComponent,
+            'Confirm Email Change'
           )}
         />
         <Route

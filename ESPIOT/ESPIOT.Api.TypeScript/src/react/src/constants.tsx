@@ -21,6 +21,8 @@ export class AuthClientRoutes {
   static readonly ConfirmRegistration = '/confirmregistration';
   static readonly ConfirmPasswordReset = '/confirmpasswordreset';
   static readonly ChangePassword = '/changepassword';
+  static readonly ChangeEmail = '/changeemail';
+  static readonly ConfirmChangeEmail  = '/confirmchangeemail';
 }
 
 export class AuthApiRoutes {
@@ -29,7 +31,9 @@ export class AuthApiRoutes {
   static readonly ResetPassword = 'auth/resetpassword';
   static readonly ConfirmRegistration = 'auth/confirmregistration';
   static readonly ConfirmPasswordReset = 'auth/confirmpasswordreset';
+  static readonly ConfirmChangeEmail = 'auth/confirmchangeemail';
   static readonly ChangePassword = 'auth/changepassword';
+  static readonly ChangeEmail= 'auth/changeemail';
 }
 
 export class ClientRoutes {

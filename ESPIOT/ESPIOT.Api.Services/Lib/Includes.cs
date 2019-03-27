@@ -305,6 +305,67 @@ namespace ESPIOTNS.Api.Services
 			}
 		}
 
+		public async Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail)
+		{
+			AuthUser user = await this.userManager.FindByEmailAsync(currentEmail);
+
+			if (user == null)
+			{
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+			}
+			else
+			{
+				if (this.userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
+				{
+					string confirmationToken = await this.userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
+
+					string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/changeemail/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
+
+					string command = "Click the link to change your email";
+
+					string email = this.FormatLink(command, confirmationLink);
+
+					await this.emailSender.SendEmailAsync(model.NewEmail, "Change Email", email);
+
+					if (this.apiSettings.DebugSendAuthEmailsToClient)
+					{
+						return ValidationResponseFactory<AuthResponse>.SuccessAuthResponseWithLink(command, confirmationLink);
+					}
+					else
+					{
+						return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+					}
+				}
+				else
+				{
+					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("Invalid email or password", AuthErrorCodes.InvalidUsernameOrPassword);
+				}
+			}
+		}
+
+		public async Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model, string currentEmail)
+		{
+			AuthUser user = await this.userManager.FindByEmailAsync(currentEmail);
+
+			if (user == null)
+			{
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+			}
+			else
+			{
+				IdentityResult result = await this.userManager.ChangeEmailAsync(user, model.NewEmail, System.Net.WebUtility.UrlDecode(model.Token));
+
+				if (result.Succeeded)
+				{
+					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+				}
+				else
+				{
+					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(result, AuthErrorCodes.UnableToConfirmRegistration);
+				}
+			}
+		}
+
 		public async Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model)
 		{
 			AuthUser user = await this.userManager.FindByIdAsync(model.Id);
@@ -405,6 +466,10 @@ namespace ESPIOTNS.Api.Services
 
 	public interface IAuthService
 	{
+		Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail);
+
+		Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model);
+
 		Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email);
 
 		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
@@ -448,6 +513,20 @@ namespace ESPIOTNS.Api.Services
 		public string CurrentPassword { get; set; }
 
 		public string NewPassword { get; set; }
+	}
+
+	public class ChangeEmailRequestModel
+	{
+		public string NewEmail { get; set; }
+
+		public string Password { get; set; }
+
+	}
+
+	public class ConfirmChangeEmailRequestModel
+	{
+		public string NewEmail { get; set; }
+		public string Token { get; set; }
 	}
 }
 

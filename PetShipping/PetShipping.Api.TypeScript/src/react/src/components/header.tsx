@@ -189,6 +189,11 @@ export const wrapperHeader = (
                   <span>Change Password</span>
                   <Link to={AuthClientRoutes.ChangePassword} />
                 </Menu.Item>
+                <Menu.Item key="mail">
+                  <Icon type="mail" />
+                  <span>Change Email</span>
+                  <Link to={AuthClientRoutes.ChangeEmail} />
+                </Menu.Item>
                 <Menu.Item key="logout">
                   <Icon type="logout" />
                   <span>Logout</span>
@@ -219,5 +224,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>64694f16a27c6189261b71dc7c41a4a4</Hash>
+    <Hash>4594e6722fc4c828ac9188f7a1873da6</Hash>
 </Codenesium>*/

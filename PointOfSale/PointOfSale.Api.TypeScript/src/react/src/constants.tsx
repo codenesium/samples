@@ -17,19 +17,23 @@ export class AuthClientRoutes {
   static readonly Login = '/login';
   static readonly Logout = '/logout';
   static readonly Register = '/register';
-  static readonly ResetPassword = '/resetpassword';
   static readonly ConfirmRegistration = '/confirmregistration';
+  static readonly ResetPassword = '/resetpassword';
   static readonly ConfirmPasswordReset = '/confirmpasswordreset';
   static readonly ChangePassword = '/changepassword';
+  static readonly ChangeEmail = '/changeemail';
+  static readonly ConfirmChangeEmail = '/confirmchangeemail';
 }
 
 export class AuthApiRoutes {
   static readonly Login = 'auth/login';
   static readonly Register = 'auth/register';
-  static readonly ResetPassword = 'auth/resetpassword';
   static readonly ConfirmRegistration = 'auth/confirmregistration';
+  static readonly ResetPassword = 'auth/resetpassword';
   static readonly ConfirmPasswordReset = 'auth/confirmpasswordreset';
   static readonly ChangePassword = 'auth/changepassword';
+  static readonly ChangeEmail = 'auth/changeemail';
+  static readonly ConfirmChangeEmail = 'auth/confirmchangeemail';
 }
 
 export class ClientRoutes {
@@ -46,5 +50,5 @@ export class ApiRoutes {
 
 
 /*<Codenesium>
-    <Hash>d8647f9c8819b510e835554a48133a3b</Hash>
+    <Hash>87a0fc83a347f69dacffe1cbad800199</Hash>
 </Codenesium>*/
