@@ -103,7 +103,7 @@ export class ReplySelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: ReplyViewModel) => {
                 return (
-                  <Select.Option key={x.replyId} value={x.replyId}>
+                  <Select.Option key={String(x.replyId)} value={x.replyId}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class ReplySelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a4f60de2e3d975e594deaf860a78ea9f</Hash>
+    <Hash>b2b2a1f3f6f07431c67501f6c1cda7e2</Hash>
 </Codenesium>*/

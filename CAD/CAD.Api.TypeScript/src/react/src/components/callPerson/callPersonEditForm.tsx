@@ -197,28 +197,28 @@ class CallPersonEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="note">note</label>
+            <label htmlFor="note">Note</label>
             <br />
             {getFieldDecorator('note', {
               rules: [{ max: 8000, message: 'Exceeds max length of 8000' }],
-            })(<Input placeholder={'note'} />)}
+            })(<Input placeholder={'Note'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="personId">personId</label>
-            <br />
-            {getFieldDecorator('personId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'personId'} />)}
-          </Form.Item>
+          <PersonSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.People}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="personId"
+            required={true}
+            selectedValue={this.state.model!.personId}
+          />
 
-          <Form.Item>
-            <label htmlFor="personTypeId">personTypeId</label>
-            <br />
-            {getFieldDecorator('personTypeId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'personTypeId'} />)}
-          </Form.Item>
+          <PersonTypeSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PersonTypes}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="personTypeId"
+            required={true}
+            selectedValue={this.state.model!.personTypeId}
+          />
 
           <Form.Item>
             <Button
@@ -244,5 +244,5 @@ export const WrappedCallPersonEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bb47a1d92f4c2d74e04e27ab2b50be88</Hash>
+    <Hash>3decbc92f222acf8bf27eb19cdf1dead</Hash>
 </Codenesium>*/

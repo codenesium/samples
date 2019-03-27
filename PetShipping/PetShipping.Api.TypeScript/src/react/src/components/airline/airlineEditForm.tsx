@@ -192,14 +192,14 @@ class AirlineEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -226,5 +226,5 @@ export const WrappedAirlineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>fcf10f4c57f4532ee3a58553c7250f51</Hash>
+    <Hash>186474de87d63a7e150b176c4496225e</Hash>
 </Codenesium>*/

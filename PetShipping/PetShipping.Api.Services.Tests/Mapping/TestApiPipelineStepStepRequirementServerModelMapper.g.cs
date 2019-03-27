@@ -19,7 +19,7 @@ namespace PetShippingNS.Api.Services.Tests
 			model.SetProperties("A", 1, true);
 			ApiPipelineStepStepRequirementServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
 		}
@@ -32,7 +32,7 @@ namespace PetShippingNS.Api.Services.Tests
 			model.SetProperties(1, "A", 1, true);
 			ApiPipelineStepStepRequirementServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
 		}
@@ -47,7 +47,7 @@ namespace PetShippingNS.Api.Services.Tests
 			JsonPatchDocument<ApiPipelineStepStepRequirementServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiPipelineStepStepRequirementServerRequestModel();
 			patch.ApplyTo(response);
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
 		}
@@ -55,5 +55,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>07bcb866ff851abda508c90ad9ac4cc3</Hash>
+    <Hash>b29a1c68414a1fc62cfed13b1a004467</Hash>
 </Codenesium>*/

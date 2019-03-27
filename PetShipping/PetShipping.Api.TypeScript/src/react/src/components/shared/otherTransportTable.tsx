@@ -115,7 +115,7 @@ export class OtherTransportTableComponent extends React.Component<
                 Header: 'OtherTransports',
                 columns: [
                   {
-                    Header: 'HandlerId',
+                    Header: 'Handler',
                     accessor: 'handlerId',
                     Cell: props => {
                       return (
@@ -139,7 +139,7 @@ export class OtherTransportTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -207,5 +207,5 @@ export class OtherTransportTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f720495c946423b57feea8fe389fc087</Hash>
+    <Hash>8bae405252ab1a116356c39b8a2decd9</Hash>
 </Codenesium>*/

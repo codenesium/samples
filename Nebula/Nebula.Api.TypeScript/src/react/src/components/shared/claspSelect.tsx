@@ -94,7 +94,7 @@ export class ClaspSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Clasp</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class ClaspSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: ClaspViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class ClaspSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>48150bda16049a711490bb9c0751af46</Hash>
+    <Hash>bd446d8c8b471a84f45f0762f65afb1d</Hash>
 </Codenesium>*/

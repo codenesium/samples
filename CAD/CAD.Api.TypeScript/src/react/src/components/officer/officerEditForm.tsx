@@ -192,55 +192,55 @@ class OfficerEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="badge">badge</label>
+            <label htmlFor="badge">Badge</label>
             <br />
             {getFieldDecorator('badge', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'badge'} />)}
+            })(<Input placeholder={'Badge'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">Email</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'email'} />)}
+            })(<Input placeholder={'Email'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">firstName</label>
+            <label htmlFor="firstName">First Name</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'firstName'} />)}
+            })(<Input placeholder={'First Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">lastName</label>
+            <label htmlFor="lastName">Last Name</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'lastName'} />)}
+            })(<Input placeholder={'Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="password">password</label>
+            <label htmlFor="password">Password</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'password'} />)}
+            })(<Input placeholder={'Password'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -267,5 +267,5 @@ export const WrappedOfficerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>37fd4800d4afabbdcf91df83a6300f00</Hash>
+    <Hash>b869df06c411d7822c2ca893ca13f725</Hash>
 </Codenesium>*/

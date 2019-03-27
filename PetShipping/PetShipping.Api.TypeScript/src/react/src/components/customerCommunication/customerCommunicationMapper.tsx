@@ -12,7 +12,7 @@ export default class CustomerCommunicationMapper {
       dto.dateCreated,
       dto.employeeId,
       dto.id,
-      dto.note
+      dto.notes
     );
 
     if (dto.customerIdNavigation != null) {
@@ -22,7 +22,7 @@ export default class CustomerCommunicationMapper {
         dto.customerIdNavigation.firstName,
         dto.customerIdNavigation.id,
         dto.customerIdNavigation.lastName,
-        dto.customerIdNavigation.note,
+        dto.customerIdNavigation.notes,
         dto.customerIdNavigation.phone
       );
     }
@@ -49,7 +49,7 @@ export default class CustomerCommunicationMapper {
       model.dateCreated,
       model.employeeId,
       model.id,
-      model.note
+      model.notes
     );
     return response;
   }
@@ -57,5 +57,5 @@ export default class CustomerCommunicationMapper {
 
 
 /*<Codenesium>
-    <Hash>e5b8808ffd405f5eeddcca0c9ac92734</Hash>
+    <Hash>47b2281fded8ca90889efbb88e31ef36</Hash>
 </Codenesium>*/

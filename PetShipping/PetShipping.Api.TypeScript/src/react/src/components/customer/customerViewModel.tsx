@@ -5,7 +5,7 @@ export default class CustomerViewModel {
   firstName: string;
   id: number;
   lastName: string;
-  note: string;
+  notes: string;
   phone: string;
 
   constructor() {
@@ -13,7 +13,7 @@ export default class CustomerViewModel {
     this.firstName = '';
     this.id = 0;
     this.lastName = '';
-    this.note = '';
+    this.notes = '';
     this.phone = '';
   }
 
@@ -22,14 +22,14 @@ export default class CustomerViewModel {
     firstName: string,
     id: number,
     lastName: string,
-    note: string,
+    notes: string,
     phone: string
   ): void {
     this.email = email;
     this.firstName = firstName;
     this.id = id;
     this.lastName = lastName;
-    this.note = note;
+    this.notes = notes;
     this.phone = phone;
   }
 
@@ -40,5 +40,5 @@ export default class CustomerViewModel {
 
 
 /*<Codenesium>
-    <Hash>8cbf4d7a31141f6e95aaf6bdf559f3b0</Hash>
+    <Hash>9b4ab007eba05861c5697a9044769a51</Hash>
 </Codenesium>*/

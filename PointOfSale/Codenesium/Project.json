@@ -1,0 +1,1400 @@
+{
+  "$id": "1",
+  "Name": "PointOfSale",
+  "ProjectType": ".NET Core REST API 1.0.0",
+  "LocalDestinationDirectory": "C:\\Users\\Administrator\\Documents\\Mercurial\\Samples\\PointOfSale",
+  "Database": {
+    "$id": "2",
+    "Name": "Demo_PointOfSale",
+    "Schemas": [
+      {
+        "$id": "3",
+        "Name": "dbo",
+        "Tables": [
+          {
+            "$id": "4",
+            "Name": "Customer",
+            "Columns": [
+              {
+                "$id": "5",
+                "Name": "email",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "6",
+                "Name": "firstName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "7",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "8",
+                "Name": "lastName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "9",
+                "Name": "phone",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 15,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "10",
+                "Name": "PK_Customer",
+                "TableName": "Customer",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "11",
+                    "Name": "id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "12",
+            "Name": "Product",
+            "Columns": [
+              {
+                "$id": "13",
+                "Name": "active",
+                "DataType": "bit",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "14",
+                "Name": "description",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 4096,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "15",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "16",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "17",
+                "Name": "price",
+                "DataType": "money",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "18",
+                "Name": "quantity",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "19",
+                "Name": "PK_Product",
+                "TableName": "Product",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "20",
+                    "Name": "id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "21",
+            "Name": "Sale",
+            "Columns": [
+              {
+                "$id": "22",
+                "Name": "customerId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "23",
+                "Name": "date",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "24",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "25",
+                "Name": "IX_sale_customerId",
+                "TableName": "sale",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "26",
+                    "Name": "customerId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "27",
+                "Name": "PK_Sale",
+                "TableName": "Sale",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "28",
+                    "Name": "id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "29",
+            "Name": "SaleProduct",
+            "Columns": [
+              {
+                "$id": "30",
+                "Name": "productId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "31",
+                "Name": "saleId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "32",
+                "Name": "IX_saleProduct_productId",
+                "TableName": "saleProduct",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "33",
+                    "Name": "productId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "34",
+                "Name": "IX_saleProduct_saleId",
+                "TableName": "saleProduct",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "35",
+                    "Name": "saleId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "36",
+                "Name": "PK_SaleProduct",
+                "TableName": "SaleProduct",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "37",
+                    "Name": "productId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "38",
+                    "Name": "saleId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": []
+      }
+    ],
+    "Version": "1.0",
+    "DatabaseType": "MSSQL"
+  },
+  "Project": {
+    "$id": "39",
+    "Schemas": [
+      {
+        "$id": "40",
+        "AppSchemaName": "dbo",
+        "AppSchemaId": "48aaccb0-3661-45af-a98f-51828c59d707",
+        "Tables": [
+          {
+            "$id": "41",
+            "AppTableName": "Customer",
+            "AppTableNamePlural": "Customers",
+            "AppDoNotProcess": false,
+            "AppTableId": "0db262ec-8118-4c3c-ac61-ed5dc7b027ef",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "42",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Email",
+                "AppNamePlural": "Emails",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "41"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "email",
+                "GenerationEnabled": true,
+                "Name": "email",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "43",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "FirstName",
+                "AppNamePlural": "FirstNames",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "41"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "firstName",
+                "GenerationEnabled": true,
+                "Name": "firstName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "44",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "41"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "45",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LastName",
+                "AppNamePlural": "LastNames",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "41"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "lastName",
+                "GenerationEnabled": true,
+                "Name": "lastName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "46",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Phone",
+                "AppNamePlural": "Phones",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 15,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "41"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "phone",
+                "GenerationEnabled": true,
+                "Name": "phone",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 15,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "47",
+                "Columns": [
+                  {
+                    "$id": "48",
+                    "Column": {
+                      "$ref": "44"
+                    },
+                    "Name": "Id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Customer",
+                "Table": {
+                  "$ref": "41"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Customer",
+                "TableName": "Customer",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "40"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.email",
+            "AppViewLabel": "Customer",
+            "AppViewIcon": "",
+            "GenerationEnabled": true,
+            "Name": "Customer",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "49",
+            "AppTableName": "Product",
+            "AppTableNamePlural": "Products",
+            "AppDoNotProcess": false,
+            "AppTableId": "ceb30533-67a7-43c7-8b3b-2b0fc2e972d7",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "50",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Active",
+                "AppNamePlural": "Actives",
+                "AppFieldType": "bit",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "bool",
+                "AppTypescriptType": "boolean",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "49"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "active",
+                "GenerationEnabled": true,
+                "Name": "active",
+                "DataType": "bit",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "51",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Description",
+                "AppNamePlural": "Descriptions",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 4096,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "49"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "description",
+                "GenerationEnabled": true,
+                "Name": "description",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 4096,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "52",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "49"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "53",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "string",
+                "AppTypescriptType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "49"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "name",
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "54",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Price",
+                "AppNamePlural": "Prices",
+                "AppFieldType": "money",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "decimal",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "49"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "price",
+                "GenerationEnabled": true,
+                "Name": "price",
+                "DataType": "money",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "55",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Quantity",
+                "AppNamePlural": "Quantities",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "49"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "quantity",
+                "GenerationEnabled": true,
+                "Name": "quantity",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "56",
+                "Columns": [
+                  {
+                    "$id": "57",
+                    "Column": {
+                      "$ref": "52"
+                    },
+                    "Name": "Id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Product",
+                "Table": {
+                  "$ref": "49"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Product",
+                "TableName": "Product",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "40"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.active",
+            "AppViewLabel": "Product",
+            "AppViewIcon": "",
+            "GenerationEnabled": true,
+            "Name": "Product",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "58",
+            "AppTableName": "Sale",
+            "AppTableNamePlural": "Sales",
+            "AppDoNotProcess": false,
+            "AppTableId": "c23a3bde-d4d0-4670-89ac-68b449caf8e1",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "59",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CustomerId",
+                "AppNamePlural": "CustomerIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "58"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "customerId",
+                "GenerationEnabled": true,
+                "Name": "customerId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "60",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Date",
+                "AppNamePlural": "Dates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "DateTime",
+                "AppTypescriptType": "any",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "58"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "date",
+                "GenerationEnabled": true,
+                "Name": "date",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "61",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "58"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": false,
+                "AppViewControlLabel": "id",
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "62",
+                "Columns": [
+                  {
+                    "$id": "63",
+                    "Column": {
+                      "$ref": "59"
+                    },
+                    "Name": "CustomerId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByCustomerId",
+                "ControllerRoute": "byCustomerId",
+                "AppName": "IX_sale_customerId",
+                "Table": {
+                  "$ref": "58"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_sale_customerId",
+                "TableName": "Sale",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "64",
+                "Columns": [
+                  {
+                    "$id": "65",
+                    "Column": {
+                      "$ref": "61"
+                    },
+                    "Name": "Id",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Sale",
+                "Table": {
+                  "$ref": "58"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Sale",
+                "TableName": "Sale",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "40"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.customerId",
+            "AppViewLabel": "Sale",
+            "AppViewIcon": "",
+            "GenerationEnabled": true,
+            "Name": "Sale",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "66",
+            "AppTableName": "SaleProduct",
+            "AppTableNamePlural": "SaleProducts",
+            "AppDoNotProcess": true,
+            "AppTableId": "646b3945-2ac9-4102-a0b8-c39739980cb8",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "67",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "ProductId",
+                "AppNamePlural": "ProductIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "66"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "productId",
+                "GenerationEnabled": true,
+                "Name": "productId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "68",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "SaleId",
+                "AppNamePlural": "SaleIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "00000000-0000-0000-0000-000000000000",
+                "AppCLRType": "int",
+                "AppTypescriptType": "number",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "66"
+                },
+                "AppDefaultValue": null,
+                "AppViewControlType": 11,
+                "AppViewDisplayOrder": 0,
+                "AppDisplayInView": true,
+                "AppViewControlLabel": "saleId",
+                "GenerationEnabled": true,
+                "Name": "saleId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "69",
+                "Columns": [
+                  {
+                    "$id": "70",
+                    "Column": {
+                      "$ref": "67"
+                    },
+                    "Name": "ProductId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByProductId",
+                "ControllerRoute": "byProductId",
+                "AppName": "IX_saleProduct_productId",
+                "Table": {
+                  "$ref": "66"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_saleProduct_productId",
+                "TableName": "SaleProduct",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "71",
+                "Columns": [
+                  {
+                    "$id": "72",
+                    "Column": {
+                      "$ref": "68"
+                    },
+                    "Name": "SaleId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "BySaleId",
+                "ControllerRoute": "bySaleId",
+                "AppName": "IX_saleProduct_saleId",
+                "Table": {
+                  "$ref": "66"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_saleProduct_saleId",
+                "TableName": "SaleProduct",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "73",
+                "Columns": [
+                  {
+                    "$id": "74",
+                    "Column": {
+                      "$ref": "67"
+                    },
+                    "Name": "ProductId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "75",
+                    "Column": {
+                      "$ref": "68"
+                    },
+                    "Name": "SaleId",
+                    "Order": 2,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByProductIdSaleId",
+                "ControllerRoute": "byProductIdSaleId",
+                "AppName": "PK_SaleProduct",
+                "Table": {
+                  "$ref": "66"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_SaleProduct",
+                "TableName": "SaleProduct",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "40"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "ForeignKeyDisplayColumn": "this.productId",
+            "AppViewLabel": "SaleProduct",
+            "AppViewIcon": "",
+            "GenerationEnabled": false,
+            "Name": "SaleProduct",
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [],
+        "ReferenceForeignKeys": [],
+        "ApplicationApiContainer": {
+          "$ref": "39"
+        },
+        "Name": "dbo"
+      }
+    ],
+    "ApplicationVersion": "1.0",
+    "ApiSettings": {
+      "$id": "76",
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "Name": "",
+    "Version": "",
+    "DatabaseType": ""
+  },
+  "Settings": {
+    "$id": "77",
+    "SettingsVersion": "1.0",
+    "ApiSettings": {
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "TableParameterSettings": [],
+    "ColumnParameterSettings": [
+      {
+        "$id": "78",
+        "Table": "Customer",
+        "Schema": "dbo",
+        "Column": "Email",
+        "AppCLRType": "string",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 5,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "email",
+        "AppName": "Email",
+        "AppNamePlural": "Emails"
+      },
+      {
+        "$id": "79",
+        "Table": "Customer",
+        "Schema": "dbo",
+        "Column": "FirstName",
+        "AppCLRType": "string",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 11,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "firstName",
+        "AppName": "FirstName",
+        "AppNamePlural": "FirstNames"
+      },
+      {
+        "$id": "80",
+        "Table": "Customer",
+        "Schema": "dbo",
+        "Column": "LastName",
+        "AppCLRType": "string",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 11,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "lastName",
+        "AppName": "LastName",
+        "AppNamePlural": "LastNames"
+      },
+      {
+        "$id": "81",
+        "Table": "Customer",
+        "Schema": "dbo",
+        "Column": "Phone",
+        "AppCLRType": "string",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 9,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "phone",
+        "AppName": "Phone",
+        "AppNamePlural": "Phones"
+      }
+    ],
+    "VirtualForeignKeys": [],
+    "ForeignKeyParameterSettings": [],
+    "VirtualConstraints": [],
+    "ConstraintParameterSettings": []
+  }
+}

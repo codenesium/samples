@@ -95,6 +95,16 @@ namespace CADNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table CallAssignment via callId.
+		public async virtual Task<List<CallAssignment>> CallAssignmentsByCallId(int callId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<CallAssignment>()
+			       .Include(x => x.CallIdNavigation)
+			       .Include(x => x.UnitIdNavigation)
+
+			       .Where(x => x.CallId == callId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CallAssignment>();
+		}
+
 		// Foreign key reference to this table Note via callId.
 		public async virtual Task<List<Note>> NotesByCallId(int callId, int limit = int.MaxValue, int offset = 0)
 		{
@@ -119,10 +129,10 @@ namespace CADNS.Api.DataAccess
 			       .SingleOrDefaultAsync(x => x.Id == callDispositionId);
 		}
 
-		// Foreign key reference to table CallStatu via callStatusId.
-		public async virtual Task<CallStatu> CallStatuByCallStatusId(int? callStatusId)
+		// Foreign key reference to table CallStatus via callStatusId.
+		public async virtual Task<CallStatus> CallStatusByCallStatusId(int? callStatusId)
 		{
-			return await this.Context.Set<CallStatu>()
+			return await this.Context.Set<CallStatus>()
 			       .SingleOrDefaultAsync(x => x.Id == callStatusId);
 		}
 
@@ -131,33 +141,6 @@ namespace CADNS.Api.DataAccess
 		{
 			return await this.Context.Set<CallType>()
 			       .SingleOrDefaultAsync(x => x.Id == callTypeId);
-		}
-
-		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Call.
-		public async virtual Task<List<Call>> ByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.CallAssignments
-			              join calls in this.Context.Calls on
-			              refTable.CallId equals calls.Id
-			              where refTable.UnitId == unitId
-			              select calls).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Call.
-		public async virtual Task<CallAssignment> CreateCallAssignment(CallAssignment item)
-		{
-			this.Context.Set<CallAssignment>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Call.
-		public async virtual Task DeleteCallAssignment(CallAssignment item)
-		{
-			this.Context.Set<CallAssignment>().Remove(item);
-			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<Call>> Where(
@@ -190,5 +173,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>95a0d2bf9e203c66191caf25ac9612a7</Hash>
+    <Hash>648c50b1962493e6b31171c3f912a360</Hash>
 </Codenesium>*/

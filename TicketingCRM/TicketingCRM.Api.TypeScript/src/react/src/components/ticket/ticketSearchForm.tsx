@@ -197,7 +197,7 @@ export default class TicketSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Tickets',
+                Header: 'Ticket',
                 columns: [
                   {
                     Header: 'Public',
@@ -291,5 +291,5 @@ export const WrappedTicketSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>814bc2b92b1143462b3029586966c734</Hash>
+    <Hash>1d113c7110bcd98534bf67fa64dc8ba6</Hash>
 </Codenesium>*/

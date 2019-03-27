@@ -194,7 +194,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()))
 			.Callback<int, ApiFamilyServerRequestModel>(
-				(id, model) => model.Note.Should().Be("A")
+				(id, model) => model.Notes.Should().Be("A")
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiFamilyServerResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyServerResponseModel>(new ApiFamilyServerResponseModel()));
@@ -203,7 +203,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiFamilyServerRequestModel>();
-			patch.Replace(x => x.Note, "A");
+			patch.Replace(x => x.Notes, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -223,7 +223,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiFamilyServerRequestModel>();
-			patch.Replace(x => x.Note, "A");
+			patch.Replace(x => x.Notes, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -341,5 +341,5 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>ed8b6483a789d30909922e26b938835e</Hash>
+    <Hash>8df06bed7509ee923bc1fe054140d050</Hash>
 </Codenesium>*/

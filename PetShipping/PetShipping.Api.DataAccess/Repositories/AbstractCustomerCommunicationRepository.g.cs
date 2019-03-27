@@ -39,7 +39,7 @@ namespace PetShippingNS.Api.DataAccess
 				                  x.DateCreated == query.ToDateTime() ||
 				                  x.EmployeeId == query.ToInt() ||
 				                  x.Id == query.ToInt() ||
-				                  x.Note.StartsWith(query),
+				                  x.Notes.StartsWith(query),
 				                  limit,
 				                  offset);
 			}
@@ -144,5 +144,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d0d38279a86b99ab59fc9cee1c0a5510</Hash>
+    <Hash>313d9a7d9e6d83be86555ab479443a1c</Hash>
 </Codenesium>*/

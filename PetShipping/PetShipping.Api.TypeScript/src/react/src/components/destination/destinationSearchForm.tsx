@@ -197,10 +197,10 @@ export default class DestinationSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Destinations',
+                Header: 'Destination',
                 columns: [
                   {
-                    Header: 'CountryId',
+                    Header: 'Country',
                     accessor: 'countryId',
                     Cell: props => {
                       return (
@@ -298,5 +298,5 @@ export const WrappedDestinationSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a73073bc5ee76c6a803db159430d4843</Hash>
+    <Hash>5fc14135a7c49b824eca75deecc51c58</Hash>
 </Codenesium>*/

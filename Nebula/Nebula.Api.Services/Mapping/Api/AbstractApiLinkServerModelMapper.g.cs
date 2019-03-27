@@ -18,14 +18,14 @@ namespace NebulaNS.Api.Services
 			                       request.ChainId,
 			                       request.DateCompleted,
 			                       request.DateStarted,
-			                       request.DynamicParameter,
+			                       request.DynamicParameters,
 			                       request.ExternalId,
 			                       request.LinkStatusId,
 			                       request.Name,
 			                       request.Order,
 			                       request.Response,
-			                       request.StaticParameter,
-			                       request.TimeoutInSecond);
+			                       request.StaticParameters,
+			                       request.TimeoutInSeconds);
 			return response;
 		}
 
@@ -38,14 +38,14 @@ namespace NebulaNS.Api.Services
 				response.ChainId,
 				response.DateCompleted,
 				response.DateStarted,
-				response.DynamicParameter,
+				response.DynamicParameters,
 				response.ExternalId,
 				response.LinkStatusId,
 				response.Name,
 				response.Order,
 				response.Response,
-				response.StaticParameter,
-				response.TimeoutInSecond);
+				response.StaticParameters,
+				response.TimeoutInSeconds);
 			return request;
 		}
 
@@ -58,14 +58,14 @@ namespace NebulaNS.Api.Services
 				response.ChainId,
 				response.DateCompleted,
 				response.DateStarted,
-				response.DynamicParameter,
+				response.DynamicParameters,
 				response.ExternalId,
 				response.LinkStatusId,
 				response.Name,
 				response.Order,
 				response.Response,
-				response.StaticParameter,
-				response.TimeoutInSecond);
+				response.StaticParameters,
+				response.TimeoutInSeconds);
 			return request;
 		}
 
@@ -76,19 +76,19 @@ namespace NebulaNS.Api.Services
 			patch.Replace(x => x.ChainId, model.ChainId);
 			patch.Replace(x => x.DateCompleted, model.DateCompleted);
 			patch.Replace(x => x.DateStarted, model.DateStarted);
-			patch.Replace(x => x.DynamicParameter, model.DynamicParameter);
+			patch.Replace(x => x.DynamicParameters, model.DynamicParameters);
 			patch.Replace(x => x.ExternalId, model.ExternalId);
 			patch.Replace(x => x.LinkStatusId, model.LinkStatusId);
 			patch.Replace(x => x.Name, model.Name);
 			patch.Replace(x => x.Order, model.Order);
 			patch.Replace(x => x.Response, model.Response);
-			patch.Replace(x => x.StaticParameter, model.StaticParameter);
-			patch.Replace(x => x.TimeoutInSecond, model.TimeoutInSecond);
+			patch.Replace(x => x.StaticParameters, model.StaticParameters);
+			patch.Replace(x => x.TimeoutInSeconds, model.TimeoutInSeconds);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1eff3e324f6047e7f66d73461cd8dedd</Hash>
+    <Hash>70fc23213c9c9100170e1f8cb6c92118</Hash>
 </Codenesium>*/

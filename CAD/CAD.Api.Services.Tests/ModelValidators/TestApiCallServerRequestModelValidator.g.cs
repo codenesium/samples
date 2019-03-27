@@ -128,7 +128,7 @@ namespace CADNS.Api.Services.Tests
 		public async void CallStatusId_Create_Valid_Reference()
 		{
 			Mock<ICallRepository> callRepository = new Mock<ICallRepository>();
-			callRepository.Setup(x => x.CallStatuByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatu>(new CallStatu()));
+			callRepository.Setup(x => x.CallStatusByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatus>(new CallStatus()));
 
 			var validator = new ApiCallServerRequestModelValidator(callRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCallServerRequestModel());
@@ -140,7 +140,7 @@ namespace CADNS.Api.Services.Tests
 		public async void CallStatusId_Create_Invalid_Reference()
 		{
 			Mock<ICallRepository> callRepository = new Mock<ICallRepository>();
-			callRepository.Setup(x => x.CallStatuByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatu>(null));
+			callRepository.Setup(x => x.CallStatusByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatus>(null));
 
 			var validator = new ApiCallServerRequestModelValidator(callRepository.Object);
 
@@ -153,7 +153,7 @@ namespace CADNS.Api.Services.Tests
 		public async void CallStatusId_Update_Valid_Reference()
 		{
 			Mock<ICallRepository> callRepository = new Mock<ICallRepository>();
-			callRepository.Setup(x => x.CallStatuByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatu>(new CallStatu()));
+			callRepository.Setup(x => x.CallStatusByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatus>(new CallStatus()));
 
 			var validator = new ApiCallServerRequestModelValidator(callRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCallServerRequestModel());
@@ -165,7 +165,7 @@ namespace CADNS.Api.Services.Tests
 		public async void CallStatusId_Update_Invalid_Reference()
 		{
 			Mock<ICallRepository> callRepository = new Mock<ICallRepository>();
-			callRepository.Setup(x => x.CallStatuByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatu>(null));
+			callRepository.Setup(x => x.CallStatusByCallStatusId(It.IsAny<int>())).Returns(Task.FromResult<CallStatus>(null));
 
 			var validator = new ApiCallServerRequestModelValidator(callRepository.Object);
 
@@ -275,5 +275,5 @@ namespace CADNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9fbe0660bc00bdd201b71644268bd76c</Hash>
+    <Hash>3cd65343e1a0c5fac2a3f0befb1961a0</Hash>
 </Codenesium>*/

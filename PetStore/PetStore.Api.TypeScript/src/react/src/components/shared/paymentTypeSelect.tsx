@@ -103,7 +103,7 @@ export class PaymentTypeSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: PaymentTypeViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class PaymentTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c7545011c51f24e7739513737f9b1d4f</Hash>
+    <Hash>3c01a59bf4c9a3a551a3d05f6dce6e64</Hash>
 </Codenesium>*/

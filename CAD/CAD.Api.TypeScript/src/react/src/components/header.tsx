@@ -56,82 +56,112 @@ export const wrapperHeader = (
                 <Link to={ClientRoutes.Calls} />
               </Menu.Item>
 
-              <Menu.Item key="callDisposition">
+              <Menu.Item key="callAssignment">
                 <Icon type="bars" />
-                <span>CallDisposition</span>
+                <span>Call Assignment</span>
+                <Link to={ClientRoutes.CallAssignments} />
+              </Menu.Item>
+
+              <Menu.Item key="callDisposition">
+                <Icon type="cloud" />
+                <span>Call Disposition</span>
                 <Link to={ClientRoutes.CallDispositions} />
               </Menu.Item>
 
               <Menu.Item key="callPerson">
-                <Icon type="cloud" />
-                <span>CallPerson</span>
+                <Icon type="code" />
+                <span>Call Person</span>
                 <Link to={ClientRoutes.CallPersons} />
               </Menu.Item>
 
-              <Menu.Item key="callStatu">
-                <Icon type="code" />
-                <span>CallStatus</span>
+              <Menu.Item key="callStatus">
+                <Icon type="smile" />
+                <span>Call Status</span>
                 <Link to={ClientRoutes.CallStatus} />
               </Menu.Item>
 
               <Menu.Item key="callType">
-                <Icon type="smile" />
-                <span>CallType</span>
+                <Icon type="laptop" />
+                <span>Call Type</span>
                 <Link to={ClientRoutes.CallTypes} />
               </Menu.Item>
 
               <Menu.Item key="note">
-                <Icon type="laptop" />
+                <Icon type="mobile" />
                 <span>Note</span>
                 <Link to={ClientRoutes.Notes} />
               </Menu.Item>
 
+              <Menu.Item key="offCapability">
+                <Icon type="paper-clip" />
+                <span>Off Capability</span>
+                <Link to={ClientRoutes.OffCapabilities} />
+              </Menu.Item>
+
               <Menu.Item key="officer">
-                <Icon type="mobile" />
+                <Icon type="setting" />
                 <span>Officer</span>
                 <Link to={ClientRoutes.Officers} />
               </Menu.Item>
 
-              <Menu.Item key="officerCapability">
-                <Icon type="paper-clip" />
-                <span>OfficerCapabilities</span>
+              <Menu.Item key="officerCapabilities">
+                <Icon type="user" />
+                <span>Officer Capabilities</span>
                 <Link to={ClientRoutes.OfficerCapabilities} />
               </Menu.Item>
 
               <Menu.Item key="person">
-                <Icon type="setting" />
+                <Icon type="home" />
                 <span>Person</span>
                 <Link to={ClientRoutes.People} />
               </Menu.Item>
 
               <Menu.Item key="personType">
-                <Icon type="user" />
-                <span>PersonType</span>
+                <Icon type="camera" />
+                <span>Person Type</span>
                 <Link to={ClientRoutes.PersonTypes} />
               </Menu.Item>
 
               <Menu.Item key="unit">
-                <Icon type="home" />
+                <Icon type="like" />
                 <span>Unit</span>
                 <Link to={ClientRoutes.Units} />
               </Menu.Item>
 
               <Menu.Item key="unitDisposition">
-                <Icon type="camera" />
-                <span>UnitDisposition</span>
+                <Icon type="bulb" />
+                <span>Unit Disposition</span>
                 <Link to={ClientRoutes.UnitDispositions} />
               </Menu.Item>
 
+              <Menu.Item key="unitOfficer">
+                <Icon type="tool" />
+                <span>Unit Officer</span>
+                <Link to={ClientRoutes.UnitOfficers} />
+              </Menu.Item>
+
+              <Menu.Item key="vehCapability">
+                <Icon type="coffee" />
+                <span>Veh Capability</span>
+                <Link to={ClientRoutes.VehCapabilities} />
+              </Menu.Item>
+
               <Menu.Item key="vehicle">
-                <Icon type="like" />
+                <Icon type="experiment" />
                 <span>Vehicle</span>
                 <Link to={ClientRoutes.Vehicles} />
               </Menu.Item>
 
-              <Menu.Item key="vehicleCapabilitty">
-                <Icon type="bulb" />
-                <span>VehicleCapabilities</span>
+              <Menu.Item key="vehicleCapabilities">
+                <Icon type="security-scan" />
+                <span>Vehicle Capabilities</span>
                 <Link to={ClientRoutes.VehicleCapabilities} />
+              </Menu.Item>
+
+              <Menu.Item key="vehicleOfficer">
+                <Icon type="thunderbolt" />
+                <span>Vehicle Officer</span>
+                <Link to={ClientRoutes.VehicleOfficers} />
               </Menu.Item>
 
               <Menu.SubMenu
@@ -177,5 +207,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>17f0fc39022a9d4d13bb4fef77e484d8</Hash>
+    <Hash>e3f12b8e5e54ce75a80f43bcfa4b10be</Hash>
 </Codenesium>*/

@@ -22,7 +22,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.CustomerId.Should().Be(1);
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.EmployeeId.Should().Be(1);
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 		}
 
 		[Fact]
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.CustomerId.Should().Be(1);
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.EmployeeId.Should().Be(1);
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 		}
 
 		[Fact]
@@ -52,11 +52,11 @@ namespace PetShippingNS.Api.Services.Tests
 			response.CustomerId.Should().Be(1);
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.EmployeeId.Should().Be(1);
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>47a8be0c38c6c029879f2b815078648e</Hash>
+    <Hash>842bda47dae416dd1fdc84f8fa8d8471</Hash>
 </Codenesium>*/

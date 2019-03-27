@@ -3,7 +3,8 @@ export class Constants {
   static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
   static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
   static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
-  static readonly HostedBaseUrl = location.protocol + '//' + location.host;
+  static readonly HostedBaseUrl =
+    window.location.protocol + '//' + window.location.host;
   static readonly HostedSubDirectory =
     process.env.REACT_APP_HOST_SUBDIRECTORY == '/'
       ? ''
@@ -33,29 +34,33 @@ export class AuthApiRoutes {
 
 export class ClientRoutes {
   static readonly Chains = '/chains';
-  static readonly ChainStatuses = '/chainstatuses';
+  static readonly ChainStatus = '/chainstatus';
   static readonly Clasps = '/clasps';
   static readonly Links = '/links';
   static readonly LinkLogs = '/linklogs';
-  static readonly LinkStatuses = '/linkstatuses';
+  static readonly LinkStatus = '/linkstatus';
   static readonly Machines = '/machines';
+  static readonly MachineRefTeams = '/machinerefteams';
   static readonly Organizations = '/organizations';
   static readonly Teams = '/teams';
+  static readonly VersionInfoes = '/versioninfoes';
 }
 
 export class ApiRoutes {
   static readonly Chains = 'chains';
-  static readonly ChainStatuses = 'chainstatuses';
+  static readonly ChainStatus = 'chainstatus';
   static readonly Clasps = 'clasps';
   static readonly Links = 'links';
   static readonly LinkLogs = 'linklogs';
-  static readonly LinkStatuses = 'linkstatuses';
+  static readonly LinkStatus = 'linkstatus';
   static readonly Machines = 'machines';
+  static readonly MachineRefTeams = 'machinerefteams';
   static readonly Organizations = 'organizations';
   static readonly Teams = 'teams';
+  static readonly VersionInfoes = 'versioninfoes';
 }
 
 
 /*<Codenesium>
-    <Hash>170664be6ce0828430b34ee5368bcec3</Hash>
+    <Hash>ef8157ed4d2745147c922da6002f5914</Hash>
 </Codenesium>*/

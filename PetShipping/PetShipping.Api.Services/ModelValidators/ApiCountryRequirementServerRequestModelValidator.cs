@@ -16,14 +16,14 @@ namespace PetShippingNS.Api.Services
 		public async Task<ValidationResult> ValidateCreateAsync(ApiCountryRequirementServerRequestModel model)
 		{
 			this.CountryIdRules();
-			this.DetailRules();
+			this.DetailsRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiCountryRequirementServerRequestModel model)
 		{
 			this.CountryIdRules();
-			this.DetailRules();
+			this.DetailsRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af597b4397a5fbd14386488e68a60c93</Hash>
+    <Hash>f268a848e946d5ac9307097f4ac09b46</Hash>
 </Codenesium>*/

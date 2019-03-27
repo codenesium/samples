@@ -5,20 +5,20 @@ export default class CountryRequirementViewModel {
   countryId: number;
   countryIdEntity: string;
   countryIdNavigation?: CountryViewModel;
-  detail: string;
+  details: string;
   id: number;
 
   constructor() {
     this.countryId = 0;
     this.countryIdEntity = '';
     this.countryIdNavigation = undefined;
-    this.detail = '';
+    this.details = '';
     this.id = 0;
   }
 
-  setProperties(countryId: number, detail: string, id: number): void {
+  setProperties(countryId: number, details: string, id: number): void {
     this.countryId = countryId;
-    this.detail = detail;
+    this.details = details;
     this.id = id;
   }
 
@@ -29,5 +29,5 @@ export default class CountryRequirementViewModel {
 
 
 /*<Codenesium>
-    <Hash>10fb468041065c85fc35ab4a35f355d9</Hash>
+    <Hash>927ba7a97821879aa94057a846b87758</Hash>
 </Codenesium>*/

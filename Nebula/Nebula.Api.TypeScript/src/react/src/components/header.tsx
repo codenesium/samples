@@ -46,25 +46,25 @@ export const wrapperHeader = (
 
               <Menu.Item key="chain">
                 <Icon type="pie-chart" />
-                <span>Chains</span>
+                <span>Chain</span>
                 <Link to={ClientRoutes.Chains} />
               </Menu.Item>
 
               <Menu.Item key="chainStatus">
                 <Icon type="rise" />
                 <span>Chain Status</span>
-                <Link to={ClientRoutes.ChainStatuses} />
+                <Link to={ClientRoutes.ChainStatus} />
               </Menu.Item>
 
               <Menu.Item key="clasp">
                 <Icon type="bars" />
-                <span>Clasps</span>
+                <span>Clasp</span>
                 <Link to={ClientRoutes.Clasps} />
               </Menu.Item>
 
               <Menu.Item key="link">
                 <Icon type="cloud" />
-                <span>Links</span>
+                <span>Link</span>
                 <Link to={ClientRoutes.Links} />
               </Menu.Item>
 
@@ -77,25 +77,37 @@ export const wrapperHeader = (
               <Menu.Item key="linkStatus">
                 <Icon type="smile" />
                 <span>Link Status</span>
-                <Link to={ClientRoutes.LinkStatuses} />
+                <Link to={ClientRoutes.LinkStatus} />
               </Menu.Item>
 
               <Menu.Item key="machine">
                 <Icon type="laptop" />
-                <span>Machines</span>
+                <span>Machine</span>
                 <Link to={ClientRoutes.Machines} />
               </Menu.Item>
 
-              <Menu.Item key="organization">
+              <Menu.Item key="machineRefTeam">
                 <Icon type="mobile" />
-                <span>Organizations</span>
+                <span>Machine Ref Team</span>
+                <Link to={ClientRoutes.MachineRefTeams} />
+              </Menu.Item>
+
+              <Menu.Item key="organization">
+                <Icon type="paper-clip" />
+                <span>Organization</span>
                 <Link to={ClientRoutes.Organizations} />
               </Menu.Item>
 
               <Menu.Item key="team">
-                <Icon type="paper-clip" />
-                <span>Teams</span>
+                <Icon type="setting" />
+                <span>Team</span>
                 <Link to={ClientRoutes.Teams} />
+              </Menu.Item>
+
+              <Menu.Item key="versionInfo">
+                <Icon type="user" />
+                <span>Version Info</span>
+                <Link to={ClientRoutes.VersionInfoes} />
               </Menu.Item>
 
               <Menu.SubMenu
@@ -141,5 +153,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>a972d7fce2d9503b23e8602437978730</Hash>
+    <Hash>ab60e3bd251e3db6a97c14a9199b1156</Hash>
 </Codenesium>*/

@@ -1,21 +1,21 @@
 import moment from 'moment';
 import AddressViewModel from '../address/addressViewModel';
 import CallDispositionViewModel from '../callDisposition/callDispositionViewModel';
-import CallStatuViewModel from '../callStatu/callStatuViewModel';
+import CallStatusViewModel from '../callStatus/callStatusViewModel';
 import CallTypeViewModel from '../callType/callTypeViewModel';
 
 export default class CallViewModel {
-  addressId: any;
+  addressId: number;
   addressIdEntity: string;
   addressIdNavigation?: AddressViewModel;
-  callDispositionId: any;
+  callDispositionId: number;
   callDispositionIdEntity: string;
   callDispositionIdNavigation?: CallDispositionViewModel;
-  callStatusId: any;
+  callStatusId: number;
   callStatusIdEntity: string;
-  callStatusIdNavigation?: CallStatuViewModel;
+  callStatusIdNavigation?: CallStatusViewModel;
   callString: string;
-  callTypeId: any;
+  callTypeId: number;
   callTypeIdEntity: string;
   callTypeIdNavigation?: CallTypeViewModel;
   dateCleared: any;
@@ -25,17 +25,17 @@ export default class CallViewModel {
   quickCallNumber: number;
 
   constructor() {
-    this.addressId = undefined;
+    this.addressId = 0;
     this.addressIdEntity = '';
     this.addressIdNavigation = undefined;
-    this.callDispositionId = undefined;
+    this.callDispositionId = 0;
     this.callDispositionIdEntity = '';
     this.callDispositionIdNavigation = undefined;
-    this.callStatusId = undefined;
+    this.callStatusId = 0;
     this.callStatusIdEntity = '';
     this.callStatusIdNavigation = undefined;
     this.callString = '';
-    this.callTypeId = undefined;
+    this.callTypeId = 0;
     this.callTypeIdEntity = '';
     this.callTypeIdNavigation = undefined;
     this.dateCleared = undefined;
@@ -46,11 +46,11 @@ export default class CallViewModel {
   }
 
   setProperties(
-    addressId: any,
-    callDispositionId: any,
-    callStatusId: any,
+    addressId: number,
+    callDispositionId: number,
+    callStatusId: number,
     callString: string,
-    callTypeId: any,
+    callTypeId: number,
     dateCleared: any,
     dateCreated: any,
     dateDispatched: any,
@@ -62,9 +62,9 @@ export default class CallViewModel {
     this.callStatusId = callStatusId;
     this.callString = callString;
     this.callTypeId = callTypeId;
-    this.dateCleared = dateCleared;
-    this.dateCreated = dateCreated;
-    this.dateDispatched = dateDispatched;
+    this.dateCleared = moment(dateCleared, 'YYYY-MM-DD');
+    this.dateCreated = moment(dateCreated, 'YYYY-MM-DD');
+    this.dateDispatched = moment(dateDispatched, 'YYYY-MM-DD');
     this.id = id;
     this.quickCallNumber = quickCallNumber;
   }
@@ -76,5 +76,5 @@ export default class CallViewModel {
 
 
 /*<Codenesium>
-    <Hash>67d411931209007841749f874e3c06bd</Hash>
+    <Hash>7ff9c834577b7b557bebdbd07b9d22c1</Hash>
 </Codenesium>*/

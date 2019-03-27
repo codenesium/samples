@@ -94,7 +94,7 @@ export class LinkSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Link</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class LinkSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: LinkViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class LinkSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9dd39c984d7def3434617f0b175699da</Hash>
+    <Hash>0afeae5d68035234faabce56505f353f</Hash>
 </Codenesium>*/

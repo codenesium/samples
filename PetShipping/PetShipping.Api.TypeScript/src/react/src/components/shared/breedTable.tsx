@@ -115,13 +115,6 @@ export class BreedTableComponent extends React.Component<
                 Header: 'Breeds',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -129,7 +122,7 @@ export class BreedTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SpeciesId',
+                    Header: 'Species',
                     accessor: 'speciesId',
                     Cell: props => {
                       return (
@@ -197,5 +190,5 @@ export class BreedTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>244fad8c978866f292b5c4e29b33dc80</Hash>
+    <Hash>03484e67f0747d5654a02267dcb45adb</Hash>
 </Codenesium>*/

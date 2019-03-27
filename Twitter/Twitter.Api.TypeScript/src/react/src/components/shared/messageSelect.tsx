@@ -103,7 +103,7 @@ export class MessageSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: MessageViewModel) => {
                 return (
-                  <Select.Option key={x.messageId} value={x.messageId}>
+                  <Select.Option key={String(x.messageId)} value={x.messageId}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class MessageSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ac70d14f30842f653b1754223be277c3</Hash>
+    <Hash>1773b8785051c05f771fb8e96006e9b7</Hash>
 </Codenesium>*/

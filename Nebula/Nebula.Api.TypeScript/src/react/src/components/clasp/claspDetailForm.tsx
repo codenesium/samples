@@ -106,12 +106,8 @@ class ClaspDetailComponent extends React.Component<
             <i className="fas fa-edit" />
           </Button>
           <div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>NextChainId</h3>
+              <h3>Next Chain</h3>
               <p>
                 {String(
                   this.state.model!.nextChainIdNavigation &&
@@ -120,7 +116,7 @@ class ClaspDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>PreviousChainId</h3>
+              <h3>Previous Chain</h3>
               <p>
                 {String(
                   this.state.model!.previousChainIdNavigation &&
@@ -144,5 +140,5 @@ export const WrappedClaspDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9daa84b4fb510d445ec0237d7412c7af</Hash>
+    <Hash>156b12be1c92c2cd8f124d07c02ed4dd</Hash>
 </Codenesium>*/

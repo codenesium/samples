@@ -194,7 +194,7 @@ class ChainEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <ChainStatusSelectComponent
-            apiRoute={Constants.ApiEndpoint + ApiRoutes.ChainStatuses}
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.ChainStatus}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="chainStatusId"
             required={true}
@@ -202,11 +202,11 @@ class ChainEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="externalId">ExternalId</label>
+            <label htmlFor="externalId">External</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'ExternalId'} />)}
+            })(<Input placeholder={'External'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -252,5 +252,5 @@ export const WrappedChainEditComponent = Form.create({ name: 'Chain Edit' })(
 
 
 /*<Codenesium>
-    <Hash>6bd307b6928c3bb9c2de771ad83e822c</Hash>
+    <Hash>e9ef5b81130b42f84baf0d99d078b491</Hash>
 </Codenesium>*/

@@ -170,7 +170,7 @@ export class LinkClientRequestModel {
   chainIdNavigation?: ChainClientResponseModel;
   dateCompleted: any;
   dateStarted: any;
-  dynamicParameter: string;
+  dynamicParameters: string;
   externalId: any;
   id: number;
   linkStatusId: number;
@@ -179,8 +179,8 @@ export class LinkClientRequestModel {
   name: string;
   order: number;
   response: string;
-  staticParameter: string;
-  timeoutInSecond: number;
+  staticParameters: string;
+  timeoutInSeconds: number;
 
   constructor() {
     this.assignedMachineId = 0;
@@ -191,7 +191,7 @@ export class LinkClientRequestModel {
     this.chainIdNavigation = undefined;
     this.dateCompleted = undefined;
     this.dateStarted = undefined;
-    this.dynamicParameter = '';
+    this.dynamicParameters = '';
     this.externalId = undefined;
     this.id = 0;
     this.linkStatusId = 0;
@@ -200,8 +200,8 @@ export class LinkClientRequestModel {
     this.name = '';
     this.order = 0;
     this.response = '';
-    this.staticParameter = '';
-    this.timeoutInSecond = 0;
+    this.staticParameters = '';
+    this.timeoutInSeconds = 0;
   }
 
   setProperties(
@@ -209,29 +209,29 @@ export class LinkClientRequestModel {
     chainId: number,
     dateCompleted: any,
     dateStarted: any,
-    dynamicParameter: string,
+    dynamicParameters: string,
     externalId: any,
     id: number,
     linkStatusId: number,
     name: string,
     order: number,
     response: string,
-    staticParameter: string,
-    timeoutInSecond: number
+    staticParameters: string,
+    timeoutInSeconds: number
   ): void {
     this.assignedMachineId = assignedMachineId;
     this.chainId = chainId;
     this.dateCompleted = dateCompleted;
     this.dateStarted = dateStarted;
-    this.dynamicParameter = dynamicParameter;
+    this.dynamicParameters = dynamicParameters;
     this.externalId = externalId;
     this.id = id;
     this.linkStatusId = linkStatusId;
     this.name = name;
     this.order = order;
     this.response = response;
-    this.staticParameter = staticParameter;
-    this.timeoutInSecond = timeoutInSecond;
+    this.staticParameters = staticParameters;
+    this.timeoutInSeconds = timeoutInSeconds;
   }
 }
 
@@ -244,7 +244,7 @@ export class LinkClientResponseModel {
   chainIdNavigation?: ChainClientResponseModel;
   dateCompleted: any;
   dateStarted: any;
-  dynamicParameter: string;
+  dynamicParameters: string;
   externalId: any;
   id: number;
   linkStatusId: number;
@@ -253,8 +253,8 @@ export class LinkClientResponseModel {
   name: string;
   order: number;
   response: string;
-  staticParameter: string;
-  timeoutInSecond: number;
+  staticParameters: string;
+  timeoutInSeconds: number;
 
   constructor() {
     this.assignedMachineId = 0;
@@ -265,7 +265,7 @@ export class LinkClientResponseModel {
     this.chainIdNavigation = undefined;
     this.dateCompleted = undefined;
     this.dateStarted = undefined;
-    this.dynamicParameter = '';
+    this.dynamicParameters = '';
     this.externalId = undefined;
     this.id = 0;
     this.linkStatusId = 0;
@@ -274,8 +274,8 @@ export class LinkClientResponseModel {
     this.name = '';
     this.order = 0;
     this.response = '';
-    this.staticParameter = '';
-    this.timeoutInSecond = 0;
+    this.staticParameters = '';
+    this.timeoutInSeconds = 0;
   }
 
   setProperties(
@@ -283,29 +283,29 @@ export class LinkClientResponseModel {
     chainId: number,
     dateCompleted: any,
     dateStarted: any,
-    dynamicParameter: string,
+    dynamicParameters: string,
     externalId: any,
     id: number,
     linkStatusId: number,
     name: string,
     order: number,
     response: string,
-    staticParameter: string,
-    timeoutInSecond: number
+    staticParameters: string,
+    timeoutInSeconds: number
   ): void {
     this.assignedMachineId = assignedMachineId;
     this.chainId = chainId;
     this.dateCompleted = dateCompleted;
     this.dateStarted = dateStarted;
-    this.dynamicParameter = dynamicParameter;
+    this.dynamicParameters = dynamicParameters;
     this.externalId = externalId;
     this.id = id;
     this.linkStatusId = linkStatusId;
     this.name = name;
     this.order = order;
     this.response = response;
-    this.staticParameter = staticParameter;
-    this.timeoutInSecond = timeoutInSecond;
+    this.staticParameters = staticParameters;
+    this.timeoutInSeconds = timeoutInSeconds;
   }
 }
 export class LinkLogClientRequestModel {
@@ -463,6 +463,57 @@ export class MachineClientResponseModel {
     this.name = name;
   }
 }
+export class MachineRefTeamClientRequestModel {
+  id: number;
+  machineId: number;
+  machineIdEntity: string;
+  machineIdNavigation?: MachineClientResponseModel;
+  teamId: number;
+  teamIdEntity: string;
+  teamIdNavigation?: TeamClientResponseModel;
+
+  constructor() {
+    this.id = 0;
+    this.machineId = 0;
+    this.machineIdEntity = '';
+    this.machineIdNavigation = undefined;
+    this.teamId = 0;
+    this.teamIdEntity = '';
+    this.teamIdNavigation = undefined;
+  }
+
+  setProperties(id: number, machineId: number, teamId: number): void {
+    this.id = id;
+    this.machineId = machineId;
+    this.teamId = teamId;
+  }
+}
+
+export class MachineRefTeamClientResponseModel {
+  id: number;
+  machineId: number;
+  machineIdEntity: string;
+  machineIdNavigation?: MachineClientResponseModel;
+  teamId: number;
+  teamIdEntity: string;
+  teamIdNavigation?: TeamClientResponseModel;
+
+  constructor() {
+    this.id = 0;
+    this.machineId = 0;
+    this.machineIdEntity = '';
+    this.machineIdNavigation = undefined;
+    this.teamId = 0;
+    this.teamIdEntity = '';
+    this.teamIdNavigation = undefined;
+  }
+
+  setProperties(id: number, machineId: number, teamId: number): void {
+    this.id = id;
+    this.machineId = machineId;
+    this.teamId = teamId;
+  }
+}
 export class OrganizationClientRequestModel {
   id: number;
   name: string;
@@ -535,8 +586,43 @@ export class TeamClientResponseModel {
     this.organizationId = organizationId;
   }
 }
+export class VersionInfoClientRequestModel {
+  appliedOn: any;
+  description: string;
+  version: number;
+
+  constructor() {
+    this.appliedOn = undefined;
+    this.description = '';
+    this.version = 0;
+  }
+
+  setProperties(appliedOn: any, description: string, version: number): void {
+    this.appliedOn = appliedOn;
+    this.description = description;
+    this.version = version;
+  }
+}
+
+export class VersionInfoClientResponseModel {
+  appliedOn: any;
+  description: string;
+  version: number;
+
+  constructor() {
+    this.appliedOn = undefined;
+    this.description = '';
+    this.version = 0;
+  }
+
+  setProperties(appliedOn: any, description: string, version: number): void {
+    this.appliedOn = appliedOn;
+    this.description = description;
+    this.version = version;
+  }
+}
 
 
 /*<Codenesium>
-    <Hash>4e6747d0c62f462df29506d52766275a</Hash>
+    <Hash>6969deba43b6f73f8b4f3daec1460259</Hash>
 </Codenesium>*/

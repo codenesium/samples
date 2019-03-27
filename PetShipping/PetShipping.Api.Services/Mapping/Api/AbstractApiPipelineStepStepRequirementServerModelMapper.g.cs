@@ -14,7 +14,7 @@ namespace PetShippingNS.Api.Services
 		{
 			var response = new ApiPipelineStepStepRequirementServerResponseModel();
 			response.SetProperties(id,
-			                       request.Detail,
+			                       request.Details,
 			                       request.PipelineStepId,
 			                       request.RequirementMet);
 			return response;
@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Services
 		{
 			var request = new ApiPipelineStepStepRequirementServerRequestModel();
 			request.SetProperties(
-				response.Detail,
+				response.Details,
 				response.PipelineStepId,
 				response.RequirementMet);
 			return request;
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services
 		{
 			var request = new ApiPipelineStepStepRequirementClientRequestModel();
 			request.SetProperties(
-				response.Detail,
+				response.Details,
 				response.PipelineStepId,
 				response.RequirementMet);
 			return request;
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Services
 		public JsonPatchDocument<ApiPipelineStepStepRequirementServerRequestModel> CreatePatch(ApiPipelineStepStepRequirementServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiPipelineStepStepRequirementServerRequestModel>();
-			patch.Replace(x => x.Detail, model.Detail);
+			patch.Replace(x => x.Details, model.Details);
 			patch.Replace(x => x.PipelineStepId, model.PipelineStepId);
 			patch.Replace(x => x.RequirementMet, model.RequirementMet);
 			return patch;
@@ -54,5 +54,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8499191e6ff719e29e8509826096c1af</Hash>
+    <Hash>c930e7e5ba269a7973ad09f3333b6033</Hash>
 </Codenesium>*/

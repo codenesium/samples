@@ -199,7 +199,7 @@ export default class NoteSearchComponent extends React.Component<
                 Header: 'Note',
                 columns: [
                   {
-                    Header: 'CallId',
+                    Header: 'Call',
                     accessor: 'callId',
                     Cell: props => {
                       return (
@@ -221,21 +221,21 @@ export default class NoteSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateCreated',
+                    Header: 'Date Created',
                     accessor: 'dateCreated',
                     Cell: props => {
                       return <span>{String(props.original.dateCreated)}</span>;
                     },
                   },
                   {
-                    Header: 'NoteText',
+                    Header: 'Note Text',
                     accessor: 'noteText',
                     Cell: props => {
                       return <span>{String(props.original.noteText)}</span>;
                     },
                   },
                   {
-                    Header: 'OfficerId',
+                    Header: 'Officer',
                     accessor: 'officerId',
                     Cell: props => {
                       return (
@@ -319,5 +319,5 @@ export const WrappedNoteSearchComponent = Form.create({ name: 'Note Search' })(
 
 
 /*<Codenesium>
-    <Hash>1c0cdba9bcad9f6fe1489f18ce6d6f3c</Hash>
+    <Hash>d6419e7d5ac995ccd624072020d99c12</Hash>
 </Codenesium>*/

@@ -199,7 +199,7 @@ export default class CallSearchComponent extends React.Component<
                 Header: 'Call',
                 columns: [
                   {
-                    Header: 'AddressId',
+                    Header: 'Address',
                     accessor: 'addressId',
                     Cell: props => {
                       return (
@@ -223,7 +223,7 @@ export default class CallSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'CallDispositionId',
+                    Header: 'Call Disposition',
                     accessor: 'callDispositionId',
                     Cell: props => {
                       return (
@@ -247,7 +247,7 @@ export default class CallSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'CallStatusId',
+                    Header: 'Call Status',
                     accessor: 'callStatusId',
                     Cell: props => {
                       return (
@@ -271,14 +271,14 @@ export default class CallSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'CallString',
+                    Header: 'Call String',
                     accessor: 'callString',
                     Cell: props => {
                       return <span>{String(props.original.callString)}</span>;
                     },
                   },
                   {
-                    Header: 'CallTypeId',
+                    Header: 'Call Type',
                     accessor: 'callTypeId',
                     Cell: props => {
                       return (
@@ -302,21 +302,21 @@ export default class CallSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateCleared',
+                    Header: 'Date Cleared',
                     accessor: 'dateCleared',
                     Cell: props => {
                       return <span>{String(props.original.dateCleared)}</span>;
                     },
                   },
                   {
-                    Header: 'DateCreated',
+                    Header: 'Date Created',
                     accessor: 'dateCreated',
                     Cell: props => {
                       return <span>{String(props.original.dateCreated)}</span>;
                     },
                   },
                   {
-                    Header: 'DateDispatched',
+                    Header: 'Date Dispatched',
                     accessor: 'dateDispatched',
                     Cell: props => {
                       return (
@@ -325,7 +325,7 @@ export default class CallSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'QuickCallNumber',
+                    Header: 'Quick Call Number',
                     accessor: 'quickCallNumber',
                     Cell: props => {
                       return (
@@ -394,5 +394,5 @@ export const WrappedCallSearchComponent = Form.create({ name: 'Call Search' })(
 
 
 /*<Codenesium>
-    <Hash>783c3604232fd98de10a2abb16693bab</Hash>
+    <Hash>e81cb40b906d471695d2f06a169f18f9</Hash>
 </Codenesium>*/

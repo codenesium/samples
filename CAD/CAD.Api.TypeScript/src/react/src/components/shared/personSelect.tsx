@@ -103,7 +103,7 @@ export class PersonSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: PersonViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class PersonSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5e062a93ace0b424b19e4a806b59d8b3</Hash>
+    <Hash>eb231e817d52880fe72af345dd8e5a07</Hash>
 </Codenesium>*/

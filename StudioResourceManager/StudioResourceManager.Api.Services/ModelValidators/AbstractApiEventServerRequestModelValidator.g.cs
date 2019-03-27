@@ -51,14 +51,14 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 		}
 
-		public virtual void StudentNoteRules()
+		public virtual void StudentNotesRules()
 		{
-			this.RuleFor(x => x.StudentNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.StudentNotes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void TeacherNoteRules()
+		public virtual void TeacherNotesRules()
 		{
-			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.TeacherNotes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		protected async Task<bool> BeValidEventStatusByEventStatusId(int id,  CancellationToken cancellationToken)
@@ -71,5 +71,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0da64c9279a27fc4b58b34fb86442432</Hash>
+    <Hash>ac9a598b9ebc836260a1968e80fb3b8c</Hash>
 </Codenesium>*/

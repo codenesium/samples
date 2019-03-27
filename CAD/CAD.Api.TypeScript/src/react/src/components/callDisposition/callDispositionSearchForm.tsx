@@ -200,7 +200,7 @@ export default class CallDispositionSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'CallDisposition',
+                Header: 'Call Disposition',
                 columns: [
                   {
                     Header: 'Name',
@@ -270,5 +270,5 @@ export const WrappedCallDispositionSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a0db27b1328861b3d4f69ed8d03608e6</Hash>
+    <Hash>042fa14ad008a876e3a43bad036df768</Hash>
 </Codenesium>*/

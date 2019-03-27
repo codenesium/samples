@@ -3,7 +3,8 @@ export class Constants {
   static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
   static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
   static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
-  static readonly HostedBaseUrl = location.protocol + '//' + location.host;
+  static readonly HostedBaseUrl =
+    window.location.protocol + '//' + window.location.host;
   static readonly HostedSubDirectory =
     process.env.REACT_APP_HOST_SUBDIRECTORY == '/'
       ? ''
@@ -34,40 +35,50 @@ export class AuthApiRoutes {
 export class ClientRoutes {
   static readonly Addresses = '/addresses';
   static readonly Calls = '/calls';
+  static readonly CallAssignments = '/callassignments';
   static readonly CallDispositions = '/calldispositions';
   static readonly CallPersons = '/callpersons';
   static readonly CallStatus = '/callstatus';
   static readonly CallTypes = '/calltypes';
   static readonly Notes = '/notes';
+  static readonly OffCapabilities = '/offcapabilities';
   static readonly Officers = '/officers';
   static readonly OfficerCapabilities = '/officercapabilities';
   static readonly People = '/people';
   static readonly PersonTypes = '/persontypes';
   static readonly Units = '/units';
   static readonly UnitDispositions = '/unitdispositions';
+  static readonly UnitOfficers = '/unitofficers';
+  static readonly VehCapabilities = '/vehcapabilities';
   static readonly Vehicles = '/vehicles';
   static readonly VehicleCapabilities = '/vehiclecapabilities';
+  static readonly VehicleOfficers = '/vehicleofficers';
 }
 
 export class ApiRoutes {
   static readonly Addresses = 'addresses';
   static readonly Calls = 'calls';
+  static readonly CallAssignments = 'callassignments';
   static readonly CallDispositions = 'calldispositions';
   static readonly CallPersons = 'callpersons';
   static readonly CallStatus = 'callstatus';
   static readonly CallTypes = 'calltypes';
   static readonly Notes = 'notes';
+  static readonly OffCapabilities = 'offcapabilities';
   static readonly Officers = 'officers';
   static readonly OfficerCapabilities = 'officercapabilities';
   static readonly People = 'people';
   static readonly PersonTypes = 'persontypes';
   static readonly Units = 'units';
   static readonly UnitDispositions = 'unitdispositions';
+  static readonly UnitOfficers = 'unitofficers';
+  static readonly VehCapabilities = 'vehcapabilities';
   static readonly Vehicles = 'vehicles';
   static readonly VehicleCapabilities = 'vehiclecapabilities';
+  static readonly VehicleOfficers = 'vehicleofficers';
 }
 
 
 /*<Codenesium>
-    <Hash>bc2e6f5e55a430397489af334b68c2f9</Hash>
+    <Hash>c9585d2e596caee143906f28ef8416fd</Hash>
 </Codenesium>*/

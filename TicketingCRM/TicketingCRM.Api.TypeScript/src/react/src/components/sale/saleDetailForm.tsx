@@ -7,7 +7,7 @@ import SaleViewModel from './saleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
-import { SaleTicketTableComponent } from '../shared/saleTicketTable';
+import { SaleTicketsTableComponent } from '../shared/saleTicketsTable';
 
 interface SaleDetailComponentProps {
   form: WrappedFormUtils;
@@ -112,8 +112,8 @@ class SaleDetailComponent extends React.Component<
               <p>{String(this.state.model!.ipAddress)}</p>
             </div>
             <div>
-              <h3>Note</h3>
-              <p>{String(this.state.model!.note)}</p>
+              <h3>Notes</h3>
+              <p>{String(this.state.model!.notes)}</p>
             </div>
             <div>
               <h3>Sale Date</h3>
@@ -132,7 +132,7 @@ class SaleDetailComponent extends React.Component<
           {message}
           <div>
             <h3>SaleTickets</h3>
-            <SaleTicketTableComponent
+            <SaleTicketsTableComponent
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -159,5 +159,5 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 
 
 /*<Codenesium>
-    <Hash>27b319a41331159a2724bfb78552f71d</Hash>
+    <Hash>b55c5d13bdb06558ef0f5099010258f7</Hash>
 </Codenesium>*/

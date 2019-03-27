@@ -115,7 +115,7 @@ export class DestinationTableComponent extends React.Component<
                 Header: 'Destinations',
                 columns: [
                   {
-                    Header: 'CountryId',
+                    Header: 'Country',
                     accessor: 'countryId',
                     Cell: props => {
                       return (
@@ -197,5 +197,5 @@ export class DestinationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6548fc0391aa5ce3716fe0a648f59839</Hash>
+    <Hash>b07773d873152954726e3c8420e095c0</Hash>
 </Codenesium>*/

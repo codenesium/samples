@@ -313,7 +313,7 @@ namespace CADNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiOfficerCapabilityClientResponseModel> response = await client.OfficerCapabilitiesByOfficerId(1);
+			List<ApiOfficerCapabilitiesClientResponseModel> response = await client.OfficerCapabilitiesByOfficerId(1);
 
 			response.Should().NotBeEmpty();
 		}
@@ -334,7 +334,91 @@ namespace CADNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiOfficerCapabilityClientResponseModel> response = await client.OfficerCapabilitiesByOfficerId(default(int));
+			List<ApiOfficerCapabilitiesClientResponseModel> response = await client.OfficerCapabilitiesByOfficerId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyUnitOfficersByOfficerIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiUnitOfficerClientResponseModel> response = await client.UnitOfficersByOfficerId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyUnitOfficersByOfficerIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiUnitOfficerClientResponseModel> response = await client.UnitOfficersByOfficerId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyVehicleOfficersByOfficerIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiVehicleOfficerClientResponseModel> response = await client.VehicleOfficersByOfficerId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyVehicleOfficersByOfficerIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiVehicleOfficerClientResponseModel> response = await client.VehicleOfficersByOfficerId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -362,5 +446,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f60e863b0eaac8dcb6caa490d236f301</Hash>
+    <Hash>7703059dde6dbc9cd4407aaa9e362b91</Hash>
 </Codenesium>*/

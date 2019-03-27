@@ -66,17 +66,17 @@ export class AddressClientResponseModel {
   }
 }
 export class CallClientRequestModel {
-  addressId: any;
+  addressId: number;
   addressIdEntity: string;
   addressIdNavigation?: AddressClientResponseModel;
-  callDispositionId: any;
+  callDispositionId: number;
   callDispositionIdEntity: string;
   callDispositionIdNavigation?: CallDispositionClientResponseModel;
-  callStatusId: any;
+  callStatusId: number;
   callStatusIdEntity: string;
-  callStatusIdNavigation?: CallStatuClientResponseModel;
+  callStatusIdNavigation?: CallStatusClientResponseModel;
   callString: string;
-  callTypeId: any;
+  callTypeId: number;
   callTypeIdEntity: string;
   callTypeIdNavigation?: CallTypeClientResponseModel;
   dateCleared: any;
@@ -86,17 +86,17 @@ export class CallClientRequestModel {
   quickCallNumber: number;
 
   constructor() {
-    this.addressId = undefined;
+    this.addressId = 0;
     this.addressIdEntity = '';
     this.addressIdNavigation = undefined;
-    this.callDispositionId = undefined;
+    this.callDispositionId = 0;
     this.callDispositionIdEntity = '';
     this.callDispositionIdNavigation = undefined;
-    this.callStatusId = undefined;
+    this.callStatusId = 0;
     this.callStatusIdEntity = '';
     this.callStatusIdNavigation = undefined;
     this.callString = '';
-    this.callTypeId = undefined;
+    this.callTypeId = 0;
     this.callTypeIdEntity = '';
     this.callTypeIdNavigation = undefined;
     this.dateCleared = undefined;
@@ -107,11 +107,11 @@ export class CallClientRequestModel {
   }
 
   setProperties(
-    addressId: any,
-    callDispositionId: any,
-    callStatusId: any,
+    addressId: number,
+    callDispositionId: number,
+    callStatusId: number,
     callString: string,
-    callTypeId: any,
+    callTypeId: number,
     dateCleared: any,
     dateCreated: any,
     dateDispatched: any,
@@ -132,17 +132,17 @@ export class CallClientRequestModel {
 }
 
 export class CallClientResponseModel {
-  addressId: any;
+  addressId: number;
   addressIdEntity: string;
   addressIdNavigation?: AddressClientResponseModel;
-  callDispositionId: any;
+  callDispositionId: number;
   callDispositionIdEntity: string;
   callDispositionIdNavigation?: CallDispositionClientResponseModel;
-  callStatusId: any;
+  callStatusId: number;
   callStatusIdEntity: string;
-  callStatusIdNavigation?: CallStatuClientResponseModel;
+  callStatusIdNavigation?: CallStatusClientResponseModel;
   callString: string;
-  callTypeId: any;
+  callTypeId: number;
   callTypeIdEntity: string;
   callTypeIdNavigation?: CallTypeClientResponseModel;
   dateCleared: any;
@@ -152,17 +152,17 @@ export class CallClientResponseModel {
   quickCallNumber: number;
 
   constructor() {
-    this.addressId = undefined;
+    this.addressId = 0;
     this.addressIdEntity = '';
     this.addressIdNavigation = undefined;
-    this.callDispositionId = undefined;
+    this.callDispositionId = 0;
     this.callDispositionIdEntity = '';
     this.callDispositionIdNavigation = undefined;
-    this.callStatusId = undefined;
+    this.callStatusId = 0;
     this.callStatusIdEntity = '';
     this.callStatusIdNavigation = undefined;
     this.callString = '';
-    this.callTypeId = undefined;
+    this.callTypeId = 0;
     this.callTypeIdEntity = '';
     this.callTypeIdNavigation = undefined;
     this.dateCleared = undefined;
@@ -173,11 +173,11 @@ export class CallClientResponseModel {
   }
 
   setProperties(
-    addressId: any,
-    callDispositionId: any,
-    callStatusId: any,
+    addressId: number,
+    callDispositionId: number,
+    callStatusId: number,
     callString: string,
-    callTypeId: any,
+    callTypeId: number,
     dateCleared: any,
     dateCreated: any,
     dateDispatched: any,
@@ -194,6 +194,57 @@ export class CallClientResponseModel {
     this.dateDispatched = dateDispatched;
     this.id = id;
     this.quickCallNumber = quickCallNumber;
+  }
+}
+export class CallAssignmentClientRequestModel {
+  callId: number;
+  callIdEntity: string;
+  callIdNavigation?: CallClientResponseModel;
+  id: number;
+  unitId: number;
+  unitIdEntity: string;
+  unitIdNavigation?: UnitClientResponseModel;
+
+  constructor() {
+    this.callId = 0;
+    this.callIdEntity = '';
+    this.callIdNavigation = undefined;
+    this.id = 0;
+    this.unitId = 0;
+    this.unitIdEntity = '';
+    this.unitIdNavigation = undefined;
+  }
+
+  setProperties(callId: number, id: number, unitId: number): void {
+    this.callId = callId;
+    this.id = id;
+    this.unitId = unitId;
+  }
+}
+
+export class CallAssignmentClientResponseModel {
+  callId: number;
+  callIdEntity: string;
+  callIdNavigation?: CallClientResponseModel;
+  id: number;
+  unitId: number;
+  unitIdEntity: string;
+  unitIdNavigation?: UnitClientResponseModel;
+
+  constructor() {
+    this.callId = 0;
+    this.callIdEntity = '';
+    this.callIdNavigation = undefined;
+    this.id = 0;
+    this.unitId = 0;
+    this.unitIdEntity = '';
+    this.unitIdNavigation = undefined;
+  }
+
+  setProperties(callId: number, id: number, unitId: number): void {
+    this.callId = callId;
+    this.id = id;
+    this.unitId = unitId;
   }
 }
 export class CallDispositionClientRequestModel {
@@ -292,7 +343,7 @@ export class CallPersonClientResponseModel {
     this.personTypeId = personTypeId;
   }
 }
-export class CallStatuClientRequestModel {
+export class CallStatusClientRequestModel {
   id: number;
   name: string;
 
@@ -307,7 +358,7 @@ export class CallStatuClientRequestModel {
   }
 }
 
-export class CallStatuClientResponseModel {
+export class CallStatusClientResponseModel {
   id: number;
   name: string;
 
@@ -425,6 +476,35 @@ export class NoteClientResponseModel {
     this.officerId = officerId;
   }
 }
+export class OffCapabilityClientRequestModel {
+  id: number;
+  name: string;
+
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
+
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+export class OffCapabilityClientResponseModel {
+  id: number;
+  name: string;
+
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
+
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
+}
 export class OfficerClientRequestModel {
   badge: string;
   email: string;
@@ -492,10 +572,11 @@ export class OfficerClientResponseModel {
     this.password = password;
   }
 }
-export class OfficerCapabilityClientRequestModel {
+export class OfficerCapabilitiesClientRequestModel {
   capabilityId: number;
   capabilityIdEntity: string;
-  capabilityIdNavigation?: OfficerCapabilityClientResponseModel;
+  capabilityIdNavigation?: OffCapabilityClientResponseModel;
+  id: number;
   officerId: number;
   officerIdEntity: string;
   officerIdNavigation?: OfficerClientResponseModel;
@@ -504,21 +585,24 @@ export class OfficerCapabilityClientRequestModel {
     this.capabilityId = 0;
     this.capabilityIdEntity = '';
     this.capabilityIdNavigation = undefined;
+    this.id = 0;
     this.officerId = 0;
     this.officerIdEntity = '';
     this.officerIdNavigation = undefined;
   }
 
-  setProperties(capabilityId: number, officerId: number): void {
+  setProperties(capabilityId: number, id: number, officerId: number): void {
     this.capabilityId = capabilityId;
+    this.id = id;
     this.officerId = officerId;
   }
 }
 
-export class OfficerCapabilityClientResponseModel {
+export class OfficerCapabilitiesClientResponseModel {
   capabilityId: number;
   capabilityIdEntity: string;
-  capabilityIdNavigation?: OfficerCapabilityClientResponseModel;
+  capabilityIdNavigation?: OffCapabilityClientResponseModel;
+  id: number;
   officerId: number;
   officerIdEntity: string;
   officerIdNavigation?: OfficerClientResponseModel;
@@ -527,13 +611,15 @@ export class OfficerCapabilityClientResponseModel {
     this.capabilityId = 0;
     this.capabilityIdEntity = '';
     this.capabilityIdNavigation = undefined;
+    this.id = 0;
     this.officerId = 0;
     this.officerIdEntity = '';
     this.officerIdNavigation = undefined;
   }
 
-  setProperties(capabilityId: number, officerId: number): void {
+  setProperties(capabilityId: number, id: number, officerId: number): void {
     this.capabilityId = capabilityId;
+    this.id = id;
     this.officerId = officerId;
   }
 }
@@ -683,6 +769,86 @@ export class UnitDispositionClientResponseModel {
     this.name = name;
   }
 }
+export class UnitOfficerClientRequestModel {
+  id: number;
+  officerId: number;
+  officerIdEntity: string;
+  officerIdNavigation?: OfficerClientResponseModel;
+  unitId: number;
+  unitIdEntity: string;
+  unitIdNavigation?: UnitClientResponseModel;
+
+  constructor() {
+    this.id = 0;
+    this.officerId = 0;
+    this.officerIdEntity = '';
+    this.officerIdNavigation = undefined;
+    this.unitId = 0;
+    this.unitIdEntity = '';
+    this.unitIdNavigation = undefined;
+  }
+
+  setProperties(id: number, officerId: number, unitId: number): void {
+    this.id = id;
+    this.officerId = officerId;
+    this.unitId = unitId;
+  }
+}
+
+export class UnitOfficerClientResponseModel {
+  id: number;
+  officerId: number;
+  officerIdEntity: string;
+  officerIdNavigation?: OfficerClientResponseModel;
+  unitId: number;
+  unitIdEntity: string;
+  unitIdNavigation?: UnitClientResponseModel;
+
+  constructor() {
+    this.id = 0;
+    this.officerId = 0;
+    this.officerIdEntity = '';
+    this.officerIdNavigation = undefined;
+    this.unitId = 0;
+    this.unitIdEntity = '';
+    this.unitIdNavigation = undefined;
+  }
+
+  setProperties(id: number, officerId: number, unitId: number): void {
+    this.id = id;
+    this.officerId = officerId;
+    this.unitId = unitId;
+  }
+}
+export class VehCapabilityClientRequestModel {
+  id: number;
+  name: string;
+
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
+
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+export class VehCapabilityClientResponseModel {
+  id: number;
+  name: string;
+
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
+
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
+}
 export class VehicleClientRequestModel {
   id: number;
   name: string;
@@ -712,15 +878,17 @@ export class VehicleClientResponseModel {
     this.name = name;
   }
 }
-export class VehicleCapabilittyClientRequestModel {
+export class VehicleCapabilitiesClientRequestModel {
+  id: number;
   vehicleCapabilityId: number;
   vehicleCapabilityIdEntity: string;
-  vehicleCapabilityIdNavigation?: VehicleCapabilityClientResponseModel;
+  vehicleCapabilityIdNavigation?: VehCapabilityClientResponseModel;
   vehicleId: number;
   vehicleIdEntity: string;
   vehicleIdNavigation?: VehicleClientResponseModel;
 
   constructor() {
+    this.id = 0;
     this.vehicleCapabilityId = 0;
     this.vehicleCapabilityIdEntity = '';
     this.vehicleCapabilityIdNavigation = undefined;
@@ -729,21 +897,28 @@ export class VehicleCapabilittyClientRequestModel {
     this.vehicleIdNavigation = undefined;
   }
 
-  setProperties(vehicleCapabilityId: number, vehicleId: number): void {
+  setProperties(
+    id: number,
+    vehicleCapabilityId: number,
+    vehicleId: number
+  ): void {
+    this.id = id;
     this.vehicleCapabilityId = vehicleCapabilityId;
     this.vehicleId = vehicleId;
   }
 }
 
-export class VehicleCapabilittyClientResponseModel {
+export class VehicleCapabilitiesClientResponseModel {
+  id: number;
   vehicleCapabilityId: number;
   vehicleCapabilityIdEntity: string;
-  vehicleCapabilityIdNavigation?: VehicleCapabilityClientResponseModel;
+  vehicleCapabilityIdNavigation?: VehCapabilityClientResponseModel;
   vehicleId: number;
   vehicleIdEntity: string;
   vehicleIdNavigation?: VehicleClientResponseModel;
 
   constructor() {
+    this.id = 0;
     this.vehicleCapabilityId = 0;
     this.vehicleCapabilityIdEntity = '';
     this.vehicleCapabilityIdNavigation = undefined;
@@ -752,13 +927,69 @@ export class VehicleCapabilittyClientResponseModel {
     this.vehicleIdNavigation = undefined;
   }
 
-  setProperties(vehicleCapabilityId: number, vehicleId: number): void {
+  setProperties(
+    id: number,
+    vehicleCapabilityId: number,
+    vehicleId: number
+  ): void {
+    this.id = id;
     this.vehicleCapabilityId = vehicleCapabilityId;
+    this.vehicleId = vehicleId;
+  }
+}
+export class VehicleOfficerClientRequestModel {
+  id: number;
+  officerId: number;
+  officerIdEntity: string;
+  officerIdNavigation?: OfficerClientResponseModel;
+  vehicleId: number;
+  vehicleIdEntity: string;
+  vehicleIdNavigation?: VehicleClientResponseModel;
+
+  constructor() {
+    this.id = 0;
+    this.officerId = 0;
+    this.officerIdEntity = '';
+    this.officerIdNavigation = undefined;
+    this.vehicleId = 0;
+    this.vehicleIdEntity = '';
+    this.vehicleIdNavigation = undefined;
+  }
+
+  setProperties(id: number, officerId: number, vehicleId: number): void {
+    this.id = id;
+    this.officerId = officerId;
+    this.vehicleId = vehicleId;
+  }
+}
+
+export class VehicleOfficerClientResponseModel {
+  id: number;
+  officerId: number;
+  officerIdEntity: string;
+  officerIdNavigation?: OfficerClientResponseModel;
+  vehicleId: number;
+  vehicleIdEntity: string;
+  vehicleIdNavigation?: VehicleClientResponseModel;
+
+  constructor() {
+    this.id = 0;
+    this.officerId = 0;
+    this.officerIdEntity = '';
+    this.officerIdNavigation = undefined;
+    this.vehicleId = 0;
+    this.vehicleIdEntity = '';
+    this.vehicleIdNavigation = undefined;
+  }
+
+  setProperties(id: number, officerId: number, vehicleId: number): void {
+    this.id = id;
+    this.officerId = officerId;
     this.vehicleId = vehicleId;
   }
 }
 
 
 /*<Codenesium>
-    <Hash>525b32d2ada1a45284c7b1d6497f1ae4</Hash>
+    <Hash>ce384a1b0f5665a84042c2ecb76020cb</Hash>
 </Codenesium>*/

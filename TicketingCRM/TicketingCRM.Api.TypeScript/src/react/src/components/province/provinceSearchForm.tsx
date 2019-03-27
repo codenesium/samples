@@ -197,7 +197,7 @@ export default class ProvinceSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Provinces',
+                Header: 'Province',
                 columns: [
                   {
                     Header: 'Country',
@@ -291,5 +291,5 @@ export const WrappedProvinceSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5a5f37ad2a6c05965337e8785126e2be</Hash>
+    <Hash>aaf4b2a5f598382a5b3e2e92ac6ce7e6</Hash>
 </Codenesium>*/

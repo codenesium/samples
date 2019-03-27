@@ -16,14 +16,18 @@ namespace StudioResourceManagerMTNS.Api.Client
 			from.Admins.ForEach(x => this.AddAdmin(x));
 			from.Events.ForEach(x => this.AddEvent(x));
 			from.EventStatus.ForEach(x => this.AddEventStatu(x));
+			from.EventStudents.ForEach(x => this.AddEventStudent(x));
+			from.EventTeachers.ForEach(x => this.AddEventTeacher(x));
 			from.Families.ForEach(x => this.AddFamily(x));
 			from.Rates.ForEach(x => this.AddRate(x));
 			from.Spaces.ForEach(x => this.AddSpace(x));
 			from.SpaceFeatures.ForEach(x => this.AddSpaceFeature(x));
+			from.SpaceSpaceFeatures.ForEach(x => this.AddSpaceSpaceFeature(x));
 			from.Students.ForEach(x => this.AddStudent(x));
 			from.Studios.ForEach(x => this.AddStudio(x));
 			from.Teachers.ForEach(x => this.AddTeacher(x));
 			from.TeacherSkills.ForEach(x => this.AddTeacherSkill(x));
+			from.TeacherTeacherSkills.ForEach(x => this.AddTeacherTeacherSkill(x));
 			from.Users.ForEach(x => this.AddUser(x));
 		}
 
@@ -33,6 +37,10 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		public List<ApiEventStatuClientResponseModel> EventStatus { get; private set; } = new List<ApiEventStatuClientResponseModel>();
 
+		public List<ApiEventStudentClientResponseModel> EventStudents { get; private set; } = new List<ApiEventStudentClientResponseModel>();
+
+		public List<ApiEventTeacherClientResponseModel> EventTeachers { get; private set; } = new List<ApiEventTeacherClientResponseModel>();
+
 		public List<ApiFamilyClientResponseModel> Families { get; private set; } = new List<ApiFamilyClientResponseModel>();
 
 		public List<ApiRateClientResponseModel> Rates { get; private set; } = new List<ApiRateClientResponseModel>();
@@ -41,6 +49,8 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		public List<ApiSpaceFeatureClientResponseModel> SpaceFeatures { get; private set; } = new List<ApiSpaceFeatureClientResponseModel>();
 
+		public List<ApiSpaceSpaceFeatureClientResponseModel> SpaceSpaceFeatures { get; private set; } = new List<ApiSpaceSpaceFeatureClientResponseModel>();
+
 		public List<ApiStudentClientResponseModel> Students { get; private set; } = new List<ApiStudentClientResponseModel>();
 
 		public List<ApiStudioClientResponseModel> Studios { get; private set; } = new List<ApiStudioClientResponseModel>();
@@ -48,6 +58,8 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public List<ApiTeacherClientResponseModel> Teachers { get; private set; } = new List<ApiTeacherClientResponseModel>();
 
 		public List<ApiTeacherSkillClientResponseModel> TeacherSkills { get; private set; } = new List<ApiTeacherSkillClientResponseModel>();
+
+		public List<ApiTeacherTeacherSkillClientResponseModel> TeacherTeacherSkills { get; private set; } = new List<ApiTeacherTeacherSkillClientResponseModel>();
 
 		public List<ApiUserClientResponseModel> Users { get; private set; } = new List<ApiUserClientResponseModel>();
 
@@ -72,6 +84,22 @@ namespace StudioResourceManagerMTNS.Api.Client
 			if (!this.EventStatus.Any(x => x.Id == item.Id))
 			{
 				this.EventStatus.Add(item);
+			}
+		}
+
+		public void AddEventStudent(ApiEventStudentClientResponseModel item)
+		{
+			if (!this.EventStudents.Any(x => x.EventId == item.EventId))
+			{
+				this.EventStudents.Add(item);
+			}
+		}
+
+		public void AddEventTeacher(ApiEventTeacherClientResponseModel item)
+		{
+			if (!this.EventTeachers.Any(x => x.EventId == item.EventId))
+			{
+				this.EventTeachers.Add(item);
 			}
 		}
 
@@ -107,6 +135,14 @@ namespace StudioResourceManagerMTNS.Api.Client
 			}
 		}
 
+		public void AddSpaceSpaceFeature(ApiSpaceSpaceFeatureClientResponseModel item)
+		{
+			if (!this.SpaceSpaceFeatures.Any(x => x.SpaceId == item.SpaceId))
+			{
+				this.SpaceSpaceFeatures.Add(item);
+			}
+		}
+
 		public void AddStudent(ApiStudentClientResponseModel item)
 		{
 			if (!this.Students.Any(x => x.Id == item.Id))
@@ -139,6 +175,14 @@ namespace StudioResourceManagerMTNS.Api.Client
 			}
 		}
 
+		public void AddTeacherTeacherSkill(ApiTeacherTeacherSkillClientResponseModel item)
+		{
+			if (!this.TeacherTeacherSkills.Any(x => x.TeacherId == item.TeacherId))
+			{
+				this.TeacherTeacherSkills.Add(item);
+			}
+		}
+
 		public void AddUser(ApiUserClientResponseModel item)
 		{
 			if (!this.Users.Any(x => x.Id == item.Id))
@@ -150,5 +194,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>7ccfe2d31125d262b6e9f8911edff002</Hash>
+    <Hash>8c1d4b25e44072c9beca846d5aa905e7</Hash>
 </Codenesium>*/

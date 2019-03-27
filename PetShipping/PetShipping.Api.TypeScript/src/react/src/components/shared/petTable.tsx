@@ -115,7 +115,7 @@ export class PetTableComponent extends React.Component<
                 Header: 'Pets',
                 columns: [
                   {
-                    Header: 'BreedId',
+                    Header: 'Breed',
                     accessor: 'breedId',
                     Cell: props => {
                       return (
@@ -137,7 +137,7 @@ export class PetTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ClientId',
+                    Header: 'Client',
                     accessor: 'clientId',
                     Cell: props => {
                       return <span>{String(props.original.clientId)}</span>;
@@ -202,5 +202,5 @@ export class PetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2123694ccc1a4e294dd1147d787bb188</Hash>
+    <Hash>bbc78011daaa358542a632296eae0326</Hash>
 </Codenesium>*/

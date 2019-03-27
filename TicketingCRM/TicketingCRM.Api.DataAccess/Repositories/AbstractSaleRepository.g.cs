@@ -37,7 +37,7 @@ namespace TicketingCRMNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Id == query.ToInt() ||
 				                  x.IpAddress.StartsWith(query) ||
-				                  x.Note.StartsWith(query) ||
+				                  x.Notes.StartsWith(query) ||
 				                  x.SaleDate == query.ToDateTime() ||
 				                  x.TransactionId == query.ToInt(),
 				                  limit,
@@ -96,14 +96,14 @@ namespace TicketingCRMNS.Api.DataAccess
 			return await this.Where(x => x.TransactionId == transactionId, limit, offset);
 		}
 
-		// Foreign key reference to this table SaleTicket via saleId.
-		public async virtual Task<List<SaleTicket>> SaleTicketsBySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table SaleTickets via saleId.
+		public async virtual Task<List<SaleTickets>> SaleTicketsBySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SaleTicket>()
+			return await this.Context.Set<SaleTickets>()
 			       .Include(x => x.SaleIdNavigation)
 			       .Include(x => x.TicketIdNavigation)
 
-			       .Where(x => x.SaleId == saleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTicket>();
+			       .Where(x => x.SaleId == saleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTickets>();
 		}
 
 		// Foreign key reference to table Transaction via transactionId.
@@ -140,5 +140,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6901b4d5c964e246132d804ab4db2949</Hash>
+    <Hash>eb1c00fa1d444b8c2336f6a9009eed6d</Hash>
 </Codenesium>*/

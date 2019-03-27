@@ -15,6 +15,7 @@ namespace StudioResourceManagerNS.Api.Services
 			EventTeacher item = new EventTeacher();
 			item.SetProperties(
 				id,
+				model.EventId,
 				model.TeacherId);
 			return item;
 		}
@@ -25,6 +26,7 @@ namespace StudioResourceManagerNS.Api.Services
 			var model = new ApiEventTeacherServerResponseModel();
 
 			model.SetProperties(item.Id,
+			                    item.EventId,
 			                    item.TeacherId);
 			if (item.IdNavigation != null)
 			{
@@ -37,8 +39,8 @@ namespace StudioResourceManagerNS.Api.Services
 					item.IdNavigation.EventStatusId,
 					item.IdNavigation.ScheduledEndDate,
 					item.IdNavigation.ScheduledStartDate,
-					item.IdNavigation.StudentNote,
-					item.IdNavigation.TeacherNote);
+					item.IdNavigation.StudentNotes,
+					item.IdNavigation.TeacherNotes);
 
 				model.SetIdNavigation(idModel);
 			}
@@ -77,5 +79,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ced72b92a9ca26d145145fed2695b4d7</Hash>
+    <Hash>e70b02137b55d395f582406ae91601e5</Hash>
 </Codenesium>*/

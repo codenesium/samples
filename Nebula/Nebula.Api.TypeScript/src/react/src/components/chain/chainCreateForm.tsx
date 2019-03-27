@@ -142,7 +142,7 @@ class ChainCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <ChainStatusSelectComponent
-            apiRoute={Constants.ApiEndpoint + ApiRoutes.ChainStatuses}
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.ChainStatus}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="chainStatusId"
             required={true}
@@ -150,11 +150,11 @@ class ChainCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="externalId">ExternalId</label>
+            <label htmlFor="externalId">External</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'ExternalId'} />)}
+            })(<Input placeholder={'External'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -200,5 +200,5 @@ export const WrappedChainCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d16493fa76c0218d35b908a6aebb5bf2</Hash>
+    <Hash>ed5cfa67d07fa41235d4ca5eb9b25d47</Hash>
 </Codenesium>*/

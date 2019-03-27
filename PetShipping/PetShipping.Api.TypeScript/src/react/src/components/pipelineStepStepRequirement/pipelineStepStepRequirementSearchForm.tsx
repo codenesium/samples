@@ -217,17 +217,17 @@ export default class PipelineStepStepRequirementSearchComponent extends React.Co
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'PipelineStepStepRequirements',
+                Header: 'Pipeline Step Step Requirement',
                 columns: [
                   {
                     Header: 'Details',
-                    accessor: 'detail',
+                    accessor: 'details',
                     Cell: props => {
-                      return <span>{String(props.original.detail)}</span>;
+                      return <span>{String(props.original.details)}</span>;
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -251,7 +251,7 @@ export default class PipelineStepStepRequirementSearchComponent extends React.Co
                     },
                   },
                   {
-                    Header: 'RequirementMet',
+                    Header: 'Requirement Met',
                     accessor: 'requirementMet',
                     Cell: props => {
                       return (
@@ -320,5 +320,5 @@ export const WrappedPipelineStepStepRequirementSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6ca7881db058c9c88e99dee19dd9e650</Hash>
+    <Hash>ee790cc477617eec8771ff2285e27096</Hash>
 </Codenesium>*/

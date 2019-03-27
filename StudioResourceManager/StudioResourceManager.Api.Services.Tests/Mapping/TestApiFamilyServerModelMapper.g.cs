@@ -19,7 +19,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			model.SetProperties("A", "A", "A", "A", "A");
 			ApiFamilyServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -34,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			model.SetProperties(1, "A", "A", "A", "A", "A");
 			ApiFamilyServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -51,7 +51,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			JsonPatchDocument<ApiFamilyServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiFamilyServerRequestModel();
 			patch.ApplyTo(response);
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -61,5 +61,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e950e2afc01a28d0500bd2aff80848b8</Hash>
+    <Hash>0e87bf83fdb16a3b27b0bdf81c06e766</Hash>
 </Codenesium>*/

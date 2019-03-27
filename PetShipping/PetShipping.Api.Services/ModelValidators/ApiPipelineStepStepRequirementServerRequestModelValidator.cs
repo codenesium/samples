@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Services
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiPipelineStepStepRequirementServerRequestModel model)
 		{
-			this.DetailRules();
+			this.DetailsRules();
 			this.PipelineStepIdRules();
 			this.RequirementMetRules();
 			return await this.ValidateAsync(model);
@@ -23,7 +23,7 @@ namespace PetShippingNS.Api.Services
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPipelineStepStepRequirementServerRequestModel model)
 		{
-			this.DetailRules();
+			this.DetailsRules();
 			this.PipelineStepIdRules();
 			this.RequirementMetRules();
 			return await this.ValidateAsync(model, id);
@@ -37,5 +37,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06d8b30f8b748052be961c713aa89a1f</Hash>
+    <Hash>9eab152ecb2b2a947602b78426ba5a90</Hash>
 </Codenesium>*/

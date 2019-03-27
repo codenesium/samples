@@ -19,7 +19,7 @@ namespace PetShippingNS.Api.Client.Tests
 			ApiCountryRequirementClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.CountryId.Should().Be(1);
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 		}
 
 		[Fact]
@@ -31,11 +31,11 @@ namespace PetShippingNS.Api.Client.Tests
 			ApiCountryRequirementClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.CountryId.Should().Be(1);
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0103a39647e4a1132efebb6b1cfa0db8</Hash>
+    <Hash>75ebbef49029945a524706970dc5a36b</Hash>
 </Codenesium>*/

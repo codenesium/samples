@@ -49,7 +49,7 @@ namespace StudioResourceManagerNS.Api.Services
 				var familyIdModel = new ApiFamilyServerResponseModel();
 				familyIdModel.SetProperties(
 					item.FamilyIdNavigation.Id,
-					item.FamilyIdNavigation.Note,
+					item.FamilyIdNavigation.Notes,
 					item.FamilyIdNavigation.PrimaryContactEmail,
 					item.FamilyIdNavigation.PrimaryContactFirstName,
 					item.FamilyIdNavigation.PrimaryContactLastName,
@@ -88,5 +88,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6f1dd7d7c59bb56fd5e31579f5ced8e1</Hash>
+    <Hash>1b6c19df9b1a1a65260e955b800de270</Hash>
 </Codenesium>*/

@@ -103,7 +103,7 @@ export class StudioSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: StudioViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class StudioSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b933bfb3c20b5c0be1e7b343aa2bbc09</Hash>
+    <Hash>b0e353f8f5596bb86c34b5233767e7fe</Hash>
 </Codenesium>*/

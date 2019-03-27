@@ -7,7 +7,7 @@ import TicketViewModel from './ticketViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
-import { SaleTicketTableComponent } from '../shared/saleTicketTable';
+import { SaleTicketsTableComponent } from '../shared/saleTicketsTable';
 
 interface TicketDetailComponentProps {
   form: WrappedFormUtils;
@@ -124,7 +124,7 @@ class TicketDetailComponent extends React.Component<
           {message}
           <div>
             <h3>SaleTickets</h3>
-            <SaleTicketTableComponent
+            <SaleTicketsTableComponent
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -151,5 +151,5 @@ export const WrappedTicketDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e32019d8915a96e482fb39133603b686</Hash>
+    <Hash>48b59beedef42fa09fcc9ff3740cdd7b</Hash>
 </Codenesium>*/

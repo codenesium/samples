@@ -108,7 +108,7 @@ class PipelineStatusDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -142,5 +142,5 @@ export const WrappedPipelineStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>529df2cd1897e3bb11b4b8053c03e839</Hash>
+    <Hash>a6e8123c59da6a69dcd2ba80905dae64</Hash>
 </Codenesium>*/

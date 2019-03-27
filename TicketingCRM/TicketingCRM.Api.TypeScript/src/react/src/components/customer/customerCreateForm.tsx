@@ -180,7 +180,7 @@ class CustomerCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<InputNumber placeholder={'Phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -207,5 +207,5 @@ export const WrappedCustomerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5de120614b0c0f611f9cb183beae76b5</Hash>
+    <Hash>033f43b709839d24410a417a456c91ae</Hash>
 </Codenesium>*/

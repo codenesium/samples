@@ -14,6 +14,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var response = new ApiEventTeacherServerResponseModel();
 			response.SetProperties(id,
+			                       request.EventId,
 			                       request.TeacherId);
 			return response;
 		}
@@ -23,6 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var request = new ApiEventTeacherServerRequestModel();
 			request.SetProperties(
+				response.EventId,
 				response.TeacherId);
 			return request;
 		}
@@ -32,6 +34,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var request = new ApiEventTeacherClientRequestModel();
 			request.SetProperties(
+				response.EventId,
 				response.TeacherId);
 			return request;
 		}
@@ -39,6 +42,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public JsonPatchDocument<ApiEventTeacherServerRequestModel> CreatePatch(ApiEventTeacherServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiEventTeacherServerRequestModel>();
+			patch.Replace(x => x.EventId, model.EventId);
 			patch.Replace(x => x.TeacherId, model.TeacherId);
 			return patch;
 		}
@@ -46,5 +50,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36247fe858f70941a3f1c8a6bc17b25d</Hash>
+    <Hash>450c1361f8c677995715874b829cd89b</Hash>
 </Codenesium>*/

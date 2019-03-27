@@ -112,9 +112,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiEventTeacherServerResponseModel>> ById(int id, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiEventTeacherServerResponseModel>> ByEventId(int eventId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<EventTeacher> records = await this.EventTeacherRepository.ById(id, limit, offset);
+			List<EventTeacher> records = await this.EventTeacherRepository.ByEventId(eventId, limit, offset);
 
 			return this.DalEventTeacherMapper.MapEntityToModel(records);
 		}
@@ -129,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57e697870296699d466e6a4286865689</Hash>
+    <Hash>b84fb9600d8ae4c8e250ced5d0f91320</Hash>
 </Codenesium>*/

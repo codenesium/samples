@@ -103,7 +103,7 @@ export class OfficerSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: OfficerViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class OfficerSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>47507fe9718c2baf944ad630621e5188</Hash>
+    <Hash>43110ee524a0cc33afbaa7d055cbd71b</Hash>
 </Codenesium>*/

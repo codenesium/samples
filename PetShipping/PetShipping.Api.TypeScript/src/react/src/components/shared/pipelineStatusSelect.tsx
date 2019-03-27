@@ -94,7 +94,7 @@ export class PipelineStatusSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Pipeline Status</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class PipelineStatusSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: PipelineStatusViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class PipelineStatusSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8339fa7b8e9b8575446d0229f2dee500</Hash>
+    <Hash>57a2c2d857a9c993be598a9c069bd44c</Hash>
 </Codenesium>*/

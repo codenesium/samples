@@ -73,7 +73,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 2, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -90,7 +90,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 
 			var entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 2, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<EventTeacher>().ToListAsync();
@@ -105,7 +105,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = EventTeacherRepositoryMoc.GetContext();
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 2, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = EventTeacherRepositoryMoc.GetContext();
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 2, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,7 +145,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = EventTeacherRepositoryMoc.GetContext();
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 2, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -174,5 +174,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9cc9818e391386543d459da60b2ef507</Hash>
+    <Hash>d6e816ecb7fe54030343297bd983d611</Hash>
 </Codenesium>*/

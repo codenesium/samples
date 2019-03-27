@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 			this.CustomerIdRules();
 			this.DateCreatedRules();
 			this.EmployeeIdRules();
-			this.NoteRules();
+			this.NotesRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -27,7 +27,7 @@ namespace PetShippingNS.Api.Services
 			this.CustomerIdRules();
 			this.DateCreatedRules();
 			this.EmployeeIdRules();
-			this.NoteRules();
+			this.NotesRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -39,5 +39,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>552ceb045a3142eb8a392248ea00da88</Hash>
+    <Hash>fe9d33f830fef4efc91cbc824b08669a</Hash>
 </Codenesium>*/

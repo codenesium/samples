@@ -15,14 +15,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int id,
-			string note,
+			string notes,
 			string primaryContactEmail,
 			string primaryContactFirstName,
 			string primaryContactLastName,
 			string primaryContactPhone)
 		{
 			this.Id = id;
-			this.Note = note;
+			this.Notes = notes;
 			this.PrimaryContactEmail = primaryContactEmail;
 			this.PrimaryContactFirstName = primaryContactFirstName;
 			this.PrimaryContactLastName = primaryContactLastName;
@@ -35,7 +35,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("notes")]
-		public virtual string Note { get; private set; }
+		public virtual string Notes { get; private set; }
 
 		[MaxLength(128)]
 		[Column("primaryContactEmail")]
@@ -56,5 +56,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ebbaed0a64125ed1969e1b7c8a29fc6</Hash>
+    <Hash>07204b3e5f4cd7ea1aebce56138bd093</Hash>
 </Codenesium>*/

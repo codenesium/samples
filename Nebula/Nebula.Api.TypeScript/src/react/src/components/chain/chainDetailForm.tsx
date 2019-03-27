@@ -109,7 +109,7 @@ class ChainDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>ChainStatusId</h3>
+              <h3>Chain Status</h3>
               <p>
                 {String(
                   this.state.model!.chainStatusIdNavigation &&
@@ -118,19 +118,15 @@ class ChainDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>ExternalId</h3>
+              <h3>External</h3>
               <p>{String(this.state.model!.externalId)}</p>
-            </div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
             </div>
             <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>TeamId</h3>
+              <h3>Team</h3>
               <p>
                 {String(
                   this.state.model!.teamIdNavigation &&
@@ -184,5 +180,5 @@ export const WrappedChainDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>27a069f90ddd494386d79a881681aebd</Hash>
+    <Hash>5ca0c1398f3fece3872ff4733760d7a4</Hash>
 </Codenesium>*/

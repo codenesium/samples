@@ -197,7 +197,7 @@ export default class VenueSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Venues',
+                Header: 'Venue',
                 columns: [
                   {
                     Header: 'Address1',
@@ -355,5 +355,5 @@ export const WrappedVenueSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>297f903aecdda9bfd8b82c275f698388</Hash>
+    <Hash>e47b41c2ddf55f67aaf497bafff45889</Hash>
 </Codenesium>*/

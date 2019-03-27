@@ -31,11 +31,11 @@ export default class LinkLogViewModel {
   }
 
   toDisplay(): string {
-    return String(this.linkId);
+    return String(this.dateEntered);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c04a65496415bfc71f0136ad8dfad0d3</Hash>
+    <Hash>f9cf87aae4e33137cfd136e891ab6ed7</Hash>
 </Codenesium>*/

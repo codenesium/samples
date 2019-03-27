@@ -96,6 +96,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table EventStudent via studentId.
+		public async virtual Task<List<EventStudent>> EventStudentsByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<EventStudent>()
+			       .Include(x => x.EventIdNavigation)
+			       .Include(x => x.StudentIdNavigation)
+
+			       .Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
+		}
+
 		// Foreign key reference to table Family via familyId.
 		public async virtual Task<Family> FamilyByFamilyId(int familyId)
 		{
@@ -138,5 +148,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>48cbc2fb1c61141f8923e5df1e4a083c</Hash>
+    <Hash>7418781cc759e18bb231d68c990fb319</Hash>
 </Codenesium>*/

@@ -7,7 +7,9 @@ import TeacherViewModel from './teacherViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
+import { EventTeacherTableComponent } from '../shared/eventTeacherTable';
 import { RateTableComponent } from '../shared/rateTable';
+import { TeacherTeacherSkillTableComponent } from '../shared/teacherTeacherSkillTable';
 
 interface TeacherDetailComponentProps {
   form: WrappedFormUtils;
@@ -139,6 +141,21 @@ class TeacherDetailComponent extends React.Component<
           </div>
           {message}
           <div>
+            <h3>EventTeachers</h3>
+            <EventTeacherTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Teachers +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.EventTeachers
+              }
+            />
+          </div>
+          <div>
             <h3>Rates</h3>
             <RateTableComponent
               history={this.props.history}
@@ -150,6 +167,21 @@ class TeacherDetailComponent extends React.Component<
                 this.state.model!.id +
                 '/' +
                 ApiRoutes.Rates
+              }
+            />
+          </div>
+          <div>
+            <h3>TeacherTeacherSkills</h3>
+            <TeacherTeacherSkillTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Teachers +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.TeacherTeacherSkills
               }
             />
           </div>
@@ -167,5 +199,5 @@ export const WrappedTeacherDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4fcbdf0ced79e3b09a6af743191a123a</Hash>
+    <Hash>73653683dd1c79ed53a7919c863f29c9</Hash>
 </Codenesium>*/

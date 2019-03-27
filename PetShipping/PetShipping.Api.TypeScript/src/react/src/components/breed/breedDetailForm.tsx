@@ -108,15 +108,11 @@ class BreedDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>speciesId</h3>
+              <h3>Species</h3>
               <p>
                 {String(
                   this.state.model!.speciesIdNavigation &&
@@ -155,5 +151,5 @@ export const WrappedBreedDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b6c32ab4ac27d829e1bf6571909177c9</Hash>
+    <Hash>23b878b7f22a6489307774e5570f078c</Hash>
 </Codenesium>*/

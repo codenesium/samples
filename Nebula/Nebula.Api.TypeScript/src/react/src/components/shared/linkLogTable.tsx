@@ -115,21 +115,14 @@ export class LinkLogTableComponent extends React.Component<
                 Header: 'LinkLogs',
                 columns: [
                   {
-                    Header: 'DateEntered',
+                    Header: 'Date Entered',
                     accessor: 'dateEntered',
                     Cell: props => {
                       return <span>{String(props.original.dateEntered)}</span>;
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LinkId',
+                    Header: 'Link',
                     accessor: 'linkId',
                     Cell: props => {
                       return (
@@ -202,5 +195,5 @@ export class LinkLogTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>666b9e240e5a927fe75d4766e209df5d</Hash>
+    <Hash>6accd32d612f9354b3691029632a8c09</Hash>
 </Codenesium>*/

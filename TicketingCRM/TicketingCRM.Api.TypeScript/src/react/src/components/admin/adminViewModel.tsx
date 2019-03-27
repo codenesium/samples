@@ -38,11 +38,11 @@ export default class AdminViewModel {
   }
 
   toDisplay(): string {
-    return String(this.username);
+    return String(this.email);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>1510202ae6aef17d3a4b9c23e3bb4835</Hash>
+    <Hash>f33634b6267c6c4305aefad1e789bc5a</Hash>
 </Codenesium>*/

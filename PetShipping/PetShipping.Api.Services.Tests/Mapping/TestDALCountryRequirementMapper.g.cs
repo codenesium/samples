@@ -21,7 +21,7 @@ namespace PetShippingNS.Api.Services
 			CountryRequirement response = mapper.MapModelToEntity(1, model);
 
 			response.CountryId.Should().Be(1);
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Services
 			ApiCountryRequirementServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.CountryId.Should().Be(1);
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.Id.Should().Be(1);
 		}
 
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d3a43651824f1a034c459c9e6e4415f9</Hash>
+    <Hash>94df50c85e79d0429782a3ffe9fd73b5</Hash>
 </Codenesium>*/

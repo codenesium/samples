@@ -438,9 +438,9 @@ namespace StudioResourceManagerNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiEventTeacherClientResponseModel>> ByEventTeacherById(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiEventTeacherClientResponseModel>> ByEventTeacherByEventId(int eventId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/EventTeachers/byId/{id}", cancellationToken).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/EventTeachers/byEventId/{eventId}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<List<ApiEventTeacherClientResponseModel>>(httpResponse.Content.ContentToString());
@@ -1365,5 +1365,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>aba4851436fb4b5d85ddb61962bc9270</Hash>
+    <Hash>be425bd3613a847d04da0a372de04e43</Hash>
 </Codenesium>*/

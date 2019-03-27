@@ -101,68 +101,34 @@ namespace CADNS.Api.DataAccess
 			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Note>();
 		}
 
-		// Foreign key reference to this table OfficerCapability via officerId.
-		public async virtual Task<List<OfficerCapability>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table OfficerCapabilities via officerId.
+		public async virtual Task<List<OfficerCapabilities>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<OfficerCapability>()
+			return await this.Context.Set<OfficerCapabilities>()
 			       .Include(x => x.CapabilityIdNavigation)
 			       .Include(x => x.OfficerIdNavigation)
 
-			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OfficerCapability>();
+			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OfficerCapabilities>();
 		}
 
-		// Foreign key reference pass-though. Pass-thru table OfficerCapability. Foreign Table Officer.
-		public async virtual Task<List<Officer>> ByCapabilityId(int capabilityId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table UnitOfficer via officerId.
+		public async virtual Task<List<UnitOfficer>> UnitOfficersByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await (from refTable in this.Context.OfficerCapabilities
-			              join officers in this.Context.Officers on
-			              refTable.OfficerId equals officers.Id
-			              where refTable.CapabilityId == capabilityId
-			              select officers).Skip(offset).Take(limit).ToListAsync();
+			return await this.Context.Set<UnitOfficer>()
+			       .Include(x => x.OfficerIdNavigation)
+			       .Include(x => x.UnitIdNavigation)
+
+			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<UnitOfficer>();
 		}
 
-		// Foreign key reference pass-though. Pass-thru table OfficerCapability. Foreign Table Officer.
-		public async virtual Task<OfficerCapability> CreateOfficerCapability(OfficerCapability item)
+		// Foreign key reference to this table VehicleOfficer via officerId.
+		public async virtual Task<List<VehicleOfficer>> VehicleOfficersByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			this.Context.Set<OfficerCapability>().Add(item);
-			await this.Context.SaveChangesAsync();
+			return await this.Context.Set<VehicleOfficer>()
+			       .Include(x => x.OfficerIdNavigation)
+			       .Include(x => x.VehicleIdNavigation)
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table OfficerCapability. Foreign Table Officer.
-		public async virtual Task DeleteOfficerCapability(OfficerCapability item)
-		{
-			this.Context.Set<OfficerCapability>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table VehicleOfficer. Foreign Table Officer.
-		public async virtual Task<List<Officer>> ByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.VehicleOfficers
-			              join officers in this.Context.Officers on
-			              refTable.OfficerId equals officers.Id
-			              where refTable.VehicleId == vehicleId
-			              select officers).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table VehicleOfficer. Foreign Table Officer.
-		public async virtual Task<VehicleOfficer> CreateVehicleOfficer(VehicleOfficer item)
-		{
-			this.Context.Set<VehicleOfficer>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table VehicleOfficer. Foreign Table Officer.
-		public async virtual Task DeleteVehicleOfficer(VehicleOfficer item)
-		{
-			this.Context.Set<VehicleOfficer>().Remove(item);
-			await this.Context.SaveChangesAsync();
+			       .Where(x => x.OfficerId == officerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<VehicleOfficer>();
 		}
 
 		protected async Task<List<Officer>> Where(
@@ -191,5 +157,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb10c7c4a83680d7261d07f345203d07</Hash>
+    <Hash>168e741a5e11e8817b298d08a2b1421e</Hash>
 </Codenesium>*/

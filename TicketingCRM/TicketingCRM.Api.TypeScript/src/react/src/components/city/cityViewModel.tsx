@@ -23,11 +23,11 @@ export default class CityViewModel {
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c7e0719cec49108812d609c108dd3c23</Hash>
+    <Hash>ecc7bb96e066257dc7eb63737d71243b</Hash>
 </Codenesium>*/

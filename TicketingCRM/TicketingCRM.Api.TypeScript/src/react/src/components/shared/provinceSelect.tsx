@@ -94,7 +94,7 @@ export class ProvinceSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Province</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class ProvinceSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: ProvinceViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class ProvinceSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b5369255fda863fcd1322d0a9693b44e</Hash>
+    <Hash>827b25f32285f5cfbdf6ca0bd9e32292</Hash>
 </Codenesium>*/

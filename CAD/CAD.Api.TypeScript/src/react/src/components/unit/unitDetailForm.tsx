@@ -109,7 +109,7 @@ class UnitDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>callSign</h3>
+              <h3>Call Sign</h3>
               <p>{String(this.state.model!.callSign)}</p>
             </div>
           </div>
@@ -158,5 +158,5 @@ export const WrappedUnitDetailComponent = Form.create({ name: 'Unit Detail' })(
 
 
 /*<Codenesium>
-    <Hash>fd4f7a0ed22be52f880e50e2e2b93929</Hash>
+    <Hash>a7a9745cab443044575edf5ff72ef619</Hash>
 </Codenesium>*/

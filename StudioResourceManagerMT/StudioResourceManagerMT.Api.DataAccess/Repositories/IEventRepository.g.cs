@@ -17,10 +17,14 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task<List<Event>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
+		Task<List<EventStudent>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<EventTeacher>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+
 		Task<EventStatu> EventStatuByEventStatusId(int eventStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>254a5339ac624d68f1804ce3e5778460</Hash>
+    <Hash>81f27ccd44fc8c17d1627bedaa9b6a17</Hash>
 </Codenesium>*/

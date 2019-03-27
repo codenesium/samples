@@ -94,14 +94,14 @@ namespace TicketingCRMNS.Api.DataAccess
 			return await this.Where(x => x.TicketStatusId == ticketStatusId, limit, offset);
 		}
 
-		// Foreign key reference to this table SaleTicket via ticketId.
-		public async virtual Task<List<SaleTicket>> SaleTicketsByTicketId(int ticketId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table SaleTickets via ticketId.
+		public async virtual Task<List<SaleTickets>> SaleTicketsByTicketId(int ticketId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SaleTicket>()
+			return await this.Context.Set<SaleTickets>()
 			       .Include(x => x.SaleIdNavigation)
 			       .Include(x => x.TicketIdNavigation)
 
-			       .Where(x => x.TicketId == ticketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTicket>();
+			       .Where(x => x.TicketId == ticketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTickets>();
 		}
 
 		// Foreign key reference to table TicketStatus via ticketStatusId.
@@ -138,5 +138,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e6a432d89d6b732cbbd0dc33be48386b</Hash>
+    <Hash>735e23c2ea3fd0859d2cee265560e402</Hash>
 </Codenesium>*/

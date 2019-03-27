@@ -42,8 +42,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				                  x.Id == query.ToInt() ||
 				                  x.ScheduledEndDate == query.ToNullableDateTime() ||
 				                  x.ScheduledStartDate == query.ToNullableDateTime() ||
-				                  x.StudentNote.StartsWith(query) ||
-				                  x.TeacherNote.StartsWith(query),
+				                  x.StudentNotes.StartsWith(query) ||
+				                  x.TeacherNotes.StartsWith(query),
 				                  limit,
 				                  offset);
 			}
@@ -154,5 +154,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4e29915b5d7d0d24452c3c2cab7af6f6</Hash>
+    <Hash>058c188846dccf7dc171dfda97551aff</Hash>
 </Codenesium>*/

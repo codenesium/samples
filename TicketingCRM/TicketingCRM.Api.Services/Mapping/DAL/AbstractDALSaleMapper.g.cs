@@ -16,7 +16,7 @@ namespace TicketingCRMNS.Api.Services
 			item.SetProperties(
 				id,
 				model.IpAddress,
-				model.Note,
+				model.Notes,
 				model.SaleDate,
 				model.TransactionId);
 			return item;
@@ -29,7 +29,7 @@ namespace TicketingCRMNS.Api.Services
 
 			model.SetProperties(item.Id,
 			                    item.IpAddress,
-			                    item.Note,
+			                    item.Notes,
 			                    item.SaleDate,
 			                    item.TransactionId);
 			if (item.TransactionIdNavigation != null)
@@ -63,5 +63,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>68dde52b8e8b33ed98b017b6ac9aac26</Hash>
+    <Hash>e2ce96c56a87da2093fe2266cf482178</Hash>
 </Codenesium>*/

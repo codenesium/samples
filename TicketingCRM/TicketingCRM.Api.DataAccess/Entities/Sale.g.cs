@@ -16,13 +16,13 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual void SetProperties(
 			int id,
 			string ipAddress,
-			string note,
+			string notes,
 			DateTime saleDate,
 			int transactionId)
 		{
 			this.Id = id;
 			this.IpAddress = ipAddress;
-			this.Note = note;
+			this.Notes = notes;
 			this.SaleDate = saleDate;
 			this.TransactionId = transactionId;
 		}
@@ -37,7 +37,7 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("notes")]
-		public virtual string Note { get; private set; }
+		public virtual string Notes { get; private set; }
 
 		[Column("saleDate")]
 		public virtual DateTime SaleDate { get; private set; }
@@ -56,5 +56,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0de8c32c1ca14d616cdad613cef3924f</Hash>
+    <Hash>589b4322f44bc9718505c3e72f1a4d5c</Hash>
 </Codenesium>*/

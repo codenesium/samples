@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Services
 
 		protected IDALLinkMapper DalLinkMapper { get; private set; }
 
+		protected IDALMachineRefTeamMapper DalMachineRefTeamMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractMachineService(
@@ -27,13 +29,15 @@ namespace NebulaNS.Api.Services
 			IMachineRepository machineRepository,
 			IApiMachineServerRequestModelValidator machineModelValidator,
 			IDALMachineMapper dalMachineMapper,
-			IDALLinkMapper dalLinkMapper)
+			IDALLinkMapper dalLinkMapper,
+			IDALMachineRefTeamMapper dalMachineRefTeamMapper)
 			: base()
 		{
 			this.MachineRepository = machineRepository;
 			this.MachineModelValidator = machineModelValidator;
 			this.DalMachineMapper = dalMachineMapper;
 			this.DalLinkMapper = dalLinkMapper;
+			this.DalMachineRefTeamMapper = dalMachineRefTeamMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -136,9 +140,16 @@ namespace NebulaNS.Api.Services
 
 			return this.DalLinkMapper.MapEntityToModel(records);
 		}
+
+		public async virtual Task<List<ApiMachineRefTeamServerResponseModel>> MachineRefTeamsByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<MachineRefTeam> records = await this.MachineRepository.MachineRefTeamsByMachineId(machineId, limit, offset);
+
+			return this.DalMachineRefTeamMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f6b5516ac95158cba47f3fa9404d9dd1</Hash>
+    <Hash>78d4d5a25459f6713bf2ef7fc87f2cef</Hash>
 </Codenesium>*/

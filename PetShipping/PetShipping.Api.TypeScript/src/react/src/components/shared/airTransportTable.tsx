@@ -115,21 +115,21 @@ export class AirTransportTableComponent extends React.Component<
                 Header: 'AirTransports',
                 columns: [
                   {
-                    Header: 'AirlineId',
+                    Header: 'Airline',
                     accessor: 'airlineId',
                     Cell: props => {
                       return <span>{String(props.original.airlineId)}</span>;
                     },
                   },
                   {
-                    Header: 'FlightNumber',
+                    Header: 'Flight Number',
                     accessor: 'flightNumber',
                     Cell: props => {
                       return <span>{String(props.original.flightNumber)}</span>;
                     },
                   },
                   {
-                    Header: 'HandlerId',
+                    Header: 'Handler',
                     accessor: 'handlerId',
                     Cell: props => {
                       return (
@@ -153,14 +153,14 @@ export class AirTransportTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'LandDate',
+                    Header: 'Land Date',
                     accessor: 'landDate',
                     Cell: props => {
                       return <span>{String(props.original.landDate)}</span>;
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -169,7 +169,7 @@ export class AirTransportTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'TakeoffDate',
+                    Header: 'Takeoff Date',
                     accessor: 'takeoffDate',
                     Cell: props => {
                       return <span>{String(props.original.takeoffDate)}</span>;
@@ -220,5 +220,5 @@ export class AirTransportTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d8a629fd6fbb27260f59df41e2a663b8</Hash>
+    <Hash>e5e997e965719e8a4ced83af9bbc013a</Hash>
 </Codenesium>*/

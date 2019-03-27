@@ -202,10 +202,10 @@ export default class HandlerPipelineStepSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'HandlerPipelineSteps',
+                Header: 'Handler Pipeline Step',
                 columns: [
                   {
-                    Header: 'HandlerId',
+                    Header: 'Handler',
                     accessor: 'handlerId',
                     Cell: props => {
                       return (
@@ -229,7 +229,7 @@ export default class HandlerPipelineStepSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -313,5 +313,5 @@ export const WrappedHandlerPipelineStepSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>377f2f12f9cc835b4e3d27ee864453d6</Hash>
+    <Hash>8e3f1f4c79eadf4ea4d4334952354458</Hash>
 </Codenesium>*/

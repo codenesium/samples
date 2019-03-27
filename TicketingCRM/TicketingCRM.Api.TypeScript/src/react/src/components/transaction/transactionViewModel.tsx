@@ -31,11 +31,11 @@ export default class TransactionViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.amount);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>7ebbc4eec8b33933372043b51340d889</Hash>
+    <Hash>91e1b33db65cb854774727b56958c312</Hash>
 </Codenesium>*/

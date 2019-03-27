@@ -70,9 +70,9 @@ namespace CADNS.Api.Services
 		public string CallStatusIdEntity { get; private set; } = RouteConstants.CallStatus;
 
 		[JsonProperty]
-		public ApiCallStatuServerResponseModel CallStatusIdNavigation { get; private set; }
+		public ApiCallStatusServerResponseModel CallStatusIdNavigation { get; private set; }
 
-		public void SetCallStatusIdNavigation(ApiCallStatuServerResponseModel value)
+		public void SetCallStatusIdNavigation(ApiCallStatusServerResponseModel value)
 		{
 			this.CallStatusIdNavigation = value;
 		}
@@ -115,5 +115,5 @@ namespace CADNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>013527e2ce3514051119406f4a104f1f</Hash>
+    <Hash>3c2824954e8d829b9f64dd3b266507fe</Hash>
 </Codenesium>*/

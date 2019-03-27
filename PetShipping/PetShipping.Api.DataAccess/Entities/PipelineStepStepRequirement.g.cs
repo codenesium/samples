@@ -15,19 +15,19 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int id,
-			string detail,
+			string details,
 			int pipelineStepId,
 			bool requirementMet)
 		{
 			this.Id = id;
-			this.Detail = detail;
+			this.Details = details;
 			this.PipelineStepId = pipelineStepId;
 			this.RequirementMet = requirementMet;
 		}
 
 		[MaxLength(2147483647)]
 		[Column("details")]
-		public virtual string Detail { get; private set; }
+		public virtual string Details { get; private set; }
 
 		[Key]
 		[Column("id")]
@@ -50,5 +50,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0f9f4079a91ec1a6c547c421f9a69e8c</Hash>
+    <Hash>11c04f72a3f353d09da62f492451c2f2</Hash>
 </Codenesium>*/

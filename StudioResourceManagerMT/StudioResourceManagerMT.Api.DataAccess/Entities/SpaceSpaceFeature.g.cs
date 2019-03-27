@@ -28,9 +28,25 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		[Key]
 		[Column("spaceId")]
 		public virtual int SpaceId { get; private set; }
+
+		[ForeignKey("SpaceFeatureId")]
+		public virtual SpaceFeature SpaceFeatureIdNavigation { get; private set; }
+
+		public void SetSpaceFeatureIdNavigation(SpaceFeature item)
+		{
+			this.SpaceFeatureIdNavigation = item;
+		}
+
+		[ForeignKey("SpaceId")]
+		public virtual Space SpaceIdNavigation { get; private set; }
+
+		public void SetSpaceIdNavigation(Space item)
+		{
+			this.SpaceIdNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e8f770111f8638c6e465629492edbc6</Hash>
+    <Hash>c4e38823650ee48a2854ca2b2ba1d9f5</Hash>
 </Codenesium>*/

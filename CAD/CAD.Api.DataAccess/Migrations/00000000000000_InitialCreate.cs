@@ -152,6 +152,11 @@ GO
 --DROP TABLE [dbo].[Note]
 --END
 --GO
+--IF OBJECT_ID('dbo.OffCapability', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[OffCapability]
+--END
+--GO
 --IF OBJECT_ID('dbo.Officer', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [dbo].[Officer]
@@ -160,11 +165,6 @@ GO
 --IF OBJECT_ID('dbo.OfficerCapabilities', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [dbo].[OfficerCapabilities]
---END
---GO
---IF OBJECT_ID('dbo.OfficerCapability', 'U') IS NOT NULL 
---BEGIN
---DROP TABLE [dbo].[OfficerCapability]
 --END
 --GO
 --IF OBJECT_ID('dbo.Person', 'U') IS NOT NULL 
@@ -192,6 +192,11 @@ GO
 --DROP TABLE [dbo].[UnitOfficer]
 --END
 --GO
+--IF OBJECT_ID('dbo.VehCapability', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[VehCapability]
+--END
+--GO
 --IF OBJECT_ID('dbo.Vehicle', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [dbo].[Vehicle]
@@ -200,11 +205,6 @@ GO
 --IF OBJECT_ID('dbo.VehicleCapabilities', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [dbo].[VehicleCapabilities]
---END
---GO
---IF OBJECT_ID('dbo.VehicleCapability', 'U') IS NOT NULL 
---BEGIN
---DROP TABLE [dbo].[VehicleCapability]
 --END
 --GO
 --IF OBJECT_ID('dbo.VehicleOfficer', 'U') IS NOT NULL 
@@ -238,6 +238,7 @@ CREATE TABLE [dbo].[Call](
 GO
 
 CREATE TABLE [dbo].[CallAssignment](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
 [callId] [int]     NOT NULL,
 [unitId] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -278,6 +279,12 @@ CREATE TABLE [dbo].[Note](
 ) ON[PRIMARY]
 GO
 
+CREATE TABLE [dbo].[OffCapability](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+) ON[PRIMARY]
+GO
+
 CREATE TABLE [dbo].[Officer](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [badge] [varchar]  (128)   NULL,
@@ -289,14 +296,9 @@ CREATE TABLE [dbo].[Officer](
 GO
 
 CREATE TABLE [dbo].[OfficerCapabilities](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
 [capabilityId] [int]     NOT NULL,
 [officerId] [int]     NOT NULL,
-) ON[PRIMARY]
-GO
-
-CREATE TABLE [dbo].[OfficerCapability](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -328,8 +330,15 @@ CREATE TABLE [dbo].[UnitDisposition](
 GO
 
 CREATE TABLE [dbo].[UnitOfficer](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
 [officerId] [int]     NOT NULL,
 [unitId] [int]     NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [dbo].[VehCapability](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -340,18 +349,14 @@ CREATE TABLE [dbo].[Vehicle](
 GO
 
 CREATE TABLE [dbo].[VehicleCapabilities](
-[vehicleId] [int]     NOT NULL,
-[vehicleCapabilityId] [int]     NOT NULL,
-) ON[PRIMARY]
-GO
-
-CREATE TABLE [dbo].[VehicleCapability](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (128)   NOT NULL,
+[vehicleCapabilityId] [int]     NOT NULL,
+[vehicleId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[VehicleOfficer](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
 [officerId] [int]     NOT NULL,
 [vehicleId] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -369,13 +374,6 @@ ADD CONSTRAINT[PK_Call] PRIMARY KEY CLUSTERED
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE[dbo].[CallAssignment]
-ADD CONSTRAINT[PK_CallAssignment] PRIMARY KEY CLUSTERED
-(
-[callId] ASC
-,[unitId] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
 CREATE  NONCLUSTERED INDEX[IX_CallAssignment_callId] ON[dbo].[CallAssignment]
 (
 [callId] ASC)
@@ -385,6 +383,12 @@ CREATE  NONCLUSTERED INDEX[IX_CallAssignment_unitId] ON[dbo].[CallAssignment]
 (
 [unitId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+ALTER TABLE[dbo].[CallAssignment]
+ADD CONSTRAINT[PK_CallAssignment] PRIMARY KEY 
+(
+[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[CallDisposition]
 ADD CONSTRAINT[PK_CallDisposition] PRIMARY KEY CLUSTERED
@@ -416,6 +420,12 @@ ADD CONSTRAINT[PK_Note] PRIMARY KEY CLUSTERED
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+ALTER TABLE[dbo].[OffCapability]
+ADD CONSTRAINT[PK_OfficerCapability] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 ALTER TABLE[dbo].[Officer]
 ADD CONSTRAINT[PK_Officer] PRIMARY KEY CLUSTERED
 (
@@ -423,14 +433,7 @@ ADD CONSTRAINT[PK_Officer] PRIMARY KEY CLUSTERED
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[OfficerCapabilities]
-ADD CONSTRAINT[PK_OfficerCapabilities] PRIMARY KEY CLUSTERED
-(
-[capabilityId] ASC
-,[officerId] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
-ALTER TABLE[dbo].[OfficerCapability]
-ADD CONSTRAINT[PK_OfficerCapability] PRIMARY KEY CLUSTERED
+ADD CONSTRAINT[PK_OfficerCapabilities] PRIMARY KEY 
 (
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
@@ -460,10 +463,15 @@ ADD CONSTRAINT[PK_UnitDisposition] PRIMARY KEY CLUSTERED
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[UnitOfficer]
-ADD CONSTRAINT[PK_UnitOfficer] PRIMARY KEY CLUSTERED
+ADD CONSTRAINT[PK_UnitOfficer] PRIMARY KEY 
 (
-[officerId] ASC
-,[unitId] ASC
+[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+ALTER TABLE[dbo].[VehCapability]
+ADD CONSTRAINT[PK_VehicleCapability] PRIMARY KEY CLUSTERED
+(
+[id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[Vehicle]
@@ -473,29 +481,21 @@ ADD CONSTRAINT[PK_Vehicle] PRIMARY KEY CLUSTERED
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[VehicleCapabilities]
-ADD CONSTRAINT[PK_VehicleCapabilities] PRIMARY KEY CLUSTERED
-(
-[vehicleId] ASC
-,[vehicleCapabilityId] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
-ALTER TABLE[dbo].[VehicleCapability]
-ADD CONSTRAINT[PK_VehicleCapability] PRIMARY KEY CLUSTERED
+ADD CONSTRAINT[PK_VehicleCapabilities] PRIMARY KEY 
 (
 [id] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
-ALTER TABLE[dbo].[VehicleOfficer]
-ADD CONSTRAINT[PK_VehicleOfficer] PRIMARY KEY CLUSTERED
-(
-[officerId] ASC
-,[vehicleId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_VehicleOfficer_officerId] ON[dbo].[VehicleOfficer]
 (
 [officerId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+ALTER TABLE[dbo].[VehicleOfficer]
+ADD CONSTRAINT[PK_VehicleOfficer] PRIMARY KEY 
+(
+[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 
 
@@ -555,7 +555,7 @@ GO
 ALTER TABLE[dbo].[OfficerCapabilities] CHECK CONSTRAINT[FK_OfficerRefCapability_officerId_Officer_id]
 GO
 ALTER TABLE[dbo].[OfficerCapabilities]  WITH CHECK ADD  CONSTRAINT[FK_OfficerRefCapability_capabilityId_OfficerCapability_id] FOREIGN KEY([capabilityId])
-REFERENCES[dbo].[OfficerCapability]([id]) on delete no action on update no action
+REFERENCES[dbo].[OffCapability]([id]) on delete no action on update no action
 GO
 ALTER TABLE[dbo].[OfficerCapabilities] CHECK CONSTRAINT[FK_OfficerRefCapability_capabilityId_OfficerCapability_id]
 GO
@@ -575,7 +575,7 @@ GO
 ALTER TABLE[dbo].[VehicleCapabilities] CHECK CONSTRAINT[FK_VehicleRefCapability_vehicleId_Vehicle_id]
 GO
 ALTER TABLE[dbo].[VehicleCapabilities]  WITH CHECK ADD  CONSTRAINT[FK_VehicleRefCapability_vehicleCapabilityId_VehicleCapability_id] FOREIGN KEY([vehicleCapabilityId])
-REFERENCES[dbo].[VehicleCapability]([id]) on delete no action on update no action
+REFERENCES[dbo].[VehCapability]([id]) on delete no action on update no action
 GO
 ALTER TABLE[dbo].[VehicleCapabilities] CHECK CONSTRAINT[FK_VehicleRefCapability_vehicleCapabilityId_VehicleCapability_id]
 GO

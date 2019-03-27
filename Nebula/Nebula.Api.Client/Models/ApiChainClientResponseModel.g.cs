@@ -20,7 +20,7 @@ namespace NebulaNS.Api.Client
 			this.Name = name;
 			this.TeamId = teamId;
 
-			this.ChainStatusIdEntity = nameof(ApiResponse.ChainStatuses);
+			this.ChainStatusIdEntity = nameof(ApiResponse.ChainStatus);
 
 			this.TeamIdEntity = nameof(ApiResponse.Teams);
 		}
@@ -65,5 +65,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>11e5accf98c92831f5fa82e8eec19d1f</Hash>
+    <Hash>05f09484f5f7f728917917cadfb06542</Hash>
 </Codenesium>*/

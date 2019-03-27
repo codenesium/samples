@@ -107,7 +107,7 @@ class HandlerPipelineStepDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>handlerId</h3>
+              <h3>Handler</h3>
               <p>
                 {String(
                   this.state.model!.handlerIdNavigation &&
@@ -116,7 +116,7 @@ class HandlerPipelineStepDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>pipelineStepId</h3>
+              <h3>Pipeline Step</h3>
               <p>
                 {String(
                   this.state.model!.pipelineStepIdNavigation &&
@@ -140,5 +140,5 @@ export const WrappedHandlerPipelineStepDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6b0bb48d39a906d43a733011bfd2a64b</Hash>
+    <Hash>1ad9fda02a0f3d48bf83ae0734beb004</Hash>
 </Codenesium>*/

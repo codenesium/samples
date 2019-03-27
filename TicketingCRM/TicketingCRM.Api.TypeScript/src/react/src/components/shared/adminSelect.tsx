@@ -94,7 +94,7 @@ export class AdminSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Admin</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class AdminSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: AdminViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class AdminSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>933812d2f887d6620b02b6b262284be1</Hash>
+    <Hash>e7aebfca6e4d16871bdf3e2ff93cd846</Hash>
 </Codenesium>*/

@@ -97,7 +97,9 @@ export class PipelineStepDestinationSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            Pipeline Step Destination
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -107,7 +109,7 @@ export class PipelineStepDestinationSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: PipelineStepDestinationViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +127,5 @@ export class PipelineStepDestinationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>67ff204a019c1fdae12c41c0856756a2</Hash>
+    <Hash>e9b4733105bb8df53aa70dedad72f8bc</Hash>
 </Codenesium>*/

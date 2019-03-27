@@ -54,10 +54,10 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			result.Record.Should().NotBeNull();
 
 			context.Set<CountryRequirement>().ToList()[1].CountryId.Should().Be(1);
-			context.Set<CountryRequirement>().ToList()[1].Detail.Should().Be("B");
+			context.Set<CountryRequirement>().ToList()[1].Details.Should().Be("B");
 
 			context.Set<CountryRequirement>().ToList()[2].CountryId.Should().Be(1);
-			context.Set<CountryRequirement>().ToList()[2].Detail.Should().Be("C");
+			context.Set<CountryRequirement>().ToList()[2].Details.Should().Be("C");
 		}
 
 		[Fact]
@@ -84,10 +84,10 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 			context.Set<CountryRequirement>().ToList()[1].CountryId.Should().Be(1);
-			context.Set<CountryRequirement>().ToList()[1].Detail.Should().Be("B");
+			context.Set<CountryRequirement>().ToList()[1].Details.Should().Be("B");
 
 			result.Record.CountryId.Should().Be(1);
-			result.Record.Detail.Should().Be("B");
+			result.Record.Details.Should().Be("B");
 		}
 
 		[Fact]
@@ -121,11 +121,11 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
 			context.Set<CountryRequirement>().ToList()[0].CountryId.Should().Be(1);
-			context.Set<CountryRequirement>().ToList()[0].Detail.Should().Be("B");
+			context.Set<CountryRequirement>().ToList()[0].Details.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.CountryId.Should().Be(1);
-			updateResponse.Record.Detail.Should().Be("B");
+			updateResponse.Record.Details.Should().Be("B");
 		}
 
 		[Fact]
@@ -182,7 +182,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 			response.CountryId.Should().Be(1);
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.Id.Should().Be(1);
 		}
 
@@ -227,7 +227,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			response.Count.Should().BeGreaterThan(0);
 			response[0].CountryId.Should().Be(1);
-			response[0].Detail.Should().Be("A");
+			response[0].Details.Should().Be("A");
 			response[0].Id.Should().Be(1);
 		}
 
@@ -254,5 +254,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>4156a6ee1a50e73a14ce5c7b16178bdf</Hash>
+    <Hash>ed292c60b1f776262baedc1f18330380</Hash>
 </Codenesium>*/

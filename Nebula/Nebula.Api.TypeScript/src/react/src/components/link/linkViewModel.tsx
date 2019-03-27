@@ -12,7 +12,7 @@ export default class LinkViewModel {
   chainIdNavigation?: ChainViewModel;
   dateCompleted: any;
   dateStarted: any;
-  dynamicParameter: string;
+  dynamicParameters: string;
   externalId: any;
   id: number;
   linkStatusId: number;
@@ -21,8 +21,8 @@ export default class LinkViewModel {
   name: string;
   order: number;
   response: string;
-  staticParameter: string;
-  timeoutInSecond: number;
+  staticParameters: string;
+  timeoutInSeconds: number;
 
   constructor() {
     this.assignedMachineId = 0;
@@ -33,7 +33,7 @@ export default class LinkViewModel {
     this.chainIdNavigation = undefined;
     this.dateCompleted = undefined;
     this.dateStarted = undefined;
-    this.dynamicParameter = '';
+    this.dynamicParameters = '';
     this.externalId = undefined;
     this.id = 0;
     this.linkStatusId = 0;
@@ -42,8 +42,8 @@ export default class LinkViewModel {
     this.name = '';
     this.order = 0;
     this.response = '';
-    this.staticParameter = '';
-    this.timeoutInSecond = 0;
+    this.staticParameters = '';
+    this.timeoutInSeconds = 0;
   }
 
   setProperties(
@@ -51,37 +51,37 @@ export default class LinkViewModel {
     chainId: number,
     dateCompleted: any,
     dateStarted: any,
-    dynamicParameter: string,
+    dynamicParameters: string,
     externalId: any,
     id: number,
     linkStatusId: number,
     name: string,
     order: number,
     response: string,
-    staticParameter: string,
-    timeoutInSecond: number
+    staticParameters: string,
+    timeoutInSeconds: number
   ): void {
     this.assignedMachineId = assignedMachineId;
     this.chainId = chainId;
     this.dateCompleted = moment(dateCompleted, 'YYYY-MM-DD');
     this.dateStarted = moment(dateStarted, 'YYYY-MM-DD');
-    this.dynamicParameter = dynamicParameter;
+    this.dynamicParameters = dynamicParameters;
     this.externalId = externalId;
     this.id = id;
     this.linkStatusId = linkStatusId;
     this.name = name;
     this.order = order;
     this.response = response;
-    this.staticParameter = staticParameter;
-    this.timeoutInSecond = timeoutInSecond;
+    this.staticParameters = staticParameters;
+    this.timeoutInSeconds = timeoutInSeconds;
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.externalId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>1a7c39972902024a27f64d0e8df5869f</Hash>
+    <Hash>a95419780fd97e3a850962df29e7109e</Hash>
 </Codenesium>*/

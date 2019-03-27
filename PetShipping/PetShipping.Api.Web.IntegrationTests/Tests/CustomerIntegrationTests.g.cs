@@ -56,13 +56,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			context.Set<Customer>().ToList()[1].Email.Should().Be("B");
 			context.Set<Customer>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Customer>().ToList()[1].LastName.Should().Be("B");
-			context.Set<Customer>().ToList()[1].Note.Should().Be("B");
+			context.Set<Customer>().ToList()[1].Notes.Should().Be("B");
 			context.Set<Customer>().ToList()[1].Phone.Should().Be("B");
 
 			context.Set<Customer>().ToList()[2].Email.Should().Be("C");
 			context.Set<Customer>().ToList()[2].FirstName.Should().Be("C");
 			context.Set<Customer>().ToList()[2].LastName.Should().Be("C");
-			context.Set<Customer>().ToList()[2].Note.Should().Be("C");
+			context.Set<Customer>().ToList()[2].Notes.Should().Be("C");
 			context.Set<Customer>().ToList()[2].Phone.Should().Be("C");
 		}
 
@@ -92,13 +92,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			context.Set<Customer>().ToList()[1].Email.Should().Be("B");
 			context.Set<Customer>().ToList()[1].FirstName.Should().Be("B");
 			context.Set<Customer>().ToList()[1].LastName.Should().Be("B");
-			context.Set<Customer>().ToList()[1].Note.Should().Be("B");
+			context.Set<Customer>().ToList()[1].Notes.Should().Be("B");
 			context.Set<Customer>().ToList()[1].Phone.Should().Be("B");
 
 			result.Record.Email.Should().Be("B");
 			result.Record.FirstName.Should().Be("B");
 			result.Record.LastName.Should().Be("B");
-			result.Record.Note.Should().Be("B");
+			result.Record.Notes.Should().Be("B");
 			result.Record.Phone.Should().Be("B");
 		}
 
@@ -135,14 +135,14 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			context.Set<Customer>().ToList()[0].Email.Should().Be("B");
 			context.Set<Customer>().ToList()[0].FirstName.Should().Be("B");
 			context.Set<Customer>().ToList()[0].LastName.Should().Be("B");
-			context.Set<Customer>().ToList()[0].Note.Should().Be("B");
+			context.Set<Customer>().ToList()[0].Notes.Should().Be("B");
 			context.Set<Customer>().ToList()[0].Phone.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.Email.Should().Be("B");
 			updateResponse.Record.FirstName.Should().Be("B");
 			updateResponse.Record.LastName.Should().Be("B");
-			updateResponse.Record.Note.Should().Be("B");
+			updateResponse.Record.Notes.Should().Be("B");
 			updateResponse.Record.Phone.Should().Be("B");
 		}
 
@@ -203,7 +203,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			response.FirstName.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.LastName.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.Phone.Should().Be("A");
 		}
 
@@ -251,7 +251,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			response[0].FirstName.Should().Be("A");
 			response[0].Id.Should().Be(1);
 			response[0].LastName.Should().Be("A");
-			response[0].Note.Should().Be("A");
+			response[0].Notes.Should().Be("A");
 			response[0].Phone.Should().Be("A");
 		}
 
@@ -320,5 +320,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>b8e420e5a7f182f9c31b768ae70e869c</Hash>
+    <Hash>836cc45b24e544f44c64c9280b8c45b7</Hash>
 </Codenesium>*/

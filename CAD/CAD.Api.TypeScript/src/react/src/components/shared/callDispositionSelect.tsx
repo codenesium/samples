@@ -94,7 +94,7 @@ export class CallDispositionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>CallDisposition</label>
+          <label htmlFor={this.props.propertyName}>Call Disposition</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class CallDispositionSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: CallDispositionViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class CallDispositionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8b8877cccdedbd22ae6545fa28662b12</Hash>
+    <Hash>88723db20358c8b9fe677e8dad0e9578</Hash>
 </Codenesium>*/

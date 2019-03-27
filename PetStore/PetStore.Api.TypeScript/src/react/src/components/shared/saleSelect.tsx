@@ -103,7 +103,7 @@ export class SaleSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: SaleViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class SaleSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1ecb472f462e4596afbe66533dcce193</Hash>
+    <Hash>a8541a24552955a6b8c034c913c6f207</Hash>
 </Codenesium>*/

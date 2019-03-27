@@ -103,7 +103,7 @@ export class DeviceSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: DeviceViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class DeviceSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>be1199a253d6cc37895a23de402b832b</Hash>
+    <Hash>cb84fa01e01a227b9fcaeaeea18b5e86</Hash>
 </Codenesium>*/

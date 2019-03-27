@@ -115,7 +115,7 @@ export class ChainTableComponent extends React.Component<
                 Header: 'Chains',
                 columns: [
                   {
-                    Header: 'ChainStatusId',
+                    Header: 'Chain Status',
                     accessor: 'chainStatusId',
                     Cell: props => {
                       return (
@@ -124,7 +124,7 @@ export class ChainTableComponent extends React.Component<
                           onClick={e => {
                             e.preventDefault();
                             this.props.history.push(
-                              ClientRoutes.ChainStatuses +
+                              ClientRoutes.ChainStatus +
                                 '/' +
                                 props.original.chainStatusId
                             );
@@ -139,17 +139,10 @@ export class ChainTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ExternalId',
+                    Header: 'External',
                     accessor: 'externalId',
                     Cell: props => {
                       return <span>{String(props.original.externalId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
                     },
                   },
                   {
@@ -160,7 +153,7 @@ export class ChainTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'TeamId',
+                    Header: 'Team',
                     accessor: 'teamId',
                     Cell: props => {
                       return (
@@ -226,5 +219,5 @@ export class ChainTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0be5113794dae0b576a09bb289b859b3</Hash>
+    <Hash>592124d5716e7fe70b3661658f8fe860</Hash>
 </Codenesium>*/

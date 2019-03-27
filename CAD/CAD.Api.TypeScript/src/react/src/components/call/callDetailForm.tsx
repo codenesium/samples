@@ -109,7 +109,7 @@ class CallDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>addressId</h3>
+              <h3>Address</h3>
               <p>
                 {String(
                   this.state.model!.addressIdNavigation &&
@@ -118,7 +118,7 @@ class CallDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>callDispositionId</h3>
+              <h3>Call Disposition</h3>
               <p>
                 {String(
                   this.state.model!.callDispositionIdNavigation &&
@@ -127,7 +127,7 @@ class CallDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>callStatusId</h3>
+              <h3>Call Status</h3>
               <p>
                 {String(
                   this.state.model!.callStatusIdNavigation &&
@@ -136,11 +136,11 @@ class CallDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>callString</h3>
+              <h3>Call String</h3>
               <p>{String(this.state.model!.callString)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>callTypeId</h3>
+              <h3>Call Type</h3>
               <p>
                 {String(
                   this.state.model!.callTypeIdNavigation &&
@@ -149,19 +149,19 @@ class CallDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>dateCleared</h3>
+              <h3>Date Cleared</h3>
               <p>{String(this.state.model!.dateCleared)}</p>
             </div>
             <div>
-              <h3>dateCreated</h3>
+              <h3>Date Created</h3>
               <p>{String(this.state.model!.dateCreated)}</p>
             </div>
             <div>
-              <h3>dateDispatched</h3>
+              <h3>Date Dispatched</h3>
               <p>{String(this.state.model!.dateDispatched)}</p>
             </div>
             <div>
-              <h3>quickCallNumber</h3>
+              <h3>Quick Call Number</h3>
               <p>{String(this.state.model!.quickCallNumber)}</p>
             </div>
           </div>
@@ -210,5 +210,5 @@ export const WrappedCallDetailComponent = Form.create({ name: 'Call Detail' })(
 
 
 /*<Codenesium>
-    <Hash>f31b2af3683e78024e2c21cb82078dba</Hash>
+    <Hash>19893aa1a4dd1283a7f6d021fa8bbc2d</Hash>
 </Codenesium>*/

@@ -26,10 +26,10 @@ namespace PetShippingNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
-		public virtual void DetailRules()
+		public virtual void DetailsRules()
 		{
-			this.RuleFor(x => x.Detail).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x.Detail).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.Details).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Details).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PipelineStepIdRules()
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f6ee2cab28707a41dc8898d88632b5a5</Hash>
+    <Hash>3bdcdac1c83796682d2940ce3f42bc0d</Hash>
 </Codenesium>*/

@@ -20,8 +20,8 @@ namespace StudioResourceManagerNS.Api.Services
 			                       request.EventStatusId,
 			                       request.ScheduledEndDate,
 			                       request.ScheduledStartDate,
-			                       request.StudentNote,
-			                       request.TeacherNote);
+			                       request.StudentNotes,
+			                       request.TeacherNotes);
 			return response;
 		}
 
@@ -36,8 +36,8 @@ namespace StudioResourceManagerNS.Api.Services
 				response.EventStatusId,
 				response.ScheduledEndDate,
 				response.ScheduledStartDate,
-				response.StudentNote,
-				response.TeacherNote);
+				response.StudentNotes,
+				response.TeacherNotes);
 			return request;
 		}
 
@@ -52,8 +52,8 @@ namespace StudioResourceManagerNS.Api.Services
 				response.EventStatusId,
 				response.ScheduledEndDate,
 				response.ScheduledStartDate,
-				response.StudentNote,
-				response.TeacherNote);
+				response.StudentNotes,
+				response.TeacherNotes);
 			return request;
 		}
 
@@ -66,13 +66,13 @@ namespace StudioResourceManagerNS.Api.Services
 			patch.Replace(x => x.EventStatusId, model.EventStatusId);
 			patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
 			patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
-			patch.Replace(x => x.StudentNote, model.StudentNote);
-			patch.Replace(x => x.TeacherNote, model.TeacherNote);
+			patch.Replace(x => x.StudentNotes, model.StudentNotes);
+			patch.Replace(x => x.TeacherNotes, model.TeacherNotes);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>95ccdfe1db0b20654eb2722d130cbd14</Hash>
+    <Hash>3a8b73fc78f02f155d2030ead69cb5e9</Hash>
 </Codenesium>*/

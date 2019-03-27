@@ -197,17 +197,17 @@ export default class EmployeeSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Employees',
+                Header: 'Employee',
                 columns: [
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'IsSalesPerson',
+                    Header: 'Is Sales Person',
                     accessor: 'isSalesPerson',
                     Cell: props => {
                       return (
@@ -216,14 +216,14 @@ export default class EmployeeSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'IsShipper',
+                    Header: 'Is Shipper',
                     accessor: 'isShipper',
                     Cell: props => {
                       return <span>{String(props.original.isShipper)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -290,5 +290,5 @@ export const WrappedEmployeeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7211068c7470f4a07152b90058e36708</Hash>
+    <Hash>2d778dd5ff0b2ae14581f12ac59dbad3</Hash>
 </Codenesium>*/

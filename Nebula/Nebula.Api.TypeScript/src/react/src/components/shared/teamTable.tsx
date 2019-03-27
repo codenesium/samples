@@ -115,13 +115,6 @@ export class TeamTableComponent extends React.Component<
                 Header: 'Teams',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -129,7 +122,7 @@ export class TeamTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'OrganizationId',
+                    Header: 'Organization',
                     accessor: 'organizationId',
                     Cell: props => {
                       return (
@@ -197,5 +190,5 @@ export class TeamTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4253ceb8bbca014b0a33eb46c1375e07</Hash>
+    <Hash>f77d982d291f376fc7eb8e0181e1e658</Hash>
 </Codenesium>*/

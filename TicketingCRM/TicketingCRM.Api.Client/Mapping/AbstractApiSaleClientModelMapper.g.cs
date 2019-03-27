@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Client
 			var response = new ApiSaleClientResponseModel();
 			response.SetProperties(id,
 			                       request.IpAddress,
-			                       request.Note,
+			                       request.Notes,
 			                       request.SaleDate,
 			                       request.TransactionId);
 			return response;
@@ -25,7 +25,7 @@ namespace TicketingCRMNS.Api.Client
 			var request = new ApiSaleClientRequestModel();
 			request.SetProperties(
 				response.IpAddress,
-				response.Note,
+				response.Notes,
 				response.SaleDate,
 				response.TransactionId);
 			return request;
@@ -34,5 +34,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>870dcb748c9c0a2749b9b31d151c15b5</Hash>
+    <Hash>5ad441c45c896d92fd83c07827934737</Hash>
 </Codenesium>*/

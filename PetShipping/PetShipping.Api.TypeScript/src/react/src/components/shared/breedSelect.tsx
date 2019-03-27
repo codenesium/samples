@@ -94,7 +94,7 @@ export class BreedSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Breed</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class BreedSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: BreedViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class BreedSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7f1ecc0010a9314f953ce48b984ee8a7</Hash>
+    <Hash>ce0450fbf3ee5af121e0afaccaaf512a</Hash>
 </Codenesium>*/

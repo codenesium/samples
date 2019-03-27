@@ -103,7 +103,7 @@ export class RetweetSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: RetweetViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class RetweetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e33d5fe687c81a58b824aa0c29c70d10</Hash>
+    <Hash>f2fe514039cfb6978bee553ff647c2d5</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
 import { AddressSelectComponent } from '../shared/addressSelect';
 import { CallDispositionSelectComponent } from '../shared/callDispositionSelect';
-import { CallStatuSelectComponent } from '../shared/callStatuSelect';
+import { CallStatusSelectComponent } from '../shared/callStatusSelect';
 import { CallTypeSelectComponent } from '../shared/callTypeSelect';
 
 interface CallCreateComponentProps {
@@ -143,79 +143,88 @@ class CallCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="addressId">addressId</label>
-            <br />
-            {getFieldDecorator('addressId', {
-              rules: [],
-            })(<Input placeholder={'addressId'} />)}
-          </Form.Item>
+          <AddressSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Addresses}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="addressId"
+            required={false}
+            selectedValue={this.state.model!.addressId}
+          />
+
+          <CallDispositionSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.CallDispositions}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="callDispositionId"
+            required={false}
+            selectedValue={this.state.model!.callDispositionId}
+          />
+
+          <CallStatusSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.CallStatus}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="callStatusId"
+            required={false}
+            selectedValue={this.state.model!.callStatusId}
+          />
 
           <Form.Item>
-            <label htmlFor="callDispositionId">callDispositionId</label>
-            <br />
-            {getFieldDecorator('callDispositionId', {
-              rules: [],
-            })(<Input placeholder={'callDispositionId'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="callStatusId">callStatusId</label>
-            <br />
-            {getFieldDecorator('callStatusId', {
-              rules: [],
-            })(<Input placeholder={'callStatusId'} />)}
-          </Form.Item>
-
-          <Form.Item>
-            <label htmlFor="callString">callString</label>
+            <label htmlFor="callString">Call String</label>
             <br />
             {getFieldDecorator('callString', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 24, message: 'Exceeds max length of 24' },
               ],
-            })(<Input placeholder={'callString'} />)}
+            })(<Input placeholder={'Call String'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="callTypeId">callTypeId</label>
-            <br />
-            {getFieldDecorator('callTypeId', {
-              rules: [],
-            })(<Input placeholder={'callTypeId'} />)}
-          </Form.Item>
+          <CallTypeSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.CallTypes}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="callTypeId"
+            required={false}
+            selectedValue={this.state.model!.callTypeId}
+          />
 
           <Form.Item>
-            <label htmlFor="dateCleared">dateCleared</label>
+            <label htmlFor="dateCleared">Date Cleared</label>
             <br />
             {getFieldDecorator('dateCleared', {
               rules: [],
-            })(<Input placeholder={'dateCleared'} />)}
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Date Cleared'} />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateCreated">dateCreated</label>
+            <label htmlFor="dateCreated">Date Created</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'dateCreated'} />)}
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Date Created'} />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateDispatched">dateDispatched</label>
+            <label htmlFor="dateDispatched">Date Dispatched</label>
             <br />
             {getFieldDecorator('dateDispatched', {
               rules: [],
-            })(<Input placeholder={'dateDispatched'} />)}
+            })(
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Date Dispatched'}
+              />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="quickCallNumber">quickCallNumber</label>
+            <label htmlFor="quickCallNumber">Quick Call Number</label>
             <br />
             {getFieldDecorator('quickCallNumber', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'quickCallNumber'} />)}
+            })(<InputNumber placeholder={'Quick Call Number'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -242,5 +251,5 @@ export const WrappedCallCreateComponent = Form.create({ name: 'Call Create' })(
 
 
 /*<Codenesium>
-    <Hash>ef56352f6c552e20faffb83554dab857</Hash>
+    <Hash>0de5e158b7cd88164f3cd3f4cb121d14</Hash>
 </Codenesium>*/

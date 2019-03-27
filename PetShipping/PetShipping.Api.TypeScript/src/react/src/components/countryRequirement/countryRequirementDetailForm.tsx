@@ -107,7 +107,7 @@ class CountryRequirementDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>countryId</h3>
+              <h3>Country</h3>
               <p>
                 {String(
                   this.state.model!.countryIdNavigation &&
@@ -116,8 +116,8 @@ class CountryRequirementDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>details</h3>
-              <p>{String(this.state.model!.detail)}</p>
+              <h3>Details</h3>
+              <p>{String(this.state.model!.details)}</p>
             </div>
           </div>
           {message}
@@ -135,5 +135,5 @@ export const WrappedCountryRequirementDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>99f2a0e1b99e80d18a092a6c2c546f18</Hash>
+    <Hash>ec706f516597d1d41dba329f86a0e2fe</Hash>
 </Codenesium>*/

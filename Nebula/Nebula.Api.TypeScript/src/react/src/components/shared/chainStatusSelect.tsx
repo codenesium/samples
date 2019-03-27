@@ -103,7 +103,7 @@ export class ChainStatusSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: ChainStatusViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class ChainStatusSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>26b04075febe1b5def9d934435e4064d</Hash>
+    <Hash>1916edc3dd6596ee17dc60e2f05815ce</Hash>
 </Codenesium>*/

@@ -110,19 +110,19 @@ class EmployeeDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>firstName</h3>
+              <h3>First Name</h3>
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>isSalesPerson</h3>
+              <h3>Is Sales Person</h3>
               <p>{String(this.state.model!.isSalesPerson)}</p>
             </div>
             <div>
-              <h3>isShipper</h3>
+              <h3>Is Shipper</h3>
               <p>{String(this.state.model!.isShipper)}</p>
             </div>
             <div>
-              <h3>lastName</h3>
+              <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
           </div>
@@ -186,5 +186,5 @@ export const WrappedEmployeeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9335fd27618f746b7d16764bb9e6bfba</Hash>
+    <Hash>fbc3522dd2c0e6f9db8058a94888daff</Hash>
 </Codenesium>*/

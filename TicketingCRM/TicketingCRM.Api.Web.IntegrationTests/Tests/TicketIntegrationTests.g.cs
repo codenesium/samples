@@ -292,7 +292,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiSaleTicketClientResponseModel> response = await client.SaleTicketsByTicketId(1);
+			List<ApiSaleTicketsClientResponseModel> response = await client.SaleTicketsByTicketId(1);
 
 			response.Should().NotBeEmpty();
 		}
@@ -313,7 +313,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiSaleTicketClientResponseModel> response = await client.SaleTicketsByTicketId(default(int));
+			List<ApiSaleTicketsClientResponseModel> response = await client.SaleTicketsByTicketId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -341,5 +341,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>cc82ac1c34ad76db4ee17fc3109b8503</Hash>
+    <Hash>527bba9a315122fa66eef2358588df9f</Hash>
 </Codenesium>*/

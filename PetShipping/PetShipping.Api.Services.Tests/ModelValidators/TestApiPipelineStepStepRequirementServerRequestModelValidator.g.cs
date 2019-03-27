@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Detail_Create_null()
+		public async void Details_Create_null()
 		{
 			Mock<IPipelineStepStepRequirementRepository> pipelineStepStepRequirementRepository = new Mock<IPipelineStepStepRequirementRepository>();
 			pipelineStepStepRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
@@ -33,11 +33,11 @@ namespace PetShippingNS.Api.Services.Tests
 			var validator = new ApiPipelineStepStepRequirementServerRequestModelValidator(pipelineStepStepRequirementRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPipelineStepStepRequirementServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Detail, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
 		}
 
 		[Fact]
-		public async void Detail_Update_null()
+		public async void Details_Update_null()
 		{
 			Mock<IPipelineStepStepRequirementRepository> pipelineStepStepRequirementRepository = new Mock<IPipelineStepStepRequirementRepository>();
 			pipelineStepStepRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validator = new ApiPipelineStepStepRequirementServerRequestModelValidator(pipelineStepStepRequirementRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepStepRequirementServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Detail, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
 		}
 
 		[Fact]
@@ -101,5 +101,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0b76e412476e3d91aa711a9f5d1d54df</Hash>
+    <Hash>e4fcb6d4c3fc8ef990bc8ef16de79da9</Hash>
 </Codenesium>*/

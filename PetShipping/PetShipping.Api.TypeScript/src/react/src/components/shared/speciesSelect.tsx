@@ -94,7 +94,7 @@ export class SpeciesSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Species</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class SpeciesSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: SpeciesViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class SpeciesSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2cee01b868643722c8531ff9e6e4c395</Hash>
+    <Hash>22ef4c51ddcc9fa1f6e0541c70e17288</Hash>
 </Codenesium>*/

@@ -197,7 +197,7 @@ export default class TransactionSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Transactions',
+                Header: 'Transaction',
                 columns: [
                   {
                     Header: 'Amount',
@@ -302,5 +302,5 @@ export const WrappedTransactionSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>76595de5e0eb4b31d4dacbd93271ad5f</Hash>
+    <Hash>be63318d3651b098c3a83f285ec55310</Hash>
 </Codenesium>*/

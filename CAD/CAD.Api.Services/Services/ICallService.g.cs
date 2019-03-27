@@ -20,12 +20,12 @@ namespace CADNS.Api.Services
 
 		Task<List<ApiCallServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
-		Task<List<ApiNoteServerResponseModel>> NotesByCallId(int callId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCallAssignmentServerResponseModel>> CallAssignmentsByCallId(int callId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCallServerResponseModel>> ByUnitId(int callId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiNoteServerResponseModel>> NotesByCallId(int callId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>45d07c082e74ab0d766e0348b270c5ed</Hash>
+    <Hash>d44e76dacf1e251874880463fc62d31e</Hash>
 </Codenesium>*/

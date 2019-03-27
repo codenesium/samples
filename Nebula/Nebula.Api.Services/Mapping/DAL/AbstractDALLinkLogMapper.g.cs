@@ -39,14 +39,14 @@ namespace NebulaNS.Api.Services
 					item.LinkIdNavigation.ChainId,
 					item.LinkIdNavigation.DateCompleted,
 					item.LinkIdNavigation.DateStarted,
-					item.LinkIdNavigation.DynamicParameter,
+					item.LinkIdNavigation.DynamicParameters,
 					item.LinkIdNavigation.ExternalId,
 					item.LinkIdNavigation.LinkStatusId,
 					item.LinkIdNavigation.Name,
 					item.LinkIdNavigation.Order,
 					item.LinkIdNavigation.Response,
-					item.LinkIdNavigation.StaticParameter,
-					item.LinkIdNavigation.TimeoutInSecond);
+					item.LinkIdNavigation.StaticParameters,
+					item.LinkIdNavigation.TimeoutInSeconds);
 
 				model.SetLinkIdNavigation(linkIdModel);
 			}
@@ -70,5 +70,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a50c8d916d77cfe349a1622f779c726a</Hash>
+    <Hash>4d365c7bfa02740a6069ddf52d4e94e0</Hash>
 </Codenesium>*/

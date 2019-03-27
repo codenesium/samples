@@ -32,7 +32,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			List<ApiMachineServerResponseModel> response = await service.All();
 
@@ -51,7 +52,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			ApiMachineServerResponseModel response = await service.Get(default(int));
 
@@ -69,7 +71,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			ApiMachineServerResponseModel response = await service.Get(default(int));
 
@@ -88,7 +91,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			CreateResponse<ApiMachineServerResponseModel> response = await service.Create(model);
 
@@ -111,7 +115,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			CreateResponse<ApiMachineServerResponseModel> response = await service.Create(model);
 
@@ -133,7 +138,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			UpdateResponse<ApiMachineServerResponseModel> response = await service.Update(default(int), model);
 
@@ -157,7 +163,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			UpdateResponse<ApiMachineServerResponseModel> response = await service.Update(default(int), model);
 
@@ -178,7 +185,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,7 +209,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -222,7 +231,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			ApiMachineServerResponseModel response = await service.ByMachineGuid(default(Guid));
 
@@ -240,7 +250,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			ApiMachineServerResponseModel response = await service.ByMachineGuid(default(Guid));
 
@@ -260,7 +271,8 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			List<ApiLinkServerResponseModel> response = await service.LinksByAssignedMachineId(default(int));
 
@@ -278,16 +290,57 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
 			List<ApiLinkServerResponseModel> response = await service.LinksByAssignedMachineId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.LinksByAssignedMachineId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void MachineRefTeamsByMachineId_Exists()
+		{
+			var mock = new ServiceMockFacade<IMachineRepository>();
+			var records = new List<MachineRefTeam>();
+			records.Add(new MachineRefTeam());
+			mock.RepositoryMock.Setup(x => x.MachineRefTeamsByMachineId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
+			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+
+			List<ApiMachineRefTeamServerResponseModel> response = await service.MachineRefTeamsByMachineId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.MachineRefTeamsByMachineId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void MachineRefTeamsByMachineId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IMachineRepository>();
+			mock.RepositoryMock.Setup(x => x.MachineRefTeamsByMachineId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<MachineRefTeam>>(new List<MachineRefTeam>()));
+			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
+			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+
+			List<ApiMachineRefTeamServerResponseModel> response = await service.MachineRefTeamsByMachineId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.MachineRefTeamsByMachineId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>766a227978c3e830048b03294a6c9dd1</Hash>
+    <Hash>4d9c335fee7ff26a3fb35223d093f76a</Hash>
 </Codenesium>*/

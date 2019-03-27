@@ -12,17 +12,21 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
-			IDALEventMapper dalEventMapper)
+			IDALEventMapper dalEventMapper,
+			IDALEventStudentMapper dalEventStudentMapper,
+			IDALEventTeacherMapper dalEventTeacherMapper)
 			: base(logger,
 			       mediator,
 			       eventRepository,
 			       eventModelValidator,
-			       dalEventMapper)
+			       dalEventMapper,
+			       dalEventStudentMapper,
+			       dalEventTeacherMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>156a81247a258ad1e1c26ed8b10c80a9</Hash>
+    <Hash>a8abed95906f2fae5aa379d1dd5f53c3</Hash>
 </Codenesium>*/

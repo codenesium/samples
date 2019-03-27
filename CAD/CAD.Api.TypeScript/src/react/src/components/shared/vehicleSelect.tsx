@@ -103,7 +103,7 @@ export class VehicleSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: VehicleViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class VehicleSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>eca6bd423e75e4bc6023405c7205a686</Hash>
+    <Hash>36f306c3e2935f2209dbeb4e4baf02ce</Hash>
 </Codenesium>*/

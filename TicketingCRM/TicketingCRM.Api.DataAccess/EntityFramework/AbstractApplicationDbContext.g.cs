@@ -47,7 +47,7 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		public virtual DbSet<Sale> Sales { get; set; }
 
-		public virtual DbSet<SaleTicket> SaleTickets { get; set; }
+		public virtual DbSet<SaleTickets> SaleTickets { get; set; }
 
 		public virtual DbSet<Ticket> Tickets { get; set; }
 
@@ -176,13 +176,13 @@ namespace TicketingCRMNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<SaleTicket>()
+			modelBuilder.Entity<SaleTickets>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<SaleTicket>()
+			modelBuilder.Entity<SaleTickets>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -274,5 +274,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>abf517b00704dbf8cafef2ec923448cd</Hash>
+    <Hash>46f7d5b381c6b3983c9c3fe0ae6c1659</Hash>
 </Codenesium>*/

@@ -94,7 +94,7 @@ export class TicketSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Ticket</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class TicketSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TicketViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TicketSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4b08fef404114e45f37f00ec47fff1fd</Hash>
+    <Hash>57a8bc3c6ccbf3615d00e691ee18f64a</Hash>
 </Codenesium>*/

@@ -38,7 +38,7 @@ namespace CADNS.Api.Services
 
 		public virtual void CallStatusIdRules()
 		{
-			this.RuleFor(x => x.CallStatusId).MustAsync(this.BeValidCallStatuByCallStatusId).When(x => !x?.CallStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+			this.RuleFor(x => x.CallStatusId).MustAsync(this.BeValidCallStatusByCallStatusId).When(x => !x?.CallStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void CallStringRules()
@@ -82,9 +82,9 @@ namespace CADNS.Api.Services
 			return record != null;
 		}
 
-		protected async Task<bool> BeValidCallStatuByCallStatusId(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidCallStatusByCallStatusId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.CallRepository.CallStatuByCallStatusId(id.GetValueOrDefault());
+			var record = await this.CallRepository.CallStatusByCallStatusId(id.GetValueOrDefault());
 
 			return record != null;
 		}
@@ -99,5 +99,5 @@ namespace CADNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d85d88dae0149be21b97614e2279b2e1</Hash>
+    <Hash>66969304cc3452b7981418b961da60dd</Hash>
 </Codenesium>*/

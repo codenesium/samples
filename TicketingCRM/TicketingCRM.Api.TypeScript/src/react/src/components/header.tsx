@@ -46,47 +46,47 @@ export const wrapperHeader = (
 
               <Menu.Item key="admin">
                 <Icon type="pie-chart" />
-                <span>Admins</span>
+                <span>Admin</span>
                 <Link to={ClientRoutes.Admins} />
               </Menu.Item>
 
               <Menu.Item key="city">
                 <Icon type="rise" />
-                <span>Cities</span>
+                <span>City</span>
                 <Link to={ClientRoutes.Cities} />
               </Menu.Item>
 
               <Menu.Item key="country">
                 <Icon type="bars" />
-                <span>Countries</span>
+                <span>Country</span>
                 <Link to={ClientRoutes.Countries} />
               </Menu.Item>
 
               <Menu.Item key="customer">
                 <Icon type="cloud" />
-                <span>Customers</span>
+                <span>Customer</span>
                 <Link to={ClientRoutes.Customers} />
               </Menu.Item>
 
               <Menu.Item key="event">
                 <Icon type="code" />
-                <span>Events</span>
+                <span>Event</span>
                 <Link to={ClientRoutes.Events} />
               </Menu.Item>
 
               <Menu.Item key="province">
                 <Icon type="smile" />
-                <span>Provinces</span>
+                <span>Province</span>
                 <Link to={ClientRoutes.Provinces} />
               </Menu.Item>
 
               <Menu.Item key="sale">
                 <Icon type="laptop" />
-                <span>Sales</span>
+                <span>Sale</span>
                 <Link to={ClientRoutes.Sales} />
               </Menu.Item>
 
-              <Menu.Item key="saleTicket">
+              <Menu.Item key="saleTickets">
                 <Icon type="mobile" />
                 <span>Sale Tickets</span>
                 <Link to={ClientRoutes.SaleTickets} />
@@ -94,7 +94,7 @@ export const wrapperHeader = (
 
               <Menu.Item key="ticket">
                 <Icon type="paper-clip" />
-                <span>Tickets</span>
+                <span>Ticket</span>
                 <Link to={ClientRoutes.Tickets} />
               </Menu.Item>
 
@@ -106,7 +106,7 @@ export const wrapperHeader = (
 
               <Menu.Item key="transaction">
                 <Icon type="user" />
-                <span>Transactions</span>
+                <span>Transaction</span>
                 <Link to={ClientRoutes.Transactions} />
               </Menu.Item>
 
@@ -118,7 +118,7 @@ export const wrapperHeader = (
 
               <Menu.Item key="venue">
                 <Icon type="camera" />
-                <span>Venues</span>
+                <span>Venue</span>
                 <Link to={ClientRoutes.Venues} />
               </Menu.Item>
 
@@ -165,5 +165,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>bedf9b39aa635205d0d4aaa1ba2e3ca2</Hash>
+    <Hash>e1d199d7666268db78cb7da3b5eb21d7</Hash>
 </Codenesium>*/

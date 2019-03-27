@@ -193,23 +193,23 @@ class BreedEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="speciesId">speciesId</label>
-            <br />
-            {getFieldDecorator('speciesId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'speciesId'} />)}
-          </Form.Item>
+          <SpeciesSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Species}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="speciesId"
+            required={true}
+            selectedValue={this.state.model!.speciesId}
+          />
 
           <Form.Item>
             <Button
@@ -235,5 +235,5 @@ export const WrappedBreedEditComponent = Form.create({ name: 'Breed Edit' })(
 
 
 /*<Codenesium>
-    <Hash>f522d9fbe3f3d6fd5ca0f4f7f5743264</Hash>
+    <Hash>16f2b29e671ebc04e94d0a81efadf73c</Hash>
 </Codenesium>*/

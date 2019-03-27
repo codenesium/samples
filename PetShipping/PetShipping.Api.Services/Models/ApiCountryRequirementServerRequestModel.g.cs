@@ -17,10 +17,10 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void SetProperties(
 			int countryId,
-			string detail)
+			string details)
 		{
 			this.CountryId = countryId;
-			this.Detail = detail;
+			this.Details = details;
 		}
 
 		[Required]
@@ -29,10 +29,10 @@ namespace PetShippingNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string Detail { get; private set; } = default(string);
+		public string Details { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2445be8f5cd6e705e94884720c9a77b9</Hash>
+    <Hash>5f551ec8617b28e0496f662bd5e94125</Hash>
 </Codenesium>*/

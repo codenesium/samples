@@ -197,7 +197,7 @@ export default class PersonTypeSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'PersonType',
+                Header: 'Person Type',
                 columns: [
                   {
                     Header: 'Name',
@@ -267,5 +267,5 @@ export const WrappedPersonTypeSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f52a9f19422faba225a791b94ce6e669</Hash>
+    <Hash>18f6db59e2e5cc863d6867639d78cb3c</Hash>
 </Codenesium>*/

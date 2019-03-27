@@ -17,6 +17,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IDALSpaceMapper DalSpaceMapper { get; private set; }
 
+		protected IDALSpaceSpaceFeatureMapper DalSpaceSpaceFeatureMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractSpaceService(
@@ -24,12 +26,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 			MediatR.IMediator mediator,
 			ISpaceRepository spaceRepository,
 			IApiSpaceServerRequestModelValidator spaceModelValidator,
-			IDALSpaceMapper dalSpaceMapper)
+			IDALSpaceMapper dalSpaceMapper,
+			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper)
 			: base()
 		{
 			this.SpaceRepository = spaceRepository;
 			this.SpaceModelValidator = spaceModelValidator;
 			this.DalSpaceMapper = dalSpaceMapper;
+			this.DalSpaceSpaceFeatureMapper = dalSpaceSpaceFeatureMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -111,9 +115,16 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiSpaceSpaceFeatureServerResponseModel>> SpaceSpaceFeaturesBySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SpaceSpaceFeature> records = await this.SpaceRepository.SpaceSpaceFeaturesBySpaceId(spaceId, limit, offset);
+
+			return this.DalSpaceSpaceFeatureMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1abbf01e0f7e3981f8e6628ed1cee5cc</Hash>
+    <Hash>98626c5f7d8135abd3c0cccd8f636ca8</Hash>
 </Codenesium>*/

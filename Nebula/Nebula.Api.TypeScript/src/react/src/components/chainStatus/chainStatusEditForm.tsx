@@ -54,7 +54,7 @@ class ChainStatusEditComponent extends React.Component<
     axios
       .get<Api.ChainStatusClientResponseModel>(
         Constants.ApiEndpoint +
-          ApiRoutes.ChainStatuses +
+          ApiRoutes.ChainStatus +
           '/' +
           this.props.match.params.id,
         {
@@ -119,7 +119,7 @@ class ChainStatusEditComponent extends React.Component<
     axios
       .put<CreateResponse<Api.ChainStatusClientRequestModel>>(
         Constants.ApiEndpoint +
-          ApiRoutes.ChainStatuses +
+          ApiRoutes.ChainStatus +
           '/' +
           this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -229,5 +229,5 @@ export const WrappedChainStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4be2db7dc601008222905cd2778b541a</Hash>
+    <Hash>4725208492e1ef988dfadbc7df386241</Hash>
 </Codenesium>*/

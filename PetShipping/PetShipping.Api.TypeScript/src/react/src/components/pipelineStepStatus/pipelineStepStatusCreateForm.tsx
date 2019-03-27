@@ -140,14 +140,14 @@ class PipelineStepStatusCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -174,5 +174,5 @@ export const WrappedPipelineStepStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2dc1d5e5f3ff8351d120075a3e4577ac</Hash>
+    <Hash>8d2d667fd7ecb054d6a2292b52434dbe</Hash>
 </Codenesium>*/

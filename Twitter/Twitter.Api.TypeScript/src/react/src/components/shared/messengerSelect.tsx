@@ -103,7 +103,7 @@ export class MessengerSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: MessengerViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class MessengerSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1a7e06f28c1ec986da66fc3504de087a</Hash>
+    <Hash>e907929b58adb4dbb3b88e291f16a786</Hash>
 </Codenesium>*/

@@ -15,15 +15,15 @@ export default class LinkLogMapper {
         dto.linkIdNavigation.chainId,
         dto.linkIdNavigation.dateCompleted,
         dto.linkIdNavigation.dateStarted,
-        dto.linkIdNavigation.dynamicParameter,
+        dto.linkIdNavigation.dynamicParameters,
         dto.linkIdNavigation.externalId,
         dto.linkIdNavigation.id,
         dto.linkIdNavigation.linkStatusId,
         dto.linkIdNavigation.name,
         dto.linkIdNavigation.order,
         dto.linkIdNavigation.response,
-        dto.linkIdNavigation.staticParameter,
-        dto.linkIdNavigation.timeoutInSecond
+        dto.linkIdNavigation.staticParameters,
+        dto.linkIdNavigation.timeoutInSeconds
       );
     }
 
@@ -46,5 +46,5 @@ export default class LinkLogMapper {
 
 
 /*<Codenesium>
-    <Hash>929ab1503bc994db4daf59340330c776</Hash>
+    <Hash>e9706aa00ffcecc55df509461a2d6eb5</Hash>
 </Codenesium>*/

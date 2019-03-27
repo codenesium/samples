@@ -115,7 +115,7 @@ export class UnitTableComponent extends React.Component<
                 Header: 'Units',
                 columns: [
                   {
-                    Header: 'CallSign',
+                    Header: 'Call Sign',
                     accessor: 'callSign',
                     Cell: props => {
                       return <span>{String(props.original.callSign)}</span>;
@@ -166,5 +166,5 @@ export class UnitTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>382e94dcfb082abe21c78abd861b8610</Hash>
+    <Hash>a688d7ad720d80500ee4cd626aa599a9</Hash>
 </Codenesium>*/

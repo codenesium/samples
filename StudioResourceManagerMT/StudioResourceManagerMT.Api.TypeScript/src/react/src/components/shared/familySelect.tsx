@@ -103,7 +103,7 @@ export class FamilySelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: FamilyViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class FamilySelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6768cf9bf1166fd63c4f9490db28974a</Hash>
+    <Hash>fa712bd02fb0c0e2cf6dbf3edcb5bbfc</Hash>
 </Codenesium>*/

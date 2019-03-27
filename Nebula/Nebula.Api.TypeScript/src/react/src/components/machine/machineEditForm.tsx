@@ -196,37 +196,37 @@ class MachineEditComponent extends React.Component<
             <br />
             {getFieldDecorator('description', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input.TextArea placeholder={'Description'} />)}
+            })(<Input placeholder={'Description'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="jwtKey">JwtKey</label>
+            <label htmlFor="jwtKey">Jwt Key</label>
             <br />
             {getFieldDecorator('jwtKey', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'JwtKey'} />)}
+            })(<Input placeholder={'Jwt Key'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastIpAddress">LastIpAddress</label>
+            <label htmlFor="lastIpAddress">Last Ip Address</label>
             <br />
             {getFieldDecorator('lastIpAddress', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'LastIpAddress'} />)}
+            })(<Input placeholder={'Last Ip Address'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="machineGuid">MachineGuid</label>
+            <label htmlFor="machineGuid">Machine Guid</label>
             <br />
             {getFieldDecorator('machineGuid', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'MachineGuid'} />)}
+            })(<Input placeholder={'Machine Guid'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -264,5 +264,5 @@ export const WrappedMachineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1311c7d2ca5f1ddd4332b5ac731ec997</Hash>
+    <Hash>a026936a2a8fb57ba4ddb0bee19a2495</Hash>
 </Codenesium>*/

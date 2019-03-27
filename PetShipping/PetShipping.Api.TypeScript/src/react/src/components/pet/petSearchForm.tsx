@@ -196,10 +196,10 @@ export default class PetSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Pets',
+                Header: 'Pet',
                 columns: [
                   {
-                    Header: 'BreedId',
+                    Header: 'Breed',
                     accessor: 'breedId',
                     Cell: props => {
                       return (
@@ -221,7 +221,7 @@ export default class PetSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ClientId',
+                    Header: 'Client',
                     accessor: 'clientId',
                     Cell: props => {
                       return <span>{String(props.original.clientId)}</span>;
@@ -302,5 +302,5 @@ export const WrappedPetSearchComponent = Form.create({ name: 'Pet Search' })(
 
 
 /*<Codenesium>
-    <Hash>9c0f6953bc1d67c74e989a069d47d796</Hash>
+    <Hash>953b3b38eccd091f57a963e2b0bdbb5e</Hash>
 </Codenesium>*/

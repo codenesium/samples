@@ -15,11 +15,11 @@ export default class TransactionStatusViewModel {
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>929e06e15660e0c4697969f554934762</Hash>
+    <Hash>0bfedacccec626b064d855288e9835f7</Hash>
 </Codenesium>*/

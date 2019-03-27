@@ -54,12 +54,12 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			result.Record.Should().NotBeNull();
 
 			context.Set<Sale>().ToList()[1].IpAddress.Should().Be("B");
-			context.Set<Sale>().ToList()[1].Note.Should().Be("B");
+			context.Set<Sale>().ToList()[1].Notes.Should().Be("B");
 			context.Set<Sale>().ToList()[1].SaleDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Sale>().ToList()[1].TransactionId.Should().Be(1);
 
 			context.Set<Sale>().ToList()[2].IpAddress.Should().Be("C");
-			context.Set<Sale>().ToList()[2].Note.Should().Be("C");
+			context.Set<Sale>().ToList()[2].Notes.Should().Be("C");
 			context.Set<Sale>().ToList()[2].SaleDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Sale>().ToList()[2].TransactionId.Should().Be(1);
 		}
@@ -88,12 +88,12 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 			context.Set<Sale>().ToList()[1].IpAddress.Should().Be("B");
-			context.Set<Sale>().ToList()[1].Note.Should().Be("B");
+			context.Set<Sale>().ToList()[1].Notes.Should().Be("B");
 			context.Set<Sale>().ToList()[1].SaleDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Sale>().ToList()[1].TransactionId.Should().Be(1);
 
 			result.Record.IpAddress.Should().Be("B");
-			result.Record.Note.Should().Be("B");
+			result.Record.Notes.Should().Be("B");
 			result.Record.SaleDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.TransactionId.Should().Be(1);
 		}
@@ -129,13 +129,13 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
 			context.Set<Sale>().ToList()[0].IpAddress.Should().Be("B");
-			context.Set<Sale>().ToList()[0].Note.Should().Be("B");
+			context.Set<Sale>().ToList()[0].Notes.Should().Be("B");
 			context.Set<Sale>().ToList()[0].SaleDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Sale>().ToList()[0].TransactionId.Should().Be(1);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.IpAddress.Should().Be("B");
-			updateResponse.Record.Note.Should().Be("B");
+			updateResponse.Record.Notes.Should().Be("B");
 			updateResponse.Record.SaleDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.TransactionId.Should().Be(1);
 		}
@@ -195,7 +195,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			response.Should().NotBeNull();
 			response.Id.Should().Be(1);
 			response.IpAddress.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TransactionId.Should().Be(1);
 		}
@@ -242,7 +242,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			response.Count.Should().BeGreaterThan(0);
 			response[0].Id.Should().Be(1);
 			response[0].IpAddress.Should().Be("A");
-			response[0].Note.Should().Be("A");
+			response[0].Notes.Should().Be("A");
 			response[0].SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].TransactionId.Should().Be(1);
 		}
@@ -268,7 +268,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			response.Should().NotBeEmpty();
 			response[0].Id.Should().Be(1);
 			response[0].IpAddress.Should().Be("A");
-			response[0].Note.Should().Be("A");
+			response[0].Notes.Should().Be("A");
 			response[0].SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].TransactionId.Should().Be(1);
 		}
@@ -310,7 +310,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiSaleTicketClientResponseModel> response = await client.SaleTicketsBySaleId(1);
+			List<ApiSaleTicketsClientResponseModel> response = await client.SaleTicketsBySaleId(1);
 
 			response.Should().NotBeEmpty();
 		}
@@ -331,7 +331,7 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiSaleTicketClientResponseModel> response = await client.SaleTicketsBySaleId(default(int));
+			List<ApiSaleTicketsClientResponseModel> response = await client.SaleTicketsBySaleId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -359,5 +359,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>8685eed1f4774190d156ddee884d4102</Hash>
+    <Hash>43c5d6f02ca9911a14c62a0604dc2f05</Hash>
 </Codenesium>*/

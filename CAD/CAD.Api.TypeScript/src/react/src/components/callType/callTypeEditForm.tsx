@@ -195,14 +195,14 @@ class CallTypeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -229,5 +229,5 @@ export const WrappedCallTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6ecdf63cba42b005d19fc4268c08ba0d</Hash>
+    <Hash>44fa246fdfdc92657c8567b0a41b0746</Hash>
 </Codenesium>*/

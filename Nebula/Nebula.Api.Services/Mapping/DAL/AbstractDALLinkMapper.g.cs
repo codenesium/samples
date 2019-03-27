@@ -19,14 +19,14 @@ namespace NebulaNS.Api.Services
 				model.ChainId,
 				model.DateCompleted,
 				model.DateStarted,
-				model.DynamicParameter,
+				model.DynamicParameters,
 				model.ExternalId,
 				model.LinkStatusId,
 				model.Name,
 				model.Order,
 				model.Response,
-				model.StaticParameter,
-				model.TimeoutInSecond);
+				model.StaticParameters,
+				model.TimeoutInSeconds);
 			return item;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 			                    item.ChainId,
 			                    item.DateCompleted,
 			                    item.DateStarted,
-			                    item.DynamicParameter,
+			                    item.DynamicParameters,
 			                    item.ExternalId,
 			                    item.LinkStatusId,
 			                    item.Name,
 			                    item.Order,
 			                    item.Response,
-			                    item.StaticParameter,
-			                    item.TimeoutInSecond);
+			                    item.StaticParameters,
+			                    item.TimeoutInSeconds);
 			if (item.AssignedMachineIdNavigation != null)
 			{
 				var assignedMachineIdModel = new ApiMachineServerResponseModel();
@@ -104,5 +104,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c49c32ac279ea4cb36d5d775795f1038</Hash>
+    <Hash>647d5ad48583f5bb880de7d9bc13ab2a</Hash>
 </Codenesium>*/

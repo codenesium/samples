@@ -243,7 +243,7 @@ class AdminEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<InputNumber placeholder={'Phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -281,5 +281,5 @@ export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(
 
 
 /*<Codenesium>
-    <Hash>1e90a5343d9cc5d8301c02881d405c7b</Hash>
+    <Hash>987e72d7352dcf340f2b4177ff09a1ba</Hash>
 </Codenesium>*/

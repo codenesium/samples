@@ -17,6 +17,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IDALEventMapper DalEventMapper { get; private set; }
 
+		protected IDALEventStudentMapper DalEventStudentMapper { get; private set; }
+
+		protected IDALEventTeacherMapper DalEventTeacherMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractEventService(
@@ -24,12 +28,16 @@ namespace StudioResourceManagerMTNS.Api.Services
 			MediatR.IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
-			IDALEventMapper dalEventMapper)
+			IDALEventMapper dalEventMapper,
+			IDALEventStudentMapper dalEventStudentMapper,
+			IDALEventTeacherMapper dalEventTeacherMapper)
 			: base()
 		{
 			this.EventRepository = eventRepository;
 			this.EventModelValidator = eventModelValidator;
 			this.DalEventMapper = dalEventMapper;
+			this.DalEventStudentMapper = dalEventStudentMapper;
+			this.DalEventTeacherMapper = dalEventTeacherMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -111,9 +119,23 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiEventStudentServerResponseModel>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EventStudent> records = await this.EventRepository.EventStudentsByEventId(eventId, limit, offset);
+
+			return this.DalEventStudentMapper.MapEntityToModel(records);
+		}
+
+		public async virtual Task<List<ApiEventTeacherServerResponseModel>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EventTeacher> records = await this.EventRepository.EventTeachersByEventId(eventId, limit, offset);
+
+			return this.DalEventTeacherMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ec8004b44cefe42eb0ae098c546c2a0</Hash>
+    <Hash>d35c5d8db6d2c42d6bff516a8fc28216</Hash>
 </Codenesium>*/

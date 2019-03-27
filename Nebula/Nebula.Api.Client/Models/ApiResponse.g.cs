@@ -14,19 +14,21 @@ namespace NebulaNS.Api.Client
 		public void Merge(ApiResponse from)
 		{
 			from.Chains.ForEach(x => this.AddChain(x));
-			from.ChainStatuses.ForEach(x => this.AddChainStatus(x));
+			from.ChainStatus.ForEach(x => this.AddChainStatus(x));
 			from.Clasps.ForEach(x => this.AddClasp(x));
 			from.Links.ForEach(x => this.AddLink(x));
 			from.LinkLogs.ForEach(x => this.AddLinkLog(x));
-			from.LinkStatuses.ForEach(x => this.AddLinkStatus(x));
+			from.LinkStatus.ForEach(x => this.AddLinkStatus(x));
 			from.Machines.ForEach(x => this.AddMachine(x));
+			from.MachineRefTeams.ForEach(x => this.AddMachineRefTeam(x));
 			from.Organizations.ForEach(x => this.AddOrganization(x));
 			from.Teams.ForEach(x => this.AddTeam(x));
+			from.VersionInfoes.ForEach(x => this.AddVersionInfo(x));
 		}
 
 		public List<ApiChainClientResponseModel> Chains { get; private set; } = new List<ApiChainClientResponseModel>();
 
-		public List<ApiChainStatusClientResponseModel> ChainStatuses { get; private set; } = new List<ApiChainStatusClientResponseModel>();
+		public List<ApiChainStatusClientResponseModel> ChainStatus { get; private set; } = new List<ApiChainStatusClientResponseModel>();
 
 		public List<ApiClaspClientResponseModel> Clasps { get; private set; } = new List<ApiClaspClientResponseModel>();
 
@@ -34,13 +36,17 @@ namespace NebulaNS.Api.Client
 
 		public List<ApiLinkLogClientResponseModel> LinkLogs { get; private set; } = new List<ApiLinkLogClientResponseModel>();
 
-		public List<ApiLinkStatusClientResponseModel> LinkStatuses { get; private set; } = new List<ApiLinkStatusClientResponseModel>();
+		public List<ApiLinkStatusClientResponseModel> LinkStatus { get; private set; } = new List<ApiLinkStatusClientResponseModel>();
 
 		public List<ApiMachineClientResponseModel> Machines { get; private set; } = new List<ApiMachineClientResponseModel>();
+
+		public List<ApiMachineRefTeamClientResponseModel> MachineRefTeams { get; private set; } = new List<ApiMachineRefTeamClientResponseModel>();
 
 		public List<ApiOrganizationClientResponseModel> Organizations { get; private set; } = new List<ApiOrganizationClientResponseModel>();
 
 		public List<ApiTeamClientResponseModel> Teams { get; private set; } = new List<ApiTeamClientResponseModel>();
+
+		public List<ApiVersionInfoClientResponseModel> VersionInfoes { get; private set; } = new List<ApiVersionInfoClientResponseModel>();
 
 		public void AddChain(ApiChainClientResponseModel item)
 		{
@@ -52,9 +58,9 @@ namespace NebulaNS.Api.Client
 
 		public void AddChainStatus(ApiChainStatusClientResponseModel item)
 		{
-			if (!this.ChainStatuses.Any(x => x.Id == item.Id))
+			if (!this.ChainStatus.Any(x => x.Id == item.Id))
 			{
-				this.ChainStatuses.Add(item);
+				this.ChainStatus.Add(item);
 			}
 		}
 
@@ -84,9 +90,9 @@ namespace NebulaNS.Api.Client
 
 		public void AddLinkStatus(ApiLinkStatusClientResponseModel item)
 		{
-			if (!this.LinkStatuses.Any(x => x.Id == item.Id))
+			if (!this.LinkStatus.Any(x => x.Id == item.Id))
 			{
-				this.LinkStatuses.Add(item);
+				this.LinkStatus.Add(item);
 			}
 		}
 
@@ -95,6 +101,14 @@ namespace NebulaNS.Api.Client
 			if (!this.Machines.Any(x => x.Id == item.Id))
 			{
 				this.Machines.Add(item);
+			}
+		}
+
+		public void AddMachineRefTeam(ApiMachineRefTeamClientResponseModel item)
+		{
+			if (!this.MachineRefTeams.Any(x => x.Id == item.Id))
+			{
+				this.MachineRefTeams.Add(item);
 			}
 		}
 
@@ -113,9 +127,17 @@ namespace NebulaNS.Api.Client
 				this.Teams.Add(item);
 			}
 		}
+
+		public void AddVersionInfo(ApiVersionInfoClientResponseModel item)
+		{
+			if (!this.VersionInfoes.Any(x => x.Version == item.Version))
+			{
+				this.VersionInfoes.Add(item);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8697a780f20c85b94114e7777957f88e</Hash>
+    <Hash>7b1e7686f23853d95452ddeda8576548</Hash>
 </Codenesium>*/

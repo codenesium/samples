@@ -108,7 +108,7 @@ class LinkDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>AssignedMachineId</h3>
+              <h3>Assigned Machine</h3>
               <p>
                 {String(
                   this.state.model!.assignedMachineIdNavigation &&
@@ -117,7 +117,7 @@ class LinkDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>ChainId</h3>
+              <h3>Chain</h3>
               <p>
                 {String(
                   this.state.model!.chainIdNavigation &&
@@ -126,27 +126,23 @@ class LinkDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>DateCompleted</h3>
+              <h3>Date Completed</h3>
               <p>{String(this.state.model!.dateCompleted)}</p>
             </div>
             <div>
-              <h3>DateStarted</h3>
+              <h3>Date Started</h3>
               <p>{String(this.state.model!.dateStarted)}</p>
             </div>
             <div>
-              <h3>DynamicParameter</h3>
-              <p>{String(this.state.model!.dynamicParameter)}</p>
+              <h3>Dynamic Parameters</h3>
+              <p>{String(this.state.model!.dynamicParameters)}</p>
             </div>
             <div>
-              <h3>ExternalId</h3>
+              <h3>External</h3>
               <p>{String(this.state.model!.externalId)}</p>
             </div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>LinkStatusId</h3>
+              <h3>Link Status</h3>
               <p>
                 {String(
                   this.state.model!.linkStatusIdNavigation &&
@@ -167,12 +163,12 @@ class LinkDetailComponent extends React.Component<
               <p>{String(this.state.model!.response)}</p>
             </div>
             <div>
-              <h3>StaticParameter</h3>
-              <p>{String(this.state.model!.staticParameter)}</p>
+              <h3>Static Parameters</h3>
+              <p>{String(this.state.model!.staticParameters)}</p>
             </div>
             <div>
-              <h3>TimeoutInSecond</h3>
-              <p>{String(this.state.model!.timeoutInSecond)}</p>
+              <h3>Timeout In Seconds</h3>
+              <p>{String(this.state.model!.timeoutInSeconds)}</p>
             </div>
           </div>
           {message}
@@ -205,5 +201,5 @@ export const WrappedLinkDetailComponent = Form.create({ name: 'Link Detail' })(
 
 
 /*<Codenesium>
-    <Hash>0f1bbe775c30c2685ac1ba5eccfcf5c2</Hash>
+    <Hash>31488881ed2a08ef30665e78836cf786</Hash>
 </Codenesium>*/

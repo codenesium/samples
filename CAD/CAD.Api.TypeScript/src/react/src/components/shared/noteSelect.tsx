@@ -103,7 +103,7 @@ export class NoteSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: NoteViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class NoteSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>23bbf35bdf3fefc25f58e65f39d6e739</Hash>
+    <Hash>b9aaa5ec83c99526a8530ba3e9c3241a</Hash>
 </Codenesium>*/

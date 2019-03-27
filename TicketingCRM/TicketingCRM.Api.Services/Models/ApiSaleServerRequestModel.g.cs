@@ -17,12 +17,12 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void SetProperties(
 			string ipAddress,
-			string note,
+			string notes,
 			DateTime saleDate,
 			int transactionId)
 		{
 			this.IpAddress = ipAddress;
-			this.Note = note;
+			this.Notes = notes;
 			this.SaleDate = saleDate;
 			this.TransactionId = transactionId;
 		}
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string Note { get; private set; } = default(string);
+		public string Notes { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
@@ -46,5 +46,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>50b62de6e55cca987ae5426f7336dabf</Hash>
+    <Hash>9f9d9c6f12bf3cf9214821acaf9bca23</Hash>
 </Codenesium>*/

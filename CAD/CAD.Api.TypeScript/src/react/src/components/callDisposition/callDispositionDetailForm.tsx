@@ -108,7 +108,7 @@ class CallDispositionDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -142,5 +142,5 @@ export const WrappedCallDispositionDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>542e4c3bbc65bf9b0245a028dc455200</Hash>
+    <Hash>636fb7439908e61e1b22a26e24a19688</Hash>
 </Codenesium>*/

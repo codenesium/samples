@@ -31,7 +31,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			List<ApiStudentServerResponseModel> response = await service.All();
 
@@ -49,7 +50,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			ApiStudentServerResponseModel response = await service.Get(default(int));
 
@@ -66,7 +68,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			ApiStudentServerResponseModel response = await service.Get(default(int));
 
@@ -84,7 +87,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			CreateResponse<ApiStudentServerResponseModel> response = await service.Create(model);
 
@@ -106,7 +110,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			CreateResponse<ApiStudentServerResponseModel> response = await service.Create(model);
 
@@ -127,7 +132,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			UpdateResponse<ApiStudentServerResponseModel> response = await service.Update(default(int), model);
 
@@ -150,7 +156,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			UpdateResponse<ApiStudentServerResponseModel> response = await service.Update(default(int), model);
 
@@ -170,7 +177,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -192,7 +200,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,9 +210,47 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
+
+		[Fact]
+		public async void EventStudentsByStudentId_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudentRepository>();
+			var records = new List<EventStudent>();
+			records.Add(new EventStudent());
+			mock.RepositoryMock.Setup(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+
+			List<ApiEventStudentServerResponseModel> response = await service.EventStudentsByStudentId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void EventStudentsByStudentId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudentRepository>();
+			mock.RepositoryMock.Setup(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventStudent>>(new List<EventStudent>()));
+			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+
+			List<ApiEventStudentServerResponseModel> response = await service.EventStudentsByStudentId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2118c5e83466138519292d61a826c49c</Hash>
+    <Hash>a2f3182f5b967aadae150b9b9d4fd37c</Hash>
 </Codenesium>*/

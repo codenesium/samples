@@ -94,7 +94,7 @@ export class SaleSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Sale</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class SaleSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: SaleViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class SaleSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b10ce189c66b67fd7d1592a3c2a4c61c</Hash>
+    <Hash>fe83512250cc10086fb751da49fc147b</Hash>
 </Codenesium>*/

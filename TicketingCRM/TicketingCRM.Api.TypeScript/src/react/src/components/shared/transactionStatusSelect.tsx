@@ -107,7 +107,7 @@ export class TransactionStatusSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: TransactionStatusViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +125,5 @@ export class TransactionStatusSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b353a850f838c5d26dddd3d2e7330849</Hash>
+    <Hash>8fb0b009b5b217e89f8c6d9ebec795ff</Hash>
 </Codenesium>*/

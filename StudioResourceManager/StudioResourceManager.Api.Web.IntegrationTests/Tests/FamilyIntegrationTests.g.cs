@@ -53,13 +53,13 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<Family>().ToList()[1].Note.Should().Be("B");
+			context.Set<Family>().ToList()[1].Notes.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactEmail.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactFirstName.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactLastName.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactPhone.Should().Be("B");
 
-			context.Set<Family>().ToList()[2].Note.Should().Be("C");
+			context.Set<Family>().ToList()[2].Notes.Should().Be("C");
 			context.Set<Family>().ToList()[2].PrimaryContactEmail.Should().Be("C");
 			context.Set<Family>().ToList()[2].PrimaryContactFirstName.Should().Be("C");
 			context.Set<Family>().ToList()[2].PrimaryContactLastName.Should().Be("C");
@@ -89,13 +89,13 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<Family>().ToList()[1].Note.Should().Be("B");
+			context.Set<Family>().ToList()[1].Notes.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactEmail.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactFirstName.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactLastName.Should().Be("B");
 			context.Set<Family>().ToList()[1].PrimaryContactPhone.Should().Be("B");
 
-			result.Record.Note.Should().Be("B");
+			result.Record.Notes.Should().Be("B");
 			result.Record.PrimaryContactEmail.Should().Be("B");
 			result.Record.PrimaryContactFirstName.Should().Be("B");
 			result.Record.PrimaryContactLastName.Should().Be("B");
@@ -132,14 +132,14 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
-			context.Set<Family>().ToList()[0].Note.Should().Be("B");
+			context.Set<Family>().ToList()[0].Notes.Should().Be("B");
 			context.Set<Family>().ToList()[0].PrimaryContactEmail.Should().Be("B");
 			context.Set<Family>().ToList()[0].PrimaryContactFirstName.Should().Be("B");
 			context.Set<Family>().ToList()[0].PrimaryContactLastName.Should().Be("B");
 			context.Set<Family>().ToList()[0].PrimaryContactPhone.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
-			updateResponse.Record.Note.Should().Be("B");
+			updateResponse.Record.Notes.Should().Be("B");
 			updateResponse.Record.PrimaryContactEmail.Should().Be("B");
 			updateResponse.Record.PrimaryContactFirstName.Should().Be("B");
 			updateResponse.Record.PrimaryContactLastName.Should().Be("B");
@@ -200,7 +200,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 			response.Id.Should().Be(1);
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -248,7 +248,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			response.Count.Should().BeGreaterThan(0);
 			response[0].Id.Should().Be(1);
-			response[0].Note.Should().Be("A");
+			response[0].Notes.Should().Be("A");
 			response[0].PrimaryContactEmail.Should().Be("A");
 			response[0].PrimaryContactFirstName.Should().Be("A");
 			response[0].PrimaryContactLastName.Should().Be("A");
@@ -320,5 +320,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a7a2552f92579168978162a8f0bd24c5</Hash>
+    <Hash>d5891c09d7add997a8e6e57b659efdb4</Hash>
 </Codenesium>*/

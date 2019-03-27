@@ -107,7 +107,7 @@ class NoteDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>callId</h3>
+              <h3>Call</h3>
               <p>
                 {String(
                   this.state.model!.callIdNavigation &&
@@ -116,15 +116,15 @@ class NoteDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>dateCreated</h3>
+              <h3>Date Created</h3>
               <p>{String(this.state.model!.dateCreated)}</p>
             </div>
             <div>
-              <h3>noteText</h3>
+              <h3>Note Text</h3>
               <p>{String(this.state.model!.noteText)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>officerId</h3>
+              <h3>Officer</h3>
               <p>
                 {String(
                   this.state.model!.officerIdNavigation &&
@@ -148,5 +148,5 @@ export const WrappedNoteDetailComponent = Form.create({ name: 'Note Detail' })(
 
 
 /*<Codenesium>
-    <Hash>94415f4a0ee262d2e8babe8186151303</Hash>
+    <Hash>6e5465d918f5bcc10c653624dfbc886f</Hash>
 </Codenesium>*/

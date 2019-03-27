@@ -141,55 +141,55 @@ class AirTransportCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="airlineId">airlineId</label>
+            <label htmlFor="airlineId">Airline</label>
             <br />
             {getFieldDecorator('airlineId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'airlineId'} />)}
+            })(<InputNumber placeholder={'Airline'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="flightNumber">flightNumber</label>
+            <label htmlFor="flightNumber">Flight Number</label>
             <br />
             {getFieldDecorator('flightNumber', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 12, message: 'Exceeds max length of 12' },
               ],
-            })(<Input placeholder={'flightNumber'} />)}
+            })(<Input placeholder={'Flight Number'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="handlerId">handlerId</label>
-            <br />
-            {getFieldDecorator('handlerId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'handlerId'} />)}
-          </Form.Item>
+          <HandlerSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Handlers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="handlerId"
+            required={true}
+            selectedValue={this.state.model!.handlerId}
+          />
 
           <Form.Item>
-            <label htmlFor="landDate">landDate</label>
+            <label htmlFor="landDate">Land Date</label>
             <br />
             {getFieldDecorator('landDate', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'landDate'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Land Date'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="pipelineStepId">pipelineStepId</label>
+            <label htmlFor="pipelineStepId">Pipeline Step</label>
             <br />
             {getFieldDecorator('pipelineStepId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStepId'} />)}
+            })(<InputNumber placeholder={'Pipeline Step'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="takeoffDate">takeoffDate</label>
+            <label htmlFor="takeoffDate">Takeoff Date</label>
             <br />
             {getFieldDecorator('takeoffDate', {
               rules: [{ required: true, message: 'Required' }],
             })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'takeoffDate'} />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Takeoff Date'} />
             )}
           </Form.Item>
 
@@ -217,5 +217,5 @@ export const WrappedAirTransportCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3333c027f7bf73b2f4cd5260a2a072e6</Hash>
+    <Hash>cd56bb28da6ebde34f4ad045dd12b15c</Hash>
 </Codenesium>*/

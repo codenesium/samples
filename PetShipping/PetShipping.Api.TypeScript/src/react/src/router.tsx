@@ -160,562 +160,544 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.Airlines + '/create'}
           component={wrapperHeader(
             WrappedAirlineCreateComponent,
-            'Airlines Create'
+            'Airline Create'
           )}
         />
         <Route
           path={ClientRoutes.Airlines + '/edit/:id'}
-          component={wrapperHeader(
-            WrappedAirlineEditComponent,
-            'Airlines Edit'
-          )}
+          component={wrapperHeader(WrappedAirlineEditComponent, 'Airline Edit')}
         />
         <Route
           path={ClientRoutes.Airlines + '/:id'}
           component={wrapperHeader(
             WrappedAirlineDetailComponent,
-            'Airlines Detail'
+            'Airline Detail'
           )}
         />
         <Route
           path={ClientRoutes.Airlines}
           component={wrapperHeader(
             WrappedAirlineSearchComponent,
-            'Airlines Search'
+            'Airline Search'
           )}
         />
         <Route
           path={ClientRoutes.AirTransports + '/create'}
           component={wrapperHeader(
             WrappedAirTransportCreateComponent,
-            'AirTransports Create'
+            'Air Transport Create'
           )}
         />
         <Route
           path={ClientRoutes.AirTransports + '/edit/:id'}
           component={wrapperHeader(
             WrappedAirTransportEditComponent,
-            'AirTransports Edit'
+            'Air Transport Edit'
           )}
         />
         <Route
           path={ClientRoutes.AirTransports + '/:id'}
           component={wrapperHeader(
             WrappedAirTransportDetailComponent,
-            'AirTransports Detail'
+            'Air Transport Detail'
           )}
         />
         <Route
           path={ClientRoutes.AirTransports}
           component={wrapperHeader(
             WrappedAirTransportSearchComponent,
-            'AirTransports Search'
+            'Air Transport Search'
           )}
         />
         <Route
           path={ClientRoutes.Breeds + '/create'}
-          component={wrapperHeader(
-            WrappedBreedCreateComponent,
-            'Breeds Create'
-          )}
+          component={wrapperHeader(WrappedBreedCreateComponent, 'Breed Create')}
         />
         <Route
           path={ClientRoutes.Breeds + '/edit/:id'}
-          component={wrapperHeader(WrappedBreedEditComponent, 'Breeds Edit')}
+          component={wrapperHeader(WrappedBreedEditComponent, 'Breed Edit')}
         />
         <Route
           path={ClientRoutes.Breeds + '/:id'}
-          component={wrapperHeader(
-            WrappedBreedDetailComponent,
-            'Breeds Detail'
-          )}
+          component={wrapperHeader(WrappedBreedDetailComponent, 'Breed Detail')}
         />
         <Route
           path={ClientRoutes.Breeds}
-          component={wrapperHeader(
-            WrappedBreedSearchComponent,
-            'Breeds Search'
-          )}
+          component={wrapperHeader(WrappedBreedSearchComponent, 'Breed Search')}
         />
         <Route
           path={ClientRoutes.Countries + '/create'}
           component={wrapperHeader(
             WrappedCountryCreateComponent,
-            'Countries Create'
+            'Country Create'
           )}
         />
         <Route
           path={ClientRoutes.Countries + '/edit/:id'}
-          component={wrapperHeader(
-            WrappedCountryEditComponent,
-            'Countries Edit'
-          )}
+          component={wrapperHeader(WrappedCountryEditComponent, 'Country Edit')}
         />
         <Route
           path={ClientRoutes.Countries + '/:id'}
           component={wrapperHeader(
             WrappedCountryDetailComponent,
-            'Countries Detail'
+            'Country Detail'
           )}
         />
         <Route
           path={ClientRoutes.Countries}
           component={wrapperHeader(
             WrappedCountrySearchComponent,
-            'Countries Search'
+            'Country Search'
           )}
         />
         <Route
           path={ClientRoutes.CountryRequirements + '/create'}
           component={wrapperHeader(
             WrappedCountryRequirementCreateComponent,
-            'CountryRequirements Create'
+            'Country Requirement Create'
           )}
         />
         <Route
           path={ClientRoutes.CountryRequirements + '/edit/:id'}
           component={wrapperHeader(
             WrappedCountryRequirementEditComponent,
-            'CountryRequirements Edit'
+            'Country Requirement Edit'
           )}
         />
         <Route
           path={ClientRoutes.CountryRequirements + '/:id'}
           component={wrapperHeader(
             WrappedCountryRequirementDetailComponent,
-            'CountryRequirements Detail'
+            'Country Requirement Detail'
           )}
         />
         <Route
           path={ClientRoutes.CountryRequirements}
           component={wrapperHeader(
             WrappedCountryRequirementSearchComponent,
-            'CountryRequirements Search'
+            'Country Requirement Search'
           )}
         />
         <Route
           path={ClientRoutes.Customers + '/create'}
           component={wrapperHeader(
             WrappedCustomerCreateComponent,
-            'Customers Create'
+            'Customer Create'
           )}
         />
         <Route
           path={ClientRoutes.Customers + '/edit/:id'}
           component={wrapperHeader(
             WrappedCustomerEditComponent,
-            'Customers Edit'
+            'Customer Edit'
           )}
         />
         <Route
           path={ClientRoutes.Customers + '/:id'}
           component={wrapperHeader(
             WrappedCustomerDetailComponent,
-            'Customers Detail'
+            'Customer Detail'
           )}
         />
         <Route
           path={ClientRoutes.Customers}
           component={wrapperHeader(
             WrappedCustomerSearchComponent,
-            'Customers Search'
+            'Customer Search'
           )}
         />
         <Route
           path={ClientRoutes.CustomerCommunications + '/create'}
           component={wrapperHeader(
             WrappedCustomerCommunicationCreateComponent,
-            'CustomerCommunications Create'
+            'Customer Communication Create'
           )}
         />
         <Route
           path={ClientRoutes.CustomerCommunications + '/edit/:id'}
           component={wrapperHeader(
             WrappedCustomerCommunicationEditComponent,
-            'CustomerCommunications Edit'
+            'Customer Communication Edit'
           )}
         />
         <Route
           path={ClientRoutes.CustomerCommunications + '/:id'}
           component={wrapperHeader(
             WrappedCustomerCommunicationDetailComponent,
-            'CustomerCommunications Detail'
+            'Customer Communication Detail'
           )}
         />
         <Route
           path={ClientRoutes.CustomerCommunications}
           component={wrapperHeader(
             WrappedCustomerCommunicationSearchComponent,
-            'CustomerCommunications Search'
+            'Customer Communication Search'
           )}
         />
         <Route
           path={ClientRoutes.Destinations + '/create'}
           component={wrapperHeader(
             WrappedDestinationCreateComponent,
-            'Destinations Create'
+            'Destination Create'
           )}
         />
         <Route
           path={ClientRoutes.Destinations + '/edit/:id'}
           component={wrapperHeader(
             WrappedDestinationEditComponent,
-            'Destinations Edit'
+            'Destination Edit'
           )}
         />
         <Route
           path={ClientRoutes.Destinations + '/:id'}
           component={wrapperHeader(
             WrappedDestinationDetailComponent,
-            'Destinations Detail'
+            'Destination Detail'
           )}
         />
         <Route
           path={ClientRoutes.Destinations}
           component={wrapperHeader(
             WrappedDestinationSearchComponent,
-            'Destinations Search'
+            'Destination Search'
           )}
         />
         <Route
           path={ClientRoutes.Employees + '/create'}
           component={wrapperHeader(
             WrappedEmployeeCreateComponent,
-            'Employees Create'
+            'Employee Create'
           )}
         />
         <Route
           path={ClientRoutes.Employees + '/edit/:id'}
           component={wrapperHeader(
             WrappedEmployeeEditComponent,
-            'Employees Edit'
+            'Employee Edit'
           )}
         />
         <Route
           path={ClientRoutes.Employees + '/:id'}
           component={wrapperHeader(
             WrappedEmployeeDetailComponent,
-            'Employees Detail'
+            'Employee Detail'
           )}
         />
         <Route
           path={ClientRoutes.Employees}
           component={wrapperHeader(
             WrappedEmployeeSearchComponent,
-            'Employees Search'
+            'Employee Search'
           )}
         />
         <Route
           path={ClientRoutes.Handlers + '/create'}
           component={wrapperHeader(
             WrappedHandlerCreateComponent,
-            'Handlers Create'
+            'Handler Create'
           )}
         />
         <Route
           path={ClientRoutes.Handlers + '/edit/:id'}
-          component={wrapperHeader(
-            WrappedHandlerEditComponent,
-            'Handlers Edit'
-          )}
+          component={wrapperHeader(WrappedHandlerEditComponent, 'Handler Edit')}
         />
         <Route
           path={ClientRoutes.Handlers + '/:id'}
           component={wrapperHeader(
             WrappedHandlerDetailComponent,
-            'Handlers Detail'
+            'Handler Detail'
           )}
         />
         <Route
           path={ClientRoutes.Handlers}
           component={wrapperHeader(
             WrappedHandlerSearchComponent,
-            'Handlers Search'
+            'Handler Search'
           )}
         />
         <Route
           path={ClientRoutes.HandlerPipelineSteps + '/create'}
           component={wrapperHeader(
             WrappedHandlerPipelineStepCreateComponent,
-            'HandlerPipelineSteps Create'
+            'Handler Pipeline Step Create'
           )}
         />
         <Route
           path={ClientRoutes.HandlerPipelineSteps + '/edit/:id'}
           component={wrapperHeader(
             WrappedHandlerPipelineStepEditComponent,
-            'HandlerPipelineSteps Edit'
+            'Handler Pipeline Step Edit'
           )}
         />
         <Route
           path={ClientRoutes.HandlerPipelineSteps + '/:id'}
           component={wrapperHeader(
             WrappedHandlerPipelineStepDetailComponent,
-            'HandlerPipelineSteps Detail'
+            'Handler Pipeline Step Detail'
           )}
         />
         <Route
           path={ClientRoutes.HandlerPipelineSteps}
           component={wrapperHeader(
             WrappedHandlerPipelineStepSearchComponent,
-            'HandlerPipelineSteps Search'
+            'Handler Pipeline Step Search'
           )}
         />
         <Route
           path={ClientRoutes.OtherTransports + '/create'}
           component={wrapperHeader(
             WrappedOtherTransportCreateComponent,
-            'OtherTransports Create'
+            'Other Transport Create'
           )}
         />
         <Route
           path={ClientRoutes.OtherTransports + '/edit/:id'}
           component={wrapperHeader(
             WrappedOtherTransportEditComponent,
-            'OtherTransports Edit'
+            'Other Transport Edit'
           )}
         />
         <Route
           path={ClientRoutes.OtherTransports + '/:id'}
           component={wrapperHeader(
             WrappedOtherTransportDetailComponent,
-            'OtherTransports Detail'
+            'Other Transport Detail'
           )}
         />
         <Route
           path={ClientRoutes.OtherTransports}
           component={wrapperHeader(
             WrappedOtherTransportSearchComponent,
-            'OtherTransports Search'
+            'Other Transport Search'
           )}
         />
         <Route
           path={ClientRoutes.Pets + '/create'}
-          component={wrapperHeader(WrappedPetCreateComponent, 'Pets Create')}
+          component={wrapperHeader(WrappedPetCreateComponent, 'Pet Create')}
         />
         <Route
           path={ClientRoutes.Pets + '/edit/:id'}
-          component={wrapperHeader(WrappedPetEditComponent, 'Pets Edit')}
+          component={wrapperHeader(WrappedPetEditComponent, 'Pet Edit')}
         />
         <Route
           path={ClientRoutes.Pets + '/:id'}
-          component={wrapperHeader(WrappedPetDetailComponent, 'Pets Detail')}
+          component={wrapperHeader(WrappedPetDetailComponent, 'Pet Detail')}
         />
         <Route
           path={ClientRoutes.Pets}
-          component={wrapperHeader(WrappedPetSearchComponent, 'Pets Search')}
+          component={wrapperHeader(WrappedPetSearchComponent, 'Pet Search')}
         />
         <Route
           path={ClientRoutes.Pipelines + '/create'}
           component={wrapperHeader(
             WrappedPipelineCreateComponent,
-            'Pipelines Create'
+            'Pipeline Create'
           )}
         />
         <Route
           path={ClientRoutes.Pipelines + '/edit/:id'}
           component={wrapperHeader(
             WrappedPipelineEditComponent,
-            'Pipelines Edit'
+            'Pipeline Edit'
           )}
         />
         <Route
           path={ClientRoutes.Pipelines + '/:id'}
           component={wrapperHeader(
             WrappedPipelineDetailComponent,
-            'Pipelines Detail'
+            'Pipeline Detail'
           )}
         />
         <Route
           path={ClientRoutes.Pipelines}
           component={wrapperHeader(
             WrappedPipelineSearchComponent,
-            'Pipelines Search'
+            'Pipeline Search'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStatus + '/create'}
           component={wrapperHeader(
             WrappedPipelineStatusCreateComponent,
-            'PipelineStatus Create'
+            'Pipeline Status Create'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStatus + '/edit/:id'}
           component={wrapperHeader(
             WrappedPipelineStatusEditComponent,
-            'PipelineStatus Edit'
+            'Pipeline Status Edit'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStatus + '/:id'}
           component={wrapperHeader(
             WrappedPipelineStatusDetailComponent,
-            'PipelineStatus Detail'
+            'Pipeline Status Detail'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStatus}
           component={wrapperHeader(
             WrappedPipelineStatusSearchComponent,
-            'PipelineStatus Search'
+            'Pipeline Status Search'
           )}
         />
         <Route
           path={ClientRoutes.PipelineSteps + '/create'}
           component={wrapperHeader(
             WrappedPipelineStepCreateComponent,
-            'PipelineSteps Create'
+            'Pipeline Step Create'
           )}
         />
         <Route
           path={ClientRoutes.PipelineSteps + '/edit/:id'}
           component={wrapperHeader(
             WrappedPipelineStepEditComponent,
-            'PipelineSteps Edit'
+            'Pipeline Step Edit'
           )}
         />
         <Route
           path={ClientRoutes.PipelineSteps + '/:id'}
           component={wrapperHeader(
             WrappedPipelineStepDetailComponent,
-            'PipelineSteps Detail'
+            'Pipeline Step Detail'
           )}
         />
         <Route
           path={ClientRoutes.PipelineSteps}
           component={wrapperHeader(
             WrappedPipelineStepSearchComponent,
-            'PipelineSteps Search'
+            'Pipeline Step Search'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepDestinations + '/create'}
           component={wrapperHeader(
             WrappedPipelineStepDestinationCreateComponent,
-            'PipelineStepDestinations Create'
+            'Pipeline Step Destination Create'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepDestinations + '/edit/:id'}
           component={wrapperHeader(
             WrappedPipelineStepDestinationEditComponent,
-            'PipelineStepDestinations Edit'
+            'Pipeline Step Destination Edit'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepDestinations + '/:id'}
           component={wrapperHeader(
             WrappedPipelineStepDestinationDetailComponent,
-            'PipelineStepDestinations Detail'
+            'Pipeline Step Destination Detail'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepDestinations}
           component={wrapperHeader(
             WrappedPipelineStepDestinationSearchComponent,
-            'PipelineStepDestinations Search'
+            'Pipeline Step Destination Search'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepNotes + '/create'}
           component={wrapperHeader(
             WrappedPipelineStepNoteCreateComponent,
-            'PipelineStepNotes Create'
+            'Pipeline Step Note Create'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepNotes + '/edit/:id'}
           component={wrapperHeader(
             WrappedPipelineStepNoteEditComponent,
-            'PipelineStepNotes Edit'
+            'Pipeline Step Note Edit'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepNotes + '/:id'}
           component={wrapperHeader(
             WrappedPipelineStepNoteDetailComponent,
-            'PipelineStepNotes Detail'
+            'Pipeline Step Note Detail'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepNotes}
           component={wrapperHeader(
             WrappedPipelineStepNoteSearchComponent,
-            'PipelineStepNotes Search'
+            'Pipeline Step Note Search'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStatus + '/create'}
           component={wrapperHeader(
             WrappedPipelineStepStatusCreateComponent,
-            'PipelineStepStatus Create'
+            'Pipeline Step Status Create'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStatus + '/edit/:id'}
           component={wrapperHeader(
             WrappedPipelineStepStatusEditComponent,
-            'PipelineStepStatus Edit'
+            'Pipeline Step Status Edit'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStatus + '/:id'}
           component={wrapperHeader(
             WrappedPipelineStepStatusDetailComponent,
-            'PipelineStepStatus Detail'
+            'Pipeline Step Status Detail'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStatus}
           component={wrapperHeader(
             WrappedPipelineStepStatusSearchComponent,
-            'PipelineStepStatus Search'
+            'Pipeline Step Status Search'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStepRequirements + '/create'}
           component={wrapperHeader(
             WrappedPipelineStepStepRequirementCreateComponent,
-            'PipelineStepStepRequirements Create'
+            'Pipeline Step Step Requirement Create'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStepRequirements + '/edit/:id'}
           component={wrapperHeader(
             WrappedPipelineStepStepRequirementEditComponent,
-            'PipelineStepStepRequirements Edit'
+            'Pipeline Step Step Requirement Edit'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStepRequirements + '/:id'}
           component={wrapperHeader(
             WrappedPipelineStepStepRequirementDetailComponent,
-            'PipelineStepStepRequirements Detail'
+            'Pipeline Step Step Requirement Detail'
           )}
         />
         <Route
           path={ClientRoutes.PipelineStepStepRequirements}
           component={wrapperHeader(
             WrappedPipelineStepStepRequirementSearchComponent,
-            'PipelineStepStepRequirements Search'
+            'Pipeline Step Step Requirement Search'
           )}
         />
         <Route
           path={ClientRoutes.Sales + '/create'}
-          component={wrapperHeader(WrappedSaleCreateComponent, 'Sales Create')}
+          component={wrapperHeader(WrappedSaleCreateComponent, 'Sale Create')}
         />
         <Route
           path={ClientRoutes.Sales + '/edit/:id'}
-          component={wrapperHeader(WrappedSaleEditComponent, 'Sales Edit')}
+          component={wrapperHeader(WrappedSaleEditComponent, 'Sale Edit')}
         />
         <Route
           path={ClientRoutes.Sales + '/:id'}
-          component={wrapperHeader(WrappedSaleDetailComponent, 'Sales Detail')}
+          component={wrapperHeader(WrappedSaleDetailComponent, 'Sale Detail')}
         />
         <Route
           path={ClientRoutes.Sales}
-          component={wrapperHeader(WrappedSaleSearchComponent, 'Sales Search')}
+          component={wrapperHeader(WrappedSaleSearchComponent, 'Sale Search')}
         />
         <Route
           path={ClientRoutes.Species + '/create'}
@@ -749,5 +731,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>9e36835aa26f8c745e5c81759af6f75c</Hash>
+    <Hash>4c41f04359640541196ae26845a95857</Hash>
 </Codenesium>*/

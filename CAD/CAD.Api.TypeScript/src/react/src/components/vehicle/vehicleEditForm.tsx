@@ -192,14 +192,14 @@ class VehicleEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -226,5 +226,5 @@ export const WrappedVehicleEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ff7b30174540e90a37070e72169cdec6</Hash>
+    <Hash>893ff1483412bbf402a1315e33fad778</Hash>
 </Codenesium>*/

@@ -15,38 +15,47 @@ namespace CADNS.Api.Client
 		{
 			from.Addresses.ForEach(x => this.AddAddress(x));
 			from.Calls.ForEach(x => this.AddCall(x));
+			from.CallAssignments.ForEach(x => this.AddCallAssignment(x));
 			from.CallDispositions.ForEach(x => this.AddCallDisposition(x));
 			from.CallPersons.ForEach(x => this.AddCallPerson(x));
-			from.CallStatus.ForEach(x => this.AddCallStatu(x));
+			from.CallStatus.ForEach(x => this.AddCallStatus(x));
 			from.CallTypes.ForEach(x => this.AddCallType(x));
 			from.Notes.ForEach(x => this.AddNote(x));
+			from.OffCapabilities.ForEach(x => this.AddOffCapability(x));
 			from.Officers.ForEach(x => this.AddOfficer(x));
-			from.OfficerCapabilities.ForEach(x => this.AddOfficerCapability(x));
+			from.OfficerCapabilities.ForEach(x => this.AddOfficerCapabilities(x));
 			from.People.ForEach(x => this.AddPerson(x));
 			from.PersonTypes.ForEach(x => this.AddPersonType(x));
 			from.Units.ForEach(x => this.AddUnit(x));
 			from.UnitDispositions.ForEach(x => this.AddUnitDisposition(x));
+			from.UnitOfficers.ForEach(x => this.AddUnitOfficer(x));
+			from.VehCapabilities.ForEach(x => this.AddVehCapability(x));
 			from.Vehicles.ForEach(x => this.AddVehicle(x));
-			from.VehicleCapabilities.ForEach(x => this.AddVehicleCapabilitty(x));
+			from.VehicleCapabilities.ForEach(x => this.AddVehicleCapabilities(x));
+			from.VehicleOfficers.ForEach(x => this.AddVehicleOfficer(x));
 		}
 
 		public List<ApiAddressClientResponseModel> Addresses { get; private set; } = new List<ApiAddressClientResponseModel>();
 
 		public List<ApiCallClientResponseModel> Calls { get; private set; } = new List<ApiCallClientResponseModel>();
 
+		public List<ApiCallAssignmentClientResponseModel> CallAssignments { get; private set; } = new List<ApiCallAssignmentClientResponseModel>();
+
 		public List<ApiCallDispositionClientResponseModel> CallDispositions { get; private set; } = new List<ApiCallDispositionClientResponseModel>();
 
 		public List<ApiCallPersonClientResponseModel> CallPersons { get; private set; } = new List<ApiCallPersonClientResponseModel>();
 
-		public List<ApiCallStatuClientResponseModel> CallStatus { get; private set; } = new List<ApiCallStatuClientResponseModel>();
+		public List<ApiCallStatusClientResponseModel> CallStatus { get; private set; } = new List<ApiCallStatusClientResponseModel>();
 
 		public List<ApiCallTypeClientResponseModel> CallTypes { get; private set; } = new List<ApiCallTypeClientResponseModel>();
 
 		public List<ApiNoteClientResponseModel> Notes { get; private set; } = new List<ApiNoteClientResponseModel>();
 
+		public List<ApiOffCapabilityClientResponseModel> OffCapabilities { get; private set; } = new List<ApiOffCapabilityClientResponseModel>();
+
 		public List<ApiOfficerClientResponseModel> Officers { get; private set; } = new List<ApiOfficerClientResponseModel>();
 
-		public List<ApiOfficerCapabilityClientResponseModel> OfficerCapabilities { get; private set; } = new List<ApiOfficerCapabilityClientResponseModel>();
+		public List<ApiOfficerCapabilitiesClientResponseModel> OfficerCapabilities { get; private set; } = new List<ApiOfficerCapabilitiesClientResponseModel>();
 
 		public List<ApiPersonClientResponseModel> People { get; private set; } = new List<ApiPersonClientResponseModel>();
 
@@ -56,9 +65,15 @@ namespace CADNS.Api.Client
 
 		public List<ApiUnitDispositionClientResponseModel> UnitDispositions { get; private set; } = new List<ApiUnitDispositionClientResponseModel>();
 
+		public List<ApiUnitOfficerClientResponseModel> UnitOfficers { get; private set; } = new List<ApiUnitOfficerClientResponseModel>();
+
+		public List<ApiVehCapabilityClientResponseModel> VehCapabilities { get; private set; } = new List<ApiVehCapabilityClientResponseModel>();
+
 		public List<ApiVehicleClientResponseModel> Vehicles { get; private set; } = new List<ApiVehicleClientResponseModel>();
 
-		public List<ApiVehicleCapabilittyClientResponseModel> VehicleCapabilities { get; private set; } = new List<ApiVehicleCapabilittyClientResponseModel>();
+		public List<ApiVehicleCapabilitiesClientResponseModel> VehicleCapabilities { get; private set; } = new List<ApiVehicleCapabilitiesClientResponseModel>();
+
+		public List<ApiVehicleOfficerClientResponseModel> VehicleOfficers { get; private set; } = new List<ApiVehicleOfficerClientResponseModel>();
 
 		public void AddAddress(ApiAddressClientResponseModel item)
 		{
@@ -73,6 +88,14 @@ namespace CADNS.Api.Client
 			if (!this.Calls.Any(x => x.Id == item.Id))
 			{
 				this.Calls.Add(item);
+			}
+		}
+
+		public void AddCallAssignment(ApiCallAssignmentClientResponseModel item)
+		{
+			if (!this.CallAssignments.Any(x => x.Id == item.Id))
+			{
+				this.CallAssignments.Add(item);
 			}
 		}
 
@@ -92,7 +115,7 @@ namespace CADNS.Api.Client
 			}
 		}
 
-		public void AddCallStatu(ApiCallStatuClientResponseModel item)
+		public void AddCallStatus(ApiCallStatusClientResponseModel item)
 		{
 			if (!this.CallStatus.Any(x => x.Id == item.Id))
 			{
@@ -116,6 +139,14 @@ namespace CADNS.Api.Client
 			}
 		}
 
+		public void AddOffCapability(ApiOffCapabilityClientResponseModel item)
+		{
+			if (!this.OffCapabilities.Any(x => x.Id == item.Id))
+			{
+				this.OffCapabilities.Add(item);
+			}
+		}
+
 		public void AddOfficer(ApiOfficerClientResponseModel item)
 		{
 			if (!this.Officers.Any(x => x.Id == item.Id))
@@ -124,9 +155,9 @@ namespace CADNS.Api.Client
 			}
 		}
 
-		public void AddOfficerCapability(ApiOfficerCapabilityClientResponseModel item)
+		public void AddOfficerCapabilities(ApiOfficerCapabilitiesClientResponseModel item)
 		{
-			if (!this.OfficerCapabilities.Any(x => x.CapabilityId == item.CapabilityId))
+			if (!this.OfficerCapabilities.Any(x => x.Id == item.Id))
 			{
 				this.OfficerCapabilities.Add(item);
 			}
@@ -164,6 +195,22 @@ namespace CADNS.Api.Client
 			}
 		}
 
+		public void AddUnitOfficer(ApiUnitOfficerClientResponseModel item)
+		{
+			if (!this.UnitOfficers.Any(x => x.Id == item.Id))
+			{
+				this.UnitOfficers.Add(item);
+			}
+		}
+
+		public void AddVehCapability(ApiVehCapabilityClientResponseModel item)
+		{
+			if (!this.VehCapabilities.Any(x => x.Id == item.Id))
+			{
+				this.VehCapabilities.Add(item);
+			}
+		}
+
 		public void AddVehicle(ApiVehicleClientResponseModel item)
 		{
 			if (!this.Vehicles.Any(x => x.Id == item.Id))
@@ -172,16 +219,24 @@ namespace CADNS.Api.Client
 			}
 		}
 
-		public void AddVehicleCapabilitty(ApiVehicleCapabilittyClientResponseModel item)
+		public void AddVehicleCapabilities(ApiVehicleCapabilitiesClientResponseModel item)
 		{
-			if (!this.VehicleCapabilities.Any(x => x.VehicleId == item.VehicleId))
+			if (!this.VehicleCapabilities.Any(x => x.Id == item.Id))
 			{
 				this.VehicleCapabilities.Add(item);
+			}
+		}
+
+		public void AddVehicleOfficer(ApiVehicleOfficerClientResponseModel item)
+		{
+			if (!this.VehicleOfficers.Any(x => x.Id == item.Id))
+			{
+				this.VehicleOfficers.Add(item);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ba019e94cd338e10b92348fc5e85e6a</Hash>
+    <Hash>3d3ed6be2b974b82963df5b0e2298266</Hash>
 </Codenesium>*/

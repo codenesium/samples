@@ -200,7 +200,7 @@ export default class UnitDispositionSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'UnitDisposition',
+                Header: 'Unit Disposition',
                 columns: [
                   {
                     Header: 'Name',
@@ -270,5 +270,5 @@ export const WrappedUnitDispositionSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>10ef6d3ff8bd1b1e563decb0bfaa814c</Hash>
+    <Hash>8756f1d30a7aaa9347fc170e8820fd29</Hash>
 </Codenesium>*/

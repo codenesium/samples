@@ -19,27 +19,27 @@ namespace NebulaNS.Api.Client
 			int chainId,
 			DateTime? dateCompleted,
 			DateTime? dateStarted,
-			string dynamicParameter,
+			string dynamicParameters,
 			Guid externalId,
 			int linkStatusId,
 			string name,
 			int order,
 			string response,
-			string staticParameter,
-			int timeoutInSecond)
+			string staticParameters,
+			int timeoutInSeconds)
 		{
 			this.AssignedMachineId = assignedMachineId;
 			this.ChainId = chainId;
 			this.DateCompleted = dateCompleted;
 			this.DateStarted = dateStarted;
-			this.DynamicParameter = dynamicParameter;
+			this.DynamicParameters = dynamicParameters;
 			this.ExternalId = externalId;
 			this.LinkStatusId = linkStatusId;
 			this.Name = name;
 			this.Order = order;
 			this.Response = response;
-			this.StaticParameter = staticParameter;
-			this.TimeoutInSecond = timeoutInSecond;
+			this.StaticParameters = staticParameters;
+			this.TimeoutInSeconds = timeoutInSeconds;
 		}
 
 		[JsonProperty]
@@ -55,7 +55,7 @@ namespace NebulaNS.Api.Client
 		public DateTime? DateStarted { get; private set; } = null;
 
 		[JsonProperty]
-		public string DynamicParameter { get; private set; } = default(string);
+		public string DynamicParameters { get; private set; } = default(string);
 
 		[JsonProperty]
 		public Guid ExternalId { get; private set; } = default(Guid);
@@ -73,13 +73,13 @@ namespace NebulaNS.Api.Client
 		public string Response { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string StaticParameter { get; private set; } = default(string);
+		public string StaticParameters { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int TimeoutInSecond { get; private set; } = default(int);
+		public int TimeoutInSeconds { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d978bb6840ee185700505763172549b</Hash>
+    <Hash>ad50057aefcd51b33bdf3a3b10d37383</Hash>
 </Codenesium>*/

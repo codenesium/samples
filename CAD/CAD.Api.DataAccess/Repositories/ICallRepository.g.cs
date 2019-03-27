@@ -17,24 +17,20 @@ namespace CADNS.Api.DataAccess
 
 		Task<List<Call>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
+		Task<List<CallAssignment>> CallAssignmentsByCallId(int callId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<Note>> NotesByCallId(int callId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Address> AddressByAddressId(int? addressId);
 
 		Task<CallDisposition> CallDispositionByCallDispositionId(int? callDispositionId);
 
-		Task<CallStatu> CallStatuByCallStatusId(int? callStatusId);
+		Task<CallStatus> CallStatusByCallStatusId(int? callStatusId);
 
 		Task<CallType> CallTypeByCallTypeId(int? callTypeId);
-
-		Task<List<Call>> ByUnitId(int unitId, int limit = int.MaxValue, int offset = 0);
-
-		Task<CallAssignment> CreateCallAssignment(CallAssignment item);
-
-		Task DeleteCallAssignment(CallAssignment item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>51be950b5558109c59cb308e175db780</Hash>
+    <Hash>0ec5a302594800b1f0f51e0f1a8a72e1</Hash>
 </Codenesium>*/

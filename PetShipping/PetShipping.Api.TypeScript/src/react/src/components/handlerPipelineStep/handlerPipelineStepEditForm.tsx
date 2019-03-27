@@ -196,21 +196,21 @@ class HandlerPipelineStepEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="handlerId">handlerId</label>
-            <br />
-            {getFieldDecorator('handlerId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'handlerId'} />)}
-          </Form.Item>
+          <HandlerSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Handlers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="handlerId"
+            required={true}
+            selectedValue={this.state.model!.handlerId}
+          />
 
-          <Form.Item>
-            <label htmlFor="pipelineStepId">pipelineStepId</label>
-            <br />
-            {getFieldDecorator('pipelineStepId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStepId'} />)}
-          </Form.Item>
+          <PipelineStepSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="pipelineStepId"
+            required={true}
+            selectedValue={this.state.model!.pipelineStepId}
+          />
 
           <Form.Item>
             <Button
@@ -236,5 +236,5 @@ export const WrappedHandlerPipelineStepEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>184ad9e4b0ea67304fe43cd9a2b6615b</Hash>
+    <Hash>1b895d1208368fcf17009cd670dd2131</Hash>
 </Codenesium>*/

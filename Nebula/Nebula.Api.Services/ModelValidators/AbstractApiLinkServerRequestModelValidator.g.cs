@@ -44,9 +44,9 @@ namespace NebulaNS.Api.Services
 		{
 		}
 
-		public virtual void DynamicParameterRules()
+		public virtual void DynamicParametersRules()
 		{
-			this.RuleFor(x => x.DynamicParameter).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.DynamicParameters).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ExternalIdRules()
@@ -74,12 +74,12 @@ namespace NebulaNS.Api.Services
 			this.RuleFor(x => x.Response).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void StaticParameterRules()
+		public virtual void StaticParametersRules()
 		{
-			this.RuleFor(x => x.StaticParameter).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.StaticParameters).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void TimeoutInSecondRules()
+		public virtual void TimeoutInSecondsRules()
 		{
 		}
 
@@ -121,5 +121,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>776aa21328bab152487a81653c436918</Hash>
+    <Hash>913391923d8df75e6054a9c5243a55f6</Hash>
 </Codenesium>*/

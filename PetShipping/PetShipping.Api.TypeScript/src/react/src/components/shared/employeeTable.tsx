@@ -115,14 +115,14 @@ export class EmployeeTableComponent extends React.Component<
                 Header: 'Employees',
                 columns: [
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'IsSalesPerson',
+                    Header: 'Is Sales Person',
                     accessor: 'isSalesPerson',
                     Cell: props => {
                       return (
@@ -131,14 +131,14 @@ export class EmployeeTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'IsShipper',
+                    Header: 'Is Shipper',
                     accessor: 'isShipper',
                     Cell: props => {
                       return <span>{String(props.original.isShipper)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -189,5 +189,5 @@ export class EmployeeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ef0f08bf4a5b19f575f4b96423e524e6</Hash>
+    <Hash>3079b563b6e0d879aa234d053d921382</Hash>
 </Codenesium>*/

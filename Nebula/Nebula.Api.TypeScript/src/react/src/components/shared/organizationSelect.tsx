@@ -94,7 +94,7 @@ export class OrganizationSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Organization</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class OrganizationSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: OrganizationViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class OrganizationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>bbd45e01a2e9f90ac7f80de3f0de0283</Hash>
+    <Hash>7b86454253582872c83de6b841c1cb43</Hash>
 </Codenesium>*/

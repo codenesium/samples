@@ -142,31 +142,31 @@ class PipelineStepCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="pipelineStepStatusId">pipelineStepStatusId</label>
-            <br />
-            {getFieldDecorator('pipelineStepStatusId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStepStatusId'} />)}
-          </Form.Item>
+          <PipelineStepStatusSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineStepStatus}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="pipelineStepStatusId"
+            required={true}
+            selectedValue={this.state.model!.pipelineStepStatusId}
+          />
 
-          <Form.Item>
-            <label htmlFor="shipperId">shipperId</label>
-            <br />
-            {getFieldDecorator('shipperId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'shipperId'} />)}
-          </Form.Item>
+          <EmployeeSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="shipperId"
+            required={true}
+            selectedValue={this.state.model!.shipperId}
+          />
 
           <Form.Item>
             <Button
@@ -192,5 +192,5 @@ export const WrappedPipelineStepCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0960d1e2e445bea936aa0f38b1275276</Hash>
+    <Hash>2ba461362663d827029073f7179ceb34</Hash>
 </Codenesium>*/

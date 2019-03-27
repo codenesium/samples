@@ -115,10 +115,10 @@ export class FamilyTableComponent extends React.Component<
                 Header: 'Families',
                 columns: [
                   {
-                    Header: 'Note',
-                    accessor: 'note',
+                    Header: 'Notes',
+                    accessor: 'notes',
                     Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
+                      return <span>{String(props.original.notes)}</span>;
                     },
                   },
                   {
@@ -210,5 +210,5 @@ export class FamilyTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f23c8705cbcbe5e049909fb2ac8de0ef</Hash>
+    <Hash>ab573c7c527430744f354588fb6fb69f</Hash>
 </Codenesium>*/

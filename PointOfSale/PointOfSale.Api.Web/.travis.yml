@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 2.2
+script:
+   -  dotnet build PointOfSale.Api.Web.csproj
+   -  dotnet test PointOfSale.Api.DataAccess.csproj
+   -  dotnet test PointOfSale.Api.Servicea.csproj
+   -  dotnet test PointOfSale.Api.Client.csproj
+   -  dotnet test PointOfSale.Api.Web.csproj

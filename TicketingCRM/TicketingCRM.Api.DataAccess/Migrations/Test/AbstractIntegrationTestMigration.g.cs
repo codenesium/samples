@@ -46,9 +46,9 @@ namespace TicketingCRMNS.Api.DataAccess
 			saleItem1.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			this.Context.Sales.Add(saleItem1);
 
-			var saleTicketItem1 = new SaleTicket();
-			saleTicketItem1.SetProperties(1, 1, 1);
-			this.Context.SaleTickets.Add(saleTicketItem1);
+			var saleTicketsItem1 = new SaleTickets();
+			saleTicketsItem1.SetProperties(1, 1, 1);
+			this.Context.SaleTickets.Add(saleTicketsItem1);
 
 			var ticketItem1 = new Ticket();
 			ticketItem1.SetProperties(1, "A", 1);
@@ -76,5 +76,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c935f38088a6d43db6236227f220cbd4</Hash>
+    <Hash>e84b9d3ff4e55ccb708f951f3b56b76c</Hash>
 </Codenesium>*/

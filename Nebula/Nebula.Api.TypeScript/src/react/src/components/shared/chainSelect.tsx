@@ -94,7 +94,7 @@ export class ChainSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Chain</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class ChainSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: ChainViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class ChainSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>533af455b00a5b270fdcf5c70ee2a8e9</Hash>
+    <Hash>0dc5612ff4f58814ec09b56e6d139508</Hash>
 </Codenesium>*/

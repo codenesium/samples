@@ -11,7 +11,7 @@ export default class CustomerCommunicationViewModel {
   employeeIdEntity: string;
   employeeIdNavigation?: EmployeeViewModel;
   id: number;
-  note: string;
+  notes: string;
 
   constructor() {
     this.customerId = 0;
@@ -22,7 +22,7 @@ export default class CustomerCommunicationViewModel {
     this.employeeIdEntity = '';
     this.employeeIdNavigation = undefined;
     this.id = 0;
-    this.note = '';
+    this.notes = '';
   }
 
   setProperties(
@@ -30,13 +30,13 @@ export default class CustomerCommunicationViewModel {
     dateCreated: any,
     employeeId: number,
     id: number,
-    note: string
+    notes: string
   ): void {
     this.customerId = customerId;
     this.dateCreated = moment(dateCreated, 'YYYY-MM-DD');
     this.employeeId = employeeId;
     this.id = id;
-    this.note = note;
+    this.notes = notes;
   }
 
   toDisplay(): string {
@@ -46,5 +46,5 @@ export default class CustomerCommunicationViewModel {
 
 
 /*<Codenesium>
-    <Hash>8fcf6f36738a46ee50fa4e51cb8aa8fc</Hash>
+    <Hash>595461369f20f93e3f3ed2fb29f27308</Hash>
 </Codenesium>*/

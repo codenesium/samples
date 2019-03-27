@@ -196,7 +196,7 @@ export default class SaleSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Sales',
+                Header: 'Sale',
                 columns: [
                   {
                     Header: 'Amount',
@@ -206,7 +206,7 @@ export default class SaleSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'CutomerId',
+                    Header: 'Cutomer',
                     accessor: 'cutomerId',
                     Cell: props => {
                       return <span>{String(props.original.cutomerId)}</span>;
@@ -220,7 +220,7 @@ export default class SaleSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PetId',
+                    Header: 'Pet',
                     accessor: 'petId',
                     Cell: props => {
                       return (
@@ -242,14 +242,14 @@ export default class SaleSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SaleDate',
+                    Header: 'Sale Date',
                     accessor: 'saleDate',
                     Cell: props => {
                       return <span>{String(props.original.saleDate)}</span>;
                     },
                   },
                   {
-                    Header: 'SalesPersonId',
+                    Header: 'Sales Person',
                     accessor: 'salesPersonId',
                     Cell: props => {
                       return (
@@ -318,5 +318,5 @@ export const WrappedSaleSearchComponent = Form.create({ name: 'Sale Search' })(
 
 
 /*<Codenesium>
-    <Hash>1bce5257fd506562810e702e80049bd1</Hash>
+    <Hash>26b45f0d8537f6ab7990a4219f8da2ee</Hash>
 </Codenesium>*/

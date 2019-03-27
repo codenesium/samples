@@ -141,21 +141,21 @@ class OtherTransportCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="handlerId">handlerId</label>
-            <br />
-            {getFieldDecorator('handlerId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'handlerId'} />)}
-          </Form.Item>
+          <HandlerSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Handlers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="handlerId"
+            required={true}
+            selectedValue={this.state.model!.handlerId}
+          />
 
-          <Form.Item>
-            <label htmlFor="pipelineStepId">pipelineStepId</label>
-            <br />
-            {getFieldDecorator('pipelineStepId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStepId'} />)}
-          </Form.Item>
+          <PipelineStepSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="pipelineStepId"
+            required={true}
+            selectedValue={this.state.model!.pipelineStepId}
+          />
 
           <Form.Item>
             <Button
@@ -181,5 +181,5 @@ export const WrappedOtherTransportCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>294c0b5166ca9b20bf3e225f7974c050</Hash>
+    <Hash>738b81ddaeb4067f74c0eb2fa09900d3</Hash>
 </Codenesium>*/

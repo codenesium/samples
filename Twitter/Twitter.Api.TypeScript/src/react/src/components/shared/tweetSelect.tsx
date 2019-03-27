@@ -103,7 +103,7 @@ export class TweetSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TweetViewModel) => {
                 return (
-                  <Select.Option key={x.tweetId} value={x.tweetId}>
+                  <Select.Option key={String(x.tweetId)} value={x.tweetId}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TweetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>297de734187743775bb28675ef18d936</Hash>
+    <Hash>7bc9071338ff676c9c6aa8ab954206fc</Hash>
 </Codenesium>*/

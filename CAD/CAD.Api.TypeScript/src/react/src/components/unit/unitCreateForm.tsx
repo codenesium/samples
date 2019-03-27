@@ -140,11 +140,11 @@ class UnitCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="callSign">callSign</label>
+            <label htmlFor="callSign">Call Sign</label>
             <br />
             {getFieldDecorator('callSign', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'callSign'} />)}
+            })(<Input placeholder={'Call Sign'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -171,5 +171,5 @@ export const WrappedUnitCreateComponent = Form.create({ name: 'Unit Create' })(
 
 
 /*<Codenesium>
-    <Hash>bca855193bf8f2a7c43feedd88e337fe</Hash>
+    <Hash>1c4450d56233b37982b9ebc0b0623fb6</Hash>
 </Codenesium>*/

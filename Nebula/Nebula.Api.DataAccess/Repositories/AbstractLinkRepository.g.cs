@@ -39,15 +39,15 @@ namespace NebulaNS.Api.DataAccess
 				                  x.ChainId == query.ToInt() ||
 				                  x.DateCompleted == query.ToNullableDateTime() ||
 				                  x.DateStarted == query.ToNullableDateTime() ||
-				                  x.DynamicParameter.StartsWith(query) ||
+				                  x.DynamicParameters.StartsWith(query) ||
 				                  x.ExternalId == query.ToGuid() ||
 				                  x.Id == query.ToInt() ||
 				                  x.LinkStatusId == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.Order == query.ToInt() ||
 				                  x.Response.StartsWith(query) ||
-				                  x.StaticParameter.StartsWith(query) ||
-				                  x.TimeoutInSecond == query.ToInt(),
+				                  x.StaticParameters.StartsWith(query) ||
+				                  x.TimeoutInSeconds == query.ToInt(),
 				                  limit,
 				                  offset);
 			}
@@ -174,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>21dfadba79d26a2e53c1da52889d6aea</Hash>
+    <Hash>d0816833863d0bff949d8c5b154f22e3</Hash>
 </Codenesium>*/

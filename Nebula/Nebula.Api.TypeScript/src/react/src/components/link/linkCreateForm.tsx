@@ -159,48 +159,51 @@ class LinkCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCompleted">DateCompleted</label>
+            <label htmlFor="dateCompleted">Date Completed</label>
             <br />
             {getFieldDecorator('dateCompleted', {
               rules: [],
             })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateCompleted'} />
+              <DatePicker
+                format={'YYYY-MM-DD'}
+                placeholder={'Date Completed'}
+              />
             )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateStarted">DateStarted</label>
+            <label htmlFor="dateStarted">Date Started</label>
             <br />
             {getFieldDecorator('dateStarted', {
               rules: [],
             })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateStarted'} />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Date Started'} />
             )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dynamicParameter">DynamicParameter</label>
+            <label htmlFor="dynamicParameters">Dynamic Parameters</label>
             <br />
-            {getFieldDecorator('dynamicParameter', {
+            {getFieldDecorator('dynamicParameters', {
               rules: [],
-            })(<Input placeholder={'DynamicParameter'} />)}
+            })(<Input placeholder={'Dynamic Parameters'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="externalId">ExternalId</label>
+            <label htmlFor="externalId">External</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'ExternalId'} />)}
+            })(<Input placeholder={'External'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="linkStatusId">LinkStatusId</label>
-            <br />
-            {getFieldDecorator('linkStatusId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'LinkStatusId'} />)}
-          </Form.Item>
+          <LinkStatusSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.LinkStatus}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="linkStatusId"
+            required={true}
+            selectedValue={this.state.model!.linkStatusId}
+          />
 
           <Form.Item>
             <label htmlFor="name">Name</label>
@@ -230,19 +233,19 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="staticParameter">StaticParameter</label>
+            <label htmlFor="staticParameters">Static Parameters</label>
             <br />
-            {getFieldDecorator('staticParameter', {
+            {getFieldDecorator('staticParameters', {
               rules: [],
-            })(<Input.TextArea placeholder={'StaticParameter'} />)}
+            })(<Input placeholder={'Static Parameters'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="timeoutInSecond">TimeoutInSecond</label>
+            <label htmlFor="timeoutInSeconds">Timeout In Seconds</label>
             <br />
-            {getFieldDecorator('timeoutInSecond', {
+            {getFieldDecorator('timeoutInSeconds', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'TimeoutInSecond'} />)}
+            })(<InputNumber placeholder={'Timeout In Seconds'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -269,5 +272,5 @@ export const WrappedLinkCreateComponent = Form.create({ name: 'Link Create' })(
 
 
 /*<Codenesium>
-    <Hash>8d9b0a3ee6c77a2e1009f06b296c5612</Hash>
+    <Hash>161b7d61acbc6c214a50effb4dab9c21</Hash>
 </Codenesium>*/

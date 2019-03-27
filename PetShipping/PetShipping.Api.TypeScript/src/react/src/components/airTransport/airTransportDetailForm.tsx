@@ -107,15 +107,15 @@ class AirTransportDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>airlineId</h3>
+              <h3>Airline</h3>
               <p>{String(this.state.model!.airlineId)}</p>
             </div>
             <div>
-              <h3>flightNumber</h3>
+              <h3>Flight Number</h3>
               <p>{String(this.state.model!.flightNumber)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>handlerId</h3>
+              <h3>Handler</h3>
               <p>
                 {String(
                   this.state.model!.handlerIdNavigation &&
@@ -124,15 +124,15 @@ class AirTransportDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>landDate</h3>
+              <h3>Land Date</h3>
               <p>{String(this.state.model!.landDate)}</p>
             </div>
             <div>
-              <h3>pipelineStepId</h3>
+              <h3>Pipeline Step</h3>
               <p>{String(this.state.model!.pipelineStepId)}</p>
             </div>
             <div>
-              <h3>takeoffDate</h3>
+              <h3>Takeoff Date</h3>
               <p>{String(this.state.model!.takeoffDate)}</p>
             </div>
           </div>
@@ -151,5 +151,5 @@ export const WrappedAirTransportDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>699e0ad601bde471b2668eb218f689a7</Hash>
+    <Hash>bea7c4677f44ff2db3283c6f70ded32c</Hash>
 </Codenesium>*/

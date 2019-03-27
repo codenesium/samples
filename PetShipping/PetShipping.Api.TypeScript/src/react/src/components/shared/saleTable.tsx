@@ -122,7 +122,7 @@ export class SaleTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'CutomerId',
+                    Header: 'Cutomer',
                     accessor: 'cutomerId',
                     Cell: props => {
                       return <span>{String(props.original.cutomerId)}</span>;
@@ -136,7 +136,7 @@ export class SaleTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PetId',
+                    Header: 'Pet',
                     accessor: 'petId',
                     Cell: props => {
                       return (
@@ -158,14 +158,14 @@ export class SaleTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SaleDate',
+                    Header: 'Sale Date',
                     accessor: 'saleDate',
                     Cell: props => {
                       return <span>{String(props.original.saleDate)}</span>;
                     },
                   },
                   {
-                    Header: 'SalesPersonId',
+                    Header: 'Sales Person',
                     accessor: 'salesPersonId',
                     Cell: props => {
                       return (
@@ -218,5 +218,5 @@ export class SaleTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c6259f2b31aafb28c10df8ca4dfca2dc</Hash>
+    <Hash>a2bc6f4d8912baf13e4ce84d6a481fa0</Hash>
 </Codenesium>*/

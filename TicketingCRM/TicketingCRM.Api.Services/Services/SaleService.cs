@@ -13,18 +13,18 @@ namespace TicketingCRMNS.Api.Services
 			ISaleRepository saleRepository,
 			IApiSaleServerRequestModelValidator saleModelValidator,
 			IDALSaleMapper dalSaleMapper,
-			IDALSaleTicketMapper dalSaleTicketMapper)
+			IDALSaleTicketsMapper dalSaleTicketsMapper)
 			: base(logger,
 			       mediator,
 			       saleRepository,
 			       saleModelValidator,
 			       dalSaleMapper,
-			       dalSaleTicketMapper)
+			       dalSaleTicketsMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ca24adec0e41b83a30b2c0a86b2c0ac</Hash>
+    <Hash>042da8d8f6db83c5f96e8ffdd2e97eb3</Hash>
 </Codenesium>*/

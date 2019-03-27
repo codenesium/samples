@@ -200,10 +200,10 @@ export default class FamilySearchComponent extends React.Component<
                 Header: 'Familes',
                 columns: [
                   {
-                    Header: 'Note',
-                    accessor: 'note',
+                    Header: 'Notes',
+                    accessor: 'notes',
                     Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
+                      return <span>{String(props.original.notes)}</span>;
                     },
                   },
                   {
@@ -311,5 +311,5 @@ export const WrappedFamilySearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cee186f45d69011bf5573b3b40167cc2</Hash>
+    <Hash>42dc58c24cdeb9098100d7cd8eaf8b27</Hash>
 </Codenesium>*/

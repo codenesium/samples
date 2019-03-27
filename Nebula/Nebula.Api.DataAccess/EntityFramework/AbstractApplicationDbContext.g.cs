@@ -35,7 +35,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<Chain> Chains { get; set; }
 
-		public virtual DbSet<ChainStatus> ChainStatuses { get; set; }
+		public virtual DbSet<ChainStatus> ChainStatus { get; set; }
 
 		public virtual DbSet<Clasp> Clasps { get; set; }
 
@@ -43,7 +43,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<LinkLog> LinkLogs { get; set; }
 
-		public virtual DbSet<LinkStatus> LinkStatuses { get; set; }
+		public virtual DbSet<LinkStatus> LinkStatus { get; set; }
 
 		public virtual DbSet<Machine> Machines { get; set; }
 
@@ -51,7 +51,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<Organization> Organizations { get; set; }
 
-		public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
+		public virtual DbSet<Sysdiagrams> Sysdiagrams { get; set; }
 
 		public virtual DbSet<Team> Teams { get; set; }
 
@@ -177,9 +177,13 @@ namespace NebulaNS.Api.DataAccess
 			modelBuilder.Entity<MachineRefTeam>()
 			.HasKey(c => new
 			{
-				c.MachineId,
-				c.TeamId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<MachineRefTeam>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Organization>()
 			.HasKey(c => new
@@ -192,13 +196,13 @@ namespace NebulaNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<Sysdiagram>()
+			modelBuilder.Entity<Sysdiagrams>()
 			.HasKey(c => new
 			{
 				c.DiagramId,
 			});
 
-			modelBuilder.Entity<Sysdiagram>()
+			modelBuilder.Entity<Sysdiagrams>()
 			.Property("DiagramId")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -252,5 +256,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e000174b940fc76d0d8ad8bab7022f86</Hash>
+    <Hash>b42a7eabc91301725c654141940fc334</Hash>
 </Codenesium>*/

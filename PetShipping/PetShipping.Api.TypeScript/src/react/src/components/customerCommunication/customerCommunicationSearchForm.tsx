@@ -205,10 +205,10 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'CustomerCommunications',
+                Header: 'Customer Communication',
                 columns: [
                   {
-                    Header: 'CustomerId',
+                    Header: 'Customer',
                     accessor: 'customerId',
                     Cell: props => {
                       return (
@@ -232,14 +232,14 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
                     },
                   },
                   {
-                    Header: 'DateCreated',
+                    Header: 'Date Created',
                     accessor: 'dateCreated',
                     Cell: props => {
                       return <span>{String(props.original.dateCreated)}</span>;
                     },
                   },
                   {
-                    Header: 'EmployeeId',
+                    Header: 'Employee',
                     accessor: 'employeeId',
                     Cell: props => {
                       return (
@@ -264,9 +264,9 @@ export default class CustomerCommunicationSearchComponent extends React.Componen
                   },
                   {
                     Header: 'Notes',
-                    accessor: 'note',
+                    accessor: 'notes',
                     Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
+                      return <span>{String(props.original.notes)}</span>;
                     },
                   },
                   {
@@ -330,5 +330,5 @@ export const WrappedCustomerCommunicationSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>979c7312acf17c1542236e82868b60d6</Hash>
+    <Hash>047c228b7f514853255eac8e7b9c7135</Hash>
 </Codenesium>*/

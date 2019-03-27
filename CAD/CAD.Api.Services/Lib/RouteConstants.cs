@@ -16,21 +16,21 @@ namespace CADNS.Api.Services
 		public const string CallStatus = "callstatus";
 		public const string CallTypes = "calltypes";
 		public const string Notes = "notes";
+		public const string OffCapabilities = "offcapabilities";
 		public const string Officers = "officers";
-		public const string OfficerCapabilities = "officercapabilities";
 		public const string OfficerCapabilities = "officercapabilities";
 		public const string People = "people";
 		public const string PersonTypes = "persontypes";
 		public const string Units = "units";
 		public const string UnitDispositions = "unitdispositions";
 		public const string UnitOfficers = "unitofficers";
+		public const string VehCapabilities = "vehcapabilities";
 		public const string Vehicles = "vehicles";
-		public const string VehicleCapabilities = "vehiclecapabilities";
 		public const string VehicleCapabilities = "vehiclecapabilities";
 		public const string VehicleOfficers = "vehicleofficers";
 	}
 }
 
 /*<Codenesium>
-    <Hash>fb742f2d376e28b11465228fa1284073</Hash>
+    <Hash>606fb5156bd9941034472f816ca91ba0</Hash>
 </Codenesium>*/

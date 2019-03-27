@@ -107,7 +107,7 @@ class CustomerCommunicationDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>customerId</h3>
+              <h3>Customer</h3>
               <p>
                 {String(
                   this.state.model!.customerIdNavigation &&
@@ -116,11 +116,11 @@ class CustomerCommunicationDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>dateCreated</h3>
+              <h3>Date Created</h3>
               <p>{String(this.state.model!.dateCreated)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>employeeId</h3>
+              <h3>Employee</h3>
               <p>
                 {String(
                   this.state.model!.employeeIdNavigation &&
@@ -129,8 +129,8 @@ class CustomerCommunicationDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>notes</h3>
-              <p>{String(this.state.model!.note)}</p>
+              <h3>Notes</h3>
+              <p>{String(this.state.model!.notes)}</p>
             </div>
           </div>
           {message}
@@ -148,5 +148,5 @@ export const WrappedCustomerCommunicationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d03cd80dac13e80c20004a95607ddd02</Hash>
+    <Hash>ea2f1d5f556b7e6e2933209137b0eadf</Hash>
 </Codenesium>*/

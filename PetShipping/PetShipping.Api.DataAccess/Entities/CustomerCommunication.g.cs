@@ -18,13 +18,13 @@ namespace PetShippingNS.Api.DataAccess
 			int customerId,
 			DateTime dateCreated,
 			int employeeId,
-			string note)
+			string notes)
 		{
 			this.Id = id;
 			this.CustomerId = customerId;
 			this.DateCreated = dateCreated;
 			this.EmployeeId = employeeId;
-			this.Note = note;
+			this.Notes = notes;
 		}
 
 		[Column("customerId")]
@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("notes")]
-		public virtual string Note { get; private set; }
+		public virtual string Notes { get; private set; }
 
 		[ForeignKey("CustomerId")]
 		public virtual Customer CustomerIdNavigation { get; private set; }
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d97fd544aa3701d833165e4eae8ef2d5</Hash>
+    <Hash>d78dcac54ed3cce3b5a57b30fd5bb398</Hash>
 </Codenesium>*/

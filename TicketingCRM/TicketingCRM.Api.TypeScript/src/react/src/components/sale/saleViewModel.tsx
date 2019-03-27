@@ -4,7 +4,7 @@ import TransactionViewModel from '../transaction/transactionViewModel';
 export default class SaleViewModel {
   id: number;
   ipAddress: string;
-  note: string;
+  notes: string;
   saleDate: any;
   transactionId: number;
   transactionIdEntity: string;
@@ -13,7 +13,7 @@ export default class SaleViewModel {
   constructor() {
     this.id = 0;
     this.ipAddress = '';
-    this.note = '';
+    this.notes = '';
     this.saleDate = undefined;
     this.transactionId = 0;
     this.transactionIdEntity = '';
@@ -23,23 +23,23 @@ export default class SaleViewModel {
   setProperties(
     id: number,
     ipAddress: string,
-    note: string,
+    notes: string,
     saleDate: any,
     transactionId: number
   ): void {
     this.id = id;
     this.ipAddress = ipAddress;
-    this.note = note;
+    this.notes = notes;
     this.saleDate = moment(saleDate, 'YYYY-MM-DD');
     this.transactionId = transactionId;
   }
 
   toDisplay(): string {
-    return String(this.transactionId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>2cfd29e24ce4802bacf6e629d1bb3e58</Hash>
+    <Hash>adb54dfdba87732d7f07f11b97a41868</Hash>
 </Codenesium>*/

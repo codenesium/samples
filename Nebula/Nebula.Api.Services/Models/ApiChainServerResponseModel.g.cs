@@ -26,7 +26,7 @@ namespace NebulaNS.Api.Services
 		public int ChainStatusId { get; private set; }
 
 		[JsonProperty]
-		public string ChainStatusIdEntity { get; private set; } = RouteConstants.ChainStatuses;
+		public string ChainStatusIdEntity { get; private set; } = RouteConstants.ChainStatus;
 
 		[JsonProperty]
 		public ApiChainStatusServerResponseModel ChainStatusIdNavigation { get; private set; }
@@ -62,5 +62,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39ace339e6db87174cfb057eb40182ed</Hash>
+    <Hash>d493d1ceb0284eef632cd70de4530399</Hash>
 </Codenesium>*/

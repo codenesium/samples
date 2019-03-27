@@ -107,11 +107,11 @@ class CallPersonDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>note</h3>
+              <h3>Note</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>personId</h3>
+              <h3>Person</h3>
               <p>
                 {String(
                   this.state.model!.personIdNavigation &&
@@ -120,7 +120,7 @@ class CallPersonDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>personTypeId</h3>
+              <h3>Person Type</h3>
               <p>
                 {String(
                   this.state.model!.personTypeIdNavigation &&
@@ -144,5 +144,5 @@ export const WrappedCallPersonDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>831a4f38fc2e20dde1532a0b95e4bdaa</Hash>
+    <Hash>475e0acd27958d139d482dc4ea013137</Hash>
 </Codenesium>*/

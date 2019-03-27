@@ -195,14 +195,14 @@ class CallDispositionEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -229,5 +229,5 @@ export const WrappedCallDispositionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ec5e83dcaaec56fb2c00ca0971384456</Hash>
+    <Hash>37a55f3314f9a1e99de99a63fd9f7f8b</Hash>
 </Codenesium>*/

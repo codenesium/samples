@@ -16,20 +16,20 @@ namespace PetShippingNS.Api.Client
 
 		public virtual void SetProperties(
 			int countryId,
-			string detail)
+			string details)
 		{
 			this.CountryId = countryId;
-			this.Detail = detail;
+			this.Details = details;
 		}
 
 		[JsonProperty]
 		public int CountryId { get; private set; }
 
 		[JsonProperty]
-		public string Detail { get; private set; } = default(string);
+		public string Details { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>69fa7f8a4b4703da5022897f7f92d049</Hash>
+    <Hash>0d92a546ab5db2251322c68836b9ff01</Hash>
 </Codenesium>*/

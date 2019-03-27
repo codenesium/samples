@@ -16,14 +16,14 @@ namespace NebulaNS.Api.Client
 			                       request.ChainId,
 			                       request.DateCompleted,
 			                       request.DateStarted,
-			                       request.DynamicParameter,
+			                       request.DynamicParameters,
 			                       request.ExternalId,
 			                       request.LinkStatusId,
 			                       request.Name,
 			                       request.Order,
 			                       request.Response,
-			                       request.StaticParameter,
-			                       request.TimeoutInSecond);
+			                       request.StaticParameters,
+			                       request.TimeoutInSeconds);
 			return response;
 		}
 
@@ -36,19 +36,19 @@ namespace NebulaNS.Api.Client
 				response.ChainId,
 				response.DateCompleted,
 				response.DateStarted,
-				response.DynamicParameter,
+				response.DynamicParameters,
 				response.ExternalId,
 				response.LinkStatusId,
 				response.Name,
 				response.Order,
 				response.Response,
-				response.StaticParameter,
-				response.TimeoutInSecond);
+				response.StaticParameters,
+				response.TimeoutInSeconds);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca49b2119a9de9fdce886229a28c6e82</Hash>
+    <Hash>aedc5a94aebed921b6cb2aecfa1db0a9</Hash>
 </Codenesium>*/

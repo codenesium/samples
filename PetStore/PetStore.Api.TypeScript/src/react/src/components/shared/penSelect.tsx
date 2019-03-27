@@ -103,7 +103,7 @@ export class PenSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: PenViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class PenSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f04e9ffbe6040c0322df217b268197f2</Hash>
+    <Hash>862a529af4c0685ca3f359bf83d028b2</Hash>
 </Codenesium>*/

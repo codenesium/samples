@@ -192,14 +192,14 @@ class SpeciesEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -226,5 +226,5 @@ export const WrappedSpeciesEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>705087b7b0d1f4b3d00fb55a0aa50b8a</Hash>
+    <Hash>c0623528b5d6429d0ce169d6816dac19</Hash>
 </Codenesium>*/

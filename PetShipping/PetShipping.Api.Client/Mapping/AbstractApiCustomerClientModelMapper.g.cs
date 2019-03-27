@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Client
 			                       request.Email,
 			                       request.FirstName,
 			                       request.LastName,
-			                       request.Note,
+			                       request.Notes,
 			                       request.Phone);
 			return response;
 		}
@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Client
 				response.Email,
 				response.FirstName,
 				response.LastName,
-				response.Note,
+				response.Notes,
 				response.Phone);
 			return request;
 		}
@@ -36,5 +36,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>72597fdc7cde5418a1837ef5364cc034</Hash>
+    <Hash>dddf5d3db661611773cbea62301770bd</Hash>
 </Codenesium>*/

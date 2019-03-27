@@ -122,7 +122,7 @@ export class PipelineStepTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PipelineStepStatusId',
+                    Header: 'Pipeline Step Status',
                     accessor: 'pipelineStepStatusId',
                     Cell: props => {
                       return (
@@ -146,7 +146,7 @@ export class PipelineStepTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ShipperId',
+                    Header: 'Shipper',
                     accessor: 'shipperId',
                     Cell: props => {
                       return (
@@ -214,5 +214,5 @@ export class PipelineStepTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>31f5a139b0bd4ad7bfbec089f1fc36f8</Hash>
+    <Hash>3f7187ff673aa3833c249bb442230ead</Hash>
 </Codenesium>*/

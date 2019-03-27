@@ -94,7 +94,7 @@ export class OtherTransportSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Other Transport</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class OtherTransportSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: OtherTransportViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class OtherTransportSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2cef26a8924483a68e933c467572fd3c</Hash>
+    <Hash>b21fc96e702a386c1363045bf560e855</Hash>
 </Codenesium>*/

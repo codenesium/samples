@@ -204,11 +204,11 @@ class SaleEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="note">Note</label>
+            <label htmlFor="notes">Notes</label>
             <br />
-            {getFieldDecorator('note', {
+            {getFieldDecorator('notes', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Note'} />)}
+            })(<Input placeholder={'Notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -251,5 +251,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>0d8aa05c88c3d0c8f04d277b0b1a7a6f</Hash>
+    <Hash>800bb454799366f275ac7998185cd50f</Hash>
 </Codenesium>*/

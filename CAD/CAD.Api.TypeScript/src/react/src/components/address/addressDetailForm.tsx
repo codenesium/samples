@@ -108,23 +108,23 @@ class AddressDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>address1</h3>
+              <h3>Address1</h3>
               <p>{String(this.state.model!.address1)}</p>
             </div>
             <div>
-              <h3>address2</h3>
+              <h3>Address2</h3>
               <p>{String(this.state.model!.address2)}</p>
             </div>
             <div>
-              <h3>city</h3>
+              <h3>City</h3>
               <p>{String(this.state.model!.city)}</p>
             </div>
             <div>
-              <h3>state</h3>
+              <h3>State</h3>
               <p>{String(this.state.model!.state)}</p>
             </div>
             <div>
-              <h3>zip</h3>
+              <h3>Zip</h3>
               <p>{String(this.state.model!.zip)}</p>
             </div>
           </div>
@@ -158,5 +158,5 @@ export const WrappedAddressDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>68c7825fa7c085337f2c1901eadd66c3</Hash>
+    <Hash>e0279a8916754fda2127e56731febd0b</Hash>
 </Codenesium>*/

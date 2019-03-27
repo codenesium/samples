@@ -108,7 +108,7 @@ class PetDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>breedId</h3>
+              <h3>Breed</h3>
               <p>
                 {String(
                   this.state.model!.breedIdNavigation &&
@@ -117,15 +117,15 @@ class PetDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>clientId</h3>
+              <h3>Client</h3>
               <p>{String(this.state.model!.clientId)}</p>
             </div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div>
-              <h3>weight</h3>
+              <h3>Weight</h3>
               <p>{String(this.state.model!.weight)}</p>
             </div>
           </div>
@@ -159,5 +159,5 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
 
 
 /*<Codenesium>
-    <Hash>865c7767f84c65f6ed28884b56122283</Hash>
+    <Hash>80ad519b7aa2947c8a29e8138546436e</Hash>
 </Codenesium>*/

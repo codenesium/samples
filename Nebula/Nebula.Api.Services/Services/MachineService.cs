@@ -13,18 +13,20 @@ namespace NebulaNS.Api.Services
 			IMachineRepository machineRepository,
 			IApiMachineServerRequestModelValidator machineModelValidator,
 			IDALMachineMapper dalMachineMapper,
-			IDALLinkMapper dalLinkMapper)
+			IDALLinkMapper dalLinkMapper,
+			IDALMachineRefTeamMapper dalMachineRefTeamMapper)
 			: base(logger,
 			       mediator,
 			       machineRepository,
 			       machineModelValidator,
 			       dalMachineMapper,
-			       dalLinkMapper)
+			       dalLinkMapper,
+			       dalMachineRefTeamMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8dd259ac2b7e4bcafb8e1e2d208ebb36</Hash>
+    <Hash>3c123fc7d427db1c8586f620a8f227a8</Hash>
 </Codenesium>*/

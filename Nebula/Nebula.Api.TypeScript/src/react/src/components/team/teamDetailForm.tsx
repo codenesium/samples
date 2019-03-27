@@ -8,6 +8,7 @@ import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
 import { ChainTableComponent } from '../shared/chainTable';
+import { MachineRefTeamTableComponent } from '../shared/machineRefTeamTable';
 
 interface TeamDetailComponentProps {
   form: WrappedFormUtils;
@@ -108,15 +109,11 @@ class TeamDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>OrganizationId</h3>
+              <h3>Organization</h3>
               <p>
                 {String(
                   this.state.model!.organizationIdNavigation &&
@@ -141,6 +138,21 @@ class TeamDetailComponent extends React.Component<
               }
             />
           </div>
+          <div>
+            <h3>MachineRefTeams</h3>
+            <MachineRefTeamTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Teams +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.MachineRefTeams
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -155,5 +167,5 @@ export const WrappedTeamDetailComponent = Form.create({ name: 'Team Detail' })(
 
 
 /*<Codenesium>
-    <Hash>52a96eb88f6cfc799122d599b80b40e0</Hash>
+    <Hash>0ccae403160c80573cf01dad28366a3d</Hash>
 </Codenesium>*/

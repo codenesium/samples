@@ -103,7 +103,7 @@ export class FollowerSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: FollowerViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class FollowerSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8f1548755c3e9822e094ef63bcf3a82d</Hash>
+    <Hash>bb00a8e782f9200efd3c4fdd80254a09</Hash>
 </Codenesium>*/

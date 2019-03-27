@@ -103,7 +103,7 @@ export class LinkStatusSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: LinkStatusViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class LinkStatusSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b79761172fc6f9e42af3bcbdbbf85bfc</Hash>
+    <Hash>48b4ee613cf39cc2f8407f5019723535</Hash>
 </Codenesium>*/

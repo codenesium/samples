@@ -33,7 +33,7 @@ export default class NoteViewModel {
     officerId: number
   ): void {
     this.callId = callId;
-    this.dateCreated = dateCreated;
+    this.dateCreated = moment(dateCreated, 'YYYY-MM-DD');
     this.id = id;
     this.noteText = noteText;
     this.officerId = officerId;
@@ -46,5 +46,5 @@ export default class NoteViewModel {
 
 
 /*<Codenesium>
-    <Hash>df40dfcf280eb450c220ed4cef084a5a</Hash>
+    <Hash>96f18a58210c13d412457a29d9efbca2</Hash>
 </Codenesium>*/

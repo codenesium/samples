@@ -24,7 +24,7 @@ namespace NebulaNS.Api.DataAccess
 
 			var chainStatusItem1 = new ChainStatus();
 			chainStatusItem1.SetProperties(1, "A");
-			this.Context.ChainStatuses.Add(chainStatusItem1);
+			this.Context.ChainStatus.Add(chainStatusItem1);
 
 			var claspItem1 = new Clasp();
 			claspItem1.SetProperties(1, 1, 1);
@@ -40,11 +40,15 @@ namespace NebulaNS.Api.DataAccess
 
 			var linkStatusItem1 = new LinkStatus();
 			linkStatusItem1.SetProperties(1, "A");
-			this.Context.LinkStatuses.Add(linkStatusItem1);
+			this.Context.LinkStatus.Add(linkStatusItem1);
 
 			var machineItem1 = new Machine();
 			machineItem1.SetProperties(1, "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 			this.Context.Machines.Add(machineItem1);
+
+			var machineRefTeamItem1 = new MachineRefTeam();
+			machineRefTeamItem1.SetProperties(1, 1, 1);
+			this.Context.MachineRefTeams.Add(machineRefTeamItem1);
 
 			var organizationItem1 = new Organization();
 			organizationItem1.SetProperties(1, "A");
@@ -54,11 +58,15 @@ namespace NebulaNS.Api.DataAccess
 			teamItem1.SetProperties(1, "A", 1);
 			this.Context.Teams.Add(teamItem1);
 
+			var versionInfoItem1 = new VersionInfo();
+			versionInfoItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			this.Context.VersionInfoes.Add(versionInfoItem1);
+
 			await this.Context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>554158aa691f38217cae6a841ad359f1</Hash>
+    <Hash>3e6b7156137b903cad8992e797047094</Hash>
 </Codenesium>*/

@@ -108,7 +108,7 @@ class CallTypeDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -142,5 +142,5 @@ export const WrappedCallTypeDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e96f1593e8daf31f6b48c24a5b29d62e</Hash>
+    <Hash>9d92bf4014779dfabce979ce3fe867f0</Hash>
 </Codenesium>*/

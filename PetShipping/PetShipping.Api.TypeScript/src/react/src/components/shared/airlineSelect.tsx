@@ -94,7 +94,7 @@ export class AirlineSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Airline</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class AirlineSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: AirlineViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class AirlineSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f46aa72998592a3af729b6ed5919bb1d</Hash>
+    <Hash>5485db47720751cd051f834923e0010e</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Client
 			                       request.CustomerId,
 			                       request.DateCreated,
 			                       request.EmployeeId,
-			                       request.Note);
+			                       request.Notes);
 			return response;
 		}
 
@@ -27,12 +27,12 @@ namespace PetShippingNS.Api.Client
 				response.CustomerId,
 				response.DateCreated,
 				response.EmployeeId,
-				response.Note);
+				response.Notes);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa568d914d42399ed13219f33f40c239</Hash>
+    <Hash>5c7884a0cf008081b7f395be261e269f</Hash>
 </Codenesium>*/

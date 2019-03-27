@@ -140,35 +140,35 @@ class PersonCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="firstName">firstName</label>
+            <label htmlFor="firstName">First Name</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'firstName'} />)}
+            })(<Input placeholder={'First Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">lastName</label>
+            <label htmlFor="lastName">Last Name</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'lastName'} />)}
+            })(<Input placeholder={'Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">phone</label>
+            <label htmlFor="phone">Phone</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [{ max: 32, message: 'Exceeds max length of 32' }],
-            })(<Input placeholder={'phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="ssn">ssn</label>
+            <label htmlFor="ssn">Ssn</label>
             <br />
             {getFieldDecorator('ssn', {
               rules: [{ max: 12, message: 'Exceeds max length of 12' }],
-            })(<Input placeholder={'ssn'} />)}
+            })(<Input placeholder={'Ssn'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -195,5 +195,5 @@ export const WrappedPersonCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7883bd608d573ae22639e26123324cbb</Hash>
+    <Hash>3669ea340dc9a38f53d7db4ec4883358</Hash>
 </Codenesium>*/

@@ -103,7 +103,7 @@ export class CallSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: CallViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class CallSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5ecc8bcab371e721631ade6c3f9395c0</Hash>
+    <Hash>5eafe99bd99c1009835e55f9a6aef7f2</Hash>
 </Codenesium>*/

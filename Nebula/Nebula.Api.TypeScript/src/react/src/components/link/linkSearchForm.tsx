@@ -196,10 +196,10 @@ export default class LinkSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Links',
+                Header: 'Link',
                 columns: [
                   {
-                    Header: 'AssignedMachineId',
+                    Header: 'Assigned Machine',
                     accessor: 'assignedMachineId',
                     Cell: props => {
                       return (
@@ -223,7 +223,7 @@ export default class LinkSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ChainId',
+                    Header: 'Chain',
                     accessor: 'chainId',
                     Cell: props => {
                       return (
@@ -245,7 +245,7 @@ export default class LinkSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateCompleted',
+                    Header: 'Date Completed',
                     accessor: 'dateCompleted',
                     Cell: props => {
                       return (
@@ -254,37 +254,30 @@ export default class LinkSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateStarted',
+                    Header: 'Date Started',
                     accessor: 'dateStarted',
                     Cell: props => {
                       return <span>{String(props.original.dateStarted)}</span>;
                     },
                   },
                   {
-                    Header: 'DynamicParameter',
-                    accessor: 'dynamicParameter',
+                    Header: 'Dynamic Parameters',
+                    accessor: 'dynamicParameters',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.dynamicParameter)}</span>
+                        <span>{String(props.original.dynamicParameters)}</span>
                       );
                     },
                   },
                   {
-                    Header: 'ExternalId',
+                    Header: 'External',
                     accessor: 'externalId',
                     Cell: props => {
                       return <span>{String(props.original.externalId)}</span>;
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LinkStatusId',
+                    Header: 'Link Status',
                     accessor: 'linkStatusId',
                     Cell: props => {
                       return (
@@ -293,7 +286,7 @@ export default class LinkSearchComponent extends React.Component<
                           onClick={e => {
                             e.preventDefault();
                             this.props.history.push(
-                              ClientRoutes.LinkStatuses +
+                              ClientRoutes.LinkStatus +
                                 '/' +
                                 props.original.linkStatusId
                             );
@@ -329,20 +322,20 @@ export default class LinkSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'StaticParameter',
-                    accessor: 'staticParameter',
+                    Header: 'Static Parameters',
+                    accessor: 'staticParameters',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.staticParameter)}</span>
+                        <span>{String(props.original.staticParameters)}</span>
                       );
                     },
                   },
                   {
-                    Header: 'TimeoutInSecond',
-                    accessor: 'timeoutInSecond',
+                    Header: 'Timeout In Seconds',
+                    accessor: 'timeoutInSeconds',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.timeoutInSecond)}</span>
+                        <span>{String(props.original.timeoutInSeconds)}</span>
                       );
                     },
                   },
@@ -407,5 +400,5 @@ export const WrappedLinkSearchComponent = Form.create({ name: 'Link Search' })(
 
 
 /*<Codenesium>
-    <Hash>4155dd3ad55ae988d460723af3cc6823</Hash>
+    <Hash>b059dba86dfea39fbbbdc6cbaa7f1458</Hash>
 </Codenesium>*/

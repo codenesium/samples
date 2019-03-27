@@ -107,15 +107,11 @@ class LinkLogDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>DateEntered</h3>
+              <h3>Date Entered</h3>
               <p>{String(this.state.model!.dateEntered)}</p>
             </div>
-            <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>LinkId</h3>
+              <h3>Link</h3>
               <p>
                 {String(
                   this.state.model!.linkIdNavigation &&
@@ -143,5 +139,5 @@ export const WrappedLinkLogDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a53ea368a4993b2edcd371fa32be7319</Hash>
+    <Hash>4361e57d63cadc1dd6876e7c606cd2b2</Hash>
 </Codenesium>*/

@@ -103,7 +103,10 @@ export class QuoteTweetSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: QuoteTweetViewModel) => {
                 return (
-                  <Select.Option key={x.quoteTweetId} value={x.quoteTweetId}>
+                  <Select.Option
+                    key={String(x.quoteTweetId)}
+                    value={x.quoteTweetId}
+                  >
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +123,5 @@ export class QuoteTweetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4613d805a2ad6e2d23921ae161833bc6</Hash>
+    <Hash>1079a0856ab4012210b8452aff27a83b</Hash>
 </Codenesium>*/

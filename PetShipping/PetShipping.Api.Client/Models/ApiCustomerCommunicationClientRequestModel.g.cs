@@ -18,12 +18,12 @@ namespace PetShippingNS.Api.Client
 			int customerId,
 			DateTime dateCreated,
 			int employeeId,
-			string note)
+			string notes)
 		{
 			this.CustomerId = customerId;
 			this.DateCreated = dateCreated;
 			this.EmployeeId = employeeId;
-			this.Note = note;
+			this.Notes = notes;
 		}
 
 		[JsonProperty]
@@ -36,10 +36,10 @@ namespace PetShippingNS.Api.Client
 		public int EmployeeId { get; private set; }
 
 		[JsonProperty]
-		public string Note { get; private set; } = default(string);
+		public string Notes { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>50f3a05ace2c2cf3684932c7a4e5560c</Hash>
+    <Hash>c7b68c068e6e5fa67f53c3bfe9b00e11</Hash>
 </Codenesium>*/

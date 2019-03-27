@@ -11,15 +11,15 @@ export default class LinkMapper {
       dto.chainId,
       dto.dateCompleted,
       dto.dateStarted,
-      dto.dynamicParameter,
+      dto.dynamicParameters,
       dto.externalId,
       dto.id,
       dto.linkStatusId,
       dto.name,
       dto.order,
       dto.response,
-      dto.staticParameter,
-      dto.timeoutInSecond
+      dto.staticParameters,
+      dto.timeoutInSeconds
     );
 
     if (dto.assignedMachineIdNavigation != null) {
@@ -61,15 +61,15 @@ export default class LinkMapper {
       model.chainId,
       model.dateCompleted,
       model.dateStarted,
-      model.dynamicParameter,
+      model.dynamicParameters,
       model.externalId,
       model.id,
       model.linkStatusId,
       model.name,
       model.order,
       model.response,
-      model.staticParameter,
-      model.timeoutInSecond
+      model.staticParameters,
+      model.timeoutInSeconds
     );
     return response;
   }
@@ -77,5 +77,5 @@ export default class LinkMapper {
 
 
 /*<Codenesium>
-    <Hash>dce417d3161c43b515fc6b8fd25df9fa</Hash>
+    <Hash>957db97cc901ca1f9a86f0130cf611dd</Hash>
 </Codenesium>*/

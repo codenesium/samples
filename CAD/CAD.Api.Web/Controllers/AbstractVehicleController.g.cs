@@ -219,7 +219,7 @@ namespace CADNS.Api.Web
 		[HttpGet]
 		[Route("{vehicleId}/VehicleCapabilities")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVehicleCapabilittyServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVehicleCapabilitiesServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> VehicleCapabilitiesByVehicleId(int vehicleId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -228,16 +228,16 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVehicleCapabilittyServerResponseModel> response = await this.VehicleService.VehicleCapabilitiesByVehicleId(vehicleId, query.Limit, query.Offset);
+			List<ApiVehicleCapabilitiesServerResponseModel> response = await this.VehicleService.VehicleCapabilitiesByVehicleId(vehicleId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("byOfficerId/{officerId}")]
+		[Route("{vehicleId}/VehicleOfficers")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVehicleServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByOfficerId(int officerId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiVehicleOfficerServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> VehicleOfficersByVehicleId(int vehicleId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -245,7 +245,7 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVehicleServerResponseModel> response = await this.VehicleService.ByOfficerId(officerId, query.Limit, query.Offset);
+			List<ApiVehicleOfficerServerResponseModel> response = await this.VehicleService.VehicleOfficersByVehicleId(vehicleId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -269,5 +269,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>baad89de8f085004bc0fd5e8a50e6706</Hash>
+    <Hash>e95c9ce0ebd0afc56cb66eedfef1b351</Hash>
 </Codenesium>*/

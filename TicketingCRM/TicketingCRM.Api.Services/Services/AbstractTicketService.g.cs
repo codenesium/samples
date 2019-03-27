@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IDALTicketMapper DalTicketMapper { get; private set; }
 
-		protected IDALSaleTicketMapper DalSaleTicketMapper { get; private set; }
+		protected IDALSaleTicketsMapper DalSaleTicketsMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -27,13 +27,13 @@ namespace TicketingCRMNS.Api.Services
 			ITicketRepository ticketRepository,
 			IApiTicketServerRequestModelValidator ticketModelValidator,
 			IDALTicketMapper dalTicketMapper,
-			IDALSaleTicketMapper dalSaleTicketMapper)
+			IDALSaleTicketsMapper dalSaleTicketsMapper)
 			: base()
 		{
 			this.TicketRepository = ticketRepository;
 			this.TicketModelValidator = ticketModelValidator;
 			this.DalTicketMapper = dalTicketMapper;
-			this.DalSaleTicketMapper = dalSaleTicketMapper;
+			this.DalSaleTicketsMapper = dalSaleTicketsMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -123,15 +123,15 @@ namespace TicketingCRMNS.Api.Services
 			return this.DalTicketMapper.MapEntityToModel(records);
 		}
 
-		public async virtual Task<List<ApiSaleTicketServerResponseModel>> SaleTicketsByTicketId(int ticketId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSaleTicketsServerResponseModel>> SaleTicketsByTicketId(int ticketId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SaleTicket> records = await this.TicketRepository.SaleTicketsByTicketId(ticketId, limit, offset);
+			List<SaleTickets> records = await this.TicketRepository.SaleTicketsByTicketId(ticketId, limit, offset);
 
-			return this.DalSaleTicketMapper.MapEntityToModel(records);
+			return this.DalSaleTicketsMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20941fb01637d014dbff630c4d460e14</Hash>
+    <Hash>0a0c9dd3fc7c17b2442d04b1a1563dcf</Hash>
 </Codenesium>*/

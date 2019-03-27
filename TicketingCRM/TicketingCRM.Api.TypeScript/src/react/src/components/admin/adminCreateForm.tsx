@@ -191,7 +191,7 @@ class AdminCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<InputNumber placeholder={'Phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -229,5 +229,5 @@ export const WrappedAdminCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2451154b7df6f99685de5e70a1cfa4d5</Hash>
+    <Hash>6bf9ff4de3204ec4992863b091c36ffb</Hash>
 </Codenesium>*/

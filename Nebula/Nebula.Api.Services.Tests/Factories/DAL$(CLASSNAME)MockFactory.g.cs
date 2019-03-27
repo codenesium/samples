@@ -22,9 +22,13 @@ namespace NebulaNS.Api.Services.Tests
 
 		public IDALMachineMapper DALMachineMapperMock { get; set; } = new DALMachineMapper();
 
+		public IDALMachineRefTeamMapper DALMachineRefTeamMapperMock { get; set; } = new DALMachineRefTeamMapper();
+
 		public IDALOrganizationMapper DALOrganizationMapperMock { get; set; } = new DALOrganizationMapper();
 
 		public IDALTeamMapper DALTeamMapperMock { get; set; } = new DALTeamMapper();
+
+		public IDALVersionInfoMapper DALVersionInfoMapperMock { get; set; } = new DALVersionInfoMapper();
 
 		public DALMapperMockFactory()
 		{
@@ -33,5 +37,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aa766e481590c1a35b2a59593885157b</Hash>
+    <Hash>10fa8e07ffd2c6d828157c5aae4dd691</Hash>
 </Codenesium>*/

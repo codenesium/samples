@@ -115,7 +115,7 @@ export class LinkTableComponent extends React.Component<
                 Header: 'Links',
                 columns: [
                   {
-                    Header: 'AssignedMachineId',
+                    Header: 'Assigned Machine',
                     accessor: 'assignedMachineId',
                     Cell: props => {
                       return (
@@ -139,7 +139,7 @@ export class LinkTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ChainId',
+                    Header: 'Chain',
                     accessor: 'chainId',
                     Cell: props => {
                       return (
@@ -161,7 +161,7 @@ export class LinkTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateCompleted',
+                    Header: 'Date Completed',
                     accessor: 'dateCompleted',
                     Cell: props => {
                       return (
@@ -170,37 +170,30 @@ export class LinkTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateStarted',
+                    Header: 'Date Started',
                     accessor: 'dateStarted',
                     Cell: props => {
                       return <span>{String(props.original.dateStarted)}</span>;
                     },
                   },
                   {
-                    Header: 'DynamicParameter',
-                    accessor: 'dynamicParameter',
+                    Header: 'Dynamic Parameters',
+                    accessor: 'dynamicParameters',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.dynamicParameter)}</span>
+                        <span>{String(props.original.dynamicParameters)}</span>
                       );
                     },
                   },
                   {
-                    Header: 'ExternalId',
+                    Header: 'External',
                     accessor: 'externalId',
                     Cell: props => {
                       return <span>{String(props.original.externalId)}</span>;
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LinkStatusId',
+                    Header: 'Link Status',
                     accessor: 'linkStatusId',
                     Cell: props => {
                       return (
@@ -209,7 +202,7 @@ export class LinkTableComponent extends React.Component<
                           onClick={e => {
                             e.preventDefault();
                             this.props.history.push(
-                              ClientRoutes.LinkStatuses +
+                              ClientRoutes.LinkStatus +
                                 '/' +
                                 props.original.linkStatusId
                             );
@@ -245,20 +238,20 @@ export class LinkTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'StaticParameter',
-                    accessor: 'staticParameter',
+                    Header: 'Static Parameters',
+                    accessor: 'staticParameters',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.staticParameter)}</span>
+                        <span>{String(props.original.staticParameters)}</span>
                       );
                     },
                   },
                   {
-                    Header: 'TimeoutInSecond',
-                    accessor: 'timeoutInSecond',
+                    Header: 'Timeout In Seconds',
+                    accessor: 'timeoutInSeconds',
                     Cell: props => {
                       return (
-                        <span>{String(props.original.timeoutInSecond)}</span>
+                        <span>{String(props.original.timeoutInSeconds)}</span>
                       );
                     },
                   },
@@ -307,5 +300,5 @@ export class LinkTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>05c251cb93815849ef212dbc2ae90464</Hash>
+    <Hash>1760e6451ba54ed52219761898a9944e</Hash>
 </Codenesium>*/

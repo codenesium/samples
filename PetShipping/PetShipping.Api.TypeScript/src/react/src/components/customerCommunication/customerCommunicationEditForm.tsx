@@ -196,38 +196,38 @@ class CustomerCommunicationEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="customerId">customerId</label>
-            <br />
-            {getFieldDecorator('customerId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'customerId'} />)}
-          </Form.Item>
+          <CustomerSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Customers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="customerId"
+            required={true}
+            selectedValue={this.state.model!.customerId}
+          />
 
           <Form.Item>
-            <label htmlFor="dateCreated">dateCreated</label>
+            <label htmlFor="dateCreated">Date Created</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
             })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'dateCreated'} />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Date Created'} />
             )}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="employeeId">employeeId</label>
-            <br />
-            {getFieldDecorator('employeeId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'employeeId'} />)}
-          </Form.Item>
+          <EmployeeSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="employeeId"
+            required={true}
+            selectedValue={this.state.model!.employeeId}
+          />
 
           <Form.Item>
-            <label htmlFor="note">notes</label>
+            <label htmlFor="notes">Notes</label>
             <br />
-            {getFieldDecorator('note', {
+            {getFieldDecorator('notes', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'notes'} />)}
+            })(<Input placeholder={'Notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -254,5 +254,5 @@ export const WrappedCustomerCommunicationEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f0e9f879f44ce41c6b9744e876b19b75</Hash>
+    <Hash>16aea7975919d79d2e2718fc46ce97f5</Hash>
 </Codenesium>*/

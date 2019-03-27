@@ -186,20 +186,20 @@ export class CountryRequirementClientRequestModel {
   countryId: number;
   countryIdEntity: string;
   countryIdNavigation?: CountryClientResponseModel;
-  detail: string;
+  details: string;
   id: number;
 
   constructor() {
     this.countryId = 0;
     this.countryIdEntity = '';
     this.countryIdNavigation = undefined;
-    this.detail = '';
+    this.details = '';
     this.id = 0;
   }
 
-  setProperties(countryId: number, detail: string, id: number): void {
+  setProperties(countryId: number, details: string, id: number): void {
     this.countryId = countryId;
-    this.detail = detail;
+    this.details = details;
     this.id = id;
   }
 }
@@ -208,20 +208,20 @@ export class CountryRequirementClientResponseModel {
   countryId: number;
   countryIdEntity: string;
   countryIdNavigation?: CountryClientResponseModel;
-  detail: string;
+  details: string;
   id: number;
 
   constructor() {
     this.countryId = 0;
     this.countryIdEntity = '';
     this.countryIdNavigation = undefined;
-    this.detail = '';
+    this.details = '';
     this.id = 0;
   }
 
-  setProperties(countryId: number, detail: string, id: number): void {
+  setProperties(countryId: number, details: string, id: number): void {
     this.countryId = countryId;
-    this.detail = detail;
+    this.details = details;
     this.id = id;
   }
 }
@@ -230,7 +230,7 @@ export class CustomerClientRequestModel {
   firstName: string;
   id: number;
   lastName: string;
-  note: string;
+  notes: string;
   phone: string;
 
   constructor() {
@@ -238,7 +238,7 @@ export class CustomerClientRequestModel {
     this.firstName = '';
     this.id = 0;
     this.lastName = '';
-    this.note = '';
+    this.notes = '';
     this.phone = '';
   }
 
@@ -247,14 +247,14 @@ export class CustomerClientRequestModel {
     firstName: string,
     id: number,
     lastName: string,
-    note: string,
+    notes: string,
     phone: string
   ): void {
     this.email = email;
     this.firstName = firstName;
     this.id = id;
     this.lastName = lastName;
-    this.note = note;
+    this.notes = notes;
     this.phone = phone;
   }
 }
@@ -264,7 +264,7 @@ export class CustomerClientResponseModel {
   firstName: string;
   id: number;
   lastName: string;
-  note: string;
+  notes: string;
   phone: string;
 
   constructor() {
@@ -272,7 +272,7 @@ export class CustomerClientResponseModel {
     this.firstName = '';
     this.id = 0;
     this.lastName = '';
-    this.note = '';
+    this.notes = '';
     this.phone = '';
   }
 
@@ -281,14 +281,14 @@ export class CustomerClientResponseModel {
     firstName: string,
     id: number,
     lastName: string,
-    note: string,
+    notes: string,
     phone: string
   ): void {
     this.email = email;
     this.firstName = firstName;
     this.id = id;
     this.lastName = lastName;
-    this.note = note;
+    this.notes = notes;
     this.phone = phone;
   }
 }
@@ -301,7 +301,7 @@ export class CustomerCommunicationClientRequestModel {
   employeeIdEntity: string;
   employeeIdNavigation?: EmployeeClientResponseModel;
   id: number;
-  note: string;
+  notes: string;
 
   constructor() {
     this.customerId = 0;
@@ -312,7 +312,7 @@ export class CustomerCommunicationClientRequestModel {
     this.employeeIdEntity = '';
     this.employeeIdNavigation = undefined;
     this.id = 0;
-    this.note = '';
+    this.notes = '';
   }
 
   setProperties(
@@ -320,13 +320,13 @@ export class CustomerCommunicationClientRequestModel {
     dateCreated: any,
     employeeId: number,
     id: number,
-    note: string
+    notes: string
   ): void {
     this.customerId = customerId;
     this.dateCreated = dateCreated;
     this.employeeId = employeeId;
     this.id = id;
-    this.note = note;
+    this.notes = notes;
   }
 }
 
@@ -339,7 +339,7 @@ export class CustomerCommunicationClientResponseModel {
   employeeIdEntity: string;
   employeeIdNavigation?: EmployeeClientResponseModel;
   id: number;
-  note: string;
+  notes: string;
 
   constructor() {
     this.customerId = 0;
@@ -350,7 +350,7 @@ export class CustomerCommunicationClientResponseModel {
     this.employeeIdEntity = '';
     this.employeeIdNavigation = undefined;
     this.id = 0;
-    this.note = '';
+    this.notes = '';
   }
 
   setProperties(
@@ -358,13 +358,13 @@ export class CustomerCommunicationClientResponseModel {
     dateCreated: any,
     employeeId: number,
     id: number,
-    note: string
+    notes: string
   ): void {
     this.customerId = customerId;
     this.dateCreated = dateCreated;
     this.employeeId = employeeId;
     this.id = id;
-    this.note = note;
+    this.notes = notes;
   }
 }
 export class DestinationClientRequestModel {
@@ -1016,7 +1016,7 @@ export class PipelineStepStatusClientResponseModel {
   }
 }
 export class PipelineStepStepRequirementClientRequestModel {
-  detail: string;
+  details: string;
   id: number;
   pipelineStepId: number;
   pipelineStepIdEntity: string;
@@ -1024,7 +1024,7 @@ export class PipelineStepStepRequirementClientRequestModel {
   requirementMet: boolean;
 
   constructor() {
-    this.detail = '';
+    this.details = '';
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
@@ -1033,12 +1033,12 @@ export class PipelineStepStepRequirementClientRequestModel {
   }
 
   setProperties(
-    detail: string,
+    details: string,
     id: number,
     pipelineStepId: number,
     requirementMet: boolean
   ): void {
-    this.detail = detail;
+    this.details = details;
     this.id = id;
     this.pipelineStepId = pipelineStepId;
     this.requirementMet = requirementMet;
@@ -1046,7 +1046,7 @@ export class PipelineStepStepRequirementClientRequestModel {
 }
 
 export class PipelineStepStepRequirementClientResponseModel {
-  detail: string;
+  details: string;
   id: number;
   pipelineStepId: number;
   pipelineStepIdEntity: string;
@@ -1054,7 +1054,7 @@ export class PipelineStepStepRequirementClientResponseModel {
   requirementMet: boolean;
 
   constructor() {
-    this.detail = '';
+    this.details = '';
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
@@ -1063,12 +1063,12 @@ export class PipelineStepStepRequirementClientResponseModel {
   }
 
   setProperties(
-    detail: string,
+    details: string,
     id: number,
     pipelineStepId: number,
     requirementMet: boolean
   ): void {
-    this.detail = detail;
+    this.details = details;
     this.id = id;
     this.pipelineStepId = pipelineStepId;
     this.requirementMet = requirementMet;
@@ -1189,5 +1189,5 @@ export class SpeciesClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>a689ac0e105a1b65a9cad820e361fc92</Hash>
+    <Hash>d00222ace7ce42222e92f0279f23f883</Hash>
 </Codenesium>*/

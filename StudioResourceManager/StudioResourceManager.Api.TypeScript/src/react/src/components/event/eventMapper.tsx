@@ -12,8 +12,8 @@ export default class EventMapper {
       dto.id,
       dto.scheduledEndDate,
       dto.scheduledStartDate,
-      dto.studentNote,
-      dto.teacherNote
+      dto.studentNotes,
+      dto.teacherNotes
     );
 
     if (dto.eventStatusIdNavigation != null) {
@@ -37,8 +37,8 @@ export default class EventMapper {
       model.id,
       model.scheduledEndDate,
       model.scheduledStartDate,
-      model.studentNote,
-      model.teacherNote
+      model.studentNotes,
+      model.teacherNotes
     );
     return response;
   }
@@ -46,5 +46,5 @@ export default class EventMapper {
 
 
 /*<Codenesium>
-    <Hash>605550f384e2dd2859673b1782a45e2a</Hash>
+    <Hash>b6db3b131602c89e143bf3364c38002e</Hash>
 </Codenesium>*/

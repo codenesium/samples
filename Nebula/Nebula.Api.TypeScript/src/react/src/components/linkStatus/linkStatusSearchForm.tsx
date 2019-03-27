@@ -52,20 +52,20 @@ export default class LinkStatusSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: LinkStatusViewModel) {
-    this.props.history.push(ClientRoutes.LinkStatuses + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.LinkStatus + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: LinkStatusViewModel) {
-    this.props.history.push(ClientRoutes.LinkStatuses + '/' + row.id);
+    this.props.history.push(ClientRoutes.LinkStatus + '/' + row.id);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push(ClientRoutes.LinkStatuses + '/create');
+    this.props.history.push(ClientRoutes.LinkStatus + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.LinkStatusClientResponseModel) {
     axios
-      .delete(Constants.ApiEndpoint + ApiRoutes.LinkStatuses + '/' + row.id, {
+      .delete(Constants.ApiEndpoint + ApiRoutes.LinkStatus + '/' + row.id, {
         headers: GlobalUtilities.defaultHeaders(),
       })
       .then(resp => {
@@ -95,7 +95,7 @@ export default class LinkStatusSearchComponent extends React.Component<
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
     let searchEndpoint =
-      Constants.ApiEndpoint + ApiRoutes.LinkStatuses + '?limit=100';
+      Constants.ApiEndpoint + ApiRoutes.LinkStatus + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -200,13 +200,6 @@ export default class LinkStatusSearchComponent extends React.Component<
                 Header: 'Link Status',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -274,5 +267,5 @@ export const WrappedLinkStatusSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3a3bc04126672083de63a1c544da7b3e</Hash>
+    <Hash>f926fca6375d7096183a101a51d5bf83</Hash>
 </Codenesium>*/

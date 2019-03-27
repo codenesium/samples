@@ -140,52 +140,52 @@ class AddressCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="address1">address1</label>
+            <label htmlFor="address1">Address1</label>
             <br />
             {getFieldDecorator('address1', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'address1'} />)}
+            })(<Input placeholder={'Address1'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="address2">address2</label>
+            <label htmlFor="address2">Address2</label>
             <br />
             {getFieldDecorator('address2', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'address2'} />)}
+            })(<Input placeholder={'Address2'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="city">city</label>
+            <label htmlFor="city">City</label>
             <br />
             {getFieldDecorator('city', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'city'} />)}
+            })(<Input placeholder={'City'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="state">state</label>
+            <label htmlFor="state">State</label>
             <br />
             {getFieldDecorator('state', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 2, message: 'Exceeds max length of 2' },
               ],
-            })(<Input placeholder={'state'} />)}
+            })(<Input placeholder={'State'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="zip">zip</label>
+            <label htmlFor="zip">Zip</label>
             <br />
             {getFieldDecorator('zip', {
               rules: [{ max: 12, message: 'Exceeds max length of 12' }],
-            })(<Input placeholder={'zip'} />)}
+            })(<Input placeholder={'Zip'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -212,5 +212,5 @@ export const WrappedAddressCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>58f12ff9a48f09134cf3ec979bf5c0d1</Hash>
+    <Hash>c5de6f8b5ddc18a278d903de4d6e0964</Hash>
 </Codenesium>*/

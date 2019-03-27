@@ -94,7 +94,7 @@ export class CallTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>CallType</label>
+          <label htmlFor={this.props.propertyName}>Call Type</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class CallTypeSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: CallTypeViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class CallTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9a49f129603cf54b9f24eb8a0086c1e7</Hash>
+    <Hash>f89d205259f36235b5d68c55b38874f6</Hash>
 </Codenesium>*/

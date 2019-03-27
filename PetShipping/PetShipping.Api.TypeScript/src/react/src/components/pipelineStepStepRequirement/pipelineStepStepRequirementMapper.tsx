@@ -7,7 +7,7 @@ export default class PipelineStepStepRequirementMapper {
   ): PipelineStepStepRequirementViewModel {
     let response = new PipelineStepStepRequirementViewModel();
     response.setProperties(
-      dto.detail,
+      dto.details,
       dto.id,
       dto.pipelineStepId,
       dto.requirementMet
@@ -31,7 +31,7 @@ export default class PipelineStepStepRequirementMapper {
   ): Api.PipelineStepStepRequirementClientRequestModel {
     let response = new Api.PipelineStepStepRequirementClientRequestModel();
     response.setProperties(
-      model.detail,
+      model.details,
       model.id,
       model.pipelineStepId,
       model.requirementMet
@@ -42,5 +42,5 @@ export default class PipelineStepStepRequirementMapper {
 
 
 /*<Codenesium>
-    <Hash>8ac03505faf35eaf19ceb10dcce20de0</Hash>
+    <Hash>b2e0d1c1093750b8c0cfd7ac48413965</Hash>
 </Codenesium>*/

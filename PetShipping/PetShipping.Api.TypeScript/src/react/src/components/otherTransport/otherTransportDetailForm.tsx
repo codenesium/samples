@@ -107,7 +107,7 @@ class OtherTransportDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>handlerId</h3>
+              <h3>Handler</h3>
               <p>
                 {String(
                   this.state.model!.handlerIdNavigation &&
@@ -116,7 +116,7 @@ class OtherTransportDetailComponent extends React.Component<
               </p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>pipelineStepId</h3>
+              <h3>Pipeline Step</h3>
               <p>
                 {String(
                   this.state.model!.pipelineStepIdNavigation &&
@@ -140,5 +140,5 @@ export const WrappedOtherTransportDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cae2e2f180a50a0eae76a8ea8e60cb86</Hash>
+    <Hash>b2ad46cca5f783c6742377bd97001747</Hash>
 </Codenesium>*/

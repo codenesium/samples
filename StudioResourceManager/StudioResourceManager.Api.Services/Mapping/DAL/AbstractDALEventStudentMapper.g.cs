@@ -39,8 +39,8 @@ namespace StudioResourceManagerNS.Api.Services
 					item.EventIdNavigation.EventStatusId,
 					item.EventIdNavigation.ScheduledEndDate,
 					item.EventIdNavigation.ScheduledStartDate,
-					item.EventIdNavigation.StudentNote,
-					item.EventIdNavigation.TeacherNote);
+					item.EventIdNavigation.StudentNotes,
+					item.EventIdNavigation.TeacherNotes);
 
 				model.SetEventIdNavigation(eventIdModel);
 			}
@@ -83,5 +83,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>978ddef1be2b5f42ca5082e7dab9ec2d</Hash>
+    <Hash>7198cc6bae11e8ef695175e7ca61a99f</Hash>
 </Codenesium>*/

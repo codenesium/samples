@@ -140,14 +140,14 @@ class UnitDispositionCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -174,5 +174,5 @@ export const WrappedUnitDispositionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>260636fd98aace5c5400f3d1387afc51</Hash>
+    <Hash>a1e11883cb9ace93ac9c5afc1a7565b0</Hash>
 </Codenesium>*/

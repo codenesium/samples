@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Client.Tests
 			model.SetProperties("A", "A", "A", "A", "A");
 			ApiFamilyClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Client.Tests
 			model.SetProperties(1, "A", "A", "A", "A", "A");
 			ApiFamilyClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -43,5 +43,5 @@ namespace StudioResourceManagerNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>3279c374f77752fa7a5f98e68d85dd90</Hash>
+    <Hash>cdb9dfc7b59a73548935232f4217f880</Hash>
 </Codenesium>*/

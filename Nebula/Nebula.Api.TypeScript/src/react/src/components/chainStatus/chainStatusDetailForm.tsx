@@ -37,7 +37,7 @@ class ChainStatusDetailComponent extends React.Component<
 
   handleEditClick(e: any) {
     this.props.history.push(
-      ClientRoutes.ChainStatuses + '/edit/' + this.state.model!.id
+      ClientRoutes.ChainStatus + '/edit/' + this.state.model!.id
     );
   }
 
@@ -47,7 +47,7 @@ class ChainStatusDetailComponent extends React.Component<
     axios
       .get<Api.ChainStatusClientResponseModel>(
         Constants.ApiEndpoint +
-          ApiRoutes.ChainStatuses +
+          ApiRoutes.ChainStatus +
           '/' +
           this.props.match.params.id,
         {
@@ -108,10 +108,6 @@ class ChainStatusDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -124,7 +120,7 @@ class ChainStatusDetailComponent extends React.Component<
               match={this.props.match}
               apiRoute={
                 Constants.ApiEndpoint +
-                ApiRoutes.ChainStatuses +
+                ApiRoutes.ChainStatus +
                 '/' +
                 this.state.model!.id +
                 '/' +
@@ -146,5 +142,5 @@ export const WrappedChainStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f35fd9427d40431ed1f528b596edde49</Hash>
+    <Hash>dc98a6e76f7fe6a2a6bc3dcd35ce4c36</Hash>
 </Codenesium>*/

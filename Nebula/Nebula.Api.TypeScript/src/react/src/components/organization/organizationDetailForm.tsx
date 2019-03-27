@@ -108,10 +108,6 @@ class OrganizationDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -146,5 +142,5 @@ export const WrappedOrganizationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1b6afbdcc97d77021720cc33a7b2017b</Hash>
+    <Hash>af72a4d9c79983e94bb4a35cfda3f256</Hash>
 </Codenesium>*/

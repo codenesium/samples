@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Services
 			PipelineStepStepRequirement item = new PipelineStepStepRequirement();
 			item.SetProperties(
 				id,
-				model.Detail,
+				model.Details,
 				model.PipelineStepId,
 				model.RequirementMet);
 			return item;
@@ -27,7 +27,7 @@ namespace PetShippingNS.Api.Services
 			var model = new ApiPipelineStepStepRequirementServerResponseModel();
 
 			model.SetProperties(item.Id,
-			                    item.Detail,
+			                    item.Details,
 			                    item.PipelineStepId,
 			                    item.RequirementMet);
 			if (item.PipelineStepIdNavigation != null)
@@ -61,5 +61,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f5af32e081a9c253f7e273bf3397dc34</Hash>
+    <Hash>88dafe9b1fe51593a736eff25e5805ad</Hash>
 </Codenesium>*/

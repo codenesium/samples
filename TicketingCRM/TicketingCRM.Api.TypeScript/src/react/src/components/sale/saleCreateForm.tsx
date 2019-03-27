@@ -152,11 +152,11 @@ class SaleCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="note">Note</label>
+            <label htmlFor="notes">Notes</label>
             <br />
-            {getFieldDecorator('note', {
+            {getFieldDecorator('notes', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'Note'} />)}
+            })(<Input placeholder={'Notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -199,5 +199,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>3bfb51e5f8cf941174e45e730e49a2e7</Hash>
+    <Hash>9e9c4f08a6823bb7b73d52f885e64b6a</Hash>
 </Codenesium>*/

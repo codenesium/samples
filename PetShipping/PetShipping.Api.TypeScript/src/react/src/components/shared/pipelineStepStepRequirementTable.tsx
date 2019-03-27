@@ -127,13 +127,13 @@ export class PipelineStepStepRequirementTableComponent extends React.Component<
                 columns: [
                   {
                     Header: 'Details',
-                    accessor: 'detail',
+                    accessor: 'details',
                     Cell: props => {
-                      return <span>{String(props.original.detail)}</span>;
+                      return <span>{String(props.original.details)}</span>;
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -157,7 +157,7 @@ export class PipelineStepStepRequirementTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'RequirementMet',
+                    Header: 'Requirement Met',
                     accessor: 'requirementMet',
                     Cell: props => {
                       return (
@@ -210,5 +210,5 @@ export class PipelineStepStepRequirementTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0b1ab73c46e6a8753c3859e316957639</Hash>
+    <Hash>64679798732f7df3a2c892f7cb1d6d97</Hash>
 </Codenesium>*/

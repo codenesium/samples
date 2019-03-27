@@ -107,7 +107,7 @@ class AirlineDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -126,5 +126,5 @@ export const WrappedAirlineDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0e916ce562ebc53e1e947251374fec0e</Hash>
+    <Hash>8a5cc9ef6b03c572dbb8c25c1265dd72</Hash>
 </Codenesium>*/

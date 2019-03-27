@@ -15,11 +15,11 @@ export default class TicketStatusViewModel {
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>5f1559f7bd11d4cc655c76891d623b3c</Hash>
+    <Hash>87b756fc3a2877d4b757f83dc0bac1ea</Hash>
 </Codenesium>*/

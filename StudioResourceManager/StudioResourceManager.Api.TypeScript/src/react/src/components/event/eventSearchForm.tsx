@@ -267,17 +267,17 @@ export default class EventSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Student Note',
-                    accessor: 'studentNote',
+                    Header: 'Student Notes',
+                    accessor: 'studentNotes',
                     Cell: props => {
-                      return <span>{String(props.original.studentNote)}</span>;
+                      return <span>{String(props.original.studentNotes)}</span>;
                     },
                   },
                   {
-                    Header: 'Teacher Note',
-                    accessor: 'teacherNote',
+                    Header: 'Teacher Notes',
+                    accessor: 'teacherNotes',
                     Cell: props => {
-                      return <span>{String(props.original.teacherNote)}</span>;
+                      return <span>{String(props.original.teacherNotes)}</span>;
                     },
                   },
                   {
@@ -341,5 +341,5 @@ export const WrappedEventSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>49adbe20a23eb36adc242e1ac2f0783e</Hash>
+    <Hash>7fad0f2d1ddf6bc5ae82d4315d5c741e</Hash>
 </Codenesium>*/

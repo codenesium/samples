@@ -7,6 +7,7 @@ import StudentViewModel from './studentViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
+import { EventStudentTableComponent } from '../shared/eventStudentTable';
 
 interface StudentDetailComponentProps {
   form: WrappedFormUtils;
@@ -158,6 +159,21 @@ class StudentDetailComponent extends React.Component<
             </div>
           </div>
           {message}
+          <div>
+            <h3>EventStudents</h3>
+            <EventStudentTableComponent
+              history={this.props.history}
+              match={this.props.match}
+              apiRoute={
+                Constants.ApiEndpoint +
+                ApiRoutes.Students +
+                '/' +
+                this.state.model!.id +
+                '/' +
+                ApiRoutes.EventStudents
+              }
+            />
+          </div>
         </div>
       );
     } else {
@@ -172,5 +188,5 @@ export const WrappedStudentDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>13cbd7d79f574d733fd3302d2ce33fe3</Hash>
+    <Hash>6e1ab15cb93a302f80780ef8cd2d0e51</Hash>
 </Codenesium>*/

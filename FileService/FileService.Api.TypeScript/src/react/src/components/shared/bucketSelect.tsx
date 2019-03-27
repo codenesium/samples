@@ -103,7 +103,7 @@ export class BucketSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: BucketViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class BucketSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2239c6421f30db47fddde3c9d0d72346</Hash>
+    <Hash>a47198337c1e348876ce8a256bd017aa</Hash>
 </Codenesium>*/

@@ -122,21 +122,14 @@ export class MachineTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'JwtKey',
+                    Header: 'Jwt Key',
                     accessor: 'jwtKey',
                     Cell: props => {
                       return <span>{String(props.original.jwtKey)}</span>;
                     },
                   },
                   {
-                    Header: 'LastIpAddress',
+                    Header: 'Last Ip Address',
                     accessor: 'lastIpAddress',
                     Cell: props => {
                       return (
@@ -145,7 +138,7 @@ export class MachineTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'MachineGuid',
+                    Header: 'Machine Guid',
                     accessor: 'machineGuid',
                     Cell: props => {
                       return <span>{String(props.original.machineGuid)}</span>;
@@ -203,5 +196,5 @@ export class MachineTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5993b7cca4d836dce76a744a2d56cc3b</Hash>
+    <Hash>a3af1bfd98a6f1930e36fc7c79115225</Hash>
 </Codenesium>*/

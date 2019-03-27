@@ -108,19 +108,19 @@ class PersonDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>firstName</h3>
+              <h3>First Name</h3>
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>lastName</h3>
+              <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <h3>phone</h3>
+              <h3>Phone</h3>
               <p>{String(this.state.model!.phone)}</p>
             </div>
             <div>
-              <h3>ssn</h3>
+              <h3>Ssn</h3>
               <p>{String(this.state.model!.ssn)}</p>
             </div>
           </div>
@@ -154,5 +154,5 @@ export const WrappedPersonDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>06cde2cb6e90d4923cbcf7c1ea49c72e</Hash>
+    <Hash>d8613ec76412902bf155185fdca6f809</Hash>
 </Codenesium>*/

@@ -92,6 +92,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table EventTeacher via teacherId.
+		public async virtual Task<List<EventTeacher>> EventTeachersByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<EventTeacher>()
+			       .Include(x => x.EventIdNavigation)
+			       .Include(x => x.TeacherIdNavigation)
+
+			       .Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
+		}
+
 		// Foreign key reference to this table Rate via teacherId.
 		public async virtual Task<List<Rate>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
@@ -100,6 +110,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			       .Include(x => x.TeacherSkillIdNavigation)
 
 			       .Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
+		}
+
+		// Foreign key reference to this table TeacherTeacherSkill via teacherId.
+		public async virtual Task<List<TeacherTeacherSkill>> TeacherTeacherSkillsByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<TeacherTeacherSkill>()
+			       .Include(x => x.TeacherIdNavigation)
+			       .Include(x => x.TeacherSkillIdNavigation)
+
+			       .Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherTeacherSkill>();
 		}
 
 		// Foreign key reference to table User via userId.
@@ -136,5 +156,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>083ed6c202d3cda6bb28ac4b74f1605a</Hash>
+    <Hash>c49c605fe1af3df0630e28387fdb50fb</Hash>
 </Codenesium>*/

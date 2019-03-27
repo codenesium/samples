@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 				model.Email,
 				model.FirstName,
 				model.LastName,
-				model.Note,
+				model.Notes,
 				model.Phone);
 			return item;
 		}
@@ -32,7 +32,7 @@ namespace PetShippingNS.Api.Services
 			                    item.Email,
 			                    item.FirstName,
 			                    item.LastName,
-			                    item.Note,
+			                    item.Notes,
 			                    item.Phone);
 
 			return model;
@@ -54,5 +54,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6bb7feeaa70c73504e81a0e8479b01b</Hash>
+    <Hash>dbf8b166f59b311846ea0a779c499c91</Hash>
 </Codenesium>*/

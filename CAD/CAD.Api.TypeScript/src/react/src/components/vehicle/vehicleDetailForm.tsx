@@ -7,7 +7,7 @@ import VehicleViewModel from './vehicleViewModel';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
-import { VehicleCapabilittyTableComponent } from '../shared/vehicleCapabilittyTable';
+import { VehicleCapabilitiesTableComponent } from '../shared/vehicleCapabilitiesTable';
 import { VehicleOfficerTableComponent } from '../shared/vehicleOfficerTable';
 
 interface VehicleDetailComponentProps {
@@ -109,14 +109,14 @@ class VehicleDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
           {message}
           <div>
             <h3>VehicleCapabilities</h3>
-            <VehicleCapabilittyTableComponent
+            <VehicleCapabilitiesTableComponent
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -158,5 +158,5 @@ export const WrappedVehicleDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>53847847f49306adf63b8b7e686ef4b9</Hash>
+    <Hash>cc87d14400158d76e414c8ed40eb8155</Hash>
 </Codenesium>*/

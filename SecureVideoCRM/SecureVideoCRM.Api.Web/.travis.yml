@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 2.2
+script:
+   -  dotnet build SecureVideoCRM.Api.Web.csproj
+   -  dotnet test SecureVideoCRM.Api.DataAccess.csproj
+   -  dotnet test SecureVideoCRM.Api.Servicea.csproj
+   -  dotnet test SecureVideoCRM.Api.Client.csproj
+   -  dotnet test SecureVideoCRM.Api.Web.csproj

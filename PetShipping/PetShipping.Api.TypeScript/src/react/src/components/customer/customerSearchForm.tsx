@@ -197,7 +197,7 @@ export default class CustomerSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Customers',
+                Header: 'Customer',
                 columns: [
                   {
                     Header: 'Email',
@@ -207,17 +207,24 @@ export default class CustomerSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'Notes',
-                    accessor: 'note',
+                    Header: 'Last Name',
+                    accessor: 'lastName',
                     Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
+                      return <span>{String(props.original.lastName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Notes',
+                    accessor: 'notes',
+                    Cell: props => {
+                      return <span>{String(props.original.notes)}</span>;
                     },
                   },
                   {
@@ -288,5 +295,5 @@ export const WrappedCustomerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f4240f8ac5fd6b3f9d2782da8b60e1dd</Hash>
+    <Hash>2d1da9d5888835c0136b478b80bfc1d5</Hash>
 </Codenesium>*/

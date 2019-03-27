@@ -3,63 +3,102 @@ mono: none
 sudo: required
 dist: xenial
 dotnet: 2.2
-script:
-   -  dotnet build ESPIOT/ESPIOT.Api.Web/ESPIOT.Api.Web.csproj
-   -  dotnet build FileService/FileService.Api.Web/FileService.Api.Web.csproj
-   -  dotnet build Nebula/Nebula.Api.Web/Nebula.Api.Web.csproj
-   -  dotnet build Twitter/Twitter.Api.Web/Twitter.Api.Web.csproj
-   -  dotnet build PetShipping/PetShipping.Api.Web/PetShipping.Api.Web.csproj
-   -  dotnet build PetStore/PetStore.Api.Web/PetStore.Api.Web.csproj
-   -  dotnet build TicketingCRM/TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj
-   -  dotnet build StudioResourceManager/StudioResourceManager.Api.Web/StudioResourceManager.Api.Web.csproj
-   -  dotnet build StudioResourceManagerMT/StudioResourceManagerMT.Api.Web/StudioResourceManagerMT.Api.Web.csproj
-   -  dotnet build StackOverflow/StackOverflow.Api.Web/StackOverflow.Api.Web.csproj
-   -  dotnet build Tests/Tests.Api.Web/Tests.Api.Web.csproj
-   
-   -  dotnet test ESPIOT/ESPIOT.Api.DataAccess.Tests/ESPIOT.Api.DataAccess.Tests.csproj
-   -  dotnet test FileService/FileService.Api.DataAccess.Tests/FileService.Api.DataAccess.Tests.csproj
-   -  dotnet test Nebula/Nebula.Api.DataAccess.Tests/Nebula.Api.DataAccess.Tests.csproj
-   -  dotnet test Twitter/Twitter.Api.DataAccess.Tests/Twitter.Api.DataAccess.Tests.csproj
-   -  dotnet test PetShipping/PetShipping.Api.DataAccess.Tests/PetShipping.Api.DataAccess.Tests.csproj
-   -  dotnet test PetStore/PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj
-   -  dotnet test TicketingCRM/TicketingCRM.Api.DataAccess.Tests/TicketingCRM.Api.DataAccess.Tests.csproj
-   -  dotnet test StudioResourceManager/StudioResourceManager.Api.DataAccess.Tests/StudioResourceManager.Api.DataAccess.Tests.csproj
-   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.DataAccess.Tests/StudioResourceManagerMT.Api.DataAccess.Tests.csproj
-   -  dotnet test StackOverflow/StackOverflow.Api.DataAccess.Tests/StackOverflow.Api.DataAccess.Tests.csproj
-   -  dotnet test Tests/Tests.Api.DataAccess.Tests/Tests.Api.DataAccess.Tests.csproj
-   
-   -  dotnet test ESPIOT/ESPIOT.Api.Services.Tests/ESPIOT.Api.Services.Tests.csproj
-   -  dotnet test FileService/FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj
-   -  dotnet test Nebula/Nebula.Api.Services.Tests/Nebula.Api.Services.Tests.csproj
-   -  dotnet test Twitter/Twitter.Api.Services.Tests/Twitter.Api.Services.Tests.csproj
-   -  dotnet test PetShipping/PetShipping.Api.Services.Tests/PetShipping.Api.Services.Tests.csproj
-   -  dotnet test PetStore/PetStore.Api.Services.Tests/PetStore.Api.Services.Tests.csproj
-   -  dotnet test TicketingCRM/TicketingCRM.Api.Services.Tests/TicketingCRM.Api.Services.Tests.csproj
-   -  dotnet test StudioResourceManager/StudioResourceManager.Api.Services.Tests/StudioResourceManager.Api.Services.Tests.csproj
-   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Services.Tests/StudioResourceManagerMT.Api.Services.Tests.csproj
-   -  dotnet test StackOverflow/StackOverflow.Api.Services.Tests/StackOverflow.Api.Services.Tests.csproj
-   -  dotnet test Tests/Tests.Api.Services.Tests/Tests.Api.Services.Tests.csproj
+script: 
+   -  dotnet build CAD/CAD.Api.Web/CAD.Api.Web.csproj
+   -  dotnet test CAD/CAD.Api.DataAccess.Tests/CAD.Api.DataAccess.Tests.csproj
+   -  dotnet test CAD/CAD.Api.Services.Tests/CAD.Api.Services.Tests.csproj
+   -  dotnet test CAD/CAD.Api.Web.Tests/CAD.Api.Web.Tests.csproj
+   -  dotnet test CAD/CAD.Api.Client.Tests/CAD.Api.Client.Tests.csproj
+   -  dotnet test CAD/CAD.Api.Web.Integration.Tests/CAD.Api.Web.Integration.Tests.csproj
 
-   -  dotnet test ESPIOT/ESPIOT.Api.Client.Tests/ESPIOT.Api.Client.Tests.csproj
-   -  dotnet test FileService/FileService.Api.Client.Tests/FileService.Api.Client.Tests.csproj
-   -  dotnet test Nebula/Nebula.Api.Client.Tests/Nebula.Api.Client.Tests.csproj
-   -  dotnet test Twitter/Twitter.Api.Client.Tests/Twitter.Api.Client.Tests.csproj
-   -  dotnet test PetShipping/PetShipping.Api.Client.Tests/PetShipping.Api.Client.Tests.csproj
-   -  dotnet test PetStore/PetStore.Api.Client.Tests/PetStore.Api.Client.Tests.csproj
-   -  dotnet test TicketingCRM/TicketingCRM.Api.Client.Tests/TicketingCRM.Api.Client.Tests.csproj
-   -  dotnet test StudioResourceManager/StudioResourceManager.Api.Client.Tests/StudioResourceManager.Api.Client.Tests.csproj
-   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Client.Tests/StudioResourceManagerMT.Api.Client.Tests.csproj
-   -  dotnet test StackOverflow/StackOverflow.Api.Client.Tests/StackOverflow.Api.Client.Tests.csproj
-   -  dotnet test Tests/Tests.Api.Client.Tests/Tests.Api.Client.Tests.csproj
-   
+   -  dotnet build ESPIOT/ESPIOT.Api.Web/ESPIOT.Api.Web.csproj
+   -  dotnet test ESPIOT/ESPIOT.Api.DataAccess.Tests/ESPIOT.Api.DataAccess.Tests.csproj
+   -  dotnet test ESPIOT/ESPIOT.Api.Services.Tests/ESPIOT.Api.Services.Tests.csproj
    -  dotnet test ESPIOT/ESPIOT.Api.Web.Tests/ESPIOT.Api.Web.Tests.csproj
+   -  dotnet test ESPIOT/ESPIOT.Api.Client.Tests/ESPIOT.Api.Client.Tests.csproj
+   -  dotnet test ESPIOT/ESPIOT.Api.Web.Integration.Tests/ESPIOT.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build FileService/FileService.Api.Web/FileService.Api.Web.csproj
+   -  dotnet test FileService/FileService.Api.DataAccess.Tests/FileService.Api.DataAccess.Tests.csproj
+   -  dotnet test FileService/FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj
    -  dotnet test FileService/FileService.Api.Web.Tests/FileService.Api.Web.Tests.csproj
+   -  dotnet test FileService/FileService.Api.Client.Tests/FileService.Api.Client.Tests.csproj
+   -  dotnet test FileService/FileService.Api.Web.Integration.Tests/FileService.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build Nebula/Nebula.Api.Web/Nebula.Api.Web.csproj
+   -  dotnet test Nebula/Nebula.Api.DataAccess.Tests/Nebula.Api.DataAccess.Tests.csproj
+   -  dotnet test Nebula/Nebula.Api.Services.Tests/Nebula.Api.Services.Tests.csproj
    -  dotnet test Nebula/Nebula.Api.Web.Tests/Nebula.Api.Web.Tests.csproj
-   -  dotnet test Twitter/Twitter.Api.Web.Tests/Twitter.Api.Web.Tests.csproj
+   -  dotnet test Nebula/Nebula.Api.Client.Tests/Nebula.Api.Client.Tests.csproj
+   -  dotnet test Nebula/Nebula.Api.Web.Integration.Tests/Nebula.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build PetShipping/PetShipping.Api.Web/PetShipping.Api.Web.csproj
+   -  dotnet test PetShipping/PetShipping.Api.DataAccess.Tests/PetShipping.Api.DataAccess.Tests.csproj
+   -  dotnet test PetShipping/PetShipping.Api.Services.Tests/PetShipping.Api.Services.Tests.csproj
    -  dotnet test PetShipping/PetShipping.Api.Web.Tests/PetShipping.Api.Web.Tests.csproj
+   -  dotnet test PetShipping/PetShipping.Api.Client.Tests/PetShipping.Api.Client.Tests.csproj
+   -  dotnet test PetShipping/PetShipping.Api.Web.Integration.Tests/PetShipping.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build PetStore/PetStore.Api.Web/PetStore.Api.Web.csproj
+   -  dotnet test PetStore/PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj
+   -  dotnet test PetStore/PetStore.Api.Services.Tests/PetStore.Api.Services.Tests.csproj
    -  dotnet test PetStore/PetStore.Api.Web.Tests/PetStore.Api.Web.Tests.csproj
-   -  dotnet test TicketingCRM/TicketingCRM.Api.Web.Tests/TicketingCRM.Api.Web.Tests.csproj
-   -  dotnet test StudioResourceManager/StudioResourceManager.Api.Web.Tests/StudioResourceManager.Api.Web.Tests.csproj
-   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Web.Tests/StudioResourceManagerMT.Api.Web.Tests.csproj
+   -  dotnet test PetStore/PetStore.Api.Client.Tests/PetStore.Api.Client.Tests.csproj
+   -  dotnet test PetStore/PetStore.Api.Web.Integration.Tests/PetStore.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build PointOfSale/PointOfSale.Api.Web/PointOfSale.Api.Web.csproj
+   -  dotnet test PointOfSale/PointOfSale.Api.DataAccess.Tests/PointOfSale.Api.DataAccess.Tests.csproj
+   -  dotnet test PointOfSale/PointOfSale.Api.Services.Tests/PointOfSale.Api.Services.Tests.csproj
+   -  dotnet test PointOfSale/PointOfSale.Api.Web.Tests/PointOfSale.Api.Web.Tests.csproj
+   -  dotnet test PointOfSale/PointOfSale.Api.Client.Tests/PointOfSale.Api.Client.Tests.csproj
+   -  dotnet test PointOfSale/PointOfSale.Api.Web.Integration.Tests/PointOfSale.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build SecureVideoCRM/SecureVideoCRM.Api.Web/SecureVideoCRM.Api.Web.csproj
+   -  dotnet test SecureVideoCRM/SecureVideoCRM.Api.DataAccess.Tests/SecureVideoCRM.Api.DataAccess.Tests.csproj
+   -  dotnet test SecureVideoCRM/SecureVideoCRM.Api.Services.Tests/SecureVideoCRM.Api.Services.Tests.csproj
+   -  dotnet test SecureVideoCRM/SecureVideoCRM.Api.Web.Tests/SecureVideoCRM.Api.Web.Tests.csproj
+   -  dotnet test SecureVideoCRM/SecureVideoCRM.Api.Client.Tests/SecureVideoCRM.Api.Client.Tests.csproj
+   -  dotnet test SecureVideoCRM/SecureVideoCRM.Api.Web.Integration.Tests/SecureVideoCRM.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build StackOverflow/StackOverflow.Api.Web/StackOverflow.Api.Web.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.DataAccess.Tests/StackOverflow.Api.DataAccess.Tests.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.Services.Tests/StackOverflow.Api.Services.Tests.csproj
    -  dotnet test StackOverflow/StackOverflow.Api.Web.Tests/StackOverflow.Api.Web.Tests.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.Client.Tests/StackOverflow.Api.Client.Tests.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.Web.Integration.Tests/StackOverflow.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build StudioResourceManager/StudioResourceManager.Api.Web/StudioResourceManager.Api.Web.csproj
+   -  dotnet test StudioResourceManager/StudioResourceManager.Api.DataAccess.Tests/StudioResourceManager.Api.DataAccess.Tests.csproj
+   -  dotnet test StudioResourceManager/StudioResourceManager.Api.Services.Tests/StudioResourceManager.Api.Services.Tests.csproj
+   -  dotnet test StudioResourceManager/StudioResourceManager.Api.Web.Tests/StudioResourceManager.Api.Web.Tests.csproj
+   -  dotnet test StudioResourceManager/StudioResourceManager.Api.Client.Tests/StudioResourceManager.Api.Client.Tests.csproj
+   -  dotnet test StudioResourceManager/StudioResourceManager.Api.Web.Integration.Tests/StudioResourceManager.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build StudioResourceManagerMT/StudioResourceManagerMT.Api.Web/StudioResourceManagerMT.Api.Web.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.DataAccess.Tests/StudioResourceManagerMT.Api.DataAccess.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Services.Tests/StudioResourceManagerMT.Api.Services.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Web.Tests/StudioResourceManagerMT.Api.Web.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Client.Tests/StudioResourceManagerMT.Api.Client.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Web.Integration.Tests/StudioResourceManagerMT.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build Tests/Tests.Api.Web/Tests.Api.Web.csproj
+   -  dotnet test Tests/Tests.Api.DataAccess.Tests/Tests.Api.DataAccess.Tests.csproj
+   -  dotnet test Tests/Tests.Api.Services.Tests/Tests.Api.Services.Tests.csproj
    -  dotnet test Tests/Tests.Api.Web.Tests/Tests.Api.Web.Tests.csproj
+   -  dotnet test Tests/Tests.Api.Client.Tests/Tests.Api.Client.Tests.csproj
+   -  dotnet test Tests/Tests.Api.Web.Integration.Tests/Tests.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build TicketingCRM/TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.DataAccess.Tests/TicketingCRM.Api.DataAccess.Tests.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.Services.Tests/TicketingCRM.Api.Services.Tests.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.Web.Tests/TicketingCRM.Api.Web.Tests.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.Client.Tests/TicketingCRM.Api.Client.Tests.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.Web.Integration.Tests/TicketingCRM.Api.Web.Integration.Tests.csproj
+
+   -  dotnet build Twitter/Twitter.Api.Web/Twitter.Api.Web.csproj
+   -  dotnet test Twitter/Twitter.Api.DataAccess.Tests/Twitter.Api.DataAccess.Tests.csproj
+   -  dotnet test Twitter/Twitter.Api.Services.Tests/Twitter.Api.Services.Tests.csproj
+   -  dotnet test Twitter/Twitter.Api.Web.Tests/Twitter.Api.Web.Tests.csproj
+   -  dotnet test Twitter/Twitter.Api.Client.Tests/Twitter.Api.Client.Tests.csproj
+   -  dotnet test Twitter/Twitter.Api.Web.Integration.Tests/Twitter.Api.Web.Integration.Tests.csproj
+

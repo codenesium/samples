@@ -52,20 +52,20 @@ export default class ChainStatusSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: ChainStatusViewModel) {
-    this.props.history.push(ClientRoutes.ChainStatuses + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.ChainStatus + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: ChainStatusViewModel) {
-    this.props.history.push(ClientRoutes.ChainStatuses + '/' + row.id);
+    this.props.history.push(ClientRoutes.ChainStatus + '/' + row.id);
   }
 
   handleCreateClick(e: any) {
-    this.props.history.push(ClientRoutes.ChainStatuses + '/create');
+    this.props.history.push(ClientRoutes.ChainStatus + '/create');
   }
 
   handleDeleteClick(e: any, row: Api.ChainStatusClientResponseModel) {
     axios
-      .delete(Constants.ApiEndpoint + ApiRoutes.ChainStatuses + '/' + row.id, {
+      .delete(Constants.ApiEndpoint + ApiRoutes.ChainStatus + '/' + row.id, {
         headers: GlobalUtilities.defaultHeaders(),
       })
       .then(resp => {
@@ -95,7 +95,7 @@ export default class ChainStatusSearchComponent extends React.Component<
   loadRecords(query: string = '') {
     this.setState({ ...this.state, searchValue: query });
     let searchEndpoint =
-      Constants.ApiEndpoint + ApiRoutes.ChainStatuses + '?limit=100';
+      Constants.ApiEndpoint + ApiRoutes.ChainStatus + '?limit=100';
 
     if (query) {
       searchEndpoint += '&query=' + query;
@@ -200,13 +200,6 @@ export default class ChainStatusSearchComponent extends React.Component<
                 Header: 'Chain Status',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -274,5 +267,5 @@ export const WrappedChainStatusSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>286b860c72675f17c5e803a63182d02f</Hash>
+    <Hash>456237f7f8fd7f807e29b9eca3d32cb2</Hash>
 </Codenesium>*/

@@ -97,7 +97,7 @@ export class CountryRequirementSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Country Requirement</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -107,7 +107,7 @@ export class CountryRequirementSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: CountryRequirementViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +125,5 @@ export class CountryRequirementSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>01801c9e7be25f43da7b5da604af7c78</Hash>
+    <Hash>ad0b083c1d89879af30117f41f85d75c</Hash>
 </Codenesium>*/

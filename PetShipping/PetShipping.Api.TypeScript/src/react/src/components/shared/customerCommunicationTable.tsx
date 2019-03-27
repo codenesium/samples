@@ -120,7 +120,7 @@ export class CustomerCommunicationTableComponent extends React.Component<
                 Header: 'CustomerCommunications',
                 columns: [
                   {
-                    Header: 'CustomerId',
+                    Header: 'Customer',
                     accessor: 'customerId',
                     Cell: props => {
                       return (
@@ -144,14 +144,14 @@ export class CustomerCommunicationTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateCreated',
+                    Header: 'Date Created',
                     accessor: 'dateCreated',
                     Cell: props => {
                       return <span>{String(props.original.dateCreated)}</span>;
                     },
                   },
                   {
-                    Header: 'EmployeeId',
+                    Header: 'Employee',
                     accessor: 'employeeId',
                     Cell: props => {
                       return (
@@ -176,9 +176,9 @@ export class CustomerCommunicationTableComponent extends React.Component<
                   },
                   {
                     Header: 'Notes',
-                    accessor: 'note',
+                    accessor: 'notes',
                     Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
+                      return <span>{String(props.original.notes)}</span>;
                     },
                   },
                   {
@@ -226,5 +226,5 @@ export class CustomerCommunicationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>50cdfc3b8b3aae84630e0ca22ca061f3</Hash>
+    <Hash>d17863e4569bef52f1a25cd2e625f9e8</Hash>
 </Codenesium>*/

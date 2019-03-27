@@ -212,7 +212,7 @@ class VenueCreateComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<InputNumber placeholder={'Phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <ProvinceSelectComponent
@@ -258,5 +258,5 @@ export const WrappedVenueCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c388dcb7f25fa6f59ee2b566d25366ef</Hash>
+    <Hash>e89d366b2e023eb61fc7b821b51ea0e6</Hash>
 </Codenesium>*/

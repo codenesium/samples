@@ -11,11 +11,11 @@ namespace PetShippingNS.Api.Services
 		public virtual void SetProperties(
 			int id,
 			int countryId,
-			string detail)
+			string details)
 		{
 			this.Id = id;
 			this.CountryId = countryId;
-			this.Detail = detail;
+			this.Details = details;
 		}
 
 		[JsonProperty]
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Services
 		}
 
 		[JsonProperty]
-		public string Detail { get; private set; }
+		public string Details { get; private set; }
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -41,5 +41,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>90f468c273ca85b326c7461539f24303</Hash>
+    <Hash>b34cc98d1998a6078c560992190eaf4b</Hash>
 </Codenesium>*/

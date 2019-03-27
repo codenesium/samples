@@ -66,7 +66,7 @@ class ChainStatusCreateComponent extends React.Component<
     let mapper = new ChainStatusMapper();
     axios
       .post<CreateResponse<Api.ChainStatusClientRequestModel>>(
-        Constants.ApiEndpoint + ApiRoutes.ChainStatuses,
+        Constants.ApiEndpoint + ApiRoutes.ChainStatus,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: GlobalUtilities.defaultHeaders(),
@@ -174,5 +174,5 @@ export const WrappedChainStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0e4ee4526c9e6099f037fb258c687288</Hash>
+    <Hash>e0f27aa55f60b65e29e5acf569102b57</Hash>
 </Codenesium>*/

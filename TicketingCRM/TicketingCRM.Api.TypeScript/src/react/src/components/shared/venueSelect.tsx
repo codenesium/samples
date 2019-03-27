@@ -94,7 +94,7 @@ export class VenueSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Venue</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class VenueSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: VenueViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class VenueSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>508be7ae81ed35b24ac5bba84050a693</Hash>
+    <Hash>0ff812cff85acad6505c3d442192520a</Hash>
 </Codenesium>*/

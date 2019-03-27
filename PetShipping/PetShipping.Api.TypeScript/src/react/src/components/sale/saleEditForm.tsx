@@ -193,51 +193,51 @@ class SaleEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="amount">amount</label>
+            <label htmlFor="amount">Amount</label>
             <br />
             {getFieldDecorator('amount', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'amount'} />)}
+            })(<InputNumber placeholder={'Amount'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="cutomerId">cutomerId</label>
+            <label htmlFor="cutomerId">Cutomer</label>
             <br />
             {getFieldDecorator('cutomerId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'cutomerId'} />)}
+            })(<InputNumber placeholder={'Cutomer'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="note">note</label>
+            <label htmlFor="note">Note</label>
             <br />
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'note'} />)}
+            })(<Input placeholder={'Note'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="petId">petId</label>
-            <br />
-            {getFieldDecorator('petId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'petId'} />)}
-          </Form.Item>
+          <PetSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Pets}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="petId"
+            required={true}
+            selectedValue={this.state.model!.petId}
+          />
 
           <Form.Item>
-            <label htmlFor="saleDate">saleDate</label>
+            <label htmlFor="saleDate">Sale Date</label>
             <br />
             {getFieldDecorator('saleDate', {
               rules: [{ required: true, message: 'Required' }],
-            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'saleDate'} />)}
+            })(<DatePicker format={'YYYY-MM-DD'} placeholder={'Sale Date'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="salesPersonId">salesPersonId</label>
+            <label htmlFor="salesPersonId">Sales Person</label>
             <br />
             {getFieldDecorator('salesPersonId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'salesPersonId'} />)}
+            })(<InputNumber placeholder={'Sales Person'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -264,5 +264,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>3d103bba98249f500f3dd025686a2ac2</Hash>
+    <Hash>8526237913822598aea837162155ecf3</Hash>
 </Codenesium>*/

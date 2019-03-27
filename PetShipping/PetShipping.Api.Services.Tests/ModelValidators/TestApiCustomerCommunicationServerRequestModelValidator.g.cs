@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Note_Create_null()
+		public async void Notes_Create_null()
 		{
 			Mock<ICustomerCommunicationRepository> customerCommunicationRepository = new Mock<ICustomerCommunicationRepository>();
 			customerCommunicationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CustomerCommunication()));
@@ -133,11 +133,11 @@ namespace PetShippingNS.Api.Services.Tests
 			var validator = new ApiCustomerCommunicationServerRequestModelValidator(customerCommunicationRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCustomerCommunicationServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Notes, null as string);
 		}
 
 		[Fact]
-		public async void Note_Update_null()
+		public async void Notes_Update_null()
 		{
 			Mock<ICustomerCommunicationRepository> customerCommunicationRepository = new Mock<ICustomerCommunicationRepository>();
 			customerCommunicationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CustomerCommunication()));
@@ -145,11 +145,11 @@ namespace PetShippingNS.Api.Services.Tests
 			var validator = new ApiCustomerCommunicationServerRequestModelValidator(customerCommunicationRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCustomerCommunicationServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Notes, null as string);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6da51f8abce61b0a9a4cf80caa86e42d</Hash>
+    <Hash>4bca420d77b40615c45ba1cf929c3de7</Hash>
 </Codenesium>*/

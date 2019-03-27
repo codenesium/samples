@@ -197,7 +197,7 @@ export default class AdminSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Admins',
+                Header: 'Admin',
                 columns: [
                   {
                     Header: 'Email',
@@ -302,5 +302,5 @@ export const WrappedAdminSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1a6749466905b15b018926a4135eb223</Hash>
+    <Hash>6dcd06d820cf449d14bfa03a32b03de1</Hash>
 </Codenesium>*/

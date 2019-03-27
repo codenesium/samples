@@ -197,15 +197,8 @@ export default class BreedSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Breeds',
+                Header: 'Breed',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -214,7 +207,7 @@ export default class BreedSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SpeciesId',
+                    Header: 'Species',
                     accessor: 'speciesId',
                     Cell: props => {
                       return (
@@ -298,5 +291,5 @@ export const WrappedBreedSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9e91ffd5a9091874ee0357e8e344bf9b</Hash>
+    <Hash>c8e39cc5ebc922036d58ce1012c81e53</Hash>
 </Codenesium>*/

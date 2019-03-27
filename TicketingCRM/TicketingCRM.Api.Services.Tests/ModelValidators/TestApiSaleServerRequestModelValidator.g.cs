@@ -73,7 +73,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Note_Create_null()
+		public async void Notes_Create_null()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
 			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
@@ -81,11 +81,11 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validator = new ApiSaleServerRequestModelValidator(saleRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSaleServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Notes, null as string);
 		}
 
 		[Fact]
-		public async void Note_Update_null()
+		public async void Notes_Update_null()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
 			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
@@ -93,7 +93,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validator = new ApiSaleServerRequestModelValidator(saleRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSaleServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Notes, null as string);
 		}
 
 		[Fact]
@@ -149,5 +149,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e67800367f5f42fd0137f357d0813188</Hash>
+    <Hash>5502e9afb695caf27b2b71d17a4aa18a</Hash>
 </Codenesium>*/

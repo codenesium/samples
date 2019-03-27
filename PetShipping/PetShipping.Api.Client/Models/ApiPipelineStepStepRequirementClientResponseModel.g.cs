@@ -9,12 +9,12 @@ namespace PetShippingNS.Api.Client
 	{
 		public virtual void SetProperties(
 			int id,
-			string detail,
+			string details,
 			int pipelineStepId,
 			bool requirementMet)
 		{
 			this.Id = id;
-			this.Detail = detail;
+			this.Details = details;
 			this.PipelineStepId = pipelineStepId;
 			this.RequirementMet = requirementMet;
 
@@ -30,7 +30,7 @@ namespace PetShippingNS.Api.Client
 		}
 
 		[JsonProperty]
-		public string Detail { get; private set; }
+		public string Details { get; private set; }
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -47,5 +47,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ed35cfaaa2928a189e23b8e34fab9a37</Hash>
+    <Hash>8c06236e20eb2db5c9c0e579dd51ea00</Hash>
 </Codenesium>*/

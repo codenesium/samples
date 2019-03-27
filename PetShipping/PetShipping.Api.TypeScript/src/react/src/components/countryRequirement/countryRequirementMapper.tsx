@@ -6,7 +6,7 @@ export default class CountryRequirementMapper {
     dto: Api.CountryRequirementClientResponseModel
   ): CountryRequirementViewModel {
     let response = new CountryRequirementViewModel();
-    response.setProperties(dto.countryId, dto.detail, dto.id);
+    response.setProperties(dto.countryId, dto.details, dto.id);
 
     if (dto.countryIdNavigation != null) {
       response.countryIdNavigation = new CountryViewModel();
@@ -23,12 +23,12 @@ export default class CountryRequirementMapper {
     model: CountryRequirementViewModel
   ): Api.CountryRequirementClientRequestModel {
     let response = new Api.CountryRequirementClientRequestModel();
-    response.setProperties(model.countryId, model.detail, model.id);
+    response.setProperties(model.countryId, model.details, model.id);
     return response;
   }
 }
 
 
 /*<Codenesium>
-    <Hash>5aa6394858e26d09d6658b33b773e924</Hash>
+    <Hash>f6ffc8eac744d4f95356084937cc178e</Hash>
 </Codenesium>*/

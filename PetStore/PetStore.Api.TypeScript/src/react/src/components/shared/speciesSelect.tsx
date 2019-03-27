@@ -103,7 +103,7 @@ export class SpeciesSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: SpeciesViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class SpeciesSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>91752869837ab382ffb35f525878a7e3</Hash>
+    <Hash>22ef4c51ddcc9fa1f6e0541c70e17288</Hash>
 </Codenesium>*/

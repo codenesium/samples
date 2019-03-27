@@ -141,21 +141,29 @@ class PipelineStepNoteCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="employeeId">employeeId</label>
-            <br />
-            {getFieldDecorator('employeeId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'employeeId'} />)}
-          </Form.Item>
+          <EmployeeSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Employees}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="employeeId"
+            required={true}
+            selectedValue={this.state.model!.employeeId}
+          />
 
           <Form.Item>
-            <label htmlFor="pipelineStepId">pipelineStepId</label>
+            <label htmlFor="note">Note</label>
             <br />
-            {getFieldDecorator('pipelineStepId', {
+            {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStepId'} />)}
+            })(<Input placeholder={'Note'} />)}
           </Form.Item>
+
+          <PipelineStepSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="pipelineStepId"
+            required={true}
+            selectedValue={this.state.model!.pipelineStepId}
+          />
 
           <Form.Item>
             <Button
@@ -181,5 +189,5 @@ export const WrappedPipelineStepNoteCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>80eda418b4be84786a63a2f229f9fb6b</Hash>
+    <Hash>0a3dd1c0fbf6f3578a4c73622d53fa83</Hash>
 </Codenesium>*/

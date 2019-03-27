@@ -115,13 +115,6 @@ export class OrganizationTableComponent extends React.Component<
                 Header: 'Organizations',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -173,5 +166,5 @@ export class OrganizationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>18b496e007c9fad88a83dcdd470dd54f</Hash>
+    <Hash>7c8246b2703a0f01b13c6965a25c311b</Hash>
 </Codenesium>*/

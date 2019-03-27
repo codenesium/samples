@@ -54,7 +54,7 @@ class LinkStatusEditComponent extends React.Component<
     axios
       .get<Api.LinkStatusClientResponseModel>(
         Constants.ApiEndpoint +
-          ApiRoutes.LinkStatuses +
+          ApiRoutes.LinkStatus +
           '/' +
           this.props.match.params.id,
         {
@@ -119,7 +119,7 @@ class LinkStatusEditComponent extends React.Component<
     axios
       .put<CreateResponse<Api.LinkStatusClientRequestModel>>(
         Constants.ApiEndpoint +
-          ApiRoutes.LinkStatuses +
+          ApiRoutes.LinkStatus +
           '/' +
           this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
@@ -229,5 +229,5 @@ export const WrappedLinkStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>62da4cfe816e0b2e87ca5b6c89809586</Hash>
+    <Hash>4453ee28e632bcd011d35e1a468cbf11</Hash>
 </Codenesium>*/

@@ -3,7 +3,8 @@ export class Constants {
   static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
   static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
   static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
-  static readonly HostedBaseUrl = location.protocol + '//' + location.host;
+  static readonly HostedBaseUrl =
+    window.location.protocol + '//' + window.location.host;
   static readonly HostedSubDirectory =
     process.env.REACT_APP_HOST_SUBDIRECTORY == '/'
       ? ''
@@ -35,14 +36,18 @@ export class ClientRoutes {
   static readonly Admins = '/admins';
   static readonly Events = '/events';
   static readonly EventStatus = '/eventstatus';
+  static readonly EventStudents = '/eventstudents';
+  static readonly EventTeachers = '/eventteachers';
   static readonly Families = '/families';
   static readonly Rates = '/rates';
   static readonly Spaces = '/spaces';
   static readonly SpaceFeatures = '/spacefeatures';
+  static readonly SpaceSpaceFeatures = '/spacespacefeatures';
   static readonly Students = '/students';
   static readonly Studios = '/studios';
   static readonly Teachers = '/teachers';
   static readonly TeacherSkills = '/teacherskills';
+  static readonly TeacherTeacherSkills = '/teacherteacherskills';
   static readonly Users = '/users';
 }
 
@@ -50,18 +55,22 @@ export class ApiRoutes {
   static readonly Admins = 'admins';
   static readonly Events = 'events';
   static readonly EventStatus = 'eventstatus';
+  static readonly EventStudents = 'eventstudents';
+  static readonly EventTeachers = 'eventteachers';
   static readonly Families = 'families';
   static readonly Rates = 'rates';
   static readonly Spaces = 'spaces';
   static readonly SpaceFeatures = 'spacefeatures';
+  static readonly SpaceSpaceFeatures = 'spacespacefeatures';
   static readonly Students = 'students';
   static readonly Studios = 'studios';
   static readonly Teachers = 'teachers';
   static readonly TeacherSkills = 'teacherskills';
+  static readonly TeacherTeacherSkills = 'teacherteacherskills';
   static readonly Users = 'users';
 }
 
 
 /*<Codenesium>
-    <Hash>91371fb0d17174ce908f79c8388da077</Hash>
+    <Hash>d401bac691be2f97b88198518ff34cf4</Hash>
 </Codenesium>*/

@@ -12,6 +12,7 @@ namespace StudioResourceManagerNS.Api.Client
 		{
 			var response = new ApiEventTeacherClientResponseModel();
 			response.SetProperties(id,
+			                       request.EventId,
 			                       request.TeacherId);
 			return response;
 		}
@@ -21,6 +22,7 @@ namespace StudioResourceManagerNS.Api.Client
 		{
 			var request = new ApiEventTeacherClientRequestModel();
 			request.SetProperties(
+				response.EventId,
 				response.TeacherId);
 			return request;
 		}
@@ -28,5 +30,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ec55bc735cd87a65f37375fc48c57a50</Hash>
+    <Hash>8f20f75d3465cc06f28b282eaa21fc64</Hash>
 </Codenesium>*/

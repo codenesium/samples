@@ -21,7 +21,7 @@ namespace TicketingCRMNS.Api.Services
 			Sale response = mapper.MapModelToEntity(1, model);
 
 			response.IpAddress.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TransactionId.Should().Be(1);
 		}
@@ -36,7 +36,7 @@ namespace TicketingCRMNS.Api.Services
 
 			response.Id.Should().Be(1);
 			response.IpAddress.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TransactionId.Should().Be(1);
 		}
@@ -55,5 +55,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12e4c1ebb41982f38d066367eb68e0ab</Hash>
+    <Hash>d5096c06abd9a60f7fa22b2e684c2646</Hash>
 </Codenesium>*/

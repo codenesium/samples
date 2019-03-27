@@ -10,7 +10,7 @@ export default class CustomerMapper {
       dto.firstName,
       dto.id,
       dto.lastName,
-      dto.note,
+      dto.notes,
       dto.phone
     );
 
@@ -26,7 +26,7 @@ export default class CustomerMapper {
       model.firstName,
       model.id,
       model.lastName,
-      model.note,
+      model.notes,
       model.phone
     );
     return response;
@@ -35,5 +35,5 @@ export default class CustomerMapper {
 
 
 /*<Codenesium>
-    <Hash>dd0c276780a33b16a634dadf02ab31f4</Hash>
+    <Hash>e4b6f760901d04c93eae741790534d39</Hash>
 </Codenesium>*/

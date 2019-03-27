@@ -44,17 +44,19 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventTeacherClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(2, 1);
 			var model2 = new ApiEventTeacherClientRequestModel();
-			model2.SetProperties(1);
+			model2.SetProperties(3, 1);
 			var request = new List<ApiEventTeacherClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiEventTeacherClientResponseModel>> result = await client.EventTeacherBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
+			context.Set<EventTeacher>().ToList()[1].EventId.Should().Be(2);
 			context.Set<EventTeacher>().ToList()[1].TeacherId.Should().Be(1);
 
+			context.Set<EventTeacher>().ToList()[2].EventId.Should().Be(3);
 			context.Set<EventTeacher>().ToList()[2].TeacherId.Should().Be(1);
 		}
 
@@ -76,13 +78,15 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventTeacherClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(2, 1);
 			CreateResponse<ApiEventTeacherClientResponseModel> result = await client.EventTeacherCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
+			context.Set<EventTeacher>().ToList()[1].EventId.Should().Be(2);
 			context.Set<EventTeacher>().ToList()[1].TeacherId.Should().Be(1);
 
+			result.Record.EventId.Should().Be(2);
 			result.Record.TeacherId.Should().Be(1);
 		}
 
@@ -108,7 +112,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			ApiEventTeacherServerResponseModel model = await service.Get(1);
 
 			ApiEventTeacherClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(1);
+			request.SetProperties(2, 1);
 
 			UpdateResponse<ApiEventTeacherClientResponseModel> updateResponse = await client.EventTeacherUpdateAsync(model.Id, request);
 
@@ -116,9 +120,11 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
+			context.Set<EventTeacher>().ToList()[0].EventId.Should().Be(2);
 			context.Set<EventTeacher>().ToList()[0].TeacherId.Should().Be(1);
 
 			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.EventId.Should().Be(2);
 			updateResponse.Record.TeacherId.Should().Be(1);
 		}
 
@@ -141,7 +147,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			IEventTeacherService service = testServer.Host.Services.GetService(typeof(IEventTeacherService)) as IEventTeacherService;
 			var model = new ApiEventTeacherServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(2, 1);
 			CreateResponse<ApiEventTeacherServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -175,6 +181,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			ApiEventTeacherClientResponseModel response = await client.EventTeacherGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.EventId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 		}
@@ -219,12 +226,13 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			List<ApiEventTeacherClientResponseModel> response = await client.EventTeacherAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].EventId.Should().Be(1);
 			response[0].Id.Should().Be(1);
 			response[0].TeacherId.Should().Be(1);
 		}
 
 		[Fact]
-		public virtual async void TestByIdFound()
+		public virtual async void TestByEventIdFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -239,15 +247,16 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiEventTeacherClientResponseModel> response = await client.ByEventTeacherById(1);
+			List<ApiEventTeacherClientResponseModel> response = await client.ByEventTeacherByEventId(1);
 
 			response.Should().NotBeEmpty();
+			response[0].EventId.Should().Be(1);
 			response[0].Id.Should().Be(1);
 			response[0].TeacherId.Should().Be(1);
 		}
 
 		[Fact]
-		public virtual async void TestByIdNotFound()
+		public virtual async void TestByEventIdNotFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -262,7 +271,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 									  "https://www.codenesium.com",
 									  "test@test.com",
 									  "Passw0rd$"));
-			List<ApiEventTeacherClientResponseModel> response = await client.ByEventTeacherById(default(int));
+			List<ApiEventTeacherClientResponseModel> response = await client.ByEventTeacherByEventId(default(int));
 
 			response.Should().BeEmpty();
 		}
@@ -286,6 +295,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			List<ApiEventTeacherClientResponseModel> response = await client.ByEventTeacherByTeacherId(1);
 
 			response.Should().NotBeEmpty();
+			response[0].EventId.Should().Be(1);
 			response[0].Id.Should().Be(1);
 			response[0].TeacherId.Should().Be(1);
 		}
@@ -334,5 +344,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>dc70b8f317397e9e3fa348c1cac4df4c</Hash>
+    <Hash>ea9be34c2b4cff027715b83acdf5a559</Hash>
 </Codenesium>*/

@@ -200,14 +200,14 @@ export default class PersonSearchComponent extends React.Component<
                 Header: 'Person',
                 columns: [
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -288,5 +288,5 @@ export const WrappedPersonSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0d62c8ab6da8b740210070b41d141c56</Hash>
+    <Hash>1a20a6d8a1b4dba6a8b1d641c2e7a12d</Hash>
 </Codenesium>*/

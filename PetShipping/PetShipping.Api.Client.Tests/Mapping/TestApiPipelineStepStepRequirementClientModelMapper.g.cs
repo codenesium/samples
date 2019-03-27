@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Client.Tests
 			model.SetProperties("A", 1, true);
 			ApiPipelineStepStepRequirementClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
 		}
@@ -31,7 +31,7 @@ namespace PetShippingNS.Api.Client.Tests
 			model.SetProperties(1, "A", 1, true);
 			ApiPipelineStepStepRequirementClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
 		}
@@ -39,5 +39,5 @@ namespace PetShippingNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>eedbc0d88f913e8469d0d97737b474c1</Hash>
+    <Hash>9fbdbeae0a27baae4e58ce2a1f69da29</Hash>
 </Codenesium>*/

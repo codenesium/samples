@@ -197,7 +197,7 @@ export default class PipelineStatusSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'PipelineStatus',
+                Header: 'Pipeline Status',
                 columns: [
                   {
                     Header: 'Name',
@@ -267,5 +267,5 @@ export const WrappedPipelineStatusSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2c7b719de2f1463e99e8f40226cb1bba</Hash>
+    <Hash>82b55fb3547aeeef827862a13d6c362b</Hash>
 </Codenesium>*/

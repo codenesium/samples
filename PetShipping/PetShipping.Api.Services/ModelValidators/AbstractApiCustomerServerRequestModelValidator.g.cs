@@ -44,9 +44,9 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.LastName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void NoteRules()
+		public virtual void NotesRules()
 		{
-			this.RuleFor(x => x.Note).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.Notes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PhoneRules()
@@ -58,5 +58,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c6ce3c69b222dd1201a9deb51187b37</Hash>
+    <Hash>e7bde73dd344822e5a6fb1737ed1f8d4</Hash>
 </Codenesium>*/

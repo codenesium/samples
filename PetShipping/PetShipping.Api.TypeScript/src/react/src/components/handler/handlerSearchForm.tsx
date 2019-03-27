@@ -197,10 +197,10 @@ export default class HandlerSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Handlers',
+                Header: 'Handler',
                 columns: [
                   {
-                    Header: 'CountryId',
+                    Header: 'Country',
                     accessor: 'countryId',
                     Cell: props => {
                       return <span>{String(props.original.countryId)}</span>;
@@ -214,14 +214,14 @@ export default class HandlerSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -295,5 +295,5 @@ export const WrappedHandlerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>525abf5b6a8257f112242314693336f9</Hash>
+    <Hash>8aba917f125fbc1e2b0de54bf06e93d8</Hash>
 </Codenesium>*/

@@ -103,7 +103,7 @@ export class FollowingSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: FollowingViewModel) => {
                 return (
-                  <Select.Option key={x.userId} value={x.userId}>
+                  <Select.Option key={String(x.userId)} value={x.userId}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class FollowingSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e35f3576abf264316af485392f0ebbf7</Hash>
+    <Hash>abbcc2c1785835e2099cfaf4318f8326</Hash>
 </Codenesium>*/

@@ -107,7 +107,7 @@ class UnitDispositionDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
           </div>
@@ -126,5 +126,5 @@ export const WrappedUnitDispositionDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3b955f51418fcdfe604998fcd0f1c47c</Hash>
+    <Hash>ed5de278975b472202d23a4d1e720a0d</Hash>
 </Codenesium>*/

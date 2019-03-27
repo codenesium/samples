@@ -60,11 +60,11 @@ export default class VenueViewModel {
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.address1);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>acc70077726e96b303a386e00fcc9b24</Hash>
+    <Hash>a66f311360fa0c5713a53dc14e0f7097</Hash>
 </Codenesium>*/

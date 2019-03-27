@@ -94,7 +94,7 @@ export class HandlerSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Handler</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class HandlerSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: HandlerViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class HandlerSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7b5d72b9f1f2d3f0702f61a3882061d4</Hash>
+    <Hash>0e67b0bfe4d1de5df7aeb1ffcbdf581b</Hash>
 </Codenesium>*/

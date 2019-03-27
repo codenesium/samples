@@ -196,21 +196,21 @@ class PipelineStepDestinationEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="destinationId">destinationId</label>
-            <br />
-            {getFieldDecorator('destinationId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'destinationId'} />)}
-          </Form.Item>
+          <DestinationSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Destinations}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="destinationId"
+            required={true}
+            selectedValue={this.state.model!.destinationId}
+          />
 
-          <Form.Item>
-            <label htmlFor="pipelineStepId">pipelineStepId</label>
-            <br />
-            {getFieldDecorator('pipelineStepId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStepId'} />)}
-          </Form.Item>
+          <PipelineStepSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="pipelineStepId"
+            required={true}
+            selectedValue={this.state.model!.pipelineStepId}
+          />
 
           <Form.Item>
             <Button
@@ -236,5 +236,5 @@ export const WrappedPipelineStepDestinationEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>91da72db00fb85784bf364945232cb29</Hash>
+    <Hash>e310d20967e9750009a31342552ba31c</Hash>
 </Codenesium>*/

@@ -59,8 +59,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[1].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[1].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<Event>().ToList()[1].StudentNote.Should().Be("B");
-			context.Set<Event>().ToList()[1].TeacherNote.Should().Be("B");
+			context.Set<Event>().ToList()[1].StudentNotes.Should().Be("B");
+			context.Set<Event>().ToList()[1].TeacherNotes.Should().Be("B");
 
 			context.Set<Event>().ToList()[2].ActualEndDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Event>().ToList()[2].ActualStartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
@@ -68,8 +68,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[2].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[2].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Event>().ToList()[2].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
-			context.Set<Event>().ToList()[2].StudentNote.Should().Be("C");
-			context.Set<Event>().ToList()[2].TeacherNote.Should().Be("C");
+			context.Set<Event>().ToList()[2].StudentNotes.Should().Be("C");
+			context.Set<Event>().ToList()[2].TeacherNotes.Should().Be("C");
 		}
 
 		[Fact]
@@ -101,8 +101,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[1].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[1].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[1].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<Event>().ToList()[1].StudentNote.Should().Be("B");
-			context.Set<Event>().ToList()[1].TeacherNote.Should().Be("B");
+			context.Set<Event>().ToList()[1].StudentNotes.Should().Be("B");
+			context.Set<Event>().ToList()[1].TeacherNotes.Should().Be("B");
 
 			result.Record.ActualEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.ActualStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -110,8 +110,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			result.Record.EventStatusId.Should().Be(1);
 			result.Record.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			result.Record.StudentNote.Should().Be("B");
-			result.Record.TeacherNote.Should().Be("B");
+			result.Record.StudentNotes.Should().Be("B");
+			result.Record.TeacherNotes.Should().Be("B");
 		}
 
 		[Fact]
@@ -150,8 +150,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			context.Set<Event>().ToList()[0].EventStatusId.Should().Be(1);
 			context.Set<Event>().ToList()[0].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Event>().ToList()[0].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<Event>().ToList()[0].StudentNote.Should().Be("B");
-			context.Set<Event>().ToList()[0].TeacherNote.Should().Be("B");
+			context.Set<Event>().ToList()[0].StudentNotes.Should().Be("B");
+			context.Set<Event>().ToList()[0].TeacherNotes.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.ActualEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -160,8 +160,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			updateResponse.Record.EventStatusId.Should().Be(1);
 			updateResponse.Record.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			updateResponse.Record.StudentNote.Should().Be("B");
-			updateResponse.Record.TeacherNote.Should().Be("B");
+			updateResponse.Record.StudentNotes.Should().Be("B");
+			updateResponse.Record.TeacherNotes.Should().Be("B");
 		}
 
 		[Fact]
@@ -224,8 +224,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			response.Id.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.StudentNote.Should().Be("A");
-			response.TeacherNote.Should().Be("A");
+			response.StudentNotes.Should().Be("A");
+			response.TeacherNotes.Should().Be("A");
 		}
 
 		[Fact]
@@ -275,8 +275,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			response[0].Id.Should().Be(1);
 			response[0].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response[0].StudentNote.Should().Be("A");
-			response[0].TeacherNote.Should().Be("A");
+			response[0].StudentNotes.Should().Be("A");
+			response[0].TeacherNotes.Should().Be("A");
 		}
 
 		[Fact]
@@ -305,8 +305,8 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			response[0].Id.Should().Be(1);
 			response[0].ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response[0].StudentNote.Should().Be("A");
-			response[0].TeacherNote.Should().Be("A");
+			response[0].StudentNotes.Should().Be("A");
+			response[0].TeacherNotes.Should().Be("A");
 		}
 
 		[Fact]
@@ -437,5 +437,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3b77bc38a41bc85e7903f513b927115c</Hash>
+    <Hash>fc219d045ceb6ad6addd4c91cf7c7b98</Hash>
 </Codenesium>*/

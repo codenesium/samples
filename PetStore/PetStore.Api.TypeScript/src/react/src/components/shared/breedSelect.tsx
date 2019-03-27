@@ -103,7 +103,7 @@ export class BreedSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: BreedViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class BreedSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7d3fc2059e1174aea800a0bee7d9b063</Hash>
+    <Hash>c2152979329c89778f8aca7b36f1c771</Hash>
 </Codenesium>*/

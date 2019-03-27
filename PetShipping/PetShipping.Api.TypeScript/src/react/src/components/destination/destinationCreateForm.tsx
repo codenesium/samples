@@ -140,31 +140,31 @@ class DestinationCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="countryId">countryId</label>
-            <br />
-            {getFieldDecorator('countryId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'countryId'} />)}
-          </Form.Item>
+          <CountrySelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="countryId"
+            required={true}
+            selectedValue={this.state.model!.countryId}
+          />
 
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="order">order</label>
+            <label htmlFor="order">Order</label>
             <br />
             {getFieldDecorator('order', {
               rules: [{ required: true, message: 'Required' }],
-            })(<InputNumber placeholder={'order'} />)}
+            })(<InputNumber placeholder={'Order'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -191,5 +191,5 @@ export const WrappedDestinationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>216170b4084334c326f370a4f336dae9</Hash>
+    <Hash>6788b870a2865d385e1bea027b796079</Hash>
 </Codenesium>*/

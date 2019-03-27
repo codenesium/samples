@@ -195,14 +195,14 @@ class PipelineStepStatusEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -229,5 +229,5 @@ export const WrappedPipelineStepStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bbdf471be77bc1a81f276a506df278f3</Hash>
+    <Hash>888115db0aecdfc03ef41abcc30dcf97</Hash>
 </Codenesium>*/

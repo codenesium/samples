@@ -192,11 +192,11 @@ class UnitEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="callSign">callSign</label>
+            <label htmlFor="callSign">Call Sign</label>
             <br />
             {getFieldDecorator('callSign', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'callSign'} />)}
+            })(<Input placeholder={'Call Sign'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -223,5 +223,5 @@ export const WrappedUnitEditComponent = Form.create({ name: 'Unit Edit' })(
 
 
 /*<Codenesium>
-    <Hash>d8c2612b58272d4128c6a5202ad3de60</Hash>
+    <Hash>cff3832e4c3bbb08e083c94a557f875f</Hash>
 </Codenesium>*/

@@ -122,17 +122,24 @@ export class CustomerTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'Notes',
-                    accessor: 'note',
+                    Header: 'Last Name',
+                    accessor: 'lastName',
                     Cell: props => {
-                      return <span>{String(props.original.note)}</span>;
+                      return <span>{String(props.original.lastName)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Notes',
+                    accessor: 'notes',
+                    Cell: props => {
+                      return <span>{String(props.original.notes)}</span>;
                     },
                   },
                   {
@@ -187,5 +194,5 @@ export class CustomerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e4c3f819cfc7247e20ed48f9787a4d97</Hash>
+    <Hash>2531e086fbed2462440f9dc4e6344448</Hash>
 </Codenesium>*/

@@ -23,14 +23,14 @@ namespace NebulaNS.Api.Services.Tests
 			response.ChainId.Should().Be(1);
 			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.DynamicParameter.Should().Be("A");
+			response.DynamicParameters.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.LinkStatusId.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.Order.Should().Be(1);
 			response.Response.Should().Be("A");
-			response.StaticParameter.Should().Be("A");
-			response.TimeoutInSecond.Should().Be(1);
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -45,14 +45,14 @@ namespace NebulaNS.Api.Services.Tests
 			response.ChainId.Should().Be(1);
 			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.DynamicParameter.Should().Be("A");
+			response.DynamicParameters.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.LinkStatusId.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.Order.Should().Be(1);
 			response.Response.Should().Be("A");
-			response.StaticParameter.Should().Be("A");
-			response.TimeoutInSecond.Should().Be(1);
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -69,18 +69,18 @@ namespace NebulaNS.Api.Services.Tests
 			response.ChainId.Should().Be(1);
 			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.DynamicParameter.Should().Be("A");
+			response.DynamicParameters.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.LinkStatusId.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.Order.Should().Be(1);
 			response.Response.Should().Be("A");
-			response.StaticParameter.Should().Be("A");
-			response.TimeoutInSecond.Should().Be(1);
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ba8faf3dfa90f44d865d29c89d82a25a</Hash>
+    <Hash>1cc4015e1a7cfb86d960384ef10662aa</Hash>
 </Codenesium>*/

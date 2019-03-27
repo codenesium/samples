@@ -68,7 +68,7 @@ namespace CADNS.Api.Services
 
 			if (item.CallStatusIdNavigation != null)
 			{
-				var callStatusIdModel = new ApiCallStatuServerResponseModel();
+				var callStatusIdModel = new ApiCallStatusServerResponseModel();
 				callStatusIdModel.SetProperties(
 					item.CallStatusIdNavigation.Id,
 					item.CallStatusIdNavigation.Name);
@@ -105,5 +105,5 @@ namespace CADNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f8aea533277ff92ac019c73d3c5ba861</Hash>
+    <Hash>efcf67fa003d46ca8780d681476d52f7</Hash>
 </Codenesium>*/

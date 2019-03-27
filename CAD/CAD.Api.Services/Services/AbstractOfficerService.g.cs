@@ -19,7 +19,11 @@ namespace CADNS.Api.Services
 
 		protected IDALNoteMapper DalNoteMapper { get; private set; }
 
-		protected IDALOfficerCapabilityMapper DalOfficerCapabilityMapper { get; private set; }
+		protected IDALOfficerCapabilitiesMapper DalOfficerCapabilitiesMapper { get; private set; }
+
+		protected IDALUnitOfficerMapper DalUnitOfficerMapper { get; private set; }
+
+		protected IDALVehicleOfficerMapper DalVehicleOfficerMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -30,14 +34,18 @@ namespace CADNS.Api.Services
 			IApiOfficerServerRequestModelValidator officerModelValidator,
 			IDALOfficerMapper dalOfficerMapper,
 			IDALNoteMapper dalNoteMapper,
-			IDALOfficerCapabilityMapper dalOfficerCapabilityMapper)
+			IDALOfficerCapabilitiesMapper dalOfficerCapabilitiesMapper,
+			IDALUnitOfficerMapper dalUnitOfficerMapper,
+			IDALVehicleOfficerMapper dalVehicleOfficerMapper)
 			: base()
 		{
 			this.OfficerRepository = officerRepository;
 			this.OfficerModelValidator = officerModelValidator;
 			this.DalOfficerMapper = dalOfficerMapper;
 			this.DalNoteMapper = dalNoteMapper;
-			this.DalOfficerCapabilityMapper = dalOfficerCapabilityMapper;
+			this.DalOfficerCapabilitiesMapper = dalOfficerCapabilitiesMapper;
+			this.DalUnitOfficerMapper = dalUnitOfficerMapper;
+			this.DalVehicleOfficerMapper = dalVehicleOfficerMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -127,29 +135,29 @@ namespace CADNS.Api.Services
 			return this.DalNoteMapper.MapEntityToModel(records);
 		}
 
-		public async virtual Task<List<ApiOfficerCapabilityServerResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiOfficerCapabilitiesServerResponseModel>> OfficerCapabilitiesByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<OfficerCapability> records = await this.OfficerRepository.OfficerCapabilitiesByOfficerId(officerId, limit, offset);
+			List<OfficerCapabilities> records = await this.OfficerRepository.OfficerCapabilitiesByOfficerId(officerId, limit, offset);
 
-			return this.DalOfficerCapabilityMapper.MapEntityToModel(records);
+			return this.DalOfficerCapabilitiesMapper.MapEntityToModel(records);
 		}
 
-		public async virtual Task<List<ApiOfficerServerResponseModel>> ByCapabilityId(int capabilityId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiUnitOfficerServerResponseModel>> UnitOfficersByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Officer> records = await this.OfficerRepository.ByCapabilityId(capabilityId, limit, offset);
+			List<UnitOfficer> records = await this.OfficerRepository.UnitOfficersByOfficerId(officerId, limit, offset);
 
-			return this.DalOfficerMapper.MapEntityToModel(records);
+			return this.DalUnitOfficerMapper.MapEntityToModel(records);
 		}
 
-		public async virtual Task<List<ApiOfficerServerResponseModel>> ByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiVehicleOfficerServerResponseModel>> VehicleOfficersByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Officer> records = await this.OfficerRepository.ByVehicleId(vehicleId, limit, offset);
+			List<VehicleOfficer> records = await this.OfficerRepository.VehicleOfficersByOfficerId(officerId, limit, offset);
 
-			return this.DalOfficerMapper.MapEntityToModel(records);
+			return this.DalVehicleOfficerMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2fab24ff8edb6e8b2b87ba38eaad1dfd</Hash>
+    <Hash>b3581417a4ee9e7f20541e8da9f4f02e</Hash>
 </Codenesium>*/

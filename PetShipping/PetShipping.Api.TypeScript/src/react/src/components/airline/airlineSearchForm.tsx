@@ -197,7 +197,7 @@ export default class AirlineSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Airlines',
+                Header: 'Airline',
                 columns: [
                   {
                     Header: 'Name',
@@ -267,5 +267,5 @@ export const WrappedAirlineSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4dec216989f657c69c9956ca4734c562</Hash>
+    <Hash>25eac8b30d8cc3cde488df617cd480dd</Hash>
 </Codenesium>*/

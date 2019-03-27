@@ -31,11 +31,11 @@ export default class ClaspViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>561f1f69ff3826cf491e0889874922f1</Hash>
+    <Hash>3d65df890d2a5fe585c38c9c2fc8deba</Hash>
 </Codenesium>*/

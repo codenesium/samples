@@ -39,6 +39,10 @@ import { WrappedMachineCreateComponent } from './components/machine/machineCreat
 import { WrappedMachineDetailComponent } from './components/machine/machineDetailForm';
 import { WrappedMachineEditComponent } from './components/machine/machineEditForm';
 import { WrappedMachineSearchComponent } from './components/machine/machineSearchForm';
+import { WrappedMachineRefTeamCreateComponent } from './components/machineRefTeam/machineRefTeamCreateForm';
+import { WrappedMachineRefTeamDetailComponent } from './components/machineRefTeam/machineRefTeamDetailForm';
+import { WrappedMachineRefTeamEditComponent } from './components/machineRefTeam/machineRefTeamEditForm';
+import { WrappedMachineRefTeamSearchComponent } from './components/machineRefTeam/machineRefTeamSearchForm';
 import { WrappedOrganizationCreateComponent } from './components/organization/organizationCreateForm';
 import { WrappedOrganizationDetailComponent } from './components/organization/organizationDetailForm';
 import { WrappedOrganizationEditComponent } from './components/organization/organizationEditForm';
@@ -47,6 +51,10 @@ import { WrappedTeamCreateComponent } from './components/team/teamCreateForm';
 import { WrappedTeamDetailComponent } from './components/team/teamDetailForm';
 import { WrappedTeamEditComponent } from './components/team/teamEditForm';
 import { WrappedTeamSearchComponent } from './components/team/teamSearchForm';
+import { WrappedVersionInfoCreateComponent } from './components/versionInfo/versionInfoCreateForm';
+import { WrappedVersionInfoDetailComponent } from './components/versionInfo/versionInfoDetailForm';
+import { WrappedVersionInfoEditComponent } from './components/versionInfo/versionInfoEditForm';
+import { WrappedVersionInfoSearchComponent } from './components/versionInfo/versionInfoSearchForm';
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
   return (
@@ -106,52 +114,43 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         />
         <Route
           path={ClientRoutes.Chains + '/create'}
-          component={wrapperHeader(
-            WrappedChainCreateComponent,
-            'Chains Create'
-          )}
+          component={wrapperHeader(WrappedChainCreateComponent, 'Chain Create')}
         />
         <Route
           path={ClientRoutes.Chains + '/edit/:id'}
-          component={wrapperHeader(WrappedChainEditComponent, 'Chains Edit')}
+          component={wrapperHeader(WrappedChainEditComponent, 'Chain Edit')}
         />
         <Route
           path={ClientRoutes.Chains + '/:id'}
-          component={wrapperHeader(
-            WrappedChainDetailComponent,
-            'Chains Detail'
-          )}
+          component={wrapperHeader(WrappedChainDetailComponent, 'Chain Detail')}
         />
         <Route
           path={ClientRoutes.Chains}
-          component={wrapperHeader(
-            WrappedChainSearchComponent,
-            'Chains Search'
-          )}
+          component={wrapperHeader(WrappedChainSearchComponent, 'Chain Search')}
         />
         <Route
-          path={ClientRoutes.ChainStatuses + '/create'}
+          path={ClientRoutes.ChainStatus + '/create'}
           component={wrapperHeader(
             WrappedChainStatusCreateComponent,
             'Chain Status Create'
           )}
         />
         <Route
-          path={ClientRoutes.ChainStatuses + '/edit/:id'}
+          path={ClientRoutes.ChainStatus + '/edit/:id'}
           component={wrapperHeader(
             WrappedChainStatusEditComponent,
             'Chain Status Edit'
           )}
         />
         <Route
-          path={ClientRoutes.ChainStatuses + '/:id'}
+          path={ClientRoutes.ChainStatus + '/:id'}
           component={wrapperHeader(
             WrappedChainStatusDetailComponent,
             'Chain Status Detail'
           )}
         />
         <Route
-          path={ClientRoutes.ChainStatuses}
+          path={ClientRoutes.ChainStatus}
           component={wrapperHeader(
             WrappedChainStatusSearchComponent,
             'Chain Status Search'
@@ -159,44 +158,35 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         />
         <Route
           path={ClientRoutes.Clasps + '/create'}
-          component={wrapperHeader(
-            WrappedClaspCreateComponent,
-            'Clasps Create'
-          )}
+          component={wrapperHeader(WrappedClaspCreateComponent, 'Clasp Create')}
         />
         <Route
           path={ClientRoutes.Clasps + '/edit/:id'}
-          component={wrapperHeader(WrappedClaspEditComponent, 'Clasps Edit')}
+          component={wrapperHeader(WrappedClaspEditComponent, 'Clasp Edit')}
         />
         <Route
           path={ClientRoutes.Clasps + '/:id'}
-          component={wrapperHeader(
-            WrappedClaspDetailComponent,
-            'Clasps Detail'
-          )}
+          component={wrapperHeader(WrappedClaspDetailComponent, 'Clasp Detail')}
         />
         <Route
           path={ClientRoutes.Clasps}
-          component={wrapperHeader(
-            WrappedClaspSearchComponent,
-            'Clasps Search'
-          )}
+          component={wrapperHeader(WrappedClaspSearchComponent, 'Clasp Search')}
         />
         <Route
           path={ClientRoutes.Links + '/create'}
-          component={wrapperHeader(WrappedLinkCreateComponent, 'Links Create')}
+          component={wrapperHeader(WrappedLinkCreateComponent, 'Link Create')}
         />
         <Route
           path={ClientRoutes.Links + '/edit/:id'}
-          component={wrapperHeader(WrappedLinkEditComponent, 'Links Edit')}
+          component={wrapperHeader(WrappedLinkEditComponent, 'Link Edit')}
         />
         <Route
           path={ClientRoutes.Links + '/:id'}
-          component={wrapperHeader(WrappedLinkDetailComponent, 'Links Detail')}
+          component={wrapperHeader(WrappedLinkDetailComponent, 'Link Detail')}
         />
         <Route
           path={ClientRoutes.Links}
-          component={wrapperHeader(WrappedLinkSearchComponent, 'Links Search')}
+          component={wrapperHeader(WrappedLinkSearchComponent, 'Link Search')}
         />
         <Route
           path={ClientRoutes.LinkLogs + '/create'}
@@ -227,28 +217,28 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           )}
         />
         <Route
-          path={ClientRoutes.LinkStatuses + '/create'}
+          path={ClientRoutes.LinkStatus + '/create'}
           component={wrapperHeader(
             WrappedLinkStatusCreateComponent,
             'Link Status Create'
           )}
         />
         <Route
-          path={ClientRoutes.LinkStatuses + '/edit/:id'}
+          path={ClientRoutes.LinkStatus + '/edit/:id'}
           component={wrapperHeader(
             WrappedLinkStatusEditComponent,
             'Link Status Edit'
           )}
         />
         <Route
-          path={ClientRoutes.LinkStatuses + '/:id'}
+          path={ClientRoutes.LinkStatus + '/:id'}
           component={wrapperHeader(
             WrappedLinkStatusDetailComponent,
             'Link Status Detail'
           )}
         />
         <Route
-          path={ClientRoutes.LinkStatuses}
+          path={ClientRoutes.LinkStatus}
           component={wrapperHeader(
             WrappedLinkStatusSearchComponent,
             'Link Status Search'
@@ -258,73 +248,126 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.Machines + '/create'}
           component={wrapperHeader(
             WrappedMachineCreateComponent,
-            'Machines Create'
+            'Machine Create'
           )}
         />
         <Route
           path={ClientRoutes.Machines + '/edit/:id'}
-          component={wrapperHeader(
-            WrappedMachineEditComponent,
-            'Machines Edit'
-          )}
+          component={wrapperHeader(WrappedMachineEditComponent, 'Machine Edit')}
         />
         <Route
           path={ClientRoutes.Machines + '/:id'}
           component={wrapperHeader(
             WrappedMachineDetailComponent,
-            'Machines Detail'
+            'Machine Detail'
           )}
         />
         <Route
           path={ClientRoutes.Machines}
           component={wrapperHeader(
             WrappedMachineSearchComponent,
-            'Machines Search'
+            'Machine Search'
+          )}
+        />
+        <Route
+          path={ClientRoutes.MachineRefTeams + '/create'}
+          component={wrapperHeader(
+            WrappedMachineRefTeamCreateComponent,
+            'Machine Ref Team Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.MachineRefTeams + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedMachineRefTeamEditComponent,
+            'Machine Ref Team Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.MachineRefTeams + '/:id'}
+          component={wrapperHeader(
+            WrappedMachineRefTeamDetailComponent,
+            'Machine Ref Team Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.MachineRefTeams}
+          component={wrapperHeader(
+            WrappedMachineRefTeamSearchComponent,
+            'Machine Ref Team Search'
           )}
         />
         <Route
           path={ClientRoutes.Organizations + '/create'}
           component={wrapperHeader(
             WrappedOrganizationCreateComponent,
-            'Organizations Create'
+            'Organization Create'
           )}
         />
         <Route
           path={ClientRoutes.Organizations + '/edit/:id'}
           component={wrapperHeader(
             WrappedOrganizationEditComponent,
-            'Organizations Edit'
+            'Organization Edit'
           )}
         />
         <Route
           path={ClientRoutes.Organizations + '/:id'}
           component={wrapperHeader(
             WrappedOrganizationDetailComponent,
-            'Organizations Detail'
+            'Organization Detail'
           )}
         />
         <Route
           path={ClientRoutes.Organizations}
           component={wrapperHeader(
             WrappedOrganizationSearchComponent,
-            'Organizations Search'
+            'Organization Search'
           )}
         />
         <Route
           path={ClientRoutes.Teams + '/create'}
-          component={wrapperHeader(WrappedTeamCreateComponent, 'Teams Create')}
+          component={wrapperHeader(WrappedTeamCreateComponent, 'Team Create')}
         />
         <Route
           path={ClientRoutes.Teams + '/edit/:id'}
-          component={wrapperHeader(WrappedTeamEditComponent, 'Teams Edit')}
+          component={wrapperHeader(WrappedTeamEditComponent, 'Team Edit')}
         />
         <Route
           path={ClientRoutes.Teams + '/:id'}
-          component={wrapperHeader(WrappedTeamDetailComponent, 'Teams Detail')}
+          component={wrapperHeader(WrappedTeamDetailComponent, 'Team Detail')}
         />
         <Route
           path={ClientRoutes.Teams}
-          component={wrapperHeader(WrappedTeamSearchComponent, 'Teams Search')}
+          component={wrapperHeader(WrappedTeamSearchComponent, 'Team Search')}
+        />
+        <Route
+          path={ClientRoutes.VersionInfoes + '/create'}
+          component={wrapperHeader(
+            WrappedVersionInfoCreateComponent,
+            'Version Info Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.VersionInfoes + '/edit/:id'}
+          component={wrapperHeader(
+            WrappedVersionInfoEditComponent,
+            'Version Info Edit'
+          )}
+        />
+        <Route
+          path={ClientRoutes.VersionInfoes + '/:id'}
+          component={wrapperHeader(
+            WrappedVersionInfoDetailComponent,
+            'Version Info Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.VersionInfoes}
+          component={wrapperHeader(
+            WrappedVersionInfoSearchComponent,
+            'Version Info Search'
+          )}
         />
       </Switch>
     </BrowserRouter>
@@ -333,5 +376,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>ec87f2b4641a94af3ef94f7f26fc43be</Hash>
+    <Hash>263ce4cd4a2ebd4d007ccd15e00bd8a8</Hash>
 </Codenesium>*/

@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+	<RootNamespace>PointOfSaleNS.Api.Web.IntegrationTests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.5.3" />
+	<PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
+  </ItemGroup>
+
+   <ItemGroup>
+    <ProjectReference Include="../PointOfSale.Api.Client/PointOfSale.Api.Client.csproj" />
+	<ProjectReference Include="../PointOfSale.Api.Contracts/PointOfSale.Api.Contracts.csproj" />
+	<ProjectReference Include="../PointOfSale.Api.Web/PointOfSale.Api.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+     <None Update="appSettings.Test.json">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+   </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>PointOfSale.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
+   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>PointOfSale.Api.Web.IntegrationTests.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+</Project>

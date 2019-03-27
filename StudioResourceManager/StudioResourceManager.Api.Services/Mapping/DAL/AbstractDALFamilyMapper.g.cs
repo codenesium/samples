@@ -15,7 +15,7 @@ namespace StudioResourceManagerNS.Api.Services
 			Family item = new Family();
 			item.SetProperties(
 				id,
-				model.Note,
+				model.Notes,
 				model.PrimaryContactEmail,
 				model.PrimaryContactFirstName,
 				model.PrimaryContactLastName,
@@ -29,7 +29,7 @@ namespace StudioResourceManagerNS.Api.Services
 			var model = new ApiFamilyServerResponseModel();
 
 			model.SetProperties(item.Id,
-			                    item.Note,
+			                    item.Notes,
 			                    item.PrimaryContactEmail,
 			                    item.PrimaryContactFirstName,
 			                    item.PrimaryContactLastName,
@@ -54,5 +54,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b588323a140b853c308530dee72915af</Hash>
+    <Hash>b4e111737b286afd42c260f7927f4657</Hash>
 </Codenesium>*/

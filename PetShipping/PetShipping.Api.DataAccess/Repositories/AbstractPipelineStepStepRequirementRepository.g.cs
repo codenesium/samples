@@ -35,7 +35,7 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Detail.StartsWith(query) ||
+				                  x.Details.StartsWith(query) ||
 				                  x.Id == query.ToInt() ||
 				                  x.PipelineStepId == query.ToInt() ||
 				                  x.RequirementMet == query.ToBoolean(),
@@ -123,5 +123,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b3683bfe4b001ebf06ac0f401fcc615d</Hash>
+    <Hash>f8071d0ba7581beca9c08fae431d6139</Hash>
 </Codenesium>*/

@@ -193,12 +193,12 @@ class LinkLogEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="dateEntered">DateEntered</label>
+            <label htmlFor="dateEntered">Date Entered</label>
             <br />
             {getFieldDecorator('dateEntered', {
               rules: [{ required: true, message: 'Required' }],
             })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateEntered'} />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Date Entered'} />
             )}
           </Form.Item>
 
@@ -215,7 +215,7 @@ class LinkLogEditComponent extends React.Component<
             <br />
             {getFieldDecorator('log', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input.TextArea placeholder={'Log'} />)}
+            })(<Input placeholder={'Log'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -242,5 +242,5 @@ export const WrappedLinkLogEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c64126e2da46292fd0537b893d68bc29</Hash>
+    <Hash>66fc8d1b22617cb9279b0a7b190e47f6</Hash>
 </Codenesium>*/

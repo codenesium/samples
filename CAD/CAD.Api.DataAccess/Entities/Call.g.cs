@@ -86,9 +86,9 @@ namespace CADNS.Api.DataAccess
 		}
 
 		[ForeignKey("CallStatusId")]
-		public virtual CallStatu CallStatusIdNavigation { get; private set; }
+		public virtual CallStatus CallStatusIdNavigation { get; private set; }
 
-		public void SetCallStatusIdNavigation(CallStatu item)
+		public void SetCallStatusIdNavigation(CallStatus item)
 		{
 			this.CallStatusIdNavigation = item;
 		}
@@ -104,5 +104,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0bc6a41981acee30e24739f741e15a23</Hash>
+    <Hash>19a4a55d15614cf79f27c534e8c43d33</Hash>
 </Codenesium>*/

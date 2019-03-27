@@ -46,127 +46,127 @@ export const wrapperHeader = (
 
               <Menu.Item key="airline">
                 <Icon type="pie-chart" />
-                <span>Airlines</span>
+                <span>Airline</span>
                 <Link to={ClientRoutes.Airlines} />
               </Menu.Item>
 
               <Menu.Item key="airTransport">
                 <Icon type="rise" />
-                <span>AirTransports</span>
+                <span>Air Transport</span>
                 <Link to={ClientRoutes.AirTransports} />
               </Menu.Item>
 
               <Menu.Item key="breed">
                 <Icon type="bars" />
-                <span>Breeds</span>
+                <span>Breed</span>
                 <Link to={ClientRoutes.Breeds} />
               </Menu.Item>
 
               <Menu.Item key="country">
                 <Icon type="cloud" />
-                <span>Countries</span>
+                <span>Country</span>
                 <Link to={ClientRoutes.Countries} />
               </Menu.Item>
 
               <Menu.Item key="countryRequirement">
                 <Icon type="code" />
-                <span>CountryRequirements</span>
+                <span>Country Requirement</span>
                 <Link to={ClientRoutes.CountryRequirements} />
               </Menu.Item>
 
               <Menu.Item key="customer">
                 <Icon type="smile" />
-                <span>Customers</span>
+                <span>Customer</span>
                 <Link to={ClientRoutes.Customers} />
               </Menu.Item>
 
               <Menu.Item key="customerCommunication">
                 <Icon type="laptop" />
-                <span>CustomerCommunications</span>
+                <span>Customer Communication</span>
                 <Link to={ClientRoutes.CustomerCommunications} />
               </Menu.Item>
 
               <Menu.Item key="destination">
                 <Icon type="mobile" />
-                <span>Destinations</span>
+                <span>Destination</span>
                 <Link to={ClientRoutes.Destinations} />
               </Menu.Item>
 
               <Menu.Item key="employee">
                 <Icon type="paper-clip" />
-                <span>Employees</span>
+                <span>Employee</span>
                 <Link to={ClientRoutes.Employees} />
               </Menu.Item>
 
               <Menu.Item key="handler">
                 <Icon type="setting" />
-                <span>Handlers</span>
+                <span>Handler</span>
                 <Link to={ClientRoutes.Handlers} />
               </Menu.Item>
 
               <Menu.Item key="handlerPipelineStep">
                 <Icon type="user" />
-                <span>HandlerPipelineSteps</span>
+                <span>Handler Pipeline Step</span>
                 <Link to={ClientRoutes.HandlerPipelineSteps} />
               </Menu.Item>
 
               <Menu.Item key="otherTransport">
                 <Icon type="home" />
-                <span>OtherTransports</span>
+                <span>Other Transport</span>
                 <Link to={ClientRoutes.OtherTransports} />
               </Menu.Item>
 
               <Menu.Item key="pet">
                 <Icon type="camera" />
-                <span>Pets</span>
+                <span>Pet</span>
                 <Link to={ClientRoutes.Pets} />
               </Menu.Item>
 
               <Menu.Item key="pipeline">
                 <Icon type="like" />
-                <span>Pipelines</span>
+                <span>Pipeline</span>
                 <Link to={ClientRoutes.Pipelines} />
               </Menu.Item>
 
               <Menu.Item key="pipelineStatus">
                 <Icon type="bulb" />
-                <span>PipelineStatus</span>
+                <span>Pipeline Status</span>
                 <Link to={ClientRoutes.PipelineStatus} />
               </Menu.Item>
 
               <Menu.Item key="pipelineStep">
                 <Icon type="tool" />
-                <span>PipelineSteps</span>
+                <span>Pipeline Step</span>
                 <Link to={ClientRoutes.PipelineSteps} />
               </Menu.Item>
 
               <Menu.Item key="pipelineStepDestination">
                 <Icon type="coffee" />
-                <span>PipelineStepDestinations</span>
+                <span>Pipeline Step Destination</span>
                 <Link to={ClientRoutes.PipelineStepDestinations} />
               </Menu.Item>
 
               <Menu.Item key="pipelineStepNote">
                 <Icon type="experiment" />
-                <span>PipelineStepNotes</span>
+                <span>Pipeline Step Note</span>
                 <Link to={ClientRoutes.PipelineStepNotes} />
               </Menu.Item>
 
               <Menu.Item key="pipelineStepStatus">
                 <Icon type="security-scan" />
-                <span>PipelineStepStatus</span>
+                <span>Pipeline Step Status</span>
                 <Link to={ClientRoutes.PipelineStepStatus} />
               </Menu.Item>
 
               <Menu.Item key="pipelineStepStepRequirement">
                 <Icon type="thunderbolt" />
-                <span>PipelineStepStepRequirements</span>
+                <span>Pipeline Step Step Requirement</span>
                 <Link to={ClientRoutes.PipelineStepStepRequirements} />
               </Menu.Item>
 
               <Menu.Item key="sale">
                 <Icon type="gateway" />
-                <span>Sales</span>
+                <span>Sale</span>
                 <Link to={ClientRoutes.Sales} />
               </Menu.Item>
 
@@ -219,5 +219,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>040ee0309e8b3dd1b16a0f799330b3c4</Hash>
+    <Hash>64694f16a27c6189261b71dc7c41a4a4</Hash>
 </Codenesium>*/

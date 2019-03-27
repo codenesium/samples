@@ -195,18 +195,18 @@ class EmployeeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="firstName">firstName</label>
+            <label htmlFor="firstName">First Name</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'firstName'} />)}
+            })(<Input placeholder={'First Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isSalesPerson">isSalesPerson</label>
+            <label htmlFor="isSalesPerson">Is Sales Person</label>
             <br />
             {getFieldDecorator('isSalesPerson', {
               rules: [],
@@ -215,7 +215,7 @@ class EmployeeEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isShipper">isShipper</label>
+            <label htmlFor="isShipper">Is Shipper</label>
             <br />
             {getFieldDecorator('isShipper', {
               rules: [],
@@ -224,14 +224,14 @@ class EmployeeEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">lastName</label>
+            <label htmlFor="lastName">Last Name</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'lastName'} />)}
+            })(<Input placeholder={'Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -258,5 +258,5 @@ export const WrappedEmployeeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>87385e2099ea4297686f50dc89de0b1f</Hash>
+    <Hash>83a086b7cdfb48c62605ea0bb10c798d</Hash>
 </Codenesium>*/

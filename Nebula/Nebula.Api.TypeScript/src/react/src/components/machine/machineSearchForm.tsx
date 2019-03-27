@@ -197,7 +197,7 @@ export default class MachineSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Machines',
+                Header: 'Machine',
                 columns: [
                   {
                     Header: 'Description',
@@ -207,21 +207,14 @@ export default class MachineSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'JwtKey',
+                    Header: 'Jwt Key',
                     accessor: 'jwtKey',
                     Cell: props => {
                       return <span>{String(props.original.jwtKey)}</span>;
                     },
                   },
                   {
-                    Header: 'LastIpAddress',
+                    Header: 'Last Ip Address',
                     accessor: 'lastIpAddress',
                     Cell: props => {
                       return (
@@ -230,7 +223,7 @@ export default class MachineSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'MachineGuid',
+                    Header: 'Machine Guid',
                     accessor: 'machineGuid',
                     Cell: props => {
                       return <span>{String(props.original.machineGuid)}</span>;
@@ -304,5 +297,5 @@ export const WrappedMachineSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>88517c6b9beccaa4c0ae4f6d72f8a99a</Hash>
+    <Hash>5b9d8d5616621186957f03aafbd1cd00</Hash>
 </Codenesium>*/

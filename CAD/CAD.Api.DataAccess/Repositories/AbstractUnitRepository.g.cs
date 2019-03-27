@@ -87,31 +87,24 @@ namespace CADNS.Api.DataAccess
 			}
 		}
 
-		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Unit.
-		public async virtual Task<List<Unit>> ByCallId(int callId, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table CallAssignment via unitId.
+		public async virtual Task<List<CallAssignment>> CallAssignmentsByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await (from refTable in this.Context.CallAssignments
-			              join units in this.Context.Units on
-			              refTable.UnitId equals units.Id
-			              where refTable.CallId == callId
-			              select units).Skip(offset).Take(limit).ToListAsync();
+			return await this.Context.Set<CallAssignment>()
+			       .Include(x => x.CallIdNavigation)
+			       .Include(x => x.UnitIdNavigation)
+
+			       .Where(x => x.UnitId == unitId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CallAssignment>();
 		}
 
-		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Unit.
-		public async virtual Task<CallAssignment> CreateCallAssignment(CallAssignment item)
+		// Foreign key reference to this table UnitOfficer via unitId.
+		public async virtual Task<List<UnitOfficer>> UnitOfficersByUnitId(int unitId, int limit = int.MaxValue, int offset = 0)
 		{
-			this.Context.Set<CallAssignment>().Add(item);
-			await this.Context.SaveChangesAsync();
+			return await this.Context.Set<UnitOfficer>()
+			       .Include(x => x.OfficerIdNavigation)
+			       .Include(x => x.UnitIdNavigation)
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table CallAssignment. Foreign Table Unit.
-		public async virtual Task DeleteCallAssignment(CallAssignment item)
-		{
-			this.Context.Set<CallAssignment>().Remove(item);
-			await this.Context.SaveChangesAsync();
+			       .Where(x => x.UnitId == unitId).AsQueryable().Skip(offset).Take(limit).ToListAsync<UnitOfficer>();
 		}
 
 		protected async Task<List<Unit>> Where(
@@ -140,5 +133,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f4775f9b81078947bfbb194ac716b882</Hash>
+    <Hash>b195a775c1c7eceaf8a106bf9d92544f</Hash>
 </Codenesium>*/

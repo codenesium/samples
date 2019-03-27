@@ -103,7 +103,7 @@ export class TicketStatusSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TicketStatusViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TicketStatusSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>429d02e92d1ff1d782f705c4bfd8d91b</Hash>
+    <Hash>79febdf806daa17c09aed17ca159cee1</Hash>
 </Codenesium>*/

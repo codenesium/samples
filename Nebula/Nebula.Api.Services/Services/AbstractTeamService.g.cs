@@ -19,6 +19,8 @@ namespace NebulaNS.Api.Services
 
 		protected IDALChainMapper DalChainMapper { get; private set; }
 
+		protected IDALMachineRefTeamMapper DalMachineRefTeamMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractTeamService(
@@ -27,13 +29,15 @@ namespace NebulaNS.Api.Services
 			ITeamRepository teamRepository,
 			IApiTeamServerRequestModelValidator teamModelValidator,
 			IDALTeamMapper dalTeamMapper,
-			IDALChainMapper dalChainMapper)
+			IDALChainMapper dalChainMapper,
+			IDALMachineRefTeamMapper dalMachineRefTeamMapper)
 			: base()
 		{
 			this.TeamRepository = teamRepository;
 			this.TeamModelValidator = teamModelValidator;
 			this.DalTeamMapper = dalTeamMapper;
 			this.DalChainMapper = dalChainMapper;
+			this.DalMachineRefTeamMapper = dalMachineRefTeamMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -136,9 +140,16 @@ namespace NebulaNS.Api.Services
 
 			return this.DalChainMapper.MapEntityToModel(records);
 		}
+
+		public async virtual Task<List<ApiMachineRefTeamServerResponseModel>> MachineRefTeamsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<MachineRefTeam> records = await this.TeamRepository.MachineRefTeamsByTeamId(teamId, limit, offset);
+
+			return this.DalMachineRefTeamMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>573e61e5085b7665ca8eb64e337ea3ef</Hash>
+    <Hash>e06f34d92a9c66881fa8113c655e9216</Hash>
 </Codenesium>*/

@@ -13,34 +13,34 @@ namespace NebulaNS.Api.Client
 			int chainId,
 			DateTime? dateCompleted,
 			DateTime? dateStarted,
-			string dynamicParameter,
+			string dynamicParameters,
 			Guid externalId,
 			int linkStatusId,
 			string name,
 			int order,
 			string response,
-			string staticParameter,
-			int timeoutInSecond)
+			string staticParameters,
+			int timeoutInSeconds)
 		{
 			this.Id = id;
 			this.AssignedMachineId = assignedMachineId;
 			this.ChainId = chainId;
 			this.DateCompleted = dateCompleted;
 			this.DateStarted = dateStarted;
-			this.DynamicParameter = dynamicParameter;
+			this.DynamicParameters = dynamicParameters;
 			this.ExternalId = externalId;
 			this.LinkStatusId = linkStatusId;
 			this.Name = name;
 			this.Order = order;
 			this.Response = response;
-			this.StaticParameter = staticParameter;
-			this.TimeoutInSecond = timeoutInSecond;
+			this.StaticParameters = staticParameters;
+			this.TimeoutInSeconds = timeoutInSeconds;
 
 			this.AssignedMachineIdEntity = nameof(ApiResponse.Machines);
 
 			this.ChainIdEntity = nameof(ApiResponse.Chains);
 
-			this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatuses);
+			this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatus);
 		}
 
 		[JsonProperty]
@@ -86,7 +86,7 @@ namespace NebulaNS.Api.Client
 		public DateTime? DateStarted { get; private set; }
 
 		[JsonProperty]
-		public string DynamicParameter { get; private set; }
+		public string DynamicParameters { get; private set; }
 
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
@@ -110,13 +110,13 @@ namespace NebulaNS.Api.Client
 		public string Response { get; private set; }
 
 		[JsonProperty]
-		public string StaticParameter { get; private set; }
+		public string StaticParameters { get; private set; }
 
 		[JsonProperty]
-		public int TimeoutInSecond { get; private set; }
+		public int TimeoutInSeconds { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ea769d754543da89fed760ccc243d54f</Hash>
+    <Hash>8c54818aea6db5d7cb0a61da19cc1abe</Hash>
 </Codenesium>*/

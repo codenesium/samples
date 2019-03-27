@@ -197,17 +197,10 @@ export default class ClaspSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Clasps',
+                Header: 'Clasp',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'NextChainId',
+                    Header: 'Next Chain',
                     accessor: 'nextChainId',
                     Cell: props => {
                       return (
@@ -231,7 +224,7 @@ export default class ClaspSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PreviousChainId',
+                    Header: 'Previous Chain',
                     accessor: 'previousChainId',
                     Cell: props => {
                       return (
@@ -315,5 +308,5 @@ export const WrappedClaspSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>480bcbf1c701e6f5d061588e19788b04</Hash>
+    <Hash>ff2870f7bd9523e03d7720b1de9abcd4</Hash>
 </Codenesium>*/

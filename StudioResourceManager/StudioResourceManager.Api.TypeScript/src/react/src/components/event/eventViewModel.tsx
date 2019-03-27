@@ -11,8 +11,8 @@ export default class EventViewModel {
   id: number;
   scheduledEndDate: any;
   scheduledStartDate: any;
-  studentNote: string;
-  teacherNote: string;
+  studentNotes: string;
+  teacherNotes: string;
 
   constructor() {
     this.actualEndDate = undefined;
@@ -24,8 +24,8 @@ export default class EventViewModel {
     this.id = 0;
     this.scheduledEndDate = undefined;
     this.scheduledStartDate = undefined;
-    this.studentNote = '';
-    this.teacherNote = '';
+    this.studentNotes = '';
+    this.teacherNotes = '';
   }
 
   setProperties(
@@ -36,8 +36,8 @@ export default class EventViewModel {
     id: number,
     scheduledEndDate: any,
     scheduledStartDate: any,
-    studentNote: string,
-    teacherNote: string
+    studentNotes: string,
+    teacherNotes: string
   ): void {
     this.actualEndDate = moment(actualEndDate, 'YYYY-MM-DD');
     this.actualStartDate = moment(actualStartDate, 'YYYY-MM-DD');
@@ -46,8 +46,8 @@ export default class EventViewModel {
     this.id = id;
     this.scheduledEndDate = moment(scheduledEndDate, 'YYYY-MM-DD');
     this.scheduledStartDate = moment(scheduledStartDate, 'YYYY-MM-DD');
-    this.studentNote = studentNote;
-    this.teacherNote = teacherNote;
+    this.studentNotes = studentNotes;
+    this.teacherNotes = teacherNotes;
   }
 
   toDisplay(): string {
@@ -57,5 +57,5 @@ export default class EventViewModel {
 
 
 /*<Codenesium>
-    <Hash>d7bb27bb0bd76de7b56c27f5c69adcbd</Hash>
+    <Hash>9bf4e9889ef4e08b069e513f76a48ec4</Hash>
 </Codenesium>*/

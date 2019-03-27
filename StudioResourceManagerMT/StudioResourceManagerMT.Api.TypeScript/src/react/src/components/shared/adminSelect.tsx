@@ -103,7 +103,7 @@ export class AdminSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: AdminViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class AdminSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>fca099d7ad08e9bd7618fced433d3089</Hash>
+    <Hash>e7aebfca6e4d16871bdf3e2ff93cd846</Hash>
 </Codenesium>*/

@@ -94,7 +94,7 @@ export class UnitDispositionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>UnitDisposition</label>
+          <label htmlFor={this.props.propertyName}>Unit Disposition</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class UnitDispositionSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: UnitDispositionViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class UnitDispositionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f08462a6b80d393ac9105395c4b9dbbb</Hash>
+    <Hash>a9b36de985103006ce88472d747393c2</Hash>
 </Codenesium>*/

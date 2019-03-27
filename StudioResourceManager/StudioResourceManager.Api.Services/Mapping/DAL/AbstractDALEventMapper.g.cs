@@ -21,8 +21,8 @@ namespace StudioResourceManagerNS.Api.Services
 				model.EventStatusId,
 				model.ScheduledEndDate,
 				model.ScheduledStartDate,
-				model.StudentNote,
-				model.TeacherNote);
+				model.StudentNotes,
+				model.TeacherNotes);
 			return item;
 		}
 
@@ -38,8 +38,8 @@ namespace StudioResourceManagerNS.Api.Services
 			                    item.EventStatusId,
 			                    item.ScheduledEndDate,
 			                    item.ScheduledStartDate,
-			                    item.StudentNote,
-			                    item.TeacherNote);
+			                    item.StudentNotes,
+			                    item.TeacherNotes);
 			if (item.EventStatusIdNavigation != null)
 			{
 				var eventStatusIdModel = new ApiEventStatusServerResponseModel();
@@ -69,5 +69,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a52f5ffbc6e70401fda9866c9dd2ffb9</Hash>
+    <Hash>0990c7e9ef4788b87b6ba341c6860cfb</Hash>
 </Codenesium>*/

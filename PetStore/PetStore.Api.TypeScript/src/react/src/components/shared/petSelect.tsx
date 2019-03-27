@@ -103,7 +103,7 @@ export class PetSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: PetViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class PetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>75704773a6b542fa95390281745eb7d7</Hash>
+    <Hash>9b0d829091a685ffe53f2d516c691c44</Hash>
 </Codenesium>*/

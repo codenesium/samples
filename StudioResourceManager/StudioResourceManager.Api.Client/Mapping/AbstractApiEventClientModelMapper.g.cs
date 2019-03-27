@@ -18,8 +18,8 @@ namespace StudioResourceManagerNS.Api.Client
 			                       request.EventStatusId,
 			                       request.ScheduledEndDate,
 			                       request.ScheduledStartDate,
-			                       request.StudentNote,
-			                       request.TeacherNote);
+			                       request.StudentNotes,
+			                       request.TeacherNotes);
 			return response;
 		}
 
@@ -34,13 +34,13 @@ namespace StudioResourceManagerNS.Api.Client
 				response.EventStatusId,
 				response.ScheduledEndDate,
 				response.ScheduledStartDate,
-				response.StudentNote,
-				response.TeacherNote);
+				response.StudentNotes,
+				response.TeacherNotes);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d8353fed728908738de8e33e43b8957</Hash>
+    <Hash>47c232c4e72a9ba9da21755220f1077f</Hash>
 </Codenesium>*/

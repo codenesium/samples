@@ -129,14 +129,14 @@ export class OfficerTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -194,5 +194,5 @@ export class OfficerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>14c2adcd2064bfc2b4a953e788bd08eb</Hash>
+    <Hash>a71a3cc8e5ce5c9bede22c4e6e394901</Hash>
 </Codenesium>*/

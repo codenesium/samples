@@ -9,11 +9,11 @@ namespace NebulaNS.Api.Services
 	public class RouteConstants
 	{
 		public const string Chains = "chains";
-		public const string ChainStatuses = "chainstatuses";
+		public const string ChainStatus = "chainstatus";
 		public const string Clasps = "clasps";
 		public const string Links = "links";
 		public const string LinkLogs = "linklogs";
-		public const string LinkStatuses = "linkstatuses";
+		public const string LinkStatus = "linkstatus";
 		public const string Machines = "machines";
 		public const string MachineRefTeams = "machinerefteams";
 		public const string Organizations = "organizations";
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9350da5eedbf233eb4aed34c8243575</Hash>
+    <Hash>af813ec92f4a3d4f902655ad385f082f</Hash>
 </Codenesium>*/

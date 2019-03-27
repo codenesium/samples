@@ -261,19 +261,19 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="studentNote">Student Note</label>
+            <label htmlFor="studentNotes">Student Notes</label>
             <br />
-            {getFieldDecorator('studentNote', {
+            {getFieldDecorator('studentNotes', {
               rules: [],
-            })(<Input placeholder={'Student Note'} />)}
+            })(<Input placeholder={'Student Notes'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherNote">Teacher Note</label>
+            <label htmlFor="teacherNotes">Teacher Notes</label>
             <br />
-            {getFieldDecorator('teacherNote', {
+            {getFieldDecorator('teacherNotes', {
               rules: [],
-            })(<Input placeholder={'Teacher Note'} />)}
+            })(<Input placeholder={'Teacher Notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -300,5 +300,5 @@ export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
 
 
 /*<Codenesium>
-    <Hash>80f3b70a4af3bc11f8e4ebe2b439243e</Hash>
+    <Hash>98d42519f0851eaa1f356904f085eabd</Hash>
 </Codenesium>*/

@@ -2,7 +2,7 @@ import moment from 'moment';
 import PipelineStepViewModel from '../pipelineStep/pipelineStepViewModel';
 
 export default class PipelineStepStepRequirementViewModel {
-  detail: string;
+  details: string;
   id: number;
   pipelineStepId: number;
   pipelineStepIdEntity: string;
@@ -10,7 +10,7 @@ export default class PipelineStepStepRequirementViewModel {
   requirementMet: boolean;
 
   constructor() {
-    this.detail = '';
+    this.details = '';
     this.id = 0;
     this.pipelineStepId = 0;
     this.pipelineStepIdEntity = '';
@@ -19,23 +19,23 @@ export default class PipelineStepStepRequirementViewModel {
   }
 
   setProperties(
-    detail: string,
+    details: string,
     id: number,
     pipelineStepId: number,
     requirementMet: boolean
   ): void {
-    this.detail = detail;
+    this.details = details;
     this.id = id;
     this.pipelineStepId = pipelineStepId;
     this.requirementMet = requirementMet;
   }
 
   toDisplay(): string {
-    return String(this.detail);
+    return String(this.details);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>0d8e1da301dba5a059e4d91fc2709afb</Hash>
+    <Hash>bf5312363033ac0f47633aefd5479636</Hash>
 </Codenesium>*/

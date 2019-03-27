@@ -109,11 +109,11 @@ class PipelineStepStepRequirementDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>details</h3>
-              <p>{String(this.state.model!.detail)}</p>
+              <h3>Details</h3>
+              <p>{String(this.state.model!.details)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>pipelineStepId</h3>
+              <h3>Pipeline Step</h3>
               <p>
                 {String(
                   this.state.model!.pipelineStepIdNavigation &&
@@ -122,7 +122,7 @@ class PipelineStepStepRequirementDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>requirementMet</h3>
+              <h3>Requirement Met</h3>
               <p>{String(this.state.model!.requirementMet)}</p>
             </div>
           </div>
@@ -141,5 +141,5 @@ export const WrappedPipelineStepStepRequirementDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>98e7ea0dc825f8b15e8a32dda1a2bf80</Hash>
+    <Hash>384a1a00ac8fac669b048c27ceea7cd3</Hash>
 </Codenesium>*/

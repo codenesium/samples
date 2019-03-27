@@ -31,7 +31,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			List<ApiUnitServerResponseModel> response = await service.All();
 
@@ -49,7 +51,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			ApiUnitServerResponseModel response = await service.Get(default(int));
 
@@ -66,7 +70,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			ApiUnitServerResponseModel response = await service.Get(default(int));
 
@@ -84,7 +90,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			CreateResponse<ApiUnitServerResponseModel> response = await service.Create(model);
 
@@ -106,7 +114,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			CreateResponse<ApiUnitServerResponseModel> response = await service.Create(model);
 
@@ -127,7 +137,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			UpdateResponse<ApiUnitServerResponseModel> response = await service.Update(default(int), model);
 
@@ -150,7 +162,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			UpdateResponse<ApiUnitServerResponseModel> response = await service.Update(default(int), model);
 
@@ -170,7 +184,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -192,7 +208,9 @@ namespace CADNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.DALMapperMockFactory.DALUnitMapperMock);
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,9 +219,89 @@ namespace CADNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UnitDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
+
+		[Fact]
+		public async void CallAssignmentsByUnitId_Exists()
+		{
+			var mock = new ServiceMockFacade<IUnitRepository>();
+			var records = new List<CallAssignment>();
+			records.Add(new CallAssignment());
+			mock.RepositoryMock.Setup(x => x.CallAssignmentsByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new UnitService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
+
+			List<ApiCallAssignmentServerResponseModel> response = await service.CallAssignmentsByUnitId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.CallAssignmentsByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void CallAssignmentsByUnitId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IUnitRepository>();
+			mock.RepositoryMock.Setup(x => x.CallAssignmentsByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CallAssignment>>(new List<CallAssignment>()));
+			var service = new UnitService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
+
+			List<ApiCallAssignmentServerResponseModel> response = await service.CallAssignmentsByUnitId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.CallAssignmentsByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void UnitOfficersByUnitId_Exists()
+		{
+			var mock = new ServiceMockFacade<IUnitRepository>();
+			var records = new List<UnitOfficer>();
+			records.Add(new UnitOfficer());
+			mock.RepositoryMock.Setup(x => x.UnitOfficersByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new UnitService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
+
+			List<ApiUnitOfficerServerResponseModel> response = await service.UnitOfficersByUnitId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.UnitOfficersByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void UnitOfficersByUnitId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IUnitRepository>();
+			mock.RepositoryMock.Setup(x => x.UnitOfficersByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<UnitOfficer>>(new List<UnitOfficer>()));
+			var service = new UnitService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UnitModelValidatorMock.Object,
+			                              mock.DALMapperMockFactory.DALUnitMapperMock,
+			                              mock.DALMapperMockFactory.DALCallAssignmentMapperMock,
+			                              mock.DALMapperMockFactory.DALUnitOfficerMapperMock);
+
+			List<ApiUnitOfficerServerResponseModel> response = await service.UnitOfficersByUnitId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.UnitOfficersByUnitId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e0fe3129526a9c97bd73cb03ca9fca3</Hash>
+    <Hash>46a8fafa46b7408c0c166d2963a622cd</Hash>
 </Codenesium>*/

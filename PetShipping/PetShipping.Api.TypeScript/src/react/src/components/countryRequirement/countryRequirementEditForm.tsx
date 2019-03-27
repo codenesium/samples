@@ -195,20 +195,20 @@ class CountryRequirementEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="countryId">countryId</label>
-            <br />
-            {getFieldDecorator('countryId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'countryId'} />)}
-          </Form.Item>
+          <CountrySelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Countries}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="countryId"
+            required={true}
+            selectedValue={this.state.model!.countryId}
+          />
 
           <Form.Item>
-            <label htmlFor="detail">details</label>
+            <label htmlFor="details">Details</label>
             <br />
-            {getFieldDecorator('detail', {
+            {getFieldDecorator('details', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'details'} />)}
+            })(<Input placeholder={'Details'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -235,5 +235,5 @@ export const WrappedCountryRequirementEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>31d2ccbcac6a9d6c92d43ce49ef16900</Hash>
+    <Hash>7e0f82bee8f542338e9c44135673a4f2</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 				model.CustomerId,
 				model.DateCreated,
 				model.EmployeeId,
-				model.Note);
+				model.Notes);
 			return item;
 		}
 
@@ -31,7 +31,7 @@ namespace PetShippingNS.Api.Services
 			                    item.CustomerId,
 			                    item.DateCreated,
 			                    item.EmployeeId,
-			                    item.Note);
+			                    item.Notes);
 			if (item.CustomerIdNavigation != null)
 			{
 				var customerIdModel = new ApiCustomerServerResponseModel();
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.Services
 					item.CustomerIdNavigation.Email,
 					item.CustomerIdNavigation.FirstName,
 					item.CustomerIdNavigation.LastName,
-					item.CustomerIdNavigation.Note,
+					item.CustomerIdNavigation.Notes,
 					item.CustomerIdNavigation.Phone);
 
 				model.SetCustomerIdNavigation(customerIdModel);
@@ -78,5 +78,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7bc9da89569b23868a9ea1f994967c34</Hash>
+    <Hash>bfec707587f98109995c127f40bf4f66</Hash>
 </Codenesium>*/

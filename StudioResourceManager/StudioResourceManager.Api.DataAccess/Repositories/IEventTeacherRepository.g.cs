@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<EventTeacher>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
-		Task<List<EventTeacher>> ById(int id, int limit = int.MaxValue, int offset = 0);
+		Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<EventTeacher>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1878562e91690cf3237c001f3531198d</Hash>
+    <Hash>643827485dd371407052e6b7dca5deee</Hash>
 </Codenesium>*/

@@ -31,7 +31,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			List<ApiSpaceFeatureServerResponseModel> response = await service.All();
 
@@ -49,7 +50,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			ApiSpaceFeatureServerResponseModel response = await service.Get(default(int));
 
@@ -66,7 +68,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			ApiSpaceFeatureServerResponseModel response = await service.Get(default(int));
 
@@ -84,7 +87,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			CreateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Create(model);
 
@@ -106,7 +110,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			CreateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Create(model);
 
@@ -127,7 +132,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			UpdateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Update(default(int), model);
 
@@ -150,7 +156,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			UpdateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Update(default(int), model);
 
@@ -170,7 +177,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -192,7 +200,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -201,9 +210,47 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SpaceFeatureDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
+
+		[Fact]
+		public async void SpaceSpaceFeaturesBySpaceFeatureId_Exists()
+		{
+			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
+			var records = new List<SpaceSpaceFeature>();
+			records.Add(new SpaceSpaceFeature());
+			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesBySpaceFeatureId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new SpaceFeatureService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+
+			List<ApiSpaceSpaceFeatureServerResponseModel> response = await service.SpaceSpaceFeaturesBySpaceFeatureId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesBySpaceFeatureId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void SpaceSpaceFeaturesBySpaceFeatureId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
+			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesBySpaceFeatureId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpaceSpaceFeature>>(new List<SpaceSpaceFeature>()));
+			var service = new SpaceFeatureService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+
+			List<ApiSpaceSpaceFeatureServerResponseModel> response = await service.SpaceSpaceFeaturesBySpaceFeatureId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesBySpaceFeatureId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5609c862182ad23f4cc970d85a9da90</Hash>
+    <Hash>2cc56a12b56d22db5d6a128b79e20121</Hash>
 </Codenesium>*/

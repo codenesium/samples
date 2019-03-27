@@ -103,7 +103,7 @@ export class LinkLogSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: LinkLogViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class LinkLogSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e7d282cf24de64e443cc70df9a7dfbe0</Hash>
+    <Hash>e960b78ee17e97fb6887df1d1f6c0223</Hash>
 </Codenesium>*/

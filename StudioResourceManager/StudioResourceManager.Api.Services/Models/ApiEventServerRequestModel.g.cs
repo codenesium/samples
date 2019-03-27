@@ -22,8 +22,8 @@ namespace StudioResourceManagerNS.Api.Services
 			int eventStatusId,
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
-			string studentNote,
-			string teacherNote)
+			string studentNotes,
+			string teacherNotes)
 		{
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
@@ -31,8 +31,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.EventStatusId = eventStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.StudentNote = studentNote;
-			this.TeacherNote = teacherNote;
+			this.StudentNotes = studentNotes;
+			this.TeacherNotes = teacherNotes;
 		}
 
 		[JsonProperty]
@@ -55,13 +55,13 @@ namespace StudioResourceManagerNS.Api.Services
 		public DateTime? ScheduledStartDate { get; private set; } = null;
 
 		[JsonProperty]
-		public string StudentNote { get; private set; } = default(string);
+		public string StudentNotes { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string TeacherNote { get; private set; } = default(string);
+		public string TeacherNotes { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0229bde7e128229e79449c7966231a7</Hash>
+    <Hash>fd83295204064a053f13e8ebda0c9cf6</Hash>
 </Codenesium>*/

@@ -94,7 +94,7 @@ export class MachineSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Machine</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class MachineSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: MachineViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class MachineSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>40765ccf9c1cebb71981eab939ac649d</Hash>
+    <Hash>6bd48cf719113f597e367e630b63e7ea</Hash>
 </Codenesium>*/

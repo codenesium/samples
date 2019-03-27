@@ -19,9 +19,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 		Task<ApiSpaceServerResponseModel> Get(int id);
 
 		Task<List<ApiSpaceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<ApiSpaceSpaceFeatureServerResponseModel>> SpaceSpaceFeaturesBySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>60dd22ac9980bdc20e6802bcd0ed4b53</Hash>
+    <Hash>24bd02fbdf2fcd76a24a56eacab11ece</Hash>
 </Codenesium>*/

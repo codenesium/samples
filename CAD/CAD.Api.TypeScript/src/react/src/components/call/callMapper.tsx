@@ -2,7 +2,7 @@ import * as Api from '../../api/models';
 import CallViewModel from './callViewModel';
 import AddressViewModel from '../address/addressViewModel';
 import CallDispositionViewModel from '../callDisposition/callDispositionViewModel';
-import CallStatuViewModel from '../callStatu/callStatuViewModel';
+import CallStatusViewModel from '../callStatus/callStatusViewModel';
 import CallTypeViewModel from '../callType/callTypeViewModel';
 export default class CallMapper {
   mapApiResponseToViewModel(dto: Api.CallClientResponseModel): CallViewModel {
@@ -39,7 +39,7 @@ export default class CallMapper {
       );
     }
     if (dto.callStatusIdNavigation != null) {
-      response.callStatusIdNavigation = new CallStatuViewModel();
+      response.callStatusIdNavigation = new CallStatusViewModel();
       response.callStatusIdNavigation.setProperties(
         dto.callStatusIdNavigation.id,
         dto.callStatusIdNavigation.name
@@ -76,5 +76,5 @@ export default class CallMapper {
 
 
 /*<Codenesium>
-    <Hash>9cdb2ebafda527b8065d8564a672f91e</Hash>
+    <Hash>a868d5d39b4ba7e9252ca40870cd849a</Hash>
 </Codenesium>*/

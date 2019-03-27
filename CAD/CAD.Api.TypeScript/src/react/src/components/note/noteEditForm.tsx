@@ -193,40 +193,42 @@ class NoteEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="callId">callId</label>
-            <br />
-            {getFieldDecorator('callId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'callId'} />)}
-          </Form.Item>
+          <CallSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Calls}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="callId"
+            required={true}
+            selectedValue={this.state.model!.callId}
+          />
 
           <Form.Item>
-            <label htmlFor="dateCreated">dateCreated</label>
+            <label htmlFor="dateCreated">Date Created</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'dateCreated'} />)}
+            })(
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Date Created'} />
+            )}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="noteText">noteText</label>
+            <label htmlFor="noteText">Note Text</label>
             <br />
             {getFieldDecorator('noteText', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 8000, message: 'Exceeds max length of 8000' },
               ],
-            })(<Input placeholder={'noteText'} />)}
+            })(<Input placeholder={'Note Text'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="officerId">officerId</label>
-            <br />
-            {getFieldDecorator('officerId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'officerId'} />)}
-          </Form.Item>
+          <OfficerSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Officers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="officerId"
+            required={true}
+            selectedValue={this.state.model!.officerId}
+          />
 
           <Form.Item>
             <Button
@@ -252,5 +254,5 @@ export const WrappedNoteEditComponent = Form.create({ name: 'Note Edit' })(
 
 
 /*<Codenesium>
-    <Hash>1ca904b01f32e7d9ac5278bd3ba96947</Hash>
+    <Hash>1189b36b257bb829df94b9c7e5d3a317</Hash>
 </Codenesium>*/

@@ -196,15 +196,8 @@ export default class TeamSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Teams',
+                Header: 'Team',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -213,7 +206,7 @@ export default class TeamSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'OrganizationId',
+                    Header: 'Organization',
                     accessor: 'organizationId',
                     Cell: props => {
                       return (
@@ -297,5 +290,5 @@ export const WrappedTeamSearchComponent = Form.create({ name: 'Team Search' })(
 
 
 /*<Codenesium>
-    <Hash>3dde17815b5bbac5aa7216db405f0ef5</Hash>
+    <Hash>eb0f9451e075997195af3e2006e7789b</Hash>
 </Codenesium>*/

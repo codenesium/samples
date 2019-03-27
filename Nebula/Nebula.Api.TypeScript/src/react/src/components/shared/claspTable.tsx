@@ -115,14 +115,7 @@ export class ClaspTableComponent extends React.Component<
                 Header: 'Clasps',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'NextChainId',
+                    Header: 'Next Chain',
                     accessor: 'nextChainId',
                     Cell: props => {
                       return (
@@ -146,7 +139,7 @@ export class ClaspTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PreviousChainId',
+                    Header: 'Previous Chain',
                     accessor: 'previousChainId',
                     Cell: props => {
                       return (
@@ -214,5 +207,5 @@ export class ClaspTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d7d69e982011b060b2ede097084b55d7</Hash>
+    <Hash>6971dbadecee295f01a5a89acd08d568</Hash>
 </Codenesium>*/

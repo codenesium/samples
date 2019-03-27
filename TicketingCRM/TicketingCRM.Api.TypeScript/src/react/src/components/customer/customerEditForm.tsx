@@ -235,7 +235,7 @@ class CustomerEditComponent extends React.Component<
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<InputNumber placeholder={'Phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -262,5 +262,5 @@ export const WrappedCustomerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>980fc2eef7d2fbbeccdb7089688e1c46</Hash>
+    <Hash>caf4bd56a1b2a920a5614582d9347425</Hash>
 </Codenesium>*/

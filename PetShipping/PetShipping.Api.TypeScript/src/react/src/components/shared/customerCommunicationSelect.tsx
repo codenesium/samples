@@ -97,7 +97,9 @@ export class CustomerCommunicationSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            Customer Communication
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -107,7 +109,7 @@ export class CustomerCommunicationSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: CustomerCommunicationViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +127,5 @@ export class CustomerCommunicationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>715c9e76a4914bfe966f9a71fee4dbb4</Hash>
+    <Hash>d351c44e797afd494684c64db1d25992</Hash>
 </Codenesium>*/

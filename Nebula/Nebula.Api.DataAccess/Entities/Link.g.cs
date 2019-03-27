@@ -19,28 +19,28 @@ namespace NebulaNS.Api.DataAccess
 			int chainId,
 			DateTime? dateCompleted,
 			DateTime? dateStarted,
-			string dynamicParameter,
+			string dynamicParameters,
 			Guid externalId,
 			int linkStatusId,
 			string name,
 			int order,
 			string response,
-			string staticParameter,
-			int timeoutInSecond)
+			string staticParameters,
+			int timeoutInSeconds)
 		{
 			this.Id = id;
 			this.AssignedMachineId = assignedMachineId;
 			this.ChainId = chainId;
 			this.DateCompleted = dateCompleted;
 			this.DateStarted = dateStarted;
-			this.DynamicParameter = dynamicParameter;
+			this.DynamicParameters = dynamicParameters;
 			this.ExternalId = externalId;
 			this.LinkStatusId = linkStatusId;
 			this.Name = name;
 			this.Order = order;
 			this.Response = response;
-			this.StaticParameter = staticParameter;
-			this.TimeoutInSecond = timeoutInSecond;
+			this.StaticParameters = staticParameters;
+			this.TimeoutInSeconds = timeoutInSeconds;
 		}
 
 		[Column("assignedMachineId")]
@@ -57,7 +57,7 @@ namespace NebulaNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("dynamicParameters")]
-		public virtual string DynamicParameter { get; private set; }
+		public virtual string DynamicParameters { get; private set; }
 
 		[Column("externalId")]
 		public virtual Guid ExternalId { get; private set; }
@@ -82,10 +82,10 @@ namespace NebulaNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("staticParameters")]
-		public virtual string StaticParameter { get; private set; }
+		public virtual string StaticParameters { get; private set; }
 
 		[Column("timeoutInSeconds")]
-		public virtual int TimeoutInSecond { get; private set; }
+		public virtual int TimeoutInSeconds { get; private set; }
 
 		[ForeignKey("AssignedMachineId")]
 		public virtual Machine AssignedMachineIdNavigation { get; private set; }
@@ -114,5 +114,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>acdae36eb7f65231ddcfec4c9006ca35</Hash>
+    <Hash>710e1df6b0be02f83d4a3fcc0d9a8ee9</Hash>
 </Codenesium>*/

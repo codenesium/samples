@@ -36,11 +36,11 @@ export class LinkStatusTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: LinkStatusViewModel) {
-    this.props.history.push(ClientRoutes.LinkStatuses + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.LinkStatus + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: LinkStatusViewModel) {
-    this.props.history.push(ClientRoutes.LinkStatuses + '/' + row.id);
+    this.props.history.push(ClientRoutes.LinkStatus + '/' + row.id);
   }
 
   componentDidMount() {
@@ -59,15 +59,15 @@ export class LinkStatusTableComponent extends React.Component<
 
         let mapper = new LinkStatusMapper();
 
-        let linkStatuses: Array<LinkStatusViewModel> = [];
+        let linkStatus: Array<LinkStatusViewModel> = [];
 
         response.data.forEach(x => {
-          linkStatuses.push(mapper.mapApiResponseToViewModel(x));
+          linkStatus.push(mapper.mapApiResponseToViewModel(x));
         });
 
         this.setState({
           ...this.state,
-          filteredRecords: linkStatuses,
+          filteredRecords: linkStatus,
           loading: false,
           loaded: true,
           errorOccurred: false,
@@ -112,15 +112,8 @@ export class LinkStatusTableComponent extends React.Component<
             defaultPageSize={10}
             columns={[
               {
-                Header: 'LinkStatuses',
+                Header: 'LinkStatus',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -173,5 +166,5 @@ export class LinkStatusTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ef81ec4daf4422c954bec350e57ffa50</Hash>
+    <Hash>db935d5511a25a5f91f2a69899949908</Hash>
 </Codenesium>*/

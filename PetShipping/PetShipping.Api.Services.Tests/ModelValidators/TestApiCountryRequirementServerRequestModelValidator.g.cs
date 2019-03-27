@@ -75,7 +75,7 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Detail_Create_null()
+		public async void Details_Create_null()
 		{
 			Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
 			countryRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CountryRequirement()));
@@ -83,11 +83,11 @@ namespace PetShippingNS.Api.Services.Tests
 			var validator = new ApiCountryRequirementServerRequestModelValidator(countryRequirementRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCountryRequirementServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Detail, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
 		}
 
 		[Fact]
-		public async void Detail_Update_null()
+		public async void Details_Update_null()
 		{
 			Mock<ICountryRequirementRepository> countryRequirementRepository = new Mock<ICountryRequirementRepository>();
 			countryRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CountryRequirement()));
@@ -95,11 +95,11 @@ namespace PetShippingNS.Api.Services.Tests
 			var validator = new ApiCountryRequirementServerRequestModelValidator(countryRequirementRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCountryRequirementServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Detail, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e7de21d7f3568ecbb7847663851a42f</Hash>
+    <Hash>604641a50047a9181e786b0789d1599c</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 			this.EmailRules();
 			this.FirstNameRules();
 			this.LastNameRules();
-			this.NoteRules();
+			this.NotesRules();
 			this.PhoneRules();
 			return await this.ValidateAsync(model);
 		}
@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Services
 			this.EmailRules();
 			this.FirstNameRules();
 			this.LastNameRules();
-			this.NoteRules();
+			this.NotesRules();
 			this.PhoneRules();
 			return await this.ValidateAsync(model, id);
 		}
@@ -41,5 +41,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>046a19bde90e0855858bad740e769800</Hash>
+    <Hash>4c167a1d81c06ccafc8454b7399c9f55</Hash>
 </Codenesium>*/

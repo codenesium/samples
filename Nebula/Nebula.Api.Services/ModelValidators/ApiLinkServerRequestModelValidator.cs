@@ -19,14 +19,14 @@ namespace NebulaNS.Api.Services
 			this.ChainIdRules();
 			this.DateCompletedRules();
 			this.DateStartedRules();
-			this.DynamicParameterRules();
+			this.DynamicParametersRules();
 			this.ExternalIdRules();
 			this.LinkStatusIdRules();
 			this.NameRules();
 			this.OrderRules();
 			this.ResponseRules();
-			this.StaticParameterRules();
-			this.TimeoutInSecondRules();
+			this.StaticParametersRules();
+			this.TimeoutInSecondsRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -36,14 +36,14 @@ namespace NebulaNS.Api.Services
 			this.ChainIdRules();
 			this.DateCompletedRules();
 			this.DateStartedRules();
-			this.DynamicParameterRules();
+			this.DynamicParametersRules();
 			this.ExternalIdRules();
 			this.LinkStatusIdRules();
 			this.NameRules();
 			this.OrderRules();
 			this.ResponseRules();
-			this.StaticParameterRules();
-			this.TimeoutInSecondRules();
+			this.StaticParametersRules();
+			this.TimeoutInSecondsRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -55,5 +55,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e4920e1d88a76bcccb08c68764bb7ff8</Hash>
+    <Hash>4c0d1cfa2947e3cee0edc1fc792ef375</Hash>
 </Codenesium>*/

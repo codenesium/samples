@@ -21,7 +21,7 @@ namespace PetShippingNS.Api.Client.Tests
 			response.Email.Should().Be("A");
 			response.FirstName.Should().Be("A");
 			response.LastName.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.Phone.Should().Be("A");
 		}
 
@@ -36,12 +36,12 @@ namespace PetShippingNS.Api.Client.Tests
 			response.Email.Should().Be("A");
 			response.FirstName.Should().Be("A");
 			response.LastName.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.Phone.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>86cdaad135f28e3cea2136067d72b7b6</Hash>
+    <Hash>a445f0b5c40e01b80639c34dcdcb9dda</Hash>
 </Codenesium>*/

@@ -120,7 +120,7 @@ export class HandlerPipelineStepTableComponent extends React.Component<
                 Header: 'HandlerPipelineSteps',
                 columns: [
                   {
-                    Header: 'HandlerId',
+                    Header: 'Handler',
                     accessor: 'handlerId',
                     Cell: props => {
                       return (
@@ -144,7 +144,7 @@ export class HandlerPipelineStepTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -212,5 +212,5 @@ export class HandlerPipelineStepTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2fa54747c12c8a8afd8dd65c25adee32</Hash>
+    <Hash>9887657e0a00d3840b8880d45a04a745</Hash>
 </Codenesium>*/

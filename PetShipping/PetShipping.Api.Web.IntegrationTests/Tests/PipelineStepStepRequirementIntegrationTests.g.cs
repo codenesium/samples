@@ -53,11 +53,11 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<PipelineStepStepRequirement>().ToList()[1].Detail.Should().Be("B");
+			context.Set<PipelineStepStepRequirement>().ToList()[1].Details.Should().Be("B");
 			context.Set<PipelineStepStepRequirement>().ToList()[1].PipelineStepId.Should().Be(1);
 			context.Set<PipelineStepStepRequirement>().ToList()[1].RequirementMet.Should().Be(true);
 
-			context.Set<PipelineStepStepRequirement>().ToList()[2].Detail.Should().Be("C");
+			context.Set<PipelineStepStepRequirement>().ToList()[2].Details.Should().Be("C");
 			context.Set<PipelineStepStepRequirement>().ToList()[2].PipelineStepId.Should().Be(1);
 			context.Set<PipelineStepStepRequirement>().ToList()[2].RequirementMet.Should().Be(true);
 		}
@@ -85,11 +85,11 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<PipelineStepStepRequirement>().ToList()[1].Detail.Should().Be("B");
+			context.Set<PipelineStepStepRequirement>().ToList()[1].Details.Should().Be("B");
 			context.Set<PipelineStepStepRequirement>().ToList()[1].PipelineStepId.Should().Be(1);
 			context.Set<PipelineStepStepRequirement>().ToList()[1].RequirementMet.Should().Be(true);
 
-			result.Record.Detail.Should().Be("B");
+			result.Record.Details.Should().Be("B");
 			result.Record.PipelineStepId.Should().Be(1);
 			result.Record.RequirementMet.Should().Be(true);
 		}
@@ -124,12 +124,12 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
-			context.Set<PipelineStepStepRequirement>().ToList()[0].Detail.Should().Be("B");
+			context.Set<PipelineStepStepRequirement>().ToList()[0].Details.Should().Be("B");
 			context.Set<PipelineStepStepRequirement>().ToList()[0].PipelineStepId.Should().Be(1);
 			context.Set<PipelineStepStepRequirement>().ToList()[0].RequirementMet.Should().Be(true);
 
 			updateResponse.Record.Id.Should().Be(1);
-			updateResponse.Record.Detail.Should().Be("B");
+			updateResponse.Record.Details.Should().Be("B");
 			updateResponse.Record.PipelineStepId.Should().Be(1);
 			updateResponse.Record.RequirementMet.Should().Be(true);
 		}
@@ -187,7 +187,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			ApiPipelineStepStepRequirementClientResponseModel response = await client.PipelineStepStepRequirementGetAsync(1);
 
 			response.Should().NotBeNull();
-			response.Detail.Should().Be("A");
+			response.Details.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
@@ -233,7 +233,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			List<ApiPipelineStepStepRequirementClientResponseModel> response = await client.PipelineStepStepRequirementAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
-			response[0].Detail.Should().Be("A");
+			response[0].Details.Should().Be("A");
 			response[0].Id.Should().Be(1);
 			response[0].PipelineStepId.Should().Be(1);
 			response[0].RequirementMet.Should().Be(true);
@@ -262,5 +262,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c220ecb8b78e88035a17fc4cac19c58c</Hash>
+    <Hash>32f70e0c80f3d9b1e75d640f7ad724cc</Hash>
 </Codenesium>*/

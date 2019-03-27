@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export default class FamilyViewModel {
   id: number;
-  note: string;
+  notes: string;
   primaryContactEmail: string;
   primaryContactFirstName: string;
   primaryContactLastName: string;
@@ -10,7 +10,7 @@ export default class FamilyViewModel {
 
   constructor() {
     this.id = 0;
-    this.note = '';
+    this.notes = '';
     this.primaryContactEmail = '';
     this.primaryContactFirstName = '';
     this.primaryContactLastName = '';
@@ -19,14 +19,14 @@ export default class FamilyViewModel {
 
   setProperties(
     id: number,
-    note: string,
+    notes: string,
     primaryContactEmail: string,
     primaryContactFirstName: string,
     primaryContactLastName: string,
     primaryContactPhone: string
   ): void {
     this.id = id;
-    this.note = note;
+    this.notes = notes;
     this.primaryContactEmail = primaryContactEmail;
     this.primaryContactFirstName = primaryContactFirstName;
     this.primaryContactLastName = primaryContactLastName;
@@ -40,5 +40,5 @@ export default class FamilyViewModel {
 
 
 /*<Codenesium>
-    <Hash>7323485e9103a68066faaa98e8f40b43</Hash>
+    <Hash>f53f3d24daa7f9f6117bbbaa0069e100</Hash>
 </Codenesium>*/

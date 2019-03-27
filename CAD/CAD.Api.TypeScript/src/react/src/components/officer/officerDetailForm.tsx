@@ -8,7 +8,7 @@ import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
 import { NoteTableComponent } from '../shared/noteTable';
-import { OfficerCapabilityTableComponent } from '../shared/officerCapabilityTable';
+import { OfficerCapabilitiesTableComponent } from '../shared/officerCapabilitiesTable';
 import { UnitOfficerTableComponent } from '../shared/unitOfficerTable';
 import { VehicleOfficerTableComponent } from '../shared/vehicleOfficerTable';
 
@@ -111,23 +111,23 @@ class OfficerDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>badge</h3>
+              <h3>Badge</h3>
               <p>{String(this.state.model!.badge)}</p>
             </div>
             <div>
-              <h3>email</h3>
+              <h3>Email</h3>
               <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <h3>firstName</h3>
+              <h3>First Name</h3>
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>lastName</h3>
+              <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <h3>password</h3>
+              <h3>Password</h3>
               <p>{String(this.state.model!.password)}</p>
             </div>
           </div>
@@ -149,7 +149,7 @@ class OfficerDetailComponent extends React.Component<
           </div>
           <div>
             <h3>OfficerCapabilities</h3>
-            <OfficerCapabilityTableComponent
+            <OfficerCapabilitiesTableComponent
               history={this.props.history}
               match={this.props.match}
               apiRoute={
@@ -206,5 +206,5 @@ export const WrappedOfficerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>50d443fe58a146fad2a5db135603f9ae</Hash>
+    <Hash>c9837bb93e60995040207342fb7d16e3</Hash>
 </Codenesium>*/

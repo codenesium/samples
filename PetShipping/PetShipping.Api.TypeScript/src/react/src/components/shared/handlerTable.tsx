@@ -115,7 +115,7 @@ export class HandlerTableComponent extends React.Component<
                 Header: 'Handlers',
                 columns: [
                   {
-                    Header: 'CountryId',
+                    Header: 'Country',
                     accessor: 'countryId',
                     Cell: props => {
                       return <span>{String(props.original.countryId)}</span>;
@@ -129,14 +129,14 @@ export class HandlerTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -194,5 +194,5 @@ export class HandlerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cdfba0d85d75327de3a383387b42665d</Hash>
+    <Hash>dae137db6872f5ed74e308922e9a806e</Hash>
 </Codenesium>*/

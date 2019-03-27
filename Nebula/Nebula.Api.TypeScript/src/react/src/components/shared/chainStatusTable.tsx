@@ -36,11 +36,11 @@ export class ChainStatusTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: ChainStatusViewModel) {
-    this.props.history.push(ClientRoutes.ChainStatuses + '/edit/' + row.id);
+    this.props.history.push(ClientRoutes.ChainStatus + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: ChainStatusViewModel) {
-    this.props.history.push(ClientRoutes.ChainStatuses + '/' + row.id);
+    this.props.history.push(ClientRoutes.ChainStatus + '/' + row.id);
   }
 
   componentDidMount() {
@@ -59,15 +59,15 @@ export class ChainStatusTableComponent extends React.Component<
 
         let mapper = new ChainStatusMapper();
 
-        let chainStatuses: Array<ChainStatusViewModel> = [];
+        let chainStatus: Array<ChainStatusViewModel> = [];
 
         response.data.forEach(x => {
-          chainStatuses.push(mapper.mapApiResponseToViewModel(x));
+          chainStatus.push(mapper.mapApiResponseToViewModel(x));
         });
 
         this.setState({
           ...this.state,
-          filteredRecords: chainStatuses,
+          filteredRecords: chainStatus,
           loading: false,
           loaded: true,
           errorOccurred: false,
@@ -112,15 +112,8 @@ export class ChainStatusTableComponent extends React.Component<
             defaultPageSize={10}
             columns={[
               {
-                Header: 'ChainStatuses',
+                Header: 'ChainStatus',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -173,5 +166,5 @@ export class ChainStatusTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ce395e83273a9d0fef43d03317f337a6</Hash>
+    <Hash>31e34bff5e51eabef87cba60c5268d2b</Hash>
 </Codenesium>*/

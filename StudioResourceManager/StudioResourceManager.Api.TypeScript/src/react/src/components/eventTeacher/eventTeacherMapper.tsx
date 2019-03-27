@@ -6,7 +6,7 @@ export default class EventTeacherMapper {
     dto: Api.EventTeacherClientResponseModel
   ): EventTeacherViewModel {
     let response = new EventTeacherViewModel();
-    response.setProperties(dto.id, dto.teacherId);
+    response.setProperties(dto.eventId, dto.id, dto.teacherId);
 
     if (dto.teacherIdNavigation != null) {
       response.teacherIdNavigation = new TeacherViewModel();
@@ -28,12 +28,12 @@ export default class EventTeacherMapper {
     model: EventTeacherViewModel
   ): Api.EventTeacherClientRequestModel {
     let response = new Api.EventTeacherClientRequestModel();
-    response.setProperties(model.id, model.teacherId);
+    response.setProperties(model.eventId, model.id, model.teacherId);
     return response;
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ddf935a0e903cad171587bced8025bea</Hash>
+    <Hash>84292c8a3db216a0c05b57e861688185</Hash>
 </Codenesium>*/

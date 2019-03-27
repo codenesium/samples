@@ -1,0 +1,70 @@
+version: '2'
+
+services:
+  app:
+    container_name: 'pointofsale-app'
+    image: 'pointofsale-app'
+    build:
+      context: .
+      dockerfile: DockerFileReact
+      args:
+      - REACT_APP_API_URL=http://192.168.99.100:81/
+	  - REACT_APP_HOST_SUBDIRECTORY=/
+    environment:
+       - REACT_APP_API_URL=http://192.168.99.100:81/
+	   - REACT_APP_HOST_SUBDIRECTORY=/
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "80:80"
+    networks:
+      - pointofsale-network
+
+  api:
+    container_name: 'pointofsale-api'
+    image: 'pointofsale-api'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:81
+       - ConnectionStrings__ApplicationDbContext=Host=pointofsale-db;Persist Security Info=False;User ID=postgres;Password=test;Database=pointofsale;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
+    volumes:
+      - .:/var/www/api
+    ports:
+     - "81:81"
+    depends_on:
+     - "db"
+    networks:
+      - pointofsale-network
+
+  db:
+    container_name: 'pointofsale-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: pointofsale
+    networks:
+      - pointofsale-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+  watchtower:
+    container_name: 'watchtower'
+    image: v2tec/watchtower
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    networks:
+      - pointofsale-network
+volumes:
+     pgdata:
+
+networks:
+    pointofsale-network:
+       driver: bridge

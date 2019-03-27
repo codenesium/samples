@@ -43,17 +43,17 @@ namespace CADNS.Api.DataAccess
 
 		public virtual DbSet<CallPerson> CallPersons { get; set; }
 
-		public virtual DbSet<CallStatu> CallStatus { get; set; }
+		public virtual DbSet<CallStatus> CallStatus { get; set; }
 
 		public virtual DbSet<CallType> CallTypes { get; set; }
 
 		public virtual DbSet<Note> Notes { get; set; }
 
+		public virtual DbSet<OffCapability> OffCapabilities { get; set; }
+
 		public virtual DbSet<Officer> Officers { get; set; }
 
-		public virtual DbSet<OfficerCapability> OfficerCapabilities { get; set; }
-
-		public virtual DbSet<OfficerCapability> OfficerCapabilities { get; set; }
+		public virtual DbSet<OfficerCapabilities> OfficerCapabilities { get; set; }
 
 		public virtual DbSet<Person> People { get; set; }
 
@@ -65,11 +65,11 @@ namespace CADNS.Api.DataAccess
 
 		public virtual DbSet<UnitOfficer> UnitOfficers { get; set; }
 
+		public virtual DbSet<VehCapability> VehCapabilities { get; set; }
+
 		public virtual DbSet<Vehicle> Vehicles { get; set; }
 
-		public virtual DbSet<VehicleCapabilitty> VehicleCapabilities { get; set; }
-
-		public virtual DbSet<VehicleCapability> VehicleCapabilities { get; set; }
+		public virtual DbSet<VehicleCapabilities> VehicleCapabilities { get; set; }
 
 		public virtual DbSet<VehicleOfficer> VehicleOfficers { get; set; }
 
@@ -138,9 +138,13 @@ namespace CADNS.Api.DataAccess
 			modelBuilder.Entity<CallAssignment>()
 			.HasKey(c => new
 			{
-				c.CallId,
-				c.UnitId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<CallAssignment>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<CallDisposition>()
 			.HasKey(c => new
@@ -164,13 +168,13 @@ namespace CADNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<CallStatu>()
+			modelBuilder.Entity<CallStatus>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<CallStatu>()
+			modelBuilder.Entity<CallStatus>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -197,6 +201,17 @@ namespace CADNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
+			modelBuilder.Entity<OffCapability>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<OffCapability>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<Officer>()
 			.HasKey(c => new
 			{
@@ -208,20 +223,13 @@ namespace CADNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<OfficerCapability>()
-			.HasKey(c => new
-			{
-				c.CapabilityId,
-				c.OfficerId,
-			});
-
-			modelBuilder.Entity<OfficerCapability>()
+			modelBuilder.Entity<OfficerCapabilities>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<OfficerCapability>()
+			modelBuilder.Entity<OfficerCapabilities>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -273,9 +281,24 @@ namespace CADNS.Api.DataAccess
 			modelBuilder.Entity<UnitOfficer>()
 			.HasKey(c => new
 			{
-				c.OfficerId,
-				c.UnitId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<UnitOfficer>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<VehCapability>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<VehCapability>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Vehicle>()
 			.HasKey(c => new
@@ -288,20 +311,13 @@ namespace CADNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<VehicleCapabilitty>()
-			.HasKey(c => new
-			{
-				c.VehicleId,
-				c.VehicleCapabilityId,
-			});
-
-			modelBuilder.Entity<VehicleCapability>()
+			modelBuilder.Entity<VehicleCapabilities>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<VehicleCapability>()
+			modelBuilder.Entity<VehicleCapabilities>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -309,9 +325,13 @@ namespace CADNS.Api.DataAccess
 			modelBuilder.Entity<VehicleOfficer>()
 			.HasKey(c => new
 			{
-				c.OfficerId,
-				c.VehicleId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<VehicleOfficer>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 			base.OnModelCreating(modelBuilder);
@@ -345,5 +365,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4e6b02bf056bd47766b9acf222d498bf</Hash>
+    <Hash>5bc1ac167d97ec4d912078b03ac31a0e</Hash>
 </Codenesium>*/

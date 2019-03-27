@@ -197,7 +197,7 @@ export default class CustomerSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Customers',
+                Header: 'Customer',
                 columns: [
                   {
                     Header: 'Email',
@@ -288,5 +288,5 @@ export const WrappedCustomerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>100614ac82631de572a9ef7a3b910b09</Hash>
+    <Hash>1ff53dd0c133444a7822c0e3c029f721</Hash>
 </Codenesium>*/

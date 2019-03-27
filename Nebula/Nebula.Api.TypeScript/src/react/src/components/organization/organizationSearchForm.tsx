@@ -197,15 +197,8 @@ export default class OrganizationSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Organizations',
+                Header: 'Organization',
                 columns: [
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
                   {
                     Header: 'Name',
                     accessor: 'name',
@@ -274,5 +267,5 @@ export const WrappedOrganizationSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>59dacf03c3f7900847d7745f59c47166</Hash>
+    <Hash>9541286ad2821ccb1aceadb3a6e9a692</Hash>
 </Codenesium>*/

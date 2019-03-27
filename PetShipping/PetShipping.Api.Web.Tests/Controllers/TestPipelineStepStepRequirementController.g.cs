@@ -194,7 +194,7 @@ namespace PetShippingNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>()))
 			.Callback<int, ApiPipelineStepStepRequirementServerRequestModel>(
-				(id, model) => model.Detail.Should().Be("A")
+				(id, model) => model.Details.Should().Be("A")
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiPipelineStepStepRequirementServerResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStepStepRequirementServerResponseModel>(new ApiPipelineStepStepRequirementServerResponseModel()));
@@ -203,7 +203,7 @@ namespace PetShippingNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiPipelineStepStepRequirementServerRequestModel>();
-			patch.Replace(x => x.Detail, "A");
+			patch.Replace(x => x.Details, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -223,7 +223,7 @@ namespace PetShippingNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiPipelineStepStepRequirementServerRequestModel>();
-			patch.Replace(x => x.Detail, "A");
+			patch.Replace(x => x.Details, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -341,5 +341,5 @@ namespace PetShippingNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>54ccccaad152dba57db1231134223c6b</Hash>
+    <Hash>a1e25fd7370db4a219c7213422c454f4</Hash>
 </Codenesium>*/

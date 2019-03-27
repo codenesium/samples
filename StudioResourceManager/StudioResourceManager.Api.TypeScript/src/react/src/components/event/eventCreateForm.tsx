@@ -209,19 +209,19 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="studentNote">Student Note</label>
+            <label htmlFor="studentNotes">Student Notes</label>
             <br />
-            {getFieldDecorator('studentNote', {
+            {getFieldDecorator('studentNotes', {
               rules: [],
-            })(<Input placeholder={'Student Note'} />)}
+            })(<Input placeholder={'Student Notes'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherNote">Teacher Note</label>
+            <label htmlFor="teacherNotes">Teacher Notes</label>
             <br />
-            {getFieldDecorator('teacherNote', {
+            {getFieldDecorator('teacherNotes', {
               rules: [],
-            })(<Input placeholder={'Teacher Note'} />)}
+            })(<Input placeholder={'Teacher Notes'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -248,5 +248,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>19acfaea5f34004401fbdd941213d0e7</Hash>
+    <Hash>a85fdd49819489f705c6d70b61632668</Hash>
 </Codenesium>*/

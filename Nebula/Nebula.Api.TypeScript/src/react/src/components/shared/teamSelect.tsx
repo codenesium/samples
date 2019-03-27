@@ -94,7 +94,7 @@ export class TeamSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Team</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class TeamSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TeamViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TeamSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0d7076530575c0e63caab6bb04f78768</Hash>
+    <Hash>cfeec2d550b5919362379704ced3006e</Hash>
 </Codenesium>*/

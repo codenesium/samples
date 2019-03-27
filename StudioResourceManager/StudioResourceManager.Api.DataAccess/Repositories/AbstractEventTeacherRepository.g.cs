@@ -35,6 +35,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
+				                  x.EventId == query.ToInt() ||
 				                  x.Id == query.ToInt() ||
 				                  x.TeacherId == query.ToInt(),
 				                  limit,
@@ -88,9 +89,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		// Non-unique constraint IX_EventTeacher_eventId.
-		public async virtual Task<List<EventTeacher>> ById(int id, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Where(x => x.Id == id, limit, offset);
+			return await this.Where(x => x.EventId == eventId, limit, offset);
 		}
 
 		// Non-unique constraint IX_EventTeacher_teacherId.
@@ -141,5 +142,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b012a698513a63c8dc245268962d4f93</Hash>
+    <Hash>bc426134791c8a486feca307d1f99310</Hash>
 </Codenesium>*/

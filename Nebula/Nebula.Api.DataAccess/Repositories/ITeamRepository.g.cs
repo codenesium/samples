@@ -21,10 +21,12 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<Chain>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
 
+		Task<List<MachineRefTeam>> MachineRefTeamsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
+
 		Task<Organization> OrganizationByOrganizationId(int organizationId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ee3a52476ca5a05d49c99c497307c2f</Hash>
+    <Hash>6ac9b404a494c88727b6f1ce548b4d5c</Hash>
 </Codenesium>*/

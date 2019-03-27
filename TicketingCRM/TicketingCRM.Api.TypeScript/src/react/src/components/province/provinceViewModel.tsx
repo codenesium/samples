@@ -23,11 +23,11 @@ export default class ProvinceViewModel {
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.countryId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>46ecc80b284054cde656e3b39edf6754</Hash>
+    <Hash>be9cc8957b89625567fb13f35697679b</Hash>
 </Codenesium>*/

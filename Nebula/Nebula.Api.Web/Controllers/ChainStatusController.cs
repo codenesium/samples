@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Web
 {
-	[Route("api/chainStatuses")]
+	[Route("api/chainStatus")]
 	[ApiController]
 	[ApiVersion("1.0")]
 
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ad8eddf6287de943fe686aa7c82dc10b</Hash>
+    <Hash>39587381a52459c285f60e1940fdaf88</Hash>
 </Codenesium>*/

@@ -103,7 +103,7 @@ export class DirectTweetSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: DirectTweetViewModel) => {
                 return (
-                  <Select.Option key={x.tweetId} value={x.tweetId}>
+                  <Select.Option key={String(x.tweetId)} value={x.tweetId}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class DirectTweetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5b1185074559f4d8bd4034291775c155</Hash>
+    <Hash>aef92292c31009aaba078964efffe570</Hash>
 </Codenesium>*/

@@ -110,23 +110,23 @@ class HandlerDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>countryId</h3>
+              <h3>Country</h3>
               <p>{String(this.state.model!.countryId)}</p>
             </div>
             <div>
-              <h3>email</h3>
+              <h3>Email</h3>
               <p>{String(this.state.model!.email)}</p>
             </div>
             <div>
-              <h3>firstName</h3>
+              <h3>First Name</h3>
               <p>{String(this.state.model!.firstName)}</p>
             </div>
             <div>
-              <h3>lastName</h3>
+              <h3>Last Name</h3>
               <p>{String(this.state.model!.lastName)}</p>
             </div>
             <div>
-              <h3>phone</h3>
+              <h3>Phone</h3>
               <p>{String(this.state.model!.phone)}</p>
             </div>
           </div>
@@ -190,5 +190,5 @@ export const WrappedHandlerDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e240e6dde0135b22295687e97bce1652</Hash>
+    <Hash>6012216034818428ca718e6c47b6f7c1</Hash>
 </Codenesium>*/

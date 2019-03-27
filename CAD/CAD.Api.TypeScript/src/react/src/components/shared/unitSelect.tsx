@@ -103,7 +103,7 @@ export class UnitSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: UnitViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class UnitSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ebc2efa79c99fdc372ec1762f400de08</Hash>
+    <Hash>99b244a9ac661cfd188d8f3e0875dcba</Hash>
 </Codenesium>*/

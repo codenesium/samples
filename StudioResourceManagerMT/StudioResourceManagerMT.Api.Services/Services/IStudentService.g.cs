@@ -19,9 +19,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 		Task<ApiStudentServerResponseModel> Get(int id);
 
 		Task<List<ApiStudentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<ApiEventStudentServerResponseModel>> EventStudentsByStudentId(int studentId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>31f873d31fabf6dbf3cb4c40f7612642</Hash>
+    <Hash>aa4df2e0382de3dbcfc2f8736bf26d27</Hash>
 </Codenesium>*/

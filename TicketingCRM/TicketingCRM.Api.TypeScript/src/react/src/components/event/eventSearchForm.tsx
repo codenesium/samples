@@ -197,7 +197,7 @@ export default class EventSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Events',
+                Header: 'Event',
                 columns: [
                   {
                     Header: 'Address1',
@@ -345,5 +345,5 @@ export const WrappedEventSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5a7f13624208dc55d235d94211495d40</Hash>
+    <Hash>9c05596f068132f0e9d2f566e403d9fe</Hash>
 </Codenesium>*/

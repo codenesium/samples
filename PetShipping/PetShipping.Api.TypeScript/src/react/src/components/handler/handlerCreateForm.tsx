@@ -140,55 +140,55 @@ class HandlerCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="countryId">countryId</label>
+            <label htmlFor="countryId">Country</label>
             <br />
             {getFieldDecorator('countryId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'countryId'} />)}
+            })(<InputNumber placeholder={'Country'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">Email</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'email'} />)}
+            })(<Input placeholder={'Email'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">firstName</label>
+            <label htmlFor="firstName">First Name</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'firstName'} />)}
+            })(<Input placeholder={'First Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">lastName</label>
+            <label htmlFor="lastName">Last Name</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'lastName'} />)}
+            })(<Input placeholder={'Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">phone</label>
+            <label htmlFor="phone">Phone</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 10, message: 'Exceeds max length of 10' },
               ],
-            })(<InputNumber placeholder={'phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -215,5 +215,5 @@ export const WrappedHandlerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d0ba847e5ec7e0766b7f1b058ebcf8a6</Hash>
+    <Hash>25e856e9aaa64f7b1b39f0b7ce1a9c8a</Hash>
 </Codenesium>*/

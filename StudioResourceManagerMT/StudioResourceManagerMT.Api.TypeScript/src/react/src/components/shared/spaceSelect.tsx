@@ -103,7 +103,7 @@ export class SpaceSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: SpaceViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class SpaceSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>180fcce4c46b7a60d325c738cf82a723</Hash>
+    <Hash>da843a9ccf3a08b5f060f2ba23be79e1</Hash>
 </Codenesium>*/

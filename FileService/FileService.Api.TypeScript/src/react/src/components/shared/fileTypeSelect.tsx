@@ -103,7 +103,7 @@ export class FileTypeSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: FileTypeViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class FileTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>45c4d433c84bf677e9a49fce96598781</Hash>
+    <Hash>823202323a812c098032f9a493fc63ce</Hash>
 </Codenesium>*/

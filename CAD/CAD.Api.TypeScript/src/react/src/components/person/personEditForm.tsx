@@ -192,35 +192,35 @@ class PersonEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="firstName">firstName</label>
+            <label htmlFor="firstName">First Name</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'firstName'} />)}
+            })(<Input placeholder={'First Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">lastName</label>
+            <label htmlFor="lastName">Last Name</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
-            })(<Input placeholder={'lastName'} />)}
+            })(<Input placeholder={'Last Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">phone</label>
+            <label htmlFor="phone">Phone</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [{ max: 32, message: 'Exceeds max length of 32' }],
-            })(<Input placeholder={'phone'} />)}
+            })(<Input placeholder={'Phone'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="ssn">ssn</label>
+            <label htmlFor="ssn">Ssn</label>
             <br />
             {getFieldDecorator('ssn', {
               rules: [{ max: 12, message: 'Exceeds max length of 12' }],
-            })(<Input placeholder={'ssn'} />)}
+            })(<Input placeholder={'Ssn'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -247,5 +247,5 @@ export const WrappedPersonEditComponent = Form.create({ name: 'Person Edit' })(
 
 
 /*<Codenesium>
-    <Hash>eab1ab07be085c7e767c71559897e3ad</Hash>
+    <Hash>5090a1986f24e8d564d33ebad08f1a53</Hash>
 </Codenesium>*/

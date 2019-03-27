@@ -195,20 +195,20 @@ class PipelineEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="pipelineStatusId">pipelineStatusId</label>
-            <br />
-            {getFieldDecorator('pipelineStatusId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStatusId'} />)}
-          </Form.Item>
+          <PipelineStatusSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineStatus}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="pipelineStatusId"
+            required={true}
+            selectedValue={this.state.model!.pipelineStatusId}
+          />
 
           <Form.Item>
-            <label htmlFor="saleId">saleId</label>
+            <label htmlFor="saleId">Sale</label>
             <br />
             {getFieldDecorator('saleId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'saleId'} />)}
+            })(<InputNumber placeholder={'Sale'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -235,5 +235,5 @@ export const WrappedPipelineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f20ea054382ad6c7d461de6ffccd9c04</Hash>
+    <Hash>ac11ffa64d30f5edfa909fbf571af7ca</Hash>
 </Codenesium>*/

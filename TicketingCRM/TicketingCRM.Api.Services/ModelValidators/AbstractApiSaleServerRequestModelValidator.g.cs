@@ -32,10 +32,10 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.IpAddress).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void NoteRules()
+		public virtual void NotesRules()
 		{
-			this.RuleFor(x => x.Note).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x.Note).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.Notes).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Notes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void SaleDateRules()
@@ -57,5 +57,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f4c3c09fa00716c65438ed59e456d345</Hash>
+    <Hash>8d54c1b8e84951aa2cbd6a1115cd3223</Hash>
 </Codenesium>*/

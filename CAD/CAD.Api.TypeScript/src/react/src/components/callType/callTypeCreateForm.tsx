@@ -140,14 +140,14 @@ class CallTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -174,5 +174,5 @@ export const WrappedCallTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3797d1554fa440e1239a958764bfe074</Hash>
+    <Hash>f2dbab726d09953dbc2f93504b97f400</Hash>
 </Codenesium>*/

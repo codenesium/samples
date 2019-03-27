@@ -25,7 +25,7 @@ export default class StudentMapper {
       response.familyIdNavigation = new FamilyViewModel();
       response.familyIdNavigation.setProperties(
         dto.familyIdNavigation.id,
-        dto.familyIdNavigation.note,
+        dto.familyIdNavigation.notes,
         dto.familyIdNavigation.primaryContactEmail,
         dto.familyIdNavigation.primaryContactFirstName,
         dto.familyIdNavigation.primaryContactLastName,
@@ -67,5 +67,5 @@ export default class StudentMapper {
 
 
 /*<Codenesium>
-    <Hash>e85c036ed6f9473b6d97a0a9c691e4de</Hash>
+    <Hash>e752fcfe7d02a5666b9bc54a0904c989</Hash>
 </Codenesium>*/

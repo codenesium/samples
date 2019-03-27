@@ -202,10 +202,10 @@ export default class CountryRequirementSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'CountryRequirements',
+                Header: 'Country Requirement',
                 columns: [
                   {
-                    Header: 'CountryId',
+                    Header: 'Country',
                     accessor: 'countryId',
                     Cell: props => {
                       return (
@@ -230,9 +230,9 @@ export default class CountryRequirementSearchComponent extends React.Component<
                   },
                   {
                     Header: 'Details',
-                    accessor: 'detail',
+                    accessor: 'details',
                     Cell: props => {
-                      return <span>{String(props.original.detail)}</span>;
+                      return <span>{String(props.original.details)}</span>;
                     },
                   },
                   {
@@ -296,5 +296,5 @@ export const WrappedCountryRequirementSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dbbc039ec917ae35ec011eb284bbe242</Hash>
+    <Hash>8196c536afd795cf36654868acf1ca3a</Hash>
 </Codenesium>*/

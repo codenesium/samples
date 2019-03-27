@@ -192,39 +192,39 @@ class PetEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
-            <label htmlFor="breedId">breedId</label>
-            <br />
-            {getFieldDecorator('breedId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'breedId'} />)}
-          </Form.Item>
+          <BreedSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Breeds}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="breedId"
+            required={true}
+            selectedValue={this.state.model!.breedId}
+          />
 
           <Form.Item>
-            <label htmlFor="clientId">clientId</label>
+            <label htmlFor="clientId">Client</label>
             <br />
             {getFieldDecorator('clientId', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'clientId'} />)}
+            })(<InputNumber placeholder={'Client'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">Name</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
                 { required: true, message: 'Required' },
                 { max: 128, message: 'Exceeds max length of 128' },
               ],
-            })(<Input placeholder={'name'} />)}
+            })(<Input placeholder={'Name'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="weight">weight</label>
+            <label htmlFor="weight">Weight</label>
             <br />
             {getFieldDecorator('weight', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'weight'} />)}
+            })(<InputNumber placeholder={'Weight'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -251,5 +251,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>e275d268909ffa987596bce1d44b2dfd</Hash>
+    <Hash>c4c775fe449619d5836436979bd9ad92</Hash>
 </Codenesium>*/

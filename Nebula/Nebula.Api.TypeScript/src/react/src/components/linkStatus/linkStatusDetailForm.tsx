@@ -37,7 +37,7 @@ class LinkStatusDetailComponent extends React.Component<
 
   handleEditClick(e: any) {
     this.props.history.push(
-      ClientRoutes.LinkStatuses + '/edit/' + this.state.model!.id
+      ClientRoutes.LinkStatus + '/edit/' + this.state.model!.id
     );
   }
 
@@ -47,7 +47,7 @@ class LinkStatusDetailComponent extends React.Component<
     axios
       .get<Api.LinkStatusClientResponseModel>(
         Constants.ApiEndpoint +
-          ApiRoutes.LinkStatuses +
+          ApiRoutes.LinkStatus +
           '/' +
           this.props.match.params.id,
         {
@@ -108,10 +108,6 @@ class LinkStatusDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>Id</h3>
-              <p>{String(this.state.model!.id)}</p>
-            </div>
-            <div>
               <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
@@ -124,7 +120,7 @@ class LinkStatusDetailComponent extends React.Component<
               match={this.props.match}
               apiRoute={
                 Constants.ApiEndpoint +
-                ApiRoutes.LinkStatuses +
+                ApiRoutes.LinkStatus +
                 '/' +
                 this.state.model!.id +
                 '/' +
@@ -146,5 +142,5 @@ export const WrappedLinkStatusDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ab09bf36e8c09edc1f7f41d9c866ced7</Hash>
+    <Hash>95e84673cce55caf6fafdd0969365ea8</Hash>
 </Codenesium>*/

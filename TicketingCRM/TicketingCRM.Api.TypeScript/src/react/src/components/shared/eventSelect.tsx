@@ -94,7 +94,7 @@ export class EventSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Event</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class EventSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: EventViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class EventSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>465315222a2039b651f26b39d342f393</Hash>
+    <Hash>afa80a58e786d0d3d36be64e12f932a1</Hash>
 </Codenesium>*/

@@ -84,6 +84,7 @@ export default class Dashboard extends React.Component<DashboardComponentProps, 
         {alert}
         <br />
 		<Button><a href={Constants.ApiHealthEndpoint} target='_blank'>API Health</a></Button>
+		<br />
 		<Button><a href={Constants.SwaggerEndpoint} target='_blank'>Swagger</a></Button>
         <div style={{'marginTop':'35px'}} > 
             <label htmlFor='authToken'>Auth Token</label>

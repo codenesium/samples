@@ -21,8 +21,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.EventStatusIdRules();
 			this.ScheduledEndDateRules();
 			this.ScheduledStartDateRules();
-			this.StudentNoteRules();
-			this.TeacherNoteRules();
+			this.StudentNotesRules();
+			this.TeacherNotesRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -34,8 +34,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.EventStatusIdRules();
 			this.ScheduledEndDateRules();
 			this.ScheduledStartDateRules();
-			this.StudentNoteRules();
-			this.TeacherNoteRules();
+			this.StudentNotesRules();
+			this.TeacherNotesRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -47,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12ce6da3b29a6c49c50d326b7131061f</Hash>
+    <Hash>24b256f592594df7ff10a1c29d5e9c91</Hash>
 </Codenesium>*/

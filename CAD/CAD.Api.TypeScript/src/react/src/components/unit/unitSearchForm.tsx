@@ -199,7 +199,7 @@ export default class UnitSearchComponent extends React.Component<
                 Header: 'Unit',
                 columns: [
                   {
-                    Header: 'CallSign',
+                    Header: 'Call Sign',
                     accessor: 'callSign',
                     Cell: props => {
                       return <span>{String(props.original.callSign)}</span>;
@@ -266,5 +266,5 @@ export const WrappedUnitSearchComponent = Form.create({ name: 'Unit Search' })(
 
 
 /*<Codenesium>
-    <Hash>d69869f34917808e5b4651fe51925127</Hash>
+    <Hash>34a01fa639801e1c75e3b13332dadfa2</Hash>
 </Codenesium>*/

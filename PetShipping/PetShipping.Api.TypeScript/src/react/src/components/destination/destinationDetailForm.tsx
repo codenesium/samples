@@ -108,7 +108,7 @@ class DestinationDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>countryId</h3>
+              <h3>Country</h3>
               <p>
                 {String(
                   this.state.model!.countryIdNavigation &&
@@ -117,11 +117,11 @@ class DestinationDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>name</h3>
+              <h3>Name</h3>
               <p>{String(this.state.model!.name)}</p>
             </div>
             <div>
-              <h3>order</h3>
+              <h3>Order</h3>
               <p>{String(this.state.model!.order)}</p>
             </div>
           </div>
@@ -155,5 +155,5 @@ export const WrappedDestinationDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4c54452dc4700d3949cf8be34038f49f</Hash>
+    <Hash>32b6803c298f03e08d8fdef1c8178d5d</Hash>
 </Codenesium>*/

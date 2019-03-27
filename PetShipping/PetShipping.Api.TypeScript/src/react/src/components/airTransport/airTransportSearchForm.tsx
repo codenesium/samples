@@ -197,24 +197,24 @@ export default class AirTransportSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'AirTransports',
+                Header: 'Air Transport',
                 columns: [
                   {
-                    Header: 'AirlineId',
+                    Header: 'Airline',
                     accessor: 'airlineId',
                     Cell: props => {
                       return <span>{String(props.original.airlineId)}</span>;
                     },
                   },
                   {
-                    Header: 'FlightNumber',
+                    Header: 'Flight Number',
                     accessor: 'flightNumber',
                     Cell: props => {
                       return <span>{String(props.original.flightNumber)}</span>;
                     },
                   },
                   {
-                    Header: 'HandlerId',
+                    Header: 'Handler',
                     accessor: 'handlerId',
                     Cell: props => {
                       return (
@@ -238,14 +238,14 @@ export default class AirTransportSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'LandDate',
+                    Header: 'Land Date',
                     accessor: 'landDate',
                     Cell: props => {
                       return <span>{String(props.original.landDate)}</span>;
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -254,7 +254,7 @@ export default class AirTransportSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'TakeoffDate',
+                    Header: 'Takeoff Date',
                     accessor: 'takeoffDate',
                     Cell: props => {
                       return <span>{String(props.original.takeoffDate)}</span>;
@@ -321,5 +321,5 @@ export const WrappedAirTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e072a06faa6a347ff64fb85a86e77fd7</Hash>
+    <Hash>1a8e5b83e4546e6e4e17f1740254f600</Hash>
 </Codenesium>*/

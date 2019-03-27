@@ -365,7 +365,7 @@ export class ProvinceClientResponseModel {
 export class SaleClientRequestModel {
   id: number;
   ipAddress: string;
-  note: string;
+  notes: string;
   saleDate: any;
   transactionId: number;
   transactionIdEntity: string;
@@ -374,7 +374,7 @@ export class SaleClientRequestModel {
   constructor() {
     this.id = 0;
     this.ipAddress = '';
-    this.note = '';
+    this.notes = '';
     this.saleDate = undefined;
     this.transactionId = 0;
     this.transactionIdEntity = '';
@@ -384,13 +384,13 @@ export class SaleClientRequestModel {
   setProperties(
     id: number,
     ipAddress: string,
-    note: string,
+    notes: string,
     saleDate: any,
     transactionId: number
   ): void {
     this.id = id;
     this.ipAddress = ipAddress;
-    this.note = note;
+    this.notes = notes;
     this.saleDate = saleDate;
     this.transactionId = transactionId;
   }
@@ -399,7 +399,7 @@ export class SaleClientRequestModel {
 export class SaleClientResponseModel {
   id: number;
   ipAddress: string;
-  note: string;
+  notes: string;
   saleDate: any;
   transactionId: number;
   transactionIdEntity: string;
@@ -408,7 +408,7 @@ export class SaleClientResponseModel {
   constructor() {
     this.id = 0;
     this.ipAddress = '';
-    this.note = '';
+    this.notes = '';
     this.saleDate = undefined;
     this.transactionId = 0;
     this.transactionIdEntity = '';
@@ -418,18 +418,18 @@ export class SaleClientResponseModel {
   setProperties(
     id: number,
     ipAddress: string,
-    note: string,
+    notes: string,
     saleDate: any,
     transactionId: number
   ): void {
     this.id = id;
     this.ipAddress = ipAddress;
-    this.note = note;
+    this.notes = notes;
     this.saleDate = saleDate;
     this.transactionId = transactionId;
   }
 }
-export class SaleTicketClientRequestModel {
+export class SaleTicketsClientRequestModel {
   id: number;
   saleId: number;
   saleIdEntity: string;
@@ -455,7 +455,7 @@ export class SaleTicketClientRequestModel {
   }
 }
 
-export class SaleTicketClientResponseModel {
+export class SaleTicketsClientResponseModel {
   id: number;
   saleId: number;
   saleIdEntity: string;
@@ -758,5 +758,5 @@ export class VenueClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>24a453148b0e6d060beea56276bcc468</Hash>
+    <Hash>cf1c748d95aa6adac3527207fdb03a08</Hash>
 </Codenesium>*/

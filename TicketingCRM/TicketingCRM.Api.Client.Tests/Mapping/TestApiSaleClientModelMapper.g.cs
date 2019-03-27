@@ -19,7 +19,7 @@ namespace TicketingCRMNS.Api.Client.Tests
 			ApiSaleClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.IpAddress.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TransactionId.Should().Be(1);
 		}
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Client.Tests
 			ApiSaleClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.IpAddress.Should().Be("A");
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TransactionId.Should().Be(1);
 		}
@@ -41,5 +41,5 @@ namespace TicketingCRMNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>e901761b17940d7133b13ef2972ecd6b</Hash>
+    <Hash>52035ce7e31218bfc59dfd67cb80cba6</Hash>
 </Codenesium>*/

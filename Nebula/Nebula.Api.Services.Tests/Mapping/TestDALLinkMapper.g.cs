@@ -24,14 +24,14 @@ namespace NebulaNS.Api.Services
 			response.ChainId.Should().Be(1);
 			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.DynamicParameter.Should().Be("A");
+			response.DynamicParameters.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.LinkStatusId.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.Order.Should().Be(1);
 			response.Response.Should().Be("A");
-			response.StaticParameter.Should().Be("A");
-			response.TimeoutInSecond.Should().Be(1);
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -46,15 +46,15 @@ namespace NebulaNS.Api.Services
 			response.ChainId.Should().Be(1);
 			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.DynamicParameter.Should().Be("A");
+			response.DynamicParameters.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.Id.Should().Be(1);
 			response.LinkStatusId.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.Order.Should().Be(1);
 			response.Response.Should().Be("A");
-			response.StaticParameter.Should().Be("A");
-			response.TimeoutInSecond.Should().Be(1);
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -71,5 +71,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0b3e1a5f9a5c70c6addcc95f5fe6d8b</Hash>
+    <Hash>f291d18b77f016f99f98535f96486dbd</Hash>
 </Codenesium>*/

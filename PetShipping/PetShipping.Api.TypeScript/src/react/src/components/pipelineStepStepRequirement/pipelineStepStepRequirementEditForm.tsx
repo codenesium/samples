@@ -196,27 +196,28 @@ class PipelineStepStepRequirementEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="detail">details</label>
+            <label htmlFor="details">Details</label>
             <br />
-            {getFieldDecorator('detail', {
+            {getFieldDecorator('details', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'details'} />)}
+            })(<Input placeholder={'Details'} />)}
           </Form.Item>
 
-          <Form.Item>
-            <label htmlFor="pipelineStepId">pipelineStepId</label>
-            <br />
-            {getFieldDecorator('pipelineStepId', {
-              rules: [{ required: true, message: 'Required' }],
-            })(<Input placeholder={'pipelineStepId'} />)}
-          </Form.Item>
+          <PipelineStepSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.PipelineSteps}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="pipelineStepId"
+            required={true}
+            selectedValue={this.state.model!.pipelineStepId}
+          />
 
           <Form.Item>
-            <label htmlFor="requirementMet">requirementMet</label>
+            <label htmlFor="requirementMet">Requirement Met</label>
             <br />
             {getFieldDecorator('requirementMet', {
               rules: [],
-            })(<Input placeholder={'requirementMet'} />)}
+              valuePropName: 'checked',
+            })(<Switch />)}
           </Form.Item>
 
           <Form.Item>
@@ -243,5 +244,5 @@ export const WrappedPipelineStepStepRequirementEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cd0e6a09d45669b7065c6482ded31120</Hash>
+    <Hash>c1fdf098e7c8c517768cf5e262aa2736</Hash>
 </Codenesium>*/

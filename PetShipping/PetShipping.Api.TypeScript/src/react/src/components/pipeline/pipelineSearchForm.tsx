@@ -197,10 +197,10 @@ export default class PipelineSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Pipelines',
+                Header: 'Pipeline',
                 columns: [
                   {
-                    Header: 'PipelineStatusId',
+                    Header: 'Pipeline Status',
                     accessor: 'pipelineStatusId',
                     Cell: props => {
                       return (
@@ -224,7 +224,7 @@ export default class PipelineSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SaleId',
+                    Header: 'Sale',
                     accessor: 'saleId',
                     Cell: props => {
                       return <span>{String(props.original.saleId)}</span>;
@@ -291,5 +291,5 @@ export const WrappedPipelineSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>264d155cb64e84455aacebfaaadbbd0b</Hash>
+    <Hash>c851dc242bc47ae7d5366241d5f7422c</Hash>
 </Codenesium>*/

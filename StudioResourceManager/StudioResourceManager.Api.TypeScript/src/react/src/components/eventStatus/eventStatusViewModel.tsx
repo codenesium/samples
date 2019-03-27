@@ -15,11 +15,11 @@ export default class EventStatusViewModel {
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>e90e24eb9460753d2ff7de44147d3365</Hash>
+    <Hash>5f53bf6f20d1341bc3bb6dae212d51ef</Hash>
 </Codenesium>*/

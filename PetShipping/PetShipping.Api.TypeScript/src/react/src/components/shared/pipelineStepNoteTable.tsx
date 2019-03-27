@@ -118,7 +118,7 @@ export class PipelineStepNoteTableComponent extends React.Component<
                 Header: 'PipelineStepNotes',
                 columns: [
                   {
-                    Header: 'EmployeeId',
+                    Header: 'Employee',
                     accessor: 'employeeId',
                     Cell: props => {
                       return (
@@ -142,7 +142,14 @@ export class PipelineStepNoteTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Note',
+                    accessor: 'note',
+                    Cell: props => {
+                      return <span>{String(props.original.note)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -210,5 +217,5 @@ export class PipelineStepNoteTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>fd0efbed1635923dc7b9ef2129d32a54</Hash>
+    <Hash>0321e5e209b25593676beb99a7676efa</Hash>
 </Codenesium>*/

@@ -57,27 +57,27 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			context.Set<Link>().ToList()[1].ChainId.Should().Be(1);
 			context.Set<Link>().ToList()[1].DateCompleted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Link>().ToList()[1].DateStarted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<Link>().ToList()[1].DynamicParameter.Should().Be("B");
+			context.Set<Link>().ToList()[1].DynamicParameters.Should().Be("B");
 			context.Set<Link>().ToList()[1].ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Link>().ToList()[1].LinkStatusId.Should().Be(1);
 			context.Set<Link>().ToList()[1].Name.Should().Be("B");
 			context.Set<Link>().ToList()[1].Order.Should().Be(2);
 			context.Set<Link>().ToList()[1].Response.Should().Be("B");
-			context.Set<Link>().ToList()[1].StaticParameter.Should().Be("B");
-			context.Set<Link>().ToList()[1].TimeoutInSecond.Should().Be(2);
+			context.Set<Link>().ToList()[1].StaticParameters.Should().Be("B");
+			context.Set<Link>().ToList()[1].TimeoutInSeconds.Should().Be(2);
 
 			context.Set<Link>().ToList()[2].AssignedMachineId.Should().Be(1);
 			context.Set<Link>().ToList()[2].ChainId.Should().Be(1);
 			context.Set<Link>().ToList()[2].DateCompleted.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<Link>().ToList()[2].DateStarted.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
-			context.Set<Link>().ToList()[2].DynamicParameter.Should().Be("C");
+			context.Set<Link>().ToList()[2].DynamicParameters.Should().Be("C");
 			context.Set<Link>().ToList()[2].ExternalId.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
 			context.Set<Link>().ToList()[2].LinkStatusId.Should().Be(1);
 			context.Set<Link>().ToList()[2].Name.Should().Be("C");
 			context.Set<Link>().ToList()[2].Order.Should().Be(3);
 			context.Set<Link>().ToList()[2].Response.Should().Be("C");
-			context.Set<Link>().ToList()[2].StaticParameter.Should().Be("C");
-			context.Set<Link>().ToList()[2].TimeoutInSecond.Should().Be(3);
+			context.Set<Link>().ToList()[2].StaticParameters.Should().Be("C");
+			context.Set<Link>().ToList()[2].TimeoutInSeconds.Should().Be(3);
 		}
 
 		[Fact]
@@ -107,27 +107,27 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			context.Set<Link>().ToList()[1].ChainId.Should().Be(1);
 			context.Set<Link>().ToList()[1].DateCompleted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Link>().ToList()[1].DateStarted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<Link>().ToList()[1].DynamicParameter.Should().Be("B");
+			context.Set<Link>().ToList()[1].DynamicParameters.Should().Be("B");
 			context.Set<Link>().ToList()[1].ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Link>().ToList()[1].LinkStatusId.Should().Be(1);
 			context.Set<Link>().ToList()[1].Name.Should().Be("B");
 			context.Set<Link>().ToList()[1].Order.Should().Be(2);
 			context.Set<Link>().ToList()[1].Response.Should().Be("B");
-			context.Set<Link>().ToList()[1].StaticParameter.Should().Be("B");
-			context.Set<Link>().ToList()[1].TimeoutInSecond.Should().Be(2);
+			context.Set<Link>().ToList()[1].StaticParameters.Should().Be("B");
+			context.Set<Link>().ToList()[1].TimeoutInSeconds.Should().Be(2);
 
 			result.Record.AssignedMachineId.Should().Be(1);
 			result.Record.ChainId.Should().Be(1);
 			result.Record.DateCompleted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.DateStarted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			result.Record.DynamicParameter.Should().Be("B");
+			result.Record.DynamicParameters.Should().Be("B");
 			result.Record.ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			result.Record.LinkStatusId.Should().Be(1);
 			result.Record.Name.Should().Be("B");
 			result.Record.Order.Should().Be(2);
 			result.Record.Response.Should().Be("B");
-			result.Record.StaticParameter.Should().Be("B");
-			result.Record.TimeoutInSecond.Should().Be(2);
+			result.Record.StaticParameters.Should().Be("B");
+			result.Record.TimeoutInSeconds.Should().Be(2);
 		}
 
 		[Fact]
@@ -164,28 +164,28 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			context.Set<Link>().ToList()[0].ChainId.Should().Be(1);
 			context.Set<Link>().ToList()[0].DateCompleted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Link>().ToList()[0].DateStarted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<Link>().ToList()[0].DynamicParameter.Should().Be("B");
+			context.Set<Link>().ToList()[0].DynamicParameters.Should().Be("B");
 			context.Set<Link>().ToList()[0].ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Link>().ToList()[0].LinkStatusId.Should().Be(1);
 			context.Set<Link>().ToList()[0].Name.Should().Be("B");
 			context.Set<Link>().ToList()[0].Order.Should().Be(2);
 			context.Set<Link>().ToList()[0].Response.Should().Be("B");
-			context.Set<Link>().ToList()[0].StaticParameter.Should().Be("B");
-			context.Set<Link>().ToList()[0].TimeoutInSecond.Should().Be(2);
+			context.Set<Link>().ToList()[0].StaticParameters.Should().Be("B");
+			context.Set<Link>().ToList()[0].TimeoutInSeconds.Should().Be(2);
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.AssignedMachineId.Should().Be(1);
 			updateResponse.Record.ChainId.Should().Be(1);
 			updateResponse.Record.DateCompleted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.DateStarted.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			updateResponse.Record.DynamicParameter.Should().Be("B");
+			updateResponse.Record.DynamicParameters.Should().Be("B");
 			updateResponse.Record.ExternalId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			updateResponse.Record.LinkStatusId.Should().Be(1);
 			updateResponse.Record.Name.Should().Be("B");
 			updateResponse.Record.Order.Should().Be(2);
 			updateResponse.Record.Response.Should().Be("B");
-			updateResponse.Record.StaticParameter.Should().Be("B");
-			updateResponse.Record.TimeoutInSecond.Should().Be(2);
+			updateResponse.Record.StaticParameters.Should().Be("B");
+			updateResponse.Record.TimeoutInSeconds.Should().Be(2);
 		}
 
 		[Fact]
@@ -245,15 +245,15 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			response.ChainId.Should().Be(1);
 			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.DynamicParameter.Should().Be("A");
+			response.DynamicParameters.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.Id.Should().Be(1);
 			response.LinkStatusId.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.Order.Should().Be(1);
 			response.Response.Should().Be("A");
-			response.StaticParameter.Should().Be("A");
-			response.TimeoutInSecond.Should().Be(1);
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -300,15 +300,15 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			response[0].ChainId.Should().Be(1);
 			response[0].DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response[0].DynamicParameter.Should().Be("A");
+			response[0].DynamicParameters.Should().Be("A");
 			response[0].ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response[0].Id.Should().Be(1);
 			response[0].LinkStatusId.Should().Be(1);
 			response[0].Name.Should().Be("A");
 			response[0].Order.Should().Be(1);
 			response[0].Response.Should().Be("A");
-			response[0].StaticParameter.Should().Be("A");
-			response[0].TimeoutInSecond.Should().Be(1);
+			response[0].StaticParameters.Should().Be("A");
+			response[0].TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -335,15 +335,15 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			response.ChainId.Should().Be(1);
 			response.DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.DynamicParameter.Should().Be("A");
+			response.DynamicParameters.Should().Be("A");
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.Id.Should().Be(1);
 			response.LinkStatusId.Should().Be(1);
 			response.Name.Should().Be("A");
 			response.Order.Should().Be(1);
 			response.Response.Should().Be("A");
-			response.StaticParameter.Should().Be("A");
-			response.TimeoutInSecond.Should().Be(1);
+			response.StaticParameters.Should().Be("A");
+			response.TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -390,15 +390,15 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			response[0].ChainId.Should().Be(1);
 			response[0].DateCompleted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].DateStarted.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response[0].DynamicParameter.Should().Be("A");
+			response[0].DynamicParameters.Should().Be("A");
 			response[0].ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response[0].Id.Should().Be(1);
 			response[0].LinkStatusId.Should().Be(1);
 			response[0].Name.Should().Be("A");
 			response[0].Order.Should().Be(1);
 			response[0].Response.Should().Be("A");
-			response[0].StaticParameter.Should().Be("A");
-			response[0].TimeoutInSecond.Should().Be(1);
+			response[0].StaticParameters.Should().Be("A");
+			response[0].TimeoutInSeconds.Should().Be(1);
 		}
 
 		[Fact]
@@ -487,5 +487,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>b3ecaf40f2f2c0330b0ff39d3599db05</Hash>
+    <Hash>3f30c9a828a645af7031afe44cda4777</Hash>
 </Codenesium>*/

@@ -17,12 +17,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task<List<Teacher>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
+		Task<List<EventTeacher>> EventTeachersByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<Rate>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<TeacherTeacherSkill>> TeacherTeacherSkillsByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
 
 		Task<User> UserByUserId(int userId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a7cf5f3124760e926b35cfaac74172a</Hash>
+    <Hash>31a797b2828c139ada879c2b2f503ee2</Hash>
 </Codenesium>*/

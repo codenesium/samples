@@ -16,10 +16,16 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual void SetProperties(
+			int eventId,
 			int teacherId)
 		{
+			this.EventId = eventId;
 			this.TeacherId = teacherId;
 		}
+
+		[Required]
+		[JsonProperty]
+		public int EventId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
@@ -28,5 +34,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f91070ecfd832d198e91225ddf3521fc</Hash>
+    <Hash>0bb15f7d38d19edd55257988ef44f245</Hash>
 </Codenesium>*/

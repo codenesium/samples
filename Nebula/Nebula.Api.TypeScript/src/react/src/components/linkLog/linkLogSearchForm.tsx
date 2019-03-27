@@ -200,21 +200,14 @@ export default class LinkLogSearchComponent extends React.Component<
                 Header: 'Link Log',
                 columns: [
                   {
-                    Header: 'DateEntered',
+                    Header: 'Date Entered',
                     accessor: 'dateEntered',
                     Cell: props => {
                       return <span>{String(props.original.dateEntered)}</span>;
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'LinkId',
+                    Header: 'Link',
                     accessor: 'linkId',
                     Cell: props => {
                       return (
@@ -303,5 +296,5 @@ export const WrappedLinkLogSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>10aac283e6ba75e05d0310d8780ae1ae</Hash>
+    <Hash>db7de86664dc6eb0e9c07c8fa3c5e682</Hash>
 </Codenesium>*/

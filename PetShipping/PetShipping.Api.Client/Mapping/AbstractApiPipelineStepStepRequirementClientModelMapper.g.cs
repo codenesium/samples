@@ -12,7 +12,7 @@ namespace PetShippingNS.Api.Client
 		{
 			var response = new ApiPipelineStepStepRequirementClientResponseModel();
 			response.SetProperties(id,
-			                       request.Detail,
+			                       request.Details,
 			                       request.PipelineStepId,
 			                       request.RequirementMet);
 			return response;
@@ -23,7 +23,7 @@ namespace PetShippingNS.Api.Client
 		{
 			var request = new ApiPipelineStepStepRequirementClientRequestModel();
 			request.SetProperties(
-				response.Detail,
+				response.Details,
 				response.PipelineStepId,
 				response.RequirementMet);
 			return request;
@@ -32,5 +32,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>f219827920a9fecf36945427a547cdf0</Hash>
+    <Hash>33ae3ccef67b6118616094d2e6c15785</Hash>
 </Codenesium>*/

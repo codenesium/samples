@@ -35,7 +35,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context.EventStudents.Add(eventStudentItem1);
 
 			var eventTeacherItem1 = new EventTeacher();
-			eventTeacherItem1.SetProperties(1, 1);
+			eventTeacherItem1.SetProperties(1, 1, 1);
 			this.Context.EventTeachers.Add(eventTeacherItem1);
 
 			var familyItem1 = new Family();
@@ -88,5 +88,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2a727e147d630c29eae98f1f4c10861a</Hash>
+    <Hash>da2135e96f9cb4a722ee4f30a69cbe95</Hash>
 </Codenesium>*/

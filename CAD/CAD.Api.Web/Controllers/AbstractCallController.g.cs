@@ -217,6 +217,23 @@ namespace CADNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("{callId}/CallAssignments")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCallAssignmentServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> CallAssignmentsByCallId(int callId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCallAssignmentServerResponseModel> response = await this.CallService.CallAssignmentsByCallId(callId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
 		[Route("{callId}/Notes")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiNoteServerResponseModel>), 200)]
@@ -229,23 +246,6 @@ namespace CADNS.Api.Web
 			}
 
 			List<ApiNoteServerResponseModel> response = await this.CallService.NotesByCallId(callId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("byUnitId/{unitId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCallServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByUnitId(int unitId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiCallServerResponseModel> response = await this.CallService.ByUnitId(unitId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -269,5 +269,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>831c48c0881873805256d5062aaa55c9</Hash>
+    <Hash>af10c045d6a64d89a1b11e267148ae42</Hash>
 </Codenesium>*/

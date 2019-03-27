@@ -17,16 +17,12 @@ namespace CADNS.Api.DataAccess
 
 		Task<List<Vehicle>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
-		Task<List<VehicleCapabilitty>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
+		Task<List<VehicleCapabilities>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Vehicle>> ByOfficerId(int officerId, int limit = int.MaxValue, int offset = 0);
-
-		Task<VehicleOfficer> CreateVehicleOfficer(VehicleOfficer item);
-
-		Task DeleteVehicleOfficer(VehicleOfficer item);
+		Task<List<VehicleOfficer>> VehicleOfficersByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d7cca3cb5207ae87288fdd9766ddbea4</Hash>
+    <Hash>8847289689ad686cfba98dbd93260019</Hash>
 </Codenesium>*/

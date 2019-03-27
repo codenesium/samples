@@ -288,6 +288,48 @@ namespace CADNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
+		public virtual async void TestForeignKeyCallAssignmentsByCallIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiCallAssignmentClientResponseModel> response = await client.CallAssignmentsByCallId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyCallAssignmentsByCallIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			JWTHelper jwtHelper = new JWTHelper();
+			client.SetBearerToken(jwtHelper.GenerateBearerToken(
+									  "defaultJWTPassword",
+									  "https://www.codenesium.com",
+									  "https://www.codenesium.com",
+									  "test@test.com",
+									  "Passw0rd$"));
+			List<ApiCallAssignmentClientResponseModel> response = await client.CallAssignmentsByCallId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
 		public virtual async void TestForeignKeyNotesByCallIdFound()
 		{
 			var builder = new WebHostBuilder()
@@ -352,5 +394,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>fc39c9c8a8c015a6493875fe49910996</Hash>
+    <Hash>e75823e621eb66453ef0c0e4d9fc98b4</Hash>
 </Codenesium>*/

@@ -120,7 +120,7 @@ export class CountryRequirementTableComponent extends React.Component<
                 Header: 'CountryRequirements',
                 columns: [
                   {
-                    Header: 'CountryId',
+                    Header: 'Country',
                     accessor: 'countryId',
                     Cell: props => {
                       return (
@@ -145,9 +145,9 @@ export class CountryRequirementTableComponent extends React.Component<
                   },
                   {
                     Header: 'Details',
-                    accessor: 'detail',
+                    accessor: 'details',
                     Cell: props => {
-                      return <span>{String(props.original.detail)}</span>;
+                      return <span>{String(props.original.details)}</span>;
                     },
                   },
                   {
@@ -195,5 +195,5 @@ export class CountryRequirementTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>89d7aa0d26b2c28fa47feebd731a6ce2</Hash>
+    <Hash>c370fb72a22d74f7d83c88f6fb7b3a68</Hash>
 </Codenesium>*/

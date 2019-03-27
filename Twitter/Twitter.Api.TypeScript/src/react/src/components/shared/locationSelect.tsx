@@ -103,7 +103,10 @@ export class LocationSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: LocationViewModel) => {
                 return (
-                  <Select.Option key={x.locationId} value={x.locationId}>
+                  <Select.Option
+                    key={String(x.locationId)}
+                    value={x.locationId}
+                  >
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +123,5 @@ export class LocationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a8c40d7c58cde7172a15e599ff125aba</Hash>
+    <Hash>d0a3d4d4ae4d97e5083647966dd0a054</Hash>
 </Codenesium>*/

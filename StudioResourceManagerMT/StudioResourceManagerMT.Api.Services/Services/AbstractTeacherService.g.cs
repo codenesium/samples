@@ -17,7 +17,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		protected IDALTeacherMapper DalTeacherMapper { get; private set; }
 
+		protected IDALEventTeacherMapper DalEventTeacherMapper { get; private set; }
+
 		protected IDALRateMapper DalRateMapper { get; private set; }
+
+		protected IDALTeacherTeacherSkillMapper DalTeacherTeacherSkillMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -27,13 +31,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 			ITeacherRepository teacherRepository,
 			IApiTeacherServerRequestModelValidator teacherModelValidator,
 			IDALTeacherMapper dalTeacherMapper,
-			IDALRateMapper dalRateMapper)
+			IDALEventTeacherMapper dalEventTeacherMapper,
+			IDALRateMapper dalRateMapper,
+			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper)
 			: base()
 		{
 			this.TeacherRepository = teacherRepository;
 			this.TeacherModelValidator = teacherModelValidator;
 			this.DalTeacherMapper = dalTeacherMapper;
+			this.DalEventTeacherMapper = dalEventTeacherMapper;
 			this.DalRateMapper = dalRateMapper;
+			this.DalTeacherTeacherSkillMapper = dalTeacherTeacherSkillMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
@@ -116,15 +124,29 @@ namespace StudioResourceManagerMTNS.Api.Services
 			return response;
 		}
 
+		public async virtual Task<List<ApiEventTeacherServerResponseModel>> EventTeachersByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EventTeacher> records = await this.TeacherRepository.EventTeachersByTeacherId(teacherId, limit, offset);
+
+			return this.DalEventTeacherMapper.MapEntityToModel(records);
+		}
+
 		public async virtual Task<List<ApiRateServerResponseModel>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Rate> records = await this.TeacherRepository.RatesByTeacherId(teacherId, limit, offset);
 
 			return this.DalRateMapper.MapEntityToModel(records);
 		}
+
+		public async virtual Task<List<ApiTeacherTeacherSkillServerResponseModel>> TeacherTeacherSkillsByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<TeacherTeacherSkill> records = await this.TeacherRepository.TeacherTeacherSkillsByTeacherId(teacherId, limit, offset);
+
+			return this.DalTeacherTeacherSkillMapper.MapEntityToModel(records);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>192060e2bf5b40306fb4d7cab3b8fa64</Hash>
+    <Hash>d394bf33ac1d1f7fa37932cc8556522f</Hash>
 </Codenesium>*/

@@ -214,14 +214,14 @@ export default class OfficerSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'FirstName',
+                    Header: 'First Name',
                     accessor: 'firstName',
                     Cell: props => {
                       return <span>{String(props.original.firstName)}</span>;
                     },
                   },
                   {
-                    Header: 'LastName',
+                    Header: 'Last Name',
                     accessor: 'lastName',
                     Cell: props => {
                       return <span>{String(props.original.lastName)}</span>;
@@ -295,5 +295,5 @@ export const WrappedOfficerSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>da3a960cc1cd9d2a4f4a35eccc89950a</Hash>
+    <Hash>ff2530549f922bc9a8335a29a8d3bd86</Hash>
 </Codenesium>*/

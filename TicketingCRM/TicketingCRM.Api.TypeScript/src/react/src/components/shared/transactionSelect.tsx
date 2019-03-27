@@ -94,7 +94,7 @@ export class TransactionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>Transaction</label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -103,7 +103,7 @@ export class TransactionSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: TransactionViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class TransactionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4ba55f4bf381d046b9b2926be375800c</Hash>
+    <Hash>b682256321ad82c87ae414667f4d2336</Hash>
 </Codenesium>*/

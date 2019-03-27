@@ -209,6 +209,96 @@ export class EventStatuClientResponseModel {
     this.name = name;
   }
 }
+export class EventStudentClientRequestModel {
+  eventId: number;
+  eventIdEntity: string;
+  eventIdNavigation?: EventClientResponseModel;
+  studentId: number;
+  studentIdEntity: string;
+  studentIdNavigation?: StudentClientResponseModel;
+
+  constructor() {
+    this.eventId = 0;
+    this.eventIdEntity = '';
+    this.eventIdNavigation = undefined;
+    this.studentId = 0;
+    this.studentIdEntity = '';
+    this.studentIdNavigation = undefined;
+  }
+
+  setProperties(eventId: number, studentId: number): void {
+    this.eventId = eventId;
+    this.studentId = studentId;
+  }
+}
+
+export class EventStudentClientResponseModel {
+  eventId: number;
+  eventIdEntity: string;
+  eventIdNavigation?: EventClientResponseModel;
+  studentId: number;
+  studentIdEntity: string;
+  studentIdNavigation?: StudentClientResponseModel;
+
+  constructor() {
+    this.eventId = 0;
+    this.eventIdEntity = '';
+    this.eventIdNavigation = undefined;
+    this.studentId = 0;
+    this.studentIdEntity = '';
+    this.studentIdNavigation = undefined;
+  }
+
+  setProperties(eventId: number, studentId: number): void {
+    this.eventId = eventId;
+    this.studentId = studentId;
+  }
+}
+export class EventTeacherClientRequestModel {
+  eventId: number;
+  eventIdEntity: string;
+  eventIdNavigation?: EventClientResponseModel;
+  teacherId: number;
+  teacherIdEntity: string;
+  teacherIdNavigation?: TeacherClientResponseModel;
+
+  constructor() {
+    this.eventId = 0;
+    this.eventIdEntity = '';
+    this.eventIdNavigation = undefined;
+    this.teacherId = 0;
+    this.teacherIdEntity = '';
+    this.teacherIdNavigation = undefined;
+  }
+
+  setProperties(eventId: number, teacherId: number): void {
+    this.eventId = eventId;
+    this.teacherId = teacherId;
+  }
+}
+
+export class EventTeacherClientResponseModel {
+  eventId: number;
+  eventIdEntity: string;
+  eventIdNavigation?: EventClientResponseModel;
+  teacherId: number;
+  teacherIdEntity: string;
+  teacherIdNavigation?: TeacherClientResponseModel;
+
+  constructor() {
+    this.eventId = 0;
+    this.eventIdEntity = '';
+    this.eventIdNavigation = undefined;
+    this.teacherId = 0;
+    this.teacherIdEntity = '';
+    this.teacherIdNavigation = undefined;
+  }
+
+  setProperties(eventId: number, teacherId: number): void {
+    this.eventId = eventId;
+    this.teacherId = teacherId;
+  }
+}
 export class FamilyClientRequestModel {
   id: number;
   note: string;
@@ -405,6 +495,51 @@ export class SpaceFeatureClientResponseModel {
   setProperties(id: number, name: string): void {
     this.id = id;
     this.name = name;
+  }
+}
+export class SpaceSpaceFeatureClientRequestModel {
+  spaceFeatureId: number;
+  spaceFeatureIdEntity: string;
+  spaceFeatureIdNavigation?: SpaceFeatureClientResponseModel;
+  spaceId: number;
+  spaceIdEntity: string;
+  spaceIdNavigation?: SpaceClientResponseModel;
+
+  constructor() {
+    this.spaceFeatureId = 0;
+    this.spaceFeatureIdEntity = '';
+    this.spaceFeatureIdNavigation = undefined;
+    this.spaceId = 0;
+    this.spaceIdEntity = '';
+    this.spaceIdNavigation = undefined;
+  }
+
+  setProperties(spaceFeatureId: number, spaceId: number): void {
+    this.spaceFeatureId = spaceFeatureId;
+    this.spaceId = spaceId;
+  }
+}
+
+export class SpaceSpaceFeatureClientResponseModel {
+  spaceFeatureId: number;
+  spaceFeatureIdEntity: string;
+  spaceFeatureIdNavigation?: SpaceFeatureClientResponseModel;
+  spaceId: number;
+  spaceIdEntity: string;
+  spaceIdNavigation?: SpaceClientResponseModel;
+
+  constructor() {
+    this.spaceFeatureId = 0;
+    this.spaceFeatureIdEntity = '';
+    this.spaceFeatureIdNavigation = undefined;
+    this.spaceId = 0;
+    this.spaceIdEntity = '';
+    this.spaceIdNavigation = undefined;
+  }
+
+  setProperties(spaceFeatureId: number, spaceId: number): void {
+    this.spaceFeatureId = spaceFeatureId;
+    this.spaceId = spaceId;
   }
 }
 export class StudentClientRequestModel {
@@ -725,6 +860,51 @@ export class TeacherSkillClientResponseModel {
     this.name = name;
   }
 }
+export class TeacherTeacherSkillClientRequestModel {
+  teacherId: number;
+  teacherIdEntity: string;
+  teacherIdNavigation?: TeacherClientResponseModel;
+  teacherSkillId: number;
+  teacherSkillIdEntity: string;
+  teacherSkillIdNavigation?: TeacherSkillClientResponseModel;
+
+  constructor() {
+    this.teacherId = 0;
+    this.teacherIdEntity = '';
+    this.teacherIdNavigation = undefined;
+    this.teacherSkillId = 0;
+    this.teacherSkillIdEntity = '';
+    this.teacherSkillIdNavigation = undefined;
+  }
+
+  setProperties(teacherId: number, teacherSkillId: number): void {
+    this.teacherId = teacherId;
+    this.teacherSkillId = teacherSkillId;
+  }
+}
+
+export class TeacherTeacherSkillClientResponseModel {
+  teacherId: number;
+  teacherIdEntity: string;
+  teacherIdNavigation?: TeacherClientResponseModel;
+  teacherSkillId: number;
+  teacherSkillIdEntity: string;
+  teacherSkillIdNavigation?: TeacherSkillClientResponseModel;
+
+  constructor() {
+    this.teacherId = 0;
+    this.teacherIdEntity = '';
+    this.teacherIdNavigation = undefined;
+    this.teacherSkillId = 0;
+    this.teacherSkillIdEntity = '';
+    this.teacherSkillIdNavigation = undefined;
+  }
+
+  setProperties(teacherId: number, teacherSkillId: number): void {
+    this.teacherId = teacherId;
+    this.teacherSkillId = teacherSkillId;
+  }
+}
 export class UserClientRequestModel {
   id: number;
   password: string;
@@ -763,5 +943,5 @@ export class UserClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>d37fc8ffab1c79cd155ee6cd0ac76eca</Hash>
+    <Hash>410909861a20777616085e65e8bd100b</Hash>
 </Codenesium>*/

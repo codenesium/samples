@@ -39,7 +39,7 @@ namespace PetShippingNS.Api.DataAccess
 				                  x.FirstName.StartsWith(query) ||
 				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
-				                  x.Note.StartsWith(query) ||
+				                  x.Notes.StartsWith(query) ||
 				                  x.Phone.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -127,5 +127,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67b53ccf6e523101098ecffe2d0216c6</Hash>
+    <Hash>f753953ff1af2451b529efc7da3f2945</Hash>
 </Codenesium>*/

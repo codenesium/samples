@@ -66,7 +66,7 @@ class LinkStatusCreateComponent extends React.Component<
     let mapper = new LinkStatusMapper();
     axios
       .post<CreateResponse<Api.LinkStatusClientRequestModel>>(
-        Constants.ApiEndpoint + ApiRoutes.LinkStatuses,
+        Constants.ApiEndpoint + ApiRoutes.LinkStatus,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: GlobalUtilities.defaultHeaders(),
@@ -174,5 +174,5 @@ export const WrappedLinkStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1ca3885d0083102d9c477bd57c023452</Hash>
+    <Hash>26b72e60d06b09e65eadf5478dc12cab</Hash>
 </Codenesium>*/

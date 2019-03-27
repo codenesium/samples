@@ -107,19 +107,19 @@ class SaleDetailComponent extends React.Component<
           </Button>
           <div>
             <div>
-              <h3>amount</h3>
+              <h3>Amount</h3>
               <p>{String(this.state.model!.amount)}</p>
             </div>
             <div>
-              <h3>cutomerId</h3>
+              <h3>Cutomer</h3>
               <p>{String(this.state.model!.cutomerId)}</p>
             </div>
             <div>
-              <h3>note</h3>
+              <h3>Note</h3>
               <p>{String(this.state.model!.note)}</p>
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <h3>petId</h3>
+              <h3>Pet</h3>
               <p>
                 {String(
                   this.state.model!.petIdNavigation &&
@@ -128,11 +128,11 @@ class SaleDetailComponent extends React.Component<
               </p>
             </div>
             <div>
-              <h3>saleDate</h3>
+              <h3>Sale Date</h3>
               <p>{String(this.state.model!.saleDate)}</p>
             </div>
             <div>
-              <h3>salesPersonId</h3>
+              <h3>Sales Person</h3>
               <p>{String(this.state.model!.salesPersonId)}</p>
             </div>
           </div>
@@ -151,5 +151,5 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 
 
 /*<Codenesium>
-    <Hash>9332ed1a3ee41b36b01d68459bd32e36</Hash>
+    <Hash>a40414523e40c6bf1574055dbc95e47c</Hash>
 </Codenesium>*/

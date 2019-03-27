@@ -200,10 +200,10 @@ export default class OtherTransportSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'OtherTransports',
+                Header: 'Other Transport',
                 columns: [
                   {
-                    Header: 'HandlerId',
+                    Header: 'Handler',
                     accessor: 'handlerId',
                     Cell: props => {
                       return (
@@ -227,7 +227,7 @@ export default class OtherTransportSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PipelineStepId',
+                    Header: 'Pipeline Step',
                     accessor: 'pipelineStepId',
                     Cell: props => {
                       return (
@@ -311,5 +311,5 @@ export const WrappedOtherTransportSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6923e3e047bb6e8fc2d19e0a7ff831d3</Hash>
+    <Hash>dfc79f6d76949da1481f25857303740d</Hash>
 </Codenesium>*/

@@ -56,12 +56,12 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			context.Set<CustomerCommunication>().ToList()[1].CustomerId.Should().Be(1);
 			context.Set<CustomerCommunication>().ToList()[1].DateCreated.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CustomerCommunication>().ToList()[1].EmployeeId.Should().Be(1);
-			context.Set<CustomerCommunication>().ToList()[1].Note.Should().Be("B");
+			context.Set<CustomerCommunication>().ToList()[1].Notes.Should().Be("B");
 
 			context.Set<CustomerCommunication>().ToList()[2].CustomerId.Should().Be(1);
 			context.Set<CustomerCommunication>().ToList()[2].DateCreated.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<CustomerCommunication>().ToList()[2].EmployeeId.Should().Be(1);
-			context.Set<CustomerCommunication>().ToList()[2].Note.Should().Be("C");
+			context.Set<CustomerCommunication>().ToList()[2].Notes.Should().Be("C");
 		}
 
 		[Fact]
@@ -90,12 +90,12 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			context.Set<CustomerCommunication>().ToList()[1].CustomerId.Should().Be(1);
 			context.Set<CustomerCommunication>().ToList()[1].DateCreated.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CustomerCommunication>().ToList()[1].EmployeeId.Should().Be(1);
-			context.Set<CustomerCommunication>().ToList()[1].Note.Should().Be("B");
+			context.Set<CustomerCommunication>().ToList()[1].Notes.Should().Be("B");
 
 			result.Record.CustomerId.Should().Be(1);
 			result.Record.DateCreated.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.EmployeeId.Should().Be(1);
-			result.Record.Note.Should().Be("B");
+			result.Record.Notes.Should().Be("B");
 		}
 
 		[Fact]
@@ -131,13 +131,13 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			context.Set<CustomerCommunication>().ToList()[0].CustomerId.Should().Be(1);
 			context.Set<CustomerCommunication>().ToList()[0].DateCreated.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CustomerCommunication>().ToList()[0].EmployeeId.Should().Be(1);
-			context.Set<CustomerCommunication>().ToList()[0].Note.Should().Be("B");
+			context.Set<CustomerCommunication>().ToList()[0].Notes.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.CustomerId.Should().Be(1);
 			updateResponse.Record.DateCreated.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.EmployeeId.Should().Be(1);
-			updateResponse.Record.Note.Should().Be("B");
+			updateResponse.Record.Notes.Should().Be("B");
 		}
 
 		[Fact]
@@ -197,7 +197,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.EmployeeId.Should().Be(1);
 			response.Id.Should().Be(1);
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 		}
 
 		[Fact]
@@ -244,7 +244,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			response[0].DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].EmployeeId.Should().Be(1);
 			response[0].Id.Should().Be(1);
-			response[0].Note.Should().Be("A");
+			response[0].Notes.Should().Be("A");
 		}
 
 		[Fact]
@@ -270,7 +270,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			response[0].DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].EmployeeId.Should().Be(1);
 			response[0].Id.Should().Be(1);
-			response[0].Note.Should().Be("A");
+			response[0].Notes.Should().Be("A");
 		}
 
 		[Fact]
@@ -317,7 +317,7 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			response[0].DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].EmployeeId.Should().Be(1);
 			response[0].Id.Should().Be(1);
-			response[0].Note.Should().Be("A");
+			response[0].Notes.Should().Be("A");
 		}
 
 		[Fact]
@@ -364,5 +364,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>94e2d404dd3393ce1a0bdd733595be98</Hash>
+    <Hash>0a93886836987be620d303b85702e718</Hash>
 </Codenesium>*/

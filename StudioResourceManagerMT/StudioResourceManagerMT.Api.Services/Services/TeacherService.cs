@@ -13,18 +13,22 @@ namespace StudioResourceManagerMTNS.Api.Services
 			ITeacherRepository teacherRepository,
 			IApiTeacherServerRequestModelValidator teacherModelValidator,
 			IDALTeacherMapper dalTeacherMapper,
-			IDALRateMapper dalRateMapper)
+			IDALEventTeacherMapper dalEventTeacherMapper,
+			IDALRateMapper dalRateMapper,
+			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper)
 			: base(logger,
 			       mediator,
 			       teacherRepository,
 			       teacherModelValidator,
 			       dalTeacherMapper,
-			       dalRateMapper)
+			       dalEventTeacherMapper,
+			       dalRateMapper,
+			       dalTeacherTeacherSkillMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a7163adb09ec9b67403597653a2e3e5</Hash>
+    <Hash>a9c840838c4dd3b489f7e9cb9b9e71ac</Hash>
 </Codenesium>*/

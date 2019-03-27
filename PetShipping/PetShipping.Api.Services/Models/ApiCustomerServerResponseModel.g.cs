@@ -13,14 +13,14 @@ namespace PetShippingNS.Api.Services
 			string email,
 			string firstName,
 			string lastName,
-			string note,
+			string notes,
 			string phone)
 		{
 			this.Id = id;
 			this.Email = email;
 			this.FirstName = firstName;
 			this.LastName = lastName;
-			this.Note = note;
+			this.Notes = notes;
 			this.Phone = phone;
 		}
 
@@ -38,7 +38,7 @@ namespace PetShippingNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string Note { get; private set; }
+		public string Notes { get; private set; }
 
 		[JsonProperty]
 		public string Phone { get; private set; }
@@ -46,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc5ffdc74eaae059c960587b83c8424a</Hash>
+    <Hash>7c10437cd908f3ec278d98891279415b</Hash>
 </Codenesium>*/

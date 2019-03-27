@@ -97,7 +97,9 @@ export class PipelineStepStepRequirementSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            Pipeline Step Step Requirement
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -107,7 +109,7 @@ export class PipelineStepStepRequirementSelectComponent extends React.Component<
               {this.state.filteredRecords.map(
                 (x: PipelineStepStepRequirementViewModel) => {
                   return (
-                    <Select.Option key={x.id} value={x.id}>
+                    <Select.Option key={String(x.id)} value={x.id}>
                       {x.toDisplay()}
                     </Select.Option>
                   );
@@ -125,5 +127,5 @@ export class PipelineStepStepRequirementSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d325b45bc749189a22f730e7d0735276</Hash>
+    <Hash>96d0f4996fbf1be28c1807310dd32cc8</Hash>
 </Codenesium>*/

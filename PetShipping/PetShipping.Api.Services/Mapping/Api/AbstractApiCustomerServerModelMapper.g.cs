@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services
 			                       request.Email,
 			                       request.FirstName,
 			                       request.LastName,
-			                       request.Note,
+			                       request.Notes,
 			                       request.Phone);
 			return response;
 		}
@@ -30,7 +30,7 @@ namespace PetShippingNS.Api.Services
 				response.Email,
 				response.FirstName,
 				response.LastName,
-				response.Note,
+				response.Notes,
 				response.Phone);
 			return request;
 		}
@@ -43,7 +43,7 @@ namespace PetShippingNS.Api.Services
 				response.Email,
 				response.FirstName,
 				response.LastName,
-				response.Note,
+				response.Notes,
 				response.Phone);
 			return request;
 		}
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Services
 			patch.Replace(x => x.Email, model.Email);
 			patch.Replace(x => x.FirstName, model.FirstName);
 			patch.Replace(x => x.LastName, model.LastName);
-			patch.Replace(x => x.Note, model.Note);
+			patch.Replace(x => x.Notes, model.Notes);
 			patch.Replace(x => x.Phone, model.Phone);
 			return patch;
 		}
@@ -62,5 +62,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fda77791da9accdd8a05ae9afb3f8371</Hash>
+    <Hash>86732ae23741f7a5a174e4b86bb2b2de</Hash>
 </Codenesium>*/

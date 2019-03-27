@@ -7,7 +7,7 @@ export default class SaleMapper {
     response.setProperties(
       dto.id,
       dto.ipAddress,
-      dto.note,
+      dto.notes,
       dto.saleDate,
       dto.transactionId
     );
@@ -30,7 +30,7 @@ export default class SaleMapper {
     response.setProperties(
       model.id,
       model.ipAddress,
-      model.note,
+      model.notes,
       model.saleDate,
       model.transactionId
     );
@@ -40,5 +40,5 @@ export default class SaleMapper {
 
 
 /*<Codenesium>
-    <Hash>b8293a0617f599b4cb9607c5738b1eb1</Hash>
+    <Hash>1bfe9e101185d6b08bf939cc390a4957</Hash>
 </Codenesium>*/

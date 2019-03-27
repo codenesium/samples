@@ -20,12 +20,12 @@ namespace CADNS.Api.Services
 
 		Task<List<ApiVehicleServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
-		Task<List<ApiVehicleCapabilittyServerResponseModel>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVehicleCapabilitiesServerResponseModel>> VehicleCapabilitiesByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiVehicleServerResponseModel>> ByOfficerId(int vehicleId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVehicleOfficerServerResponseModel>> VehicleOfficersByVehicleId(int vehicleId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5c77468f55569964f6b825f8a539c32</Hash>
+    <Hash>bd2f5462ba9e025f71e552d4d0a3db6d</Hash>
 </Codenesium>*/

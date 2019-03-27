@@ -197,10 +197,10 @@ export default class ChainSearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Chains',
+                Header: 'Chain',
                 columns: [
                   {
-                    Header: 'ChainStatusId',
+                    Header: 'Chain Status',
                     accessor: 'chainStatusId',
                     Cell: props => {
                       return (
@@ -209,7 +209,7 @@ export default class ChainSearchComponent extends React.Component<
                           onClick={e => {
                             e.preventDefault();
                             this.props.history.push(
-                              ClientRoutes.ChainStatuses +
+                              ClientRoutes.ChainStatus +
                                 '/' +
                                 props.original.chainStatusId
                             );
@@ -224,17 +224,10 @@ export default class ChainSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'ExternalId',
+                    Header: 'External',
                     accessor: 'externalId',
                     Cell: props => {
                       return <span>{String(props.original.externalId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
                     },
                   },
                   {
@@ -245,7 +238,7 @@ export default class ChainSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'TeamId',
+                    Header: 'Team',
                     accessor: 'teamId',
                     Cell: props => {
                       return (
@@ -327,5 +320,5 @@ export const WrappedChainSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d7f83c6c170350dff535e64f5822151e</Hash>
+    <Hash>38e2b41cba5c2cc208e8551213497e71</Hash>
 </Codenesium>*/

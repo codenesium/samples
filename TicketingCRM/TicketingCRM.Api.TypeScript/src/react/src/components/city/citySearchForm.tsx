@@ -197,7 +197,7 @@ export default class CitySearchComponent extends React.Component<
             data={this.state.filteredRecords}
             columns={[
               {
-                Header: 'Cities',
+                Header: 'City',
                 columns: [
                   {
                     Header: 'Name',
@@ -291,5 +291,5 @@ export const WrappedCitySearchComponent = Form.create({ name: 'City Search' })(
 
 
 /*<Codenesium>
-    <Hash>5fe71cf8dfc2f0294ee241eb824d0283</Hash>
+    <Hash>f381c679b6b00be3824d793513c0bb90</Hash>
 </Codenesium>*/

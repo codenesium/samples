@@ -56,9 +56,9 @@ namespace CADNS.Api.Client
 		}
 
 		[JsonProperty]
-		public ApiCallStatuClientResponseModel CallStatusIdNavigation { get; private set; }
+		public ApiCallStatusClientResponseModel CallStatusIdNavigation { get; private set; }
 
-		public void SetCallStatusIdNavigation(ApiCallStatuClientResponseModel value)
+		public void SetCallStatusIdNavigation(ApiCallStatusClientResponseModel value)
 		{
 			this.CallStatusIdNavigation = value;
 		}
@@ -116,5 +116,5 @@ namespace CADNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>560f02efeac6474476daec4baf2c5699</Hash>
+    <Hash>468ac4e7716ede69ca6c5737a7919201</Hash>
 </Codenesium>*/

@@ -18,13 +18,13 @@ namespace PetShippingNS.Api.Client
 			string email,
 			string firstName,
 			string lastName,
-			string note,
+			string notes,
 			string phone)
 		{
 			this.Email = email;
 			this.FirstName = firstName;
 			this.LastName = lastName;
-			this.Note = note;
+			this.Notes = notes;
 			this.Phone = phone;
 		}
 
@@ -38,7 +38,7 @@ namespace PetShippingNS.Api.Client
 		public string LastName { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Note { get; private set; } = default(string);
+		public string Notes { get; private set; } = default(string);
 
 		[JsonProperty]
 		public string Phone { get; private set; } = default(string);
@@ -46,5 +46,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>09ac1fd610519db5503c2f934c66eb1d</Hash>
+    <Hash>40f2b512da2654bb3298e5a015589a41</Hash>
 </Codenesium>*/

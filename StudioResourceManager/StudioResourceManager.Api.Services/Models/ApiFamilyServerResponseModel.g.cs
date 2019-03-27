@@ -10,14 +10,14 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public virtual void SetProperties(
 			int id,
-			string note,
+			string notes,
 			string primaryContactEmail,
 			string primaryContactFirstName,
 			string primaryContactLastName,
 			string primaryContactPhone)
 		{
 			this.Id = id;
-			this.Note = note;
+			this.Notes = notes;
 			this.PrimaryContactEmail = primaryContactEmail;
 			this.PrimaryContactFirstName = primaryContactFirstName;
 			this.PrimaryContactLastName = primaryContactLastName;
@@ -29,7 +29,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string Note { get; private set; }
+		public string Notes { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -49,5 +49,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f426154e4b285ff756f8d77eae2aff71</Hash>
+    <Hash>2d22ec24c5818e0882e296ee1787733c</Hash>
 </Codenesium>*/

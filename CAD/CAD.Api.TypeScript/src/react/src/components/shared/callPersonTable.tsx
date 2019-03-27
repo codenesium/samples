@@ -122,7 +122,7 @@ export class CallPersonTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PersonId',
+                    Header: 'Person',
                     accessor: 'personId',
                     Cell: props => {
                       return (
@@ -146,7 +146,7 @@ export class CallPersonTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'PersonTypeId',
+                    Header: 'Person Type',
                     accessor: 'personTypeId',
                     Cell: props => {
                       return (
@@ -214,5 +214,5 @@ export class CallPersonTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a8ab710a7453d2e6bb50cbfbacc8f59a</Hash>
+    <Hash>bd5a94aaf8e3b427e9ff3813da7e8bf0</Hash>
 </Codenesium>*/

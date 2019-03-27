@@ -103,7 +103,7 @@ export class AddressSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: AddressViewModel) => {
                 return (
-                  <Select.Option key={x.id} value={x.id}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -120,5 +120,5 @@ export class AddressSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1d6207fd5ce7511894149f8b4e066133</Hash>
+    <Hash>0a64a2e72a72f7310e5da1e9cf3fb586</Hash>
 </Codenesium>*/

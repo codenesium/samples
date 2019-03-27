@@ -16,7 +16,7 @@ namespace PetShippingNS.Api.Services
 			item.SetProperties(
 				id,
 				model.CountryId,
-				model.Detail);
+				model.Details);
 			return item;
 		}
 
@@ -27,7 +27,7 @@ namespace PetShippingNS.Api.Services
 
 			model.SetProperties(item.Id,
 			                    item.CountryId,
-			                    item.Detail);
+			                    item.Details);
 			if (item.CountryIdNavigation != null)
 			{
 				var countryIdModel = new ApiCountryServerResponseModel();
@@ -57,5 +57,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e00c565125b728c5688cdf243e96c6d9</Hash>
+    <Hash>bf3b3c88c3547c9b088e6c015692ce4f</Hash>
 </Codenesium>*/

@@ -91,8 +91,8 @@ export class EventClientRequestModel {
   id: number;
   scheduledEndDate: any;
   scheduledStartDate: any;
-  studentNote: string;
-  teacherNote: string;
+  studentNotes: string;
+  teacherNotes: string;
 
   constructor() {
     this.actualEndDate = undefined;
@@ -104,8 +104,8 @@ export class EventClientRequestModel {
     this.id = 0;
     this.scheduledEndDate = undefined;
     this.scheduledStartDate = undefined;
-    this.studentNote = '';
-    this.teacherNote = '';
+    this.studentNotes = '';
+    this.teacherNotes = '';
   }
 
   setProperties(
@@ -116,8 +116,8 @@ export class EventClientRequestModel {
     id: number,
     scheduledEndDate: any,
     scheduledStartDate: any,
-    studentNote: string,
-    teacherNote: string
+    studentNotes: string,
+    teacherNotes: string
   ): void {
     this.actualEndDate = actualEndDate;
     this.actualStartDate = actualStartDate;
@@ -126,8 +126,8 @@ export class EventClientRequestModel {
     this.id = id;
     this.scheduledEndDate = scheduledEndDate;
     this.scheduledStartDate = scheduledStartDate;
-    this.studentNote = studentNote;
-    this.teacherNote = teacherNote;
+    this.studentNotes = studentNotes;
+    this.teacherNotes = teacherNotes;
   }
 }
 
@@ -141,8 +141,8 @@ export class EventClientResponseModel {
   id: number;
   scheduledEndDate: any;
   scheduledStartDate: any;
-  studentNote: string;
-  teacherNote: string;
+  studentNotes: string;
+  teacherNotes: string;
 
   constructor() {
     this.actualEndDate = undefined;
@@ -154,8 +154,8 @@ export class EventClientResponseModel {
     this.id = 0;
     this.scheduledEndDate = undefined;
     this.scheduledStartDate = undefined;
-    this.studentNote = '';
-    this.teacherNote = '';
+    this.studentNotes = '';
+    this.teacherNotes = '';
   }
 
   setProperties(
@@ -166,8 +166,8 @@ export class EventClientResponseModel {
     id: number,
     scheduledEndDate: any,
     scheduledStartDate: any,
-    studentNote: string,
-    teacherNote: string
+    studentNotes: string,
+    teacherNotes: string
   ): void {
     this.actualEndDate = actualEndDate;
     this.actualStartDate = actualStartDate;
@@ -176,8 +176,8 @@ export class EventClientResponseModel {
     this.id = id;
     this.scheduledEndDate = scheduledEndDate;
     this.scheduledStartDate = scheduledStartDate;
-    this.studentNote = studentNote;
-    this.teacherNote = teacherNote;
+    this.studentNotes = studentNotes;
+    this.teacherNotes = teacherNotes;
   }
 }
 export class EventStatusClientRequestModel {
@@ -261,6 +261,7 @@ export class EventStudentClientResponseModel {
   }
 }
 export class EventTeacherClientRequestModel {
+  eventId: number;
   id: number;
   idEntity: string;
   idNavigation?: EventClientResponseModel;
@@ -269,6 +270,7 @@ export class EventTeacherClientRequestModel {
   teacherIdNavigation?: TeacherClientResponseModel;
 
   constructor() {
+    this.eventId = 0;
     this.id = 0;
     this.idEntity = '';
     this.idNavigation = undefined;
@@ -277,13 +279,15 @@ export class EventTeacherClientRequestModel {
     this.teacherIdNavigation = undefined;
   }
 
-  setProperties(id: number, teacherId: number): void {
+  setProperties(eventId: number, id: number, teacherId: number): void {
+    this.eventId = eventId;
     this.id = id;
     this.teacherId = teacherId;
   }
 }
 
 export class EventTeacherClientResponseModel {
+  eventId: number;
   id: number;
   idEntity: string;
   idNavigation?: EventClientResponseModel;
@@ -292,6 +296,7 @@ export class EventTeacherClientResponseModel {
   teacherIdNavigation?: TeacherClientResponseModel;
 
   constructor() {
+    this.eventId = 0;
     this.id = 0;
     this.idEntity = '';
     this.idNavigation = undefined;
@@ -300,14 +305,15 @@ export class EventTeacherClientResponseModel {
     this.teacherIdNavigation = undefined;
   }
 
-  setProperties(id: number, teacherId: number): void {
+  setProperties(eventId: number, id: number, teacherId: number): void {
+    this.eventId = eventId;
     this.id = id;
     this.teacherId = teacherId;
   }
 }
 export class FamilyClientRequestModel {
   id: number;
-  note: string;
+  notes: string;
   primaryContactEmail: string;
   primaryContactFirstName: string;
   primaryContactLastName: string;
@@ -315,7 +321,7 @@ export class FamilyClientRequestModel {
 
   constructor() {
     this.id = 0;
-    this.note = '';
+    this.notes = '';
     this.primaryContactEmail = '';
     this.primaryContactFirstName = '';
     this.primaryContactLastName = '';
@@ -324,14 +330,14 @@ export class FamilyClientRequestModel {
 
   setProperties(
     id: number,
-    note: string,
+    notes: string,
     primaryContactEmail: string,
     primaryContactFirstName: string,
     primaryContactLastName: string,
     primaryContactPhone: string
   ): void {
     this.id = id;
-    this.note = note;
+    this.notes = notes;
     this.primaryContactEmail = primaryContactEmail;
     this.primaryContactFirstName = primaryContactFirstName;
     this.primaryContactLastName = primaryContactLastName;
@@ -341,7 +347,7 @@ export class FamilyClientRequestModel {
 
 export class FamilyClientResponseModel {
   id: number;
-  note: string;
+  notes: string;
   primaryContactEmail: string;
   primaryContactFirstName: string;
   primaryContactLastName: string;
@@ -349,7 +355,7 @@ export class FamilyClientResponseModel {
 
   constructor() {
     this.id = 0;
-    this.note = '';
+    this.notes = '';
     this.primaryContactEmail = '';
     this.primaryContactFirstName = '';
     this.primaryContactLastName = '';
@@ -358,14 +364,14 @@ export class FamilyClientResponseModel {
 
   setProperties(
     id: number,
-    note: string,
+    notes: string,
     primaryContactEmail: string,
     primaryContactFirstName: string,
     primaryContactLastName: string,
     primaryContactPhone: string
   ): void {
     this.id = id;
-    this.note = note;
+    this.notes = notes;
     this.primaryContactEmail = primaryContactEmail;
     this.primaryContactFirstName = primaryContactFirstName;
     this.primaryContactLastName = primaryContactLastName;
@@ -961,5 +967,5 @@ export class UserClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>28ab9d146e8f480a22f8c04b0fd6715d</Hash>
+    <Hash>eaa414b28286ab3bbf318d9e167816ef</Hash>
 </Codenesium>*/

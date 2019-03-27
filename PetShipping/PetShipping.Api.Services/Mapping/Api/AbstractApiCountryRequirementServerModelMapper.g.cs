@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Services
 			var response = new ApiCountryRequirementServerResponseModel();
 			response.SetProperties(id,
 			                       request.CountryId,
-			                       request.Detail);
+			                       request.Details);
 			return response;
 		}
 
@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Services
 			var request = new ApiCountryRequirementServerRequestModel();
 			request.SetProperties(
 				response.CountryId,
-				response.Detail);
+				response.Details);
 			return request;
 		}
 
@@ -35,7 +35,7 @@ namespace PetShippingNS.Api.Services
 			var request = new ApiCountryRequirementClientRequestModel();
 			request.SetProperties(
 				response.CountryId,
-				response.Detail);
+				response.Details);
 			return request;
 		}
 
@@ -43,12 +43,12 @@ namespace PetShippingNS.Api.Services
 		{
 			var patch = new JsonPatchDocument<ApiCountryRequirementServerRequestModel>();
 			patch.Replace(x => x.CountryId, model.CountryId);
-			patch.Replace(x => x.Detail, model.Detail);
+			patch.Replace(x => x.Details, model.Details);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a1338bb7a1da6a434ea95811b24b88ac</Hash>
+    <Hash>f0be902a31fe1d85d35c17ff833e7ffc</Hash>
 </Codenesium>*/

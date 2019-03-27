@@ -26,9 +26,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
-		public virtual void NoteRules()
+		public virtual void NotesRules()
 		{
-			this.RuleFor(x => x.Note).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.Notes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PrimaryContactEmailRules()
@@ -55,5 +55,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69a0a6f12e95f22a0e01293a7a263f17</Hash>
+    <Hash>11fb0ce30defe3f7409bac3c7abf5865</Hash>
 </Codenesium>*/

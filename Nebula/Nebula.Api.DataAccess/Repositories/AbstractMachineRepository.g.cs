@@ -110,6 +110,16 @@ namespace NebulaNS.Api.DataAccess
 			       .Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
+		// Foreign key reference to this table MachineRefTeam via machineId.
+		public async virtual Task<List<MachineRefTeam>> MachineRefTeamsByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<MachineRefTeam>()
+			       .Include(x => x.MachineIdNavigation)
+			       .Include(x => x.TeamIdNavigation)
+
+			       .Where(x => x.MachineId == machineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<MachineRefTeam>();
+		}
+
 		protected async Task<List<Machine>> Where(
 			Expression<Func<Machine, bool>> predicate,
 			int limit = int.MaxValue,
@@ -136,5 +146,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0cee713f7061e46de7f4eae4d48f9227</Hash>
+    <Hash>119408df3681e28c0dedf558e49dffb9</Hash>
 </Codenesium>*/

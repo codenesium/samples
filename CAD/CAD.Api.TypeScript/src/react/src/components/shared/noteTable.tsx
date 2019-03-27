@@ -115,7 +115,7 @@ export class NoteTableComponent extends React.Component<
                 Header: 'Notes',
                 columns: [
                   {
-                    Header: 'CallId',
+                    Header: 'Call',
                     accessor: 'callId',
                     Cell: props => {
                       return (
@@ -137,21 +137,21 @@ export class NoteTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'DateCreated',
+                    Header: 'Date Created',
                     accessor: 'dateCreated',
                     Cell: props => {
                       return <span>{String(props.original.dateCreated)}</span>;
                     },
                   },
                   {
-                    Header: 'NoteText',
+                    Header: 'Note Text',
                     accessor: 'noteText',
                     Cell: props => {
                       return <span>{String(props.original.noteText)}</span>;
                     },
                   },
                   {
-                    Header: 'OfficerId',
+                    Header: 'Officer',
                     accessor: 'officerId',
                     Cell: props => {
                       return (
@@ -219,5 +219,5 @@ export class NoteTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b331a5434fa296cd0261f58af1ee6c31</Hash>
+    <Hash>bd4d3e903ac4b7f0cd43df7b1b2289cc</Hash>
 </Codenesium>*/

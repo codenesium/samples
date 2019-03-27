@@ -115,7 +115,7 @@ export class PipelineTableComponent extends React.Component<
                 Header: 'Pipelines',
                 columns: [
                   {
-                    Header: 'PipelineStatusId',
+                    Header: 'Pipeline Status',
                     accessor: 'pipelineStatusId',
                     Cell: props => {
                       return (
@@ -139,7 +139,7 @@ export class PipelineTableComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'SaleId',
+                    Header: 'Sale',
                     accessor: 'saleId',
                     Cell: props => {
                       return <span>{String(props.original.saleId)}</span>;
@@ -190,5 +190,5 @@ export class PipelineTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>97b5fc3310b4fe17638e5f51379c13da</Hash>
+    <Hash>846ce2e2d2bcf5062481d02979992ddb</Hash>
 </Codenesium>*/

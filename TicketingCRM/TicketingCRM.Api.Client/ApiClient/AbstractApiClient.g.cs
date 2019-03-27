@@ -584,39 +584,39 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSaleClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleTicketClientResponseModel>> SaleTicketsBySaleId(int saleId, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiSaleTicketsClientResponseModel>> SaleTicketsBySaleId(int saleId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Sales/{saleId}/SaleTickets", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketsClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSaleTicketClientResponseModel>>> SaleTicketBulkInsertAsync(List<ApiSaleTicketClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSaleTicketsClientResponseModel>>> SaleTicketsBulkInsertAsync(List<ApiSaleTicketsClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SaleTickets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSaleTicketClientResponseModel>>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSaleTicketsClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiSaleTicketClientResponseModel>> SaleTicketCreateAsync(ApiSaleTicketClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<ApiSaleTicketsClientResponseModel>> SaleTicketsCreateAsync(ApiSaleTicketsClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SaleTickets", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiSaleTicketsClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiSaleTicketClientResponseModel>> SaleTicketUpdateAsync(int id, ApiSaleTicketClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<UpdateResponse<ApiSaleTicketsClientResponseModel>> SaleTicketsUpdateAsync(int id, ApiSaleTicketsClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/SaleTickets/{id}", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiSaleTicketsClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> SaleTicketDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ActionResponse> SaleTicketsDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/SaleTickets/{id}", cancellationToken).ConfigureAwait(false);
 
@@ -624,25 +624,25 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiSaleTicketClientResponseModel> SaleTicketGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ApiSaleTicketsClientResponseModel> SaleTicketsGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SaleTickets/{id}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiSaleTicketClientResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiSaleTicketsClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleTicketClientResponseModel>> SaleTicketAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiSaleTicketsClientResponseModel>> SaleTicketsAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			int offset = 0;
 			bool moreRecords = true;
-			List<ApiSaleTicketClientResponseModel> response = new List<ApiSaleTicketClientResponseModel>();
+			List<ApiSaleTicketsClientResponseModel> response = new List<ApiSaleTicketsClientResponseModel>();
 			while (moreRecords)
 			{
 				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SaleTickets?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
 				this.HandleResponseCode(httpResponse);
-				List<ApiSaleTicketClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+				List<ApiSaleTicketsClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiSaleTicketsClientResponseModel>>(httpResponse.Content.ContentToString());
 				response.AddRange(records);
 				if (records.Count < this.MaxLimit)
 				{
@@ -657,12 +657,12 @@ namespace TicketingCRMNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<List<ApiSaleTicketClientResponseModel>> BySaleTicketByTicketId(int ticketId, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiSaleTicketsClientResponseModel>> BySaleTicketsByTicketId(int ticketId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SaleTickets/byTicketId/{ticketId}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketsClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiTicketClientResponseModel>>> TicketBulkInsertAsync(List<ApiTicketClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -738,12 +738,12 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTicketClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleTicketClientResponseModel>> SaleTicketsByTicketId(int ticketId, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiSaleTicketsClientResponseModel>> SaleTicketsByTicketId(int ticketId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Tickets/{ticketId}/SaleTickets", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketsClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiTicketStatusClientResponseModel>>> TicketStatusBulkInsertAsync(List<ApiTicketStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -1082,5 +1082,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>faa5adacc40366fbd21a78638d2f3c4c</Hash>
+    <Hash>6faa65b4b1300068525706535f499dff</Hash>
 </Codenesium>*/

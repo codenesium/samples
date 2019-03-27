@@ -141,12 +141,12 @@ class LinkLogCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="dateEntered">DateEntered</label>
+            <label htmlFor="dateEntered">Date Entered</label>
             <br />
             {getFieldDecorator('dateEntered', {
               rules: [{ required: true, message: 'Required' }],
             })(
-              <DatePicker format={'YYYY-MM-DD'} placeholder={'DateEntered'} />
+              <DatePicker format={'YYYY-MM-DD'} placeholder={'Date Entered'} />
             )}
           </Form.Item>
 
@@ -163,7 +163,7 @@ class LinkLogCreateComponent extends React.Component<
             <br />
             {getFieldDecorator('log', {
               rules: [{ required: true, message: 'Required' }],
-            })(<Input.TextArea placeholder={'Log'} />)}
+            })(<Input placeholder={'Log'} />)}
           </Form.Item>
 
           <Form.Item>
@@ -190,5 +190,5 @@ export const WrappedLinkLogCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>357c860afc2cd2a9323b87a43ede4c48</Hash>
+    <Hash>7ca41a1f233a4fff61e62779cc7ab93c</Hash>
 </Codenesium>*/

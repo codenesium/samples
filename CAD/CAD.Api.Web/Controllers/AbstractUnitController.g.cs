@@ -217,10 +217,10 @@ namespace CADNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byCallId/{callId}")]
+		[Route("{unitId}/CallAssignments")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiUnitServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByCallId(int callId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiCallAssignmentServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> CallAssignmentsByUnitId(int unitId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -228,7 +228,24 @@ namespace CADNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiUnitServerResponseModel> response = await this.UnitService.ByCallId(callId, query.Limit, query.Offset);
+			List<ApiCallAssignmentServerResponseModel> response = await this.UnitService.CallAssignmentsByUnitId(unitId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{unitId}/UnitOfficers")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiUnitOfficerServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> UnitOfficersByUnitId(int unitId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiUnitOfficerServerResponseModel> response = await this.UnitService.UnitOfficersByUnitId(unitId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -252,5 +269,5 @@ namespace CADNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c9306514acb2657fbbafe20bcd75993c</Hash>
+    <Hash>4e5c3d10494073a58d0259c26a1a42b9</Hash>
 </Codenesium>*/
